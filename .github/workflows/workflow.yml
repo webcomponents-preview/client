@@ -16,9 +16,9 @@ jobs:
         with:
           cache: "npm"
           node-version: 18.14.2
-      - name: install
+      - name: Install dependencies
         run: npm ci
-      - name: lint
+      - name: Lint
         run: npm run lint
 
   test:
@@ -31,9 +31,9 @@ jobs:
         with:
           cache: "npm"
           node-version: 18.14.2
-      - name: install
+      - name: Install dependencies
         run: npm ci
-      - name: test
+      - name: Test
         run: npm run test:ci
 
   build:
@@ -46,9 +46,9 @@ jobs:
         with:
           cache: "npm"
           node-version: 18.14.2
-      - name: install
+      - name: Install dependencies
         run: npm ci
-      - name: build
+      - name: Build
         run: npm run build
       - uses: actions/upload-artifact@v3
         if: success() && github.ref == 'refs/heads/main'
@@ -73,13 +73,13 @@ jobs:
         with:
           name: package
           path: dist
-      - name: configure git
+      - name: Configure git
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - name: configure npm
+      - name: Configure npm
         run: npm config set //registry.npmjs.org/:_authToken ${{secrets.WCP_NPM_TOKEN}}
-      - name: release
+      - name: Release package
         run: npx release-it --ci --verbose
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -94,7 +94,7 @@ jobs:
       pages: write
       id-token: write
     environment:
-      name: github-pages
+      name: Preview
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
