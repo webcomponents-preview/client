@@ -1,0 +1,100 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-layout-aside-collapsed-width: var(--wcp-layout-aside-collapsed-width, 60px);
+  ---wcp-layout-aside-expanded-width: var(--wcp-layout-aside-expanded-width, 260px);
+}
+
+:host {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: row;
+
+  height: 100vh;
+  width: 100vw;
+}
+
+aside {
+  box-sizing: border-box;
+  padding: 0 10px;
+  max-height: 100%;
+  max-width: 100%;
+  min-width: 100%;
+
+  overflow: auto;
+  overflow-x: hidden;
+
+  background-color: var(---wcp-color-blue-17);
+  color: var(---wcp-color-blue-96);
+
+  transition: ease-in-out var(---wcp-fx-layout-duration);
+  transition-property: max-width, min-width;
+  will-change: max-width, min-width, position, inset;
+
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+
+  @include utils.breakpoint(sm) {
+    max-width: var(---wcp-layout-aside-expanded-width);
+    min-width: var(---wcp-layout-aside-expanded-width);
+
+    position: static;
+    inset: auto;
+  }
+
+  :host([hide-aside]) & {
+    max-width: var(---wcp-layout-aside-collapsed-width);
+    min-width: var(---wcp-layout-aside-collapsed-width);
+    overflow: hidden;
+  }
+
+  slot[name='aside']::slotted(*) {
+    transition: calc(var(---wcp-fx-layout-duration) - var(---wcp-fx-default-duration)) opacity var(---wcp-fx-default-duration) ease-in-out;
+    will-change: opacity;
+
+    :host([hide-aside]) & {
+      pointer-events: none;
+      transition-delay: 0s;
+      opacity: 0;
+    }
+  }
+
+  header {
+    position: sticky;
+    top: 17px;
+    right: 30px;
+    z-index: 2;
+  }
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  max-width: 100vw;
+
+  :host([hide-aside]) & {
+    max-width: calc(100vw - var(---wcp-layout-aside-collapsed-width));
+    margin-left: var(---wcp-layout-aside-collapsed-width);
+
+    @include utils.breakpoint(sm) {
+      max-width: 100vw;
+      margin-left: 0;
+    }
+  }
+}
+
+.toggle-aside {
+  appearance: none;
+  all: unset;
+
+  display: block;
+  height: 22px;
+  width: 22px;
+  cursor: pointer;
+
+  position: absolute;
+  inset: 0 10px auto auto;
+}

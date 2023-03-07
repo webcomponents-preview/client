@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  padding: 0 10px;
+
+  border: 1px solid var(---wcp-color-grey-90);
+  border-radius: var(---wcp-border-radius);
+}
+
+slot[name='code']::slotted(pre) {
+  margin: 0;
+}

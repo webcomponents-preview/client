@@ -1,0 +1,55 @@
+@use 'highlight.js/scss/xcode';
+
+:host {
+  flex: 1 0 auto;
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+}
+
+wcp-tabs {
+  flex: 1 0 auto;
+
+  &::part(element-panel:not([hidden])) {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &::part(examples-panel) {
+    padding: 0;
+  }
+}
+
+[slot='examples'] {
+  display: flex;
+  flex-direction: column;
+
+  section {
+    padding: 20px 0;
+  }
+
+  section ~ section {
+    border-top: 1px solid var(---wcp-color-grey-90);
+  }
+}
+
+// [slot='element'] {
+//   position: relative;
+//   flex: 1 0 auto;
+//   background-color: var(---wcp-color-blue-13);
+
+//   .viewport {
+//     flex: 1 0 auto;
+//     position: absolute;
+//     inset: 50% auto auto 50%;
+
+//     height: var(---wcp-viewport-height, 100%);
+//     width: var(---wcp-viewport-width, 100%);
+
+//     transform-origin: center center;
+//     transform: translate(-50%, -50%) scale(var(---wcp-viewport-scale, 1));
+
+//     background-color: var(---wcp-color-grey-100);
+//   }
+// }

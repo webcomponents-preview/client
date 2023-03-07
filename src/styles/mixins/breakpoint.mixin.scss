@@ -1,0 +1,14 @@
+@use 'sass:map' as map;
+
+// use scss variables for media queries
+$breakpoints: (
+  xs: 480px,
+  // unsued yet
+  sm: 768px,
+);
+
+@mixin breakpoint($name) {
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}

@@ -1,0 +1,5 @@
+/// convenient function to calculate spacing based on a global custom property
+/// padding-left: space(2); // calc(var(--time-shift-base-space) * 2)
+@function space($factor: 1) {
+  @return calc(var(--time-shift-base-space, 10px) * #{$factor});
+}

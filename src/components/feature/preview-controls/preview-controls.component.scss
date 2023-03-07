@@ -1,0 +1,15 @@
+:host {
+  ---wcp-controls-height: var(--wcp-controls-height, 70px);
+}
+
+:host {
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 auto;
+
+  box-sizing: border-box;
+  height: var(---wcp-controls-height);
+  padding: 20px;
+
+  background-color: var(---wcp-color-blue-34);
+}

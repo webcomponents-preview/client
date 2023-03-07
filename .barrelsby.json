@@ -1,0 +1,8 @@
+{
+  "directory": "src",
+  "delete": true,
+  "flat": true,
+  "noHeader": true,
+  "include": ["components", "utils"],
+  "singleQuotes": true
+}
