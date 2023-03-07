@@ -1,8 +1,8 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
-![Workflow status](https://github.com/webcomponents-preview/client/actions/workflows/workflow.yml/badge.svg)
-![npm Release](https://badgen.net/npm/v/@webcomponents-preview/client/latest?label=@webcomponents-preview/client&color=cyan&icon=npm)
-![Package name](https://badgen.net/badge/%e2%80%8b/@webcomponents-preview%2Fclient?color=blue&icon=https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo-mono.svg)
+[![Workflow status](https://github.com/webcomponents-preview/client/actions/workflows/workflow.yml/badge.svg)](https://github.com/webcomponents-preview/client/actions)
+[![npm Release](https://badgen.net/npm/v/@webcomponents-preview/client/latest?label=@webcomponents-preview/client&color=cyan&icon=npm)](https://www.npmjs.com/package/@webcomponents-preview/client)
+[![Deployed preview](https://badgen.net/badge/%e2%80%8b/Preview?color=blue&icon=https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo-mono.svg)](https://webcomponents-preview.github.io/client/)
 
 A storybook alike preview application for web components. It processes a given custom element manifest and renders a preview for each element with its properties and events.
 
