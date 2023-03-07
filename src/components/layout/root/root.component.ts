@@ -124,7 +124,7 @@ export class Root extends LitElement {
       <wcp-layout>
         <wcp-title slot="aside" title="${this.title}">
           <slot name="logo" slot="logo">
-            <img src="/assets/icons/logo.svg" height="23px" />
+            <img src="assets/icons/logo.svg" height="23px" />
           </slot>
         </wcp-title>
 
@@ -137,7 +137,7 @@ export class Root extends LitElement {
                 (element) => html`
                   <wcp-navigation-item
                     ?active="${element.tagName === this.activeElement}"
-                    href="/#/${getNiceUrl(element)}"
+                    href="#/${getNiceUrl(element)}"
                   >
                     ${getNiceName(element)}
                   </wcp-navigation-item>

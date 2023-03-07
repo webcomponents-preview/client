@@ -13,7 +13,7 @@ declare global {
 }
 
 // mostly used internally
-export const loadConfig = async (url = '/config.json'): Promise<Config> => {
+export const loadConfig = async (url = 'config.json'): Promise<Config> => {
   const response = await fetch(url);
   return response.json();
 };
