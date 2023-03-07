@@ -1,6 +1,4 @@
-<img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" width="55px" style="margin-right: 10px">
-
-# Web Components Preview
+# <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
 ![Workflow status](https://github.com/webcomponents-preview/client/actions/workflows/workflow.yml/badge.svg)
 ![npm Release](https://badgen.net/npm/v/@webcomponents-preview/client/latest?label=@webcomponents-preview/client&color=cyan&icon=npm)
