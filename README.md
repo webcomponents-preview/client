@@ -1,7 +1,10 @@
-<img align="right" src="https://github.com/webcomponents-preview/client/actions/workflows/workflow.yml/badge.svg" alt="Workflow status">
 <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" width="55px" style="margin-right: 10px">
 
 # Web Components Preview
+
+![Workflow status](https://github.com/webcomponents-preview/client/actions/workflows/workflow.yml/badge.svg)
+![npm Release](https://badgen.net/npm/v/@webcomponents-preview/client/latest?label=@webcomponents-preview/client&color=cyan&icon=npm)
+![Package name](https://badgen.net/badge/%20/@webcomponents-preview%2Fclient?color=blue&icon=https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo-mono.svg)
 
 A storybook alike preview application for web components. It processes a given custom element manifest and renders a preview for each element with its properties and events.
 
