@@ -15,9 +15,6 @@ import { basename, dirname, join, relative, resolve, sep } from 'node:path';
 import { argv } from 'node:process';
 import { parseArgs, promisify } from 'node:util';
 
-// @ts-expect-error - no types
-import { cli as analyzer } from '@custom-elements-manifest/analyzer/cli.js';
-
 // load the example config
 import libraries from './prepare-examples.json' assert { type: 'json' };
 
@@ -104,10 +101,11 @@ export async function createManifests(name: string, target: string, library: Lib
   // prepare paths
   const repository = basename(library.git, '.git');
   const cwd = resolve(target, repository);
+  const bin = relative(cwd, join(dirname(__dirname), 'node_modules', '.bin', 'custom-elements-manifest'));
   const config = relative(cwd, join(__dirname, 'prepare-examples.config.ts'));
 
   // create manifest
-  await analyzer({ argv: ['analyze', '--quiet', '--config', config], cwd });
+  await execAsync(`${bin} analyze --quiet --config ${config}`, { cwd });
 
   // done
   console.info(`> Created manifest for ${name}.`);
