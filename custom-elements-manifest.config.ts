@@ -3,9 +3,9 @@
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
-import { customElementExamplesPlugin } from './custom-element-examples.plugin';
-import { customElementReadmePlugin } from './custom-element-readme.plugin';
-import { customElementTagsPlugin } from './custom-element-tags.plugin';
+import { customElementExamplesPlugin } from './scripts/custom-element-examples.plugin';
+import { customElementReadmePlugin } from './scripts/custom-element-readme.plugin';
+import { customElementTagsPlugin } from './scripts/custom-element-tags.plugin';
 
 export default {
   packagejson: true,
