@@ -9,7 +9,7 @@
 | `elements`         |                  | `CustomElementDeclaration[]` | []                                               |                                                  |
 | `handleHashChange` |                  |                              | "(() => {\n    const [, activeElement] = window.location.hash.split('#/');\n    this.activeElement = activeElement;\n    this.emitActiveElementChanged();\n  }).bind(this)" |                                                  |
 | `manifestUrl`      | `manifest-url`   | `string \| undefined`        |                                                  | Defines the location of the custom element manifest file. |
-| `title`            |                  | `string`                     | "Webcomponents Preview"                          |                                                  |
+| `title`            | `title`          | `string`                     |                                                  |                                                  |
 
 ## Methods
 
@@ -19,7 +19,6 @@
 | `emitManifestLoaded`          | `(): void`                                  |
 | `getActiveElementDeclaration` | `(): CustomElementDeclaration \| undefined` |
 | `loadCustomElementsManifest`  | `(): Promise<void>`                         |
-| `loadTitleFromConfig`         | `(): Promise<void>`                         |
 
 ## Events
 
