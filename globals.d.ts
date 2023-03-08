@@ -1,5 +1,5 @@
 declare module 'esbuild-copy-static-files' {
-  import type { Plugin, build } from 'esbuild';
+  import type { Plugin } from 'esbuild';
   export type CopyStaticFilesOptions = {
     src: string;
     dest: string;

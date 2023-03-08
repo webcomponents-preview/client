@@ -34,10 +34,10 @@ Just add the following script tag to your html file:
 <script type="module" src="https://unpkg.com/@webcomponents-preview/client"></script>
 ```
 
-Then add the following markup to your html and pass in the manifest url and a path to the configuration file:
+Then add the following markup to your html and pass in the manifest url:
 
 ```html
-<wcp-root config-url="/webcomponents-preview.config.json" manifest-url="/custom-elements.json"></wcp-root>
+<wcp-root manifest-url="/custom-elements.json"></wcp-root>
 ```
 
 ## Extras
