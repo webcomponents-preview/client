@@ -5,7 +5,6 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { range } from 'lit/directives/range.js';
 import { map } from 'lit/directives/map.js';
 
-import { getConfig } from '@/utils/config.utils';
 import { getCustomElements, getNiceName, getNiceUrl } from '@/utils/custom-elements-manifest.utils';
 
 import styles from './root.component.scss';
@@ -23,11 +22,20 @@ import styles from './root.component.scss';
 export class Root extends LitElement {
   static readonly styles = unsafeCSS(styles);
 
-  @state()
-  title = 'Webcomponents Preview';
+  #title = 'WCP';
+  #manifestUrl: string | undefined;
 
   @state()
   elements: CustomElementDeclaration[] = [];
+
+  @property({ type: String, reflect: true })
+  set title(title: string) {
+    this.#title = title;
+    document.title = title;
+  }
+  get title(): string {
+    return this.#title;
+  }
 
   @property({ type: String, reflect: true, attribute: 'active-element' })
   activeElement?: string;
@@ -42,16 +50,17 @@ export class Root extends LitElement {
    * Defines the location of the custom element manifest file.
    */
   @property({ type: String, reflect: true, attribute: 'manifest-url' })
-  manifestUrl?: string;
-
-  async loadTitleFromConfig() {
-    const { title } = await getConfig(this.configUrl);
-    document.title = this.title = title;
+  set manifestUrl(manifestUrl: string | undefined) {
+    this.#manifestUrl = manifestUrl;
+    this.loadCustomElementsManifest();
+  }
+  get manifestUrl(): string | undefined {
+    return this.#manifestUrl;
   }
 
   async loadCustomElementsManifest() {
-    if (!this.manifestUrl) return;
-    const response = await fetch(this.manifestUrl);
+    if (this.#manifestUrl === undefined) return;
+    const response = await fetch(this.#manifestUrl);
     const manifest = await response.json();
     this.elements = getCustomElements(manifest);
     this.emitManifestLoaded();
@@ -97,26 +106,11 @@ export class Root extends LitElement {
 
     // check, if we have an active element in the hash
     this.handleHashChange();
-
-    // if the default value of the config file isn't changed, we'll never get
-    // an attribute changed call; so we need to load the title here initially
-    this.loadTitleFromConfig();
   }
 
   override disconnectedCallback() {
     window.removeEventListener('hashchange', this.handleHashChange, false);
     super.disconnectedCallback();
-  }
-
-  override attributeChangedCallback(name: string, old: string | null, value: string | null) {
-    super.attributeChangedCallback(name, old, value);
-
-    if (name === 'config-url') {
-      this.loadTitleFromConfig();
-    }
-    if (name === 'manifest-url') {
-      this.loadCustomElementsManifest();
-    }
   }
 
   protected render(): TemplateResult {
