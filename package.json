@@ -60,7 +60,7 @@
     "barrelsby": "2.5.1",
     "cross-env": "7.0.3",
     "custom-elements-manifest": "2.0.0",
-    "esbuild": "0.17.10",
+    "esbuild": "0.17.11",
     "esbuild-copy-static-files": "0.1.0",
     "esbuild-sass-plugin": "2.4.5",
     "eslint": "8.35.0",
@@ -86,7 +86,7 @@
     "node": "^18"
   },
   "overrides": {
-    "esbuild": "0.17.10"
+    "esbuild": "0.17.11"
   },
   "jest-junit": {
     "outputDirectory": "reports",
