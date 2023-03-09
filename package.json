@@ -1,7 +1,7 @@
 {
   "name": "@webcomponents-preview/client",
   "description": "A storybook alike preview application for web components.",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "license": "MIT",
   "author": {
     "name": "David Enke",
@@ -95,7 +95,8 @@
   },
   "release-it": {
     "git": {
-      "commitMessage": "chore: release v${version}"
+      "commitMessage": "chore: release v${version}",
+      "pushArgs": "--force-with-lease"
     },
     "github": {
       "release": true
