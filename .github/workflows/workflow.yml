@@ -110,7 +110,7 @@ jobs:
   deploy:
     name: Deploy
     if: success() && github.ref == 'refs/heads/main'
-    needs: build
+    needs: release
     permissions:
       contents: read
       pages: write
