@@ -1,7 +1,7 @@
 {
   "name": "@webcomponents-preview/client",
   "description": "A storybook alike preview application for web components.",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "license": "MIT",
   "author": {
     "name": "David Enke",
