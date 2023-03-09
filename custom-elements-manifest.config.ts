@@ -3,9 +3,8 @@
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
-import { customElementExamplesPlugin } from './scripts/custom-element-examples.plugin';
-import { customElementReadmePlugin } from './scripts/custom-element-readme.plugin';
-import { customElementTagsPlugin } from './scripts/custom-element-tags.plugin';
+import { customElementExamplesPlugin } from '@webcomponents-preview/cem-plugin-examples';
+import { customElementInlineReadmePlugin } from '@webcomponents-preview/cem-plugin-inline-readme';
 
 export default {
   packagejson: true,
@@ -15,12 +14,11 @@ export default {
   outdir: 'dist',
   plugins: [
     customElementExamplesPlugin(),
-    customElementReadmePlugin({
+    customElementInlineReadmePlugin({
       loadReadme(path?: string) {
         if (path === undefined) return '';
         return readFileSync(resolve(dirname(path), 'README.md')).toString();
       },
     }),
-    customElementTagsPlugin(),
   ],
 };

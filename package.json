@@ -2,6 +2,7 @@
   "name": "@webcomponents-preview/client",
   "description": "A storybook alike preview application for web components.",
   "version": "0.0.9",
+  "license": "MIT",
   "author": {
     "name": "David Enke",
     "email": "david@enke.dev"
@@ -53,6 +54,8 @@
     "@types/pretty": "2.0.1",
     "@typescript-eslint/eslint-plugin": "5.53.0",
     "@typescript-eslint/parser": "5.53.0",
+    "@webcomponents-preview/cem-plugin-examples": "0.0.4",
+    "@webcomponents-preview/cem-plugin-inline-readme": "0.0.4",
     "autoprefixer": "10.4.13",
     "barrelsby": "2.5.1",
     "cross-env": "7.0.3",
