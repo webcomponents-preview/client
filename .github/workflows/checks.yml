@@ -82,7 +82,7 @@ jobs:
         run: npm config set //registry.npmjs.org/:_authToken ${{secrets.WCP_NPM_TOKEN}}
       - name: Release
         run: |
-          npx release-it --no-npm.publish --no-github.release --git.commitMessage='chore: release v${version}' --git.pushArgs=--follow-tags --ci
+          npx release-it --no-npm.publish --github.release --github.autoGenerate --git.commitMessage='chore: release v${version}' --git.pushArgs=--follow-tags --ci
         env:
           GITHUB_TOKEN: ${{secrets.WCP_GITHUB_TOKEN}}
           NODE_AUTH_TOKEN: ${{secrets.WCP_NPM_TOKEN}}

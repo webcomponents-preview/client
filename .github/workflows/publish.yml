@@ -64,7 +64,7 @@ jobs:
       - name: Configure npm
         run: npm config set //registry.npmjs.org/:_authToken ${{secrets.WCP_NPM_TOKEN}}
       - name: Publish package
-        run: npx release-it --no-git --github.release --github.autoGenerate --no-increment --ci
+        run: npx release-it --no-git --no-github.release --no-increment --ci
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           NODE_AUTH_TOKEN: ${{secrets.WCP_NPM_TOKEN}}
