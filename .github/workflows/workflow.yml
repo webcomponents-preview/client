@@ -81,12 +81,21 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       - name: Configure npm
         run: npm config set //registry.npmjs.org/:_authToken ${{secrets.WCP_NPM_TOKEN}}
+      - name: Install dependencies
+        run: npm ci
       - name: Release
         run: |
           npx release-it --no-npm.publish --github.release --github.autoGenerate --git.commitMessage='chore: release v${version}' --git.pushArgs=--follow-tags --git.pushArgs=--force --ci
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           NODE_AUTH_TOKEN: ${{secrets.WCP_NPM_TOKEN}}
+      - name: Rebuild tag
+        run: npm run build
+      - uses: actions/upload-artifact@v3
+        if: success() && github.ref == 'refs/heads/main'
+        with:
+          name: package
+          path: dist
 
   publish:
     name: Publish
