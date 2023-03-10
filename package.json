@@ -92,14 +92,5 @@
     "outputDirectory": "reports",
     "outputName": "test-unit.xml",
     "usePathForSuiteName": true
-  },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release v${version}",
-      "pushArgs": "--force"
-    },
-    "github": {
-      "release": true
-    }
   }
 }
