@@ -88,7 +88,7 @@ export async function createExampleEntryPoint(name: string, target: string, libr
   const content = await readFile(template, 'utf-8');
   const context: Record<string, string> = {
     title: name,
-    sources: modules.map((module) => `<script module src="${module}"></script>`).join('\n\t'),
+    sources: modules.map((module) => `<script type="module" src="${module}"></script>`).join('\n\t'),
   };
   const html = content.replace(/{{([^}}]*)}}/g, (_, key) => context[key]);
   await writeFile(entry, html);
