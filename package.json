@@ -30,7 +30,7 @@
     "prebuild": "npm run clean",
     "build:components": "ts-node esbuild.config.ts",
     "build:types": "tsc --project tsconfig.types.json",
-    "build": "run-p --print-name generate:* build:* docs",
+    "build": "run-p --print-name generate:* build:*",
     "predev": "run-p --print-name generate:*",
     "dev:docs": "npm run docs:schema -- --watch",
     "dev:build": "npm run build:components -- --watch --port 8087",
