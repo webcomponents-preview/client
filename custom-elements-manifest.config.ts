@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
 import { customElementExamplesPlugin } from '@webcomponents-preview/cem-plugin-examples';
+import { customElementGroupingPlugin } from '@webcomponents-preview/cem-plugin-grouping';
 import { customElementInlineReadmePlugin } from '@webcomponents-preview/cem-plugin-inline-readme';
 
 export default {
@@ -14,6 +15,12 @@ export default {
   outdir: 'dist',
   plugins: [
     customElementExamplesPlugin(),
+    customElementGroupingPlugin({
+      addGroups(componentPath) {
+        const [, , group] = componentPath?.split('/') || [];
+        return [group];
+      },
+    }),
     customElementInlineReadmePlugin({
       loadReadme(path?: string) {
         if (path === undefined) return '';
