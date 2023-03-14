@@ -1,0 +1,112 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-button-passive-background: var(--wcp-button-passive-background, transparent);
+  ---wcp-button-passive-border-color: var(--wcp-button-passive-border-color, var(--wcp-color-blue-17));
+  ---wcp-button-passive-color: var(--wcp-button-passive-color, var(--wcp-color-blue-17));
+
+  ---wcp-button-hover-background: var(--wcp-button-hover-background, var(--wcp-color-blue-17));
+  ---wcp-button-hover-border-color: var(--wcp-button-hover-border-color, var(--wcp-color-blue-17));
+  ---wcp-button-hover-color: var(--wcp-button-hover-color, var(--wcp-color-blue-96));
+
+  ---wcp-button-active-background: var(--wcp-button-active-background, var(--wcp-color-blue-17));
+  ---wcp-button-active-border-color: var(--wcp-button-active-border-color, var(--wcp-color-blue-17));
+  ---wcp-button-active-color: var(--wcp-button-active-color, var(--wcp-color-blue-96));
+}
+
+// map interactions to button states
+:host {
+  ---wcp-button-background: var(---wcp-button-passive-background);
+  ---wcp-button-border-color: var(---wcp-button-passive-border-color);
+  ---wcp-button-color: var(---wcp-button-passive-color);
+}
+
+:host(:not(:disabled):hover) {
+  ---wcp-button-background: var(---wcp-button-hover-background);
+  ---wcp-button-border-color: var(---wcp-button-hover-border-color);
+  ---wcp-button-color: var(---wcp-button-hover-color);
+}
+
+:host(:not(:disabled):active),
+:host(:not(:disabled).active) {
+  ---wcp-button-background: var(---wcp-button-active-background);
+  ---wcp-button-border-color: var(---wcp-button-active-border-color);
+  ---wcp-button-color: var(---wcp-button-active-color);
+}
+
+:host {
+  display: inline-block;
+  width: fit-content;
+}
+
+:host(:not([kind='icon'])[stretched]) {
+  width: 100%;
+}
+
+.button {
+  all: unset;
+  appearance: none;
+
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+
+  font-weight: 700;
+  line-height: 1.5em;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+  word-wrap: break-word;
+
+  cursor: pointer;
+  transition: ease-in-out var(--wcp-fx-default-duration);
+  transition-property: background-color, color, opacity;
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  :host(:not([kind='icon'])) & {
+    padding: 0.5em 1em;
+
+    background-color: var(---wcp-button-background);
+    border: var(---wcp-button-border-color) 1px solid;
+    color: var(---wcp-button-color);
+  }
+
+  :host([kind='icon']) & {
+    aspect-ratio: 1 / 1;
+    padding: utils.size(1);
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+
+      transition: ease-in-out var(--wcp-fx-default-duration);
+      transition-property: background-color, opacity;
+
+      background-color: var(---wcp-button-background);
+      opacity: 0.15;
+    }
+  }
+
+  :host([kind='icon']:not(:disabled):active) &,
+  :host([kind='icon']:not(:disabled).active) & {
+    &::before {
+      opacity: 0.3;
+    }
+  }
+
+  :host([nowrap]) & {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow: hidden;
+  }
+}

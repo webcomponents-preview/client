@@ -12,6 +12,7 @@ export * from './components/layout/aside/aside.component';
 export * from './components/layout/layout/layout.component';
 export * from './components/layout/main/main.component';
 export * from './components/root/root.component';
+export * from './components/ui/button/button.component';
 export * from './components/ui/icon/icon.component';
 export * from './components/ui/tabs/tabs.component';
 export * from './components/ui/title/title.component';
