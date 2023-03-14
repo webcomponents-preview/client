@@ -68,23 +68,23 @@ jobs:
     if: github.event_name == 'pull_request'
     name: Deploy PR
     needs: build
-    permissions: write-all
+    runs-on: ubuntu-latest
     environment:
       name: Review
-      url: https://webcomponents-preview.github.io/client/${{ github.event.number }}/
-    runs-on: ubuntu-latest
+      url: https://webcomponents-preview.github.io/client/pr/${{ github.event.number }}/
     steps:
       - uses: actions/checkout@v3
         with:
           ref: deploy
+          token: ${{secrets.WCP_GITHUB_TOKEN}}
       - uses: actions/download-artifact@v3
         with:
           name: preview
           path: .tmp
       - name: Configure git
         run: |
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config user.name "autoreleaser"
+          git config user.email "release@enke.dev"
       - name: Update latest
         run: |
           rm -rf pr/${{ github.event.number }}
