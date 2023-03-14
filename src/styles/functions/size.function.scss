@@ -1,0 +1,5 @@
+/// convenient function to calculate sizing based on a global custom property
+/// padding-left: size(2); // calc(var(--wcp-base-size) * 2)
+@function size($factor: 1) {
+  @return calc(var(--wcp-base-size, 10px) * #{$factor});
+}
