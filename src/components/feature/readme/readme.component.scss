@@ -1,0 +1,9 @@
+// add some default styles for the rendered readme for the time being
+@import 'github-markdown-css/github-markdown-light';
+
+// as we do not have Shadow DOM, we can't rely on the :host selector, so
+// to scope the styles we use the tag name of the component
+wcp-readme {
+  display: block;
+  background-color: transparent !important;
+}
