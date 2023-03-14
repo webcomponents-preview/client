@@ -4,24 +4,10 @@ on:
   push:
     tags:
       - "**"
-  workflow_dispatch:
-    inputs:
-      publish:
-        description: "Publish package to npm"
-        required: false
-        type: boolean
-        default: true
-      deploy:
-        description: "Deploy example to GitHub Pages"
-        required: false
-        type: boolean
-        default: true
 
 jobs:
   build:
     name: Build
-    if: |
-      github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && (${{ inputs.publish }} || ${{ inputs.deploy }}))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -43,8 +29,6 @@ jobs:
 
   publish:
     name: Publish
-    if: |
-      github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && ${{ inputs.publish }})
     needs: build
     permissions: write-all
     runs-on: ubuntu-latest
@@ -73,28 +57,28 @@ jobs:
 
   deploy:
     name: Deploy
-    if: |
-      github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && ${{ inputs.deploy }})
     needs: build
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     environment:
       name: Preview
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: https://webcomponents-preview.github.io/client/latest/
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/configure-pages@v3
+        with:
+          ref: deploy
+          token: ${{secrets.WCP_GITHUB_TOKEN}}
       - uses: actions/download-artifact@v3
         with:
           name: latest
-          path: dist
-      - name: Upload
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: "dist"
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+          path: .tmp
+      - name: Configure git
+        run: |
+          git config user.name "autoreleaser"
+          git config user.email "release@enke.dev"
+      - name: Update latest
+        run: |
+          rm -rf latest
+          mv .tmp latest
+          git add .
+          git commit --allow-empty --message $GITHUB_SHA
+          git push
