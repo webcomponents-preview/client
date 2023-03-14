@@ -1,6 +1,6 @@
 # wcp-layout
 
-## Examples
+## Example
 
 ```html
 <wcp-layout>
@@ -8,26 +8,6 @@
   <article>Me the important content!</article>
 </wcp-layout>
 ```
-
-### Hidden contents
-
-```html
-<wcp-layout hidden>
-  <nav slot="aside">To the left!</nav>
-</wcp-layout>
-```
-
-## Properties
-
-| Property    | Attribute    | Type      | Default |
-|-------------|--------------|-----------|---------|
-| `hideAside` | `hide-aside` | `boolean` | false   |
-
-## Methods
-
-| Method              | Type       |
-|---------------------|------------|
-| `handleAsideToggle` | `(): void` |
 
 ## Slots
 
