@@ -27,11 +27,9 @@ const importMapper = (path: string): string => {
 };
 
 // parse cli arguments
-const args = process.argv.slice(2);
 const {
   values: { ci = false, port = '3500', watch },
 } = parseArgs({
-  args,
   options: {
     ci: { type: 'boolean' },
     port: { type: 'string', short: 'p' },
@@ -43,7 +41,6 @@ const {
 const options: BuildOptions = {
   sourceRoot: 'src',
   entryPoints: ['src/index.ts', 'src/index.html', 'src/styles/global.scss'],
-  // we don't mess with the default buildt output, but use the temp dir
   outdir: 'dist',
   platform: 'browser',
   format: 'esm',
