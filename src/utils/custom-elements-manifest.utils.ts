@@ -1,6 +1,7 @@
 import type { CustomElementDeclaration, Declaration, Package as Manifest } from 'custom-elements-manifest/schema';
 
 export type CustomElementDeclarationWithExamples = CustomElementDeclaration & { examples: string[] };
+export type CustomElementDeclarationWithGroups = CustomElementDeclaration & { groups: string[] };
 export type CustomElementDeclarationWithReadme = CustomElementDeclaration & { readme: string };
 export type CustomElementDeclarationWithTagName = CustomElementDeclaration & { tagName: string[] };
 
@@ -12,6 +13,17 @@ export function getCustomElements(manifest: Manifest): CustomElementDeclaration[
   return manifest.modules.flatMap((module) => module.declarations).filter(isCustomElementDeclaration);
 }
 
+export function groupCustomElements(
+  elements: CustomElementDeclaration[],
+  fallbackGroupName: string
+): Record<string, CustomElementDeclaration[]> {
+  return elements.reduce((acc, element) => {
+    let groups = [fallbackGroupName];
+    if (hasGroups(element)) groups = element.groups;
+    return groups.reduce((all, group) => ({ ...all, [group]: [...(all[group] ?? []), element] }), acc);
+  }, {} as Record<string, CustomElementDeclaration[]>);
+}
+
 export function hasExamples(
   declaration?: CustomElementDeclaration
 ): declaration is CustomElementDeclarationWithExamples {
@@ -20,6 +32,10 @@ export function hasExamples(
     'examples' in declaration &&
     (declaration as CustomElementDeclarationWithExamples).examples.length > 0
   );
+}
+
+export function hasGroups(declaration?: CustomElementDeclaration): declaration is CustomElementDeclarationWithGroups {
+  return declaration !== undefined && 'groups' in declaration;
 }
 
 export function hasReadme(declaration?: CustomElementDeclaration): declaration is CustomElementDeclarationWithReadme {
