@@ -58,3 +58,4 @@
 | `--wcp-tabs-tab-spacing`             | The inner padding of the tabs.                 |
 | `--wcp-tabs-tablist-border-color`    | The border color of the tablist.               |
 | `--wcp-tabs-tablist-gap`             | The gap between the tablist and the tabpanels. |
+| `--wcp-tabs-tablist-spacing`         | The inner padding of the tablist.              |

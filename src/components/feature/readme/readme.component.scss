@@ -1,0 +1,27 @@
+@use 'sass:meta' as meta;
+
+// add some default styles from GitHub for the rendered readme for the time being
+@include meta.load-css('github-markdown-css/github-markdown-light');
+
+// a small example of basic markdown styling can be found in the nextcloud project:
+// https://github.com/nextcloud/deck/blob/main/src/css/markdown.scss
+
+// as we do not have Shadow DOM, we can't rely on the :host selector, so
+// to scope the styles we use the tag name of the component
+wcp-readme {
+  display: block;
+
+  // override some of the github styles to blend in with the rest
+  &.markdown-body {
+    font-family: inherit;
+    background-color: transparent;
+
+    table tr {
+      background-color: var(--wcp-color-grey-96);
+
+      &:nth-child(2n) {
+        background-color: var(--wcp-color-blue-93);
+      }
+    }
+  }
+}

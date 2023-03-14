@@ -3,6 +3,7 @@ import type { CustomElementDeclaration } from 'custom-elements-manifest';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
 import { renderMarkdown } from '@/utils/code.utils';
@@ -42,13 +43,13 @@ export class PreviewFrame extends LitElement {
   protected renderExamples(element: CustomElementDeclarationWithExamples): TemplateResult {
     return html`
       <div slot="examples">
-        ${map(element.examples, (example: string) => html`<section .innerHTML="${renderMarkdown(example)}"></section>`)}
+        ${map(element.examples, (example: string) => html`<section>${unsafeHTML(renderMarkdown(example))}</section>`)}
       </div>
     `;
   }
 
   protected renderReadme(element: CustomElementDeclarationWithReadme): TemplateResult {
-    return html` <div slot="readme" .innerHTML="${renderMarkdown(element.readme)}"></div> `;
+    return html`<wcp-readme slot="readme" markdown="${element.readme}"></wcp-readme>`;
   }
 
   protected render(): TemplateResult {
