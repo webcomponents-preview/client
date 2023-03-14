@@ -1,0 +1,111 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-aside-collapsed-width: var(--wcp-aside-collapsed-width, #{utils.size(5)});
+  ---wcp-aside-expanded-width: var(--wcp-aside-expanded-width, #{utils.size(24)});
+
+  ---wcp-aside-spacing: var(--wcp-aside-spacing, 0);
+
+  ---wcp-aside-dark-background: var(--wcp-aside-dark-background, var(--wcp-color-blue-13));
+  ---wcp-aside-dark-color: var(--wcp-aside-dark-color, var(--wcp-color-blue-96));
+  
+  ---wcp-aside-light-background: var(--wcp-aside-dark-background, var(--wcp-color-blue-17));
+  ---wcp-aside-light-color: var(--wcp-aside-dark-color, var(--wcp-color-blue-96));
+  
+  ---wcp-aside-toggle-size: var(--wcp-aside-toggle-size, #{utils.size(2)});
+  ---wcp-aside-toggle-offset-vertical: var(--wcp-aside-toggle-offset-vertical, #{utils.size(.4)});
+  ---wcp-aside-toggle-offset-horizontal: var(--wcp-aside-toggle-offset-horizontal, #{utils.size(.5)});
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-aside-background: var(---wcp-aside-#{$color-scheme}-background);
+    ---wcp-aside-color: var(---wcp-aside-#{$color-scheme}-color);
+  }
+}
+
+:host {
+  display: block;
+  box-sizing: border-box;
+  padding: var(---wcp-aside-spacing);
+
+  height: 100%;
+  max-width: 100%;
+  min-width: 100%;
+
+  overflow: auto;
+  overflow-x: hidden;
+
+  background-color: var(---wcp-aside-background);
+  color: var(---wcp-aside-color);
+
+  transition: ease-in-out var(--wcp-fx-layout-duration);
+  transition-property: left, max-width, min-width;
+  will-change: left, max-width, min-width;
+
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+
+  @include utils.breakpoint(sm) {
+    max-width: var(---wcp-aside-expanded-width);
+    min-width: var(---wcp-aside-expanded-width);
+
+    position: static;
+    inset: auto;
+  }
+}
+
+// a little hack to prevent the contents from collapsing when animated
+slot:not([name])::slotted(*) {
+  width: 100%;
+
+  @include utils.breakpoint(sm) {
+    width: var(---wcp-aside-expanded-width);
+  }
+}
+
+:host([collapsed]) {
+  left: calc(var(---wcp-aside-collapsed-width) * -1);
+  max-width: var(---wcp-aside-collapsed-width);
+  min-width: var(---wcp-aside-collapsed-width);
+  overflow: hidden;
+
+  @include utils.breakpoint(sm) {
+    left: 0;
+  }
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+section {
+  transition: calc(var(--wcp-fx-layout-duration) - var(--wcp-fx-default-duration)) opacity
+    var(--wcp-fx-default-duration) ease-in-out;
+  will-change: opacity;
+
+  :host([collapsed]) & {
+    pointer-events: none;
+    transition-delay: 0s;
+    opacity: 0;
+  }
+}
+
+wcp-button {
+  position: absolute;
+  inset: var(---wcp-aside-toggle-offset-vertical) var(---wcp-aside-toggle-offset-horizontal) auto auto;
+
+  wcp-icon {
+    width: var(---wcp-aside-toggle-size);
+  }
+
+  :host([collapsed]) & {
+    display: none;
+
+    @include utils.breakpoint(sm) {
+      display: block;
+    }
+  }
+}

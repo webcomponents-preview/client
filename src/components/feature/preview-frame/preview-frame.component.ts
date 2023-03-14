@@ -3,6 +3,7 @@ import type { CustomElementDeclaration } from 'custom-elements-manifest';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
 import { renderMarkdown } from '@/utils/code.utils';
@@ -20,6 +21,19 @@ import styles from './preview-frame.component.scss';
  * ```html
  * <wcp-preview-frame></wcp-preview-frame>
  * ```
+ *
+ * @cssprop --wcp-preview-frame-dark-background - Background color of the preview frame in dark mode
+ * @cssprop --wcp-preview-frame-dark-border-color - Border color of the example section in dark mode
+ * @cssprop --wcp-preview-frame-dark-color - Text color of the preview frame in dark mode
+ * 
+ * @cssprop --wcp-preview-frame-light-background - Background color of the preview frame in light mode
+ * @cssprop --wcp-preview-frame-light-border-color - Border color of the example section in light mode
+ * @cssprop --wcp-preview-frame-light-color - Text color of the preview frame in light mode
+ * 
+ * @cssprop --wcp-preview-frame-distance - Outer margin of the preview frame
+ * @cssprop --wcp-preview-frame-spacing - Inner padding of the preview frame
+ * @cssprop --wcp-preview-frame-border-width - Border width of the example section
+ * @cssprop --wcp-preview-frame-spacing - Inner padding of the example section
  */
 @customElement('wcp-preview-frame')
 export class PreviewFrame extends LitElement {
@@ -37,13 +51,13 @@ export class PreviewFrame extends LitElement {
   protected renderExamples(element: CustomElementDeclarationWithExamples): TemplateResult {
     return html`
       <div slot="examples">
-        ${map(element.examples, (example: string) => html`<section .innerHTML="${renderMarkdown(example)}"></section>`)}
+        ${map(element.examples, (example: string) => html`<section>${unsafeHTML(renderMarkdown(example))}</section>`)}
       </div>
     `;
   }
 
   protected renderReadme(element: CustomElementDeclarationWithReadme): TemplateResult {
-    return html` <div slot="readme" .innerHTML="${renderMarkdown(element.readme)}"></div> `;
+    return html`<wcp-readme slot="readme" markdown="${element.readme}"></wcp-readme>`;
   }
 
   protected render(): TemplateResult {
@@ -51,7 +65,6 @@ export class PreviewFrame extends LitElement {
       ...(hasExamples(this.activeElement) ? { examples: 'Examples' } : {}),
       ...(hasReadme(this.activeElement) ? { readme: 'Readme' } : {}),
     };
-    console.log(this.activeElement);
 
     return html`
       ${when(

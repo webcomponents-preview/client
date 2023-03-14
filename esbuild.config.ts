@@ -22,7 +22,7 @@ const transform = async (source: string): Promise<string> => {
 // resolve @ imports in sass
 const importMapper = (path: string): string => {
   if (path.includes('node_modules')) return path;
-  if (path.includes('@')) return resolve(path.replace(/^.*@\/?/, './src/'));
+  if (path.startsWith('@')) return resolve(path.replace(/^.*@\/?/, './src/'));
   return path;
 };
 
@@ -94,5 +94,6 @@ if (watch) {
     process.exit(1);
   }
 } else {
-  build(options);
+  await build(options);
+  process.exit(0);
 }

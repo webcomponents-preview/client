@@ -1,0 +1,7 @@
+@mixin color-scheme($color-schemes: (dark, light)) {
+  @each $color-scheme in $color-schemes {
+    @media (prefers-color-scheme: #{$color-scheme}) {
+      @content ($color-scheme);
+    }
+  }
+}

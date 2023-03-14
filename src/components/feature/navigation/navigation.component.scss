@@ -1,24 +1,56 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-navigation-spacing: var(--wcp-navigation-spacing, #{0 0 utils.size(1)});
+  ---wcp-navigation-spacing-items: var(--wcp-navigation-spacing-items, 0);
+  ---wcp-navigation-spacing-headline: var(--wcp-navigation-spacing-headline, #{utils.size(1.5) 0 utils.size(1) utils.size(2)});
+  
+  ---wcp-navigation-dark-border-color: var(--wcp-navigation-headline-dark-border-color, var(--wcp-color-grey-24));
+  ---wcp-navigation-light-border-color: var(--wcp-navigation-headline-light-border-color, var(--wcp-color-blue-24));
+
+  ---wcp-navigation-headline-size: var(--wcp-navigation-headline-size, .8em);
+  ---wcp-navigation-headline-weight: var(--wcp-navigation-headline-weight, 200);
+  ---wcp-navigation-headline-spacing: var(--wcp-navigation-headline-spacing, .1em);
+
+  ---wcp-navigation-headline-dark-background: var(--wcp-navigation-headline-dark-background, var(--wcp-color-blue-13));
+  ---wcp-navigation-headline-light-background: var(--wcp-navigation-headline-light-background, var(--wcp-color-blue-17));
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-navigation-headline-background: var(---wcp-navigation-headline-#{$color-scheme}-background);
+    ---wcp-navigation-border-color: var(---wcp-navigation-#{$color-scheme}-border-color);
+  }
+}
+
+:host {
+  display: block;
+  border-top: 1px solid var(---wcp-navigation-border-color);
+}
+
 h3 {
   position: sticky;
   top: 0;
   z-index: 1;
+
   margin: 0;
-  padding: 15px 0 10px 10px;
-  background-color: var(---wcp-color-blue-17);
+  padding: var(---wcp-navigation-spacing-headline);
+
+  background-color: var(---wcp-navigation-headline-background);
+  font-size: var(---wcp-navigation-headline-size);
+  font-weight: var(---wcp-navigation-headline-weight);
+  letter-spacing: var(---wcp-navigation-headline-spacing);
+
+  line-height: 1;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-// nav {
-//   display: inline;
-//   position: static;
-
-//   overflow: hidden;
-// }
 
 nav {
   position: relative;
-  padding: 0 0 10px;
+  padding: var(---wcp-navigation-spacing);
 
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: var(---wcp-navigation-spacing-items);
 }

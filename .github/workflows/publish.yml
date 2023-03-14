@@ -33,6 +33,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Docs
+        run: npm run docs
       - uses: actions/upload-artifact@v3
         if: success()
         with:

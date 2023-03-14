@@ -1,11 +1,15 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema';
 
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
-import { range } from 'lit/directives/range.js';
+import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 
-import { getCustomElements, getNiceName, getNiceUrl } from '@/utils/custom-elements-manifest.utils';
+import {
+  getCustomElements,
+  getNiceName,
+  getNiceUrl,
+  groupCustomElements,
+} from '@/utils/custom-elements-manifest.utils';
 
 import styles from './root.component.scss';
 
@@ -14,6 +18,12 @@ import styles from './root.component.scss';
  * @slot preview-controls - Can be used to inject additional preview controls.
  * @slot preview-frame - Used to be override the existing preview pane.
  * @slot preview-details - Can be used to inject additional preview detail panes.
+ * 
+ * @cssprop --wcp-root-dark-background - The background color of the root element in dark mode
+ * @cssprop --wcp-root-dark-color - The text color of the text in the root element in dark mode
+ * 
+ * @cssprop --wcp-root-light-background - The background color of the root element in light mode
+ * @cssprop --wcp-root-light-color - The text color of the text in the root element in light mode
  *
  * @emits wcp-root:active-element-changed - Fired when the active element changes. Carries the declaration of the new active element with it.
  * @emits wcp-root:manifest-loaded - Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved.
@@ -28,6 +38,9 @@ export class Root extends LitElement {
   @state()
   elements: CustomElementDeclaration[] = [];
 
+  @state()
+  navigation: Record<string, CustomElementDeclaration[]> = {};
+
   @property({ type: String, reflect: true })
   set title(title: string) {
     this.#title = title;
@@ -37,6 +50,25 @@ export class Root extends LitElement {
     return this.#title;
   }
 
+  /**
+   * Flags the component to be displayed inline and not standalone. Requires the surrounding
+   * layout to provide the necessary styles like for any other block element.
+   */
+  @property({ type: Boolean, reflect: true })
+  inline = false;
+
+  /**
+   * Allows to set a fallback group name for elements that do not have a `groups` property.
+   * So this is the name of the group that will contain all elements unless the manifest is
+   * generated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin.
+   */
+  @property({ type: String, reflect: true, attribute: 'fallback-group-name' })
+  fallbackGroupName = 'Components';
+
+  /**
+   * Sets the currently active element by its tag name. Will be updated at runtime and can
+   * be preset with an initial value to define the active element at startup.
+   */
   @property({ type: String, reflect: true, attribute: 'active-element' })
   activeElement?: string;
 
@@ -62,7 +94,11 @@ export class Root extends LitElement {
     if (this.#manifestUrl === undefined) return;
     const response = await fetch(this.#manifestUrl);
     const manifest = await response.json();
+
+    // store the elements and derive navigation
     this.elements = getCustomElements(manifest);
+    this.navigation = groupCustomElements(this.elements, this.fallbackGroupName);
+
     this.emitManifestLoaded();
   }
 
@@ -90,13 +126,18 @@ export class Root extends LitElement {
     this.dispatchEvent(event);
   }
 
-  // sincewe're not binding this through lit-html, we actually need to bind
+  // since we're not binding this through lit-html, we actually need to bind
   // this explicitly, so we can add the event listener to the window properly
   handleHashChange = (() => {
     const [, activeElement] = window.location.hash.split('#/');
     this.activeElement = activeElement;
     this.emitActiveElementChanged();
   }).bind(this);
+
+  @eventOptions({ passive: true })
+  handleMenuClick() {
+    window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: false }));
+  }
 
   override connectedCallback() {
     super.connectedCallback();
@@ -118,16 +159,16 @@ export class Root extends LitElement {
       <wcp-layout>
         <wcp-title slot="aside" title="${this.title}">
           <slot name="logo" slot="logo">
-            <img src="assets/icons/logo.svg" height="23px" />
+            <img src="assets/icons/logo.svg" height="20px" />
           </slot>
         </wcp-title>
 
         ${map(
-          range(3),
-          (index) => html`
-            <wcp-navigation slot="aside" headline="Components ${['A', 'B', 'C'][index]}">
+          Object.keys(this.navigation),
+          (group) => html`
+            <wcp-navigation slot="aside" headline="${group}">
               ${map(
-                this.elements,
+                this.navigation[group],
                 (element) => html`
                   <wcp-navigation-item
                     ?active="${element.tagName === this.activeElement}"
@@ -142,6 +183,7 @@ export class Root extends LitElement {
         )}
 
         <wcp-preview-controls>
+          <wcp-button kind="icon" @click="${this.handleMenuClick}"><wcp-icon name="menu"></wcp-icon></wcp-button>
           <slot name="preview-controls"></slot>
         </wcp-preview-controls>
         <slot name="preview-frame">

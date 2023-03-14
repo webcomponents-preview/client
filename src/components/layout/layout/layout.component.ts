@@ -1,5 +1,5 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, eventOptions, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 
 import styles from './layout.component.scss';
 
@@ -11,16 +11,7 @@ import styles from './layout.component.scss';
  *   <article>Me the important content!</article>
  * </wcp-layout>
  * ```
- * 
- * @example
- * ### Hidden contents
- * 
- * ```html
- * <wcp-layout hidden>
- *   <nav slot="aside">To the left!</nav>
- * </wcp-layout>
- * ```
- * 
+ *
  * @slot aside - Projects elements aside the main content
  * @slot - Receives the content of the main section
  */
@@ -28,28 +19,15 @@ import styles from './layout.component.scss';
 export class Layout extends LitElement {
   static readonly styles = unsafeCSS(styles);
 
-  @property({ type: Boolean, reflect: true, attribute: 'hide-aside' })
-  hideAside = false;
-
-  @eventOptions({ passive: true })
-  handleAsideToggle() {
-    this.hideAside = !this.hideAside;
-  }
-
   protected render(): TemplateResult {
     return html`
-      <aside>
-        <header>
-          <button class="toggle-aside" @click="${this.handleAsideToggle}">
-            <wcp-icon name="${this.hideAside ? 'menu' : 'close'}"></wcp-icon>
-          </button>
-        </header>
+      <wcp-aside>
         <slot name="aside"></slot>
-      </aside>
+      </wcp-aside>
 
-      <main>
+      <wcp-main>
         <slot></slot>
-      </main>
+      </wcp-main>
     `;
   }
 }

@@ -18,6 +18,15 @@ import styles from './preview-controls.component.scss';
  * ```
  * 
  * @slot - Default slot for navigation items
+ * 
+ * @cssprop --wcp-preview-controls-dark-background - Background color of the preview controls in dark mode
+ * @cssprop --wcp-preview-controls-dark-color - Text color of the preview controls in dark mode
+ * 
+ * @cssprop --wcp-preview-controls-light-background - Background color of the preview controls in light mode
+ * @cssprop --wcp-preview-controls-light-color - Text color of the preview controls in light mode
+ * 
+ * @cssprop --wcp-preview-controls-height - Overall height of the preview controls nav bar
+ * @cssprop --wcp-preview-controls-spacing - Inner spacing, used as padding of the controls
  */
 @customElement('wcp-preview-controls')
 export class PreviewControls extends LitElement {

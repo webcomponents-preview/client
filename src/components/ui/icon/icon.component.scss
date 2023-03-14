@@ -10,3 +10,11 @@
 @use 'css.gg/icons/scss/screen-wide';
 @use 'css.gg/icons/scss/smartphone';
 @use 'css.gg/icons/scss/sync';
+
+:host {
+  ---wcp-icon-scale: var(--wcp-icon-scale, 1);
+}
+
+i {
+  --ggs: var(---wcp-icon-scale);
+}

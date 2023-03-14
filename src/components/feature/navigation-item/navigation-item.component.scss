@@ -1,18 +1,55 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-navigation-item-spacing: var(--wcp-navigation-item-spacing, #{utils.size(.75) utils.size(2)});
+  
+  ---wcp-navigation-item-dark-passive-background: var(--wcp-navigation-item-dark-passive-background, transparent);
+  ---wcp-navigation-item-dark-passive-color: var(--wcp-navigation-item-dark-passive-color, inherit);
+  
+  ---wcp-navigation-item-dark-hover-background: var(--wcp-navigation-item-dark-hover-background, var(--wcp-color-blue-17));
+  ---wcp-navigation-item-dark-hover-color: var(--wcp-navigation-item-dark-hover-color, inherit);
+  
+  ---wcp-navigation-item-dark-active-background: var(--wcp-navigation-item-dark-active-background, var(--wcp-color-blue-20));
+  ---wcp-navigation-item-dark-active-color: var(--wcp-navigation-item-dark-active-color, inherit);
+  
+  ---wcp-navigation-item-light-passive-background: var(--wcp-navigation-item-light-passive-background, transparent);
+  ---wcp-navigation-item-light-passive-color: var(--wcp-navigation-item-light-passive-color, inherit);
+  
+  ---wcp-navigation-item-light-hover-background: var(--wcp-navigation-item-light-hover-background, var(--wcp-color-blue-24));
+  ---wcp-navigation-item-light-hover-color: var(--wcp-navigation-item-light-hover-color, inherit);
+  
+  ---wcp-navigation-item-light-active-background: var(--wcp-navigation-item-light-active-background, var(--wcp-color-blue-27));
+  ---wcp-navigation-item-light-active-color: var(--wcp-navigation-item-light-active-color, inherit);
+}
+
+// map interactions to item states and color schemes
+@include utils.color-scheme() using ($color-scheme) {
+  :host(:not([active])) {
+    ---wcp-navigation-item-background: var(---wcp-navigation-item-#{$color-scheme}-passive-background);
+    ---wcp-navigation-item-color: var(---wcp-navigation-item-#{$color-scheme}-passive-color);
+  }
+
+  :host([active]) {
+    ---wcp-navigation-item-background: var(---wcp-navigation-item-#{$color-scheme}-active-background);
+    ---wcp-navigation-item-color: var(---wcp-navigation-item-#{$color-scheme}-active-color);
+  }
+
+  :host(:not([active])) a:hover {
+    ---wcp-navigation-item-background: var(---wcp-navigation-item-#{$color-scheme}-hover-background);
+    ---wcp-navigation-item-color: var(---wcp-navigation-item-#{$color-scheme}-hover-color);
+  }
+}
+
 a,
 span {
   display: block;
-  padding: 5px 10px;
-}
+  padding: var(---wcp-navigation-item-spacing);
 
-a {
-  color: inherit;
   text-decoration: none;
+  text-overflow: ellipsis;
   white-space: nowrap;
-}
 
-:host([active]) a,
-:host([active]) span,
-a:hover {
-  background-color: var(---wcp-color-blue-34);
-  border-radius: var(---wcp-border-radius);
+  background-color: var(---wcp-navigation-item-background);
+  color: var(---wcp-navigation-item-color);
 }
