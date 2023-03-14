@@ -70,7 +70,7 @@ jobs:
     needs: build
     permissions: write-all
     environment:
-      name: Preview
+      name: Review
       url: https://webcomponents-preview.github.io/client/${{ github.event.number }}/
     runs-on: ubuntu-latest
     steps:
