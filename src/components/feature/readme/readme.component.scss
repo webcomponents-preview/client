@@ -2,9 +2,7 @@
 @use '@/styles/utils' as utils;
 
 // add some default styles from GitHub for the rendered readme for the time being
-@include utils.color-scheme() using ($color-scheme) {
-  @include meta.load-css('github-markdown-css/github-markdown-#{$color-scheme}');
-}
+@include meta.load-css('github-markdown-css/github-markdown');
 
 // a small example of basic markdown styling can be found in the nextcloud project:
 // https://github.com/nextcloud/deck/blob/main/src/css/markdown.scss

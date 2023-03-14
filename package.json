@@ -18,7 +18,6 @@
     "dist"
   ],
   "scripts": {
-    "postinstall": "npm run generate",
     "lint": "eslint --ext .ts src",
     "clean": "shx rm -rf dist",
     "generate:barrels": "barrelsby --config .barrelsby.json",
@@ -28,7 +27,7 @@
     "test": "jest",
     "test:ci": "jest --ci --passWithNoTests --reporters=default --reporters=jest-junit",
     "test:watch": "jest --watch",
-    "prebuild": "run-p --print-name clean generate",
+    "prebuild": "run-s --print-name clean generate",
     "build:components": "ts-node esbuild.config.ts",
     "build:types": "tsc --project tsconfig.types.json",
     "build": "run-p --print-name build:*",
