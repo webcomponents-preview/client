@@ -65,7 +65,7 @@
     "custom-elements-manifest": "2.0.0",
     "esbuild": "0.17.11",
     "esbuild-copy-static-files": "0.1.0",
-    "esbuild-sass-plugin": "2.4.5",
+    "esbuild-sass-plugin": "2.6.0",
     "eslint": "8.35.0",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-tsdoc": "0.2.17",

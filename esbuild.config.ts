@@ -94,5 +94,5 @@ if (watch) {
     process.exit(1);
   }
 } else {
-  build(options);
+  await build(options);
 }
