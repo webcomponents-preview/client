@@ -2,37 +2,51 @@
 
 // prettier-ignore
 :host {
-  ---wcp-button-passive-background: var(--wcp-button-passive-background, transparent);
-  ---wcp-button-passive-border-color: var(--wcp-button-passive-border-color, var(--wcp-color-blue-17));
-  ---wcp-button-passive-color: var(--wcp-button-passive-color, var(--wcp-color-blue-17));
+  ---wcp-button-dark-passive-background: var(--wcp-button-dark-passive-background, transparent);
+  ---wcp-button-dark-passive-border-color: var(--wcp-button-dark-passive-border-color, var(--wcp-color-blue-96));
+  ---wcp-button-dark-passive-color: var(--wcp-button-dark-passive-color, var(--wcp-color-blue-96));
 
-  ---wcp-button-hover-background: var(--wcp-button-hover-background, var(--wcp-color-blue-17));
-  ---wcp-button-hover-border-color: var(--wcp-button-hover-border-color, var(--wcp-color-blue-17));
-  ---wcp-button-hover-color: var(--wcp-button-hover-color, var(--wcp-color-blue-96));
+  ---wcp-button-dark-hover-background: var(--wcp-button-dark-hover-background, var(--wcp-color-blue-96));
+  ---wcp-button-dark-hover-border-color: var(--wcp-button-dark-hover-border-color, var(--wcp-color-blue-96));
+  ---wcp-button-dark-hover-color: var(--wcp-button-dark-hover-color, var(--wcp-color-blue-17));
 
-  ---wcp-button-active-background: var(--wcp-button-active-background, var(--wcp-color-blue-17));
-  ---wcp-button-active-border-color: var(--wcp-button-active-border-color, var(--wcp-color-blue-17));
-  ---wcp-button-active-color: var(--wcp-button-active-color, var(--wcp-color-blue-96));
+  ---wcp-button-dark-active-background: var(--wcp-button-dark-active-background, var(--wcp-color-blue-96));
+  ---wcp-button-dark-active-border-color: var(--wcp-button-dark-active-border-color, var(--wcp-color-blue-96));
+  ---wcp-button-dark-active-color: var(--wcp-button-dark-active-color, var(--wcp-color-blue-17));
+
+  ---wcp-button-light-passive-background: var(--wcp-button-light-passive-background, transparent);
+  ---wcp-button-light-passive-border-color: var(--wcp-button-light-passive-border-color, var(--wcp-color-blue-17));
+  ---wcp-button-light-passive-color: var(--wcp-button-light-passive-color, var(--wcp-color-blue-17));
+
+  ---wcp-button-light-hover-background: var(--wcp-button-light-hover-background, var(--wcp-color-blue-17));
+  ---wcp-button-light-hover-border-color: var(--wcp-button-light-hover-border-color, var(--wcp-color-blue-17));
+  ---wcp-button-light-hover-color: var(--wcp-button-light-hover-color, var(--wcp-color-blue-96));
+
+  ---wcp-button-light-active-background: var(--wcp-button-light-active-background, var(--wcp-color-blue-17));
+  ---wcp-button-light-active-border-color: var(--wcp-button-light-active-border-color, var(--wcp-color-blue-17));
+  ---wcp-button-light-active-color: var(--wcp-button-light-active-color, var(--wcp-color-blue-96));
 }
 
-// map interactions to button states
-:host {
-  ---wcp-button-background: var(---wcp-button-passive-background);
-  ---wcp-button-border-color: var(---wcp-button-passive-border-color);
-  ---wcp-button-color: var(---wcp-button-passive-color);
-}
+// map interactions to button states and color schemes
+@include utils.color-scheme() using ($color-scheme) {
+  :host {
+    ---wcp-button-background: var(---wcp-button-#{$color-scheme}-passive-background);
+    ---wcp-button-border-color: var(---wcp-button-#{$color-scheme}-passive-border-color);
+    ---wcp-button-color: var(---wcp-button-#{$color-scheme}-passive-color);
+  }
 
-:host(:not(:disabled):hover) {
-  ---wcp-button-background: var(---wcp-button-hover-background);
-  ---wcp-button-border-color: var(---wcp-button-hover-border-color);
-  ---wcp-button-color: var(---wcp-button-hover-color);
-}
+  :host(:not(:disabled):hover) {
+    ---wcp-button-background: var(---wcp-button-#{$color-scheme}-hover-background);
+    ---wcp-button-border-color: var(---wcp-button-#{$color-scheme}-hover-border-color);
+    ---wcp-button-color: var(---wcp-button-#{$color-scheme}-hover-color);
+  }
 
-:host(:not(:disabled):active),
-:host(:not(:disabled).active) {
-  ---wcp-button-background: var(---wcp-button-active-background);
-  ---wcp-button-border-color: var(---wcp-button-active-border-color);
-  ---wcp-button-color: var(---wcp-button-active-color);
+  :host(:not(:disabled):active),
+  :host(:not(:disabled).active) {
+    ---wcp-button-background: var(---wcp-button-#{$color-scheme}-active-background);
+    ---wcp-button-border-color: var(---wcp-button-#{$color-scheme}-active-border-color);
+    ---wcp-button-color: var(---wcp-button-#{$color-scheme}-active-color);
+  }
 }
 
 :host {

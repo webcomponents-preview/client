@@ -35,7 +35,18 @@ This will probably only be used for the active item.
 
 ## CSS Custom Properties
 
-| Property                                   | Description                                      |
-|--------------------------------------------|--------------------------------------------------|
-| `--wcp-navigation-item-passive-background` | Background color of the item when non interactive |
-| `--wcp-navigation-item-spacing`            | Inner padding of the item                        |
+| Property                                         | Description                                      |
+|--------------------------------------------------|--------------------------------------------------|
+| `--wcp-navigation-item-dark-active-background`   | Background color of the item when active in dark mode |
+| `--wcp-navigation-item-dark-active-color`        | Text color of the item when active in dark mode  |
+| `--wcp-navigation-item-dark-hover-background`    | Background color of the item when hovered in dark mode |
+| `--wcp-navigation-item-dark-hover-color`         | Text color of the item when hovered in dark mode |
+| `--wcp-navigation-item-dark-passive-background`  | Background color of the item when non interactive in dark mode |
+| `--wcp-navigation-item-dark-passive-color`       | Text color of the item when non interactive in dark mode |
+| `--wcp-navigation-item-light-active-background`  | Background color of the item when active in light mode |
+| `--wcp-navigation-item-light-active-color`       | Text color of the item when active in light mode |
+| `--wcp-navigation-item-light-hover-background`   | Background color of the item when hovered in light mode |
+| `--wcp-navigation-item-light-hover-color`        | Text color of the item when hovered in light mode |
+| `--wcp-navigation-item-light-passive-background` | Background color of the item when non interactive in light mode |
+| `--wcp-navigation-item-light-passive-color`      | Text color of the item when non interactive in light mode |
+| `--wcp-navigation-item-spacing`                  | Inner padding of the item                        |

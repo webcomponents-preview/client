@@ -9,6 +9,12 @@
 </wcp-readme>
 ```
 
+## Properties
+
+| Property   | Attribute  | Type     |
+|------------|------------|----------|
+| `markdown` | `markdown` | `string` |
+
 ## Methods
 
 | Method             | Type       |

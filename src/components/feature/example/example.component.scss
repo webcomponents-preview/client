@@ -3,9 +3,15 @@
 // prettier-ignore
 :host {
   ---wcp-example-spacing: var(--wcp-example-spacing, #{0 utils.size(1)});
-  ---wcp-example-border-color: var(--wcp-example-border-color, var(--wcp-color-grey-90));
   ---wcp-example-border-radius: var(--wcp-example-border-radius, var(--wcp-border-radius));
   ---wcp-example-border-width: var(--wcp-example-border-width, 1px);
+
+  ---wcp-example-dark-border-color: var(--wcp-example-dark-border-color, var(--wcp-color-grey-24));
+  ---wcp-example-light-border-color: var(--wcp-example-light-border-color, var(--wcp-color-grey-80));
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-example-border-color: var(---wcp-example-#{$color-scheme}-border-color);
+  }
 }
 
 :host {

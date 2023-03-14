@@ -19,7 +19,7 @@ import styles from './readme.component.scss';
 export class Readme extends LitElement {
   static readonly styles = unsafeCSS(styles);
 
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   markdown!: string;
 
   // disable ShadowDOM

@@ -2,13 +2,22 @@
 
 // prettier-ignore
 :host {
-  ---wcp-tabs-tablist-border-color: var(--wcp-tabs-tablist-border-color, var(--wcp-color-grey-90));
   ---wcp-tabs-tablist-gap: var(--wcp-tabs-tablist-gap, #{utils.size(1)});
   ---wcp-tabs-tablist-spacing: var(--wcp-tabs-tablist-spacing, 0);
   ---wcp-tabs-tab-spacing: var(--wcp-tabs-tab-spacing, #{utils.size(1) utils.size(1) utils.size(.5)});
-  ---wcp-tabs-tab-active-border-color: var(--wcp-tabs-active-tab-border-color, var(--wcp-color-blue-65));
   ---wcp-tabs-tab-active-border-width: var(--wcp-tabs-active-tab-border-width, 3px);
   ---wcp-tabs-panel-spacing: var(--wcp-tabs-panel-spacing, #{utils.size(1)});
+  
+  ---wcp-tabs-tablist-dark-border-color: var(--wcp-tabs-tablist-dark-border-color, var(--wcp-color-grey-24));
+  ---wcp-tabs-tab-active-dark-border-color: var(--wcp-tabs-active-tab-border-color, var(--wcp-color-blue-55));
+  
+  ---wcp-tabs-tablist-light-border-color: var(--wcp-tabs-tablist-light-border-color, var(--wcp-color-grey-80));
+  ---wcp-tabs-tab-active-light-border-color: var(--wcp-tabs-active-tab-border-color, var(--wcp-color-blue-65));
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-tabs-tablist-border-color: var(---wcp-tabs-tablist-#{$color-scheme}-border-color);
+    ---wcp-tabs-tab-active-border-color: var(---wcp-tabs-tab-active-#{$color-scheme}-border-color);
+  }
 }
 
 :host {

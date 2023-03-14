@@ -1,15 +1,28 @@
-@use 'highlight.js/scss/xcode';
+@use 'sass:meta' as meta;
 @use '@/styles/utils' as utils;
 
 // prettier-ignore
 :host {
-  ---wcp-preview-frame-background: var(--wcp-preview-frame-background, var(--wcp-color-grey-96));
+  ---wcp-preview-frame-dark-background: var(--wcp-preview-frame-dark-background, var(--wcp-color-blue-13));
+  ---wcp-preview-frame-dark-border-color: var(--wcp-preview-frame-border-color, var(--wcp-color-grey-24));
+  ---wcp-preview-frame-dark-color: var(--wcp-preview-frame-dark-color, var(--wcp-color-grey-96));
+  
+  ---wcp-preview-frame-light-background: var(--wcp-preview-frame-light-background, var(--wcp-color-grey-96));
+  ---wcp-preview-frame-light-border-color: var(--wcp-preview-frame-border-color, var(--wcp-color-grey-80));
+  ---wcp-preview-frame-light-color: var(--wcp-preview-frame-light-color, var(--wcp-color-grey-17));
+
   ---wcp-preview-frame-border-radius: var(--wcp-preview-frame-border-radius, var(--wcp-border-radius));
+  ---wcp-preview-frame-border-width: var(--wcp-preview-frame-border-width, 1px);
   ---wcp-preview-frame-distance: var(--wcp-preview-frame-distance, #{0 utils.size(1)});
   ---wcp-preview-frame-spacing: var(--wcp-preview-frame-spacing, #{0 utils.size(1) utils.size(1)});
+
   ---wcp-preview-frame-example-spacing: var(--wcp-preview-frame-example-spacing, #{utils.size(2) 0});
-  ---wcp-preview-frame-example-border-color: var(--wcp-preview-frame-example-border-color, var(--wcp-color-grey-90));
-  ---wcp-preview-frame-example-border-width: var(--wcp-preview-frame-example-border-width, 1px);
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-preview-frame-background: var(---wcp-preview-frame-#{$color-scheme}-background);
+    ---wcp-preview-frame-border-color: var(---wcp-preview-frame-#{$color-scheme}-border-color);
+    ---wcp-preview-frame-color: var(---wcp-preview-frame-#{$color-scheme}-color);
+  }
 }
 
 :host {
@@ -21,11 +34,21 @@
   padding: var(---wcp-preview-frame-spacing);
 
   background-color: var(---wcp-preview-frame-background);
+  color: var(---wcp-preview-frame-color);
 
   @include utils.breakpoint(sm) {
     margin: var(---wcp-preview-frame-distance);
     border-top-right-radius: var(---wcp-preview-frame-border-radius);
     border-top-left-radius: var(---wcp-preview-frame-border-radius);
+  }
+
+  @include utils.color-scheme() using ($color-scheme) {
+    @if ($color-scheme == light) {
+      @include meta.load-css('highlight.js/scss/xcode');
+    }
+    @if ($color-scheme == dark) {
+      @include meta.load-css('highlight.js/scss/dark');
+    }
   }
 }
 
@@ -58,6 +81,6 @@ wcp-tabs {
   }
 
   section ~ section {
-    border-top: var(---wcp-preview-frame-example-border-width) solid var(---wcp-preview-frame-example-border-color);
+    border-top: var(---wcp-preview-frame-border-width) solid var(---wcp-preview-frame-border-color);
   }
 }

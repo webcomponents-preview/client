@@ -20,11 +20,15 @@ import styles from './aside.component.scss';
  * @cssprop --wcp-aside-collapsed-width - The width of the aside bar when collapsed
  * @cssprop --wcp-aside-expanded-width - The width of the aside bar when expanded
  * @cssprop --wcp-aside-spacing - Inner padding of the aside bar
- * @cssprop --wcp-aside-background - The background color of the aside bar
- * @cssprop --wcp-aside-color - The color of the aside bar
  * @cssprop --wcp-aside-toggle-size - The size of the toggle button
  * @cssprop --wcp-aside-toggle-offset-vertical - The vertical offset of the toggle button
  * @cssprop --wcp-aside-toggle-offset-horizontal - The horizontal offset of the toggle button
+ * 
+ * @cssprop --wcp-aside-dark-background - The background color of the side bar in dark mode
+ * @cssprop --wcp-aside-dark-color - The color of the side bar in dark mode
+ * 
+ * @cssprop --wcp-aside-light-background - The background color of the side bar in light mode
+ * @cssprop --wcp-aside-light-color - The color of the side bar in light mode
  */
 @customElement('wcp-aside')
 export class Aside extends LitElement {

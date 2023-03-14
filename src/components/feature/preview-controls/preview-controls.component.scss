@@ -2,10 +2,19 @@
 
 // prettier-ignore
 :host {
+  ---wcp-preview-controls-dark-background: var(--wcp-preview-controls-dark-background, var(--wcp-color-blue-24));
+  ---wcp-preview-controls-dark-color: var(--wcp-preview-controls-dark-color, var(--wcp-color-blue-96));
+  
+  ---wcp-preview-controls-light-background: var(--wcp-preview-controls-light-background, var(--wcp-color-blue-34));
+  ---wcp-preview-controls-light-color: var(--wcp-preview-controls-light-color, var(--wcp-color-blue-96));
+  
   ---wcp-preview-controls-height: var(--wcp-preview-controls-height, #{utils.size(5)});
   ---wcp-preview-controls-spacing: var(--wcp-preview-controls-spacing, #{utils.size(.5) utils.size(1)});
-  ---wcp-preview-controls-background: var(--wcp-preview-controls-background, var(--wcp-color-blue-34));
-  ---wcp-preview-controls-color: var(--wcp-preview-controls-color, var(--wcp-color-blue-96));
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-preview-controls-background: var(---wcp-preview-controls-#{$color-scheme}-background);
+    ---wcp-preview-controls-color: var(---wcp-preview-controls-#{$color-scheme}-color);
+  }
 }
 
 :host {

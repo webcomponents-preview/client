@@ -54,14 +54,23 @@ Shows a button element.
 
 ## CSS Custom Properties
 
-| Property                            | Description                                      |
-|-------------------------------------|--------------------------------------------------|
-| `--wcp-button-active-background`    | Background color of the button if active         |
-| `--wcp-button-active-border-color`  | Border color of the button if active             |
-| `--wcp-button-active-color`         | Text color of the button if active               |
-| `--wcp-button-hover-background`     | Background color of the button if hovered        |
-| `--wcp-button-hover-border-color`   | Border color of the button if hovered            |
-| `--wcp-button-hover-color`          | Text color of the button if hovered              |
-| `--wcp-button-passive-background`   | Background color of the button if non interactive |
-| `--wcp-button-passive-border-color` | Border color of the button if non interactive    |
-| `--wcp-button-passive-color`        | Text color of the button if non interactive      |
+| Property                                  | Description                                      |
+|-------------------------------------------|--------------------------------------------------|
+| `--wcp-button-dark-active-background`     | Background color of the button if active in dark mode |
+| `--wcp-button-dark-active-border-color`   | Border color of the button if active in dark mode |
+| `--wcp-button-dark-active-color`          | Text color of the button if active in dark mode  |
+| `--wcp-button-dark-hover-background`      | Background color of the button if hovered in dark mode |
+| `--wcp-button-dark-hover-border-color`    | Border color of the button if hovered in dark mode |
+| `--wcp-button-dark-hover-color`           | Text color of the button if hovered in dark mode |
+| `--wcp-button-dark-passive-background`    | Background color of the button if non interactive in dark mode |
+| `--wcp-button-dark-passive-border-color`  | Border color of the button if non interactive in dark mode |
+| `--wcp-button-dark-passive-color`         | Text color of the button if non interactive in dark mode |
+| `--wcp-button-light-active-background`    | Background color of the button if active in light mode |
+| `--wcp-button-light-active-border-color`  | Border color of the button if active in light mode |
+| `--wcp-button-light-active-color`         | Text color of the button if active in light mode |
+| `--wcp-button-light-hover-background`     | Background color of the button if hovered in light mode |
+| `--wcp-button-light-hover-border-color`   | Border color of the button if hovered in light mode |
+| `--wcp-button-light-hover-color`          | Text color of the button if hovered in light mode |
+| `--wcp-button-light-passive-background`   | Background color of the button if non interactive in light mode |
+| `--wcp-button-light-passive-border-color` | Border color of the button if non interactive in light mode |
+| `--wcp-button-light-passive-color`        | Text color of the button if non interactive in light mode |

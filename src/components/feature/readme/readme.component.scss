@@ -1,7 +1,10 @@
 @use 'sass:meta' as meta;
+@use '@/styles/utils' as utils;
 
 // add some default styles from GitHub for the rendered readme for the time being
-@include meta.load-css('github-markdown-css/github-markdown-light');
+@include utils.color-scheme() using ($color-scheme) {
+  @include meta.load-css('github-markdown-css/github-markdown-#{$color-scheme}');
+}
 
 // a small example of basic markdown styling can be found in the nextcloud project:
 // https://github.com/nextcloud/deck/blob/main/src/css/markdown.scss
@@ -13,14 +16,43 @@ wcp-readme {
 
   // override some of the github styles to blend in with the rest
   &.markdown-body {
+    // first, reset some defaults, to be inheritted from the global scope
+    background-color: inherit;
+    color: inherit;
     font-family: inherit;
-    background-color: transparent;
+    font-size: inherit;
+    line-height: inherit;
 
-    table tr {
-      background-color: var(--wcp-color-grey-96);
+    // as these are wrapped in our custom `wcp-example` component, we
+    // need to reset the spacing on the projected pre elements
+    pre {
+      margin: 0;
+      padding: 0;
+    }
 
-      &:nth-child(2n) {
-        background-color: var(--wcp-color-blue-93);
+    // prettier-ignore
+    table td, table th, table tr,
+    h1, h2, h3, h4, h5, h6 {
+      @media (prefers-color-scheme: dark) {
+        border-color: var(--wcp-color-grey-24);
+      }
+      @media (prefers-color-scheme: light) {
+        border-color: var(--wcp-color-grey-80);
+      }
+    }
+
+    table {
+      tr {
+        background-color: transparent;
+
+        &:nth-child(2n) {
+          @media (prefers-color-scheme: dark) {
+            background-color: var(--wcp-color-grey-17);
+          }
+          @media (prefers-color-scheme: light) {
+            background-color: var(--wcp-color-blue-93);
+          }
+        }
       }
     }
   }

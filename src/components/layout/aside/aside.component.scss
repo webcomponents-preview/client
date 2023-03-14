@@ -6,12 +6,21 @@
   ---wcp-aside-expanded-width: var(--wcp-aside-expanded-width, #{utils.size(24)});
 
   ---wcp-aside-spacing: var(--wcp-aside-spacing, 0);
-  ---wcp-aside-background: var(--wcp-aside-background, var(--wcp-color-blue-17));
-  ---wcp-aside-color: var(--wcp-aside-color, var(--wcp-color-blue-96));
+
+  ---wcp-aside-dark-background: var(--wcp-aside-dark-background, var(--wcp-color-blue-13));
+  ---wcp-aside-dark-color: var(--wcp-aside-dark-color, var(--wcp-color-blue-96));
+  
+  ---wcp-aside-light-background: var(--wcp-aside-dark-background, var(--wcp-color-blue-17));
+  ---wcp-aside-light-color: var(--wcp-aside-dark-color, var(--wcp-color-blue-96));
   
   ---wcp-aside-toggle-size: var(--wcp-aside-toggle-size, #{utils.size(2)});
   ---wcp-aside-toggle-offset-vertical: var(--wcp-aside-toggle-offset-vertical, #{utils.size(.4)});
   ---wcp-aside-toggle-offset-horizontal: var(--wcp-aside-toggle-offset-horizontal, #{utils.size(.5)});
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-aside-background: var(---wcp-aside-#{$color-scheme}-background);
+    ---wcp-aside-color: var(---wcp-aside-#{$color-scheme}-color);
+  }
 }
 
 :host {

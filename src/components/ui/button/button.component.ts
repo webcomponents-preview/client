@@ -42,15 +42,29 @@ import styles from './button.component.scss';
  * </form>
  * ```
  * 
- * @cssprop --wcp-button-passive-background - Background color of the button if non interactive
- * @cssprop --wcp-button-passive-border-color - Border color of the button if non interactive
- * @cssprop --wcp-button-passive-color - Text color of the button if non interactive
- * @cssprop --wcp-button-hover-background - Background color of the button if hovered
- * @cssprop --wcp-button-hover-border-color - Border color of the button if hovered
- * @cssprop --wcp-button-hover-color - Text color of the button if hovered
- * @cssprop --wcp-button-active-background - Background color of the button if active
- * @cssprop --wcp-button-active-border-color - Border color of the button if active
- * @cssprop --wcp-button-active-color - Text color of the button if active
+ * @cssprop --wcp-button-dark-passive-background - Background color of the button if non interactive in dark mode
+ * @cssprop --wcp-button-dark-passive-border-color - Border color of the button if non interactive in dark mode
+ * @cssprop --wcp-button-dark-passive-color - Text color of the button if non interactive in dark mode
+ * 
+ * @cssprop --wcp-button-dark-hover-background - Background color of the button if hovered in dark mode
+ * @cssprop --wcp-button-dark-hover-border-color - Border color of the button if hovered in dark mode
+ * @cssprop --wcp-button-dark-hover-color - Text color of the button if hovered in dark mode
+ * 
+ * @cssprop --wcp-button-dark-active-background - Background color of the button if active in dark mode
+ * @cssprop --wcp-button-dark-active-border-color - Border color of the button if active in dark mode
+ * @cssprop --wcp-button-dark-active-color - Text color of the button if active in dark mode
+ * 
+ * @cssprop --wcp-button-light-passive-background - Background color of the button if non interactive in light mode
+ * @cssprop --wcp-button-light-passive-border-color - Border color of the button if non interactive in light mode
+ * @cssprop --wcp-button-light-passive-color - Text color of the button if non interactive in light mode
+ * 
+ * @cssprop --wcp-button-light-hover-background - Background color of the button if hovered in light mode
+ * @cssprop --wcp-button-light-hover-border-color - Border color of the button if hovered in light mode
+ * @cssprop --wcp-button-light-hover-color - Text color of the button if hovered in light mode
+ * 
+ * @cssprop --wcp-button-light-active-background - Background color of the button if active in light mode
+ * @cssprop --wcp-button-light-active-border-color - Border color of the button if active in light mode
+ * @cssprop --wcp-button-light-active-color - Text color of the button if active in light mode
  */
 @customElement('wcp-button')
 export class Button extends LitElement {

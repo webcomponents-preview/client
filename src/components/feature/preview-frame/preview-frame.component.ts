@@ -22,10 +22,18 @@ import styles from './preview-frame.component.scss';
  * <wcp-preview-frame></wcp-preview-frame>
  * ```
  *
+ * @cssprop --wcp-preview-frame-dark-background - Background color of the preview frame in dark mode
+ * @cssprop --wcp-preview-frame-dark-border-color - Border color of the example section in dark mode
+ * @cssprop --wcp-preview-frame-dark-color - Text color of the preview frame in dark mode
+ * 
+ * @cssprop --wcp-preview-frame-light-background - Background color of the preview frame in light mode
+ * @cssprop --wcp-preview-frame-light-border-color - Border color of the example section in light mode
+ * @cssprop --wcp-preview-frame-light-color - Text color of the preview frame in light mode
+ * 
+ * @cssprop --wcp-preview-frame-distance - Outer margin of the preview frame
  * @cssprop --wcp-preview-frame-spacing - Inner padding of the preview frame
- * @cssprop --wcp-preview-frame-example-spacing - Inner padding of the example section
- * @cssprop --wcp-preview-frame-example-border-color - Border color of the example section
- * @cssprop --wcp-preview-frame-example-border-width - Border width of the example section
+ * @cssprop --wcp-preview-frame-border-width - Border width of the example section
+ * @cssprop --wcp-preview-frame-spacing - Inner padding of the example section
  */
 @customElement('wcp-preview-frame')
 export class PreviewFrame extends LitElement {
