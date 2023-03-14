@@ -58,25 +58,26 @@ jobs:
   deploy:
     name: Deploy
     needs: build
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
+    permissions: write-all
     environment:
       name: Preview
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: https://webcomponents-preview.github.io/client/latest/
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/configure-pages@v3
+        with:
+          ref: deploy
       - uses: actions/download-artifact@v3
         with:
           name: latest
-          path: dist
-      - name: Upload
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: "dist"
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+          path: .tmp
+      - name: Configure git
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - name: Update latest
+        run: |
+          rm -rf latest
+          mv .tmp latest
+          git add .
+          git commit --allow-empty --message $GITHUB_SHA
