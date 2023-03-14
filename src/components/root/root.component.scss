@@ -2,37 +2,55 @@
 
 // prettier-ignore
 :host {
-  ---wcp-color-grey-100:  hsl(0, 0%, 100%);
-  ---wcp-color-grey-96:  hsl(0, 0%, 96%);
-  ---wcp-color-grey-90:  hsl(0, 0%, 90%);
+  --wcp-base-size: 10px;
+  --wcp-border-radius: calc(var(--wcp-base-size) * 0.5);
 
-  ---wcp-color-blue-13: hsl(225, 6%, 13%);
-  ---wcp-color-blue-17: hsl(215, 28%, 17%);
-  ---wcp-color-blue-27: hsl(217, 19%, 27%);
-  ---wcp-color-blue-34: hsl(215, 14%, 34%);
-  ---wcp-color-blue-65: hsl(218, 11%, 65%);
-  ---wcp-color-blue-91: hsl(220, 13%, 91%);
-  ---wcp-color-blue-96: hsl(220, 14%, 96%);
+  --wcp-color-grey-100:  hsl(0, 0%, 100%);
+  --wcp-color-grey-96:  hsl(0, 0%, 96%);
+  --wcp-color-grey-90:  hsl(0, 0%, 90%);
 
-  ---wcp-fx-default-duration: 0.2s;
-  ---wcp-fx-layout-duration: 0.5s;
+  --wcp-color-blue-13: hsl(225, 6%, 13%);
+  --wcp-color-blue-17: hsl(215, 28%, 17%);
+  --wcp-color-blue-24: hsl(217, 19%, 24%);
+  --wcp-color-blue-27: hsl(217, 19%, 27%);
+  --wcp-color-blue-34: hsl(215, 14%, 34%);
+  --wcp-color-blue-65: hsl(218, 11%, 65%);
+  --wcp-color-blue-91: hsl(220, 13%, 91%);
+  --wcp-color-blue-96: hsl(220, 14%, 96%);
 
-  ---wcp-border-radius: 5px;
+  --wcp-fx-default-duration: 0.2s;
+  --wcp-fx-layout-duration: 0.4s;
+
+  --wcp-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+  'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'
+}
+
+// prettier-ignore
+:host {
+  ---wcp-root-background: var(--wcp-root-background, var(--wcp-color-blue-34));
 }
 
 :host {
   display: block;
-  height: 100vh;
-  width: 100vw;
-
-  line-height: 1.5;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  background-color: var(---wcp-root-background);
+  font-family: var(--wcp-font-family);
   font-feature-settings: normal;
+  line-height: 1.3;
 
   font-size: 20px;
 
   @include utils.breakpoint(sm) {
-    font-size: 15px;
+    font-size: 13px;
+  }
+}
+
+:host(:not([inline])) {
+  height: 100vh;
+  width: 100vw;
+}
+
+wcp-button {
+  @include utils.breakpoint(sm) {
+    display: none;
   }
 }

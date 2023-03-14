@@ -18,6 +18,8 @@ import styles from './root.component.scss';
  * @slot preview-controls - Can be used to inject additional preview controls.
  * @slot preview-frame - Used to be override the existing preview pane.
  * @slot preview-details - Can be used to inject additional preview detail panes.
+ * 
+ * @cssprop --wcp-root-background - The background color of the root element.
  *
  * @emits wcp-root:active-element-changed - Fired when the active element changes. Carries the declaration of the new active element with it.
  * @emits wcp-root:manifest-loaded - Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved.
@@ -128,6 +130,11 @@ export class Root extends LitElement {
     this.emitActiveElementChanged();
   }).bind(this);
 
+  @eventOptions({ passive: true })
+  handleMenuClick() {
+    window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: false }));
+  }
+
   override connectedCallback() {
     super.connectedCallback();
 
@@ -148,7 +155,7 @@ export class Root extends LitElement {
       <wcp-layout>
         <wcp-title slot="aside" title="${this.title}">
           <slot name="logo" slot="logo">
-            <img src="assets/icons/logo.svg" height="23px" />
+            <img src="assets/icons/logo.svg" height="20px" />
           </slot>
         </wcp-title>
 
@@ -172,6 +179,7 @@ export class Root extends LitElement {
         )}
 
         <wcp-preview-controls>
+          <wcp-button kind="icon" @click="${this.handleMenuClick}"><wcp-icon name="menu"></wcp-icon></wcp-button>
           <slot name="preview-controls"></slot>
         </wcp-preview-controls>
         <slot name="preview-frame">

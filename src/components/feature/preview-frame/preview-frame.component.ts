@@ -20,6 +20,11 @@ import styles from './preview-frame.component.scss';
  * ```html
  * <wcp-preview-frame></wcp-preview-frame>
  * ```
+ *
+ * @cssprop --wcp-preview-frame-spacing - Inner padding of the preview frame
+ * @cssprop --wcp-preview-frame-example-spacing - Inner padding of the example section
+ * @cssprop --wcp-preview-frame-example-border-color - Border color of the example section
+ * @cssprop --wcp-preview-frame-example-border-width - Border width of the example section
  */
 @customElement('wcp-preview-frame')
 export class PreviewFrame extends LitElement {
@@ -51,7 +56,6 @@ export class PreviewFrame extends LitElement {
       ...(hasExamples(this.activeElement) ? { examples: 'Examples' } : {}),
       ...(hasReadme(this.activeElement) ? { readme: 'Readme' } : {}),
     };
-    console.log(this.activeElement);
 
     return html`
       ${when(

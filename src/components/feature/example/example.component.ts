@@ -11,6 +11,11 @@ const EXAMPLE_TABS = { preview: 'Preview', code: 'Code' };
  *
  * @slot code - Code example
  * @slot preview - Rendered example preview
+ * 
+ * @cssprop --wcp-example-spacing - Inner padding of the example
+ * @cssprop --wcp-example-border-color - Border color of the example
+ * @cssprop --wcp-example-border-radius - Border radius of the example
+ * @cssprop --wcp-example-border-width - Border width of the example
  */
 @customElement('wcp-example')
 export class Example extends LitElement {

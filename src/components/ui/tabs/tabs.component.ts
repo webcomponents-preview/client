@@ -15,16 +15,24 @@ import styles from './tabs.component.scss';
  *
  * @example
  * ### Active tab preselected
- * 
+ *
  * ```html
  * <wcp-tabs tabs='{"first": "First tab", "second": "Second tab"}' active-tab="second">
  *  <div slot="first">First tab content</div>
  *  <div slot="second">Second tab content</div>
  * </wcp-tabs>
  * ```
- * 
+ *
  * @slot tab name - The content of the named tab.
- * @emits wcp-tabs:active-tab-change - Notifies when the active tab changes.
+ * @emits wcp-tabs:active-tab-changed - Notifies when the active tab changes.
+ * 
+ * @cssprop --wcp-tabs-tablist-border-color - The border color of the tablist.
+ * @cssprop --wcp-tabs-tablist-gap - The gap between the tablist and the tabpanels.
+ * @cssprop --wcp-tabs-tablist-spacing - The inner padding of the tablist.
+ * @cssprop --wcp-tabs-tab-spacing - The inner padding of the tabs.
+ * @cssprop --wcp-tabs-tab-active-border-color - The border color of the active tab.
+ * @cssprop --wcp-tabs-tab-active-border-width - The border width of the active tab.
+ * @cssprop --wcp-tabs-panel-spacing - The inner padding of the tabpanels.
  */
 @customElement('wcp-tabs')
 export class Tabs extends LitElement {
@@ -45,7 +53,7 @@ export class Tabs extends LitElement {
   activeTab?: string;
 
   emitActiveTabChange() {
-    const event = new CustomEvent('wcp-tabs:active-tab-change', {
+    const event = new CustomEvent('wcp-tabs:active-tab-changed', {
       detail: { activeTab: this.activeTab },
       bubbles: true,
       cancelable: true,
@@ -88,7 +96,7 @@ export class Tabs extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <nav role="tablist" aria-label="Sample Tabs" @keydown="${this.handleKeydown}">
+      <nav part="tablist" role="tablist" aria-label="Sample Tabs" @keydown="${this.handleKeydown}">
         ${map(
           Object.entries(this.tabs),
           ([tab, label]) => html`
@@ -128,7 +136,7 @@ export class Tabs extends LitElement {
 
 declare global {
   interface HTMLElementEventMap {
-    'wcp-tabs:active-tab-change': CustomEvent<{ activeTab?: string }>;
+    'wcp-tabs:active-tab-changed': CustomEvent<{ activeTab?: string }>;
   }
   interface HTMLElementTagNameMap {
     'wcp-tabs': Tabs;

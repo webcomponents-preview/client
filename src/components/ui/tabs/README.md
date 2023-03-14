@@ -38,12 +38,23 @@
 
 ## Events
 
-| Event                        | Type                                             | Description                           |
-|------------------------------|--------------------------------------------------|---------------------------------------|
-| `wcp-tabs:active-tab-change` | `CustomEvent<{ activeTab: string \| undefined; }>` | Notifies when the active tab changes. |
+| Event                         | Type                                             | Description                           |
+|-------------------------------|--------------------------------------------------|---------------------------------------|
+| `wcp-tabs:active-tab-changed` | `CustomEvent<{ activeTab: string \| undefined; }>` | Notifies when the active tab changes. |
 
 ## Slots
 
 | Name | Description                              |
 |------|------------------------------------------|
 |      | tab name - The content of the named tab. |
+
+## CSS Custom Properties
+
+| Property                             | Description                                    |
+|--------------------------------------|------------------------------------------------|
+| `--wcp-tabs-panel-spacing`           | The inner padding of the tabpanels.            |
+| `--wcp-tabs-tab-active-border-color` | The border color of the active tab.            |
+| `--wcp-tabs-tab-active-border-width` | The border width of the active tab.            |
+| `--wcp-tabs-tab-spacing`             | The inner padding of the tabs.                 |
+| `--wcp-tabs-tablist-border-color`    | The border color of the tablist.               |
+| `--wcp-tabs-tablist-gap`             | The gap between the tablist and the tabpanels. |

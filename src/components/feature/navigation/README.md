@@ -22,3 +22,15 @@
 | Name | Description                       |
 |------|-----------------------------------|
 |      | Default slot for navigation items |
+
+## CSS Custom Properties
+
+| Property                               | Description                                 |
+|----------------------------------------|---------------------------------------------|
+| `--wcp-navigation-headline-background` | Background color of the navigation headline |
+| `--wcp-navigation-headline-size`       | Font size of the navigation headline        |
+| `--wcp-navigation-headline-spacing`    | Letter spacing of the navigation headline   |
+| `--wcp-navigation-headline-weight`     | Font weight of the navigation headline      |
+| `--wcp-navigation-spacing`             | Spacing between navigation and headline     |
+| `--wcp-navigation-spacing-headline`    | Inner padding of the navigation headline    |
+| `--wcp-navigation-spacing-items`       | Spacing between navigation items            |

@@ -1,18 +1,35 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-title-gap: var(--wcp-title-gap, #{utils.size(1)});
+  ---wcp-title-height: var(--wcp-title-height, #{utils.size(5)});
+  ---wcp-title-spacing: var(--wcp-title-spacing, #{utils.size(1) utils.size(4) utils.size(1) utils.size(2)});
+  ---wcp-title-headline-size: var(--wcp-title-headline-size, 15px);
+  ---wcp-title-headline-weight: var(--wcp-title-headline-weight, 400);
+  ---wcp-title-headline-spacing: var(--wcp-title-headline-spacing, 0.05em);
+  ---wcp-title-headline-line-height: var(--wcp-title-headline-line-height, 1.1);
+  ---wcp-title-headline-transform: var(--wcp-title-headline-transform, uppercase);
+}
+
 :host {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
-  padding: 20px 40px 10px 10px;
+  gap: var(---wcp-title-gap);
+
+  box-sizing: border-box;
+  padding: var(---wcp-title-spacing);
+  min-height: var(---wcp-title-height);
 }
 
 h1 {
   height: fit-content;
-  margin: -0.2em 0 -0.1em;
+  margin: -0.175em 0 -0.1em;
 
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  line-height: 1.1;
-  text-transform: uppercase;
+  font-size: var(---wcp-title-headline-size);
+  font-weight: var(---wcp-title-headline-weight);
+  letter-spacing: var(---wcp-title-headline-spacing);
+  line-height: var(---wcp-title-headline-line-height);
+  text-transform: var(---wcp-title-headline-transform);
 }

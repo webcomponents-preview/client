@@ -1,9 +1,19 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-example-spacing: var(--wcp-example-spacing, #{0 utils.size(1)});
+  ---wcp-example-border-color: var(--wcp-example-border-color, var(--wcp-color-grey-90));
+  ---wcp-example-border-radius: var(--wcp-example-border-radius, var(--wcp-border-radius));
+  ---wcp-example-border-width: var(--wcp-example-border-width, 1px);
+}
+
 :host {
   display: block;
-  padding: 0 10px;
+  padding: var(---wcp-example-spacing);
 
-  border: 1px solid var(---wcp-color-grey-90);
-  border-radius: var(---wcp-border-radius);
+  border: var(---wcp-example-border-width) solid var(---wcp-example-border-color);
+  border-radius: var(---wcp-example-border-radius);
 }
 
 slot[name='code']::slotted(pre) {

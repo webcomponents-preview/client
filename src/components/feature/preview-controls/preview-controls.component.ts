@@ -18,6 +18,10 @@ import styles from './preview-controls.component.scss';
  * ```
  * 
  * @slot - Default slot for navigation items
+ * 
+ * @cssprop --wcp-preview-controls-height - Overall height of the preview controls nav bar.
+ * @cssprop --wcp-preview-controls-spacing - Inner spacing, used as padding of the controls.
+ * @cssprop --wcp-preview-controls-background - Background color of the preview controls.
  */
 @customElement('wcp-preview-controls')
 export class PreviewControls extends LitElement {

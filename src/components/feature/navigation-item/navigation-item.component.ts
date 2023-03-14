@@ -26,6 +26,9 @@ import styles from './navigation-item.component.scss';
  * ```
  * 
  * @slot - Default slot for contents
+ * 
+ * @cssprop --wcp-navigation-item-spacing - Inner padding of the item
+ * @cssprop --wcp-navigation-item-passive-background - Background color of the item when non interactive
  */
 @customElement('wcp-navigation-item')
 export class NavigationItem extends LitElement {

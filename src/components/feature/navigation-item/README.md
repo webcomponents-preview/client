@@ -32,3 +32,10 @@ This will probably only be used for the active item.
 | Name | Description               |
 |------|---------------------------|
 |      | Default slot for contents |
+
+## CSS Custom Properties
+
+| Property                                   | Description                                      |
+|--------------------------------------------|--------------------------------------------------|
+| `--wcp-navigation-item-passive-background` | Background color of the item when non interactive |
+| `--wcp-navigation-item-spacing`            | Inner padding of the item                        |

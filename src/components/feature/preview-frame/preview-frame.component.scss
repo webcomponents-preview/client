@@ -1,18 +1,46 @@
 @use 'highlight.js/scss/xcode';
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-preview-frame-background: var(--wcp-preview-frame-background, var(--wcp-color-grey-96));
+  ---wcp-preview-frame-border-radius: var(--wcp-preview-frame-border-radius, var(--wcp-border-radius));
+  ---wcp-preview-frame-distance: var(--wcp-preview-frame-distance, #{0 utils.size(1)});
+  ---wcp-preview-frame-spacing: var(--wcp-preview-frame-spacing, #{0 utils.size(1) utils.size(1)});
+  ---wcp-preview-frame-example-spacing: var(--wcp-preview-frame-example-spacing, #{utils.size(2) 0});
+  ---wcp-preview-frame-example-border-color: var(--wcp-preview-frame-example-border-color, var(--wcp-color-grey-90));
+  ---wcp-preview-frame-example-border-width: var(--wcp-preview-frame-example-border-width, 1px);
+}
 
 :host {
-  flex: 1 0 auto;
-  display: flex;
-  padding: 10px;
+  flex: 1 1 auto;
   flex-direction: column;
+
+  display: flex;
+  overflow: auto;
+  padding: var(---wcp-preview-frame-spacing);
+
+  background-color: var(---wcp-preview-frame-background);
+
+  @include utils.breakpoint(sm) {
+    margin: var(---wcp-preview-frame-distance);
+    border-top-right-radius: var(---wcp-preview-frame-border-radius);
+    border-top-left-radius: var(---wcp-preview-frame-border-radius);
+  }
 }
 
 wcp-tabs {
   flex: 1 0 auto;
 
+  &::part(tablist) {
+    position: sticky;
+    top: 0;
+    background-color: var(---wcp-preview-frame-background);
+  }
+
   &::part(element-panel:not([hidden])) {
-    flex: 1 0 auto;
     display: flex;
+    flex: 1 0 auto;
     flex-direction: column;
   }
 
@@ -26,30 +54,10 @@ wcp-tabs {
   flex-direction: column;
 
   section {
-    padding: 20px 0;
+    padding: var(---wcp-preview-frame-example-spacing);
   }
 
   section ~ section {
-    border-top: 1px solid var(---wcp-color-grey-90);
+    border-top: var(---wcp-preview-frame-example-border-width) solid var(---wcp-preview-frame-example-border-color);
   }
 }
-
-// [slot='element'] {
-//   position: relative;
-//   flex: 1 0 auto;
-//   background-color: var(---wcp-color-blue-13);
-
-//   .viewport {
-//     flex: 1 0 auto;
-//     position: absolute;
-//     inset: 50% auto auto 50%;
-
-//     height: var(---wcp-viewport-height, 100%);
-//     width: var(---wcp-viewport-width, 100%);
-
-//     transform-origin: center center;
-//     transform: translate(-50%, -50%) scale(var(---wcp-viewport-scale, 1));
-
-//     background-color: var(---wcp-color-grey-100);
-//   }
-// }
