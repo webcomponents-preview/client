@@ -81,3 +81,4 @@ jobs:
           mv .tmp latest
           git add .
           git commit --allow-empty --message $GITHUB_SHA
+          git push

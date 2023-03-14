@@ -92,6 +92,7 @@ jobs:
           mv .tmp pr/${{ github.event.number }}
           git add .
           git commit --allow-empty --message $GITHUB_SHA
+          git push
 
   release:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
