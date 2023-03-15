@@ -11,18 +11,18 @@ window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));
 
 ## Properties
 
-| Property            | Attribute   | Type      | Default                                          | Description                                      |
-|---------------------|-------------|-----------|--------------------------------------------------|--------------------------------------------------|
-| `collapsed`         | `collapsed` | `boolean` | false                                            | Used to toggle the width of the aside bar        |
-| `listenAsideToggle` |             |           | "(({ detail = !this.collapsed }: CustomEvent<boolean>) => {\n    this.collapsed = detail;\n    this.emitToggled();\n  }).bind(this)" |                                                  |
-| `role`              | `role`      | `string`  | "complementary"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |
+| Property            | Attribute | Type      | Default                                          | Description                                      |
+|---------------------|-----------|-----------|--------------------------------------------------|--------------------------------------------------|
+| `hidden`            | `hidden`  | `boolean` | false                                            | Used to toggle the width of the aside bar        |
+| `listenAsideToggle` |           |           | "(({ detail }: CustomEvent<boolean \| null>) => {\n    this.hidden = detail ?? !this.hidden;\n    this.emitToggled();\n  }).bind(this)" |                                                  |
+| `role`              | `role`    | `string`  | "complementary"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |
 
 ## Methods
 
 | Method              | Type       |
 |---------------------|------------|
 | `emitToggled`       | `(): void` |
-| `handleAsideToggle` | `(): void` |
+| `handleButtonClick` | `(): void` |
 
 ## Events
 
@@ -39,15 +39,12 @@ window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));
 
 ## CSS Custom Properties
 
-| Property                               | Description                                      |
-|----------------------------------------|--------------------------------------------------|
-| `--wcp-aside-collapsed-width`          | The width of the aside bar when collapsed        |
-| `--wcp-aside-dark-background`          | The background color of the side bar in dark mode |
-| `--wcp-aside-dark-color`               | The color of the side bar in dark mode           |
-| `--wcp-aside-expanded-width`           | The width of the aside bar when expanded         |
-| `--wcp-aside-light-background`         | The background color of the side bar in light mode |
-| `--wcp-aside-light-color`              | The color of the side bar in light mode          |
-| `--wcp-aside-spacing`                  | Inner padding of the aside bar                   |
-| `--wcp-aside-toggle-offset-horizontal` | The horizontal offset of the toggle button       |
-| `--wcp-aside-toggle-offset-vertical`   | The vertical offset of the toggle button         |
-| `--wcp-aside-toggle-size`              | The size of the toggle button                    |
+| Property                       | Description                                      |
+|--------------------------------|--------------------------------------------------|
+| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |
+| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |
+| `--wcp-aside-light-background` | The background color of the side bar in light mode |
+| `--wcp-aside-light-color`      | The color of the side bar in light mode          |
+| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |
+| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |
+| `--wcp-aside-toggle-size`      | The size of the toggle button                    |

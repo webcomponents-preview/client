@@ -17,16 +17,13 @@ import styles from './aside.component.scss';
  *
  * @event wcp-aside-toggled - Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event.
  *
- * @cssprop --wcp-aside-collapsed-width - The width of the aside bar when collapsed
- * @cssprop --wcp-aside-expanded-width - The width of the aside bar when expanded
+ * @cssprop --wcp-aside-max-width - The maximum width of the aside bar when visible
  * @cssprop --wcp-aside-spacing - Inner padding of the aside bar
  * @cssprop --wcp-aside-toggle-size - The size of the toggle button
- * @cssprop --wcp-aside-toggle-offset-vertical - The vertical offset of the toggle button
- * @cssprop --wcp-aside-toggle-offset-horizontal - The horizontal offset of the toggle button
- * 
+ *
  * @cssprop --wcp-aside-dark-background - The background color of the side bar in dark mode
  * @cssprop --wcp-aside-dark-color - The color of the side bar in dark mode
- * 
+ *
  * @cssprop --wcp-aside-light-background - The background color of the side bar in light mode
  * @cssprop --wcp-aside-light-color - The color of the side bar in light mode
  */
@@ -38,7 +35,7 @@ export class Aside extends LitElement {
    * Used to toggle the width of the aside bar
    */
   @property({ type: Boolean, reflect: true })
-  collapsed = false;
+  hidden = false;
 
   /**
    * Presets the aria role to `complementary` as we do not use te aside element directly
@@ -52,19 +49,19 @@ export class Aside extends LitElement {
       bubbles: true,
       cancelable: true,
       composed: true,
-      detail: this.collapsed,
+      detail: this.hidden,
     });
     this.dispatchEvent(event);
   }
 
   @eventOptions({ passive: true })
-  handleAsideToggle() {
-    this.collapsed = !this.collapsed;
+  handleButtonClick() {
+    this.hidden = true;
     this.emitToggled();
   }
 
-  listenAsideToggle = (({ detail = !this.collapsed }: CustomEvent<boolean>) => {
-    this.collapsed = detail;
+  listenAsideToggle = (({ detail }: CustomEvent<boolean | null>) => {
+    this.hidden = detail ?? !this.hidden;
     this.emitToggled();
   }).bind(this);
 
@@ -80,21 +77,19 @@ export class Aside extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <header>
-        <wcp-button kind="icon" @click="${this.handleAsideToggle}">
-          <wcp-icon name="${this.collapsed ? 'menu' : 'close'}"></wcp-icon>
-        </wcp-button>
-      </header>
-      <section>
-        <slot></slot>
-      </section>
+      <slot></slot>
+      <wcp-button kind="icon" @click="${this.handleButtonClick}">
+        <wcp-icon name="close"></wcp-icon>
+      </wcp-button>
     `;
   }
 }
 
 declare global {
   interface WindowEventMap {
-    'wcp-aside:toggle': CustomEvent<boolean>;
+    'wcp-aside:toggle': CustomEvent<boolean | null>;
+  }
+  interface HTMLElementEventMap {
     'wcp-aside:toggled': CustomEvent<boolean>;
   }
   interface HTMLElementTagNameMap {

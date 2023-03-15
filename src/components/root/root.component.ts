@@ -1,7 +1,7 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema';
 
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, eventOptions, property, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 
 import {
@@ -18,10 +18,10 @@ import styles from './root.component.scss';
  * @slot preview-controls - Can be used to inject additional preview controls.
  * @slot preview-frame - Used to be override the existing preview pane.
  * @slot preview-details - Can be used to inject additional preview detail panes.
- * 
+ *
  * @cssprop --wcp-root-dark-background - The background color of the root element in dark mode
  * @cssprop --wcp-root-dark-color - The text color of the text in the root element in dark mode
- * 
+ *
  * @cssprop --wcp-root-light-background - The background color of the root element in light mode
  * @cssprop --wcp-root-light-color - The text color of the text in the root element in light mode
  *
@@ -134,11 +134,6 @@ export class Root extends LitElement {
     this.emitActiveElementChanged();
   }).bind(this);
 
-  @eventOptions({ passive: true })
-  handleMenuClick() {
-    window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: false }));
-  }
-
   override connectedCallback() {
     super.connectedCallback();
 
@@ -183,7 +178,7 @@ export class Root extends LitElement {
         )}
 
         <wcp-preview-controls>
-          <wcp-button kind="icon" @click="${this.handleMenuClick}"><wcp-icon name="menu"></wcp-icon></wcp-button>
+          <wcp-toggle-sidebar></wcp-toggle-sidebar>
           <slot name="preview-controls"></slot>
         </wcp-preview-controls>
         <slot name="preview-frame">

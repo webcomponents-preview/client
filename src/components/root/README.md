@@ -21,14 +21,12 @@
 | `emitActiveElementChanged`    | `(): void`                                  |
 | `emitManifestLoaded`          | `(): void`                                  |
 | `getActiveElementDeclaration` | `(): CustomElementDeclaration \| undefined` |
-| `handleMenuClick`             | `(): void`                                  |
 | `loadCustomElementsManifest`  | `(): Promise<void>`                         |
 
 ## Events
 
 | Event                             | Type                                      | Description                                      |
 |-----------------------------------|-------------------------------------------|--------------------------------------------------|
-| `wcp-aside:toggle`                | `CustomEvent<boolean>`                    |                                                  |
 | `wcp-root:active-element-changed` | `CustomEvent<CustomElementDeclaration>`   | Fired when the active element changes. Carries the declaration of the new active element with it. |
 | `wcp-root:manifest-loaded`        | `CustomEvent<CustomElementDeclaration[]>` | Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved. |
 
