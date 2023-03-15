@@ -208,7 +208,7 @@ export class Root extends ColorSchemable(LitElement) {
 }
 
 declare global {
-  interface WindowEventMap {
+  interface HTMLElementEventMap {
     'wcp-root:active-element-changed': CustomEvent<CustomElementDeclaration | undefined>;
     'wcp-root:manifest-loaded': CustomEvent<CustomElementDeclaration[]>;
   }
