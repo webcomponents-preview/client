@@ -3,18 +3,30 @@
 @use 'css.gg/icons/scss/laptop';
 @use 'css.gg/icons/scss/menu';
 @use 'css.gg/icons/scss/menu-right';
+@use 'css.gg/icons/scss/moon';
 @use 'css.gg/icons/scss/push-chevron-down';
 @use 'css.gg/icons/scss/push-chevron-up';
 @use 'css.gg/icons/scss/ratio';
 @use 'css.gg/icons/scss/screen';
 @use 'css.gg/icons/scss/screen-wide';
 @use 'css.gg/icons/scss/smartphone';
+@use 'css.gg/icons/scss/sun';
 @use 'css.gg/icons/scss/sync';
 
 :host {
-  ---wcp-icon-scale: var(--wcp-icon-scale, 1);
+  ---wcp-icon-size: var(--wcp-icon-size, 22);
+  --ggs: calc(var(---wcp-icon-size) / 22);
+}
+
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: calc(var(---wcp-icon-size) * 1px);
+  width: calc(var(---wcp-icon-size) * 1px);
 }
 
 i {
-  --ggs: var(---wcp-icon-scale);
+  flex: 0 0 auto;
 }

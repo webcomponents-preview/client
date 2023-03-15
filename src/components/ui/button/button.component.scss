@@ -92,9 +92,12 @@
   }
 
   :host([kind='icon']) & {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1;
     padding: utils.size(1);
     position: relative;
+
+    font-size: 0;
+    line-height: 0;
 
     &::before {
       content: '';

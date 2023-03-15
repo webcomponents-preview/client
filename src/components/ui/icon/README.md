@@ -11,6 +11,12 @@ By setting the name attribute.
 <wcp-icon name="smartphone"></wcp-icon>
 ```
 
+```html
+### Set a custom size
+
+<wcp-icon name="laptop" style="--wcp-icon-size: 44px"></wcp-icon>
+```
+
 ### Set a custom ~~size~~ _scale_
 
 It is not recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. \
@@ -33,3 +39,4 @@ The approach of the currently used icons is to (CSS) transform by a given scale,
 | Property           | Description                                      |
 |--------------------|--------------------------------------------------|
 | `--wcp-icon-scale` | Sets the scale of the icon, where 1 is the default scale at a size of 22px. It is not<br />recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. The<br />approach of the currently used icons is to (CSS) transform by a given scale, which breaks the layout boundaries. |
+| `--wcp-icon-size`  | Sets the size of the icon                        |

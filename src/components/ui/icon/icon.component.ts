@@ -15,20 +15,13 @@ import styles from './icon.component.scss';
  * ```
  *
  * @example
- * ### Set a custom ~~size~~ _scale_
+ * ### Set a custom size
  * 
- * It is not recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. \
- * The approach of the currently used icons is to (CSS) transform by a given scale, which breaks the layout boundaries.
- *
  * ```html
- * <example style="display: inline-block; height: 22px; width: 22px; border: 5px solid rgba(255, 0, 0, .5)">
- *   <wcp-icon name="laptop" style="--wcp-icon-scale: 2"></wcp-icon>
- * </example>
+ * <wcp-icon name="laptop" style="--wcp-icon-size: 44"></wcp-icon>
  * ```
  *
- * @cssprop --wcp-icon-scale - Sets the scale of the icon, where 1 is the default scale at a size of 22px. It is not
- * recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. The
- * approach of the currently used icons is to (CSS) transform by a given scale, which breaks the layout boundaries.
+ * @cssprop --wcp-icon-size - Sets the size of the icon as unitless number in pixels
  */
 @customElement('wcp-icon')
 export class Icon extends LitElement {
