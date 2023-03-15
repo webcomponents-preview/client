@@ -63,12 +63,6 @@
 }
 
 :host(:not([inline])) {
-  height: 100vh;
+  height: 100dvh;
   width: 100vw;
-}
-
-wcp-button {
-  @include utils.breakpoint(sm) {
-    display: none;
-  }
 }
