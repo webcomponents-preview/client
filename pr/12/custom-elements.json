@@ -1,0 +1,1833 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/components/root/root.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Root",
+          "cssProperties": [
+            {
+              "description": "The background color of the root element in dark mode",
+              "name": "--wcp-root-dark-background"
+            },
+            {
+              "description": "The text color of the text in the root element in dark mode",
+              "name": "--wcp-root-dark-color"
+            },
+            {
+              "description": "The background color of the root element in light mode",
+              "name": "--wcp-root-light-background"
+            },
+            {
+              "description": "The text color of the text in the root element in light mode",
+              "name": "--wcp-root-light-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Allows setting a custom logo to be displayed in the title.",
+              "name": "logo"
+            },
+            {
+              "description": "Can be used to inject additional preview controls.",
+              "name": "preview-controls"
+            },
+            {
+              "description": "Used to be override the existing preview pane.",
+              "name": "preview-frame"
+            },
+            {
+              "description": "Can be used to inject additional preview detail panes.",
+              "name": "preview-details"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "#title",
+              "privacy": "private",
+              "type": {
+                "text": "string"
+              },
+              "default": "'WCP'"
+            },
+            {
+              "kind": "field",
+              "name": "#manifestUrl",
+              "privacy": "private",
+              "type": {
+                "text": "string | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "elements",
+              "type": {
+                "text": "CustomElementDeclaration[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "navigation",
+              "type": {
+                "text": "Record<string, CustomElementDeclaration[]>"
+              },
+              "default": "{}"
+            },
+            {
+              "kind": "field",
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "title",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "inline",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Flags the component to be displayed inline and not standalone. Requires the surrounding\nlayout to provide the necessary styles like for any other block element.",
+              "attribute": "inline",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "fallbackGroupName",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Components'",
+              "description": "Allows to set a fallback group name for elements that do not have a `groups` property.\nSo this is the name of the group that will contain all elements unless the manifest is\ngenerated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin.",
+              "attribute": "fallback-group-name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "activeElement",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Sets the currently active element by its tag name. Will be updated at runtime and can\nbe preset with an initial value to define the active element at startup.",
+              "attribute": "active-element",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "configUrl",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Allows to set a url to load a config file from.",
+              "attribute": "config-url",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "manifestUrl",
+              "description": "Defines the location of the custom element manifest file.",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "manifest-url",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "loadCustomElementsManifest"
+            },
+            {
+              "kind": "method",
+              "name": "getActiveElementDeclaration",
+              "return": {
+                "type": {
+                  "text": "CustomElementDeclaration | undefined"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "emitManifestLoaded"
+            },
+            {
+              "kind": "method",
+              "name": "emitActiveElementChanged"
+            },
+            {
+              "kind": "field",
+              "name": "handleHashChange"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "title"
+            },
+            {
+              "name": "inline",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Flags the component to be displayed inline and not standalone. Requires the surrounding\nlayout to provide the necessary styles like for any other block element.",
+              "fieldName": "inline"
+            },
+            {
+              "name": "fallback-group-name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Components'",
+              "description": "Allows to set a fallback group name for elements that do not have a `groups` property.\nSo this is the name of the group that will contain all elements unless the manifest is\ngenerated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin.",
+              "fieldName": "fallbackGroupName"
+            },
+            {
+              "name": "active-element",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Sets the currently active element by its tag name. Will be updated at runtime and can\nbe preset with an initial value to define the active element at startup.",
+              "fieldName": "activeElement"
+            },
+            {
+              "name": "config-url",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Allows to set a url to load a config file from.",
+              "fieldName": "configUrl"
+            },
+            {
+              "name": "manifest-url",
+              "description": "Defines the location of the custom element manifest file.",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "manifestUrl"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [],
+          "groups": [
+            "root"
+          ],
+          "readme": "# wcp-root\n\n## Properties\n\n| Property            | Attribute             | Type                                         | Default                                          | Description                                      |\n|---------------------|-----------------------|----------------------------------------------|--------------------------------------------------|--------------------------------------------------|\n| `activeElement`     | `active-element`      | `string \\| undefined`                        |                                                  | Sets the currently active element by its tag name. Will be updated at runtime and can<br />be preset with an initial value to define the active element at startup. |\n| `configUrl`         | `config-url`          | `string \\| undefined`                        |                                                  | Allows to set a url to load a config file from.  |\n| `elements`          |                       | `CustomElementDeclaration[]`                 | []                                               |                                                  |\n| `fallbackGroupName` | `fallback-group-name` | `string`                                     | \"Components\"                                     | Allows to set a fallback group name for elements that do not have a `groups` property.<br />So this is the name of the group that will contain all elements unless the manifest is<br />generated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin. |\n| `handleHashChange`  |                       |                                              | \"(() => {\\n    const [, activeElement] = window.location.hash.split('#/');\\n    this.activeElement = activeElement;\\n    this.emitActiveElementChanged();\\n  }).bind(this)\" |                                                  |\n| `inline`            | `inline`              | `boolean`                                    | false                                            | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifestUrl`       | `manifest-url`        | `string \\| undefined`                        |                                                  | Defines the location of the custom element manifest file. |\n| `navigation`        |                       | `Record<string, CustomElementDeclaration[]>` | {}                                               |                                                  |\n| `title`             | `title`               | `string`                                     |                                                  |                                                  |\n\n## Methods\n\n| Method                        | Type                                        |\n|-------------------------------|---------------------------------------------|\n| `emitActiveElementChanged`    | `(): void`                                  |\n| `emitManifestLoaded`          | `(): void`                                  |\n| `getActiveElementDeclaration` | `(): CustomElementDeclaration \\| undefined` |\n| `loadCustomElementsManifest`  | `(): Promise<void>`                         |\n\n## Events\n\n| Event                             | Type                                      | Description                                      |\n|-----------------------------------|-------------------------------------------|--------------------------------------------------|\n| `wcp-root:active-element-changed` | `CustomEvent<CustomElementDeclaration>`   | Fired when the active element changes. Carries the declaration of the new active element with it. |\n| `wcp-root:manifest-loaded`        | `CustomEvent<CustomElementDeclaration[]>` | Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode |\n| `--wcp-root-light-background` | The background color of the root element in light mode |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode |\n",
+          "tagName": "wcp-root",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Root",
+          "declaration": {
+            "name": "Root",
+            "module": "src/components/root/root.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-root",
+          "declaration": {
+            "name": "Root",
+            "module": "src/components/root/root.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/feature/example/example.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Shows a code example and a preview of the component.",
+          "name": "Example",
+          "cssProperties": [
+            {
+              "description": "Inner padding of the example",
+              "name": "--wcp-example-spacing"
+            },
+            {
+              "description": "Border radius of the example",
+              "name": "--wcp-example-border-radius"
+            },
+            {
+              "description": "Border width of the example",
+              "name": "--wcp-example-border-width"
+            },
+            {
+              "description": "Border color of the example in dark mode",
+              "name": "--wcp-example-dark-border-color"
+            },
+            {
+              "description": "Border color of the example in light mode",
+              "name": "--wcp-example-light-border-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Code example",
+              "name": "code"
+            },
+            {
+              "description": "Rendered example preview",
+              "name": "preview"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [],
+          "groups": [
+            "feature"
+          ],
+          "readme": "# wcp-example\n\nShows a code example and a preview of the component.\n\n## Slots\n\n| Name      | Description              |\n|-----------|--------------------------|\n| `code`    | Code example             |\n| `preview` | Rendered example preview |\n\n## CSS Custom Properties\n\n| Property                           | Description                               |\n|------------------------------------|-------------------------------------------|\n| `--wcp-example-border-radius`      | Border radius of the example              |\n| `--wcp-example-border-width`       | Border width of the example               |\n| `--wcp-example-dark-border-color`  | Border color of the example in dark mode  |\n| `--wcp-example-light-border-color` | Border color of the example in light mode |\n| `--wcp-example-spacing`            | Inner padding of the example              |\n",
+          "tagName": "wcp-example",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Example",
+          "declaration": {
+            "name": "Example",
+            "module": "src/components/feature/example/example.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-example",
+          "declaration": {
+            "name": "Example",
+            "module": "src/components/feature/example/example.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/feature/navigation/navigation.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Navigation",
+          "cssProperties": [
+            {
+              "description": "Spacing between navigation and headline",
+              "name": "--wcp-navigation-spacing"
+            },
+            {
+              "description": "Spacing between navigation items",
+              "name": "--wcp-navigation-spacing-items"
+            },
+            {
+              "description": "Inner padding of the navigation headline",
+              "name": "--wcp-navigation-spacing-headline"
+            },
+            {
+              "description": "Border color of the navigation headline in dark mode",
+              "name": "--wcp-navigation-dark-border-color"
+            },
+            {
+              "description": "Border color of the navigation headline in light mode",
+              "name": "--wcp-navigation-light-border-color"
+            },
+            {
+              "description": "Font size of the navigation headline",
+              "name": "--wcp-navigation-headline-size"
+            },
+            {
+              "description": "Font weight of the navigation headline",
+              "name": "--wcp-navigation-headline-weight"
+            },
+            {
+              "description": "Letter spacing of the navigation headline",
+              "name": "--wcp-navigation-headline-spacing"
+            },
+            {
+              "description": "Background color of the navigation headline in dark mode",
+              "name": "--wcp-navigation-headline-dark-background"
+            },
+            {
+              "description": "Background color of the navigation headline in light mode",
+              "name": "--wcp-navigation-headline-light-background"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Default slot for navigation items",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "headline",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "headline",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "headline",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "headline"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "### Usage with headline\n\n```html\n<wcp-navigation headline=\"Navigation\">\n  <wcp-navigation-item href=\"/home\">Home</wcp-navigation-item>\n  <wcp-navigation-item href=\"/about\">About</wcp-navigation-item>\n</wcp-navigation>\n```"
+          ],
+          "groups": [
+            "feature"
+          ],
+          "readme": "# wcp-navigation\n\n## Example\n\n### Usage with headline\n\n```html\n<wcp-navigation headline=\"Navigation\">\n  <wcp-navigation-item href=\"/home\">Home</wcp-navigation-item>\n  <wcp-navigation-item href=\"/about\">About</wcp-navigation-item>\n</wcp-navigation>\n```\n\n## Properties\n\n| Property   | Attribute  | Type                  |\n|------------|------------|-----------------------|\n| `headline` | `headline` | `string \\| undefined` |\n\n## Slots\n\n| Name | Description                       |\n|------|-----------------------------------|\n|      | Default slot for navigation items |\n\n## CSS Custom Properties\n\n| Property                                     | Description                                      |\n|----------------------------------------------|--------------------------------------------------|\n| `--wcp-navigation-dark-border-color`         | Border color of the navigation headline in dark mode |\n| `--wcp-navigation-headline-dark-background`  | Background color of the navigation headline in dark mode |\n| `--wcp-navigation-headline-light-background` | Background color of the navigation headline in light mode |\n| `--wcp-navigation-headline-size`             | Font size of the navigation headline             |\n| `--wcp-navigation-headline-spacing`          | Letter spacing of the navigation headline        |\n| `--wcp-navigation-headline-weight`           | Font weight of the navigation headline           |\n| `--wcp-navigation-light-border-color`        | Border color of the navigation headline in light mode |\n| `--wcp-navigation-spacing`                   | Spacing between navigation and headline          |\n| `--wcp-navigation-spacing-headline`          | Inner padding of the navigation headline         |\n| `--wcp-navigation-spacing-items`             | Spacing between navigation items                 |\n",
+          "tagName": "wcp-navigation",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Navigation",
+          "declaration": {
+            "name": "Navigation",
+            "module": "src/components/feature/navigation/navigation.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-navigation",
+          "declaration": {
+            "name": "Navigation",
+            "module": "src/components/feature/navigation/navigation.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/feature/navigation-item/navigation-item.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "NavigationItem",
+          "cssProperties": [
+            {
+              "description": "Inner padding of the item",
+              "name": "--wcp-navigation-item-spacing"
+            },
+            {
+              "description": "Background color of the item when non interactive in dark mode",
+              "name": "--wcp-navigation-item-dark-passive-background"
+            },
+            {
+              "description": "Background color of the item when hovered in dark mode",
+              "name": "--wcp-navigation-item-dark-hover-background"
+            },
+            {
+              "description": "Background color of the item when active in dark mode",
+              "name": "--wcp-navigation-item-dark-active-background"
+            },
+            {
+              "description": "Text color of the item when non interactive in dark mode",
+              "name": "--wcp-navigation-item-dark-passive-color"
+            },
+            {
+              "description": "Text color of the item when hovered in dark mode",
+              "name": "--wcp-navigation-item-dark-hover-color"
+            },
+            {
+              "description": "Text color of the item when active in dark mode",
+              "name": "--wcp-navigation-item-dark-active-color"
+            },
+            {
+              "description": "Background color of the item when non interactive in light mode",
+              "name": "--wcp-navigation-item-light-passive-background"
+            },
+            {
+              "description": "Background color of the item when hovered in light mode",
+              "name": "--wcp-navigation-item-light-hover-background"
+            },
+            {
+              "description": "Background color of the item when active in light mode",
+              "name": "--wcp-navigation-item-light-active-background"
+            },
+            {
+              "description": "Text color of the item when non interactive in light mode",
+              "name": "--wcp-navigation-item-light-passive-color"
+            },
+            {
+              "description": "Text color of the item when hovered in light mode",
+              "name": "--wcp-navigation-item-light-hover-color"
+            },
+            {
+              "description": "Text color of the item when active in light mode",
+              "name": "--wcp-navigation-item-light-active-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Default slot for contents",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "active",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "active",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "href",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "active",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "active"
+            },
+            {
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "href"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "### Non-interactive\n\nThis will probably only be used for the active item.\n\n```html\n<wcp-navigation-item>\n  Non-interactive\n</wcp-navigation-item>\n```",
+            "### With link\n\n```html\n<wcp-navigation-item href=\"/home\">\n  Home\n</wcp-navigation-item>\n```"
+          ],
+          "groups": [
+            "feature"
+          ],
+          "readme": "# wcp-navigation-item\n\n## Examples\n\n### Non-interactive\n\nThis will probably only be used for the active item.\n\n```html\n<wcp-navigation-item>\n  Non-interactive\n</wcp-navigation-item>\n```\n\n### With link\n\n```html\n<wcp-navigation-item href=\"/home\">\n  Home\n</wcp-navigation-item>\n```\n\n## Properties\n\n| Property | Attribute | Type                  | Default |\n|----------|-----------|-----------------------|---------|\n| `active` | `active`  | `boolean`             | false   |\n| `href`   | `href`    | `string \\| undefined` |         |\n\n## Slots\n\n| Name | Description               |\n|------|---------------------------|\n|      | Default slot for contents |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                      |\n|--------------------------------------------------|--------------------------------------------------|\n| `--wcp-navigation-item-dark-active-background`   | Background color of the item when active in dark mode |\n| `--wcp-navigation-item-dark-active-color`        | Text color of the item when active in dark mode  |\n| `--wcp-navigation-item-dark-hover-background`    | Background color of the item when hovered in dark mode |\n| `--wcp-navigation-item-dark-hover-color`         | Text color of the item when hovered in dark mode |\n| `--wcp-navigation-item-dark-passive-background`  | Background color of the item when non interactive in dark mode |\n| `--wcp-navigation-item-dark-passive-color`       | Text color of the item when non interactive in dark mode |\n| `--wcp-navigation-item-light-active-background`  | Background color of the item when active in light mode |\n| `--wcp-navigation-item-light-active-color`       | Text color of the item when active in light mode |\n| `--wcp-navigation-item-light-hover-background`   | Background color of the item when hovered in light mode |\n| `--wcp-navigation-item-light-hover-color`        | Text color of the item when hovered in light mode |\n| `--wcp-navigation-item-light-passive-background` | Background color of the item when non interactive in light mode |\n| `--wcp-navigation-item-light-passive-color`      | Text color of the item when non interactive in light mode |\n| `--wcp-navigation-item-spacing`                  | Inner padding of the item                        |\n",
+          "tagName": "wcp-navigation-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "NavigationItem",
+          "declaration": {
+            "name": "NavigationItem",
+            "module": "src/components/feature/navigation-item/navigation-item.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-navigation-item",
+          "declaration": {
+            "name": "NavigationItem",
+            "module": "src/components/feature/navigation-item/navigation-item.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/feature/preview-controls/preview-controls.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PreviewControls",
+          "cssProperties": [
+            {
+              "description": "Background color of the preview controls in dark mode",
+              "name": "--wcp-preview-controls-dark-background"
+            },
+            {
+              "description": "Text color of the preview controls in dark mode",
+              "name": "--wcp-preview-controls-dark-color"
+            },
+            {
+              "description": "Background color of the preview controls in light mode",
+              "name": "--wcp-preview-controls-light-background"
+            },
+            {
+              "description": "Text color of the preview controls in light mode",
+              "name": "--wcp-preview-controls-light-color"
+            },
+            {
+              "description": "Overall height of the preview controls nav bar",
+              "name": "--wcp-preview-controls-height"
+            },
+            {
+              "description": "Inner spacing, used as padding of the controls",
+              "name": "--wcp-preview-controls-spacing"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Default slot for navigation items",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-preview-controls></wcp-preview-controls>\n```",
+            "### Usage with controls\n\n```html\n<wcp-preview-controls>\n  <wcp-preview-controls-viewport></wcp-preview-controls-viewport>\n</wcp-preview-controls>\n```"
+          ],
+          "groups": [
+            "feature"
+          ],
+          "readme": "# wcp-preview-controls\n\n## Examples\n\n```html\n<wcp-preview-controls></wcp-preview-controls>\n```\n\n### Usage with controls\n\n```html\n<wcp-preview-controls>\n  <wcp-preview-controls-viewport></wcp-preview-controls-viewport>\n</wcp-preview-controls>\n```\n\n## Slots\n\n| Name | Description                       |\n|------|-----------------------------------|\n|      | Default slot for navigation items |\n\n## CSS Custom Properties\n\n| Property                                  | Description                                      |\n|-------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-controls-dark-background`  | Background color of the preview controls in dark mode |\n| `--wcp-preview-controls-dark-color`       | Text color of the preview controls in dark mode  |\n| `--wcp-preview-controls-height`           | Overall height of the preview controls nav bar   |\n| `--wcp-preview-controls-light-background` | Background color of the preview controls in light mode |\n| `--wcp-preview-controls-light-color`      | Text color of the preview controls in light mode |\n| `--wcp-preview-controls-spacing`          | Inner spacing, used as padding of the controls   |\n",
+          "tagName": "wcp-preview-controls",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PreviewControls",
+          "declaration": {
+            "name": "PreviewControls",
+            "module": "src/components/feature/preview-controls/preview-controls.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview-controls",
+          "declaration": {
+            "name": "PreviewControls",
+            "module": "src/components/feature/preview-controls/preview-controls.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/feature/preview-details/preview-details.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PreviewDetails",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "groups": [
+            "feature"
+          ],
+          "readme": "# wcp-preview-details\n",
+          "tagName": "wcp-preview-details",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PreviewDetails",
+          "declaration": {
+            "name": "PreviewDetails",
+            "module": "src/components/feature/preview-details/preview-details.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview-details",
+          "declaration": {
+            "name": "PreviewDetails",
+            "module": "src/components/feature/preview-details/preview-details.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/feature/preview-frame/preview-frame.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PreviewFrame",
+          "cssProperties": [
+            {
+              "description": "Background color of the preview frame in dark mode",
+              "name": "--wcp-preview-frame-dark-background"
+            },
+            {
+              "description": "Border color of the example section in dark mode",
+              "name": "--wcp-preview-frame-dark-border-color"
+            },
+            {
+              "description": "Text color of the preview frame in dark mode",
+              "name": "--wcp-preview-frame-dark-color"
+            },
+            {
+              "description": "Background color of the preview frame in light mode",
+              "name": "--wcp-preview-frame-light-background"
+            },
+            {
+              "description": "Border color of the example section in light mode",
+              "name": "--wcp-preview-frame-light-border-color"
+            },
+            {
+              "description": "Text color of the preview frame in light mode",
+              "name": "--wcp-preview-frame-light-color"
+            },
+            {
+              "description": "Outer margin of the preview frame",
+              "name": "--wcp-preview-frame-distance"
+            },
+            {
+              "description": "Inner padding of the preview frame",
+              "name": "--wcp-preview-frame-spacing"
+            },
+            {
+              "description": "Border width of the example section",
+              "name": "--wcp-preview-frame-border-width"
+            },
+            {
+              "description": "Inner padding of the example section",
+              "name": "--wcp-preview-frame-spacing"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "preview",
+              "type": {
+                "text": "string"
+              },
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "examples",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "activeElement",
+              "type": {
+                "text": "CustomElementDeclaration | undefined"
+              },
+              "attribute": "activeElement"
+            },
+            {
+              "kind": "method",
+              "name": "renderExamples",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "CustomElementDeclarationWithExamples"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderReadme",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "CustomElementDeclarationWithReadme"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "activeElement",
+              "type": {
+                "text": "CustomElementDeclaration | undefined"
+              },
+              "fieldName": "activeElement"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-preview-frame></wcp-preview-frame>\n```"
+          ],
+          "groups": [
+            "feature"
+          ],
+          "readme": "# wcp-preview-frame\n\n## Example\n\n```html\n<wcp-preview-frame></wcp-preview-frame>\n```\n\n## Properties\n\n| Property        | Attribute       | Type                                    | Default |\n|-----------------|-----------------|-----------------------------------------|---------|\n| `activeElement` | `activeElement` | `CustomElementDeclaration \\| undefined` |         |\n| `examples`      |                 | `string[]`                              | []      |\n| `preview`       |                 | `string`                                | \"\"      |\n\n## CSS Custom Properties\n\n| Property                                 | Description                                      |\n|------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-frame-border-width`       | Border width of the example section              |\n| `--wcp-preview-frame-dark-background`    | Background color of the preview frame in dark mode |\n| `--wcp-preview-frame-dark-border-color`  | Border color of the example section in dark mode |\n| `--wcp-preview-frame-dark-color`         | Text color of the preview frame in dark mode     |\n| `--wcp-preview-frame-distance`           | Outer margin of the preview frame                |\n| `--wcp-preview-frame-light-background`   | Background color of the preview frame in light mode |\n| `--wcp-preview-frame-light-border-color` | Border color of the example section in light mode |\n| `--wcp-preview-frame-light-color`        | Text color of the preview frame in light mode    |\n| `--wcp-preview-frame-spacing`            | Inner padding of the preview frame               |\n",
+          "tagName": "wcp-preview-frame",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PreviewFrame",
+          "declaration": {
+            "name": "PreviewFrame",
+            "module": "src/components/feature/preview-frame/preview-frame.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview-frame",
+          "declaration": {
+            "name": "PreviewFrame",
+            "module": "src/components/feature/preview-frame/preview-frame.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/feature/readme/readme.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Readme",
+          "members": [
+            {
+              "kind": "field",
+              "name": "markdown",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "markdown"
+            },
+            {
+              "kind": "method",
+              "name": "createRenderRoot"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "markdown",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "markdown"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-readme>\n <h1>Readme</h1>\n <p>Some readme content</p>\n</wcp-readme>\n```"
+          ],
+          "groups": [
+            "feature"
+          ],
+          "readme": "# wcp-readme\n\n## Example\n\n```html\n<wcp-readme>\n <h1>Readme</h1>\n <p>Some readme content</p>\n</wcp-readme>\n```\n\n## Properties\n\n| Property   | Attribute  | Type     |\n|------------|------------|----------|\n| `markdown` | `markdown` | `string` |\n\n## Methods\n\n| Method             | Type       |\n|--------------------|------------|\n| `createRenderRoot` | `(): this` |\n",
+          "tagName": "wcp-readme",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Readme",
+          "declaration": {
+            "name": "Readme",
+            "module": "src/components/feature/readme/readme.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-readme",
+          "declaration": {
+            "name": "Readme",
+            "module": "src/components/feature/readme/readme.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/feature/toggle-sidebar/toggle-sidebar.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Shows a button to toggle sidebar.",
+          "name": "ToggleSidebar",
+          "members": [
+            {
+              "kind": "method",
+              "name": "handleButtonClick"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-wcp-toggle-sidebar></wcp-wcp-toggle-sidebar>\n```"
+          ],
+          "groups": [
+            "feature"
+          ],
+          "readme": "# wcp-toggle-sidebar\n\nShows a button to toggle sidebar.\n\n## Example\n\n```html\n<wcp-wcp-toggle-sidebar></wcp-wcp-toggle-sidebar>\n```\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event              |\n|--------------------|\n| `wcp-aside:toggle` |\n",
+          "tagName": "wcp-toggle-sidebar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ToggleSidebar",
+          "declaration": {
+            "name": "ToggleSidebar",
+            "module": "src/components/feature/toggle-sidebar/toggle-sidebar.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-toggle-sidebar",
+          "declaration": {
+            "name": "ToggleSidebar",
+            "module": "src/components/feature/toggle-sidebar/toggle-sidebar.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/layout/aside/aside.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "To toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```",
+          "name": "Aside",
+          "cssProperties": [
+            {
+              "description": "The maximum width of the aside bar when visible",
+              "name": "--wcp-aside-max-width"
+            },
+            {
+              "description": "Inner padding of the aside bar",
+              "name": "--wcp-aside-spacing"
+            },
+            {
+              "description": "The size of the toggle button",
+              "name": "--wcp-aside-toggle-size"
+            },
+            {
+              "description": "The background color of the side bar in dark mode",
+              "name": "--wcp-aside-dark-background"
+            },
+            {
+              "description": "The color of the side bar in dark mode",
+              "name": "--wcp-aside-dark-color"
+            },
+            {
+              "description": "The background color of the side bar in light mode",
+              "name": "--wcp-aside-light-background"
+            },
+            {
+              "description": "The color of the side bar in light mode",
+              "name": "--wcp-aside-light-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Projects elements aside the main content",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "hidden",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Used to toggle the width of the aside bar",
+              "attribute": "hidden",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'complementary'",
+              "description": "Presets the aria role to `complementary` as we do not use te aside element directly",
+              "attribute": "role",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "emitToggled"
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonClick"
+            },
+            {
+              "kind": "field",
+              "name": "listenAsideToggle"
+            }
+          ],
+          "events": [
+            {
+              "description": "Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event.",
+              "name": "wcp-aside-toggled"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "hidden",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Used to toggle the width of the aside bar",
+              "fieldName": "hidden"
+            },
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'complementary'",
+              "description": "Presets the aria role to `complementary` as we do not use te aside element directly",
+              "fieldName": "role"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [],
+          "groups": [
+            "layout"
+          ],
+          "readme": "# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n## Properties\n\n| Property            | Attribute | Type      | Default                                          | Description                                      |\n|---------------------|-----------|-----------|--------------------------------------------------|--------------------------------------------------|\n| `hidden`            | `hidden`  | `boolean` | false                                            | Used to toggle the width of the aside bar        |\n| `listenAsideToggle` |           |           | \"(({ detail }: CustomEvent<boolean \\| null>) => {\\n    this.hidden = detail ?? !this.hidden;\\n    this.emitToggled();\\n  }).bind(this)\" |                                                  |\n| `role`              | `role`    | `string`  | \"complementary\"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `emitToggled`       | `(): void` |\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event               | Type                   | Description                                      |\n|---------------------|------------------------|--------------------------------------------------|\n| `wcp-aside-toggled` |                        | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n| `wcp-aside:toggled` | `CustomEvent<boolean>` |                                                  |\n\n## Slots\n\n| Name | Description                              |\n|------|------------------------------------------|\n|      | Projects elements aside the main content |\n\n## CSS Custom Properties\n\n| Property                       | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |\n| `--wcp-aside-light-background` | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      | The color of the side bar in light mode          |\n| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |\n| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-size`      | The size of the toggle button                    |\n",
+          "tagName": "wcp-aside",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Aside",
+          "declaration": {
+            "name": "Aside",
+            "module": "src/components/layout/aside/aside.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-aside",
+          "declaration": {
+            "name": "Aside",
+            "module": "src/components/layout/aside/aside.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/layout/layout/layout.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Layout",
+          "slots": [
+            {
+              "description": "Projects elements aside the main content",
+              "name": "aside"
+            },
+            {
+              "description": "Receives the content of the main section",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```"
+          ],
+          "groups": [
+            "layout"
+          ],
+          "readme": "# wcp-layout\n\n## Example\n\n```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```\n\n## Slots\n\n| Name    | Description                              |\n|---------|------------------------------------------|\n|         | Receives the content of the main section |\n| `aside` | Projects elements aside the main content |\n",
+          "tagName": "wcp-layout",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Layout",
+          "declaration": {
+            "name": "Layout",
+            "module": "src/components/layout/layout/layout.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-layout",
+          "declaration": {
+            "name": "Layout",
+            "module": "src/components/layout/layout/layout.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/layout/main/main.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Main",
+          "slots": [
+            {
+              "description": "Projects elements to the main content",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'main'",
+              "description": "Presets the aria role to `main` as we do not use te main element directly",
+              "attribute": "role",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'main'",
+              "description": "Presets the aria role to `main` as we do not use te main element directly",
+              "fieldName": "role"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [],
+          "groups": [
+            "layout"
+          ],
+          "readme": "# wcp-main\n\n## Properties\n\n| Property | Attribute | Type     | Default | Description                                      |\n|----------|-----------|----------|---------|--------------------------------------------------|\n| `role`   | `role`    | `string` | \"main\"  | Presets the aria role to `main` as we do not use te main element directly |\n\n## Slots\n\n| Name | Description                           |\n|------|---------------------------------------|\n|      | Projects elements to the main content |\n",
+          "tagName": "wcp-main",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Main",
+          "declaration": {
+            "name": "Main",
+            "module": "src/components/layout/main/main.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-main",
+          "declaration": {
+            "name": "Main",
+            "module": "src/components/layout/main/main.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/button/button.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Shows a button element.",
+          "name": "Button",
+          "cssProperties": [
+            {
+              "description": "Background color of the button if non interactive in dark mode",
+              "name": "--wcp-button-dark-passive-background"
+            },
+            {
+              "description": "Border color of the button if non interactive in dark mode",
+              "name": "--wcp-button-dark-passive-border-color"
+            },
+            {
+              "description": "Text color of the button if non interactive in dark mode",
+              "name": "--wcp-button-dark-passive-color"
+            },
+            {
+              "description": "Background color of the button if hovered in dark mode",
+              "name": "--wcp-button-dark-hover-background"
+            },
+            {
+              "description": "Border color of the button if hovered in dark mode",
+              "name": "--wcp-button-dark-hover-border-color"
+            },
+            {
+              "description": "Text color of the button if hovered in dark mode",
+              "name": "--wcp-button-dark-hover-color"
+            },
+            {
+              "description": "Background color of the button if active in dark mode",
+              "name": "--wcp-button-dark-active-background"
+            },
+            {
+              "description": "Border color of the button if active in dark mode",
+              "name": "--wcp-button-dark-active-border-color"
+            },
+            {
+              "description": "Text color of the button if active in dark mode",
+              "name": "--wcp-button-dark-active-color"
+            },
+            {
+              "description": "Background color of the button if non interactive in light mode",
+              "name": "--wcp-button-light-passive-background"
+            },
+            {
+              "description": "Border color of the button if non interactive in light mode",
+              "name": "--wcp-button-light-passive-border-color"
+            },
+            {
+              "description": "Text color of the button if non interactive in light mode",
+              "name": "--wcp-button-light-passive-color"
+            },
+            {
+              "description": "Background color of the button if hovered in light mode",
+              "name": "--wcp-button-light-hover-background"
+            },
+            {
+              "description": "Border color of the button if hovered in light mode",
+              "name": "--wcp-button-light-hover-border-color"
+            },
+            {
+              "description": "Text color of the button if hovered in light mode",
+              "name": "--wcp-button-light-hover-color"
+            },
+            {
+              "description": "Background color of the button if active in light mode",
+              "name": "--wcp-button-light-active-background"
+            },
+            {
+              "description": "Border color of the button if active in light mode",
+              "name": "--wcp-button-light-active-border-color"
+            },
+            {
+              "description": "Text color of the button if active in light mode",
+              "name": "--wcp-button-light-active-color"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true"
+            },
+            {
+              "kind": "field",
+              "name": "#internals",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "nowrap",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "nowrap",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "stretched",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "stretched",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "kind",
+              "type": {
+                "text": "'button' | 'icon'"
+              },
+              "default": "'button'",
+              "attribute": "kind",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "'button' | 'reset' | 'submit'"
+              },
+              "default": "'button'",
+              "attribute": "type",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "href",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "type": {
+                "text": "'_self' | '_blank' | '_parent' | '_top' | undefined"
+              },
+              "attribute": "target",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonClick"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "nowrap",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "nowrap"
+            },
+            {
+              "name": "stretched",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "stretched"
+            },
+            {
+              "name": "kind",
+              "type": {
+                "text": "'button' | 'icon'"
+              },
+              "default": "'button'",
+              "fieldName": "kind"
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "'button' | 'reset' | 'submit'"
+              },
+              "default": "'button'",
+              "fieldName": "type"
+            },
+            {
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "href"
+            },
+            {
+              "name": "target",
+              "type": {
+                "text": "'_self' | '_blank' | '_parent' | '_top' | undefined"
+              },
+              "fieldName": "target"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "## Default button\n\n```html\n<wcp-button>Click me!</wcp-button>\n```",
+            "## Button with icon\n\n```html\n<wcp-button kind=\"icon\">\n <wcp-icon name=\"menu\"></wcp-icon>\n</wcp-button>\n```",
+            "## Use as native submit button in form\n\n```html\n<form onsubmit=\"alert('Submit!'); return false\">\n <wcp-button type=\"submit\">Submit</wcp-button>\n</form>\n```",
+            "## Use as native reset button in form\n\n```html\n<form onreset=\"alert('Reset!'); return false\">\n  <wcp-button type=\"reset\">Reset</wcp-button>\n</form>\n```"
+          ],
+          "groups": [
+            "ui"
+          ],
+          "readme": "# wcp-button\n\nShows a button element.\n\n## Examples\n\n## Default button\n\n```html\n<wcp-button>Click me!</wcp-button>\n```\n\n## Button with icon\n\n```html\n<wcp-button kind=\"icon\">\n <wcp-icon name=\"menu\"></wcp-icon>\n</wcp-button>\n```\n\n## Use as native submit button in form\n\n```html\n<form onsubmit=\"alert('Submit!'); return false\">\n <wcp-button type=\"submit\">Submit</wcp-button>\n</form>\n```\n\n## Use as native reset button in form\n\n```html\n<form onreset=\"alert('Reset!'); return false\">\n  <wcp-button type=\"reset\">Reset</wcp-button>\n</form>\n```\n\n## Properties\n\n| Property    | Attribute   | Type                                             | Default  |\n|-------------|-------------|--------------------------------------------------|----------|\n| `disabled`  | `disabled`  | `boolean`                                        | false    |\n| `href`      | `href`      | `string \\| undefined`                            |          |\n| `kind`      | `kind`      | `\"button\" \\| \"icon\"`                             | \"button\" |\n| `nowrap`    | `nowrap`    | `boolean`                                        | false    |\n| `stretched` | `stretched` | `boolean`                                        | false    |\n| `target`    | `target`    | `\"_self\" \\| \"_blank\" \\| \"_parent\" \\| \"_top\" \\| undefined` |          |\n| `type`      | `type`      | `\"button\" \\| \"reset\" \\| \"submit\"`                | \"button\" |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## CSS Custom Properties\n\n| Property                                  | Description                                      |\n|-------------------------------------------|--------------------------------------------------|\n| `--wcp-button-dark-active-background`     | Background color of the button if active in dark mode |\n| `--wcp-button-dark-active-border-color`   | Border color of the button if active in dark mode |\n| `--wcp-button-dark-active-color`          | Text color of the button if active in dark mode  |\n| `--wcp-button-dark-hover-background`      | Background color of the button if hovered in dark mode |\n| `--wcp-button-dark-hover-border-color`    | Border color of the button if hovered in dark mode |\n| `--wcp-button-dark-hover-color`           | Text color of the button if hovered in dark mode |\n| `--wcp-button-dark-passive-background`    | Background color of the button if non interactive in dark mode |\n| `--wcp-button-dark-passive-border-color`  | Border color of the button if non interactive in dark mode |\n| `--wcp-button-dark-passive-color`         | Text color of the button if non interactive in dark mode |\n| `--wcp-button-light-active-background`    | Background color of the button if active in light mode |\n| `--wcp-button-light-active-border-color`  | Border color of the button if active in light mode |\n| `--wcp-button-light-active-color`         | Text color of the button if active in light mode |\n| `--wcp-button-light-hover-background`     | Background color of the button if hovered in light mode |\n| `--wcp-button-light-hover-border-color`   | Border color of the button if hovered in light mode |\n| `--wcp-button-light-hover-color`          | Text color of the button if hovered in light mode |\n| `--wcp-button-light-passive-background`   | Background color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-border-color` | Border color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-color`        | Text color of the button if non interactive in light mode |\n",
+          "tagName": "wcp-button",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Button",
+          "declaration": {
+            "name": "Button",
+            "module": "src/components/ui/button/button.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-button",
+          "declaration": {
+            "name": "Button",
+            "module": "src/components/ui/button/button.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/icon/icon.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Shows an icon from the css.gg icon set.",
+          "name": "Icon",
+          "cssProperties": [
+            {
+              "description": "Sets the scale of the icon, where 1 is the default scale at a size of 22px. It is not recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. The approach of the currently used icons is to (CSS) transform by a given scale, which breaks the layout boundaries.",
+              "name": "--wcp-icon-scale"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "name",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "name"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "## Use icon\nBy setting the name attribute.\n\n```html\n<wcp-icon name=\"smartphone\"></wcp-icon>\n```",
+            "### Set a custom ~~size~~ _scale_\n\nIt is not recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. \\\nThe approach of the currently used icons is to (CSS) transform by a given scale, which breaks the layout boundaries.\n\n```html\n<example style=\"display: inline-block; height: 22px; width: 22px; border: 5px solid rgba(255, 0, 0, .5)\">\n  <wcp-icon name=\"laptop\" style=\"--wcp-icon-scale: 2\"></wcp-icon>\n</example>\n```"
+          ],
+          "groups": [
+            "ui"
+          ],
+          "readme": "# wcp-icon\n\nShows an icon from the css.gg icon set.\n\n## Examples\n\n## Use icon\nBy setting the name attribute.\n\n```html\n<wcp-icon name=\"smartphone\"></wcp-icon>\n```\n\n### Set a custom ~~size~~ _scale_\n\nIt is not recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. \\\nThe approach of the currently used icons is to (CSS) transform by a given scale, which breaks the layout boundaries.\n\n```html\n<example style=\"display: inline-block; height: 22px; width: 22px; border: 5px solid rgba(255, 0, 0, .5)\">\n  <wcp-icon name=\"laptop\" style=\"--wcp-icon-scale: 2\"></wcp-icon>\n</example>\n```\n\n## Properties\n\n| Property | Attribute | Type     |\n|----------|-----------|----------|\n| `name`   | `name`    | `string` |\n\n## CSS Custom Properties\n\n| Property           | Description                                      |\n|--------------------|--------------------------------------------------|\n| `--wcp-icon-scale` | Sets the scale of the icon, where 1 is the default scale at a size of 22px. It is not<br />recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. The<br />approach of the currently used icons is to (CSS) transform by a given scale, which breaks the layout boundaries. |\n",
+          "tagName": "wcp-icon",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Icon",
+          "declaration": {
+            "name": "Icon",
+            "module": "src/components/ui/icon/icon.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-icon",
+          "declaration": {
+            "name": "Icon",
+            "module": "src/components/ui/icon/icon.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/tabs/tabs.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Tabs",
+          "cssProperties": [
+            {
+              "description": "The gap between the tablist and the tabpanels",
+              "name": "--wcp-tabs-tablist-gap"
+            },
+            {
+              "description": "The inner padding of the tablist",
+              "name": "--wcp-tabs-tablist-spacing"
+            },
+            {
+              "description": "The inner padding of the tabs",
+              "name": "--wcp-tabs-tab-spacing"
+            },
+            {
+              "description": "The border width of the active tab",
+              "name": "--wcp-tabs-tab-active-border-width"
+            },
+            {
+              "description": "The inner padding of the tabpanels",
+              "name": "--wcp-tabs-panel-spacing"
+            },
+            {
+              "description": "The border color of the tablist in dark mode",
+              "name": "--wcp-tabs-tablist-dark-border-color"
+            },
+            {
+              "description": "The border color of the active tab in dark mode",
+              "name": "--wcp-tabs-tab-active-dark-border-color"
+            },
+            {
+              "description": "The border color of the tablist in light mode",
+              "name": "--wcp-tabs-tablist-light-border-color"
+            },
+            {
+              "description": "The border color of the active tab in light mode",
+              "name": "--wcp-tabs-tab-active-light-border-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "name - The content of the named tab.",
+              "name": "tab"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "tabFocus",
+              "type": {
+                "text": "number"
+              },
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "tabRoles",
+              "type": {
+                "text": "HTMLElement[]"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "code",
+              "type": {
+                "text": "string"
+              },
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "tabs",
+              "type": {
+                "text": "Record<string, string>"
+              },
+              "default": "{}",
+              "attribute": "tabs",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "activeTab",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "active-tab",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "emitActiveTabChange"
+            },
+            {
+              "kind": "method",
+              "name": "handleTabClick",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleKeydown",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "tabs",
+              "type": {
+                "text": "Record<string, string>"
+              },
+              "default": "{}",
+              "fieldName": "tabs"
+            },
+            {
+              "name": "active-tab",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "activeTab"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}'>\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```",
+            "### Active tab preselected\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}' active-tab=\"second\">\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```"
+          ],
+          "groups": [
+            "ui"
+          ],
+          "readme": "# wcp-tabs\n\n## Examples\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}'>\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```\n\n### Active tab preselected\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}' active-tab=\"second\">\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```\n\n## Properties\n\n| Property    | Attribute    | Type                     | Default |\n|-------------|--------------|--------------------------|---------|\n| `activeTab` | `active-tab` | `string \\| undefined`    |         |\n| `code`      |              | `string`                 | \"\"      |\n| `tabFocus`  |              | `number`                 | 0       |\n| `tabRoles`  |              | `HTMLElement[]`          |         |\n| `tabs`      | `tabs`       | `Record<string, string>` | {}      |\n\n## Methods\n\n| Method                | Type                           |\n|-----------------------|--------------------------------|\n| `emitActiveTabChange` | `(): void`                     |\n| `handleKeydown`       | `(event: KeyboardEvent): void` |\n| `handleTabClick`      | `(event: Event): void`         |\n\n## Events\n\n| Event                         | Type                                             | Description                          |\n|-------------------------------|--------------------------------------------------|--------------------------------------|\n| `wcp-tabs:active-tab-changed` | `CustomEvent<{ activeTab: string \\| undefined; }>` | Notifies when the active tab changes |\n\n## Slots\n\n| Name | Description                              |\n|------|------------------------------------------|\n|      | tab name - The content of the named tab. |\n\n## CSS Custom Properties\n\n| Property                                   | Description                                      |\n|--------------------------------------------|--------------------------------------------------|\n| `--wcp-tabs-panel-spacing`                 | The inner padding of the tabpanels               |\n| `--wcp-tabs-tab-active-border-width`       | The border width of the active tab               |\n| `--wcp-tabs-tab-active-dark-border-color`  | The border color of the active tab in dark mode  |\n| `--wcp-tabs-tab-active-light-border-color` | The border color of the active tab in light mode |\n| `--wcp-tabs-tab-spacing`                   | The inner padding of the tabs                    |\n| `--wcp-tabs-tablist-dark-border-color`     | The border color of the tablist in dark mode     |\n| `--wcp-tabs-tablist-gap`                   | The gap between the tablist and the tabpanels    |\n| `--wcp-tabs-tablist-light-border-color`    | The border color of the tablist in light mode    |\n| `--wcp-tabs-tablist-spacing`               | The inner padding of the tablist                 |\n",
+          "tagName": "wcp-tabs",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Tabs",
+          "declaration": {
+            "name": "Tabs",
+            "module": "src/components/ui/tabs/tabs.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-tabs",
+          "declaration": {
+            "name": "Tabs",
+            "module": "src/components/ui/tabs/tabs.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/title/title.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Shows the application title and a logo.",
+          "name": "Title",
+          "cssProperties": [
+            {
+              "description": "The gap between the logo and the title",
+              "name": "--wcp-title-gap"
+            },
+            {
+              "description": "The height of the title. Content may exceed and scales the tile",
+              "name": "--wcp-title-height"
+            },
+            {
+              "description": "Inner padding of the title",
+              "name": "--wcp-title-spacing"
+            },
+            {
+              "description": "The font size of the title",
+              "name": "--wcp-title-headline-size"
+            },
+            {
+              "description": "The font weight of the title",
+              "name": "--wcp-title-headline-weight"
+            },
+            {
+              "description": "The letter spacing of the title",
+              "name": "--wcp-title-headline-spacing"
+            },
+            {
+              "description": "The line height of the title",
+              "name": "--wcp-title-headline-line-height"
+            },
+            {
+              "description": "The text transform of the title",
+              "name": "--wcp-title-headline-transform"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Receives the logo image to be shown",
+              "name": "logo"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "title",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "title"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-title title=\"Web Components Preview\">\n  <img slot=\"logo\" src=\"assets/icons/logo.svg\" height=\"30px\" />\n</wcp-title>\n```"
+          ],
+          "groups": [
+            "ui"
+          ],
+          "readme": "# wcp-title\n\nShows the application title and a logo.\n\n## Example\n\n```html\n<wcp-title title=\"Web Components Preview\">\n  <img slot=\"logo\" src=\"assets/icons/logo.svg\" height=\"30px\" />\n</wcp-title>\n```\n\n## Properties\n\n| Property | Attribute | Type     |\n|----------|-----------|----------|\n| `title`  | `title`   | `string` |\n\n## Slots\n\n| Name   | Description                         |\n|--------|-------------------------------------|\n| `logo` | Receives the logo image to be shown |\n\n## CSS Custom Properties\n\n| Property                           | Description                                      |\n|------------------------------------|--------------------------------------------------|\n| `--wcp-title-gap`                  | The gap between the logo and the title           |\n| `--wcp-title-headline-line-height` | The line height of the title                     |\n| `--wcp-title-headline-size`        | The font size of the title                       |\n| `--wcp-title-headline-spacing`     | The letter spacing of the title                  |\n| `--wcp-title-headline-transform`   | The text transform of the title                  |\n| `--wcp-title-headline-weight`      | The font weight of the title                     |\n| `--wcp-title-height`               | The height of the title. Content may exceed and scales the tile |\n| `--wcp-title-spacing`              | Inner padding of the title                       |\n",
+          "tagName": "wcp-title",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Title",
+          "declaration": {
+            "name": "Title",
+            "module": "src/components/ui/title/title.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-title",
+          "declaration": {
+            "name": "Title",
+            "module": "src/components/ui/title/title.component.ts"
+          }
+        }
+      ]
+    }
+  ]
+}
