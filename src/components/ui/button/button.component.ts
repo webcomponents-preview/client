@@ -3,6 +3,9 @@ import { customElement, eventOptions, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 
+// Safari still hasn't ElementInternals shipped
+import 'element-internals-polyfill';
+
 import styles from './button.component.scss';
 
 /**
