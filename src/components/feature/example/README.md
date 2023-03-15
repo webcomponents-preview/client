@@ -18,6 +18,8 @@
 
 **Mixins:** ColorSchemable
 
+**Mixins:** ColorSchemable
+
 ## Slots
 
 | Name      | Description              |
