@@ -1,5 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
-declare const ToggleColorScheme_base: (new (...args: any[]) => import("@/utils/color-scheme.utils").ColorSchemableInterface) & typeof LitElement;
+declare const ToggleColorScheme_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * Shows a button to toggle the desired color-scheme.
  *
@@ -10,7 +12,7 @@ declare const ToggleColorScheme_base: (new (...args: any[]) => import("@/utils/c
  */
 export declare class ToggleColorScheme extends ToggleColorScheme_base {
     static readonly styles: import("lit").CSSResult;
-    colorScheme: "dark" | "light";
+    colorScheme: "light" | "dark";
     handleButtonClick(): void;
     protected render(): TemplateResult;
 }

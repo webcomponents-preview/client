@@ -1,5 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
-declare const Aside_base: (new (...args: any[]) => import("@/utils/color-scheme.utils").ColorSchemableInterface) & typeof LitElement;
+declare const Aside_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * To toggle the side bar remotely, you can dispatch a custom event on the global window object:
  * ```js

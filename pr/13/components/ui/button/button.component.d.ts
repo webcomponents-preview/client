@@ -1,6 +1,8 @@
 import { LitElement, type TemplateResult } from 'lit';
 import 'element-internals-polyfill';
-declare const Button_base: (new (...args: any[]) => import("@/utils/color-scheme.utils").ColorSchemableInterface) & typeof LitElement;
+declare const Button_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * Shows a button element.
  *

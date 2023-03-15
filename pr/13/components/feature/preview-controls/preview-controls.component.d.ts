@@ -1,5 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
-declare const PreviewControls_base: (new (...args: any[]) => import("@/utils/color-scheme.utils").ColorSchemableInterface) & typeof LitElement;
+declare const PreviewControls_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * @example
  * ```html

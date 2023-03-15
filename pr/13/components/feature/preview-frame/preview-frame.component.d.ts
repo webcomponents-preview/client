@@ -1,7 +1,9 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest';
 import { LitElement, type TemplateResult } from 'lit';
 import { type CustomElementDeclarationWithExamples, CustomElementDeclarationWithReadme } from '@/utils/custom-elements-manifest.utils';
-declare const PreviewFrame_base: (new (...args: any[]) => import("@/utils/color-scheme.utils").ColorSchemableInterface) & typeof LitElement;
+declare const PreviewFrame_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * @example
  * ```html
