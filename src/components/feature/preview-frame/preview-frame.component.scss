@@ -66,21 +66,14 @@ wcp-tabs {
     flex: 1 0 auto;
     flex-direction: column;
   }
-
-  &::part(examples-panel) {
-    padding: 0;
-  }
 }
 
 [slot='examples'] {
-  display: flex;
-  flex-direction: column;
-
   section {
-    padding: var(---wcp-preview-frame-example-spacing);
-  }
+    margin: var(---wcp-preview-frame-example-spacing);
 
-  section ~ section {
-    border-top: var(---wcp-preview-frame-border-width) solid var(---wcp-preview-frame-border-color);
+    ~ section {
+      border-top: var(---wcp-preview-frame-border-width) solid var(---wcp-preview-frame-border-color);
+    }
   }
 }
