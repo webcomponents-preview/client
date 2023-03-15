@@ -16,6 +16,6 @@ Shows a button to toggle sidebar.
 
 ## Events
 
-| Event              | Type                   |
-|--------------------|------------------------|
-| `wcp-aside:toggle` | `CustomEvent<boolean>` |
+| Event              |
+|--------------------|
+| `wcp-aside:toggle` |
