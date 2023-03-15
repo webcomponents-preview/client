@@ -23,10 +23,10 @@ import styles from './aside.component.scss';
  * @cssprop --wcp-aside-toggle-size - The size of the toggle button
  * @cssprop --wcp-aside-toggle-offset-vertical - The vertical offset of the toggle button
  * @cssprop --wcp-aside-toggle-offset-horizontal - The horizontal offset of the toggle button
- * 
+ *
  * @cssprop --wcp-aside-dark-background - The background color of the side bar in dark mode
  * @cssprop --wcp-aside-dark-color - The color of the side bar in dark mode
- * 
+ *
  * @cssprop --wcp-aside-light-background - The background color of the side bar in light mode
  * @cssprop --wcp-aside-light-color - The color of the side bar in light mode
  */
@@ -57,12 +57,6 @@ export class Aside extends LitElement {
     this.dispatchEvent(event);
   }
 
-  @eventOptions({ passive: true })
-  handleAsideToggle() {
-    this.collapsed = !this.collapsed;
-    this.emitToggled();
-  }
-
   listenAsideToggle = (({ detail = !this.collapsed }: CustomEvent<boolean>) => {
     this.collapsed = detail;
     this.emitToggled();
@@ -80,11 +74,6 @@ export class Aside extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <header>
-        <wcp-button kind="icon" @click="${this.handleAsideToggle}">
-          <wcp-icon name="${this.collapsed ? 'menu' : 'close'}"></wcp-icon>
-        </wcp-button>
-      </header>
       <section>
         <slot></slot>
       </section>

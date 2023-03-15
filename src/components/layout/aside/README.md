@@ -19,10 +19,9 @@ window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));
 
 ## Methods
 
-| Method              | Type       |
-|---------------------|------------|
-| `emitToggled`       | `(): void` |
-| `handleAsideToggle` | `(): void` |
+| Method        | Type       |
+|---------------|------------|
+| `emitToggled` | `(): void` |
 
 ## Events
 
