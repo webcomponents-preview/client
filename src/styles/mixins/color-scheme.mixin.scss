@@ -1,29 +1,39 @@
+@use 'sass:list';
 @use 'sass:selector';
 
+@mixin with-color-scheme-attribute($color-scheme, $append-root: true, $no-shadow: false) {
+  $modifier: '[color-scheme="#{$color-scheme}"]';
+  $modified: if($no-shadow, $modifier, ':host(#{$modifier})');
+  $selector: if($append-root, selector.unify($modified, &), $modified &);
+
+  @at-root (without: all) {
+    #{$selector} {
+      @content;
+    }
+  }
+}
+
+@mixin with-color-scheme-media($color-scheme) {
+  @media (prefers-color-scheme: #{$color-scheme}) {
+    @content;
+  }
+}
+
 @mixin color-scheme(
+  $no-shadow: false,
+  $append-root: true,
   $color-schemes: (
     dark,
     light,
   )
 ) {
   @each $color-scheme in $color-schemes {
-    @media (prefers-color-scheme: #{$color-scheme}) {
+    // match to media query by OS default
+    @include with-color-scheme-media($color-scheme) {
       @content ($color-scheme);
     }
-
-    @at-root :host([color-scheme='#{$color-scheme}']) {
-      @content ($color-scheme);
-    }
-  }
-}
-
-@mixin color-scheme-no-shadow($selector, $color-schemes: (dark, light)) {
-  @each $color-scheme in $color-schemes {
-    @media (prefers-color-scheme: #{$color-scheme}) {
-      @content ($color-scheme);
-    }
-
-    @at-root #{selector.replace(&, $selector, '#{$selector}[color-scheme="#{$color-scheme}"]')} {
+    // match to element attribute selector override
+    @include with-color-scheme-attribute($color-scheme, $append-root, $no-shadow) {
       @content ($color-scheme);
     }
   }

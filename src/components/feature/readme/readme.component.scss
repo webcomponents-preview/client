@@ -42,7 +42,7 @@ wcp-readme {
     // prettier-ignore
     table td, table th, table tr,
     h1, h2, h3, h4, h5, h6 {
-      @include utils.color-scheme-no-shadow('wcp-readme') using ($color-scheme) {
+      @include utils.color-scheme(true) using ($color-scheme) {
         border-color: var(---wcp-readme-#{$color-scheme}-border-color);
       }
     }
@@ -52,7 +52,7 @@ wcp-readme {
         background-color: transparent;
 
         &:nth-child(2n) {
-          @include utils.color-scheme-no-shadow('wcp-readme') using ($color-scheme) {
+          @include utils.color-scheme(true, true) using ($color-scheme) {
             background-color: var(---wcp-readme-#{$color-scheme}-highlight-background);
           }
         }
