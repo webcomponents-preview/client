@@ -1,3 +1,5 @@
+@use 'sass:selector';
+
 @mixin color-scheme(
   $color-schemes: (
     dark,
@@ -10,6 +12,18 @@
     }
 
     @at-root :host([color-scheme='#{$color-scheme}']) {
+      @content ($color-scheme);
+    }
+  }
+}
+
+@mixin color-scheme-no-shadow($selector, $color-schemes: (dark, light)) {
+  @each $color-scheme in $color-schemes {
+    @media (prefers-color-scheme: #{$color-scheme}) {
+      @content ($color-scheme);
+    }
+
+    @at-root #{selector.replace(&, $selector, '#{$selector}[color-scheme="#{$color-scheme}"]')} {
       @content ($color-scheme);
     }
   }
