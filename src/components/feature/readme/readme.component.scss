@@ -39,23 +39,19 @@ wcp-readme {
       padding: 0;
     }
 
-    // prettier-ignore
-    table td, table th, table tr,
-    h1, h2, h3, h4, h5, h6 {
-      @include utils.color-scheme(true) using ($color-scheme) {
-        border-color: var(---wcp-readme-#{$color-scheme}-border-color);
-      }
+    table tr {
+      background-color: transparent;
     }
 
-    table {
-      tr {
-        background-color: transparent;
+    @include utils.color-scheme(false, parent) using ($color-scheme) {
+      // prettier-ignore
+      table td, table th, table tr,
+      h1, h2, h3, h4, h5, h6 {
+        border-color: var(---wcp-readme-#{$color-scheme}-border-color);
+      }
 
-        &:nth-child(2n) {
-          @include utils.color-scheme(true, true) using ($color-scheme) {
-            background-color: var(---wcp-readme-#{$color-scheme}-highlight-background);
-          }
-        }
+      table tr:nth-child(2n) {
+        background-color: var(---wcp-readme-#{$color-scheme}-highlight-background);
       }
     }
   }
