@@ -8,7 +8,7 @@ import styles from './toggle-sidebar.component.scss';
  *
  * @example
  * ```html
- * <wcp-wcp-toggle-sidebar></wcp-wcp-toggle-sidebar>
+ * <wcp-toggle-sidebar></wcp-toggle-sidebar>
  * ```
  */
 @customElement('wcp-toggle-sidebar')

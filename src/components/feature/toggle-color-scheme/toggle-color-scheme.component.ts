@@ -8,7 +8,7 @@ import styles from './toggle-color-scheme.component.scss';
  *
  * @example
  * ```html
- * <wcp-wcp-toggle-color-scheme></wcp-wcp-toggle-color-scheme>
+ * <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
  * ```
  */
 @customElement('wcp-toggle-color-scheme')
