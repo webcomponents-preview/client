@@ -20,7 +20,9 @@ export class ToggleColorScheme extends LitElement {
 
   protected render(): TemplateResult {
     return html`
-      <wcp-button kind="icon" @click="${this.handleButtonClick}"><wcp-icon name="menu"></wcp-icon></wcp-button>
+      <wcp-button kind="icon" @click="${this.handleButtonClick}">
+        <wcp-icon name="${this.colorScheme === 'dark' ? 'moon' : 'sun'}"></wcp-icon>
+      </wcp-button>
     `;
   }
 }
