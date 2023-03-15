@@ -102,6 +102,15 @@ export class Root extends LitElement {
     this.emitManifestLoaded();
   }
 
+  async selectFallbackElement() {
+    // do we already have an active element? do we have any elements at all?
+    if (this.activeElement !== undefined || this.elements.length < 1) return;
+
+    // wait for the element to be loaded and then start navigating
+    await this.updateComplete;
+    location.href = `#/${getNiceUrl(this.elements[0])}`;
+  }
+
   getActiveElementDeclaration(): CustomElementDeclaration | undefined {
     return this.elements?.find((element) => element.tagName === this.activeElement);
   }
