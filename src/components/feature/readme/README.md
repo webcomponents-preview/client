@@ -1,5 +1,7 @@
 # wcp-readme
 
+**Mixins:** ColorSchemable
+
 ## Example
 
 ```html

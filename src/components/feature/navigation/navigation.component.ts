@@ -2,6 +2,8 @@ import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 
+import { ColorSchemable } from '@/utils/color-scheme.utils';
+
 import styles from './navigation.component.scss';
 
 /**
@@ -29,7 +31,7 @@ import styles from './navigation.component.scss';
  * @cssprop --wcp-navigation-headline-light-background - Background color of the navigation headline in light mode
  */
 @customElement('wcp-navigation')
-export class Navigation extends LitElement {
+export class Navigation extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   @property({ type: String, reflect: true })

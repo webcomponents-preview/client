@@ -3,6 +3,8 @@ import { customElement, eventOptions, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 
+import { ColorSchemable } from '@/utils/color-scheme.utils';
+
 // Safari still hasn't ElementInternals shipped
 import 'element-internals-polyfill';
 
@@ -70,7 +72,7 @@ import styles from './button.component.scss';
  * @cssprop --wcp-button-light-active-color - Text color of the button if active in light mode
  */
 @customElement('wcp-button')
-export class Button extends LitElement {
+export class Button extends ColorSchemable(LitElement) {
   static readonly formAssociated = true;
   static readonly styles = unsafeCSS(styles);
 

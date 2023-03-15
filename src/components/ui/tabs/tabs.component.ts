@@ -2,6 +2,8 @@ import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, queryAll, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 
+import { ColorSchemable } from '@/utils/color-scheme.utils';
+
 import styles from './tabs.component.scss';
 
 /**
@@ -39,7 +41,7 @@ import styles from './tabs.component.scss';
  * @cssprop --wcp-tabs-tab-active-light-border-color - The border color of the active tab in light mode
  */
 @customElement('wcp-tabs')
-export class Tabs extends LitElement {
+export class Tabs extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   tabFocus = 0;

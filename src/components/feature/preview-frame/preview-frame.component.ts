@@ -7,6 +7,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
 import { renderMarkdown } from '@/utils/code.utils';
+import { ColorSchemable } from '@/utils/color-scheme.utils';
 import {
   type CustomElementDeclarationWithExamples,
   hasExamples,
@@ -36,7 +37,7 @@ import styles from './preview-frame.component.scss';
  * @cssprop --wcp-preview-frame-spacing - Inner padding of the example section
  */
 @customElement('wcp-preview-frame')
-export class PreviewFrame extends LitElement {
+export class PreviewFrame extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   @state()

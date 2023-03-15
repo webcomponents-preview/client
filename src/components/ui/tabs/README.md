@@ -1,5 +1,7 @@
 # wcp-tabs
 
+**Mixins:** ColorSchemable
+
 ## Examples
 
 ```html
