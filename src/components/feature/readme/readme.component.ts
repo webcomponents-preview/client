@@ -30,14 +30,12 @@ export class Readme extends ColorSchemable(LitElement) {
   }
 
   override connectedCallback() {
-    console.log('connected');
     super.connectedCallback();
     this.classList.add('markdown-body');
   }
 
   // without ShadowDOM, we need to manually inject the styles
   protected render(): TemplateResult {
-    console.log('render');
     return html`
       ${unsafeHTML(renderMarkdown(this.markdown))}
       <style>
