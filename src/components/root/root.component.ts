@@ -193,6 +193,7 @@ export class Root extends ColorSchemable(LitElement) {
 
         <wcp-preview-controls>
           <wcp-toggle-sidebar></wcp-toggle-sidebar>
+          <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
           <slot name="preview-controls"></slot>
         </wcp-preview-controls>
         <slot name="preview-frame">
