@@ -1,13 +1,21 @@
-@use 'sass:list';
-@use 'sass:selector';
-
-@mixin with-color-scheme-attribute($color-scheme, $append-root: true, $no-shadow: false) {
+@mixin with-color-scheme-attribute($color-scheme, $shadow: true, $append: false) {
   $modifier: '[color-scheme="#{$color-scheme}"]';
-  $modified: if($no-shadow, $modifier, ':host(#{$modifier})');
-  $selector: if($append-root, selector.unify($modified, &), $modified &);
+  $modified: if($shadow, ':host(#{$modifier})', $modifier);
 
-  @at-root (without: all) {
-    #{$selector} {
+  @if $append == root {
+    @at-root (without: all) {
+      #{$modified}#{&} {
+        @content;
+      }
+    }
+  } @else if $append == parent {
+    @at-root (without: all) {
+      #{&}#{$modified} {
+        @content;
+      }
+    }
+  } @else {
+    #{$modified} {
       @content;
     }
   }
@@ -19,9 +27,11 @@
   }
 }
 
+/// Color Scheme mixin
+/// Allows to apply styles based on the OS default color scheme and an override by an attribute selector
 @mixin color-scheme(
-  $no-shadow: false,
-  $append-root: true,
+  $shadow: true,
+  $append: root,
   $color-schemes: (
     dark,
     light,
@@ -33,7 +43,7 @@
       @content ($color-scheme);
     }
     // match to element attribute selector override
-    @include with-color-scheme-attribute($color-scheme, $append-root, $no-shadow) {
+    @include with-color-scheme-attribute($color-scheme, $shadow, $append) {
       @content ($color-scheme);
     }
   }
