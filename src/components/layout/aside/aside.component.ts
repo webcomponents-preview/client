@@ -77,10 +77,12 @@ export class Aside extends LitElement {
 
   protected render(): TemplateResult {
     return html`
+      <header>
+        <wcp-button kind="icon" @click="${this.handleButtonClick}">
+          <wcp-icon name="close"></wcp-icon>
+        </wcp-button>
+      </header>
       <slot></slot>
-      <wcp-button kind="icon" @click="${this.handleButtonClick}">
-        <wcp-icon name="close"></wcp-icon>
-      </wcp-button>
     `;
   }
 }
