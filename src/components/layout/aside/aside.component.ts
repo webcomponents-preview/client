@@ -84,6 +84,8 @@ export class Aside extends LitElement {
 declare global {
   interface WindowEventMap {
     'wcp-aside:toggle': CustomEvent<boolean>;
+  }
+  interface HTMLElementEventMap {
     'wcp-aside:toggled': CustomEvent<boolean>;
   }
   interface HTMLElementTagNameMap {
