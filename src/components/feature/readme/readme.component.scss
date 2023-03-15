@@ -34,6 +34,7 @@ wcp-readme {
     // as these are wrapped in our custom `wcp-example` component, we
     // need to reset the spacing on the projected pre elements
     pre {
+      background: 0;
       margin: 0;
       padding: 0;
     }
