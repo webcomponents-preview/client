@@ -17,7 +17,7 @@ export class ToggleSidebar extends LitElement {
 
   @eventOptions({ passive: true })
   handleButtonClick() {
-    window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: false }));
+    window.dispatchEvent(new CustomEvent('wcp-aside:toggle'));
   }
 
   protected render(): TemplateResult {
