@@ -13,12 +13,9 @@ import { LitElement, type TemplateResult } from 'lit';
  *
  * @event wcp-aside-toggled - Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event.
  *
- * @cssprop --wcp-aside-collapsed-width - The width of the aside bar when collapsed
- * @cssprop --wcp-aside-expanded-width - The width of the aside bar when expanded
+ * @cssprop --wcp-aside-max-width - The maximum width of the aside bar when visible
  * @cssprop --wcp-aside-spacing - Inner padding of the aside bar
  * @cssprop --wcp-aside-toggle-size - The size of the toggle button
- * @cssprop --wcp-aside-toggle-offset-vertical - The vertical offset of the toggle button
- * @cssprop --wcp-aside-toggle-offset-horizontal - The horizontal offset of the toggle button
  *
  * @cssprop --wcp-aside-dark-background - The background color of the side bar in dark mode
  * @cssprop --wcp-aside-dark-color - The color of the side bar in dark mode
@@ -31,22 +28,24 @@ export declare class Aside extends LitElement {
     /**
      * Used to toggle the width of the aside bar
      */
-    collapsed: boolean;
+    hidden: boolean;
     /**
      * Presets the aria role to `complementary` as we do not use te aside element directly
      * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/complementary_role
      */
     role: string;
     emitToggled(): void;
-    handleAsideToggle(): void;
-    listenAsideToggle: ({ detail }: CustomEvent<boolean>) => void;
+    handleButtonClick(): void;
+    listenAsideToggle: ({ detail }: CustomEvent<boolean | null>) => void;
     connectedCallback(): void;
     disconnectedCallback(): void;
     protected render(): TemplateResult;
 }
 declare global {
     interface WindowEventMap {
-        'wcp-aside:toggle': CustomEvent<boolean>;
+        'wcp-aside:toggle': CustomEvent<boolean | null>;
+    }
+    interface HTMLElementEventMap {
         'wcp-aside:toggled': CustomEvent<boolean>;
     }
     interface HTMLElementTagNameMap {

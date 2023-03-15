@@ -165,10 +165,6 @@
             {
               "kind": "field",
               "name": "handleHashChange"
-            },
-            {
-              "kind": "method",
-              "name": "handleMenuClick"
             }
           ],
           "attributes": [
@@ -230,7 +226,7 @@
           "groups": [
             "root"
           ],
-          "readme": "# wcp-root\n\n## Properties\n\n| Property            | Attribute             | Type                                         | Default                                          | Description                                      |\n|---------------------|-----------------------|----------------------------------------------|--------------------------------------------------|--------------------------------------------------|\n| `activeElement`     | `active-element`      | `string \\| undefined`                        |                                                  | Sets the currently active element by its tag name. Will be updated at runtime and can<br />be preset with an initial value to define the active element at startup. |\n| `configUrl`         | `config-url`          | `string \\| undefined`                        |                                                  | Allows to set a url to load a config file from.  |\n| `elements`          |                       | `CustomElementDeclaration[]`                 | []                                               |                                                  |\n| `fallbackGroupName` | `fallback-group-name` | `string`                                     | \"Components\"                                     | Allows to set a fallback group name for elements that do not have a `groups` property.<br />So this is the name of the group that will contain all elements unless the manifest is<br />generated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin. |\n| `handleHashChange`  |                       |                                              | \"(() => {\\n    const [, activeElement] = window.location.hash.split('#/');\\n    this.activeElement = activeElement;\\n    this.emitActiveElementChanged();\\n  }).bind(this)\" |                                                  |\n| `inline`            | `inline`              | `boolean`                                    | false                                            | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifestUrl`       | `manifest-url`        | `string \\| undefined`                        |                                                  | Defines the location of the custom element manifest file. |\n| `navigation`        |                       | `Record<string, CustomElementDeclaration[]>` | {}                                               |                                                  |\n| `title`             | `title`               | `string`                                     |                                                  |                                                  |\n\n## Methods\n\n| Method                        | Type                                        |\n|-------------------------------|---------------------------------------------|\n| `emitActiveElementChanged`    | `(): void`                                  |\n| `emitManifestLoaded`          | `(): void`                                  |\n| `getActiveElementDeclaration` | `(): CustomElementDeclaration \\| undefined` |\n| `handleMenuClick`             | `(): void`                                  |\n| `loadCustomElementsManifest`  | `(): Promise<void>`                         |\n\n## Events\n\n| Event                             | Type                                      | Description                                      |\n|-----------------------------------|-------------------------------------------|--------------------------------------------------|\n| `wcp-aside:toggle`                | `CustomEvent<boolean>`                    |                                                  |\n| `wcp-root:active-element-changed` | `CustomEvent<CustomElementDeclaration>`   | Fired when the active element changes. Carries the declaration of the new active element with it. |\n| `wcp-root:manifest-loaded`        | `CustomEvent<CustomElementDeclaration[]>` | Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode |\n| `--wcp-root-light-background` | The background color of the root element in light mode |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode |\n",
+          "readme": "# wcp-root\n\n## Properties\n\n| Property            | Attribute             | Type                                         | Default                                          | Description                                      |\n|---------------------|-----------------------|----------------------------------------------|--------------------------------------------------|--------------------------------------------------|\n| `activeElement`     | `active-element`      | `string \\| undefined`                        |                                                  | Sets the currently active element by its tag name. Will be updated at runtime and can<br />be preset with an initial value to define the active element at startup. |\n| `configUrl`         | `config-url`          | `string \\| undefined`                        |                                                  | Allows to set a url to load a config file from.  |\n| `elements`          |                       | `CustomElementDeclaration[]`                 | []                                               |                                                  |\n| `fallbackGroupName` | `fallback-group-name` | `string`                                     | \"Components\"                                     | Allows to set a fallback group name for elements that do not have a `groups` property.<br />So this is the name of the group that will contain all elements unless the manifest is<br />generated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin. |\n| `handleHashChange`  |                       |                                              | \"(() => {\\n    const [, activeElement] = window.location.hash.split('#/');\\n    this.activeElement = activeElement;\\n    this.emitActiveElementChanged();\\n  }).bind(this)\" |                                                  |\n| `inline`            | `inline`              | `boolean`                                    | false                                            | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifestUrl`       | `manifest-url`        | `string \\| undefined`                        |                                                  | Defines the location of the custom element manifest file. |\n| `navigation`        |                       | `Record<string, CustomElementDeclaration[]>` | {}                                               |                                                  |\n| `title`             | `title`               | `string`                                     |                                                  |                                                  |\n\n## Methods\n\n| Method                        | Type                                        |\n|-------------------------------|---------------------------------------------|\n| `emitActiveElementChanged`    | `(): void`                                  |\n| `emitManifestLoaded`          | `(): void`                                  |\n| `getActiveElementDeclaration` | `(): CustomElementDeclaration \\| undefined` |\n| `loadCustomElementsManifest`  | `(): Promise<void>`                         |\n\n## Events\n\n| Event                             | Type                                      | Description                                      |\n|-----------------------------------|-------------------------------------------|--------------------------------------------------|\n| `wcp-root:active-element-changed` | `CustomEvent<CustomElementDeclaration>`   | Fired when the active element changes. Carries the declaration of the new active element with it. |\n| `wcp-root:manifest-loaded`        | `CustomEvent<CustomElementDeclaration[]>` | Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode |\n| `--wcp-root-light-background` | The background color of the root element in light mode |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode |\n",
           "tagName": "wcp-root",
           "customElement": true
         }
@@ -916,6 +912,54 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/feature/toggle-sidebar/toggle-sidebar.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Shows a button to toggle sidebar.",
+          "name": "ToggleSidebar",
+          "members": [
+            {
+              "kind": "method",
+              "name": "handleButtonClick"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-wcp-toggle-sidebar></wcp-wcp-toggle-sidebar>\n```"
+          ],
+          "groups": [
+            "feature"
+          ],
+          "readme": "# wcp-toggle-sidebar\n\nShows a button to toggle sidebar.\n\n## Example\n\n```html\n<wcp-wcp-toggle-sidebar></wcp-wcp-toggle-sidebar>\n```\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event              |\n|--------------------|\n| `wcp-aside:toggle` |\n",
+          "tagName": "wcp-toggle-sidebar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ToggleSidebar",
+          "declaration": {
+            "name": "ToggleSidebar",
+            "module": "src/components/feature/toggle-sidebar/toggle-sidebar.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-toggle-sidebar",
+          "declaration": {
+            "name": "ToggleSidebar",
+            "module": "src/components/feature/toggle-sidebar/toggle-sidebar.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/layout/aside/aside.component.ts",
       "declarations": [
         {
@@ -924,12 +968,8 @@
           "name": "Aside",
           "cssProperties": [
             {
-              "description": "The width of the aside bar when collapsed",
-              "name": "--wcp-aside-collapsed-width"
-            },
-            {
-              "description": "The width of the aside bar when expanded",
-              "name": "--wcp-aside-expanded-width"
+              "description": "The maximum width of the aside bar when visible",
+              "name": "--wcp-aside-max-width"
             },
             {
               "description": "Inner padding of the aside bar",
@@ -938,14 +978,6 @@
             {
               "description": "The size of the toggle button",
               "name": "--wcp-aside-toggle-size"
-            },
-            {
-              "description": "The vertical offset of the toggle button",
-              "name": "--wcp-aside-toggle-offset-vertical"
-            },
-            {
-              "description": "The horizontal offset of the toggle button",
-              "name": "--wcp-aside-toggle-offset-horizontal"
             },
             {
               "description": "The background color of the side bar in dark mode",
@@ -973,13 +1005,13 @@
           "members": [
             {
               "kind": "field",
-              "name": "collapsed",
+              "name": "hidden",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
               "description": "Used to toggle the width of the aside bar",
-              "attribute": "collapsed",
+              "attribute": "hidden",
               "reflects": true
             },
             {
@@ -999,7 +1031,7 @@
             },
             {
               "kind": "method",
-              "name": "handleAsideToggle"
+              "name": "handleButtonClick"
             },
             {
               "kind": "field",
@@ -1014,13 +1046,13 @@
           ],
           "attributes": [
             {
-              "name": "collapsed",
+              "name": "hidden",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
               "description": "Used to toggle the width of the aside bar",
-              "fieldName": "collapsed"
+              "fieldName": "hidden"
             },
             {
               "name": "role",
@@ -1040,7 +1072,7 @@
           "groups": [
             "layout"
           ],
-          "readme": "# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n## Properties\n\n| Property            | Attribute   | Type      | Default                                          | Description                                      |\n|---------------------|-------------|-----------|--------------------------------------------------|--------------------------------------------------|\n| `collapsed`         | `collapsed` | `boolean` | false                                            | Used to toggle the width of the aside bar        |\n| `listenAsideToggle` |             |           | \"(({ detail = !this.collapsed }: CustomEvent<boolean>) => {\\n    this.collapsed = detail;\\n    this.emitToggled();\\n  }).bind(this)\" |                                                  |\n| `role`              | `role`      | `string`  | \"complementary\"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `emitToggled`       | `(): void` |\n| `handleAsideToggle` | `(): void` |\n\n## Events\n\n| Event               | Type                   | Description                                      |\n|---------------------|------------------------|--------------------------------------------------|\n| `wcp-aside-toggled` |                        | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n| `wcp-aside:toggled` | `CustomEvent<boolean>` |                                                  |\n\n## Slots\n\n| Name | Description                              |\n|------|------------------------------------------|\n|      | Projects elements aside the main content |\n\n## CSS Custom Properties\n\n| Property                               | Description                                      |\n|----------------------------------------|--------------------------------------------------|\n| `--wcp-aside-collapsed-width`          | The width of the aside bar when collapsed        |\n| `--wcp-aside-dark-background`          | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`               | The color of the side bar in dark mode           |\n| `--wcp-aside-expanded-width`           | The width of the aside bar when expanded         |\n| `--wcp-aside-light-background`         | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`              | The color of the side bar in light mode          |\n| `--wcp-aside-spacing`                  | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-offset-horizontal` | The horizontal offset of the toggle button       |\n| `--wcp-aside-toggle-offset-vertical`   | The vertical offset of the toggle button         |\n| `--wcp-aside-toggle-size`              | The size of the toggle button                    |\n",
+          "readme": "# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n## Properties\n\n| Property            | Attribute | Type      | Default                                          | Description                                      |\n|---------------------|-----------|-----------|--------------------------------------------------|--------------------------------------------------|\n| `hidden`            | `hidden`  | `boolean` | false                                            | Used to toggle the width of the aside bar        |\n| `listenAsideToggle` |           |           | \"(({ detail }: CustomEvent<boolean \\| null>) => {\\n    this.hidden = detail ?? !this.hidden;\\n    this.emitToggled();\\n  }).bind(this)\" |                                                  |\n| `role`              | `role`    | `string`  | \"complementary\"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `emitToggled`       | `(): void` |\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event               | Type                   | Description                                      |\n|---------------------|------------------------|--------------------------------------------------|\n| `wcp-aside-toggled` |                        | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n| `wcp-aside:toggled` | `CustomEvent<boolean>` |                                                  |\n\n## Slots\n\n| Name | Description                              |\n|------|------------------------------------------|\n|      | Projects elements aside the main content |\n\n## CSS Custom Properties\n\n| Property                       | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |\n| `--wcp-aside-light-background` | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      | The color of the side bar in light mode          |\n| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |\n| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-size`      | The size of the toggle button                    |\n",
           "tagName": "wcp-aside",
           "customElement": true
         }

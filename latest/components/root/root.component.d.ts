@@ -52,7 +52,6 @@ export declare class Root extends LitElement {
     emitManifestLoaded(): void;
     emitActiveElementChanged(): void;
     handleHashChange: () => void;
-    handleMenuClick(): void;
     connectedCallback(): void;
     disconnectedCallback(): void;
     protected render(): TemplateResult;

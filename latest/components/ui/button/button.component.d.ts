@@ -1,4 +1,5 @@
 import { LitElement, type TemplateResult } from 'lit';
+import 'element-internals-polyfill';
 /**
  * Shows a button element.
  *
