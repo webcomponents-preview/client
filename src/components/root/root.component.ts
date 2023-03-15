@@ -99,6 +99,10 @@ export class Root extends LitElement {
     this.elements = getCustomElements(manifest);
     this.navigation = groupCustomElements(this.elements, this.fallbackGroupName);
 
+    // make sure we have a at least the first element active
+    this.selectFallbackElement();
+
+    // notify all others
     this.emitManifestLoaded();
   }
 
