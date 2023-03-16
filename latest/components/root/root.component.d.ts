@@ -48,6 +48,7 @@ export declare class Root extends LitElement {
     set manifestUrl(manifestUrl: string | undefined);
     get manifestUrl(): string | undefined;
     loadCustomElementsManifest(): Promise<void>;
+    selectFallbackElement(): Promise<void>;
     getActiveElementDeclaration(): CustomElementDeclaration | undefined;
     emitManifestLoaded(): void;
     emitActiveElementChanged(): void;
