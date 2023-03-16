@@ -61,8 +61,14 @@
   }
 }
 
+header {
+  position: sticky;
+  inset: 0 0 auto;
+  z-index: 4;
+}
+
 wcp-button {
-  position: fixed;
+  position: absolute;
   top: utils.size(0.4);
   right: utils.size(1.5);
 
