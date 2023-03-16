@@ -99,7 +99,20 @@ export class Root extends LitElement {
     this.elements = getCustomElements(manifest);
     this.navigation = groupCustomElements(this.elements, this.fallbackGroupName);
 
+    // make sure we have a at least the first element active
+    this.selectFallbackElement();
+
+    // notify all others
     this.emitManifestLoaded();
+  }
+
+  async selectFallbackElement() {
+    // do we already have an active element? do we have any elements at all?
+    if (this.activeElement !== undefined || this.elements.length < 1) return;
+
+    // wait for the element to be loaded and then start navigating
+    await this.updateComplete;
+    location.href = `#/${getNiceUrl(this.elements[0])}`;
   }
 
   getActiveElementDeclaration(): CustomElementDeclaration | undefined {
