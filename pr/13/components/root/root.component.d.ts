@@ -51,6 +51,7 @@ export declare class Root extends Root_base {
     set manifestUrl(manifestUrl: string | undefined);
     get manifestUrl(): string | undefined;
     loadCustomElementsManifest(): Promise<void>;
+    selectFallbackElement(): Promise<void>;
     getActiveElementDeclaration(): CustomElementDeclaration | undefined;
     emitManifestLoaded(): void;
     emitActiveElementChanged(): void;
