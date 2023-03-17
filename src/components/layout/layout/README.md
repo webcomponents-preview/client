@@ -1,17 +1,16 @@
-# wcp-layout
+# class: `Layout`
 
-## Example
+## Methods
 
-```html
-<wcp-layout>
-  <nav slot="aside">To the left!</nav>
-  <article>Me the important content!</article>
-</wcp-layout>
-```
+| Name     | Privacy   | Description | Parameters | Return           | Inherited From |
+| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |
+| `render` | protected |             |            | `TemplateResult` |                |
 
 ## Slots
 
 | Name    | Description                              |
-|---------|------------------------------------------|
-|         | Receives the content of the main section |
+| ------- | ---------------------------------------- |
 | `aside` | Projects elements aside the main content |
+|         | Receives the content of the main section |
+
+<hr/>

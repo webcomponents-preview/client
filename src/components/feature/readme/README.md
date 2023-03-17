@@ -1,24 +1,23 @@
-# wcp-readme
+# class: `Readme`
 
-**Mixins:** ColorSchemable
+## Fields
 
-## Example
-
-```html
-<wcp-readme>
- <h1>Readme</h1>
- <p>Some readme content</p>
-</wcp-readme>
-```
-
-## Properties
-
-| Property   | Attribute  | Type     |
-|------------|------------|----------|
-| `markdown` | `markdown` | `string` |
+| Name       | Privacy | Type     | Default | Description | Inherited From |
+| ---------- | ------- | -------- | ------- | ----------- | -------------- |
+| `markdown` |         | `string` |         |             |                |
 
 ## Methods
 
-| Method             | Type       |
-|--------------------|------------|
-| `createRenderRoot` | `(): this` |
+| Name                | Privacy   | Description | Parameters | Return           | Inherited From |
+| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |
+| `createRenderRoot`  |           |             |            |                  |                |
+| `connectedCallback` |           |             |            |                  |                |
+| `render`            | protected |             |            | `TemplateResult` |                |
+
+## Attributes
+
+| Name       | Field    | Inherited From |
+| ---------- | -------- | -------------- |
+| `markdown` | markdown |                |
+
+<hr/>
