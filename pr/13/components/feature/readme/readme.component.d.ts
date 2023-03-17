@@ -13,7 +13,7 @@ declare const Readme_base: (new (...args: any[]) => {
  */
 export declare class Readme extends Readme_base {
     static readonly styles: import("lit").CSSResult;
-    markdown: string;
+    markdown?: string;
     createRenderRoot(): this;
     connectedCallback(): void;
     protected render(): TemplateResult;

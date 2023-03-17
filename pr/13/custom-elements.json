@@ -898,7 +898,7 @@
               "kind": "field",
               "name": "markdown",
               "type": {
-                "text": "string"
+                "text": "string | undefined"
               },
               "attribute": "markdown"
             },
@@ -911,7 +911,7 @@
             {
               "name": "markdown",
               "type": {
-                "text": "string"
+                "text": "string | undefined"
               },
               "fieldName": "markdown"
             }
@@ -932,7 +932,7 @@
           "groups": [
             "feature"
           ],
-          "readme": "# wcp-readme\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-readme>\n <h1>Readme</h1>\n <p>Some readme content</p>\n</wcp-readme>\n```\n\n## Properties\n\n| Property   | Attribute  | Type     |\n|------------|------------|----------|\n| `markdown` | `markdown` | `string` |\n\n## Methods\n\n| Method             | Type       |\n|--------------------|------------|\n| `createRenderRoot` | `(): this` |\n",
+          "readme": "# wcp-readme\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-readme>\n <h1>Readme</h1>\n <p>Some readme content</p>\n</wcp-readme>\n```\n\n## Properties\n\n| Property   | Attribute  | Type                  |\n|------------|------------|-----------------------|\n| `markdown` | `markdown` | `string \\| undefined` |\n\n## Methods\n\n| Method             | Type       |\n|--------------------|------------|\n| `createRenderRoot` | `(): this` |\n",
           "tagName": "wcp-readme",
           "customElement": true
         }
