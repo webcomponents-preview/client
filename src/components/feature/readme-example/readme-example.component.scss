@@ -1,0 +1,27 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-readme-example-spacing: var(--wcp-readme-example-spacing, #{0 utils.size(1)});
+  ---wcp-readme-example-border-radius: var(--wcp-readme-example-border-radius, var(--wcp-border-radius));
+  ---wcp-readme-example-border-width: var(--wcp-readme-example-border-width, 1px);
+
+  ---wcp-readme-example-dark-border-color: var(--wcp-readme-example-dark-border-color, var(--wcp-color-grey-24));
+  ---wcp-readme-example-light-border-color: var(--wcp-readme-example-light-border-color, var(--wcp-color-grey-80));
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-readme-example-border-color: var(---wcp-readme-example-#{$color-scheme}-border-color);
+  }
+}
+
+:host {
+  display: block;
+  padding: var(---wcp-readme-example-spacing);
+
+  border: var(---wcp-readme-example-border-width) solid var(---wcp-readme-example-border-color);
+  border-radius: var(---wcp-readme-example-border-radius);
+}
+
+slot[name='code']::slotted(pre) {
+  margin: 0;
+}
