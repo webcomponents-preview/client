@@ -6,20 +6,6 @@ export function getCodeExample(slot: HTMLSlotElement): string {
   return slot.assignedElements().reduce((acc, el) => `${acc}\n${el.outerHTML}`, '');
 }
 
-// export const replacements = {
-//   '&': '&amp;',
-//   '<': '&lt;',
-//   '>': '&gt;',
-//   '"': '&quot;',
-//   "'": '&#39;',
-// };
-
-// export function escapeCode(code: string): string {
-//   const keys = Object.keys(replacements).join('|');
-//   const regex = new RegExp(`(${keys})`, 'g');
-//   return code.replace(regex, (match) => replacements[match as keyof typeof replacements]);
-// }
-
 // configure marked once, to always use our custom component to preview code examples
 marked.setOptions({
   highlight(code: string, lang: string) {
