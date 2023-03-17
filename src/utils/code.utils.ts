@@ -27,11 +27,17 @@ marked.setOptions({
     return hljs.highlight(code, { language }).value;
   },
   renderer: new (class extends marked.Renderer {
-    code(preview: string, language = 'plaintext'): string {
+    code(preview: string, language = 'plaintext', isEscaped: boolean): string {
+      // do not use example component for anything but html examples
+      if (language !== 'html') {
+        return super.code(preview, language, isEscaped);
+      }
+      // prettify and highlight the code
       let code = pretty(preview);
       if (this.options.highlight) {
         code = this.options.highlight(code, language) as string;
       }
+      // wrap the code in a custom element to preview it
       return `
         <wcp-example>
           <pre slot="code"><code>${code}</code></pre>
