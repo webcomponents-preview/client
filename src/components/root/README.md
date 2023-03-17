@@ -24,6 +24,7 @@
 | `emitManifestLoaded`          | `(): void`                                  |
 | `getActiveElementDeclaration` | `(): CustomElementDeclaration \| undefined` |
 | `loadCustomElementsManifest`  | `(): Promise<void>`                         |
+| `selectFallbackElement`       | `(): Promise<void>`                         |
 
 ## Events
 
