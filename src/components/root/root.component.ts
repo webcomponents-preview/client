@@ -199,9 +199,6 @@ export class Root extends ColorSchemable(LitElement) {
         <slot name="preview-frame">
           <wcp-preview-frame .activeElement="${this.getActiveElementDeclaration()}"></wcp-preview-frame>
         </slot>
-        <wcp-preview-details opened expanded>
-          <slot name="preview-details"></slot>
-        </wcp-preview-details>
       </wcp-layout>
     `;
   }
