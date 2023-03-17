@@ -11,6 +11,26 @@ const README_EXAMPLE_TABS = { preview: 'Preview', code: 'Code' };
 /**
  * Shows an inline code example and a preview of the element in the readme.
  * This is used in the markdown formatter to render `html` examples.
+ * 
+ * In most cases you don't want to use this component directly, but rather use the `wcp-readme` element instead,
+ * or the enhanced markdown renderer which instruments this element under the hood. It can be used with the
+ * `renderMarkdown` function provided by the `@/utils/markdown.utils`.
+ * 
+ * @example
+ * ### Shows arbitrary HTML code example
+ * 
+ * ```html
+ * <wcp-readme-example>
+ *   <pre slot="code">
+ * &lt;h1&gt;Readme&lt;/h1&gt;
+ * &lt;p&gt;Some readme content&lt;/p&gt;
+ *   </pre>
+ *   <div slot="preview">
+ *     <h1>Readme</h1>
+ *     <p>Some readme content</p>
+ *   </div>
+ * </wcp-readme-example>
+ * ```
  *
  * @slot code - Code example
  * @slot preview - Rendered example preview
