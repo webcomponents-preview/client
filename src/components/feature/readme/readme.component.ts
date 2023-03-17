@@ -1,4 +1,4 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { LitElement, type TemplateResult, html, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
@@ -21,7 +21,7 @@ export class Readme extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   @property({ type: String })
-  markdown!: string;
+  markdown?: string;
 
   // disable ShadowDOM
   // https://stackoverflow.com/a/55213037/1146207
@@ -37,7 +37,7 @@ export class Readme extends ColorSchemable(LitElement) {
   // without ShadowDOM, we need to manually inject the styles
   protected render(): TemplateResult {
     return html`
-      ${unsafeHTML(renderMarkdown(this.markdown))}
+      ${this.markdown ? unsafeHTML(renderMarkdown(this.markdown)) : nothing}
       <style>
         ${Readme.styles}
       </style>
