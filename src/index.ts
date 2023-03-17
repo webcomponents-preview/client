@@ -19,6 +19,6 @@ export * from './components/ui/button/button.component';
 export * from './components/ui/icon/icon.component';
 export * from './components/ui/tabs/tabs.component';
 export * from './components/ui/title/title.component';
-export * from './utils/code.utils';
 export * from './utils/color-scheme.utils';
 export * from './utils/custom-elements-manifest.utils';
+export * from './utils/markdown.utils';

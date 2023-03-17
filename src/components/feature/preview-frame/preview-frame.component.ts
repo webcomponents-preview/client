@@ -6,7 +6,7 @@ import { map } from 'lit/directives/map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
-import { renderMarkdown } from '@/utils/code.utils';
+import { renderMarkdown } from '@/utils/markdown.utils';
 import { ColorSchemable } from '@/utils/color-scheme.utils';
 import {
   type CustomElementDeclarationWithExamples,

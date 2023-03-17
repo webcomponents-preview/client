@@ -2,7 +2,7 @@ import { LitElement, type TemplateResult, html, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
-import { renderMarkdown } from '@/utils/code.utils';
+import { renderMarkdown } from '@/utils/markdown.utils';
 import { ColorSchemable } from '@/utils/color-scheme.utils';
 
 import styles from './readme.component.scss';
