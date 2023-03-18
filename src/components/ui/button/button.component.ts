@@ -107,9 +107,18 @@ export class Button extends ColorSchemable(LitElement) {
   @property({ type: Boolean, reflect: true })
   nowrap = false;
 
+  /**
+   * Allows stretching the button across the full width of its container.
+   * This is useful for buttons that are used in a narrow form, or in general
+   * on small viewports, like handheld devices.
+   */
   @property({ type: Boolean, reflect: true })
   stretched = false;
 
+  /**
+   * The kind of button to render. Either like a conventional button, or for
+   * icons. Icon buttons are quadrtic and will show a radial background on interaction.
+   */
   @property({ type: String, reflect: true })
   kind: 'button' | 'icon' = 'button';
 
