@@ -10,7 +10,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/utils/color-scheme.utils';
-import { CustomElementData, EMPTY_ELEMENT_DATA, mapFormData } from './viewer.utils';
+import { CustomElementData, mapFormData, prepareInitialElementData } from './viewer.utils';
 
 import styles from './viewer.component.scss';
 
@@ -24,35 +24,44 @@ import styles from './viewer.component.scss';
 export class Viewer extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
-  @state()
-  private elementData: CustomElementData = EMPTY_ELEMENT_DATA;
+  #element!: CustomElementDeclaration;
 
   @property({ type: Object })
-  element!: CustomElementDeclaration;
+  set element(element: CustomElementDeclaration) {
+    this.#element = element;
+    this.elementData = prepareInitialElementData(element);
+  }
+
+  @state()
+  private elementData?: CustomElementData;
 
   protected getElementReference(): HTMLElement {
-    return this.renderRoot.querySelector(this.element.tagName!) as HTMLElement;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this.renderRoot.querySelector(this.#element.tagName!) as HTMLElement;
   }
 
   protected getFields(): CustomElementField[] {
-    return (this.element.members ?? []).filter(
+    return (this.#element.members ?? []).filter(
       (member) => member.kind === 'field' && member.privacy !== 'private' && !member.static
     ) as CustomElementField[];
   }
 
   protected getSlots(): Slot[] {
-    return this.element.slots ?? [];
+    return this.#element.slots ?? [];
   }
 
   protected getSlotsWithData(): { slot: Slot; data: string }[] {
-    return (this.element.slots ?? [])
-      .filter((slot) => slot.name in this.elementData.slots)
-      .map((slot) => ({ slot, data: this.elementData.slots[slot.name] }));
+    return (
+      this.getSlots()
+        .filter((slot) => this.elementData?.slots && slot.name in this.elementData.slots)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        .map((slot) => ({ slot, data: this.elementData!.slots[slot.name] }))
+    );
   }
 
   protected handleControlsInput(event: InputEvent) {
     const form = event.currentTarget as HTMLFormElement;
-    this.elementData = mapFormData(form, this.element);
+    this.elementData = mapFormData(form, this.#element);
   }
 
   protected renderSlots(): TemplateResult {
@@ -71,9 +80,10 @@ export class Viewer extends ColorSchemable(LitElement) {
   }
 
   protected renderElement(): TemplateResult {
-    const tag = unsafeStatic(this.element.tagName!);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const tag = unsafeStatic(this.#element.tagName!);
     return withStatic(html)`
-      <${tag} ${spread(this.elementData.members)}>${this.renderSlots()}</${tag}>
+      <${tag} ${spread(this.elementData?.members ?? {})}>${this.renderSlots()}</${tag}>
     `;
   }
 
@@ -84,7 +94,6 @@ export class Viewer extends ColorSchemable(LitElement) {
       <!-- TODO: Prepare stage element -->
       <wcp-viewer-stage>${this.renderElement()}</wcp-viewer-stage>
 
-      <!-- <pre>${JSON.stringify(this.element, null, 2)}</pre> -->
       <!-- TODO: Move controls into separate element -->
       <wcp-viewer-controls>
         <form @input="${this.handleControlsInput}">
@@ -96,31 +105,58 @@ export class Viewer extends ColorSchemable(LitElement) {
                 ${map(
                   fields,
                   (member) => html`
-                    <label>
-                      ${when(
-                        member.type?.text === 'boolean',
-                        () =>
-                          html`
-                            <input
-                              type="checkbox"
-                              name="members.${member.name}"
-                              ?checked="${this.elementData.members[member.name]}"
-                            />
-                            <span>${member.name}</span>
+                    <wcp-input>
+                      <label>
+                        ${when(
+                          member.type?.text.startsWith('boolean'),
+                          () =>
+                            html`
+                              <input
+                                type="checkbox"
+                                name="members.${member.name}"
+                                ?checked="${this.elementData?.members[member.name]}"
+                              />
+                              <span class="label">${member.name}</span>
+                            `,
+                          () => html`
+                            ${when(
+                              member.type?.text.startsWith('string'),
+                              () => html`
+                                <input
+                                  type="text"
+                                  name="members.${member.name}"
+                                  placeholder="${member.attribute ?? member.name}"
+                                  .value="${this.elementData?.members[member.name] ?? null}"
+                                />
+                              `,
+                              () =>
+                                html`
+                                  ${when(
+                                    member.type?.text.includes(' | '),
+                                    () => html`
+                                      <select name="members.${member.name}">
+                                        ${map(
+                                          member.type?.text.split(' | '),
+                                          (option) => html`
+                                            <option
+                                              value="${option.slice(1, -1)}"
+                                              ?selected="${this.elementData?.members[member.name] ===
+                                              option.slice(1, -1)}"
+                                            >
+                                              ${option.slice(1, -1)}
+                                            </option>
+                                          `
+                                        )}
+                                      </select>
+                                    `
+                                  )}
+                                `
+                            )}
                           `
-                      )}
-                      ${when(
-                        member.type?.text.startsWith('string'),
-                        () => html`
-                          <input
-                            type="text"
-                            name="members.${member.name}"
-                            placeholder="${member.name}"
-                            value="${this.elementData.members[member.name]}"
-                          />
-                        `
-                      )}
-                    </label>
+                        )}
+                        ${when(member.description, () => html`<span class="description">${member.description}</span>`)}
+                      </label>
+                    </wcp-input>
                   `
                 )}
               </fieldset>
@@ -134,10 +170,17 @@ export class Viewer extends ColorSchemable(LitElement) {
                 ${map(
                   slots,
                   (slot) => html`
-                    <label>
-                      <span>${slot.name.trim() ? slot.name : 'Default'}</span>
-                      <input type="text" name="slots.${slot.name}" value="${this.elementData.slots[slot.name]}" />
-                    </label>
+                    <wcp-input>
+                      <label>
+                        <input
+                          type="text"
+                          name="slots.${slot.name}"
+                          placeholder="${slot.name ?? 'Default'}"
+                          value="${this.elementData?.slots[slot.name]}"
+                        />
+                        ${when(slot.description, () => html`<span class="description">${slot.description}</span>`)}
+                      </label>
+                    </wcp-input>
                   `
                 )}
               </fieldset>

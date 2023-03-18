@@ -11,6 +11,10 @@
   height: 100%;
 }
 
+fieldset {
+  min-width: 0;
+}
+
 wcp-viewer-stage {
   display: block;
   flex: 1 1 auto;
@@ -18,4 +22,22 @@ wcp-viewer-stage {
 
 wcp-viewer-controls {
   display: block;
+  flex: 0 0 auto;
+}
+
+wcp-input {
+  display: block;
+  margin: utils.size(1) 0;
+  width: 100%;
+
+  &:not(:last-child) {
+    padding-bottom: utils.size(1);
+    border-bottom: 1px solid currentColor;
+  }
+
+  .description {
+    display: block;
+    margin: utils.size(0.5) 0 0;
+    max-width: 500px;
+  }
 }
