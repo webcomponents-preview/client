@@ -26,11 +26,11 @@ import styles from './preview-frame.component.scss';
  * @cssprop --wcp-preview-frame-dark-background - Background color of the preview frame in dark mode
  * @cssprop --wcp-preview-frame-dark-border-color - Border color of the example section in dark mode
  * @cssprop --wcp-preview-frame-dark-color - Text color of the preview frame in dark mode
- * 
+ *
  * @cssprop --wcp-preview-frame-light-background - Background color of the preview frame in light mode
  * @cssprop --wcp-preview-frame-light-border-color - Border color of the example section in light mode
  * @cssprop --wcp-preview-frame-light-color - Text color of the preview frame in light mode
- * 
+ *
  * @cssprop --wcp-preview-frame-distance - Outer margin of the preview frame
  * @cssprop --wcp-preview-frame-spacing - Inner padding of the preview frame
  * @cssprop --wcp-preview-frame-border-width - Border width of the example section
@@ -61,8 +61,13 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
     return html`<wcp-readme slot="readme" markdown="${element.readme}"></wcp-readme>`;
   }
 
+  protected renderViewer(element: CustomElementDeclaration): TemplateResult {
+    return html`<wcp-viewer slot="viewer" .element="${element}"></wcp-viewer>`;
+  }
+
   protected render(): TemplateResult {
     const tabs = {
+      viewer: 'Viewer',
       ...(hasExamples(this.activeElement) ? { examples: 'Examples' } : {}),
       ...(hasReadme(this.activeElement) ? { readme: 'Readme' } : {}),
     };
@@ -76,6 +81,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
               this.renderExamples(this.activeElement as CustomElementDeclarationWithExamples)
             )}
             ${when('readme' in tabs, () => this.renderReadme(this.activeElement as CustomElementDeclarationWithReadme))}
+            ${this.renderViewer(this.activeElement as CustomElementDeclaration)}
           </wcp-tabs>
         `,
         () => html`<h1>No preview available.</h1>`

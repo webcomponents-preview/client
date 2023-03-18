@@ -35,6 +35,7 @@
     "dev": "run-p --print-name dev:*"
   },
   "dependencies": {
+    "@open-wc/lit-helpers": "0.5.1",
     "css.gg": "2.0.0",
     "element-internals-polyfill": "1.2.6",
     "github-markdown-css": "5.2.0",

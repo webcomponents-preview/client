@@ -47,6 +47,8 @@ import styles from './button.component.scss';
  * </form>
  * ```
  * 
+ * @slot - Default slot for the button content
+ * 
  * @cssprop --wcp-button-dark-passive-background - Background color of the button if non interactive in dark mode
  * @cssprop --wcp-button-dark-passive-border-color - Border color of the button if non interactive in dark mode
  * @cssprop --wcp-button-dark-passive-color - Text color of the button if non interactive in dark mode

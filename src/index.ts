@@ -10,6 +10,8 @@ export * from './components/feature/readme/readme.component';
 export * from './components/feature/readme-example/readme-example.component';
 export * from './components/feature/toggle-color-scheme/toggle-color-scheme.component';
 export * from './components/feature/toggle-sidebar/toggle-sidebar.component';
+export * from './components/feature/viewer/viewer.component';
+export * from './components/feature/viewer/viewer.utils';
 export * from './components/layout/aside/aside.component';
 export * from './components/layout/layout/layout.component';
 export * from './components/layout/main/main.component';

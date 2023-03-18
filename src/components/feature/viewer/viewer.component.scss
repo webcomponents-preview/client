@@ -1,0 +1,21 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-viewer-example: var(--wcp-viewer-example, unset);
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+wcp-viewer-stage {
+  display: block;
+  flex: 1 1 auto;
+}
+
+wcp-viewer-controls {
+  display: block;
+}
