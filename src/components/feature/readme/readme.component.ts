@@ -1,8 +1,9 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { LitElement, type TemplateResult, html, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import { renderMarkdown } from '@/utils/code.utils';
+import { ColorSchemable } from '@/utils/color-scheme.utils';
 
 import styles from './readme.component.scss';
 
@@ -16,11 +17,11 @@ import styles from './readme.component.scss';
  * ```
  */
 @customElement('wcp-readme')
-export class Readme extends LitElement {
+export class Readme extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   @property({ type: String })
-  markdown!: string;
+  markdown?: string;
 
   // disable ShadowDOM
   // https://stackoverflow.com/a/55213037/1146207
@@ -29,16 +30,14 @@ export class Readme extends LitElement {
   }
 
   override connectedCallback() {
-    console.log('connected');
     super.connectedCallback();
     this.classList.add('markdown-body');
   }
 
   // without ShadowDOM, we need to manually inject the styles
   protected render(): TemplateResult {
-    console.log('render');
     return html`
-      ${unsafeHTML(renderMarkdown(this.markdown))}
+      ${this.markdown ? unsafeHTML(renderMarkdown(this.markdown)) : nothing}
       <style>
         ${Readme.styles}
       </style>

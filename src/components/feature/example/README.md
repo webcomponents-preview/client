@@ -2,6 +2,8 @@
 
 Shows a code example and a preview of the component.
 
+**Mixins:** ColorSchemable
+
 ## Slots
 
 | Name      | Description              |

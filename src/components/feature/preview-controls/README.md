@@ -1,5 +1,7 @@
 # wcp-preview-controls
 
+**Mixins:** ColorSchemable
+
 ## Examples
 
 ```html

@@ -1,5 +1,7 @@
 # wcp-navigation
 
+**Mixins:** ColorSchemable
+
 ## Example
 
 ### Usage with headline

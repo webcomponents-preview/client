@@ -1,5 +1,7 @@
 # wcp-preview-frame
 
+**Mixins:** ColorSchemable
+
 ## Example
 
 ```html

@@ -1,4 +1,5 @@
 @use 'sass:meta' as meta;
+@use 'sass:selector' as selector;
 @use '@/styles/utils' as utils;
 
 // add some default styles from GitHub for the rendered readme for the time being
@@ -6,6 +7,15 @@
 
 // a small example of basic markdown styling can be found in the nextcloud project:
 // https://github.com/nextcloud/deck/blob/main/src/css/markdown.scss
+
+// prettier-ignore
+wcp-readme {
+  ---wcp-readme-dark-border-color: var(--wcp-readme-dark-border-color, var(--wcp-color-grey-24));
+  ---wcp-readme-dark-highlight-background: var(--wcp-readme-dark-highlight-background, var(--wcp-color-grey-17));
+
+  ---wcp-readme-light-border-color: var(--wcp-readme-light-border-color, var(--wcp-color-grey-80));
+  ---wcp-readme-light-highlight-background: var(--wcp-readme-light-highlight-background, var(--wcp-color-blue-93));
+}
 
 // as we do not have Shadow DOM, we can't rely on the :host selector, so
 // to scope the styles we use the tag name of the component
@@ -24,33 +34,24 @@ wcp-readme {
     // as these are wrapped in our custom `wcp-example` component, we
     // need to reset the spacing on the projected pre elements
     pre {
+      background: 0;
       margin: 0;
       padding: 0;
     }
 
-    // prettier-ignore
-    table td, table th, table tr,
-    h1, h2, h3, h4, h5, h6 {
-      @media (prefers-color-scheme: dark) {
-        border-color: var(--wcp-color-grey-24);
-      }
-      @media (prefers-color-scheme: light) {
-        border-color: var(--wcp-color-grey-80);
-      }
+    table tr {
+      background-color: transparent;
     }
 
-    table {
-      tr {
-        background-color: transparent;
+    @include utils.color-scheme(false, parent) using ($color-scheme) {
+      // prettier-ignore
+      table td, table th, table tr,
+      h1, h2, h3, h4, h5, h6 {
+        border-color: var(---wcp-readme-#{$color-scheme}-border-color);
+      }
 
-        &:nth-child(2n) {
-          @media (prefers-color-scheme: dark) {
-            background-color: var(--wcp-color-grey-17);
-          }
-          @media (prefers-color-scheme: light) {
-            background-color: var(--wcp-color-blue-93);
-          }
-        }
+      table tr:nth-child(2n) {
+        background-color: var(---wcp-readme-#{$color-scheme}-highlight-background);
       }
     }
   }

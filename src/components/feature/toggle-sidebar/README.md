@@ -5,7 +5,7 @@ Shows a button to toggle sidebar.
 ## Example
 
 ```html
-<wcp-wcp-toggle-sidebar></wcp-wcp-toggle-sidebar>
+<wcp-toggle-sidebar></wcp-toggle-sidebar>
 ```
 
 ## Methods

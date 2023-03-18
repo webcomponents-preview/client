@@ -1,5 +1,7 @@
 # wcp-navigation-item
 
+**Mixins:** ColorSchemable
+
 ## Examples
 
 ### Non-interactive

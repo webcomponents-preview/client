@@ -24,18 +24,22 @@
 }
 
 // map interactions to item states and color schemes
-@include utils.color-scheme() using ($color-scheme) {
-  :host(:not([active])) {
+:host(:not([active])) {
+  @include utils.color-scheme() using ($color-scheme) {
     ---wcp-navigation-item-background: var(---wcp-navigation-item-#{$color-scheme}-passive-background);
     ---wcp-navigation-item-color: var(---wcp-navigation-item-#{$color-scheme}-passive-color);
   }
+}
 
-  :host([active]) {
+:host([active]) {
+  @include utils.color-scheme() using ($color-scheme) {
     ---wcp-navigation-item-background: var(---wcp-navigation-item-#{$color-scheme}-active-background);
     ---wcp-navigation-item-color: var(---wcp-navigation-item-#{$color-scheme}-active-color);
   }
+}
 
-  :host(:not([active])) a:hover {
+:host(:not([active])) a:hover {
+  @include utils.color-scheme() using ($color-scheme) {
     ---wcp-navigation-item-background: var(---wcp-navigation-item-#{$color-scheme}-hover-background);
     ---wcp-navigation-item-color: var(---wcp-navigation-item-#{$color-scheme}-hover-color);
   }

@@ -1,6 +1,8 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
+import { ColorSchemable } from '@/utils/color-scheme.utils';
+
 import styles from './preview-controls.component.scss';
 
 /**
@@ -29,7 +31,7 @@ import styles from './preview-controls.component.scss';
  * @cssprop --wcp-preview-controls-spacing - Inner spacing, used as padding of the controls
  */
 @customElement('wcp-preview-controls')
-export class PreviewControls extends LitElement {
+export class PreviewControls extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   protected render(): TemplateResult {

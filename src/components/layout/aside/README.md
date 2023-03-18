@@ -9,6 +9,8 @@ You may pass an optional boolean value to the event to toggle the side bar to a 
 window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));
 ```
 
+**Mixins:** ColorSchemable
+
 ## Properties
 
 | Property            | Attribute | Type      | Default                                          | Description                                      |

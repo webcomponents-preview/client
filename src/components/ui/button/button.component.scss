@@ -28,21 +28,25 @@
 }
 
 // map interactions to button states and color schemes
-@include utils.color-scheme() using ($color-scheme) {
-  :host {
+:host {
+  @include utils.color-scheme() using ($color-scheme) {
     ---wcp-button-background: var(---wcp-button-#{$color-scheme}-passive-background);
     ---wcp-button-border-color: var(---wcp-button-#{$color-scheme}-passive-border-color);
     ---wcp-button-color: var(---wcp-button-#{$color-scheme}-passive-color);
   }
+}
 
-  :host(:not(:disabled):hover) {
+:host(:not(:disabled):hover) {
+  @include utils.color-scheme() using ($color-scheme) {
     ---wcp-button-background: var(---wcp-button-#{$color-scheme}-hover-background);
     ---wcp-button-border-color: var(---wcp-button-#{$color-scheme}-hover-border-color);
     ---wcp-button-color: var(---wcp-button-#{$color-scheme}-hover-color);
   }
+}
 
-  :host(:not(:disabled):active),
-  :host(:not(:disabled).active) {
+:host(:not(:disabled):active),
+:host(:not(:disabled).active) {
+  @include utils.color-scheme() using ($color-scheme) {
     ---wcp-button-background: var(---wcp-button-#{$color-scheme}-active-background);
     ---wcp-button-border-color: var(---wcp-button-#{$color-scheme}-active-border-color);
     ---wcp-button-color: var(---wcp-button-#{$color-scheme}-active-color);
@@ -92,9 +96,12 @@
   }
 
   :host([kind='icon']) & {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1;
     padding: utils.size(1);
     position: relative;
+
+    font-size: 0;
+    line-height: 0;
 
     &::before {
       content: '';

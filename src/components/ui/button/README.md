@@ -2,6 +2,8 @@
 
 Shows a button element.
 
+**Mixins:** ColorSchemable
+
 ## Examples
 
 ## Default button

@@ -4,6 +4,7 @@ import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 
+import { ColorSchemable } from '@/utils/color-scheme.utils';
 import {
   getCustomElements,
   getNiceName,
@@ -29,7 +30,7 @@ import styles from './root.component.scss';
  * @emits wcp-root:manifest-loaded - Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved.
  */
 @customElement('wcp-root')
-export class Root extends LitElement {
+export class Root extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   #title = 'WCP';
@@ -192,6 +193,7 @@ export class Root extends LitElement {
 
         <wcp-preview-controls>
           <wcp-toggle-sidebar></wcp-toggle-sidebar>
+          <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
           <slot name="preview-controls"></slot>
         </wcp-preview-controls>
         <slot name="preview-frame">
@@ -206,7 +208,7 @@ export class Root extends LitElement {
 }
 
 declare global {
-  interface WindowEventMap {
+  interface HTMLElementEventMap {
     'wcp-root:active-element-changed': CustomEvent<CustomElementDeclaration | undefined>;
     'wcp-root:manifest-loaded': CustomEvent<CustomElementDeclaration[]>;
   }

@@ -1,6 +1,8 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 
+import { ColorSchemable } from '@/utils/color-scheme.utils';
+
 import styles from './aside.component.scss';
 
 /**
@@ -28,7 +30,7 @@ import styles from './aside.component.scss';
  * @cssprop --wcp-aside-light-color - The color of the side bar in light mode
  */
 @customElement('wcp-aside')
-export class Aside extends LitElement {
+export class Aside extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   /**

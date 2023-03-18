@@ -2,6 +2,8 @@ import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 
+import { ColorSchemable } from '@/utils/color-scheme.utils';
+
 import styles from './navigation-item.component.scss';
 
 /**
@@ -46,7 +48,7 @@ import styles from './navigation-item.component.scss';
  * @cssprop --wcp-navigation-item-light-active-color - Text color of the item when active in light mode
  */
 @customElement('wcp-navigation-item')
-export class NavigationItem extends LitElement {
+export class NavigationItem extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   @property({ type: Boolean, reflect: true })
