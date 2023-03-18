@@ -21,12 +21,33 @@ import styles from './button.component.scss';
  * ```
  *
  * @example
+ * ## Disabled button
+ *
+ * ```html
+ * <wcp-button disabled>Try to click me!</wcp-button>
+ * ```
+ *
+ * @example
  * ## Button with icon
  *
  * ```html
  * <wcp-button kind="icon">
  *  <wcp-icon name="menu"></wcp-icon>
  * </wcp-button>
+ * ```
+ *
+ * @example
+ * ## Force active state
+ *
+ * ```html
+ * <wcp-button class="active">Link</wcp-button>
+ * ```
+ *
+ * @example
+ * ## Use as link
+ *
+ * ```html
+ * <wcp-button href=".">Link</wcp-button>
  * ```
  *
  * @example
