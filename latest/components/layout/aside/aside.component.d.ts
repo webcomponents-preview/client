@@ -1,4 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
+declare const Aside_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * To toggle the side bar remotely, you can dispatch a custom event on the global window object:
  * ```js
@@ -23,7 +26,7 @@ import { LitElement, type TemplateResult } from 'lit';
  * @cssprop --wcp-aside-light-background - The background color of the side bar in light mode
  * @cssprop --wcp-aside-light-color - The color of the side bar in light mode
  */
-export declare class Aside extends LitElement {
+export declare class Aside extends Aside_base {
     static readonly styles: import("lit").CSSResult;
     /**
      * Used to toggle the width of the aside bar
@@ -52,3 +55,4 @@ declare global {
         'wcp-aside': Aside;
     }
 }
+export {};

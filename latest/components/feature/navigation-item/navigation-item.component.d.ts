@@ -1,4 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
+declare const NavigationItem_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * @example
  * ### Non-interactive
@@ -40,7 +43,7 @@ import { LitElement, type TemplateResult } from 'lit';
  * @cssprop --wcp-navigation-item-light-hover-color - Text color of the item when hovered in light mode
  * @cssprop --wcp-navigation-item-light-active-color - Text color of the item when active in light mode
  */
-export declare class NavigationItem extends LitElement {
+export declare class NavigationItem extends NavigationItem_base {
     static readonly styles: import("lit").CSSResult;
     active: boolean;
     href?: string;
@@ -51,3 +54,4 @@ declare global {
         'wcp-navigation-item': NavigationItem;
     }
 }
+export {};

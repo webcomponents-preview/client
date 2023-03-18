@@ -1,4 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
+declare const Example_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * Shows a code example and a preview of the component.
  *
@@ -12,7 +15,7 @@ import { LitElement, type TemplateResult } from 'lit';
  * @cssprop --wcp-example-dark-border-color - Border color of the example in dark mode
  * @cssprop --wcp-example-light-border-color - Border color of the example in light mode
  */
-export declare class Example extends LitElement {
+export declare class Example extends Example_base {
     static readonly styles: import("lit").CSSResult;
     protected render(): TemplateResult;
 }
@@ -21,3 +24,4 @@ declare global {
         'wcp-example': Example;
     }
 }
+export {};

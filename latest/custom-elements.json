@@ -222,6 +222,12 @@
               "fieldName": "manifestUrl"
             }
           ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -230,7 +236,7 @@
           "groups": [
             "root"
           ],
-          "readme": "# wcp-root\n\n## Properties\n\n| Property            | Attribute             | Type                                         | Default                                          | Description                                      |\n|---------------------|-----------------------|----------------------------------------------|--------------------------------------------------|--------------------------------------------------|\n| `activeElement`     | `active-element`      | `string \\| undefined`                        |                                                  | Sets the currently active element by its tag name. Will be updated at runtime and can<br />be preset with an initial value to define the active element at startup. |\n| `configUrl`         | `config-url`          | `string \\| undefined`                        |                                                  | Allows to set a url to load a config file from.  |\n| `elements`          |                       | `CustomElementDeclaration[]`                 | []                                               |                                                  |\n| `fallbackGroupName` | `fallback-group-name` | `string`                                     | \"Components\"                                     | Allows to set a fallback group name for elements that do not have a `groups` property.<br />So this is the name of the group that will contain all elements unless the manifest is<br />generated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin. |\n| `handleHashChange`  |                       |                                              | \"(() => {\\n    const [, activeElement] = window.location.hash.split('#/');\\n    this.activeElement = activeElement;\\n    this.emitActiveElementChanged();\\n  }).bind(this)\" |                                                  |\n| `inline`            | `inline`              | `boolean`                                    | false                                            | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifestUrl`       | `manifest-url`        | `string \\| undefined`                        |                                                  | Defines the location of the custom element manifest file. |\n| `navigation`        |                       | `Record<string, CustomElementDeclaration[]>` | {}                                               |                                                  |\n| `title`             | `title`               | `string`                                     |                                                  |                                                  |\n\n## Methods\n\n| Method                        | Type                                        |\n|-------------------------------|---------------------------------------------|\n| `emitActiveElementChanged`    | `(): void`                                  |\n| `emitManifestLoaded`          | `(): void`                                  |\n| `getActiveElementDeclaration` | `(): CustomElementDeclaration \\| undefined` |\n| `loadCustomElementsManifest`  | `(): Promise<void>`                         |\n| `selectFallbackElement`       | `(): Promise<void>`                         |\n\n## Events\n\n| Event                             | Type                                      | Description                                      |\n|-----------------------------------|-------------------------------------------|--------------------------------------------------|\n| `wcp-root:active-element-changed` | `CustomEvent<CustomElementDeclaration>`   | Fired when the active element changes. Carries the declaration of the new active element with it. |\n| `wcp-root:manifest-loaded`        | `CustomEvent<CustomElementDeclaration[]>` | Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode |\n| `--wcp-root-light-background` | The background color of the root element in light mode |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode |\n",
+          "readme": "# wcp-root\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property            | Attribute             | Type                                         | Default                                          | Description                                      |\n|---------------------|-----------------------|----------------------------------------------|--------------------------------------------------|--------------------------------------------------|\n| `activeElement`     | `active-element`      | `string \\| undefined`                        |                                                  | Sets the currently active element by its tag name. Will be updated at runtime and can<br />be preset with an initial value to define the active element at startup. |\n| `configUrl`         | `config-url`          | `string \\| undefined`                        |                                                  | Allows to set a url to load a config file from.  |\n| `elements`          |                       | `CustomElementDeclaration[]`                 | []                                               |                                                  |\n| `fallbackGroupName` | `fallback-group-name` | `string`                                     | \"Components\"                                     | Allows to set a fallback group name for elements that do not have a `groups` property.<br />So this is the name of the group that will contain all elements unless the manifest is<br />generated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin. |\n| `handleHashChange`  |                       |                                              | \"(() => {\\n    const [, activeElement] = window.location.hash.split('#/');\\n    this.activeElement = activeElement;\\n    this.emitActiveElementChanged();\\n  }).bind(this)\" |                                                  |\n| `inline`            | `inline`              | `boolean`                                    | false                                            | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifestUrl`       | `manifest-url`        | `string \\| undefined`                        |                                                  | Defines the location of the custom element manifest file. |\n| `navigation`        |                       | `Record<string, CustomElementDeclaration[]>` | {}                                               |                                                  |\n| `title`             | `title`               | `string`                                     |                                                  |                                                  |\n\n## Methods\n\n| Method                        | Type                                        |\n|-------------------------------|---------------------------------------------|\n| `emitActiveElementChanged`    | `(): void`                                  |\n| `emitManifestLoaded`          | `(): void`                                  |\n| `getActiveElementDeclaration` | `(): CustomElementDeclaration \\| undefined` |\n| `loadCustomElementsManifest`  | `(): Promise<void>`                         |\n| `selectFallbackElement`       | `(): Promise<void>`                         |\n\n## Events\n\n| Event                             | Type                                      | Description                                      |\n|-----------------------------------|-------------------------------------------|--------------------------------------------------|\n| `wcp-root:active-element-changed` | `CustomEvent<CustomElementDeclaration>`   | Fired when the active element changes. Carries the declaration of the new active element with it. |\n| `wcp-root:manifest-loaded`        | `CustomEvent<CustomElementDeclaration[]>` | Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode |\n| `--wcp-root-light-background` | The background color of the root element in light mode |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode |\n",
           "tagName": "wcp-root",
           "customElement": true
         }
@@ -295,6 +301,12 @@
             }
           ],
           "members": [],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -303,7 +315,7 @@
           "groups": [
             "feature"
           ],
-          "readme": "# wcp-example\n\nShows a code example and a preview of the component.\n\n## Slots\n\n| Name      | Description              |\n|-----------|--------------------------|\n| `code`    | Code example             |\n| `preview` | Rendered example preview |\n\n## CSS Custom Properties\n\n| Property                           | Description                               |\n|------------------------------------|-------------------------------------------|\n| `--wcp-example-border-radius`      | Border radius of the example              |\n| `--wcp-example-border-width`       | Border width of the example               |\n| `--wcp-example-dark-border-color`  | Border color of the example in dark mode  |\n| `--wcp-example-light-border-color` | Border color of the example in light mode |\n| `--wcp-example-spacing`            | Inner padding of the example              |\n",
+          "readme": "# wcp-example\n\nShows a code example and a preview of the component.\n\n**Mixins:** ColorSchemable\n\n## Slots\n\n| Name      | Description              |\n|-----------|--------------------------|\n| `code`    | Code example             |\n| `preview` | Rendered example preview |\n\n## CSS Custom Properties\n\n| Property                           | Description                               |\n|------------------------------------|-------------------------------------------|\n| `--wcp-example-border-radius`      | Border radius of the example              |\n| `--wcp-example-border-width`       | Border width of the example               |\n| `--wcp-example-dark-border-color`  | Border color of the example in dark mode  |\n| `--wcp-example-light-border-color` | Border color of the example in light mode |\n| `--wcp-example-spacing`            | Inner padding of the example              |\n",
           "tagName": "wcp-example",
           "customElement": true
         }
@@ -403,6 +415,12 @@
               "fieldName": "headline"
             }
           ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -413,7 +431,7 @@
           "groups": [
             "feature"
           ],
-          "readme": "# wcp-navigation\n\n## Example\n\n### Usage with headline\n\n```html\n<wcp-navigation headline=\"Navigation\">\n  <wcp-navigation-item href=\"/home\">Home</wcp-navigation-item>\n  <wcp-navigation-item href=\"/about\">About</wcp-navigation-item>\n</wcp-navigation>\n```\n\n## Properties\n\n| Property   | Attribute  | Type                  |\n|------------|------------|-----------------------|\n| `headline` | `headline` | `string \\| undefined` |\n\n## Slots\n\n| Name | Description                       |\n|------|-----------------------------------|\n|      | Default slot for navigation items |\n\n## CSS Custom Properties\n\n| Property                                     | Description                                      |\n|----------------------------------------------|--------------------------------------------------|\n| `--wcp-navigation-dark-border-color`         | Border color of the navigation headline in dark mode |\n| `--wcp-navigation-headline-dark-background`  | Background color of the navigation headline in dark mode |\n| `--wcp-navigation-headline-light-background` | Background color of the navigation headline in light mode |\n| `--wcp-navigation-headline-size`             | Font size of the navigation headline             |\n| `--wcp-navigation-headline-spacing`          | Letter spacing of the navigation headline        |\n| `--wcp-navigation-headline-weight`           | Font weight of the navigation headline           |\n| `--wcp-navigation-light-border-color`        | Border color of the navigation headline in light mode |\n| `--wcp-navigation-spacing`                   | Spacing between navigation and headline          |\n| `--wcp-navigation-spacing-headline`          | Inner padding of the navigation headline         |\n| `--wcp-navigation-spacing-items`             | Spacing between navigation items                 |\n",
+          "readme": "# wcp-navigation\n\n**Mixins:** ColorSchemable\n\n## Example\n\n### Usage with headline\n\n```html\n<wcp-navigation headline=\"Navigation\">\n  <wcp-navigation-item href=\"/home\">Home</wcp-navigation-item>\n  <wcp-navigation-item href=\"/about\">About</wcp-navigation-item>\n</wcp-navigation>\n```\n\n## Properties\n\n| Property   | Attribute  | Type                  |\n|------------|------------|-----------------------|\n| `headline` | `headline` | `string \\| undefined` |\n\n## Slots\n\n| Name | Description                       |\n|------|-----------------------------------|\n|      | Default slot for navigation items |\n\n## CSS Custom Properties\n\n| Property                                     | Description                                      |\n|----------------------------------------------|--------------------------------------------------|\n| `--wcp-navigation-dark-border-color`         | Border color of the navigation headline in dark mode |\n| `--wcp-navigation-headline-dark-background`  | Background color of the navigation headline in dark mode |\n| `--wcp-navigation-headline-light-background` | Background color of the navigation headline in light mode |\n| `--wcp-navigation-headline-size`             | Font size of the navigation headline             |\n| `--wcp-navigation-headline-spacing`          | Letter spacing of the navigation headline        |\n| `--wcp-navigation-headline-weight`           | Font weight of the navigation headline           |\n| `--wcp-navigation-light-border-color`        | Border color of the navigation headline in light mode |\n| `--wcp-navigation-spacing`                   | Spacing between navigation and headline          |\n| `--wcp-navigation-spacing-headline`          | Inner padding of the navigation headline         |\n| `--wcp-navigation-spacing-items`             | Spacing between navigation items                 |\n",
           "tagName": "wcp-navigation",
           "customElement": true
         }
@@ -543,6 +561,12 @@
               "fieldName": "href"
             }
           ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -554,7 +578,7 @@
           "groups": [
             "feature"
           ],
-          "readme": "# wcp-navigation-item\n\n## Examples\n\n### Non-interactive\n\nThis will probably only be used for the active item.\n\n```html\n<wcp-navigation-item>\n  Non-interactive\n</wcp-navigation-item>\n```\n\n### With link\n\n```html\n<wcp-navigation-item href=\"/home\">\n  Home\n</wcp-navigation-item>\n```\n\n## Properties\n\n| Property | Attribute | Type                  | Default |\n|----------|-----------|-----------------------|---------|\n| `active` | `active`  | `boolean`             | false   |\n| `href`   | `href`    | `string \\| undefined` |         |\n\n## Slots\n\n| Name | Description               |\n|------|---------------------------|\n|      | Default slot for contents |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                      |\n|--------------------------------------------------|--------------------------------------------------|\n| `--wcp-navigation-item-dark-active-background`   | Background color of the item when active in dark mode |\n| `--wcp-navigation-item-dark-active-color`        | Text color of the item when active in dark mode  |\n| `--wcp-navigation-item-dark-hover-background`    | Background color of the item when hovered in dark mode |\n| `--wcp-navigation-item-dark-hover-color`         | Text color of the item when hovered in dark mode |\n| `--wcp-navigation-item-dark-passive-background`  | Background color of the item when non interactive in dark mode |\n| `--wcp-navigation-item-dark-passive-color`       | Text color of the item when non interactive in dark mode |\n| `--wcp-navigation-item-light-active-background`  | Background color of the item when active in light mode |\n| `--wcp-navigation-item-light-active-color`       | Text color of the item when active in light mode |\n| `--wcp-navigation-item-light-hover-background`   | Background color of the item when hovered in light mode |\n| `--wcp-navigation-item-light-hover-color`        | Text color of the item when hovered in light mode |\n| `--wcp-navigation-item-light-passive-background` | Background color of the item when non interactive in light mode |\n| `--wcp-navigation-item-light-passive-color`      | Text color of the item when non interactive in light mode |\n| `--wcp-navigation-item-spacing`                  | Inner padding of the item                        |\n",
+          "readme": "# wcp-navigation-item\n\n**Mixins:** ColorSchemable\n\n## Examples\n\n### Non-interactive\n\nThis will probably only be used for the active item.\n\n```html\n<wcp-navigation-item>\n  Non-interactive\n</wcp-navigation-item>\n```\n\n### With link\n\n```html\n<wcp-navigation-item href=\"/home\">\n  Home\n</wcp-navigation-item>\n```\n\n## Properties\n\n| Property | Attribute | Type                  | Default |\n|----------|-----------|-----------------------|---------|\n| `active` | `active`  | `boolean`             | false   |\n| `href`   | `href`    | `string \\| undefined` |         |\n\n## Slots\n\n| Name | Description               |\n|------|---------------------------|\n|      | Default slot for contents |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                      |\n|--------------------------------------------------|--------------------------------------------------|\n| `--wcp-navigation-item-dark-active-background`   | Background color of the item when active in dark mode |\n| `--wcp-navigation-item-dark-active-color`        | Text color of the item when active in dark mode  |\n| `--wcp-navigation-item-dark-hover-background`    | Background color of the item when hovered in dark mode |\n| `--wcp-navigation-item-dark-hover-color`         | Text color of the item when hovered in dark mode |\n| `--wcp-navigation-item-dark-passive-background`  | Background color of the item when non interactive in dark mode |\n| `--wcp-navigation-item-dark-passive-color`       | Text color of the item when non interactive in dark mode |\n| `--wcp-navigation-item-light-active-background`  | Background color of the item when active in light mode |\n| `--wcp-navigation-item-light-active-color`       | Text color of the item when active in light mode |\n| `--wcp-navigation-item-light-hover-background`   | Background color of the item when hovered in light mode |\n| `--wcp-navigation-item-light-hover-color`        | Text color of the item when hovered in light mode |\n| `--wcp-navigation-item-light-passive-background` | Background color of the item when non interactive in light mode |\n| `--wcp-navigation-item-light-passive-color`      | Text color of the item when non interactive in light mode |\n| `--wcp-navigation-item-spacing`                  | Inner padding of the item                        |\n",
           "tagName": "wcp-navigation-item",
           "customElement": true
         }
@@ -619,6 +643,12 @@
             }
           ],
           "members": [],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -630,7 +660,7 @@
           "groups": [
             "feature"
           ],
-          "readme": "# wcp-preview-controls\n\n## Examples\n\n```html\n<wcp-preview-controls></wcp-preview-controls>\n```\n\n### Usage with controls\n\n```html\n<wcp-preview-controls>\n  <wcp-preview-controls-viewport></wcp-preview-controls-viewport>\n</wcp-preview-controls>\n```\n\n## Slots\n\n| Name | Description                       |\n|------|-----------------------------------|\n|      | Default slot for navigation items |\n\n## CSS Custom Properties\n\n| Property                                  | Description                                      |\n|-------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-controls-dark-background`  | Background color of the preview controls in dark mode |\n| `--wcp-preview-controls-dark-color`       | Text color of the preview controls in dark mode  |\n| `--wcp-preview-controls-height`           | Overall height of the preview controls nav bar   |\n| `--wcp-preview-controls-light-background` | Background color of the preview controls in light mode |\n| `--wcp-preview-controls-light-color`      | Text color of the preview controls in light mode |\n| `--wcp-preview-controls-spacing`          | Inner spacing, used as padding of the controls   |\n",
+          "readme": "# wcp-preview-controls\n\n**Mixins:** ColorSchemable\n\n## Examples\n\n```html\n<wcp-preview-controls></wcp-preview-controls>\n```\n\n### Usage with controls\n\n```html\n<wcp-preview-controls>\n  <wcp-preview-controls-viewport></wcp-preview-controls-viewport>\n</wcp-preview-controls>\n```\n\n## Slots\n\n| Name | Description                       |\n|------|-----------------------------------|\n|      | Default slot for navigation items |\n\n## CSS Custom Properties\n\n| Property                                  | Description                                      |\n|-------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-controls-dark-background`  | Background color of the preview controls in dark mode |\n| `--wcp-preview-controls-dark-color`       | Text color of the preview controls in dark mode  |\n| `--wcp-preview-controls-height`           | Overall height of the preview controls nav bar   |\n| `--wcp-preview-controls-light-background` | Background color of the preview controls in light mode |\n| `--wcp-preview-controls-light-color`      | Text color of the preview controls in light mode |\n| `--wcp-preview-controls-spacing`          | Inner spacing, used as padding of the controls   |\n",
           "tagName": "wcp-preview-controls",
           "customElement": true
         }
@@ -815,6 +845,12 @@
               "fieldName": "activeElement"
             }
           ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -825,7 +861,7 @@
           "groups": [
             "feature"
           ],
-          "readme": "# wcp-preview-frame\n\n## Example\n\n```html\n<wcp-preview-frame></wcp-preview-frame>\n```\n\n## Properties\n\n| Property        | Attribute       | Type                                    | Default |\n|-----------------|-----------------|-----------------------------------------|---------|\n| `activeElement` | `activeElement` | `CustomElementDeclaration \\| undefined` |         |\n| `examples`      |                 | `string[]`                              | []      |\n| `preview`       |                 | `string`                                | \"\"      |\n\n## CSS Custom Properties\n\n| Property                                 | Description                                      |\n|------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-frame-border-width`       | Border width of the example section              |\n| `--wcp-preview-frame-dark-background`    | Background color of the preview frame in dark mode |\n| `--wcp-preview-frame-dark-border-color`  | Border color of the example section in dark mode |\n| `--wcp-preview-frame-dark-color`         | Text color of the preview frame in dark mode     |\n| `--wcp-preview-frame-distance`           | Outer margin of the preview frame                |\n| `--wcp-preview-frame-light-background`   | Background color of the preview frame in light mode |\n| `--wcp-preview-frame-light-border-color` | Border color of the example section in light mode |\n| `--wcp-preview-frame-light-color`        | Text color of the preview frame in light mode    |\n| `--wcp-preview-frame-spacing`            | Inner padding of the preview frame               |\n",
+          "readme": "# wcp-preview-frame\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-preview-frame></wcp-preview-frame>\n```\n\n## Properties\n\n| Property        | Attribute       | Type                                    | Default |\n|-----------------|-----------------|-----------------------------------------|---------|\n| `activeElement` | `activeElement` | `CustomElementDeclaration \\| undefined` |         |\n| `examples`      |                 | `string[]`                              | []      |\n| `preview`       |                 | `string`                                | \"\"      |\n\n## CSS Custom Properties\n\n| Property                                 | Description                                      |\n|------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-frame-border-width`       | Border width of the example section              |\n| `--wcp-preview-frame-dark-background`    | Background color of the preview frame in dark mode |\n| `--wcp-preview-frame-dark-border-color`  | Border color of the example section in dark mode |\n| `--wcp-preview-frame-dark-color`         | Text color of the preview frame in dark mode     |\n| `--wcp-preview-frame-distance`           | Outer margin of the preview frame                |\n| `--wcp-preview-frame-light-background`   | Background color of the preview frame in light mode |\n| `--wcp-preview-frame-light-border-color` | Border color of the example section in light mode |\n| `--wcp-preview-frame-light-color`        | Text color of the preview frame in light mode    |\n| `--wcp-preview-frame-spacing`            | Inner padding of the preview frame               |\n",
           "tagName": "wcp-preview-frame",
           "customElement": true
         }
@@ -862,7 +898,7 @@
               "kind": "field",
               "name": "markdown",
               "type": {
-                "text": "string"
+                "text": "string | undefined"
               },
               "attribute": "markdown"
             },
@@ -875,9 +911,15 @@
             {
               "name": "markdown",
               "type": {
-                "text": "string"
+                "text": "string | undefined"
               },
               "fieldName": "markdown"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
             }
           ],
           "superclass": {
@@ -890,7 +932,7 @@
           "groups": [
             "feature"
           ],
-          "readme": "# wcp-readme\n\n## Example\n\n```html\n<wcp-readme>\n <h1>Readme</h1>\n <p>Some readme content</p>\n</wcp-readme>\n```\n\n## Properties\n\n| Property   | Attribute  | Type     |\n|------------|------------|----------|\n| `markdown` | `markdown` | `string` |\n\n## Methods\n\n| Method             | Type       |\n|--------------------|------------|\n| `createRenderRoot` | `(): this` |\n",
+          "readme": "# wcp-readme\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-readme>\n <h1>Readme</h1>\n <p>Some readme content</p>\n</wcp-readme>\n```\n\n## Properties\n\n| Property   | Attribute  | Type                  |\n|------------|------------|-----------------------|\n| `markdown` | `markdown` | `string \\| undefined` |\n\n## Methods\n\n| Method             | Type       |\n|--------------------|------------|\n| `createRenderRoot` | `(): this` |\n",
           "tagName": "wcp-readme",
           "customElement": true
         }
@@ -916,6 +958,64 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/feature/toggle-color-scheme/toggle-color-scheme.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Shows a button to toggle the desired color-scheme.",
+          "name": "ToggleColorScheme",
+          "members": [
+            {
+              "kind": "field",
+              "name": "colorScheme"
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonClick"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n```"
+          ],
+          "groups": [
+            "feature"
+          ],
+          "readme": "# wcp-toggle-color-scheme\n\nShows a button to toggle the desired color-scheme.\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n```\n\n## Properties\n\n| Property      | Type                | Default                                          |\n|---------------|---------------------|--------------------------------------------------|\n| `colorScheme` | `\"dark\" \\| \"light\"` | \"matchMedia('(prefers-color-scheme: dark)').matches ? ('dark' as const) : ('light' as const)\" |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event                     | Type                  |\n|---------------------------|-----------------------|\n| `wcp-color-scheme:toggle` | `CustomEvent<string>` |\n",
+          "tagName": "wcp-toggle-color-scheme",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ToggleColorScheme",
+          "declaration": {
+            "name": "ToggleColorScheme",
+            "module": "src/components/feature/toggle-color-scheme/toggle-color-scheme.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-toggle-color-scheme",
+          "declaration": {
+            "name": "ToggleColorScheme",
+            "module": "src/components/feature/toggle-color-scheme/toggle-color-scheme.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/feature/toggle-sidebar/toggle-sidebar.component.ts",
       "declarations": [
         {
@@ -933,12 +1033,12 @@
             "package": "lit"
           },
           "examples": [
-            "```html\n<wcp-wcp-toggle-sidebar></wcp-wcp-toggle-sidebar>\n```"
+            "```html\n<wcp-toggle-sidebar></wcp-toggle-sidebar>\n```"
           ],
           "groups": [
             "feature"
           ],
-          "readme": "# wcp-toggle-sidebar\n\nShows a button to toggle sidebar.\n\n## Example\n\n```html\n<wcp-wcp-toggle-sidebar></wcp-wcp-toggle-sidebar>\n```\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event              |\n|--------------------|\n| `wcp-aside:toggle` |\n",
+          "readme": "# wcp-toggle-sidebar\n\nShows a button to toggle sidebar.\n\n## Example\n\n```html\n<wcp-toggle-sidebar></wcp-toggle-sidebar>\n```\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event              |\n|--------------------|\n| `wcp-aside:toggle` |\n",
           "tagName": "wcp-toggle-sidebar",
           "customElement": true
         }
@@ -1068,6 +1168,12 @@
               "fieldName": "role"
             }
           ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -1076,7 +1182,7 @@
           "groups": [
             "layout"
           ],
-          "readme": "# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n## Properties\n\n| Property            | Attribute | Type      | Default                                          | Description                                      |\n|---------------------|-----------|-----------|--------------------------------------------------|--------------------------------------------------|\n| `hidden`            | `hidden`  | `boolean` | false                                            | Used to toggle the width of the aside bar        |\n| `listenAsideToggle` |           |           | \"(({ detail }: CustomEvent<boolean \\| null>) => {\\n    this.hidden = detail ?? !this.hidden;\\n    this.emitToggled();\\n  }).bind(this)\" |                                                  |\n| `role`              | `role`    | `string`  | \"complementary\"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `emitToggled`       | `(): void` |\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event               | Type                   | Description                                      |\n|---------------------|------------------------|--------------------------------------------------|\n| `wcp-aside-toggled` |                        | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n| `wcp-aside:toggled` | `CustomEvent<boolean>` |                                                  |\n\n## Slots\n\n| Name | Description                              |\n|------|------------------------------------------|\n|      | Projects elements aside the main content |\n\n## CSS Custom Properties\n\n| Property                       | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |\n| `--wcp-aside-light-background` | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      | The color of the side bar in light mode          |\n| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |\n| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-size`      | The size of the toggle button                    |\n",
+          "readme": "# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property            | Attribute | Type      | Default                                          | Description                                      |\n|---------------------|-----------|-----------|--------------------------------------------------|--------------------------------------------------|\n| `hidden`            | `hidden`  | `boolean` | false                                            | Used to toggle the width of the aside bar        |\n| `listenAsideToggle` |           |           | \"(({ detail }: CustomEvent<boolean \\| null>) => {\\n    this.hidden = detail ?? !this.hidden;\\n    this.emitToggled();\\n  }).bind(this)\" |                                                  |\n| `role`              | `role`    | `string`  | \"complementary\"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `emitToggled`       | `(): void` |\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event               | Type                   | Description                                      |\n|---------------------|------------------------|--------------------------------------------------|\n| `wcp-aside-toggled` |                        | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n| `wcp-aside:toggled` | `CustomEvent<boolean>` |                                                  |\n\n## Slots\n\n| Name | Description                              |\n|------|------------------------------------------|\n|      | Projects elements aside the main content |\n\n## CSS Custom Properties\n\n| Property                       | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |\n| `--wcp-aside-light-background` | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      | The color of the side bar in light mode          |\n| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |\n| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-size`      | The size of the toggle button                    |\n",
           "tagName": "wcp-aside",
           "customElement": true
         }
@@ -1449,6 +1555,12 @@
               "fieldName": "target"
             }
           ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -1462,7 +1574,7 @@
           "groups": [
             "ui"
           ],
-          "readme": "# wcp-button\n\nShows a button element.\n\n## Examples\n\n## Default button\n\n```html\n<wcp-button>Click me!</wcp-button>\n```\n\n## Button with icon\n\n```html\n<wcp-button kind=\"icon\">\n <wcp-icon name=\"menu\"></wcp-icon>\n</wcp-button>\n```\n\n## Use as native submit button in form\n\n```html\n<form onsubmit=\"alert('Submit!'); return false\">\n <wcp-button type=\"submit\">Submit</wcp-button>\n</form>\n```\n\n## Use as native reset button in form\n\n```html\n<form onreset=\"alert('Reset!'); return false\">\n  <wcp-button type=\"reset\">Reset</wcp-button>\n</form>\n```\n\n## Properties\n\n| Property    | Attribute   | Type                                             | Default  |\n|-------------|-------------|--------------------------------------------------|----------|\n| `disabled`  | `disabled`  | `boolean`                                        | false    |\n| `href`      | `href`      | `string \\| undefined`                            |          |\n| `kind`      | `kind`      | `\"button\" \\| \"icon\"`                             | \"button\" |\n| `nowrap`    | `nowrap`    | `boolean`                                        | false    |\n| `stretched` | `stretched` | `boolean`                                        | false    |\n| `target`    | `target`    | `\"_self\" \\| \"_blank\" \\| \"_parent\" \\| \"_top\" \\| undefined` |          |\n| `type`      | `type`      | `\"button\" \\| \"reset\" \\| \"submit\"`                | \"button\" |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## CSS Custom Properties\n\n| Property                                  | Description                                      |\n|-------------------------------------------|--------------------------------------------------|\n| `--wcp-button-dark-active-background`     | Background color of the button if active in dark mode |\n| `--wcp-button-dark-active-border-color`   | Border color of the button if active in dark mode |\n| `--wcp-button-dark-active-color`          | Text color of the button if active in dark mode  |\n| `--wcp-button-dark-hover-background`      | Background color of the button if hovered in dark mode |\n| `--wcp-button-dark-hover-border-color`    | Border color of the button if hovered in dark mode |\n| `--wcp-button-dark-hover-color`           | Text color of the button if hovered in dark mode |\n| `--wcp-button-dark-passive-background`    | Background color of the button if non interactive in dark mode |\n| `--wcp-button-dark-passive-border-color`  | Border color of the button if non interactive in dark mode |\n| `--wcp-button-dark-passive-color`         | Text color of the button if non interactive in dark mode |\n| `--wcp-button-light-active-background`    | Background color of the button if active in light mode |\n| `--wcp-button-light-active-border-color`  | Border color of the button if active in light mode |\n| `--wcp-button-light-active-color`         | Text color of the button if active in light mode |\n| `--wcp-button-light-hover-background`     | Background color of the button if hovered in light mode |\n| `--wcp-button-light-hover-border-color`   | Border color of the button if hovered in light mode |\n| `--wcp-button-light-hover-color`          | Text color of the button if hovered in light mode |\n| `--wcp-button-light-passive-background`   | Background color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-border-color` | Border color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-color`        | Text color of the button if non interactive in light mode |\n",
+          "readme": "# wcp-button\n\nShows a button element.\n\n**Mixins:** ColorSchemable\n\n## Examples\n\n## Default button\n\n```html\n<wcp-button>Click me!</wcp-button>\n```\n\n## Button with icon\n\n```html\n<wcp-button kind=\"icon\">\n <wcp-icon name=\"menu\"></wcp-icon>\n</wcp-button>\n```\n\n## Use as native submit button in form\n\n```html\n<form onsubmit=\"alert('Submit!'); return false\">\n <wcp-button type=\"submit\">Submit</wcp-button>\n</form>\n```\n\n## Use as native reset button in form\n\n```html\n<form onreset=\"alert('Reset!'); return false\">\n  <wcp-button type=\"reset\">Reset</wcp-button>\n</form>\n```\n\n## Properties\n\n| Property    | Attribute   | Type                                             | Default  |\n|-------------|-------------|--------------------------------------------------|----------|\n| `disabled`  | `disabled`  | `boolean`                                        | false    |\n| `href`      | `href`      | `string \\| undefined`                            |          |\n| `kind`      | `kind`      | `\"button\" \\| \"icon\"`                             | \"button\" |\n| `nowrap`    | `nowrap`    | `boolean`                                        | false    |\n| `stretched` | `stretched` | `boolean`                                        | false    |\n| `target`    | `target`    | `\"_self\" \\| \"_blank\" \\| \"_parent\" \\| \"_top\" \\| undefined` |          |\n| `type`      | `type`      | `\"button\" \\| \"reset\" \\| \"submit\"`                | \"button\" |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## CSS Custom Properties\n\n| Property                                  | Description                                      |\n|-------------------------------------------|--------------------------------------------------|\n| `--wcp-button-dark-active-background`     | Background color of the button if active in dark mode |\n| `--wcp-button-dark-active-border-color`   | Border color of the button if active in dark mode |\n| `--wcp-button-dark-active-color`          | Text color of the button if active in dark mode  |\n| `--wcp-button-dark-hover-background`      | Background color of the button if hovered in dark mode |\n| `--wcp-button-dark-hover-border-color`    | Border color of the button if hovered in dark mode |\n| `--wcp-button-dark-hover-color`           | Text color of the button if hovered in dark mode |\n| `--wcp-button-dark-passive-background`    | Background color of the button if non interactive in dark mode |\n| `--wcp-button-dark-passive-border-color`  | Border color of the button if non interactive in dark mode |\n| `--wcp-button-dark-passive-color`         | Text color of the button if non interactive in dark mode |\n| `--wcp-button-light-active-background`    | Background color of the button if active in light mode |\n| `--wcp-button-light-active-border-color`  | Border color of the button if active in light mode |\n| `--wcp-button-light-active-color`         | Text color of the button if active in light mode |\n| `--wcp-button-light-hover-background`     | Background color of the button if hovered in light mode |\n| `--wcp-button-light-hover-border-color`   | Border color of the button if hovered in light mode |\n| `--wcp-button-light-hover-color`          | Text color of the button if hovered in light mode |\n| `--wcp-button-light-passive-background`   | Background color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-border-color` | Border color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-color`        | Text color of the button if non interactive in light mode |\n",
           "tagName": "wcp-button",
           "customElement": true
         }
@@ -1496,8 +1608,8 @@
           "name": "Icon",
           "cssProperties": [
             {
-              "description": "Sets the scale of the icon, where 1 is the default scale at a size of 22px. It is not recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. The approach of the currently used icons is to (CSS) transform by a given scale, which breaks the layout boundaries.",
-              "name": "--wcp-icon-scale"
+              "description": "Sets the size of the icon as unitless number in pixels",
+              "name": "--wcp-icon-size"
             }
           ],
           "members": [
@@ -1526,12 +1638,12 @@
           },
           "examples": [
             "## Use icon\nBy setting the name attribute.\n\n```html\n<wcp-icon name=\"smartphone\"></wcp-icon>\n```",
-            "### Set a custom ~~size~~ _scale_\n\nIt is not recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. \\\nThe approach of the currently used icons is to (CSS) transform by a given scale, which breaks the layout boundaries.\n\n```html\n<example style=\"display: inline-block; height: 22px; width: 22px; border: 5px solid rgba(255, 0, 0, .5)\">\n  <wcp-icon name=\"laptop\" style=\"--wcp-icon-scale: 2\"></wcp-icon>\n</example>\n```"
+            "### Set a custom size\n\n```html\n<wcp-icon name=\"laptop\" style=\"--wcp-icon-size: 44\"></wcp-icon>\n```"
           ],
           "groups": [
             "ui"
           ],
-          "readme": "# wcp-icon\n\nShows an icon from the css.gg icon set.\n\n## Examples\n\n## Use icon\nBy setting the name attribute.\n\n```html\n<wcp-icon name=\"smartphone\"></wcp-icon>\n```\n\n### Set a custom ~~size~~ _scale_\n\nIt is not recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. \\\nThe approach of the currently used icons is to (CSS) transform by a given scale, which breaks the layout boundaries.\n\n```html\n<example style=\"display: inline-block; height: 22px; width: 22px; border: 5px solid rgba(255, 0, 0, .5)\">\n  <wcp-icon name=\"laptop\" style=\"--wcp-icon-scale: 2\"></wcp-icon>\n</example>\n```\n\n## Properties\n\n| Property | Attribute | Type     |\n|----------|-----------|----------|\n| `name`   | `name`    | `string` |\n\n## CSS Custom Properties\n\n| Property           | Description                                      |\n|--------------------|--------------------------------------------------|\n| `--wcp-icon-scale` | Sets the scale of the icon, where 1 is the default scale at a size of 22px. It is not<br />recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. The<br />approach of the currently used icons is to (CSS) transform by a given scale, which breaks the layout boundaries. |\n",
+          "readme": "# wcp-icon\n\nShows an icon from the css.gg icon set.\n\n## Examples\n\n## Use icon\nBy setting the name attribute.\n\n```html\n<wcp-icon name=\"smartphone\"></wcp-icon>\n```\n\n### Set a custom size\n\n```html\n<wcp-icon name=\"laptop\" style=\"--wcp-icon-size: 44\"></wcp-icon>\n```\n\n## Properties\n\n| Property | Attribute | Type     |\n|----------|-----------|----------|\n| `name`   | `name`    | `string` |\n\n## CSS Custom Properties\n\n| Property          | Description                                      |\n|-------------------|--------------------------------------------------|\n| `--wcp-icon-size` | Sets the size of the icon as unitless number in pixels |\n",
           "tagName": "wcp-icon",
           "customElement": true
         }
@@ -1696,6 +1808,12 @@
               "fieldName": "activeTab"
             }
           ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -1707,7 +1825,7 @@
           "groups": [
             "ui"
           ],
-          "readme": "# wcp-tabs\n\n## Examples\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}'>\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```\n\n### Active tab preselected\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}' active-tab=\"second\">\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```\n\n## Properties\n\n| Property    | Attribute    | Type                     | Default |\n|-------------|--------------|--------------------------|---------|\n| `activeTab` | `active-tab` | `string \\| undefined`    |         |\n| `code`      |              | `string`                 | \"\"      |\n| `tabFocus`  |              | `number`                 | 0       |\n| `tabRoles`  |              | `HTMLElement[]`          |         |\n| `tabs`      | `tabs`       | `Record<string, string>` | {}      |\n\n## Methods\n\n| Method                | Type                           |\n|-----------------------|--------------------------------|\n| `emitActiveTabChange` | `(): void`                     |\n| `handleKeydown`       | `(event: KeyboardEvent): void` |\n| `handleTabClick`      | `(event: Event): void`         |\n\n## Events\n\n| Event                         | Type                                             | Description                          |\n|-------------------------------|--------------------------------------------------|--------------------------------------|\n| `wcp-tabs:active-tab-changed` | `CustomEvent<{ activeTab: string \\| undefined; }>` | Notifies when the active tab changes |\n\n## Slots\n\n| Name | Description                              |\n|------|------------------------------------------|\n|      | tab name - The content of the named tab. |\n\n## CSS Custom Properties\n\n| Property                                   | Description                                      |\n|--------------------------------------------|--------------------------------------------------|\n| `--wcp-tabs-panel-spacing`                 | The inner padding of the tabpanels               |\n| `--wcp-tabs-tab-active-border-width`       | The border width of the active tab               |\n| `--wcp-tabs-tab-active-dark-border-color`  | The border color of the active tab in dark mode  |\n| `--wcp-tabs-tab-active-light-border-color` | The border color of the active tab in light mode |\n| `--wcp-tabs-tab-spacing`                   | The inner padding of the tabs                    |\n| `--wcp-tabs-tablist-dark-border-color`     | The border color of the tablist in dark mode     |\n| `--wcp-tabs-tablist-gap`                   | The gap between the tablist and the tabpanels    |\n| `--wcp-tabs-tablist-light-border-color`    | The border color of the tablist in light mode    |\n| `--wcp-tabs-tablist-spacing`               | The inner padding of the tablist                 |\n",
+          "readme": "# wcp-tabs\n\n**Mixins:** ColorSchemable\n\n## Examples\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}'>\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```\n\n### Active tab preselected\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}' active-tab=\"second\">\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```\n\n## Properties\n\n| Property    | Attribute    | Type                     | Default |\n|-------------|--------------|--------------------------|---------|\n| `activeTab` | `active-tab` | `string \\| undefined`    |         |\n| `code`      |              | `string`                 | \"\"      |\n| `tabFocus`  |              | `number`                 | 0       |\n| `tabRoles`  |              | `HTMLElement[]`          |         |\n| `tabs`      | `tabs`       | `Record<string, string>` | {}      |\n\n## Methods\n\n| Method                | Type                           |\n|-----------------------|--------------------------------|\n| `emitActiveTabChange` | `(): void`                     |\n| `handleKeydown`       | `(event: KeyboardEvent): void` |\n| `handleTabClick`      | `(event: Event): void`         |\n\n## Events\n\n| Event                         | Type                                             | Description                          |\n|-------------------------------|--------------------------------------------------|--------------------------------------|\n| `wcp-tabs:active-tab-changed` | `CustomEvent<{ activeTab: string \\| undefined; }>` | Notifies when the active tab changes |\n\n## Slots\n\n| Name | Description                              |\n|------|------------------------------------------|\n|      | tab name - The content of the named tab. |\n\n## CSS Custom Properties\n\n| Property                                   | Description                                      |\n|--------------------------------------------|--------------------------------------------------|\n| `--wcp-tabs-panel-spacing`                 | The inner padding of the tabpanels               |\n| `--wcp-tabs-tab-active-border-width`       | The border width of the active tab               |\n| `--wcp-tabs-tab-active-dark-border-color`  | The border color of the active tab in dark mode  |\n| `--wcp-tabs-tab-active-light-border-color` | The border color of the active tab in light mode |\n| `--wcp-tabs-tab-spacing`                   | The inner padding of the tabs                    |\n| `--wcp-tabs-tablist-dark-border-color`     | The border color of the tablist in dark mode     |\n| `--wcp-tabs-tablist-gap`                   | The gap between the tablist and the tabpanels    |\n| `--wcp-tabs-tablist-light-border-color`    | The border color of the tablist in light mode    |\n| `--wcp-tabs-tablist-spacing`               | The inner padding of the tablist                 |\n",
           "tagName": "wcp-tabs",
           "customElement": true
         }

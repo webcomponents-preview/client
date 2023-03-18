@@ -1,4 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
+declare const Navigation_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * @example
  * ### Usage with headline
@@ -23,7 +26,7 @@ import { LitElement, type TemplateResult } from 'lit';
  * @cssprop --wcp-navigation-headline-dark-background - Background color of the navigation headline in dark mode
  * @cssprop --wcp-navigation-headline-light-background - Background color of the navigation headline in light mode
  */
-export declare class Navigation extends LitElement {
+export declare class Navigation extends Navigation_base {
     static readonly styles: import("lit").CSSResult;
     headline?: string;
     protected render(): TemplateResult;
@@ -33,3 +36,4 @@ declare global {
         'wcp-navigation': Navigation;
     }
 }
+export {};

@@ -8,6 +8,7 @@ export * from './components/feature/preview-controls/preview-controls.component'
 export * from './components/feature/preview-details/preview-details.component';
 export * from './components/feature/preview-frame/preview-frame.component';
 export * from './components/feature/readme/readme.component';
+export * from './components/feature/toggle-color-scheme/toggle-color-scheme.component';
 export * from './components/feature/toggle-sidebar/toggle-sidebar.component';
 export * from './components/layout/aside/aside.component';
 export * from './components/layout/layout/layout.component';
@@ -18,4 +19,5 @@ export * from './components/ui/icon/icon.component';
 export * from './components/ui/tabs/tabs.component';
 export * from './components/ui/title/title.component';
 export * from './utils/code.utils';
+export * from './utils/color-scheme.utils';
 export * from './utils/custom-elements-manifest.utils';

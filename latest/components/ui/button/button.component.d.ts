@@ -1,5 +1,8 @@
 import { LitElement, type TemplateResult } from 'lit';
 import 'element-internals-polyfill';
+declare const Button_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * Shows a button element.
  *
@@ -61,7 +64,7 @@ import 'element-internals-polyfill';
  * @cssprop --wcp-button-light-active-border-color - Border color of the button if active in light mode
  * @cssprop --wcp-button-light-active-color - Text color of the button if active in light mode
  */
-export declare class Button extends LitElement {
+export declare class Button extends Button_base {
     #private;
     static readonly formAssociated = true;
     static readonly styles: import("lit").CSSResult;
@@ -80,3 +83,4 @@ declare global {
         'wcp-button': Button;
     }
 }
+export {};

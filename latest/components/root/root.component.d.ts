@@ -1,5 +1,8 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema';
 import { LitElement, type TemplateResult } from 'lit';
+declare const Root_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * @slot logo - Allows setting a custom logo to be displayed in the title.
  * @slot preview-controls - Can be used to inject additional preview controls.
@@ -15,7 +18,7 @@ import { LitElement, type TemplateResult } from 'lit';
  * @emits wcp-root:active-element-changed - Fired when the active element changes. Carries the declaration of the new active element with it.
  * @emits wcp-root:manifest-loaded - Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved.
  */
-export declare class Root extends LitElement {
+export declare class Root extends Root_base {
     #private;
     static readonly styles: import("lit").CSSResult;
     elements: CustomElementDeclaration[];
@@ -58,7 +61,7 @@ export declare class Root extends LitElement {
     protected render(): TemplateResult;
 }
 declare global {
-    interface WindowEventMap {
+    interface HTMLElementEventMap {
         'wcp-root:active-element-changed': CustomEvent<CustomElementDeclaration | undefined>;
         'wcp-root:manifest-loaded': CustomEvent<CustomElementDeclaration[]>;
     }
@@ -66,3 +69,4 @@ declare global {
         'wcp-root': Root;
     }
 }
+export {};
