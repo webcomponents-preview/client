@@ -10,9 +10,10 @@ declare const Viewer_base: (new (...args: any[]) => {
  * ```
  */
 export declare class Viewer extends Viewer_base {
+    #private;
     static readonly styles: import("lit").CSSResult;
-    private elementData;
-    element: CustomElementDeclaration;
+    set element(element: CustomElementDeclaration);
+    private elementData?;
     protected getElementReference(): HTMLElement;
     protected getFields(): CustomElementField[];
     protected getSlots(): Slot[];

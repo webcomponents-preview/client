@@ -14,12 +14,33 @@ declare const Button_base: (new (...args: any[]) => {
  * ```
  *
  * @example
+ * ## Disabled button
+ *
+ * ```html
+ * <wcp-button disabled>Try to click me!</wcp-button>
+ * ```
+ *
+ * @example
  * ## Button with icon
  *
  * ```html
  * <wcp-button kind="icon">
  *  <wcp-icon name="menu"></wcp-icon>
  * </wcp-button>
+ * ```
+ *
+ * @example
+ * ## Force active state
+ *
+ * ```html
+ * <wcp-button class="active">Link</wcp-button>
+ * ```
+ *
+ * @example
+ * ## Use as link
+ *
+ * ```html
+ * <wcp-button href=".">Link</wcp-button>
  * ```
  *
  * @example
@@ -72,7 +93,16 @@ export declare class Button extends Button_base {
     static readonly styles: import("lit").CSSResult;
     disabled: boolean;
     nowrap: boolean;
+    /**
+     * Allows stretching the button across the full width of its container.
+     * This is useful for buttons that are used in a narrow form, or in general
+     * on small viewports, like handheld devices.
+     */
     stretched: boolean;
+    /**
+     * The kind of button to render. Either like a conventional button, or for
+     * icons. Icon buttons are quadrtic and will show a radial background on interaction.
+     */
     kind: 'button' | 'icon';
     type: 'button' | 'reset' | 'submit';
     href?: string;

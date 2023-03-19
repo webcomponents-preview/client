@@ -40,7 +40,6 @@ export declare class Tabs extends Tabs_base {
     static readonly styles: import("lit").CSSResult;
     tabFocus: number;
     tabRoles: HTMLElement[];
-    code: string;
     tabs: Record<string, string>;
     activeTab?: string;
     emitActiveTabChange(): void;
