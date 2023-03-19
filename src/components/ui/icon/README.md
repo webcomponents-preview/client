@@ -1,30 +1,27 @@
-# wcp-icon
+# class: `Icon`
 
-Shows an icon from the css.gg icon set.
+## Fields
 
-## Examples
+| Name   | Privacy | Type     | Default | Description | Inherited From |
+| ------ | ------- | -------- | ------- | ----------- | -------------- |
+| `name` |         | `string` |         |             |                |
 
-## Use icon
-By setting the name attribute.
+## Methods
 
-```html
-<wcp-icon name="smartphone"></wcp-icon>
-```
+| Name     | Privacy   | Description | Parameters | Return           | Inherited From |
+| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |
+| `render` | protected |             |            | `TemplateResult` |                |
 
-### Set a custom size
+## Attributes
 
-```html
-<wcp-icon name="laptop" style="--wcp-icon-size: 44"></wcp-icon>
-```
+| Name   | Field | Inherited From |
+| ------ | ----- | -------------- |
+| `name` | name  |                |
 
-## Properties
+## CSS Properties
 
-| Property | Attribute | Type     |
-|----------|-----------|----------|
-| `name`   | `name`    | `string` |
+| Name               | Default | Description                                                                                                                                                                                                                                                                                                             |
+| ------------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--wcp-icon-scale` |         | Sets the scale of the icon, where 1 is the default scale at a size of 22px. It is not recommended to set this value yet, until a proper icon set is used and the icon sizes can be set explicitly. The approach of the currently used icons is to (CSS) transform by a given scale, which breaks the layout boundaries. |
 
-## CSS Custom Properties
-
-| Property          | Description                                      |
-|-------------------|--------------------------------------------------|
-| `--wcp-icon-size` | Sets the size of the icon as unitless number in pixels |
+<hr/>

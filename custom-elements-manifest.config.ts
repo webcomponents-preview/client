@@ -1,11 +1,10 @@
 #!/usr/bin/env ts-node
 
-import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
 import { customElementExamplesPlugin } from '@webcomponents-preview/cem-plugin-examples';
+import { customElementGenerateReadmesPlugin } from '@webcomponents-preview/cem-plugin-generate-readmes';
 import { customElementGroupingPlugin } from '@webcomponents-preview/cem-plugin-grouping';
-import { customElementInlineReadmePlugin } from '@webcomponents-preview/cem-plugin-inline-readme';
 
 export default {
   packagejson: true,
@@ -15,16 +14,24 @@ export default {
   outdir: 'dist',
   plugins: [
     customElementExamplesPlugin(),
+    customElementGenerateReadmesPlugin({
+      addInlineReadme: true,
+      transformer: 'cem',
+      transformerOptions: {
+        headingOffset: -1,
+        omitDeclarations: ['exports'],
+        omitSections: ['main-heading', 'super-class', 'static-fields', 'static-methods'],
+        private: 'hidden',
+      },
+      outputPath(path) {
+        if (path === undefined) return '';
+        return resolve(dirname(path), 'README.md');
+      },
+    }),
     customElementGroupingPlugin({
       addGroups(componentPath) {
         const [, , group] = componentPath?.split('/') || [];
         return [group];
-      },
-    }),
-    customElementInlineReadmePlugin({
-      loadReadme(path?: string) {
-        if (path === undefined) return '';
-        return readFileSync(resolve(dirname(path), 'README.md')).toString();
       },
     }),
   ],
