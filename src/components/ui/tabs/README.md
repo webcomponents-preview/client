@@ -12,7 +12,6 @@
 | ----------- | ------- | ------------------------ | ------- | ----------- | -------------- |
 | `tabFocus`  |         | `number`                 | `0`     |             |                |
 | `tabRoles`  |         | `HTMLElement[]`          |         |             |                |
-| `code`      |         | `string`                 | `''`    |             |                |
 | `tabs`      |         | `Record<string, string>` | `{}`    |             |                |
 | `activeTab` |         | `string \| undefined`    |         |             |                |
 

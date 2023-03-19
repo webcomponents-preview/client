@@ -20,6 +20,7 @@
 | ---------------- | --------- | ----------- | ----------------------------------------------- | ---------------- | -------------- |
 | `renderExamples` | protected |             | `element: CustomElementDeclarationWithExamples` | `TemplateResult` |                |
 | `renderReadme`   | protected |             | `element: CustomElementDeclarationWithReadme`   | `TemplateResult` |                |
+| `renderViewer`   | protected |             | `element: CustomElementDeclaration`             | `TemplateResult` |                |
 | `render`         | protected |             |                                                 | `TemplateResult` |                |
 
 ## Attributes

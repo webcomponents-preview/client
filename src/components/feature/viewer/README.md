@@ -1,15 +1,34 @@
-# wcp-viewer
+# class: `Viewer`
 
-**Mixins:** ColorSchemable
+## Mixins
 
-## Example
+| Name             | Module | Package                    |
+| ---------------- | ------ | -------------------------- |
+| `ColorSchemable` |        | @/utils/color-scheme.utils |
 
-```html
-<wcp-viewer></wcp-viewer>
-```
+## Fields
 
-## Properties
+| Name      | Privacy | Type | Default | Description | Inherited From |
+| --------- | ------- | ---- | ------- | ----------- | -------------- |
+| `element` |         |      |         |             |                |
 
-| Property  | Attribute | Type                       |
-|-----------|-----------|----------------------------|
-| `element` | `element` | `CustomElementDeclaration` |
+## Methods
+
+| Name                  | Privacy   | Description | Parameters          | Return                           | Inherited From |
+| --------------------- | --------- | ----------- | ------------------- | -------------------------------- | -------------- |
+| `getElementReference` | protected |             |                     | `HTMLElement`                    |                |
+| `getFields`           | protected |             |                     | `CustomElementField[]`           |                |
+| `getSlots`            | protected |             |                     | `Slot[]`                         |                |
+| `getSlotsWithData`    | protected |             |                     | `{ slot: Slot; data: string }[]` |                |
+| `handleControlsInput` | protected |             | `event: InputEvent` |                                  |                |
+| `renderSlots`         | protected |             |                     | `TemplateResult`                 |                |
+| `renderElement`       | protected |             |                     | `TemplateResult`                 |                |
+| `render`              | protected |             |                     | `TemplateResult`                 |                |
+
+## Attributes
+
+| Name      | Field   | Inherited From |
+| --------- | ------- | -------------- |
+| `element` | element |                |
+
+<hr/>
