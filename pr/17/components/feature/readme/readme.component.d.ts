@@ -1,4 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
+declare const Readme_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * @example
  * ```html
@@ -8,9 +11,9 @@ import { LitElement, type TemplateResult } from 'lit';
  * </wcp-readme>
  * ```
  */
-export declare class Readme extends LitElement {
+export declare class Readme extends Readme_base {
     static readonly styles: import("lit").CSSResult;
-    markdown: string;
+    markdown?: string;
     createRenderRoot(): this;
     connectedCallback(): void;
     protected render(): TemplateResult;
@@ -20,3 +23,4 @@ declare global {
         'wcp-readme': Readme;
     }
 }
+export {};

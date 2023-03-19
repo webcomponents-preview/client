@@ -1,4 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
+declare const PreviewControls_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * @example
  * ```html
@@ -24,7 +27,7 @@ import { LitElement, type TemplateResult } from 'lit';
  * @cssprop --wcp-preview-controls-height - Overall height of the preview controls nav bar
  * @cssprop --wcp-preview-controls-spacing - Inner spacing, used as padding of the controls
  */
-export declare class PreviewControls extends LitElement {
+export declare class PreviewControls extends PreviewControls_base {
     static readonly styles: import("lit").CSSResult;
     protected render(): TemplateResult;
 }
@@ -33,3 +36,4 @@ declare global {
         'wcp-preview-controls': PreviewControls;
     }
 }
+export {};

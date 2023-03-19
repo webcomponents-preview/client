@@ -1,4 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
+declare const Tabs_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * @example
  * ```html
@@ -33,7 +36,7 @@ import { LitElement, type TemplateResult } from 'lit';
  * @cssprop --wcp-tabs-tablist-light-border-color - The border color of the tablist in light mode
  * @cssprop --wcp-tabs-tab-active-light-border-color - The border color of the active tab in light mode
  */
-export declare class Tabs extends LitElement {
+export declare class Tabs extends Tabs_base {
     static readonly styles: import("lit").CSSResult;
     tabFocus: number;
     tabRoles: HTMLElement[];
@@ -55,3 +58,4 @@ declare global {
         'wcp-tabs': Tabs;
     }
 }
+export {};

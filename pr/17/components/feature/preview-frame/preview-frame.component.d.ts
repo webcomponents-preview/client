@@ -1,6 +1,9 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest';
 import { LitElement, type TemplateResult } from 'lit';
 import { type CustomElementDeclarationWithExamples, CustomElementDeclarationWithReadme } from '@/utils/custom-elements-manifest.utils';
+declare const PreviewFrame_base: (new (...args: any[]) => {
+    colorScheme?: "light" | "dark" | undefined;
+}) & typeof LitElement;
 /**
  * @example
  * ```html
@@ -20,7 +23,7 @@ import { type CustomElementDeclarationWithExamples, CustomElementDeclarationWith
  * @cssprop --wcp-preview-frame-border-width - Border width of the example section
  * @cssprop --wcp-preview-frame-spacing - Inner padding of the example section
  */
-export declare class PreviewFrame extends LitElement {
+export declare class PreviewFrame extends PreviewFrame_base {
     static readonly styles: import("lit").CSSResult;
     preview: string;
     examples: string[];
@@ -34,3 +37,4 @@ declare global {
         'wcp-preview-frame': PreviewFrame;
     }
 }
+export {};

@@ -4,7 +4,7 @@ import { LitElement, type TemplateResult } from 'lit';
  *
  * @example
  * ```html
- * <wcp-wcp-toggle-sidebar></wcp-wcp-toggle-sidebar>
+ * <wcp-toggle-sidebar></wcp-toggle-sidebar>
  * ```
  */
 export declare class ToggleSidebar extends LitElement {
