@@ -6,20 +6,6 @@ export function getCodeExample(slot: HTMLSlotElement): string {
   return slot.assignedElements().reduce((acc, el) => `${acc}\n${el.outerHTML}`, '');
 }
 
-// export const replacements = {
-//   '&': '&amp;',
-//   '<': '&lt;',
-//   '>': '&gt;',
-//   '"': '&quot;',
-//   "'": '&#39;',
-// };
-
-// export function escapeCode(code: string): string {
-//   const keys = Object.keys(replacements).join('|');
-//   const regex = new RegExp(`(${keys})`, 'g');
-//   return code.replace(regex, (match) => replacements[match as keyof typeof replacements]);
-// }
-
 // configure marked once, to always use our custom component to preview code examples
 marked.setOptions({
   highlight(code: string, lang: string) {
@@ -27,11 +13,17 @@ marked.setOptions({
     return hljs.highlight(code, { language }).value;
   },
   renderer: new (class extends marked.Renderer {
-    code(preview: string, language = 'plaintext'): string {
+    code(preview: string, language = 'plaintext', isEscaped: boolean): string {
+      // do not use example component for anything but html examples
+      if (language !== 'html') {
+        return super.code(preview, language, isEscaped);
+      }
+      // prettify and highlight the code
       let code = pretty(preview);
       if (this.options.highlight) {
         code = this.options.highlight(code, language) as string;
       }
+      // wrap the code in a custom element to preview it
       return `
         <wcp-example>
           <pre slot="code"><code>${code}</code></pre>

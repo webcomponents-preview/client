@@ -1,5 +1,11 @@
 # class: `PreviewControls`
 
+## Mixins
+
+| Name             | Module | Package                    |
+| ---------------- | ------ | -------------------------- |
+| `ColorSchemable` |        | @/utils/color-scheme.utils |
+
 ## Methods
 
 | Name     | Privacy   | Description | Parameters | Return           | Inherited From |

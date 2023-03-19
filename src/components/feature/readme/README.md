@@ -1,10 +1,16 @@
 # class: `Readme`
 
+## Mixins
+
+| Name             | Module | Package                    |
+| ---------------- | ------ | -------------------------- |
+| `ColorSchemable` |        | @/utils/color-scheme.utils |
+
 ## Fields
 
-| Name       | Privacy | Type     | Default | Description | Inherited From |
-| ---------- | ------- | -------- | ------- | ----------- | -------------- |
-| `markdown` |         | `string` |         |             |                |
+| Name       | Privacy | Type                  | Default | Description | Inherited From |
+| ---------- | ------- | --------------------- | ------- | ----------- | -------------- |
+| `markdown` |         | `string \| undefined` |         |             |                |
 
 ## Methods
 
