@@ -54,9 +54,9 @@ export function prepareInitialElementData(element: CustomElementDeclaration): Cu
 }
 
 export function parseMemberValue(
-  input: Element | RadioNodeList,
-  value: FormDataEntryValue
-): string | number | boolean | undefined {
+  value: FormDataEntryValue,
+  input: Element | RadioNodeList
+): FormDataEntryValue | string | number | boolean | undefined {
   // radio menus and selects have string based values (or null)
   if (input instanceof RadioNodeList || input instanceof HTMLSelectElement) {
     return value as string;
@@ -68,7 +68,7 @@ export function parseMemberValue(
         return Number(value);
     }
   }
-  return value as string;
+  return (value as string).trim() ? value : undefined;
 }
 
 export function mapMemberData(
@@ -76,7 +76,7 @@ export function mapMemberData(
   input: Element | RadioNodeList,
   field: CustomElementField
 ): [string, unknown] {
-  return [litKey(field), parseMemberValue(input, value)];
+  return [litKey(field), parseMemberValue(value, input)];
 }
 
 export function mapSlotData(name: string, value: string): [string, string] {
