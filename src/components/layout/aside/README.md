@@ -1,5 +1,11 @@
 # class: `Aside`
 
+## Mixins
+
+| Name             | Module | Package                    |
+| ---------------- | ------ | -------------------------- |
+| `ColorSchemable` |        | @/utils/color-scheme.utils |
+
 ## Fields
 
 | Name                | Privacy | Type      | Default           | Description                                                                           | Inherited From |

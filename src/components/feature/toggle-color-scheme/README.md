@@ -1,29 +1,22 @@
-# wcp-toggle-color-scheme
+# class: `ToggleColorScheme`
 
-Shows a button to toggle the desired color-scheme.
+## Mixins
 
-**Mixins:** ColorSchemable
+| Name             | Module | Package                    |
+| ---------------- | ------ | -------------------------- |
+| `ColorSchemable` |        | @/utils/color-scheme.utils |
 
-## Example
+## Fields
 
-```html
-<wcp-toggle-color-scheme></wcp-toggle-color-scheme>
-```
-
-## Properties
-
-| Property      | Type                | Default                                          |
-|---------------|---------------------|--------------------------------------------------|
-| `colorScheme` | `"dark" \| "light"` | "matchMedia('(prefers-color-scheme: dark)').matches ? ('dark' as const) : ('light' as const)" |
+| Name          | Privacy | Type | Default | Description | Inherited From |
+| ------------- | ------- | ---- | ------- | ----------- | -------------- |
+| `colorScheme` |         |      |         |             |                |
 
 ## Methods
 
-| Method              | Type       |
-|---------------------|------------|
-| `handleButtonClick` | `(): void` |
+| Name                | Privacy   | Description | Parameters | Return           | Inherited From |
+| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |
+| `handleButtonClick` |           |             |            |                  |                |
+| `render`            | protected |             |            | `TemplateResult` |                |
 
-## Events
-
-| Event                     | Type                  |
-|---------------------------|-----------------------|
-| `wcp-color-scheme:toggle` | `CustomEvent<string>` |
+<hr/>

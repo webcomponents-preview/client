@@ -46,9 +46,5 @@
     @include with-color-scheme-attribute($color-scheme, $shadow, $append) {
       @content ($color-scheme);
     }
-    // match to element attribute selector override
-    @include with-color-scheme-attribute($color-scheme, $append-root, $no-shadow) {
-      @content ($color-scheme);
-    }
   }
 }

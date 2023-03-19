@@ -1,5 +1,11 @@
 # class: `Example`
 
+## Mixins
+
+| Name             | Module | Package                    |
+| ---------------- | ------ | -------------------------- |
+| `ColorSchemable` |        | @/utils/color-scheme.utils |
+
 ## Methods
 
 | Name     | Privacy   | Description | Parameters | Return           | Inherited From |
@@ -15,10 +21,6 @@
 | `--wcp-example-border-width`       |         | Border width of the example               |
 | `--wcp-example-dark-border-color`  |         | Border color of the example in dark mode  |
 | `--wcp-example-light-border-color` |         | Border color of the example in light mode |
-
-**Mixins:** ColorSchemable
-
-**Mixins:** ColorSchemable
 
 ## Slots
 
