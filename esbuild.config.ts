@@ -67,6 +67,10 @@ const options: BuildOptions = {
       transform,
     }),
     copyPlugin({
+      src: 'src/config.json',
+      dest: 'dist/config.json',
+    }),
+    copyPlugin({
       src: 'src/assets',
       dest: 'dist/assets',
     }),

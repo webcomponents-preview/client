@@ -20,7 +20,9 @@
   "scripts": {
     "lint": "eslint --ext .ts src",
     "clean": "shx rm -rf dist",
-    "generate": "barrelsby --config .barrelsby.json",
+    "generate:barrel": "barrelsby --config .barrelsby.json",
+    "generate:config": "typescript-json-schema src/utils/config.utils.ts Config --ignoreErrors --out src/config.schema.json",
+    "generate": "run-p --print-name generate:*",
     "docs": "cross-env NODE_OPTIONS='--loader ts-node/esm' cem analyze --config custom-elements-manifest.config.ts",
     "test": "jest",
     "test:ci": "jest --ci --passWithNoTests --reporters=default --reporters=jest-junit",
@@ -80,7 +82,8 @@
     "ts-jest": "29.0.5",
     "ts-node": "10.9.1",
     "typedoc": "0.23.26",
-    "typescript": "4.9.5"
+    "typescript": "4.9.5",
+    "typescript-json-schema": "0.55.0"
   },
   "engines": {
     "node": "18.15.0"
