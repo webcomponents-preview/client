@@ -49,6 +49,14 @@
           "members": [
             {
               "kind": "field",
+              "name": "#activeElement",
+              "privacy": "private",
+              "type": {
+                "text": "string | undefined"
+              }
+            },
+            {
+              "kind": "field",
               "name": "#title",
               "privacy": "private",
               "type": {
@@ -73,6 +81,13 @@
             },
             {
               "kind": "field",
+              "name": "activeElementDeclaration",
+              "type": {
+                "text": "CustomElementDeclaration | undefined"
+              }
+            },
+            {
+              "kind": "field",
               "name": "navigation",
               "type": {
                 "text": "Record<string, CustomElementDeclaration[]>"
@@ -86,6 +101,16 @@
                 "text": "string"
               },
               "attribute": "title",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "activeElement",
+              "description": "Sets the currently active element by its tag name. Will be updated at runtime and can\nbe preset with an initial value to define the active element at startup.",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "active-element",
               "reflects": true
             },
             {
@@ -108,16 +133,6 @@
               "default": "'Components'",
               "description": "Allows to set a fallback group name for elements that do not have a `groups` property.\nSo this is the name of the group that will contain all elements unless the manifest is\ngenerated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin.",
               "attribute": "fallback-group-name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "activeElement",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "Sets the currently active element by its tag name. Will be updated at runtime and can\nbe preset with an initial value to define the active element at startup.",
-              "attribute": "active-element",
               "reflects": true
             },
             {
@@ -174,20 +189,7 @@
             },
             {
               "kind": "method",
-              "name": "getActiveElementDeclaration",
-              "return": {
-                "type": {
-                  "text": "CustomElementDeclaration | undefined"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "elements",
-                  "type": {
-                    "text": "CustomElementDeclaration[]"
-                  }
-                }
-              ]
+              "name": "retrieveActiveElementDeclaration"
             },
             {
               "kind": "method",
@@ -211,6 +213,14 @@
               "fieldName": "title"
             },
             {
+              "name": "active-element",
+              "description": "Sets the currently active element by its tag name. Will be updated at runtime and can\nbe preset with an initial value to define the active element at startup.",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "activeElement"
+            },
+            {
               "name": "inline",
               "type": {
                 "text": "boolean"
@@ -227,14 +237,6 @@
               "default": "'Components'",
               "description": "Allows to set a fallback group name for elements that do not have a `groups` property.\nSo this is the name of the group that will contain all elements unless the manifest is\ngenerated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin.",
               "fieldName": "fallbackGroupName"
-            },
-            {
-              "name": "active-element",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "Sets the currently active element by its tag name. Will be updated at runtime and can\nbe preset with an initial value to define the active element at startup.",
-              "fieldName": "activeElement"
             },
             {
               "name": "initial-preview-tab",
@@ -266,7 +268,7 @@
             "package": "lit"
           },
           "examples": [],
-          "readme": "# class: `Root`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name                | Privacy | Type                                         | Default        | Description                                                                                                                                                                                                                                                                | Inherited From |\n| ------------------- | ------- | -------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |\n| `config`            |         | `Config \\| undefined`                        |                |                                                                                                                                                                                                                                                                            |                |\n| `elements`          |         | `CustomElementDeclaration[]`                 | `[]`           |                                                                                                                                                                                                                                                                            |                |\n| `navigation`        |         | `Record<string, CustomElementDeclaration[]>` | `{}`           |                                                                                                                                                                                                                                                                            |                |\n| `title`             |         | `string`                                     |                |                                                                                                                                                                                                                                                                            |                |\n| `inline`            |         | `boolean`                                    | `false`        | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element.                                                                                                       |                |\n| `fallbackGroupName` |         | `string`                                     | `'Components'` | Allows to set a fallback group name for elements that do not have a \\`groups\\` property.&#xA;So this is the name of the group that will contain all elements unless the manifest is&#xA;generated with the optional \\`@webcomponents-preview/cem-plugin-grouping\\` plugin. |                |\n| `activeElement`     |         | `string \\| undefined`                        |                | Sets the currently active element by its tag name. Will be updated at runtime and can&#xA;be preset with an initial value to define the active element at startup.                                                                                                         |                |\n| `initialPreviewTab` |         | `Config['initialPreviewTab'] \\| undefined`   |                | Configure the initial preview tab to be displayed. Can be either \\`examples\\`, \\`readme\\` or \\`viewer\\`.                                                                                                                                                                   |                |\n| `configUrl`         |         |                                              |                | Allows to set a url to load a config file from.                                                                                                                                                                                                                            |                |\n| `manifestUrl`       |         |                                              |                | Defines the location of the custom element manifest file.                                                                                                                                                                                                                  |                |\n| `handleHashChange`  |         |                                              |                |                                                                                                                                                                                                                                                                            |                |\n\n## Methods\n\n| Name                          | Privacy   | Description | Parameters                             | Return                                  | Inherited From |\n| ----------------------------- | --------- | ----------- | -------------------------------------- | --------------------------------------- | -------------- |\n| `loadConfig`                  |           |             | `configUrl: string`                    |                                         |                |\n| `loadCustomElementsManifest`  |           |             | `manifestUrl: string`                  |                                         |                |\n| `selectFallbackElement`       |           |             |                                        |                                         |                |\n| `getActiveElementDeclaration` |           |             | `elements: CustomElementDeclaration[]` | `CustomElementDeclaration \\| undefined` |                |\n| `emitManifestLoaded`          |           |             |                                        |                                         |                |\n| `emitActiveElementChanged`    |           |             |                                        |                                         |                |\n| `connectedCallback`           |           |             |                                        |                                         |                |\n| `disconnectedCallback`        |           |             |                                        |                                         |                |\n| `render`                      | protected |             |                                        | `TemplateResult`                        |                |\n\n## Attributes\n\n| Name                  | Field             | Inherited From |\n| --------------------- | ----------------- | -------------- |\n| `title`               | title             |                |\n| `inline`              | inline            |                |\n| `fallback-group-name` | fallbackGroupName |                |\n| `active-element`      | activeElement     |                |\n| `initial-preview-tab` | initialPreviewTab |                |\n| `config-url`          | configUrl         |                |\n| `manifest-url`        | manifestUrl       |                |\n\n## CSS Properties\n\n| Name                          | Default | Description                                                  |\n| ----------------------------- | ------- | ------------------------------------------------------------ |\n| `--wcp-root-dark-background`  |         | The background color of the root element in dark mode        |\n| `--wcp-root-dark-color`       |         | The text color of the text in the root element in dark mode  |\n| `--wcp-root-light-background` |         | The background color of the root element in light mode       |\n| `--wcp-root-light-color`      |         | The text color of the text in the root element in light mode |\n\n## Slots\n\n| Name               | Description                                                |\n| ------------------ | ---------------------------------------------------------- |\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls.         |\n| `preview-frame`    | Used to be override the existing preview pane.             |\n| `preview-details`  | Can be used to inject additional preview detail panes.     |\n\n<hr/>\n",
+          "readme": "# class: `Root`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name                       | Privacy | Type                                         | Default        | Description                                                                                                                                                                                                                                                                | Inherited From |\n| -------------------------- | ------- | -------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |\n| `config`                   |         | `Config \\| undefined`                        |                |                                                                                                                                                                                                                                                                            |                |\n| `elements`                 |         | `CustomElementDeclaration[]`                 | `[]`           |                                                                                                                                                                                                                                                                            |                |\n| `activeElementDeclaration` |         | `CustomElementDeclaration \\| undefined`      |                |                                                                                                                                                                                                                                                                            |                |\n| `navigation`               |         | `Record<string, CustomElementDeclaration[]>` | `{}`           |                                                                                                                                                                                                                                                                            |                |\n| `title`                    |         | `string`                                     |                |                                                                                                                                                                                                                                                                            |                |\n| `activeElement`            |         | `string \\| undefined`                        |                | Sets the currently active element by its tag name. Will be updated at runtime and can&#xA;be preset with an initial value to define the active element at startup.                                                                                                         |                |\n| `inline`                   |         | `boolean`                                    | `false`        | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element.                                                                                                       |                |\n| `fallbackGroupName`        |         | `string`                                     | `'Components'` | Allows to set a fallback group name for elements that do not have a \\`groups\\` property.&#xA;So this is the name of the group that will contain all elements unless the manifest is&#xA;generated with the optional \\`@webcomponents-preview/cem-plugin-grouping\\` plugin. |                |\n| `initialPreviewTab`        |         | `Config['initialPreviewTab'] \\| undefined`   |                | Configure the initial preview tab to be displayed. Can be either \\`examples\\`, \\`readme\\` or \\`viewer\\`.                                                                                                                                                                   |                |\n| `configUrl`                |         |                                              |                | Allows to set a url to load a config file from.                                                                                                                                                                                                                            |                |\n| `manifestUrl`              |         |                                              |                | Defines the location of the custom element manifest file.                                                                                                                                                                                                                  |                |\n| `handleHashChange`         |         |                                              |                |                                                                                                                                                                                                                                                                            |                |\n\n## Methods\n\n| Name                               | Privacy   | Description | Parameters            | Return           | Inherited From |\n| ---------------------------------- | --------- | ----------- | --------------------- | ---------------- | -------------- |\n| `loadConfig`                       |           |             | `configUrl: string`   |                  |                |\n| `loadCustomElementsManifest`       |           |             | `manifestUrl: string` |                  |                |\n| `selectFallbackElement`            |           |             |                       |                  |                |\n| `retrieveActiveElementDeclaration` |           |             |                       |                  |                |\n| `emitManifestLoaded`               |           |             |                       |                  |                |\n| `emitActiveElementChanged`         |           |             |                       |                  |                |\n| `connectedCallback`                |           |             |                       |                  |                |\n| `disconnectedCallback`             |           |             |                       |                  |                |\n| `render`                           | protected |             |                       | `TemplateResult` |                |\n\n## Attributes\n\n| Name                  | Field             | Inherited From |\n| --------------------- | ----------------- | -------------- |\n| `title`               | title             |                |\n| `active-element`      | activeElement     |                |\n| `inline`              | inline            |                |\n| `fallback-group-name` | fallbackGroupName |                |\n| `initial-preview-tab` | initialPreviewTab |                |\n| `config-url`          | configUrl         |                |\n| `manifest-url`        | manifestUrl       |                |\n\n## CSS Properties\n\n| Name                          | Default | Description                                                  |\n| ----------------------------- | ------- | ------------------------------------------------------------ |\n| `--wcp-root-dark-background`  |         | The background color of the root element in dark mode        |\n| `--wcp-root-dark-color`       |         | The text color of the text in the root element in dark mode  |\n| `--wcp-root-light-background` |         | The background color of the root element in light mode       |\n| `--wcp-root-light-color`      |         | The text color of the text in the root element in light mode |\n\n## Slots\n\n| Name               | Description                                                |\n| ------------------ | ---------------------------------------------------------- |\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls.         |\n| `preview-frame`    | Used to be override the existing preview pane.             |\n| `preview-details`  | Can be used to inject additional preview detail panes.     |\n\n<hr/>\n",
           "groups": [
             "root"
           ],
@@ -289,6 +291,87 @@
           "declaration": {
             "name": "Root",
             "module": "src/components/root/root.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/feature/markdown-example/markdown-example.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Shows an inline code example and a preview of the element in the readme.\nThis is used in the markdown formatter to render `html` examples.\n\nIn most cases you don't want to use this component directly, but rather use the `wcp-readme` element instead,\nor the enhanced markdown renderer which instruments this element under the hood. It can be used with the\n`renderMarkdown` function provided by the `@/utils/markdown.utils`.",
+          "name": "MarkdownExample",
+          "cssProperties": [
+            {
+              "description": "Inner padding of the example",
+              "name": "--wcp-markdown-example-spacing"
+            },
+            {
+              "description": "Border radius of the example",
+              "name": "--wcp-markdown-example-border-radius"
+            },
+            {
+              "description": "Border width of the example",
+              "name": "--wcp-markdown-example-border-width"
+            },
+            {
+              "description": "Border color of the example in dark mode",
+              "name": "--wcp-markdown-example-dark-border-color"
+            },
+            {
+              "description": "Border color of the example in light mode",
+              "name": "--wcp-markdown-example-light-border-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Code example",
+              "name": "code"
+            },
+            {
+              "description": "Rendered example preview",
+              "name": "preview"
+            }
+          ],
+          "members": [],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "### Shows arbitrary HTML code example\n\n```html\n<wcp-markdown-example>\n  <pre slot=\"code\">\n&lt;h1&gt;Readme&lt;/h1&gt;\n&lt;p&gt;Some readme content&lt;/p&gt;\n  </pre>\n  <div slot=\"preview\">\n    <h1>Readme</h1>\n    <p>Some readme content</p>\n  </div>\n</wcp-markdown-example>\n```"
+          ],
+          "readme": "# class: `MarkdownExample`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## CSS Properties\n\n| Name                                        | Default | Description                               |\n| ------------------------------------------- | ------- | ----------------------------------------- |\n| `--wcp-markdown-example-spacing`            |         | Inner padding of the example              |\n| `--wcp-markdown-example-border-radius`      |         | Border radius of the example              |\n| `--wcp-markdown-example-border-width`       |         | Border width of the example               |\n| `--wcp-markdown-example-dark-border-color`  |         | Border color of the example in dark mode  |\n| `--wcp-markdown-example-light-border-color` |         | Border color of the example in light mode |\n\n## Slots\n\n| Name      | Description              |\n| --------- | ------------------------ |\n| `code`    | Code example             |\n| `preview` | Rendered example preview |\n\n<hr/>\n\n# Variables\n\n| Name                    | Description | Type     |\n| ----------------------- | ----------- | -------- |\n| `MARKDOWN_EXAMPLE_TABS` |             | `object` |\n\n<hr/>\n\n# Functions\n\n| Name | Description | Parameters | Return |\n| ---- | ----------- | ---------- | ------ |\n|      |             |            |        |\n\n<hr/>\n",
+          "groups": [
+            "feature"
+          ],
+          "tagName": "wcp-markdown-example",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MarkdownExample",
+          "declaration": {
+            "name": "MarkdownExample",
+            "module": "src/components/feature/markdown-example/markdown-example.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-markdown-example",
+          "declaration": {
+            "name": "MarkdownExample",
+            "module": "src/components/feature/markdown-example/markdown-example.component.ts"
           }
         }
       ]
@@ -691,27 +774,12 @@
           "members": [
             {
               "kind": "field",
-              "name": "preview",
+              "name": "_tabs",
               "type": {
-                "text": "string"
+                "text": "PreviewFramePlugin[]"
               },
-              "default": "''"
-            },
-            {
-              "kind": "field",
-              "name": "examples",
-              "type": {
-                "text": "string[]"
-              },
+              "privacy": "private",
               "default": "[]"
-            },
-            {
-              "kind": "field",
-              "name": "element",
-              "type": {
-                "text": "CustomElementDeclaration | undefined"
-              },
-              "attribute": "element"
             },
             {
               "kind": "field",
@@ -724,67 +792,39 @@
             },
             {
               "kind": "method",
-              "name": "renderExamples",
+              "name": "handleSlotChange",
               "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              },
               "parameters": [
                 {
-                  "name": "element",
+                  "name": "event",
                   "type": {
-                    "text": "CustomElementDeclarationWithExamples"
+                    "text": "Event"
                   }
                 }
               ]
             },
             {
               "kind": "method",
-              "name": "renderReadme",
+              "name": "getAvailableTabs",
               "privacy": "protected",
               "return": {
                 "type": {
-                  "text": "TemplateResult"
+                  "text": "HTMLElementTagNameMap['wcp-tabs']['tabs']"
                 }
-              },
-              "parameters": [
-                {
-                  "name": "element",
-                  "type": {
-                    "text": "CustomElementDeclarationWithReadme"
-                  }
-                }
-              ]
+              }
             },
             {
               "kind": "method",
-              "name": "renderViewer",
+              "name": "getActiveTab",
               "privacy": "protected",
               "return": {
                 "type": {
-                  "text": "TemplateResult"
+                  "text": "HTMLElementTagNameMap['wcp-tabs']['activeTab']"
                 }
-              },
-              "parameters": [
-                {
-                  "name": "element",
-                  "type": {
-                    "text": "CustomElementDeclaration"
-                  }
-                }
-              ]
+              }
             }
           ],
           "attributes": [
-            {
-              "name": "element",
-              "type": {
-                "text": "CustomElementDeclaration | undefined"
-              },
-              "fieldName": "element"
-            },
             {
               "name": "initial-preview-tab",
               "type": {
@@ -806,7 +846,7 @@
           "examples": [
             "```html\n<wcp-preview-frame></wcp-preview-frame>\n```"
           ],
-          "readme": "# class: `PreviewFrame`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name                | Privacy | Type                                       | Default | Description | Inherited From |\n| ------------------- | ------- | ------------------------------------------ | ------- | ----------- | -------------- |\n| `preview`           |         | `string`                                   | `''`    |             |                |\n| `examples`          |         | `string[]`                                 | `[]`    |             |                |\n| `element`           |         | `CustomElementDeclaration \\| undefined`    |         |             |                |\n| `initialPreviewTab` |         | `Config['initialPreviewTab'] \\| undefined` |         |             |                |\n\n## Methods\n\n| Name             | Privacy   | Description | Parameters                                      | Return           | Inherited From |\n| ---------------- | --------- | ----------- | ----------------------------------------------- | ---------------- | -------------- |\n| `renderExamples` | protected |             | `element: CustomElementDeclarationWithExamples` | `TemplateResult` |                |\n| `renderReadme`   | protected |             | `element: CustomElementDeclarationWithReadme`   | `TemplateResult` |                |\n| `renderViewer`   | protected |             | `element: CustomElementDeclaration`             | `TemplateResult` |                |\n| `render`         | protected |             |                                                 | `TemplateResult` |                |\n\n## Attributes\n\n| Name                  | Field             | Inherited From |\n| --------------------- | ----------------- | -------------- |\n| `element`             | element           |                |\n| `initial-preview-tab` | initialPreviewTab |                |\n\n## CSS Properties\n\n| Name                                     | Default | Description                                         |\n| ---------------------------------------- | ------- | --------------------------------------------------- |\n| `--wcp-preview-frame-dark-background`    |         | Background color of the preview frame in dark mode  |\n| `--wcp-preview-frame-dark-border-color`  |         | Border color of the example section in dark mode    |\n| `--wcp-preview-frame-dark-color`         |         | Text color of the preview frame in dark mode        |\n| `--wcp-preview-frame-light-background`   |         | Background color of the preview frame in light mode |\n| `--wcp-preview-frame-light-border-color` |         | Border color of the example section in light mode   |\n| `--wcp-preview-frame-light-color`        |         | Text color of the preview frame in light mode       |\n| `--wcp-preview-frame-distance`           |         | Outer margin of the preview frame                   |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the preview frame                  |\n| `--wcp-preview-frame-border-width`       |         | Border width of the example section                 |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the example section                |\n\n<hr/>\n",
+          "readme": "# class: `PreviewFrame`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name                | Privacy | Type                                       | Default | Description | Inherited From |\n| ------------------- | ------- | ------------------------------------------ | ------- | ----------- | -------------- |\n| `initialPreviewTab` |         | `Config['initialPreviewTab'] \\| undefined` |         |             |                |\n\n## Methods\n\n| Name               | Privacy   | Description | Parameters     | Return                                           | Inherited From |\n| ------------------ | --------- | ----------- | -------------- | ------------------------------------------------ | -------------- |\n| `handleSlotChange` | protected |             | `event: Event` |                                                  |                |\n| `getAvailableTabs` | protected |             |                | `HTMLElementTagNameMap['wcp-tabs']['tabs']`      |                |\n| `getActiveTab`     | protected |             |                | `HTMLElementTagNameMap['wcp-tabs']['activeTab']` |                |\n| `render`           | protected |             |                | `TemplateResult`                                 |                |\n\n## Attributes\n\n| Name                  | Field             | Inherited From |\n| --------------------- | ----------------- | -------------- |\n| `initial-preview-tab` | initialPreviewTab |                |\n\n## CSS Properties\n\n| Name                                     | Default | Description                                         |\n| ---------------------------------------- | ------- | --------------------------------------------------- |\n| `--wcp-preview-frame-dark-background`    |         | Background color of the preview frame in dark mode  |\n| `--wcp-preview-frame-dark-border-color`  |         | Border color of the example section in dark mode    |\n| `--wcp-preview-frame-dark-color`         |         | Text color of the preview frame in dark mode        |\n| `--wcp-preview-frame-light-background`   |         | Background color of the preview frame in light mode |\n| `--wcp-preview-frame-light-border-color` |         | Border color of the example section in light mode   |\n| `--wcp-preview-frame-light-color`        |         | Text color of the preview frame in light mode       |\n| `--wcp-preview-frame-distance`           |         | Outer margin of the preview frame                   |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the preview frame                  |\n| `--wcp-preview-frame-border-width`       |         | Border width of the example section                 |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the example section                |\n\n<hr/>\n",
           "groups": [
             "feature"
           ],
@@ -829,158 +869,6 @@
           "declaration": {
             "name": "PreviewFrame",
             "module": "src/components/feature/preview-frame/preview-frame.component.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/feature/readme/readme.component.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Readme",
-          "members": [
-            {
-              "kind": "field",
-              "name": "markdown",
-              "type": {
-                "text": "string | undefined"
-              },
-              "attribute": "markdown"
-            },
-            {
-              "kind": "method",
-              "name": "createRenderRoot"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "markdown",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "markdown"
-            }
-          ],
-          "mixins": [
-            {
-              "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "examples": [
-            "```html\n<wcp-readme>\n <h1>Readme</h1>\n <p>Some readme content</p>\n</wcp-readme>\n```"
-          ],
-          "readme": "# class: `Readme`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name       | Privacy | Type                  | Default | Description | Inherited From |\n| ---------- | ------- | --------------------- | ------- | ----------- | -------------- |\n| `markdown` |         | `string \\| undefined` |         |             |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `createRenderRoot`  |           |             |            |                  |                |\n| `connectedCallback` |           |             |            |                  |                |\n| `render`            | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name       | Field    | Inherited From |\n| ---------- | -------- | -------------- |\n| `markdown` | markdown |                |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
-          "tagName": "wcp-readme",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Readme",
-          "declaration": {
-            "name": "Readme",
-            "module": "src/components/feature/readme/readme.component.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-readme",
-          "declaration": {
-            "name": "Readme",
-            "module": "src/components/feature/readme/readme.component.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/feature/readme-example/readme-example.component.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Shows an inline code example and a preview of the element in the readme.\nThis is used in the markdown formatter to render `html` examples.\n\nIn most cases you don't want to use this component directly, but rather use the `wcp-readme` element instead,\nor the enhanced markdown renderer which instruments this element under the hood. It can be used with the\n`renderMarkdown` function provided by the `@/utils/markdown.utils`.",
-          "name": "ReadmeExample",
-          "cssProperties": [
-            {
-              "description": "Inner padding of the example",
-              "name": "--wcp-readme-example-spacing"
-            },
-            {
-              "description": "Border radius of the example",
-              "name": "--wcp-readme-example-border-radius"
-            },
-            {
-              "description": "Border width of the example",
-              "name": "--wcp-readme-example-border-width"
-            },
-            {
-              "description": "Border color of the example in dark mode",
-              "name": "--wcp-readme-example-dark-border-color"
-            },
-            {
-              "description": "Border color of the example in light mode",
-              "name": "--wcp-readme-example-light-border-color"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Code example",
-              "name": "code"
-            },
-            {
-              "description": "Rendered example preview",
-              "name": "preview"
-            }
-          ],
-          "members": [],
-          "mixins": [
-            {
-              "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "examples": [
-            "### Shows arbitrary HTML code example\n\n```html\n<wcp-readme-example>\n  <pre slot=\"code\">\n&lt;h1&gt;Readme&lt;/h1&gt;\n&lt;p&gt;Some readme content&lt;/p&gt;\n  </pre>\n  <div slot=\"preview\">\n    <h1>Readme</h1>\n    <p>Some readme content</p>\n  </div>\n</wcp-readme-example>\n```"
-          ],
-          "readme": "# class: `ReadmeExample`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## CSS Properties\n\n| Name                                      | Default | Description                               |\n| ----------------------------------------- | ------- | ----------------------------------------- |\n| `--wcp-readme-example-spacing`            |         | Inner padding of the example              |\n| `--wcp-readme-example-border-radius`      |         | Border radius of the example              |\n| `--wcp-readme-example-border-width`       |         | Border width of the example               |\n| `--wcp-readme-example-dark-border-color`  |         | Border color of the example in dark mode  |\n| `--wcp-readme-example-light-border-color` |         | Border color of the example in light mode |\n\n## Slots\n\n| Name      | Description              |\n| --------- | ------------------------ |\n| `code`    | Code example             |\n| `preview` | Rendered example preview |\n\n<hr/>\n\n# Variables\n\n| Name                  | Description | Type     |\n| --------------------- | ----------- | -------- |\n| `README_EXAMPLE_TABS` |             | `object` |\n\n<hr/>\n\n# Functions\n\n| Name | Description | Parameters | Return |\n| ---- | ----------- | ---------- | ------ |\n|      |             |            |        |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
-          "tagName": "wcp-readme-example",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ReadmeExample",
-          "declaration": {
-            "name": "ReadmeExample",
-            "module": "src/components/feature/readme-example/readme-example.component.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-readme-example",
-          "declaration": {
-            "name": "ReadmeExample",
-            "module": "src/components/feature/readme-example/readme-example.component.ts"
           }
         }
       ]
@@ -1087,199 +975,6 @@
           "declaration": {
             "name": "ToggleSidebar",
             "module": "src/components/feature/toggle-sidebar/toggle-sidebar.component.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/feature/viewer/viewer.component.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Viewer",
-          "members": [
-            {
-              "kind": "field",
-              "name": "#element",
-              "privacy": "private",
-              "type": {
-                "text": "CustomElementDeclaration"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "element",
-              "attribute": "element"
-            },
-            {
-              "kind": "field",
-              "name": "elementData",
-              "type": {
-                "text": "CustomElementData | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "getElementReference",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "HTMLElement"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getFields",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "CustomElementField[]"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getSlots",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "Slot[]"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getSlotsWithData",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "{ slot: Slot; data: string }[]"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleControlsInput",
-              "privacy": "protected",
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "InputEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "renderSlots",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "renderElement",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "element",
-              "fieldName": "element"
-            }
-          ],
-          "mixins": [
-            {
-              "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "examples": [
-            "```html\n<wcp-viewer></wcp-viewer>\n```"
-          ],
-          "readme": "# class: `Viewer`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name      | Privacy | Type | Default | Description | Inherited From |\n| --------- | ------- | ---- | ------- | ----------- | -------------- |\n| `element` |         |      |         |             |                |\n\n## Methods\n\n| Name                  | Privacy   | Description | Parameters          | Return                           | Inherited From |\n| --------------------- | --------- | ----------- | ------------------- | -------------------------------- | -------------- |\n| `getElementReference` | protected |             |                     | `HTMLElement`                    |                |\n| `getFields`           | protected |             |                     | `CustomElementField[]`           |                |\n| `getSlots`            | protected |             |                     | `Slot[]`                         |                |\n| `getSlotsWithData`    | protected |             |                     | `{ slot: Slot; data: string }[]` |                |\n| `handleControlsInput` | protected |             | `event: InputEvent` |                                  |                |\n| `renderSlots`         | protected |             |                     | `TemplateResult`                 |                |\n| `renderElement`       | protected |             |                     | `TemplateResult`                 |                |\n| `render`              | protected |             |                     | `TemplateResult`                 |                |\n\n## Attributes\n\n| Name      | Field   | Inherited From |\n| --------- | ------- | -------------- |\n| `element` | element |                |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
-          "tagName": "wcp-viewer",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Viewer",
-          "declaration": {
-            "name": "Viewer",
-            "module": "src/components/feature/viewer/viewer.component.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-viewer",
-          "declaration": {
-            "name": "Viewer",
-            "module": "src/components/feature/viewer/viewer.component.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/feature/viewer-stage/viewer-stage.component.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ViewerStage",
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "examples": [
-            "```html\n<wcp-viewer-stage>\n  <wcp-button>Example button</wcp-button>\n</wcp-viewer-stage>\n```"
-          ],
-          "readme": "# class: `ViewerStage`\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
-          "tagName": "wcp-viewer-stage",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ViewerStage",
-          "declaration": {
-            "name": "ViewerStage",
-            "module": "src/components/feature/viewer-stage/viewer-stage.component.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-viewer-stage",
-          "declaration": {
-            "name": "ViewerStage",
-            "module": "src/components/feature/viewer-stage/viewer-stage.component.ts"
           }
         }
       ]
@@ -1547,6 +1242,443 @@
           "declaration": {
             "name": "Main",
             "module": "src/components/layout/main/main.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/plugins/preview-frame-examples/preview-frame-examples.plugin.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PreviewFrameExamples",
+          "members": [
+            {
+              "kind": "field",
+              "name": "element",
+              "type": {
+                "text": "CustomElementDeclarationWithExamples | undefined"
+              },
+              "attribute": "element"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'examples'",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Examples'",
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "available",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "element",
+              "type": {
+                "text": "CustomElementDeclarationWithExamples | undefined"
+              },
+              "fieldName": "element"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'examples'",
+              "fieldName": "name"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Examples'",
+              "fieldName": "label"
+            },
+            {
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "fieldName": "available"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "readme": "# class: `PreviewFrameExamples`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name        | Privacy | Type                                                | Default      | Description | Inherited From |\n| ----------- | ------- | --------------------------------------------------- | ------------ | ----------- | -------------- |\n| `element`   |         | `CustomElementDeclarationWithExamples \\| undefined` |              |             |                |\n| `name`      |         | `string`                                            | `'examples'` |             |                |\n| `label`     |         | `string`                                            | `'Examples'` |             |                |\n| `available` |         | `boolean`                                           |              |             |                |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n| `available` | available |                |\n\n<hr/>\n",
+          "groups": [
+            "plugins"
+          ],
+          "tagName": "wcp-preview-frame-examples",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PreviewFrameExamples",
+          "declaration": {
+            "name": "PreviewFrameExamples",
+            "module": "src/components/plugins/preview-frame-examples/preview-frame-examples.plugin.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview-frame-examples",
+          "declaration": {
+            "name": "PreviewFrameExamples",
+            "module": "src/components/plugins/preview-frame-examples/preview-frame-examples.plugin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/plugins/preview-frame-readme/preview-frame-readme.plugin.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PreviewFrameReadme",
+          "members": [
+            {
+              "kind": "field",
+              "name": "element",
+              "type": {
+                "text": "CustomElementDeclarationWithReadme | undefined"
+              },
+              "attribute": "element"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'readme'",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Readme'",
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "attribute": "available",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "createRenderRoot"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "element",
+              "type": {
+                "text": "CustomElementDeclarationWithReadme | undefined"
+              },
+              "fieldName": "element"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'readme'",
+              "fieldName": "name"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Readme'",
+              "fieldName": "label"
+            },
+            {
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "fieldName": "available"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "readme": "# class: `PreviewFrameReadme`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name        | Privacy | Type                                              | Default    | Description | Inherited From |\n| ----------- | ------- | ------------------------------------------------- | ---------- | ----------- | -------------- |\n| `element`   |         | `CustomElementDeclarationWithReadme \\| undefined` |            |             |                |\n| `name`      |         | `string`                                          | `'readme'` |             |                |\n| `label`     |         | `string`                                          | `'Readme'` |             |                |\n| `available` |         | `boolean`                                         |            |             |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `createRenderRoot`  |           |             |            |                  |                |\n| `connectedCallback` |           |             |            |                  |                |\n| `render`            | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n| `available` | available |                |\n\n<hr/>\n",
+          "groups": [
+            "plugins"
+          ],
+          "tagName": "wcp-preview-frame-readme",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PreviewFrameReadme",
+          "declaration": {
+            "name": "PreviewFrameReadme",
+            "module": "src/components/plugins/preview-frame-readme/preview-frame-readme.plugin.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview-frame-readme",
+          "declaration": {
+            "name": "PreviewFrameReadme",
+            "module": "src/components/plugins/preview-frame-readme/preview-frame-readme.plugin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/plugins/preview-frame-viewer/preview-frame-viewer.plugin.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PreviewFrameViewer",
+          "members": [
+            {
+              "kind": "field",
+              "name": "#element",
+              "privacy": "private",
+              "type": {
+                "text": "CustomElementDeclaration | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "element",
+              "attribute": "element"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'viewer'",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Viewer'",
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "attribute": "available",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "elementData",
+              "type": {
+                "text": "CustomElementData | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "getElementReference",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "Element | undefined"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getFields",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "CustomElementField[]"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getSlots",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "Slot[]"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getSlotsWithData",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "{ slot: Slot; data: string }[]"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleControlsInput",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "InputEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderSlots",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderElement",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "element",
+              "fieldName": "element"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'viewer'",
+              "fieldName": "name"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Viewer'",
+              "fieldName": "label"
+            },
+            {
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "fieldName": "available"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "readme": "# class: `PreviewFrameViewer`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name        | Privacy | Type      | Default    | Description | Inherited From |\n| ----------- | ------- | --------- | ---------- | ----------- | -------------- |\n| `element`   |         |           |            |             |                |\n| `name`      |         | `string`  | `'viewer'` |             |                |\n| `label`     |         | `string`  | `'Viewer'` |             |                |\n| `available` |         | `boolean` | `true`     |             |                |\n\n## Methods\n\n| Name                  | Privacy   | Description | Parameters          | Return                           | Inherited From |\n| --------------------- | --------- | ----------- | ------------------- | -------------------------------- | -------------- |\n| `getElementReference` | protected |             |                     | `Element \\| undefined`           |                |\n| `getFields`           | protected |             |                     | `CustomElementField[]`           |                |\n| `getSlots`            | protected |             |                     | `Slot[]`                         |                |\n| `getSlotsWithData`    | protected |             |                     | `{ slot: Slot; data: string }[]` |                |\n| `handleControlsInput` | protected |             | `event: InputEvent` |                                  |                |\n| `renderSlots`         | protected |             |                     | `TemplateResult`                 |                |\n| `renderElement`       | protected |             |                     | `TemplateResult`                 |                |\n| `render`              | protected |             |                     | `TemplateResult`                 |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n| `available` | available |                |\n\n<hr/>\n",
+          "groups": [
+            "plugins"
+          ],
+          "tagName": "wcp-preview-frame-viewer",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PreviewFrameViewer",
+          "declaration": {
+            "name": "PreviewFrameViewer",
+            "module": "src/components/plugins/preview-frame-viewer/preview-frame-viewer.plugin.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview-frame-viewer",
+          "declaration": {
+            "name": "PreviewFrameViewer",
+            "module": "src/components/plugins/preview-frame-viewer/preview-frame-viewer.plugin.ts"
           }
         }
       ]
@@ -2173,6 +2305,49 @@
           "declaration": {
             "name": "Title",
             "module": "src/components/ui/title/title.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PreviewFrameViewerStage",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-preview-frame-viewer-stage>\n  <wcp-button>Example button</wcp-button>\n</wcp-preview-frame-viewer-stage>\n```"
+          ],
+          "readme": "# class: `PreviewFrameViewerStage`\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n<hr/>\n",
+          "groups": [
+            "plugins"
+          ],
+          "tagName": "wcp-preview-frame-viewer-stage",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PreviewFrameViewerStage",
+          "declaration": {
+            "name": "PreviewFrameViewerStage",
+            "module": "src/components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview-frame-viewer-stage",
+          "declaration": {
+            "name": "PreviewFrameViewerStage",
+            "module": "src/components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component.ts"
           }
         }
       ]

@@ -1,7 +1,5 @@
-import type { CustomElementDeclaration } from 'custom-elements-manifest';
 import { LitElement, type TemplateResult } from 'lit';
 import type { Config } from '@/utils/config.utils';
-import { type CustomElementDeclarationWithExamples, type CustomElementDeclarationWithReadme } from '@/utils/custom-elements-manifest.utils';
 declare const PreviewFrame_base: (new (...args: any[]) => {
     colorScheme?: "light" | "dark" | undefined;
 }) & typeof LitElement;
@@ -26,13 +24,11 @@ declare const PreviewFrame_base: (new (...args: any[]) => {
  */
 export declare class PreviewFrame extends PreviewFrame_base {
     static readonly styles: import("lit").CSSResult;
-    preview: string;
-    examples: string[];
-    element?: CustomElementDeclaration;
+    private _tabs;
     initialPreviewTab?: Config['initialPreviewTab'];
-    protected renderExamples(element: CustomElementDeclarationWithExamples): TemplateResult;
-    protected renderReadme(element: CustomElementDeclarationWithReadme): TemplateResult;
-    protected renderViewer(element: CustomElementDeclaration): TemplateResult;
+    protected handleSlotChange(event: Event): void;
+    protected getAvailableTabs(): HTMLElementTagNameMap['wcp-tabs']['tabs'];
+    protected getActiveTab(): HTMLElementTagNameMap['wcp-tabs']['activeTab'];
     protected render(): TemplateResult;
 }
 declare global {

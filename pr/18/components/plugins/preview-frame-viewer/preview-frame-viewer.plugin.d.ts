@@ -1,20 +1,18 @@
-import type { CustomElementField, CustomElementDeclaration, Slot } from 'custom-elements-manifest';
+import type { CustomElementDeclaration, CustomElementField, Slot } from 'custom-elements-manifest';
 import { LitElement, type TemplateResult } from 'lit';
-declare const Viewer_base: (new (...args: any[]) => {
+import type { PreviewFramePlugin } from '@/components/feature/preview-frame/preview-frame.utils';
+declare const PreviewFrameViewer_base: (new (...args: any[]) => {
     colorScheme?: "light" | "dark" | undefined;
 }) & typeof LitElement;
-/**
- * @example
- * ```html
- * <wcp-viewer></wcp-viewer>
- * ```
- */
-export declare class Viewer extends Viewer_base {
+export declare class PreviewFrameViewer extends PreviewFrameViewer_base implements PreviewFramePlugin {
     #private;
     static readonly styles: import("lit").CSSResult;
-    set element(element: CustomElementDeclaration);
+    set element(element: CustomElementDeclaration | undefined);
+    readonly name = "viewer";
+    readonly label = "Viewer";
+    readonly available = true;
     private elementData?;
-    protected getElementReference(): HTMLElement;
+    protected getElementReference(): Element | undefined;
     protected getFields(): CustomElementField[];
     protected getSlots(): Slot[];
     protected getSlotsWithData(): {
@@ -28,7 +26,7 @@ export declare class Viewer extends Viewer_base {
 }
 declare global {
     interface HTMLElementTagNameMap {
-        'wcp-viewer': Viewer;
+        'wcp-preview-frame-viewer': PreviewFrameViewer;
     }
 }
 export {};

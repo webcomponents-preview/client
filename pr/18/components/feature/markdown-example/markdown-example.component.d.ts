@@ -1,5 +1,5 @@
 import { LitElement, type TemplateResult } from 'lit';
-declare const ReadmeExample_base: (new (...args: any[]) => {
+declare const MarkdownExample_base: (new (...args: any[]) => {
     colorScheme?: "light" | "dark" | undefined;
 }) & typeof LitElement;
 /**
@@ -14,7 +14,7 @@ declare const ReadmeExample_base: (new (...args: any[]) => {
  * ### Shows arbitrary HTML code example
  *
  * ```html
- * <wcp-readme-example>
+ * <wcp-markdown-example>
  *   <pre slot="code">
  * &lt;h1&gt;Readme&lt;/h1&gt;
  * &lt;p&gt;Some readme content&lt;/p&gt;
@@ -23,26 +23,26 @@ declare const ReadmeExample_base: (new (...args: any[]) => {
  *     <h1>Readme</h1>
  *     <p>Some readme content</p>
  *   </div>
- * </wcp-readme-example>
+ * </wcp-markdown-example>
  * ```
  *
  * @slot code - Code example
  * @slot preview - Rendered example preview
  *
- * @cssprop --wcp-readme-example-spacing - Inner padding of the example
- * @cssprop --wcp-readme-example-border-radius - Border radius of the example
- * @cssprop --wcp-readme-example-border-width - Border width of the example
+ * @cssprop --wcp-markdown-example-spacing - Inner padding of the example
+ * @cssprop --wcp-markdown-example-border-radius - Border radius of the example
+ * @cssprop --wcp-markdown-example-border-width - Border width of the example
  *
- * @cssprop --wcp-readme-example-dark-border-color - Border color of the example in dark mode
- * @cssprop --wcp-readme-example-light-border-color - Border color of the example in light mode
+ * @cssprop --wcp-markdown-example-dark-border-color - Border color of the example in dark mode
+ * @cssprop --wcp-markdown-example-light-border-color - Border color of the example in light mode
  */
-export declare class ReadmeExample extends ReadmeExample_base {
+export declare class MarkdownExample extends MarkdownExample_base {
     static readonly styles: import("lit").CSSResult;
     protected render(): TemplateResult;
 }
 declare global {
     interface HTMLElementTagNameMap {
-        'wcp-readme-example': ReadmeExample;
+        'wcp-markdown-example': MarkdownExample;
     }
 }
 export {};

@@ -24,9 +24,16 @@ export declare class Root extends Root_base {
     static readonly styles: import("lit").CSSResult;
     config?: Config;
     elements: CustomElementDeclaration[];
+    activeElementDeclaration?: CustomElementDeclaration;
     navigation: Record<string, CustomElementDeclaration[]>;
     set title(title: string);
     get title(): string;
+    /**
+     * Sets the currently active element by its tag name. Will be updated at runtime and can
+     * be preset with an initial value to define the active element at startup.
+     */
+    set activeElement(activeElement: string | undefined);
+    get activeElement(): string | undefined;
     /**
      * Flags the component to be displayed inline and not standalone. Requires the surrounding
      * layout to provide the necessary styles like for any other block element.
@@ -38,11 +45,6 @@ export declare class Root extends Root_base {
      * generated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin.
      */
     fallbackGroupName: string;
-    /**
-     * Sets the currently active element by its tag name. Will be updated at runtime and can
-     * be preset with an initial value to define the active element at startup.
-     */
-    activeElement?: string;
     /**
      * Configure the initial preview tab to be displayed. Can be either `examples`, `readme` or `viewer`.
      */
@@ -58,7 +60,7 @@ export declare class Root extends Root_base {
     loadConfig(configUrl: string): Promise<void>;
     loadCustomElementsManifest(manifestUrl: string): Promise<void>;
     selectFallbackElement(): Promise<void>;
-    getActiveElementDeclaration(elements: CustomElementDeclaration[]): CustomElementDeclaration | undefined;
+    retrieveActiveElementDeclaration(): void;
     emitManifestLoaded(): void;
     emitActiveElementChanged(): void;
     handleHashChange: () => void;
