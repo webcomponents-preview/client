@@ -12,6 +12,7 @@ export * from './components/feature/toggle-color-scheme/toggle-color-scheme.comp
 export * from './components/feature/toggle-sidebar/toggle-sidebar.component';
 export * from './components/feature/viewer/viewer.component';
 export * from './components/feature/viewer/viewer.utils';
+export * from './components/feature/viewer-stage/viewer-stage.component';
 export * from './components/layout/aside/aside.component';
 export * from './components/layout/layout/layout.component';
 export * from './components/layout/main/main.component';

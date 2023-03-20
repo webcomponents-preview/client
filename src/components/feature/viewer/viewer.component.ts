@@ -91,7 +91,6 @@ export class Viewer extends ColorSchemable(LitElement) {
     const fields = this.getFields();
     const slots = this.getSlots();
     return html`
-      <!-- TODO: Prepare stage element -->
       <wcp-viewer-stage>${this.renderElement()}</wcp-viewer-stage>
 
       <!-- TODO: Move controls into separate element -->
