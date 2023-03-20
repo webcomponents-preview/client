@@ -2,9 +2,12 @@ import type { CustomElementDeclaration } from 'custom-elements-manifest/schema';
 
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
+import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/utils/color-scheme.utils';
+import { type Config, getConfig } from '@/utils/config.utils';
 import {
   getCustomElements,
   getNiceName,
@@ -34,7 +37,9 @@ export class Root extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   #title = 'WCP';
-  #manifestUrl: string | undefined;
+
+  @state()
+  config?: Config;
 
   @state()
   elements: CustomElementDeclaration[] = [];
@@ -74,26 +79,39 @@ export class Root extends ColorSchemable(LitElement) {
   activeElement?: string;
 
   /**
+   * Configure the initial preview tab to be displayed. Can be either `examples`, `readme` or `viewer`.
+   */
+  @property({ type: String, reflect: true, attribute: 'initial-preview-tab' })
+  initialPreviewTab?: Config['initialPreviewTab'];
+
+  /**
    * Allows to set a url to load a config file from.
    */
   @property({ type: String, reflect: true, attribute: 'config-url' })
-  configUrl?: string;
+  set configUrl(configUrl: string) {
+    this.loadConfig(configUrl);
+  }
 
   /**
    * Defines the location of the custom element manifest file.
    */
   @property({ type: String, reflect: true, attribute: 'manifest-url' })
-  set manifestUrl(manifestUrl: string | undefined) {
-    this.#manifestUrl = manifestUrl;
-    this.loadCustomElementsManifest();
-  }
-  get manifestUrl(): string | undefined {
-    return this.#manifestUrl;
+  set manifestUrl(manifestUrl: string) {
+    this.loadCustomElementsManifest(manifestUrl);
   }
 
-  async loadCustomElementsManifest() {
-    if (this.#manifestUrl === undefined) return;
-    const response = await fetch(this.#manifestUrl);
+  async loadConfig(configUrl: string) {
+    this.config = await getConfig(configUrl);
+    if (this.activeElement === undefined) {
+      this.activeElement = this.config?.initialActiveElement;
+    }
+    if (this.activeElement !== undefined) {
+      this.selectFallbackElement();
+    }
+  }
+
+  async loadCustomElementsManifest(manifestUrl: string) {
+    const response = await fetch(manifestUrl);
     const manifest = await response.json();
 
     // store the elements and derive navigation
@@ -116,8 +134,8 @@ export class Root extends ColorSchemable(LitElement) {
     location.href = `#/${getNiceUrl(this.elements[0])}`;
   }
 
-  getActiveElementDeclaration(): CustomElementDeclaration | undefined {
-    return this.elements?.find((element) => element.tagName === this.activeElement);
+  getActiveElementDeclaration(elements: CustomElementDeclaration[]): CustomElementDeclaration | undefined {
+    return elements.find((element) => element.tagName === this.activeElement);
   }
 
   emitManifestLoaded() {
@@ -135,7 +153,7 @@ export class Root extends ColorSchemable(LitElement) {
       bubbles: true,
       cancelable: true,
       composed: true,
-      detail: this.getActiveElementDeclaration(),
+      detail: this.getActiveElementDeclaration(this.elements),
     });
     this.dispatchEvent(event);
   }
@@ -190,15 +208,22 @@ export class Root extends ColorSchemable(LitElement) {
             </wcp-navigation>
           `
         )}
-
-        <wcp-preview-controls>
-          <wcp-toggle-sidebar></wcp-toggle-sidebar>
-          <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
-          <slot name="preview-controls"></slot>
-        </wcp-preview-controls>
-        <slot name="preview-frame">
-          <wcp-preview-frame .activeElement="${this.getActiveElementDeclaration()}"></wcp-preview-frame>
-        </slot>
+        ${when(
+          this.elements,
+          () => html`
+            <wcp-preview-controls>
+              <wcp-toggle-sidebar></wcp-toggle-sidebar>
+              <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
+              <slot name="preview-controls"></slot>
+            </wcp-preview-controls>
+            <slot name="preview-frame">
+              <wcp-preview-frame
+                .element="${this.getActiveElementDeclaration(this.elements)}"
+                initial-preview-tab="${ifDefined(this.initialPreviewTab ?? this.config?.initialPreviewTab)}"
+              ></wcp-preview-frame>
+            </slot>
+          `
+        )}
       </wcp-layout>
     `;
   }

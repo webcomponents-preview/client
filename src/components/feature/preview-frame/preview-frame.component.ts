@@ -6,14 +6,15 @@ import { map } from 'lit/directives/map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
-import { renderMarkdown } from '@/utils/markdown.utils';
 import { ColorSchemable } from '@/utils/color-scheme.utils';
+import type { Config } from '@/utils/config.utils';
 import {
   type CustomElementDeclarationWithExamples,
+  type CustomElementDeclarationWithReadme,
   hasExamples,
   hasReadme,
-  CustomElementDeclarationWithReadme,
 } from '@/utils/custom-elements-manifest.utils';
+import { renderMarkdown } from '@/utils/markdown.utils';
 
 import styles from './preview-frame.component.scss';
 
@@ -47,7 +48,10 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   examples: string[] = [];
 
   @property({ type: Object })
-  activeElement?: CustomElementDeclaration;
+  element?: CustomElementDeclaration;
+
+  @property({ type: String, reflect: true, attribute: 'initial-preview-tab' })
+  initialPreviewTab?: Config['initialPreviewTab'];
 
   protected renderExamples(element: CustomElementDeclarationWithExamples): TemplateResult {
     return html`
@@ -67,21 +71,19 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
 
   protected render(): TemplateResult {
     const tabs = {
+      ...(hasExamples(this.element) ? { examples: 'Examples' } : {}),
+      ...(hasReadme(this.element) ? { readme: 'Readme' } : {}),
       viewer: 'Viewer',
-      ...(hasExamples(this.activeElement) ? { examples: 'Examples' } : {}),
-      ...(hasReadme(this.activeElement) ? { readme: 'Readme' } : {}),
     };
 
     return html`
       ${when(
-        this.activeElement !== undefined && Object.keys(tabs).length > 0,
+        this.element !== undefined && Object.keys(tabs).length > 0,
         () => html`
-          <wcp-tabs .tabs="${tabs}" active-tab="${Object.keys(tabs)[0]}">
-            ${when('examples' in tabs, () =>
-              this.renderExamples(this.activeElement as CustomElementDeclarationWithExamples)
-            )}
-            ${when('readme' in tabs, () => this.renderReadme(this.activeElement as CustomElementDeclarationWithReadme))}
-            ${this.renderViewer(this.activeElement as CustomElementDeclaration)}
+          <wcp-tabs .tabs="${tabs}" active-tab="${this.initialPreviewTab ?? Object.keys(tabs)[0]}">
+            ${when('examples' in tabs, () => this.renderExamples(this.element as CustomElementDeclarationWithExamples))}
+            ${when('readme' in tabs, () => this.renderReadme(this.element as CustomElementDeclarationWithReadme))}
+            ${this.renderViewer(this.element as CustomElementDeclaration)}
           </wcp-tabs>
         `,
         () => html`<h1>No preview available.</h1>`

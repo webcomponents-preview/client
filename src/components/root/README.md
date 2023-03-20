@@ -10,28 +10,31 @@
 
 | Name                | Privacy | Type                                         | Default        | Description                                                                                                                                                                                                                                                                | Inherited From |
 | ------------------- | ------- | -------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| `config`            |         | `Config \| undefined`                        |                |                                                                                                                                                                                                                                                                            |                |
 | `elements`          |         | `CustomElementDeclaration[]`                 | `[]`           |                                                                                                                                                                                                                                                                            |                |
 | `navigation`        |         | `Record<string, CustomElementDeclaration[]>` | `{}`           |                                                                                                                                                                                                                                                                            |                |
 | `title`             |         | `string`                                     |                |                                                                                                                                                                                                                                                                            |                |
 | `inline`            |         | `boolean`                                    | `false`        | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element.                                                                                                       |                |
 | `fallbackGroupName` |         | `string`                                     | `'Components'` | Allows to set a fallback group name for elements that do not have a \`groups\` property.&#xA;So this is the name of the group that will contain all elements unless the manifest is&#xA;generated with the optional \`@webcomponents-preview/cem-plugin-grouping\` plugin. |                |
 | `activeElement`     |         | `string \| undefined`                        |                | Sets the currently active element by its tag name. Will be updated at runtime and can&#xA;be preset with an initial value to define the active element at startup.                                                                                                         |                |
-| `configUrl`         |         | `string \| undefined`                        |                | Allows to set a url to load a config file from.                                                                                                                                                                                                                            |                |
-| `manifestUrl`       |         | `string \| undefined`                        |                | Defines the location of the custom element manifest file.                                                                                                                                                                                                                  |                |
+| `initialPreviewTab` |         | `Config['initialPreviewTab'] \| undefined`   |                | Configure the initial preview tab to be displayed. Can be either \`examples\`, \`readme\` or \`viewer\`.                                                                                                                                                                   |                |
+| `configUrl`         |         |                                              |                | Allows to set a url to load a config file from.                                                                                                                                                                                                                            |                |
+| `manifestUrl`       |         |                                              |                | Defines the location of the custom element manifest file.                                                                                                                                                                                                                  |                |
 | `handleHashChange`  |         |                                              |                |                                                                                                                                                                                                                                                                            |                |
 
 ## Methods
 
-| Name                          | Privacy   | Description | Parameters | Return                                  | Inherited From |
-| ----------------------------- | --------- | ----------- | ---------- | --------------------------------------- | -------------- |
-| `loadCustomElementsManifest`  |           |             |            |                                         |                |
-| `selectFallbackElement`       |           |             |            |                                         |                |
-| `getActiveElementDeclaration` |           |             |            | `CustomElementDeclaration \| undefined` |                |
-| `emitManifestLoaded`          |           |             |            |                                         |                |
-| `emitActiveElementChanged`    |           |             |            |                                         |                |
-| `connectedCallback`           |           |             |            |                                         |                |
-| `disconnectedCallback`        |           |             |            |                                         |                |
-| `render`                      | protected |             |            | `TemplateResult`                        |                |
+| Name                          | Privacy   | Description | Parameters                             | Return                                  | Inherited From |
+| ----------------------------- | --------- | ----------- | -------------------------------------- | --------------------------------------- | -------------- |
+| `loadConfig`                  |           |             | `configUrl: string`                    |                                         |                |
+| `loadCustomElementsManifest`  |           |             | `manifestUrl: string`                  |                                         |                |
+| `selectFallbackElement`       |           |             |                                        |                                         |                |
+| `getActiveElementDeclaration` |           |             | `elements: CustomElementDeclaration[]` | `CustomElementDeclaration \| undefined` |                |
+| `emitManifestLoaded`          |           |             |                                        |                                         |                |
+| `emitActiveElementChanged`    |           |             |                                        |                                         |                |
+| `connectedCallback`           |           |             |                                        |                                         |                |
+| `disconnectedCallback`        |           |             |                                        |                                         |                |
+| `render`                      | protected |             |                                        | `TemplateResult`                        |                |
 
 ## Attributes
 
@@ -41,6 +44,7 @@
 | `inline`              | inline            |                |
 | `fallback-group-name` | fallbackGroupName |                |
 | `active-element`      | activeElement     |                |
+| `initial-preview-tab` | initialPreviewTab |                |
 | `config-url`          | configUrl         |                |
 | `manifest-url`        | manifestUrl       |                |
 

@@ -8,11 +8,12 @@
 
 ## Fields
 
-| Name            | Privacy | Type                                    | Default | Description | Inherited From |
-| --------------- | ------- | --------------------------------------- | ------- | ----------- | -------------- |
-| `preview`       |         | `string`                                | `''`    |             |                |
-| `examples`      |         | `string[]`                              | `[]`    |             |                |
-| `activeElement` |         | `CustomElementDeclaration \| undefined` |         |             |                |
+| Name                | Privacy | Type                                       | Default | Description | Inherited From |
+| ------------------- | ------- | ------------------------------------------ | ------- | ----------- | -------------- |
+| `preview`           |         | `string`                                   | `''`    |             |                |
+| `examples`          |         | `string[]`                                 | `[]`    |             |                |
+| `element`           |         | `CustomElementDeclaration \| undefined`    |         |             |                |
+| `initialPreviewTab` |         | `Config['initialPreviewTab'] \| undefined` |         |             |                |
 
 ## Methods
 
@@ -25,9 +26,10 @@
 
 ## Attributes
 
-| Name            | Field         | Inherited From |
-| --------------- | ------------- | -------------- |
-| `activeElement` | activeElement |                |
+| Name                  | Field             | Inherited From |
+| --------------------- | ----------------- | -------------- |
+| `element`             | element           |                |
+| `initial-preview-tab` | initialPreviewTab |                |
 
 ## CSS Properties
 
