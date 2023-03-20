@@ -1,13 +1,10 @@
-@use 'sass:meta' as meta;
 @use '@/styles/utils' as utils;
 
+// prettier-ignore
 :host {
-  @include utils.color-scheme() using ($color-scheme) {
-    @if ($color-scheme == light) {
-      @include meta.load-css('highlight.js/scss/xcode');
-    }
-    @if ($color-scheme == dark) {
-      @include meta.load-css('highlight.js/scss/dark');
-    }
-  }
+  ---wcp-preview-frame-examples-spacing: var(--wcp-preview-frame-examples-spacing, #{utils.size(3)});
+}
+
+section ~ section {
+  margin-top: var(---wcp-preview-frame-examples-spacing);
 }

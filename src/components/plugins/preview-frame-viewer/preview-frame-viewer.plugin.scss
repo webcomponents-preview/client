@@ -10,13 +10,14 @@ fieldset {
   min-width: 0;
 }
 
-wcp-preview-frame-viewer-stage {
-  flex: 1 1 auto;
-}
+wcp-preview-frame-viewer {
+  &-stage {
+    flex: 1 1 auto;
+  }
 
-wcp-preview-frame-viewer-controls {
-  display: block;
-  flex: 0 0 auto;
+  &-controls {
+    flex: 0 0 auto;
+  }
 }
 
 wcp-input {

@@ -26,7 +26,7 @@ marked.setOptions({
       // wrap the code in a custom element to preview it
       return `
         <wcp-markdown-example>
-          <pre slot="code"><code>${code}</code></pre>
+          <wcp-code slot="code"><pre><code>${code}</code></pre></wcp-code>
           <div slot="preview">${preview}</div>
         </wcp-markdown-example>
       `;

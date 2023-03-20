@@ -24,4 +24,10 @@
 | `label`     | label     |                |
 | `available` | available |                |
 
+## CSS Properties
+
+| Name                                   | Default | Description               |
+| -------------------------------------- | ------- | ------------------------- |
+| `--wcp-preview-frame-examples-spacing` |         | Spacing between examples. |
+
 <hr/>

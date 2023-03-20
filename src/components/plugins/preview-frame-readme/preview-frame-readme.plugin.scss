@@ -49,13 +49,6 @@ wcp-preview-frame-readme {
     }
 
     @include utils.color-scheme(false, parent) using ($color-scheme) {
-      @if ($color-scheme == light) {
-        @include meta.load-css('highlight.js/scss/xcode');
-      }
-      @if ($color-scheme == dark) {
-        @include meta.load-css('highlight.js/scss/dark');
-      }
-
       // prettier-ignore
       table td, table th, table tr,
       h1, h2, h3, h4, h5, h6 {

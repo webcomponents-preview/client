@@ -15,8 +15,6 @@
   ---wcp-preview-frame-distance: var(--wcp-preview-frame-distance, #{0 utils.size(1)});
   ---wcp-preview-frame-spacing: var(--wcp-preview-frame-spacing, #{0 utils.size(1) utils.size(1)});
 
-  ---wcp-preview-frame-example-spacing: var(--wcp-preview-frame-example-spacing, #{utils.size(2) 0});
-
   @include utils.color-scheme() using ($color-scheme) {
     ---wcp-preview-frame-background: var(---wcp-preview-frame-#{$color-scheme}-background);
     ---wcp-preview-frame-border-color: var(---wcp-preview-frame-#{$color-scheme}-border-color);
@@ -61,15 +59,4 @@ wcp-tabs {
 // hide the default slot, as we use it only initially to collect all plugins
 slot:not([name]) {
   display: none;
-}
-
-// TODO: Move to a example plugin component
-[slot='examples'] {
-  section {
-    margin: var(---wcp-preview-frame-example-spacing);
-
-    ~ section {
-      border-top: var(---wcp-preview-frame-border-width) solid var(---wcp-preview-frame-border-color);
-    }
-  }
 }

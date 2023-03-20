@@ -10,6 +10,11 @@ import { renderMarkdown } from '@/utils/markdown.utils';
 
 import styles from './preview-frame-examples.plugin.scss';
 
+/**
+ * Shows the examples of a custom element manifest.
+ * 
+ * @cssprop --wcp-preview-frame-examples-spacing - Spacing between examples.
+ */
 @customElement('wcp-preview-frame-examples')
 export class PreviewFrameExamples
   extends ColorSchemable(LitElement)
