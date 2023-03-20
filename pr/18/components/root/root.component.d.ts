@@ -1,5 +1,6 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema';
 import { LitElement, type TemplateResult } from 'lit';
+import { type Config } from '@/utils/config.utils';
 declare const Root_base: (new (...args: any[]) => {
     colorScheme?: "light" | "dark" | undefined;
 }) & typeof LitElement;
@@ -21,6 +22,7 @@ declare const Root_base: (new (...args: any[]) => {
 export declare class Root extends Root_base {
     #private;
     static readonly styles: import("lit").CSSResult;
+    config?: Config;
     elements: CustomElementDeclaration[];
     navigation: Record<string, CustomElementDeclaration[]>;
     set title(title: string);
@@ -42,17 +44,21 @@ export declare class Root extends Root_base {
      */
     activeElement?: string;
     /**
+     * Configure the initial preview tab to be displayed. Can be either `examples`, `readme` or `viewer`.
+     */
+    initialPreviewTab?: Config['initialPreviewTab'];
+    /**
      * Allows to set a url to load a config file from.
      */
-    configUrl?: string;
+    set configUrl(configUrl: string);
     /**
      * Defines the location of the custom element manifest file.
      */
-    set manifestUrl(manifestUrl: string | undefined);
-    get manifestUrl(): string | undefined;
-    loadCustomElementsManifest(): Promise<void>;
+    set manifestUrl(manifestUrl: string);
+    loadConfig(configUrl: string): Promise<void>;
+    loadCustomElementsManifest(manifestUrl: string): Promise<void>;
     selectFallbackElement(): Promise<void>;
-    getActiveElementDeclaration(): CustomElementDeclaration | undefined;
+    getActiveElementDeclaration(elements: CustomElementDeclaration[]): CustomElementDeclaration | undefined;
     emitManifestLoaded(): void;
     emitActiveElementChanged(): void;
     handleHashChange: () => void;

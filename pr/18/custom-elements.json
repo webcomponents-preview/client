@@ -58,10 +58,9 @@
             },
             {
               "kind": "field",
-              "name": "#manifestUrl",
-              "privacy": "private",
+              "name": "config",
               "type": {
-                "text": "string | undefined"
+                "text": "Config | undefined"
               }
             },
             {
@@ -123,10 +122,17 @@
             },
             {
               "kind": "field",
-              "name": "configUrl",
+              "name": "initialPreviewTab",
               "type": {
-                "text": "string | undefined"
+                "text": "Config['initialPreviewTab'] | undefined"
               },
+              "description": "Configure the initial preview tab to be displayed. Can be either `examples`, `readme` or `viewer`.",
+              "attribute": "initial-preview-tab",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "configUrl",
               "description": "Allows to set a url to load a config file from.",
               "attribute": "config-url",
               "reflects": true
@@ -135,15 +141,32 @@
               "kind": "field",
               "name": "manifestUrl",
               "description": "Defines the location of the custom element manifest file.",
-              "type": {
-                "text": "string | undefined"
-              },
               "attribute": "manifest-url",
               "reflects": true
             },
             {
               "kind": "method",
-              "name": "loadCustomElementsManifest"
+              "name": "loadConfig",
+              "parameters": [
+                {
+                  "name": "configUrl",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "loadCustomElementsManifest",
+              "parameters": [
+                {
+                  "name": "manifestUrl",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
             },
             {
               "kind": "method",
@@ -156,7 +179,15 @@
                 "type": {
                   "text": "CustomElementDeclaration | undefined"
                 }
-              }
+              },
+              "parameters": [
+                {
+                  "name": "elements",
+                  "type": {
+                    "text": "CustomElementDeclaration[]"
+                  }
+                }
+              ]
             },
             {
               "kind": "method",
@@ -206,19 +237,21 @@
               "fieldName": "activeElement"
             },
             {
-              "name": "config-url",
+              "name": "initial-preview-tab",
               "type": {
-                "text": "string | undefined"
+                "text": "Config['initialPreviewTab'] | undefined"
               },
+              "description": "Configure the initial preview tab to be displayed. Can be either `examples`, `readme` or `viewer`.",
+              "fieldName": "initialPreviewTab"
+            },
+            {
+              "name": "config-url",
               "description": "Allows to set a url to load a config file from.",
               "fieldName": "configUrl"
             },
             {
               "name": "manifest-url",
               "description": "Defines the location of the custom element manifest file.",
-              "type": {
-                "text": "string | undefined"
-              },
               "fieldName": "manifestUrl"
             }
           ],
@@ -233,7 +266,7 @@
             "package": "lit"
           },
           "examples": [],
-          "readme": "# class: `Root`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name                | Privacy | Type                                         | Default        | Description                                                                                                                                                                                                                                                                | Inherited From |\n| ------------------- | ------- | -------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |\n| `elements`          |         | `CustomElementDeclaration[]`                 | `[]`           |                                                                                                                                                                                                                                                                            |                |\n| `navigation`        |         | `Record<string, CustomElementDeclaration[]>` | `{}`           |                                                                                                                                                                                                                                                                            |                |\n| `title`             |         | `string`                                     |                |                                                                                                                                                                                                                                                                            |                |\n| `inline`            |         | `boolean`                                    | `false`        | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element.                                                                                                       |                |\n| `fallbackGroupName` |         | `string`                                     | `'Components'` | Allows to set a fallback group name for elements that do not have a \\`groups\\` property.&#xA;So this is the name of the group that will contain all elements unless the manifest is&#xA;generated with the optional \\`@webcomponents-preview/cem-plugin-grouping\\` plugin. |                |\n| `activeElement`     |         | `string \\| undefined`                        |                | Sets the currently active element by its tag name. Will be updated at runtime and can&#xA;be preset with an initial value to define the active element at startup.                                                                                                         |                |\n| `configUrl`         |         | `string \\| undefined`                        |                | Allows to set a url to load a config file from.                                                                                                                                                                                                                            |                |\n| `manifestUrl`       |         | `string \\| undefined`                        |                | Defines the location of the custom element manifest file.                                                                                                                                                                                                                  |                |\n| `handleHashChange`  |         |                                              |                |                                                                                                                                                                                                                                                                            |                |\n\n## Methods\n\n| Name                          | Privacy   | Description | Parameters | Return                                  | Inherited From |\n| ----------------------------- | --------- | ----------- | ---------- | --------------------------------------- | -------------- |\n| `loadCustomElementsManifest`  |           |             |            |                                         |                |\n| `selectFallbackElement`       |           |             |            |                                         |                |\n| `getActiveElementDeclaration` |           |             |            | `CustomElementDeclaration \\| undefined` |                |\n| `emitManifestLoaded`          |           |             |            |                                         |                |\n| `emitActiveElementChanged`    |           |             |            |                                         |                |\n| `connectedCallback`           |           |             |            |                                         |                |\n| `disconnectedCallback`        |           |             |            |                                         |                |\n| `render`                      | protected |             |            | `TemplateResult`                        |                |\n\n## Attributes\n\n| Name                  | Field             | Inherited From |\n| --------------------- | ----------------- | -------------- |\n| `title`               | title             |                |\n| `inline`              | inline            |                |\n| `fallback-group-name` | fallbackGroupName |                |\n| `active-element`      | activeElement     |                |\n| `config-url`          | configUrl         |                |\n| `manifest-url`        | manifestUrl       |                |\n\n## CSS Properties\n\n| Name                          | Default | Description                                                  |\n| ----------------------------- | ------- | ------------------------------------------------------------ |\n| `--wcp-root-dark-background`  |         | The background color of the root element in dark mode        |\n| `--wcp-root-dark-color`       |         | The text color of the text in the root element in dark mode  |\n| `--wcp-root-light-background` |         | The background color of the root element in light mode       |\n| `--wcp-root-light-color`      |         | The text color of the text in the root element in light mode |\n\n## Slots\n\n| Name               | Description                                                |\n| ------------------ | ---------------------------------------------------------- |\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls.         |\n| `preview-frame`    | Used to be override the existing preview pane.             |\n| `preview-details`  | Can be used to inject additional preview detail panes.     |\n\n<hr/>\n",
+          "readme": "# class: `Root`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name                | Privacy | Type                                         | Default        | Description                                                                                                                                                                                                                                                                | Inherited From |\n| ------------------- | ------- | -------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |\n| `config`            |         | `Config \\| undefined`                        |                |                                                                                                                                                                                                                                                                            |                |\n| `elements`          |         | `CustomElementDeclaration[]`                 | `[]`           |                                                                                                                                                                                                                                                                            |                |\n| `navigation`        |         | `Record<string, CustomElementDeclaration[]>` | `{}`           |                                                                                                                                                                                                                                                                            |                |\n| `title`             |         | `string`                                     |                |                                                                                                                                                                                                                                                                            |                |\n| `inline`            |         | `boolean`                                    | `false`        | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element.                                                                                                       |                |\n| `fallbackGroupName` |         | `string`                                     | `'Components'` | Allows to set a fallback group name for elements that do not have a \\`groups\\` property.&#xA;So this is the name of the group that will contain all elements unless the manifest is&#xA;generated with the optional \\`@webcomponents-preview/cem-plugin-grouping\\` plugin. |                |\n| `activeElement`     |         | `string \\| undefined`                        |                | Sets the currently active element by its tag name. Will be updated at runtime and can&#xA;be preset with an initial value to define the active element at startup.                                                                                                         |                |\n| `initialPreviewTab` |         | `Config['initialPreviewTab'] \\| undefined`   |                | Configure the initial preview tab to be displayed. Can be either \\`examples\\`, \\`readme\\` or \\`viewer\\`.                                                                                                                                                                   |                |\n| `configUrl`         |         |                                              |                | Allows to set a url to load a config file from.                                                                                                                                                                                                                            |                |\n| `manifestUrl`       |         |                                              |                | Defines the location of the custom element manifest file.                                                                                                                                                                                                                  |                |\n| `handleHashChange`  |         |                                              |                |                                                                                                                                                                                                                                                                            |                |\n\n## Methods\n\n| Name                          | Privacy   | Description | Parameters                             | Return                                  | Inherited From |\n| ----------------------------- | --------- | ----------- | -------------------------------------- | --------------------------------------- | -------------- |\n| `loadConfig`                  |           |             | `configUrl: string`                    |                                         |                |\n| `loadCustomElementsManifest`  |           |             | `manifestUrl: string`                  |                                         |                |\n| `selectFallbackElement`       |           |             |                                        |                                         |                |\n| `getActiveElementDeclaration` |           |             | `elements: CustomElementDeclaration[]` | `CustomElementDeclaration \\| undefined` |                |\n| `emitManifestLoaded`          |           |             |                                        |                                         |                |\n| `emitActiveElementChanged`    |           |             |                                        |                                         |                |\n| `connectedCallback`           |           |             |                                        |                                         |                |\n| `disconnectedCallback`        |           |             |                                        |                                         |                |\n| `render`                      | protected |             |                                        | `TemplateResult`                        |                |\n\n## Attributes\n\n| Name                  | Field             | Inherited From |\n| --------------------- | ----------------- | -------------- |\n| `title`               | title             |                |\n| `inline`              | inline            |                |\n| `fallback-group-name` | fallbackGroupName |                |\n| `active-element`      | activeElement     |                |\n| `initial-preview-tab` | initialPreviewTab |                |\n| `config-url`          | configUrl         |                |\n| `manifest-url`        | manifestUrl       |                |\n\n## CSS Properties\n\n| Name                          | Default | Description                                                  |\n| ----------------------------- | ------- | ------------------------------------------------------------ |\n| `--wcp-root-dark-background`  |         | The background color of the root element in dark mode        |\n| `--wcp-root-dark-color`       |         | The text color of the text in the root element in dark mode  |\n| `--wcp-root-light-background` |         | The background color of the root element in light mode       |\n| `--wcp-root-light-color`      |         | The text color of the text in the root element in light mode |\n\n## Slots\n\n| Name               | Description                                                |\n| ------------------ | ---------------------------------------------------------- |\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls.         |\n| `preview-frame`    | Used to be override the existing preview pane.             |\n| `preview-details`  | Can be used to inject additional preview detail panes.     |\n\n<hr/>\n",
           "groups": [
             "root"
           ],
@@ -674,11 +707,20 @@
             },
             {
               "kind": "field",
-              "name": "activeElement",
+              "name": "element",
               "type": {
                 "text": "CustomElementDeclaration | undefined"
               },
-              "attribute": "activeElement"
+              "attribute": "element"
+            },
+            {
+              "kind": "field",
+              "name": "initialPreviewTab",
+              "type": {
+                "text": "Config['initialPreviewTab'] | undefined"
+              },
+              "attribute": "initial-preview-tab",
+              "reflects": true
             },
             {
               "kind": "method",
@@ -737,11 +779,18 @@
           ],
           "attributes": [
             {
-              "name": "activeElement",
+              "name": "element",
               "type": {
                 "text": "CustomElementDeclaration | undefined"
               },
-              "fieldName": "activeElement"
+              "fieldName": "element"
+            },
+            {
+              "name": "initial-preview-tab",
+              "type": {
+                "text": "Config['initialPreviewTab'] | undefined"
+              },
+              "fieldName": "initialPreviewTab"
             }
           ],
           "mixins": [
@@ -757,7 +806,7 @@
           "examples": [
             "```html\n<wcp-preview-frame></wcp-preview-frame>\n```"
           ],
-          "readme": "# class: `PreviewFrame`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name            | Privacy | Type                                    | Default | Description | Inherited From |\n| --------------- | ------- | --------------------------------------- | ------- | ----------- | -------------- |\n| `preview`       |         | `string`                                | `''`    |             |                |\n| `examples`      |         | `string[]`                              | `[]`    |             |                |\n| `activeElement` |         | `CustomElementDeclaration \\| undefined` |         |             |                |\n\n## Methods\n\n| Name             | Privacy   | Description | Parameters                                      | Return           | Inherited From |\n| ---------------- | --------- | ----------- | ----------------------------------------------- | ---------------- | -------------- |\n| `renderExamples` | protected |             | `element: CustomElementDeclarationWithExamples` | `TemplateResult` |                |\n| `renderReadme`   | protected |             | `element: CustomElementDeclarationWithReadme`   | `TemplateResult` |                |\n| `renderViewer`   | protected |             | `element: CustomElementDeclaration`             | `TemplateResult` |                |\n| `render`         | protected |             |                                                 | `TemplateResult` |                |\n\n## Attributes\n\n| Name            | Field         | Inherited From |\n| --------------- | ------------- | -------------- |\n| `activeElement` | activeElement |                |\n\n## CSS Properties\n\n| Name                                     | Default | Description                                         |\n| ---------------------------------------- | ------- | --------------------------------------------------- |\n| `--wcp-preview-frame-dark-background`    |         | Background color of the preview frame in dark mode  |\n| `--wcp-preview-frame-dark-border-color`  |         | Border color of the example section in dark mode    |\n| `--wcp-preview-frame-dark-color`         |         | Text color of the preview frame in dark mode        |\n| `--wcp-preview-frame-light-background`   |         | Background color of the preview frame in light mode |\n| `--wcp-preview-frame-light-border-color` |         | Border color of the example section in light mode   |\n| `--wcp-preview-frame-light-color`        |         | Text color of the preview frame in light mode       |\n| `--wcp-preview-frame-distance`           |         | Outer margin of the preview frame                   |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the preview frame                  |\n| `--wcp-preview-frame-border-width`       |         | Border width of the example section                 |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the example section                |\n\n<hr/>\n",
+          "readme": "# class: `PreviewFrame`\n\n## Mixins\n\n| Name             | Module | Package                    |\n| ---------------- | ------ | -------------------------- |\n| `ColorSchemable` |        | @/utils/color-scheme.utils |\n\n## Fields\n\n| Name                | Privacy | Type                                       | Default | Description | Inherited From |\n| ------------------- | ------- | ------------------------------------------ | ------- | ----------- | -------------- |\n| `preview`           |         | `string`                                   | `''`    |             |                |\n| `examples`          |         | `string[]`                                 | `[]`    |             |                |\n| `element`           |         | `CustomElementDeclaration \\| undefined`    |         |             |                |\n| `initialPreviewTab` |         | `Config['initialPreviewTab'] \\| undefined` |         |             |                |\n\n## Methods\n\n| Name             | Privacy   | Description | Parameters                                      | Return           | Inherited From |\n| ---------------- | --------- | ----------- | ----------------------------------------------- | ---------------- | -------------- |\n| `renderExamples` | protected |             | `element: CustomElementDeclarationWithExamples` | `TemplateResult` |                |\n| `renderReadme`   | protected |             | `element: CustomElementDeclarationWithReadme`   | `TemplateResult` |                |\n| `renderViewer`   | protected |             | `element: CustomElementDeclaration`             | `TemplateResult` |                |\n| `render`         | protected |             |                                                 | `TemplateResult` |                |\n\n## Attributes\n\n| Name                  | Field             | Inherited From |\n| --------------------- | ----------------- | -------------- |\n| `element`             | element           |                |\n| `initial-preview-tab` | initialPreviewTab |                |\n\n## CSS Properties\n\n| Name                                     | Default | Description                                         |\n| ---------------------------------------- | ------- | --------------------------------------------------- |\n| `--wcp-preview-frame-dark-background`    |         | Background color of the preview frame in dark mode  |\n| `--wcp-preview-frame-dark-border-color`  |         | Border color of the example section in dark mode    |\n| `--wcp-preview-frame-dark-color`         |         | Text color of the preview frame in dark mode        |\n| `--wcp-preview-frame-light-background`   |         | Background color of the preview frame in light mode |\n| `--wcp-preview-frame-light-border-color` |         | Border color of the example section in light mode   |\n| `--wcp-preview-frame-light-color`        |         | Text color of the preview frame in light mode       |\n| `--wcp-preview-frame-distance`           |         | Outer margin of the preview frame                   |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the preview frame                  |\n| `--wcp-preview-frame-border-width`       |         | Border width of the example section                 |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the example section                |\n\n<hr/>\n",
           "groups": [
             "feature"
           ],
@@ -1188,6 +1237,49 @@
           "declaration": {
             "name": "Viewer",
             "module": "src/components/feature/viewer/viewer.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/feature/viewer-stage/viewer-stage.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ViewerStage",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-viewer-stage>\n  <wcp-button>Example button</wcp-button>\n</wcp-viewer-stage>\n```"
+          ],
+          "readme": "# class: `ViewerStage`\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n<hr/>\n",
+          "groups": [
+            "feature"
+          ],
+          "tagName": "wcp-viewer-stage",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ViewerStage",
+          "declaration": {
+            "name": "ViewerStage",
+            "module": "src/components/feature/viewer-stage/viewer-stage.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-viewer-stage",
+          "declaration": {
+            "name": "ViewerStage",
+            "module": "src/components/feature/viewer-stage/viewer-stage.component.ts"
           }
         }
       ]
