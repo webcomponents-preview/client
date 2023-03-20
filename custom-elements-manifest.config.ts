@@ -19,8 +19,8 @@ export default {
       transformer: 'cem',
       transformerOptions: {
         headingOffset: -1,
-        omitDeclarations: ['exports'],
-        omitSections: ['main-heading', 'super-class', 'static-fields', 'static-methods'],
+        omitDeclarations: ['exports', 'mixins'],
+        omitSections: ['main-heading', 'mixins', 'super-class', 'static-fields', 'static-methods'],
         private: 'hidden',
       },
       outputPath(path) {
