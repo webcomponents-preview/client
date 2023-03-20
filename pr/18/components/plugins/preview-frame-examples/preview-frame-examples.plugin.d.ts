@@ -4,6 +4,11 @@ import { type CustomElementDeclarationWithExamples } from '@/utils/custom-elemen
 declare const PreviewFrameExamples_base: (new (...args: any[]) => {
     colorScheme?: "light" | "dark" | undefined;
 }) & typeof LitElement;
+/**
+ * Shows the examples of a custom element manifest.
+ *
+ * @cssprop --wcp-preview-frame-examples-spacing - Spacing between examples.
+ */
 export declare class PreviewFrameExamples extends PreviewFrameExamples_base implements PreviewFramePlugin<CustomElementDeclarationWithExamples> {
     static readonly styles: import("lit").CSSResult;
     element?: CustomElementDeclarationWithExamples;

@@ -1252,8 +1252,14 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "Shows the examples of a custom element manifest.",
           "name": "PreviewFrameExamples",
+          "cssProperties": [
+            {
+              "description": "Spacing between examples.",
+              "name": "--wcp-preview-frame-examples-spacing"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -1335,7 +1341,8 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "readme": "# class: `PreviewFrameExamples`\n\n## Fields\n\n| Name        | Privacy | Type                                                | Default      | Description | Inherited From |\n| ----------- | ------- | --------------------------------------------------- | ------------ | ----------- | -------------- |\n| `element`   |         | `CustomElementDeclarationWithExamples \\| undefined` |              |             |                |\n| `name`      |         | `string`                                            | `'examples'` |             |                |\n| `label`     |         | `string`                                            | `'Examples'` |             |                |\n| `available` |         | `boolean`                                           |              |             |                |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n| `available` | available |                |\n\n<hr/>\n",
+          "examples": [],
+          "readme": "# class: `PreviewFrameExamples`\n\n## Fields\n\n| Name        | Privacy | Type                                                | Default      | Description | Inherited From |\n| ----------- | ------- | --------------------------------------------------- | ------------ | ----------- | -------------- |\n| `element`   |         | `CustomElementDeclarationWithExamples \\| undefined` |              |             |                |\n| `name`      |         | `string`                                            | `'examples'` |             |                |\n| `label`     |         | `string`                                            | `'Examples'` |             |                |\n| `available` |         | `boolean`                                           |              |             |                |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n| `available` | available |                |\n\n## CSS Properties\n\n| Name                                   | Default | Description               |\n| -------------------------------------- | ------- | ------------------------- |\n| `--wcp-preview-frame-examples-spacing` |         | Spacing between examples. |\n\n<hr/>\n",
           "groups": [
             "plugins"
           ],
@@ -1961,6 +1968,60 @@
           "declaration": {
             "name": "Button",
             "module": "src/components/ui/button/button.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/ui/code/code.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Shows a formatted code snippet.",
+          "name": "Code",
+          "members": [
+            {
+              "kind": "method",
+              "name": "createRenderRoot"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-code>\n  <pre><code>Some code</code></pre>\n</wcp-code>\n```"
+          ],
+          "readme": "# class: `Code`\n\n## Methods\n\n| Name               | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------ | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `createRenderRoot` |           |             |            |                  |                |\n| `render`           | protected |             |            | `TemplateResult` |                |\n\n<hr/>\n",
+          "groups": [
+            "ui"
+          ],
+          "tagName": "wcp-code",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Code",
+          "declaration": {
+            "name": "Code",
+            "module": "src/components/ui/code/code.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-code",
+          "declaration": {
+            "name": "Code",
+            "module": "src/components/ui/code/code.component.ts"
           }
         }
       ]

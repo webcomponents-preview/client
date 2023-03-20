@@ -19,6 +19,7 @@ export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.ut
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component';
 export * from './components/root/root.component';
 export * from './components/ui/button/button.component';
+export * from './components/ui/code/code.component';
 export * from './components/ui/icon/icon.component';
 export * from './components/ui/tabs/tabs.component';
 export * from './components/ui/title/title.component';
