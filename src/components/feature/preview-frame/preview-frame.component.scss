@@ -1,4 +1,3 @@
-@use 'sass:meta' as meta;
 @use '@/styles/utils' as utils;
 
 // prettier-ignore
@@ -41,15 +40,6 @@
     border-top-right-radius: var(---wcp-preview-frame-border-radius);
     border-top-left-radius: var(---wcp-preview-frame-border-radius);
   }
-
-  @include utils.color-scheme() using ($color-scheme) {
-    @if ($color-scheme == light) {
-      @include meta.load-css('highlight.js/scss/xcode');
-    }
-    @if ($color-scheme == dark) {
-      @include meta.load-css('highlight.js/scss/dark');
-    }
-  }
 }
 
 wcp-tabs {
@@ -68,6 +58,12 @@ wcp-tabs {
   }
 }
 
+// hide the default slot, as we use it only initially to collect all plugins
+slot:not([name]) {
+  display: none;
+}
+
+// TODO: Move to a example plugin component
 [slot='examples'] {
   section {
     margin: var(---wcp-preview-frame-example-spacing);

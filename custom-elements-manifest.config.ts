@@ -9,7 +9,7 @@ import { customElementGroupingPlugin } from '@webcomponents-preview/cem-plugin-g
 export default {
   packagejson: true,
   litelement: true,
-  globs: ['src/components/**/*.component.ts'],
+  globs: ['src/components/**/*.{component,plugin}.ts'],
   exclude: ['**/legacy.component.ts'],
   outdir: 'dist',
   plugins: [

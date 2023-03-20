@@ -1,4 +1,4 @@
-# class: `Viewer`
+# class: `PreviewFrameViewer`
 
 ## Mixins
 
@@ -8,15 +8,18 @@
 
 ## Fields
 
-| Name      | Privacy | Type | Default | Description | Inherited From |
-| --------- | ------- | ---- | ------- | ----------- | -------------- |
-| `element` |         |      |         |             |                |
+| Name        | Privacy | Type      | Default    | Description | Inherited From |
+| ----------- | ------- | --------- | ---------- | ----------- | -------------- |
+| `element`   |         |           |            |             |                |
+| `name`      |         | `string`  | `'viewer'` |             |                |
+| `label`     |         | `string`  | `'Viewer'` |             |                |
+| `available` |         | `boolean` | `true`     |             |                |
 
 ## Methods
 
 | Name                  | Privacy   | Description | Parameters          | Return                           | Inherited From |
 | --------------------- | --------- | ----------- | ------------------- | -------------------------------- | -------------- |
-| `getElementReference` | protected |             |                     | `HTMLElement`                    |                |
+| `getElementReference` | protected |             |                     | `Element \| undefined`           |                |
 | `getFields`           | protected |             |                     | `CustomElementField[]`           |                |
 | `getSlots`            | protected |             |                     | `Slot[]`                         |                |
 | `getSlotsWithData`    | protected |             |                     | `{ slot: Slot; data: string }[]` |                |
@@ -27,8 +30,11 @@
 
 ## Attributes
 
-| Name      | Field   | Inherited From |
-| --------- | ------- | -------------- |
-| `element` | element |                |
+| Name        | Field     | Inherited From |
+| ----------- | --------- | -------------- |
+| `element`   | element   |                |
+| `name`      | name      |                |
+| `label`     | label     |                |
+| `available` | available |                |
 
 <hr/>

@@ -25,10 +25,10 @@ marked.setOptions({
       }
       // wrap the code in a custom element to preview it
       return `
-        <wcp-readme-example>
+        <wcp-markdown-example>
           <pre slot="code"><code>${code}</code></pre>
           <div slot="preview">${preview}</div>
-        </wcp-readme-example>
+        </wcp-markdown-example>
       `;
     }
   })(),

@@ -1,10 +1,5 @@
 @use '@/styles/utils' as utils;
 
-// prettier-ignore
-:host {
-  ---wcp-viewer-example: var(--wcp-viewer-example, unset);
-}
-
 :host {
   display: flex;
   flex-direction: column;
@@ -15,11 +10,11 @@ fieldset {
   min-width: 0;
 }
 
-wcp-viewer-stage {
+wcp-preview-frame-viewer-stage {
   flex: 1 1 auto;
 }
 
-wcp-viewer-controls {
+wcp-preview-frame-viewer-controls {
   display: block;
   flex: 0 0 auto;
 }

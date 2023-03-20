@@ -1,18 +1,18 @@
 import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-import styles from './viewer-stage.component.scss';
+import styles from './preview-frame-viewer-stage.component.scss';
 
 /**
  * @example
  * ```html
- * <wcp-viewer-stage>
+ * <wcp-preview-frame-viewer-stage>
  *   <wcp-button>Example button</wcp-button>
- * </wcp-viewer-stage>
+ * </wcp-preview-frame-viewer-stage>
  * ```
  */
-@customElement('wcp-viewer-stage')
-export class ViewerStage extends LitElement {
+@customElement('wcp-preview-frame-viewer-stage')
+export class PreviewFrameViewerStage extends LitElement {
   static readonly styles = unsafeCSS(styles);
 
   protected render(): TemplateResult {
@@ -22,6 +22,6 @@ export class ViewerStage extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wcp-viewer-stage': ViewerStage;
+    'wcp-preview-frame-viewer-stage': PreviewFrameViewerStage;
   }
 }

@@ -10,25 +10,21 @@
 
 | Name                | Privacy | Type                                       | Default | Description | Inherited From |
 | ------------------- | ------- | ------------------------------------------ | ------- | ----------- | -------------- |
-| `preview`           |         | `string`                                   | `''`    |             |                |
-| `examples`          |         | `string[]`                                 | `[]`    |             |                |
-| `element`           |         | `CustomElementDeclaration \| undefined`    |         |             |                |
 | `initialPreviewTab` |         | `Config['initialPreviewTab'] \| undefined` |         |             |                |
 
 ## Methods
 
-| Name             | Privacy   | Description | Parameters                                      | Return           | Inherited From |
-| ---------------- | --------- | ----------- | ----------------------------------------------- | ---------------- | -------------- |
-| `renderExamples` | protected |             | `element: CustomElementDeclarationWithExamples` | `TemplateResult` |                |
-| `renderReadme`   | protected |             | `element: CustomElementDeclarationWithReadme`   | `TemplateResult` |                |
-| `renderViewer`   | protected |             | `element: CustomElementDeclaration`             | `TemplateResult` |                |
-| `render`         | protected |             |                                                 | `TemplateResult` |                |
+| Name               | Privacy   | Description | Parameters     | Return                                           | Inherited From |
+| ------------------ | --------- | ----------- | -------------- | ------------------------------------------------ | -------------- |
+| `handleSlotChange` | protected |             | `event: Event` |                                                  |                |
+| `getAvailableTabs` | protected |             |                | `HTMLElementTagNameMap['wcp-tabs']['tabs']`      |                |
+| `getActiveTab`     | protected |             |                | `HTMLElementTagNameMap['wcp-tabs']['activeTab']` |                |
+| `render`           | protected |             |                | `TemplateResult`                                 |                |
 
 ## Attributes
 
 | Name                  | Field             | Inherited From |
 | --------------------- | ----------------- | -------------- |
-| `element`             | element           |                |
 | `initial-preview-tab` | initialPreviewTab |                |
 
 ## CSS Properties

@@ -1,20 +1,11 @@
-import type { CustomElementDeclaration } from 'custom-elements-manifest';
-
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/utils/color-scheme.utils';
 import type { Config } from '@/utils/config.utils';
-import {
-  type CustomElementDeclarationWithExamples,
-  type CustomElementDeclarationWithReadme,
-  hasExamples,
-  hasReadme,
-} from '@/utils/custom-elements-manifest.utils';
-import { renderMarkdown } from '@/utils/markdown.utils';
+import { PreviewFramePlugin, findAllPlugins } from './preview-frame.utils';
 
 import styles from './preview-frame.component.scss';
 
@@ -42,52 +33,45 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   @state()
-  preview = '';
-
-  @state()
-  examples: string[] = [];
-
-  @property({ type: Object })
-  element?: CustomElementDeclaration;
+  private _tabs: PreviewFramePlugin[] = [];
 
   @property({ type: String, reflect: true, attribute: 'initial-preview-tab' })
   initialPreviewTab?: Config['initialPreviewTab'];
 
-  protected renderExamples(element: CustomElementDeclarationWithExamples): TemplateResult {
-    return html`
-      <div slot="examples">
-        ${map(element.examples, (example: string) => html`<section>${unsafeHTML(renderMarkdown(example))}</section>`)}
-      </div>
-    `;
+  @eventOptions({ passive: true })
+  protected handleSlotChange(event: Event) {
+    const slot = event.target as HTMLSlotElement;
+    const tabs = findAllPlugins(slot);
+    // once the plugins are slotted into their respective targets, the slot
+    // change listener may be called again with an empty result set
+    if (tabs.length > 0) {
+      this._tabs = tabs;
+      this._tabs.forEach((tab) => tab.setAttribute('slot', tab.name));
+    }
   }
 
-  protected renderReadme(element: CustomElementDeclarationWithReadme): TemplateResult {
-    return html`<wcp-readme slot="readme" markdown="${element.readme}"></wcp-readme>`;
+  protected getAvailableTabs(): HTMLElementTagNameMap['wcp-tabs']['tabs'] {
+    return this._tabs.reduce((tabs, { name, label }) => ({ ...tabs, [name]: label }), {});
   }
 
-  protected renderViewer(element: CustomElementDeclaration): TemplateResult {
-    return html`<wcp-viewer slot="viewer" .element="${element}"></wcp-viewer>`;
+  protected getActiveTab(): HTMLElementTagNameMap['wcp-tabs']['activeTab'] {
+    if (this.initialPreviewTab && this._tabs.some(({ name }) => name === this.initialPreviewTab)) {
+      return this.initialPreviewTab;
+    }
+    return this._tabs[0].name;
   }
 
   protected render(): TemplateResult {
-    const tabs = {
-      ...(hasExamples(this.element) ? { examples: 'Examples' } : {}),
-      ...(hasReadme(this.element) ? { readme: 'Readme' } : {}),
-      viewer: 'Viewer',
-    };
-
     return html`
       ${when(
-        this.element !== undefined && Object.keys(tabs).length > 0,
+        this._tabs.length > 0,
         () => html`
-          <wcp-tabs .tabs="${tabs}" active-tab="${this.initialPreviewTab ?? Object.keys(tabs)[0]}">
-            ${when('examples' in tabs, () => this.renderExamples(this.element as CustomElementDeclarationWithExamples))}
-            ${when('readme' in tabs, () => this.renderReadme(this.element as CustomElementDeclarationWithReadme))}
-            ${this.renderViewer(this.element as CustomElementDeclaration)}
+          <wcp-tabs .tabs="${this.getAvailableTabs()}" active-tab="${this.getActiveTab()}">
+            ${map(this._tabs, ({ name }) => html`<slot name="${name}" slot="${name}"></slot>`)}
           </wcp-tabs>
-        `,
-        () => html`<h1>No preview available.</h1>`
+        `
       )}
+      <slot @slotchange="${this.handleSlotChange}"></slot>
     `;
   }
 }

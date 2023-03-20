@@ -36,6 +36,7 @@ import styles from './root.component.scss';
 export class Root extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
+  #activeElement?: string;
   #title = 'WCP';
 
   @state()
@@ -43,6 +44,9 @@ export class Root extends ColorSchemable(LitElement) {
 
   @state()
   elements: CustomElementDeclaration[] = [];
+
+  @state()
+  activeElementDeclaration?: CustomElementDeclaration;
 
   @state()
   navigation: Record<string, CustomElementDeclaration[]> = {};
@@ -54,6 +58,20 @@ export class Root extends ColorSchemable(LitElement) {
   }
   get title(): string {
     return this.#title;
+  }
+
+  /**
+   * Sets the currently active element by its tag name. Will be updated at runtime and can
+   * be preset with an initial value to define the active element at startup.
+   */
+  @property({ type: String, reflect: true, attribute: 'active-element' })
+  set activeElement(activeElement: string | undefined) {
+    this.#activeElement = activeElement;
+    this.retrieveActiveElementDeclaration();
+    this.emitActiveElementChanged();
+  }
+  get activeElement(): string | undefined {
+    return this.#activeElement;
   }
 
   /**
@@ -70,13 +88,6 @@ export class Root extends ColorSchemable(LitElement) {
    */
   @property({ type: String, reflect: true, attribute: 'fallback-group-name' })
   fallbackGroupName = 'Components';
-
-  /**
-   * Sets the currently active element by its tag name. Will be updated at runtime and can
-   * be preset with an initial value to define the active element at startup.
-   */
-  @property({ type: String, reflect: true, attribute: 'active-element' })
-  activeElement?: string;
 
   /**
    * Configure the initial preview tab to be displayed. Can be either `examples`, `readme` or `viewer`.
@@ -105,9 +116,7 @@ export class Root extends ColorSchemable(LitElement) {
     if (this.activeElement === undefined) {
       this.activeElement = this.config?.initialActiveElement;
     }
-    if (this.activeElement !== undefined) {
-      this.selectFallbackElement();
-    }
+    this.selectFallbackElement();
   }
 
   async loadCustomElementsManifest(manifestUrl: string) {
@@ -117,6 +126,10 @@ export class Root extends ColorSchemable(LitElement) {
     // store the elements and derive navigation
     this.elements = getCustomElements(manifest);
     this.navigation = groupCustomElements(this.elements, this.fallbackGroupName);
+    this.activeElementDeclaration = this.elements.find((element) => element.tagName === this.activeElement);
+
+    // update the declaration if we have an active element
+    this.retrieveActiveElementDeclaration();
 
     // make sure we have a at least the first element active
     this.selectFallbackElement();
@@ -134,8 +147,9 @@ export class Root extends ColorSchemable(LitElement) {
     location.href = `#/${getNiceUrl(this.elements[0])}`;
   }
 
-  getActiveElementDeclaration(elements: CustomElementDeclaration[]): CustomElementDeclaration | undefined {
-    return elements.find((element) => element.tagName === this.activeElement);
+  retrieveActiveElementDeclaration() {
+    this.activeElementDeclaration = this.elements.find((element) => element.tagName === this.activeElement);
+    console.log(this.activeElementDeclaration);
   }
 
   emitManifestLoaded() {
@@ -153,7 +167,7 @@ export class Root extends ColorSchemable(LitElement) {
       bubbles: true,
       cancelable: true,
       composed: true,
-      detail: this.getActiveElementDeclaration(this.elements),
+      detail: this.activeElementDeclaration,
     });
     this.dispatchEvent(event);
   }
@@ -163,7 +177,6 @@ export class Root extends ColorSchemable(LitElement) {
   handleHashChange = (() => {
     const [, activeElement] = window.location.hash.split('#/');
     this.activeElement = activeElement;
-    this.emitActiveElementChanged();
   }).bind(this);
 
   override connectedCallback() {
@@ -218,9 +231,12 @@ export class Root extends ColorSchemable(LitElement) {
             </wcp-preview-controls>
             <slot name="preview-frame">
               <wcp-preview-frame
-                .element="${this.getActiveElementDeclaration(this.elements)}"
                 initial-preview-tab="${ifDefined(this.initialPreviewTab ?? this.config?.initialPreviewTab)}"
-              ></wcp-preview-frame>
+              >
+                <wcp-preview-frame-examples .element="${this.activeElementDeclaration}"></wcp-preview-frame-examples>
+                <wcp-preview-frame-readme .element="${this.activeElementDeclaration}"></wcp-preview-frame-readme>
+                <wcp-preview-frame-viewer .element="${this.activeElementDeclaration}"></wcp-preview-frame-viewer>
+              </wcp-preview-frame>
             </slot>
           `
         )}

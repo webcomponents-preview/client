@@ -1,7 +1,7 @@
 import { spread } from '@open-wc/lit-helpers';
-import type { CustomElementField, CustomElementDeclaration, Slot } from 'custom-elements-manifest';
+import type { CustomElementDeclaration, CustomElementField, Slot } from 'custom-elements-manifest';
 
-import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
+import { LitElement, type TemplateResult, html, unsafeCSS, nothing } from 'lit';
 import { unsafeStatic, withStatic } from 'lit/static-html.js';
 import { customElement, property, state } from 'lit/decorators.js';
 
@@ -9,45 +9,51 @@ import { map } from 'lit/directives/map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
+import type { PreviewFramePlugin } from '@/components/feature/preview-frame/preview-frame.utils';
 import { ColorSchemable } from '@/utils/color-scheme.utils';
-import { CustomElementData, mapFormData, prepareInitialElementData } from './viewer.utils';
 
-import styles from './viewer.component.scss';
+import { CustomElementData, mapFormData, prepareInitialElementData } from './preview-frame-viewer.utils';
 
-/**
- * @example
- * ```html
- * <wcp-viewer></wcp-viewer>
- * ```
- */
-@customElement('wcp-viewer')
-export class Viewer extends ColorSchemable(LitElement) {
+import styles from './preview-frame-viewer.plugin.scss';
+
+@customElement('wcp-preview-frame-viewer')
+export class PreviewFrameViewer extends ColorSchemable(LitElement) implements PreviewFramePlugin {
   static readonly styles = unsafeCSS(styles);
 
-  #element!: CustomElementDeclaration;
+  #element?: CustomElementDeclaration;
 
   @property({ type: Object })
-  set element(element: CustomElementDeclaration) {
+  set element(element: CustomElementDeclaration | undefined) {
     this.#element = element;
-    this.elementData = prepareInitialElementData(element);
+    this.elementData = element !== undefined ? prepareInitialElementData(element) : undefined;
   }
+
+  @property({ type: String, reflect: true })
+  readonly name = 'viewer';
+
+  @property({ type: String, reflect: true })
+  readonly label = 'Viewer';
+
+  @property({ type: Boolean, reflect: true })
+  readonly available = true;
 
   @state()
   private elementData?: CustomElementData;
 
-  protected getElementReference(): HTMLElement {
+  protected getElementReference(): Element | undefined {
+    if (this.#element === undefined) return undefined;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.renderRoot.querySelector(this.#element.tagName!) as HTMLElement;
+    return this.renderRoot.querySelector(this.#element.tagName!) ?? undefined;
   }
 
   protected getFields(): CustomElementField[] {
-    return (this.#element.members ?? []).filter(
+    return (this.#element?.members ?? []).filter(
       (member) => member.kind === 'field' && member.privacy !== 'private' && !member.static
     ) as CustomElementField[];
   }
 
   protected getSlots(): Slot[] {
-    return this.#element.slots ?? [];
+    return this.#element?.slots ?? [];
   }
 
   protected getSlotsWithData(): { slot: Slot; data: string }[] {
@@ -60,6 +66,7 @@ export class Viewer extends ColorSchemable(LitElement) {
   }
 
   protected handleControlsInput(event: InputEvent) {
+    if (this.#element === undefined) return;
     const form = event.currentTarget as HTMLFormElement;
     this.elementData = mapFormData(form, this.#element);
   }
@@ -80,6 +87,7 @@ export class Viewer extends ColorSchemable(LitElement) {
   }
 
   protected renderElement(): TemplateResult {
+    if (this.#element === undefined) return html`${nothing}`;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const tag = unsafeStatic(this.#element.tagName!);
     return withStatic(html)`
@@ -91,10 +99,10 @@ export class Viewer extends ColorSchemable(LitElement) {
     const fields = this.getFields();
     const slots = this.getSlots();
     return html`
-      <wcp-viewer-stage>${this.renderElement()}</wcp-viewer-stage>
+      <wcp-preview-frame-viewer-stage>${this.renderElement()}</wcp-preview-frame-viewer-stage>
 
       <!-- TODO: Move controls into separate element -->
-      <wcp-viewer-controls>
+      <wcp-preview-frame-viewer-controls>
         <form @input="${this.handleControlsInput}">
           ${when(
             fields.length > 0,
@@ -186,13 +194,13 @@ export class Viewer extends ColorSchemable(LitElement) {
             `
           )}
         </form>
-      </wcp-viewer-controls>
+      </wcp-preview-frame-viewer-controls>
     `;
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wcp-viewer': Viewer;
+    'wcp-preview-frame-viewer': PreviewFrameViewer;
   }
 }

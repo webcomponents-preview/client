@@ -57,7 +57,7 @@ const options: BuildOptions = {
   plugins: [
     sassPlugin({
       type: 'css-text',
-      filter: /\.component\.scss$/,
+      filter: /\.(component|plugin)\.scss$/,
       importMapper,
       transform,
     }),
