@@ -44,7 +44,7 @@ export declare class Root extends Root_base {
      * So this is the name of the group that will contain all elements unless the manifest is
      * generated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin.
      */
-    fallbackGroupName: string;
+    fallbackGroupName?: string;
     /**
      * Configure the initial preview tab to be displayed. Can be either `examples`, `readme` or `viewer`.
      */
