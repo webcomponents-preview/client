@@ -15,6 +15,7 @@ export * from './components/layout/main/main.component';
 export * from './components/plugins/preview-frame-examples/preview-frame-examples.plugin';
 export * from './components/plugins/preview-frame-readme/preview-frame-readme.plugin';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.plugin';
+export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.utils.spec';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.utils';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component';
 export * from './components/root/root.component';
