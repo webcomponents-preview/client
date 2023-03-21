@@ -120,10 +120,7 @@ export function prepareInitialElementData(element: CustomElementDeclaration): Cu
   };
 }
 
-export function parseMemberValue(
-  value: FormDataEntryValue,
-  field: Field
-): FormDataEntryValue | string | number | boolean | undefined {
+export function parseMemberValue(field: Field, value: unknown): string | number | boolean | undefined {
   if (field.isBoolean) {
     return value === 'on';
   }
@@ -131,8 +128,9 @@ export function parseMemberValue(
     return Number(value);
   }
   if (field.isString) {
-    return (value as string).trim() ? value : undefined;
+    return (value as string).trim() ? (value as string) : undefined;
   }
+  return undefined;
 }
 
 export function mapFormData(form: HTMLFormElement, element: CustomElementDeclaration): CustomElementData {
@@ -152,6 +150,6 @@ export function mapFormData(form: HTMLFormElement, element: CustomElementDeclara
 
     // pass the key-value pair into the data set
     const field = new Field(member);
-    return { ...acc, [group]: { ...acc[group as keyof typeof acc], [litKey(field)]: parseMemberValue(value, field) } };
+    return { ...acc, [group]: { ...acc[group as keyof typeof acc], [litKey(field)]: parseMemberValue(field, value) } };
   }, EMPTY_ELEMENT_DATA);
 }
