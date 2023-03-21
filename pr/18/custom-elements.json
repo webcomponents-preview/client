@@ -1774,6 +1774,9 @@
           ],
           "slots": [
             {
+              "type": {
+                "text": "Some <i>Button</i>"
+              },
               "description": "Default slot for the button content",
               "name": ""
             }

@@ -61,7 +61,7 @@ declare const Button_base: (new (...args: any[]) => {
  * </form>
  * ```
  *
- * @slot - Default slot for the button content
+ * @slot {Some <i>Button</i>} - Default slot for the button content
  *
  * @cssprop --wcp-button-dark-passive-background - Background color of the button if non interactive in dark mode
  * @cssprop --wcp-button-dark-passive-border-color - Border color of the button if non interactive in dark mode
