@@ -136,7 +136,10 @@ export function prepareInitialElementData(element: CustomElementDeclaration): Cu
         }
         return acc;
       }, {}) ?? {},
-    slots: element.slots?.reduce((acc, slot) => ({ ...acc, [slot.name]: '' }), {}) ?? {},
+    // we use a bug in the analyzer for the time being to provide default contents
+    // for slots by their inofficial (and maybe unintentionally shipped) type data
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    slots: element.slots?.reduce((acc, slot) => ({ ...acc, [slot.name]: (slot as any).type?.text ?? '' }), {}) ?? {},
   };
 }
 
