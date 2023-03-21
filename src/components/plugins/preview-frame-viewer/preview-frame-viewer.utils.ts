@@ -31,7 +31,7 @@ export class Field {
     return this._types[0] === 'string' || this._types[0]?.startsWith(`'`);
   }
   get isEnum(): boolean {
-    return this._types.length > 0 && this._types[1] !== 'undefined';
+    return this._types.length > 1 && this._types[1] !== 'undefined';
   }
   get isArray(): boolean {
     return this._types[0]?.endsWith('[]');
@@ -75,9 +75,8 @@ export class Field {
       return this.hasDefault && Number(this._field.default);
     }
     if (this.isString) {
-      const unwrap = (value: string): string => (value.startsWith(`'`) ? value.slice(1, -1) : value);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return this.hasDefault ? unwrap(this._field.default!) : '';
+      return this.hasDefault ? unwrapString(this._field.default!) : '';
     }
 
     return this._field.default;
@@ -85,7 +84,7 @@ export class Field {
 
   constructor(field: CustomElementField) {
     this._field = field;
-    this._types = field.type?.text.split(' | ') ?? [];
+    this._types = getEnumValues(field);
   }
 }
 
@@ -95,6 +94,14 @@ export function isCustomElementField(field?: ClassMember): field is CustomElemen
 
 export function isControlable(field: CustomElementField): boolean {
   return field.privacy !== 'private' && field.privacy !== 'protected' && !field.static;
+}
+
+export function unwrapString(value: string): string {
+  return value.startsWith(`'`) ? value.slice(1, -1) : value;
+}
+
+export function getEnumValues(field: CustomElementField): string[] {
+  return field.type?.text.split(' | ') ?? [];
 }
 
 /**

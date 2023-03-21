@@ -11,16 +11,18 @@
 
 ## Methods
 
-| Name                  | Privacy   | Description | Parameters          | Return                           | Inherited From |
-| --------------------- | --------- | ----------- | ------------------- | -------------------------------- | -------------- |
-| `getElementReference` | protected |             |                     | `Element \| undefined`           |                |
-| `getFields`           | protected |             |                     | `CustomElementField[]`           |                |
-| `getSlots`            | protected |             |                     | `Slot[]`                         |                |
-| `getSlotsWithData`    | protected |             |                     | `{ slot: Slot; data: string }[]` |                |
-| `handleControlsInput` | protected |             | `event: InputEvent` |                                  |                |
-| `renderSlots`         | protected |             |                     | `TemplateResult`                 |                |
-| `renderElement`       | protected |             |                     | `TemplateResult`                 |                |
-| `render`              | protected |             |                     | `TemplateResult`                 |                |
+| Name                  | Privacy   | Description | Parameters                   | Return                           | Inherited From |
+| --------------------- | --------- | ----------- | ---------------------------- | -------------------------------- | -------------- |
+| `getElementReference` | protected |             |                              | `Element \| undefined`           |                |
+| `getFields`           | protected |             |                              | `CustomElementField[]`           |                |
+| `getSlots`            | protected |             |                              | `Slot[]`                         |                |
+| `getSlotsWithData`    | protected |             |                              | `{ slot: Slot; data: string }[]` |                |
+| `handleControlsInput` | protected |             | `event: InputEvent`          |                                  |                |
+| `renderSlots`         | protected |             |                              | `TemplateResult`                 |                |
+| `renderFieldControl`  | protected |             | `member: CustomElementField` | `TemplateResult`                 |                |
+| `renderSlotControl`   | protected |             | `slot: Slot`                 | `TemplateResult`                 |                |
+| `renderElement`       | protected |             |                              | `TemplateResult`                 |                |
+| `render`              | protected |             |                              | `TemplateResult`                 |                |
 
 ## Attributes
 
