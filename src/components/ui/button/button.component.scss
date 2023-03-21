@@ -44,7 +44,14 @@
   }
 }
 
-:host(:enabled:active),
+:host(:enabled:active) {
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-button-background: var(---wcp-button-#{$color-scheme}-active-background);
+    ---wcp-button-border-color: var(---wcp-button-#{$color-scheme}-active-border-color);
+    ---wcp-button-color: var(---wcp-button-#{$color-scheme}-active-color);
+  }
+}
+
 :host(:enabled.active) {
   @include utils.color-scheme() using ($color-scheme) {
     ---wcp-button-background: var(---wcp-button-#{$color-scheme}-active-background);
