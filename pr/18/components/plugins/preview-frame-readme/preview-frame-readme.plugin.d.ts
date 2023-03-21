@@ -4,6 +4,13 @@ import { type CustomElementDeclarationWithReadme } from '@/utils/custom-elements
 declare const PreviewFrameReadme_base: (new (...args: any[]) => {
     colorScheme?: "light" | "dark" | undefined;
 }) & typeof LitElement;
+/**
+ * @cssprop --wcp-preview-frame-readme-dark-border-color - Border color of the readme in dark mode.
+ * @cssprop --wcp-preview-frame-readme-dark-highlight-background - Background color of highlighted table rows in dark mode.
+ *
+ * @cssprop --wcp-preview-frame-readme-light-border-color - Border color of the readme in light mode.
+ * @cssprop --wcp-preview-frame-readme-light-highlight-background - Background color of highlighted table rows in light mode.
+ */
 export declare class PreviewFrameReadme extends PreviewFrameReadme_base implements PreviewFramePlugin<CustomElementDeclarationWithReadme> {
     static readonly styles: import("lit").CSSResult;
     element?: CustomElementDeclarationWithReadme;

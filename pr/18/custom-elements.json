@@ -1322,6 +1322,24 @@
           "kind": "class",
           "description": "",
           "name": "PreviewFrameReadme",
+          "cssProperties": [
+            {
+              "description": "Border color of the readme in dark mode.",
+              "name": "--wcp-preview-frame-readme-dark-border-color"
+            },
+            {
+              "description": "Background color of highlighted table rows in dark mode.",
+              "name": "--wcp-preview-frame-readme-dark-highlight-background"
+            },
+            {
+              "description": "Border color of the readme in light mode.",
+              "name": "--wcp-preview-frame-readme-light-border-color"
+            },
+            {
+              "description": "Background color of highlighted table rows in light mode.",
+              "name": "--wcp-preview-frame-readme-light-highlight-background"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -1407,7 +1425,8 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "readme": "# class: `PreviewFrameReadme`\n\n## Fields\n\n| Name        | Privacy | Type                                              | Default    | Description | Inherited From |\n| ----------- | ------- | ------------------------------------------------- | ---------- | ----------- | -------------- |\n| `element`   |         | `CustomElementDeclarationWithReadme \\| undefined` |            |             |                |\n| `name`      |         | `string`                                          | `'readme'` |             |                |\n| `label`     |         | `string`                                          | `'Readme'` |             |                |\n| `available` |         | `boolean`                                         |            |             |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `createRenderRoot`  |           |             |            |                  |                |\n| `connectedCallback` |           |             |            |                  |                |\n| `render`            | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n| `available` | available |                |\n\n<hr/>\n",
+          "examples": [],
+          "readme": "# class: `PreviewFrameReadme`\n\n## Fields\n\n| Name        | Privacy | Type                                              | Default    | Description | Inherited From |\n| ----------- | ------- | ------------------------------------------------- | ---------- | ----------- | -------------- |\n| `element`   |         | `CustomElementDeclarationWithReadme \\| undefined` |            |             |                |\n| `name`      |         | `string`                                          | `'readme'` |             |                |\n| `label`     |         | `string`                                          | `'Readme'` |             |                |\n| `available` |         | `boolean`                                         |            |             |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `createRenderRoot`  |           |             |            |                  |                |\n| `connectedCallback` |           |             |            |                  |                |\n| `render`            | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n| `available` | available |                |\n\n## CSS Properties\n\n| Name                                                    | Default | Description                                               |\n| ------------------------------------------------------- | ------- | --------------------------------------------------------- |\n| `--wcp-preview-frame-readme-dark-border-color`          |         | Border color of the readme in dark mode.                  |\n| `--wcp-preview-frame-readme-dark-highlight-background`  |         | Background color of highlighted table rows in dark mode.  |\n| `--wcp-preview-frame-readme-light-border-color`         |         | Border color of the readme in light mode.                 |\n| `--wcp-preview-frame-readme-light-highlight-background` |         | Background color of highlighted table rows in light mode. |\n\n<hr/>\n",
           "groups": [
             "plugins"
           ],
