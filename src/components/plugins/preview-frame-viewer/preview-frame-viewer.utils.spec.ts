@@ -85,7 +85,7 @@ describe('preview-frame-viewer.utils', () => {
       expect(cefType(`'foo' | 'bar' | undefined`).isObject).toBeFalsy();
     });
 
-    it('flags array type', () => {
+    it('flags (simple) array type', () => {
       expect(cef({}).isObject).toBeFalsy();
       expect(cefType('string[]').isArray).toBeTruthy();
       expect(cefType('string[] | undefined').isArray).toBeTruthy();

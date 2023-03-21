@@ -11,7 +11,7 @@ export const EMPTY_ELEMENT_DATA = {
 } satisfies CustomElementData;
 
 /**
- * Derives a given fields meta data by parsing the CustomElementField
+ * Derives a given fields meta data by parsing it
  */
 export class Field {
   private _field!: CustomElementField;
@@ -66,6 +66,23 @@ export class Field {
     return this._field.privacy === 'protected';
   }
 
+  get default(): string | number | boolean | undefined {
+    if (this.isBoolean) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      return this.hasDefault && this._field.default!.startsWith('true');
+    }
+    if (this.isNumber) {
+      return this.hasDefault && Number(this._field.default);
+    }
+    if (this.isString) {
+      const unwrap = (value: string): string => (value.startsWith(`'`) ? value.slice(1, -1) : value);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      return this.hasDefault ? unwrap(this._field.default!) : '';
+    }
+
+    return this._field.default;
+  }
+
   constructor(field: CustomElementField) {
     this._field = field;
     this._types = field.type?.text.split(' | ') ?? [];
@@ -74,6 +91,10 @@ export class Field {
 
 export function isCustomElementField(field?: ClassMember): field is CustomElementField {
   return field?.kind === 'field';
+}
+
+export function isControlable(field: CustomElementField): boolean {
+  return field.privacy !== 'private' && field.privacy !== 'protected' && !field.static;
 }
 
 /**
@@ -92,26 +113,18 @@ export function litKey(field: Field): string {
   return field.data.attribute!;
 }
 
+/**
+ * Prepare the initial data for a given element by its defaults
+ */
 export function prepareInitialElementData(element: CustomElementDeclaration): CustomElementData {
   return {
     members:
       element.members?.reduce((acc, member) => {
-        if (isCustomElementField(member) && member.privacy !== 'private' && !member.static) {
+        if (isCustomElementField(member) && isControlable(member)) {
           const field = new Field(member as CustomElementField);
-          const key = litKey(field);
-
-          // prepare initial boolean values
-          if (field.isBoolean) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            return { ...acc, [key]: field.hasDefault && field.data.default!.startsWith('true') };
-          }
-          // set string based values if default is set
-          if (field.hasDefault) {
-            return { ...acc, [key]: field.data.default ?? null };
-          }
-          // skip the element if no defaults given
-          else {
-            return acc;
+          const value = field.default;
+          if (value !== undefined) {
+            return { ...acc, [litKey(field)]: value };
           }
         }
         return acc;
@@ -120,6 +133,9 @@ export function prepareInitialElementData(element: CustomElementDeclaration): Cu
   };
 }
 
+/**
+ * Retrieve the current value of a given field parsed to the correct type
+ */
 export function parseMemberValue(field: Field, value: unknown): string | number | boolean | undefined {
   if (field.isBoolean) {
     return value === 'on';
@@ -133,6 +149,9 @@ export function parseMemberValue(field: Field, value: unknown): string | number 
   return undefined;
 }
 
+/**
+ * Maps the given form data by the given element definition to a stateful data object
+ */
 export function mapFormData(form: HTMLFormElement, element: CustomElementDeclaration): CustomElementData {
   const data = new FormData(form);
   return Array.from(data.entries()).reduce((acc, [key, value]) => {
