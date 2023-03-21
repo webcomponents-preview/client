@@ -21,6 +21,8 @@ export declare class PreviewFrameViewer extends PreviewFrameViewer_base implemen
     }[];
     protected handleControlsInput(event: InputEvent): void;
     protected renderSlots(): TemplateResult;
+    protected renderFieldControl(member: CustomElementField): TemplateResult;
+    protected renderSlotControl(slot: Slot): TemplateResult;
     protected renderElement(): TemplateResult;
     protected render(): TemplateResult;
 }

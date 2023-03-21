@@ -33,6 +33,8 @@ export declare class Field {
 }
 export declare function isCustomElementField(field?: ClassMember): field is CustomElementField;
 export declare function isControlable(field: CustomElementField): boolean;
+export declare function unwrapString(value: string): string;
+export declare function getEnumValues(field: CustomElementField): string[];
 /**
  * Prepares a lit compatible template key for a given field
  */

@@ -1559,6 +1559,42 @@
             },
             {
               "kind": "method",
+              "name": "renderFieldControl",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "member",
+                  "type": {
+                    "text": "CustomElementField"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderSlotControl",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "slot",
+                  "type": {
+                    "text": "Slot"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
               "name": "renderElement",
               "privacy": "protected",
               "return": {
@@ -1608,7 +1644,7 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "readme": "# class: `PreviewFrameViewer`\n\n## Fields\n\n| Name        | Privacy | Type      | Default    | Description | Inherited From |\n| ----------- | ------- | --------- | ---------- | ----------- | -------------- |\n| `element`   |         |           |            |             |                |\n| `name`      |         | `string`  | `'viewer'` |             |                |\n| `label`     |         | `string`  | `'Viewer'` |             |                |\n| `available` |         | `boolean` | `true`     |             |                |\n\n## Methods\n\n| Name                  | Privacy   | Description | Parameters          | Return                           | Inherited From |\n| --------------------- | --------- | ----------- | ------------------- | -------------------------------- | -------------- |\n| `getElementReference` | protected |             |                     | `Element \\| undefined`           |                |\n| `getFields`           | protected |             |                     | `CustomElementField[]`           |                |\n| `getSlots`            | protected |             |                     | `Slot[]`                         |                |\n| `getSlotsWithData`    | protected |             |                     | `{ slot: Slot; data: string }[]` |                |\n| `handleControlsInput` | protected |             | `event: InputEvent` |                                  |                |\n| `renderSlots`         | protected |             |                     | `TemplateResult`                 |                |\n| `renderElement`       | protected |             |                     | `TemplateResult`                 |                |\n| `render`              | protected |             |                     | `TemplateResult`                 |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n| `available` | available |                |\n\n<hr/>\n",
+          "readme": "# class: `PreviewFrameViewer`\n\n## Fields\n\n| Name        | Privacy | Type      | Default    | Description | Inherited From |\n| ----------- | ------- | --------- | ---------- | ----------- | -------------- |\n| `element`   |         |           |            |             |                |\n| `name`      |         | `string`  | `'viewer'` |             |                |\n| `label`     |         | `string`  | `'Viewer'` |             |                |\n| `available` |         | `boolean` | `true`     |             |                |\n\n## Methods\n\n| Name                  | Privacy   | Description | Parameters                   | Return                           | Inherited From |\n| --------------------- | --------- | ----------- | ---------------------------- | -------------------------------- | -------------- |\n| `getElementReference` | protected |             |                              | `Element \\| undefined`           |                |\n| `getFields`           | protected |             |                              | `CustomElementField[]`           |                |\n| `getSlots`            | protected |             |                              | `Slot[]`                         |                |\n| `getSlotsWithData`    | protected |             |                              | `{ slot: Slot; data: string }[]` |                |\n| `handleControlsInput` | protected |             | `event: InputEvent`          |                                  |                |\n| `renderSlots`         | protected |             |                              | `TemplateResult`                 |                |\n| `renderFieldControl`  | protected |             | `member: CustomElementField` | `TemplateResult`                 |                |\n| `renderSlotControl`   | protected |             | `slot: Slot`                 | `TemplateResult`                 |                |\n| `renderElement`       | protected |             |                              | `TemplateResult`                 |                |\n| `render`              | protected |             |                              | `TemplateResult`                 |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n| `available` | available |                |\n\n<hr/>\n",
           "groups": [
             "plugins"
           ],
