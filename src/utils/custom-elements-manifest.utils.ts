@@ -9,8 +9,11 @@ export function isCustomElementDeclaration(declaration?: Declaration): declarati
   return declaration !== undefined && 'customElement' in declaration;
 }
 
-export function getCustomElements(manifest: Manifest): CustomElementDeclaration[] {
-  return manifest.modules.flatMap((module) => module.declarations).filter(isCustomElementDeclaration);
+export function getCustomElements(manifest: Manifest, exclude: string[] = []): CustomElementDeclaration[] {
+  return manifest.modules
+    .flatMap((module) => module.declarations)
+    .filter(isCustomElementDeclaration)
+    .filter((element) => !exclude.includes(element.tagName!));
 }
 
 export function groupCustomElements(

@@ -2,20 +2,17 @@
 
 ## Fields
 
-| Name                       | Privacy | Type                                         | Default | Description                                                                                                                                                                                                                                                                | Inherited From |
-| -------------------------- | ------- | -------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| `config`                   |         | `Config \| undefined`                        |         |                                                                                                                                                                                                                                                                            |                |
-| `elements`                 |         | `CustomElementDeclaration[]`                 | `[]`    |                                                                                                                                                                                                                                                                            |                |
-| `activeElementDeclaration` |         | `CustomElementDeclaration \| undefined`      |         |                                                                                                                                                                                                                                                                            |                |
-| `navigation`               |         | `Record<string, CustomElementDeclaration[]>` | `{}`    |                                                                                                                                                                                                                                                                            |                |
-| `title`                    |         | `string`                                     |         |                                                                                                                                                                                                                                                                            |                |
-| `activeElement`            |         | `string \| undefined`                        |         | Sets the currently active element by its tag name. Will be updated at runtime and can&#xA;be preset with an initial value to define the active element at startup.                                                                                                         |                |
-| `inline`                   |         | `boolean`                                    | `false` | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element.                                                                                                       |                |
-| `fallbackGroupName`        |         | `string \| undefined`                        |         | Allows to set a fallback group name for elements that do not have a \`groups\` property.&#xA;So this is the name of the group that will contain all elements unless the manifest is&#xA;generated with the optional \`@webcomponents-preview/cem-plugin-grouping\` plugin. |                |
-| `initialPreviewTab`        |         | `Config['initialPreviewTab'] \| undefined`   |         | Configure the initial preview tab to be displayed. Can be either \`examples\`, \`readme\` or \`viewer\`.                                                                                                                                                                   |                |
-| `configUrl`                |         |                                              |         | Allows to set a url to load a config file from.                                                                                                                                                                                                                            |                |
-| `manifestUrl`              |         |                                              |         | Defines the location of the custom element manifest file.                                                                                                                                                                                                                  |                |
-| `handleHashChange`         |         |                                              |         |                                                                                                                                                                                                                                                                            |                |
+| Name                       | Privacy | Type                                                      | Default | Description                                                                                                                                                          | Inherited From |
+| -------------------------- | ------- | --------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| `elements`                 |         | `CustomElementDeclaration[]`                              | `[]`    |                                                                                                                                                                      |                |
+| `activeElementDeclaration` |         | `CustomElementDeclaration \| undefined`                   |         |                                                                                                                                                                      |                |
+| `initialPreviewTab`        |         | `string \| undefined`                                     |         |                                                                                                                                                                      |                |
+| `navigation`               |         | `Record<string, CustomElementDeclaration[]> \| undefined` |         |                                                                                                                                                                      |                |
+| `activeElement`            |         | `string \| undefined`                                     |         | Sets the currently active element by its tag name. Will be updated at runtime and can&#xA;be preset with an initial value to define the active element at startup.   |                |
+| `inline`                   |         | `boolean`                                                 | `false` | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element. |                |
+| `configUrl`                |         |                                                           |         | Allows to set a url to load a config file from.                                                                                                                      |                |
+| `manifestUrl`              |         |                                                           |         | Defines the location of the custom element manifest file.                                                                                                            |                |
+| `handleHashChange`         |         |                                                           |         |                                                                                                                                                                      |                |
 
 ## Methods
 
@@ -33,15 +30,12 @@
 
 ## Attributes
 
-| Name                  | Field             | Inherited From |
-| --------------------- | ----------------- | -------------- |
-| `title`               | title             |                |
-| `active-element`      | activeElement     |                |
-| `inline`              | inline            |                |
-| `fallback-group-name` | fallbackGroupName |                |
-| `initial-preview-tab` | initialPreviewTab |                |
-| `config-url`          | configUrl         |                |
-| `manifest-url`        | manifestUrl       |                |
+| Name             | Field         | Inherited From |
+| ---------------- | ------------- | -------------- |
+| `active-element` | activeElement |                |
+| `inline`         | inline        |                |
+| `config-url`     | configUrl     |                |
+| `manifest-url`   | manifestUrl   |                |
 
 ## CSS Properties
 

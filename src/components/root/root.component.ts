@@ -40,25 +40,16 @@ export class Root extends ColorSchemable(LitElement) {
   #title = 'WCP';
 
   @state()
-  config?: Config;
-
-  @state()
   elements: CustomElementDeclaration[] = [];
 
   @state()
   activeElementDeclaration?: CustomElementDeclaration;
 
   @state()
-  navigation: Record<string, CustomElementDeclaration[]> = {};
+  initialPreviewTab?: string;
 
-  @property({ type: String, reflect: true })
-  set title(title: string) {
-    this.#title = title;
-    document.title = title;
-  }
-  get title(): string {
-    return this.#title;
-  }
+  @state()
+  navigation?: Record<string, CustomElementDeclaration[]>;
 
   /**
    * Sets the currently active element by its tag name. Will be updated at runtime and can
@@ -82,20 +73,6 @@ export class Root extends ColorSchemable(LitElement) {
   inline = false;
 
   /**
-   * Allows to set a fallback group name for elements that do not have a `groups` property.
-   * So this is the name of the group that will contain all elements unless the manifest is
-   * generated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin.
-   */
-  @property({ type: String, reflect: true, attribute: 'fallback-group-name' })
-  fallbackGroupName?: string;
-
-  /**
-   * Configure the initial preview tab to be displayed. Can be either `examples`, `readme` or `viewer`.
-   */
-  @property({ type: String, reflect: true, attribute: 'initial-preview-tab' })
-  initialPreviewTab?: Config['initialPreviewTab'];
-
-  /**
    * Allows to set a url to load a config file from.
    */
   @property({ type: String, reflect: true, attribute: 'config-url' })
@@ -112,23 +89,31 @@ export class Root extends ColorSchemable(LitElement) {
   }
 
   async loadConfig(configUrl: string) {
-    this.config = await getConfig(configUrl);
-    if (this.activeElement === undefined) {
-      this.activeElement = this.config?.initialActiveElement;
+    const config = await getConfig(configUrl);
+    // update title from config
+    if (config?.title) {
+      this.#title = config.title;
+      document.title = this.#title;
     }
+    if (config?.initialPreviewTab) {
+      this.initialPreviewTab = config.initialPreviewTab;
+    }
+    // set initial active element
+    if (config?.initialActiveElement && this.activeElement === undefined) {
+      this.activeElement = config?.initialActiveElement;
+    }
+    // check if a fallback element should be activated
     this.selectFallbackElement();
   }
 
   async loadCustomElementsManifest(manifestUrl: string) {
+    const config = await getConfig(this.configUrl);
     const response = await fetch(manifestUrl);
     const manifest = await response.json();
 
     // store the elements and derive navigation
-    this.elements = getCustomElements(manifest);
-    this.navigation = groupCustomElements(
-      this.elements,
-      this.fallbackGroupName ?? this.config?.fallbackGroupName ?? 'Components'
-    );
+    this.elements = getCustomElements(manifest, config?.excludeElements);
+    this.navigation = groupCustomElements(this.elements, config?.fallbackGroupName ?? 'Components');
     this.activeElementDeclaration = this.elements.find((element) => element.tagName === this.activeElement);
 
     // update the declaration if we have an active element
@@ -150,9 +135,8 @@ export class Root extends ColorSchemable(LitElement) {
     location.href = `#/${getNiceUrl(this.elements[0])}`;
   }
 
-  retrieveActiveElementDeclaration() {
+  async retrieveActiveElementDeclaration() {
     this.activeElementDeclaration = this.elements.find((element) => element.tagName === this.activeElement);
-    console.log(this.activeElementDeclaration);
   }
 
   emitManifestLoaded() {
@@ -200,49 +184,47 @@ export class Root extends ColorSchemable(LitElement) {
   protected render(): TemplateResult {
     return html`
       <wcp-layout>
-        <wcp-title slot="aside" title="${this.title}">
+        <wcp-title slot="aside" title="${this.#title}">
           <slot name="logo" slot="logo">
             <img src="assets/icons/logo.svg" height="20px" />
           </slot>
         </wcp-title>
 
-        ${map(
-          Object.keys(this.navigation),
-          (group) => html`
-            <wcp-navigation slot="aside" headline="${group}">
-              ${map(
-                this.navigation[group],
-                (element) => html`
-                  <wcp-navigation-item
-                    ?active="${element.tagName === this.activeElement}"
-                    href="#/${getNiceUrl(element)}"
-                  >
-                    ${getNiceName(element)}
-                  </wcp-navigation-item>
-                `
-              )}
-            </wcp-navigation>
-          `
-        )}
         ${when(
-          this.elements,
+          this.navigation !== undefined,
           () => html`
-            <wcp-preview-controls>
-              <wcp-toggle-sidebar></wcp-toggle-sidebar>
-              <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
-              <slot name="preview-controls"></slot>
-            </wcp-preview-controls>
-            <slot name="preview-frame">
-              <wcp-preview-frame
-                initial-preview-tab="${ifDefined(this.initialPreviewTab ?? this.config?.initialPreviewTab)}"
-              >
-                <wcp-preview-frame-examples .element="${this.activeElementDeclaration}"></wcp-preview-frame-examples>
-                <wcp-preview-frame-readme .element="${this.activeElementDeclaration}"></wcp-preview-frame-readme>
-                <wcp-preview-frame-viewer .element="${this.activeElementDeclaration}"></wcp-preview-frame-viewer>
-              </wcp-preview-frame>
-            </slot>
+            ${map(
+              Object.keys(this.navigation!),
+              (group) => html`
+                <wcp-navigation slot="aside" headline="${group}">
+                  ${map(
+                    this.navigation![group],
+                    (element) => html`
+                      <wcp-navigation-item
+                        ?active="${element.tagName === this.activeElement}"
+                        href="#/${getNiceUrl(element)}"
+                      >
+                        ${getNiceName(element)}
+                      </wcp-navigation-item>
+                    `
+                  )}
+                </wcp-navigation>
+              `
+            )}
           `
         )}
+        <wcp-preview-controls>
+          <wcp-toggle-sidebar></wcp-toggle-sidebar>
+          <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
+          <slot name="preview-controls"></slot>
+        </wcp-preview-controls>
+        <slot name="preview-frame">
+          <wcp-preview-frame initial-preview-tab="${ifDefined(this.initialPreviewTab)}">
+            <wcp-preview-frame-examples .element="${this.activeElementDeclaration}"></wcp-preview-frame-examples>
+            <wcp-preview-frame-readme .element="${this.activeElementDeclaration}"></wcp-preview-frame-readme>
+            <wcp-preview-frame-viewer .element="${this.activeElementDeclaration}"></wcp-preview-frame-viewer>
+          </wcp-preview-frame>
+        </slot>
       </wcp-layout>
     `;
   }
