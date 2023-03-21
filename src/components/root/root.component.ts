@@ -87,7 +87,7 @@ export class Root extends ColorSchemable(LitElement) {
    * generated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin.
    */
   @property({ type: String, reflect: true, attribute: 'fallback-group-name' })
-  fallbackGroupName = 'Components';
+  fallbackGroupName?: string;
 
   /**
    * Configure the initial preview tab to be displayed. Can be either `examples`, `readme` or `viewer`.
@@ -125,7 +125,10 @@ export class Root extends ColorSchemable(LitElement) {
 
     // store the elements and derive navigation
     this.elements = getCustomElements(manifest);
-    this.navigation = groupCustomElements(this.elements, this.fallbackGroupName);
+    this.navigation = groupCustomElements(
+      this.elements,
+      this.fallbackGroupName ?? this.config?.fallbackGroupName ?? 'Components'
+    );
     this.activeElementDeclaration = this.elements.find((element) => element.tagName === this.activeElement);
 
     // update the declaration if we have an active element

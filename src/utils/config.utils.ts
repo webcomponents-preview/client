@@ -1,5 +1,6 @@
 // this type will be used to derive the config schema from
 export type Config = {
+  fallbackGroupName: string;
   initialActiveElement: string;
   initialPreviewTab: 'examples' | 'readme' | 'viewer';
 };
