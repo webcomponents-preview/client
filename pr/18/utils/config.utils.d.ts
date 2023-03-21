@@ -1,4 +1,6 @@
 export type Config = {
+    title: string;
+    excludeElements: string[];
     fallbackGroupName: string;
     initialActiveElement: string;
     initialPreviewTab: 'examples' | 'readme' | 'viewer';

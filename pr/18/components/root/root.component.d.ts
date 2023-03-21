@@ -1,6 +1,5 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema';
 import { LitElement, type TemplateResult } from 'lit';
-import { type Config } from '@/utils/config.utils';
 declare const Root_base: (new (...args: any[]) => {
     colorScheme?: "light" | "dark" | undefined;
 }) & typeof LitElement;
@@ -22,12 +21,10 @@ declare const Root_base: (new (...args: any[]) => {
 export declare class Root extends Root_base {
     #private;
     static readonly styles: import("lit").CSSResult;
-    config?: Config;
     elements: CustomElementDeclaration[];
     activeElementDeclaration?: CustomElementDeclaration;
-    navigation: Record<string, CustomElementDeclaration[]>;
-    set title(title: string);
-    get title(): string;
+    initialPreviewTab?: string;
+    navigation?: Record<string, CustomElementDeclaration[]>;
     /**
      * Sets the currently active element by its tag name. Will be updated at runtime and can
      * be preset with an initial value to define the active element at startup.
@@ -40,16 +37,6 @@ export declare class Root extends Root_base {
      */
     inline: boolean;
     /**
-     * Allows to set a fallback group name for elements that do not have a `groups` property.
-     * So this is the name of the group that will contain all elements unless the manifest is
-     * generated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin.
-     */
-    fallbackGroupName?: string;
-    /**
-     * Configure the initial preview tab to be displayed. Can be either `examples`, `readme` or `viewer`.
-     */
-    initialPreviewTab?: Config['initialPreviewTab'];
-    /**
      * Allows to set a url to load a config file from.
      */
     set configUrl(configUrl: string);
@@ -60,7 +47,7 @@ export declare class Root extends Root_base {
     loadConfig(configUrl: string): Promise<void>;
     loadCustomElementsManifest(manifestUrl: string): Promise<void>;
     selectFallbackElement(): Promise<void>;
-    retrieveActiveElementDeclaration(): void;
+    retrieveActiveElementDeclaration(): Promise<void>;
     emitManifestLoaded(): void;
     emitActiveElementChanged(): void;
     handleHashChange: () => void;
