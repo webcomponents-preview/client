@@ -5,6 +5,7 @@ import { LitElement, type TemplateResult, html, unsafeCSS, nothing } from 'lit';
 import { unsafeStatic, withStatic } from 'lit/static-html.js';
 import { customElement, property, state } from 'lit/decorators.js';
 
+import { keyed } from 'lit/directives/keyed.js';
 import { map } from 'lit/directives/map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
@@ -72,7 +73,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
   }
 
   protected renderSlots(): TemplateResult {
-    return withStatic(html)`
+    return html`
       ${map(
         this.getSlotsWithData(),
         ({ slot, data }) => withStatic(html)`
@@ -99,102 +100,113 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
     const fields = this.getFields();
     const slots = this.getSlots();
     return html`
-      <wcp-preview-frame-viewer-stage>${this.renderElement()}</wcp-preview-frame-viewer-stage>
+      ${keyed(
+        this.#element?.tagName ?? '',
+        html`
+          <wcp-preview-frame-viewer-stage>${this.renderElement()}</wcp-preview-frame-viewer-stage>
 
-      <!-- TODO: Move controls into separate element -->
-      <wcp-preview-frame-viewer-controls>
-        <form @input="${this.handleControlsInput}">
-          ${when(
-            fields.length > 0,
-            () => html`
-              <fieldset>
-                <legend>Fields</legend>
-                ${map(
-                  fields,
-                  (member) => html`
-                    <wcp-input>
-                      <label>
-                        ${when(
-                          member.type?.text.startsWith('boolean'),
-                          () =>
-                            html`
-                              <input
-                                type="checkbox"
-                                name="members.${member.name}"
-                                ?checked="${this.elementData?.members[member.name]}"
-                              />
-                              <span class="label">${member.name}</span>
-                            `,
-                          () => html`
+          <!-- TODO: Move controls into separate element -->
+          <wcp-preview-frame-viewer-controls>
+            <form @input="${this.handleControlsInput}">
+              ${when(
+                fields.length > 0,
+                () => html`
+                  <fieldset>
+                    <legend>Fields</legend>
+                    ${map(
+                      fields,
+                      (member) => html`
+                        <wcp-input>
+                          <label>
                             ${when(
-                              member.type?.text.startsWith('string'),
-                              () => html`
-                                <input
-                                  type="text"
-                                  name="members.${member.name}"
-                                  placeholder="${member.attribute ?? member.name}"
-                                  .value="${this.elementData?.members[member.name] ?? null}"
-                                />
-                              `,
+                              member.type?.text.startsWith('boolean'),
                               () =>
                                 html`
-                                  ${when(
-                                    member.type?.text.includes(' | '),
-                                    () => html`
-                                      <select name="members.${member.name}">
-                                        ${map(
-                                          member.type?.text.split(' | '),
-                                          (option) => html`
-                                            <option
-                                              value="${option.slice(1, -1)}"
-                                              ?selected="${this.elementData?.members[member.name] ===
-                                              option.slice(1, -1)}"
-                                            >
-                                              ${option.slice(1, -1)}
-                                            </option>
-                                          `
-                                        )}
-                                      </select>
+                                  <input
+                                    autocomplete="off"
+                                    type="checkbox"
+                                    name="members.${member.name}"
+                                    ?checked="${this.elementData?.members[member.name]}"
+                                  />
+                                  <span class="label">${member.name}</span>
+                                `,
+                              () => html`
+                                ${when(
+                                  member.type?.text.startsWith('string'),
+                                  () => html`
+                                    <span class="label">${member.attribute ?? member.name}</span>
+                                    <input
+                                      autocomplete="off"
+                                      type="text"
+                                      name="members.${member.name}"
+                                      .value="${this.elementData?.members[member.name] ?? null}"
+                                    />
+                                  `,
+                                  () =>
+                                    html`
+                                      ${when(
+                                        member.type?.text.includes(' | '),
+                                        () => html`
+                                          <select autocomplete="off" name="members.${member.name}">
+                                            ${map(
+                                              member.type?.text.split(' | '),
+                                              (option) => html`
+                                                <option
+                                                  value="${option.slice(1, -1)}"
+                                                  ?selected="${this.elementData?.members[member.name] ===
+                                                  option.slice(1, -1)}"
+                                                >
+                                                  ${option.slice(1, -1)}
+                                                </option>
+                                              `
+                                            )}
+                                          </select>
+                                        `
+                                      )}
                                     `
-                                  )}
-                                `
+                                )}
+                              `
                             )}
-                          `
-                        )}
-                        ${when(member.description, () => html`<span class="description">${member.description}</span>`)}
-                      </label>
-                    </wcp-input>
-                  `
-                )}
-              </fieldset>
-            `
-          )}
-          ${when(
-            slots.length > 0,
-            () => html`
-              <fieldset>
-                <legend>Slots</legend>
-                ${map(
-                  slots,
-                  (slot) => html`
-                    <wcp-input>
-                      <label>
-                        <input
-                          type="text"
-                          name="slots.${slot.name}"
-                          placeholder="${slot.name ?? 'Default'}"
-                          value="${this.elementData?.slots[slot.name]}"
-                        />
-                        ${when(slot.description, () => html`<span class="description">${slot.description}</span>`)}
-                      </label>
-                    </wcp-input>
-                  `
-                )}
-              </fieldset>
-            `
-          )}
-        </form>
-      </wcp-preview-frame-viewer-controls>
+                            ${when(
+                              member.description,
+                              () => html`<span class="description">${member.description}</span>`
+                            )}
+                          </label>
+                        </wcp-input>
+                      `
+                    )}
+                  </fieldset>
+                `
+              )}
+              ${when(
+                slots.length > 0,
+                () => html`
+                  <fieldset>
+                    <legend>Slots</legend>
+                    ${map(
+                      slots,
+                      (slot) => html`
+                        <wcp-input>
+                          <label>
+                            <input
+                              autocomplete="off"
+                              type="text"
+                              name="slots.${slot.name}"
+                              placeholder="${slot.name ?? 'Default'}"
+                              value="${this.elementData?.slots[slot.name]}"
+                            />
+                            ${when(slot.description, () => html`<span class="description">${slot.description}</span>`)}
+                          </label>
+                        </wcp-input>
+                      `
+                    )}
+                  </fieldset>
+                `
+              )}
+            </form>
+          </wcp-preview-frame-viewer-controls>
+        `
+      )}
     `;
   }
 }
