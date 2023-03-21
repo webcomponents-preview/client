@@ -8,7 +8,7 @@ export declare const EMPTY_ELEMENT_DATA: {
     slots: {};
 };
 /**
- * Derives a given fields meta data by parsing the CustomElementField
+ * Derives a given fields meta data by parsing it
  */
 export declare class Field {
     private _field;
@@ -28,13 +28,24 @@ export declare class Field {
     get isPublic(): boolean;
     get isPrivate(): boolean;
     get isProtected(): boolean;
+    get default(): string | number | boolean | undefined;
     constructor(field: CustomElementField);
 }
 export declare function isCustomElementField(field?: ClassMember): field is CustomElementField;
+export declare function isControlable(field: CustomElementField): boolean;
 /**
  * Prepares a lit compatible template key for a given field
  */
 export declare function litKey(field: Field): string;
+/**
+ * Prepare the initial data for a given element by its defaults
+ */
 export declare function prepareInitialElementData(element: CustomElementDeclaration): CustomElementData;
+/**
+ * Retrieve the current value of a given field parsed to the correct type
+ */
 export declare function parseMemberValue(field: Field, value: unknown): string | number | boolean | undefined;
+/**
+ * Maps the given form data by the given element definition to a stateful data object
+ */
 export declare function mapFormData(form: HTMLFormElement, element: CustomElementDeclaration): CustomElementData;
