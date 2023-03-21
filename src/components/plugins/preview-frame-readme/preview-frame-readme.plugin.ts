@@ -9,6 +9,13 @@ import { renderMarkdown } from '@/utils/markdown.utils';
 
 import styles from './preview-frame-readme.plugin.scss';
 
+/**
+ * @cssprop --wcp-preview-frame-readme-dark-border-color - Border color of the readme in dark mode.
+ * @cssprop --wcp-preview-frame-readme-dark-highlight-background - Background color of highlighted table rows in dark mode.
+ *
+ * @cssprop --wcp-preview-frame-readme-light-border-color - Border color of the readme in light mode.
+ * @cssprop --wcp-preview-frame-readme-light-highlight-background - Background color of highlighted table rows in light mode.
+ */
 @customElement('wcp-preview-frame-readme')
 export class PreviewFrameReadme
   extends ColorSchemable(LitElement)
