@@ -7,7 +7,7 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/utils/color-scheme.utils';
-import { type Config, getConfig } from '@/utils/config.utils';
+import { getConfig } from '@/utils/config.utils';
 import {
   getCustomElements,
   getNiceName,
@@ -90,14 +90,17 @@ export class Root extends ColorSchemable(LitElement) {
 
   async loadConfig(configUrl: string) {
     const config = await getConfig(configUrl);
+
     // update title from config
     if (config?.title) {
       this.#title = config.title;
       document.title = this.#title;
     }
+    // set initial preview tab
     if (config?.initialPreviewTab) {
       this.initialPreviewTab = config.initialPreviewTab;
     }
+
     // set initial active element
     if (config?.initialActiveElement && this.activeElement === undefined) {
       this.activeElement = config?.initialActiveElement;
@@ -194,11 +197,12 @@ export class Root extends ColorSchemable(LitElement) {
           this.navigation !== undefined,
           () => html`
             ${map(
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               Object.keys(this.navigation!),
               (group) => html`
                 <wcp-navigation slot="aside" headline="${group}">
                   ${map(
-                    this.navigation![group],
+                    this.navigation?.[group],
                     (element) => html`
                       <wcp-navigation-item
                         ?active="${element.tagName === this.activeElement}"
