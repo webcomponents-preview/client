@@ -1,10 +1,10 @@
-import type { CustomElementDeclaration } from 'custom-elements-manifest';
+import type * as Parsed from '@/utils/parser.types';
 
-export type PreviewFramePlugin<T extends CustomElementDeclaration = CustomElementDeclaration> = Element & {
+export type PreviewFramePlugin = Element & {
   readonly name: string;
   readonly label: string;
   readonly available: boolean;
-  element?: T;
+  element?: Parsed.Element;
 };
 
 export function isPreviewFramePlugin(element: Element): element is PreviewFramePlugin {
