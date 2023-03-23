@@ -21,12 +21,33 @@ import styles from './button.component.scss';
  * ```
  *
  * @example
+ * ## Disabled button
+ *
+ * ```html
+ * <wcp-button disabled>Try to click me!</wcp-button>
+ * ```
+ *
+ * @example
  * ## Button with icon
  *
  * ```html
  * <wcp-button kind="icon">
  *  <wcp-icon name="menu"></wcp-icon>
  * </wcp-button>
+ * ```
+ *
+ * @example
+ * ## Force active state
+ *
+ * ```html
+ * <wcp-button class="active">Link</wcp-button>
+ * ```
+ *
+ * @example
+ * ## Use as link
+ *
+ * ```html
+ * <wcp-button href=".">Link</wcp-button>
  * ```
  *
  * @example
@@ -46,27 +67,29 @@ import styles from './button.component.scss';
  *   <wcp-button type="reset">Reset</wcp-button>
  * </form>
  * ```
- * 
+ *
+ * @slot {Some <i>Button</i>} - Default slot for the button content
+ *
  * @cssprop --wcp-button-dark-passive-background - Background color of the button if non interactive in dark mode
  * @cssprop --wcp-button-dark-passive-border-color - Border color of the button if non interactive in dark mode
  * @cssprop --wcp-button-dark-passive-color - Text color of the button if non interactive in dark mode
- * 
+ *
  * @cssprop --wcp-button-dark-hover-background - Background color of the button if hovered in dark mode
  * @cssprop --wcp-button-dark-hover-border-color - Border color of the button if hovered in dark mode
  * @cssprop --wcp-button-dark-hover-color - Text color of the button if hovered in dark mode
- * 
+ *
  * @cssprop --wcp-button-dark-active-background - Background color of the button if active in dark mode
  * @cssprop --wcp-button-dark-active-border-color - Border color of the button if active in dark mode
  * @cssprop --wcp-button-dark-active-color - Text color of the button if active in dark mode
- * 
+ *
  * @cssprop --wcp-button-light-passive-background - Background color of the button if non interactive in light mode
  * @cssprop --wcp-button-light-passive-border-color - Border color of the button if non interactive in light mode
  * @cssprop --wcp-button-light-passive-color - Text color of the button if non interactive in light mode
- * 
+ *
  * @cssprop --wcp-button-light-hover-background - Background color of the button if hovered in light mode
  * @cssprop --wcp-button-light-hover-border-color - Border color of the button if hovered in light mode
  * @cssprop --wcp-button-light-hover-color - Text color of the button if hovered in light mode
- * 
+ *
  * @cssprop --wcp-button-light-active-background - Background color of the button if active in light mode
  * @cssprop --wcp-button-light-active-border-color - Border color of the button if active in light mode
  * @cssprop --wcp-button-light-active-color - Text color of the button if active in light mode
@@ -84,9 +107,18 @@ export class Button extends ColorSchemable(LitElement) {
   @property({ type: Boolean, reflect: true })
   nowrap = false;
 
+  /**
+   * Allows stretching the button across the full width of its container.
+   * This is useful for buttons that are used in a narrow form, or in general
+   * on small viewports, like handheld devices.
+   */
   @property({ type: Boolean, reflect: true })
   stretched = false;
 
+  /**
+   * The kind of button to render. Either like a conventional button, or for
+   * icons. Icon buttons are quadrtic and will show a radial background on interaction.
+   */
   @property({ type: String, reflect: true })
   kind: 'button' | 'icon' = 'button';
 
@@ -114,7 +146,7 @@ export class Button extends ColorSchemable(LitElement) {
   protected render(): TemplateResult {
     return html`
       ${when(
-        this.href !== undefined,
+        this.href !== undefined && !this.disabled,
         () => html`
           <a class="button" type="${this.type}" href="${this.href}" target="${ifDefined(this.target)}">
             <slot></slot>

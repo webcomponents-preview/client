@@ -1,4 +1,4 @@
-# class: `PreviewDetails`
+# class: `PreviewFrameViewerStage`
 
 ## Methods
 

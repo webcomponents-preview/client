@@ -1,22 +1,16 @@
 # class: `Button`
 
-## Mixins
-
-| Name             | Module | Package                    |
-| ---------------- | ------ | -------------------------- |
-| `ColorSchemable` |        | @/utils/color-scheme.utils |
-
 ## Fields
 
-| Name        | Privacy | Type                                                      | Default    | Description | Inherited From |
-| ----------- | ------- | --------------------------------------------------------- | ---------- | ----------- | -------------- |
-| `disabled`  |         | `boolean`                                                 | `false`    |             |                |
-| `nowrap`    |         | `boolean`                                                 | `false`    |             |                |
-| `stretched` |         | `boolean`                                                 | `false`    |             |                |
-| `kind`      |         | `'button' \| 'icon'`                                      | `'button'` |             |                |
-| `type`      |         | `'button' \| 'reset' \| 'submit'`                         | `'button'` |             |                |
-| `href`      |         | `string \| undefined`                                     |            |             |                |
-| `target`    |         | `'_self' \| '_blank' \| '_parent' \| '_top' \| undefined` |            |             |                |
+| Name        | Privacy | Type                                                      | Default    | Description                                                                                                                                                                                      | Inherited From |
+| ----------- | ------- | --------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------- |
+| `disabled`  |         | `boolean`                                                 | `false`    |                                                                                                                                                                                                  |                |
+| `nowrap`    |         | `boolean`                                                 | `false`    |                                                                                                                                                                                                  |                |
+| `stretched` |         | `boolean`                                                 | `false`    | Allows stretching the button across the full width of its container.&#xA;This is useful for buttons that are used in a narrow form, or in general&#xA;on small viewports, like handheld devices. |                |
+| `kind`      |         | `'button' \| 'icon'`                                      | `'button'` | The kind of button to render. Either like a conventional button, or for&#xA;icons. Icon buttons are quadrtic and will show a radial background on interaction.                                   |                |
+| `type`      |         | `'button' \| 'reset' \| 'submit'`                         | `'button'` |                                                                                                                                                                                                  |                |
+| `href`      |         | `string \| undefined`                                     |            |                                                                                                                                                                                                  |                |
+| `target`    |         | `'_self' \| '_blank' \| '_parent' \| '_top' \| undefined` |            |                                                                                                                                                                                                  |                |
 
 ## Methods
 
@@ -59,5 +53,11 @@
 | `--wcp-button-light-active-background`    |         | Background color of the button if active in light mode          |
 | `--wcp-button-light-active-border-color`  |         | Border color of the button if active in light mode              |
 | `--wcp-button-light-active-color`         |         | Text color of the button if active in light mode                |
+
+## Slots
+
+| Name | Description                         |
+| ---- | ----------------------------------- |
+|      | Default slot for the button content |
 
 <hr/>

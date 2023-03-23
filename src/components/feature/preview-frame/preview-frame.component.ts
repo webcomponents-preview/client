@@ -1,19 +1,11 @@
-import type { CustomElementDeclaration } from 'custom-elements-manifest';
-
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
-import { renderMarkdown } from '@/utils/code.utils';
 import { ColorSchemable } from '@/utils/color-scheme.utils';
-import {
-  type CustomElementDeclarationWithExamples,
-  hasExamples,
-  hasReadme,
-  CustomElementDeclarationWithReadme,
-} from '@/utils/custom-elements-manifest.utils';
+import type { Config } from '@/utils/config.utils';
+import { PreviewFramePlugin, findAllPlugins } from './preview-frame.utils';
 
 import styles from './preview-frame.component.scss';
 
@@ -26,11 +18,11 @@ import styles from './preview-frame.component.scss';
  * @cssprop --wcp-preview-frame-dark-background - Background color of the preview frame in dark mode
  * @cssprop --wcp-preview-frame-dark-border-color - Border color of the example section in dark mode
  * @cssprop --wcp-preview-frame-dark-color - Text color of the preview frame in dark mode
- * 
+ *
  * @cssprop --wcp-preview-frame-light-background - Background color of the preview frame in light mode
  * @cssprop --wcp-preview-frame-light-border-color - Border color of the example section in light mode
  * @cssprop --wcp-preview-frame-light-color - Text color of the preview frame in light mode
- * 
+ *
  * @cssprop --wcp-preview-frame-distance - Outer margin of the preview frame
  * @cssprop --wcp-preview-frame-spacing - Inner padding of the preview frame
  * @cssprop --wcp-preview-frame-border-width - Border width of the example section
@@ -41,45 +33,45 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   @state()
-  preview = '';
+  private _tabs: PreviewFramePlugin[] = [];
 
-  @state()
-  examples: string[] = [];
+  @property({ type: String, reflect: true, attribute: 'initial-preview-tab' })
+  initialPreviewTab?: Config['initialPreviewTab'];
 
-  @property({ type: Object })
-  activeElement?: CustomElementDeclaration;
-
-  protected renderExamples(element: CustomElementDeclarationWithExamples): TemplateResult {
-    return html`
-      <div slot="examples">
-        ${map(element.examples, (example: string) => html`<section>${unsafeHTML(renderMarkdown(example))}</section>`)}
-      </div>
-    `;
+  @eventOptions({ passive: true })
+  protected handleSlotChange(event: Event) {
+    const slot = event.target as HTMLSlotElement;
+    const tabs = findAllPlugins(slot);
+    // once the plugins are slotted into their respective targets, the slot
+    // change listener may be called again with an empty result set
+    if (tabs.length > 0) {
+      this._tabs = tabs;
+      this._tabs.forEach((tab) => tab.setAttribute('slot', tab.name));
+    }
   }
 
-  protected renderReadme(element: CustomElementDeclarationWithReadme): TemplateResult {
-    return html`<wcp-readme slot="readme" markdown="${element.readme}"></wcp-readme>`;
+  protected getAvailableTabs(): HTMLElementTagNameMap['wcp-tabs']['tabs'] {
+    return this._tabs.reduce((tabs, { name, label }) => ({ ...tabs, [name]: label }), {});
+  }
+
+  protected getActiveTab(): HTMLElementTagNameMap['wcp-tabs']['activeTab'] {
+    if (this.initialPreviewTab && this._tabs.some(({ name }) => name === this.initialPreviewTab)) {
+      return this.initialPreviewTab;
+    }
+    return this._tabs[0].name;
   }
 
   protected render(): TemplateResult {
-    const tabs = {
-      ...(hasExamples(this.activeElement) ? { examples: 'Examples' } : {}),
-      ...(hasReadme(this.activeElement) ? { readme: 'Readme' } : {}),
-    };
-
     return html`
       ${when(
-        this.activeElement !== undefined && Object.keys(tabs).length > 0,
+        this._tabs.length > 0,
         () => html`
-          <wcp-tabs .tabs="${tabs}" active-tab="${Object.keys(tabs)[0]}">
-            ${when('examples' in tabs, () =>
-              this.renderExamples(this.activeElement as CustomElementDeclarationWithExamples)
-            )}
-            ${when('readme' in tabs, () => this.renderReadme(this.activeElement as CustomElementDeclarationWithReadme))}
+          <wcp-tabs .tabs="${this.getAvailableTabs()}" active-tab="${this.getActiveTab()}">
+            ${map(this._tabs, ({ name }) => html`<slot name="${name}" slot="${name}"></slot>`)}
           </wcp-tabs>
-        `,
-        () => html`<h1>No preview available.</h1>`
+        `
       )}
+      <slot @slotchange="${this.handleSlotChange}"></slot>
     `;
   }
 }

@@ -36,7 +36,7 @@
   }
 }
 
-:host(:not(:disabled):hover) {
+:host(:enabled:hover) {
   @include utils.color-scheme() using ($color-scheme) {
     ---wcp-button-background: var(---wcp-button-#{$color-scheme}-hover-background);
     ---wcp-button-border-color: var(---wcp-button-#{$color-scheme}-hover-border-color);
@@ -44,8 +44,15 @@
   }
 }
 
-:host(:not(:disabled):active),
-:host(:not(:disabled).active) {
+:host(:enabled:active) {
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-button-background: var(---wcp-button-#{$color-scheme}-active-background);
+    ---wcp-button-border-color: var(---wcp-button-#{$color-scheme}-active-border-color);
+    ---wcp-button-color: var(---wcp-button-#{$color-scheme}-active-color);
+  }
+}
+
+:host(:enabled.active) {
   @include utils.color-scheme() using ($color-scheme) {
     ---wcp-button-background: var(---wcp-button-#{$color-scheme}-active-background);
     ---wcp-button-border-color: var(---wcp-button-#{$color-scheme}-active-border-color);
@@ -55,6 +62,7 @@
 
 :host {
   display: inline-block;
+  max-width: 100%;
   width: fit-content;
 }
 
@@ -117,8 +125,8 @@
     }
   }
 
-  :host([kind='icon']:not(:disabled):active) &,
-  :host([kind='icon']:not(:disabled).active) & {
+  :host([kind='icon']:enabled:active) &,
+  :host([kind='icon']:enabled.active) & {
     &::before {
       opacity: 0.3;
     }

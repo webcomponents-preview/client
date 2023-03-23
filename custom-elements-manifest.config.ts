@@ -9,7 +9,7 @@ import { customElementGroupingPlugin } from '@webcomponents-preview/cem-plugin-g
 export default {
   packagejson: true,
   litelement: true,
-  globs: ['src/components/**/*.component.ts'],
+  globs: ['src/components/**/*.{component,plugin}.ts'],
   exclude: ['**/legacy.component.ts'],
   outdir: 'dist',
   plugins: [
@@ -19,8 +19,8 @@ export default {
       transformer: 'cem',
       transformerOptions: {
         headingOffset: -1,
-        omitDeclarations: ['exports'],
-        omitSections: ['main-heading', 'super-class', 'static-fields', 'static-methods'],
+        omitDeclarations: ['exports', 'mixins'],
+        omitSections: ['main-heading', 'mixins', 'super-class', 'static-fields', 'static-methods'],
         private: 'hidden',
       },
       outputPath(path) {

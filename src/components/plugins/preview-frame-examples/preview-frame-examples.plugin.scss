@@ -1,0 +1,10 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-preview-frame-examples-spacing: var(--wcp-preview-frame-examples-spacing, #{utils.size(3)});
+}
+
+section ~ section {
+  margin-top: var(---wcp-preview-frame-examples-spacing);
+}

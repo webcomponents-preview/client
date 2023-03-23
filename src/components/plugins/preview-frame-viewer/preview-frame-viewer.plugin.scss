@@ -1,0 +1,43 @@
+@use '@/styles/utils' as utils;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+fieldset {
+  min-width: 0;
+}
+
+wcp-preview-frame-viewer {
+  &-stage {
+    flex: 1 1 auto;
+  }
+
+  &-controls {
+    flex: 0 0 auto;
+  }
+}
+
+wcp-input {
+  display: block;
+  margin: utils.size(1) 0;
+  width: 100%;
+
+  .label:has(~ input, ~ select) {
+    display: block;
+    margin-bottom: utils.size(0.5);
+  }
+
+  &:not(:last-child) {
+    padding-bottom: utils.size(1);
+    border-bottom: 1px solid currentColor;
+  }
+
+  .description {
+    display: block;
+    margin-top: utils.size(0.5);
+    max-width: 500px;
+  }
+}

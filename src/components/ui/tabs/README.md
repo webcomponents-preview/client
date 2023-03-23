@@ -1,18 +1,11 @@
 # class: `Tabs`
 
-## Mixins
-
-| Name             | Module | Package                    |
-| ---------------- | ------ | -------------------------- |
-| `ColorSchemable` |        | @/utils/color-scheme.utils |
-
 ## Fields
 
 | Name        | Privacy | Type                     | Default | Description | Inherited From |
 | ----------- | ------- | ------------------------ | ------- | ----------- | -------------- |
 | `tabFocus`  |         | `number`                 | `0`     |             |                |
 | `tabRoles`  |         | `HTMLElement[]`          |         |             |                |
-| `code`      |         | `string`                 | `''`    |             |                |
 | `tabs`      |         | `Record<string, string>` | `{}`    |             |                |
 | `activeTab` |         | `string \| undefined`    |         |             |                |
 

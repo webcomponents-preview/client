@@ -57,7 +57,7 @@ const options: BuildOptions = {
   plugins: [
     sassPlugin({
       type: 'css-text',
-      filter: /\.component\.scss$/,
+      filter: /\.(component|plugin)\.scss$/,
       importMapper,
       transform,
     }),
@@ -65,6 +65,10 @@ const options: BuildOptions = {
       type: 'css',
       importMapper,
       transform,
+    }),
+    copyPlugin({
+      src: 'src/config.json',
+      dest: 'dist/config.json',
     }),
     copyPlugin({
       src: 'src/assets',

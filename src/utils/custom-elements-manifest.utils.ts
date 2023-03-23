@@ -5,12 +5,17 @@ export type CustomElementDeclarationWithGroups = CustomElementDeclaration & { gr
 export type CustomElementDeclarationWithReadme = CustomElementDeclaration & { readme: string };
 export type CustomElementDeclarationWithTagName = CustomElementDeclaration & { tagName: string[] };
 
-export function isCustomElementDeclaration(declaration?: Declaration): declaration is CustomElementDeclaration {
-  return declaration !== undefined && 'customElement' in declaration;
+export function isCustomElementDeclarationWithTagName(
+  declaration?: Declaration
+): declaration is CustomElementDeclarationWithTagName {
+  return declaration !== undefined && 'customElement' in declaration && 'tagName' in declaration;
 }
 
-export function getCustomElements(manifest: Manifest): CustomElementDeclaration[] {
-  return manifest.modules.flatMap((module) => module.declarations).filter(isCustomElementDeclaration);
+export function getCustomElements(manifest: Manifest, exclude: string[] = []): CustomElementDeclaration[] {
+  return manifest.modules
+    .flatMap((module) => module.declarations)
+    .filter(isCustomElementDeclarationWithTagName)
+    .filter((element) => !exclude.includes(element.tagName));
 }
 
 export function groupCustomElements(

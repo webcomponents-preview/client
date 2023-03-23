@@ -1,32 +1,25 @@
 # class: `PreviewFrame`
 
-## Mixins
-
-| Name             | Module | Package                    |
-| ---------------- | ------ | -------------------------- |
-| `ColorSchemable` |        | @/utils/color-scheme.utils |
-
 ## Fields
 
-| Name            | Privacy | Type                                    | Default | Description | Inherited From |
-| --------------- | ------- | --------------------------------------- | ------- | ----------- | -------------- |
-| `preview`       |         | `string`                                | `''`    |             |                |
-| `examples`      |         | `string[]`                              | `[]`    |             |                |
-| `activeElement` |         | `CustomElementDeclaration \| undefined` |         |             |                |
+| Name                | Privacy | Type                                       | Default | Description | Inherited From |
+| ------------------- | ------- | ------------------------------------------ | ------- | ----------- | -------------- |
+| `initialPreviewTab` |         | `Config['initialPreviewTab'] \| undefined` |         |             |                |
 
 ## Methods
 
-| Name             | Privacy   | Description | Parameters                                      | Return           | Inherited From |
-| ---------------- | --------- | ----------- | ----------------------------------------------- | ---------------- | -------------- |
-| `renderExamples` | protected |             | `element: CustomElementDeclarationWithExamples` | `TemplateResult` |                |
-| `renderReadme`   | protected |             | `element: CustomElementDeclarationWithReadme`   | `TemplateResult` |                |
-| `render`         | protected |             |                                                 | `TemplateResult` |                |
+| Name               | Privacy   | Description | Parameters     | Return                                           | Inherited From |
+| ------------------ | --------- | ----------- | -------------- | ------------------------------------------------ | -------------- |
+| `handleSlotChange` | protected |             | `event: Event` |                                                  |                |
+| `getAvailableTabs` | protected |             |                | `HTMLElementTagNameMap['wcp-tabs']['tabs']`      |                |
+| `getActiveTab`     | protected |             |                | `HTMLElementTagNameMap['wcp-tabs']['activeTab']` |                |
+| `render`           | protected |             |                | `TemplateResult`                                 |                |
 
 ## Attributes
 
-| Name            | Field         | Inherited From |
-| --------------- | ------------- | -------------- |
-| `activeElement` | activeElement |                |
+| Name                  | Field             | Inherited From |
+| --------------------- | ----------------- | -------------- |
+| `initial-preview-tab` | initialPreviewTab |                |
 
 ## CSS Properties
 
