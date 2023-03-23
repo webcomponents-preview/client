@@ -22,37 +22,32 @@ export declare class Root extends Root_base {
     #private;
     static readonly styles: import("lit").CSSResult;
     elements: CustomElementDeclaration[];
-    navigation: Record<string, CustomElementDeclaration[]>;
-    set title(title: string);
-    get title(): string;
+    activeElementDeclaration?: CustomElementDeclaration;
+    initialPreviewTab?: string;
+    navigation?: Record<string, CustomElementDeclaration[]>;
+    /**
+     * Sets the currently active element by its tag name. Will be updated at runtime and can
+     * be preset with an initial value to define the active element at startup.
+     */
+    set activeElement(activeElement: string | undefined);
+    get activeElement(): string | undefined;
     /**
      * Flags the component to be displayed inline and not standalone. Requires the surrounding
      * layout to provide the necessary styles like for any other block element.
      */
     inline: boolean;
     /**
-     * Allows to set a fallback group name for elements that do not have a `groups` property.
-     * So this is the name of the group that will contain all elements unless the manifest is
-     * generated with the optional `@webcomponents-preview/cem-plugin-grouping` plugin.
-     */
-    fallbackGroupName: string;
-    /**
-     * Sets the currently active element by its tag name. Will be updated at runtime and can
-     * be preset with an initial value to define the active element at startup.
-     */
-    activeElement?: string;
-    /**
      * Allows to set a url to load a config file from.
      */
-    configUrl?: string;
+    set configUrl(configUrl: string);
     /**
      * Defines the location of the custom element manifest file.
      */
-    set manifestUrl(manifestUrl: string | undefined);
-    get manifestUrl(): string | undefined;
-    loadCustomElementsManifest(): Promise<void>;
+    set manifestUrl(manifestUrl: string);
+    loadConfig(configUrl: string): Promise<void>;
+    loadCustomElementsManifest(manifestUrl: string): Promise<void>;
     selectFallbackElement(): Promise<void>;
-    getActiveElementDeclaration(): CustomElementDeclaration | undefined;
+    retrieveActiveElementDeclaration(): Promise<void>;
     emitManifestLoaded(): void;
     emitActiveElementChanged(): void;
     handleHashChange: () => void;

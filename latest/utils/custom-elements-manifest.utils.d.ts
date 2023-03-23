@@ -11,8 +11,8 @@ export type CustomElementDeclarationWithReadme = CustomElementDeclaration & {
 export type CustomElementDeclarationWithTagName = CustomElementDeclaration & {
     tagName: string[];
 };
-export declare function isCustomElementDeclaration(declaration?: Declaration): declaration is CustomElementDeclaration;
-export declare function getCustomElements(manifest: Manifest): CustomElementDeclaration[];
+export declare function isCustomElementDeclarationWithTagName(declaration?: Declaration): declaration is CustomElementDeclarationWithTagName;
+export declare function getCustomElements(manifest: Manifest, exclude?: string[]): CustomElementDeclaration[];
 export declare function groupCustomElements(elements: CustomElementDeclaration[], fallbackGroupName: string): Record<string, CustomElementDeclaration[]>;
 export declare function hasExamples(declaration?: CustomElementDeclaration): declaration is CustomElementDeclarationWithExamples;
 export declare function hasGroups(declaration?: CustomElementDeclaration): declaration is CustomElementDeclarationWithGroups;
