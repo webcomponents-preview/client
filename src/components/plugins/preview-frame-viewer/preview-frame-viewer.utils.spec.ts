@@ -87,6 +87,7 @@ describe('preview-frame-viewer.utils', () => {
 
     it('flags (simple) array type', () => {
       expect(cef({}).isObject).toBeFalsy();
+      expect(cefType('string[]').isString).toBeFalsy();
       expect(cefType('string[]').isArray).toBeTruthy();
       expect(cefType('string[] | undefined').isArray).toBeTruthy();
       expect(cefType('ReadonlyArray<null> | undefined').isArray).toBeFalsy();
@@ -94,6 +95,7 @@ describe('preview-frame-viewer.utils', () => {
 
     it('flags object type', () => {
       expect(cef({}).isObject).toBeFalsy();
+      expect(cefType('object').isArray).toBeFalsy();
       expect(cefType('object').isObject).toBeTruthy();
       expect(cefType('object | undefined').isObject).toBeTruthy();
       expect(cefType('Record<null, null>').isObject).toBeTruthy();
