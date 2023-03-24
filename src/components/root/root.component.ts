@@ -36,6 +36,7 @@ export class Root extends ColorSchemable(LitElement) {
   #activeElement?: string;
   #title = 'WCP';
 
+  @state()
   manifest?: Manifest;
 
   @state()
