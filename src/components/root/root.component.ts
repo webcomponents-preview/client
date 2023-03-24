@@ -8,12 +8,8 @@ import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/utils/color-scheme.utils';
 import { getConfig } from '@/utils/config.utils';
-import {
-  getCustomElements,
-  getNiceName,
-  getNiceUrl,
-  groupCustomElements,
-} from '@/utils/custom-elements-manifest.utils';
+import type { Element, Manifest } from '@/utils/parser.types';
+import { parseCEM } from '@/parsers/cem/parse';
 
 import logo from '@/assets/icons/logo.svg';
 import styles from './root.component.scss';
@@ -41,16 +37,13 @@ export class Root extends ColorSchemable(LitElement) {
   #title = 'WCP';
 
   @state()
-  elements: CustomElementDeclaration[] = [];
-
-  @state()
-  activeElementDeclaration?: CustomElementDeclaration;
+  manifest?: Manifest;
 
   @state()
   initialPreviewTab?: string;
 
   @state()
-  navigation?: Record<string, CustomElementDeclaration[]>;
+  navigation?: Map<string, Element[]>;
 
   /**
    * Sets the currently active element by its tag name. Will be updated at runtime and can
@@ -59,7 +52,6 @@ export class Root extends ColorSchemable(LitElement) {
   @property({ type: String, reflect: true, attribute: 'active-element' })
   set activeElement(activeElement: string | undefined) {
     this.#activeElement = activeElement;
-    this.retrieveActiveElementDeclaration();
     this.emitActiveElementChanged();
   }
   get activeElement(): string | undefined {
@@ -116,12 +108,8 @@ export class Root extends ColorSchemable(LitElement) {
     const manifest = await response.json();
 
     // store the elements and derive navigation
-    this.elements = getCustomElements(manifest, config?.excludeElements);
-    this.navigation = groupCustomElements(this.elements, config?.fallbackGroupName ?? 'Components');
-    this.activeElementDeclaration = this.elements.find((element) => element.tagName === this.activeElement);
-
-    // update the declaration if we have an active element
-    this.retrieveActiveElementDeclaration();
+    this.manifest = parseCEM(manifest, config?.excludeElements);
+    this.navigation = this.manifest.getGroupedElements(config?.fallbackGroupName ?? 'Components');
 
     // make sure we have a at least the first element active
     this.selectFallbackElement();
@@ -132,15 +120,11 @@ export class Root extends ColorSchemable(LitElement) {
 
   async selectFallbackElement() {
     // do we already have an active element? do we have any elements at all?
-    if (this.activeElement !== undefined || this.elements.length < 1) return;
+    if (this.activeElement !== undefined || !this.manifest?.elements.size) return;
 
     // wait for the element to be loaded and then start navigating
     await this.updateComplete;
-    location.href = `#/${getNiceUrl(this.elements[0])}`;
-  }
-
-  async retrieveActiveElementDeclaration() {
-    this.activeElementDeclaration = this.elements.find((element) => element.tagName === this.activeElement);
+    location.href = `#/${this.manifest?.elements.values().next().value.getNiceUrl()}`;
   }
 
   emitManifestLoaded() {
@@ -148,7 +132,7 @@ export class Root extends ColorSchemable(LitElement) {
       bubbles: true,
       cancelable: true,
       composed: true,
-      detail: this.elements,
+      detail: this.manifest?.elements,
     });
     this.dispatchEvent(event);
   }
@@ -158,7 +142,7 @@ export class Root extends ColorSchemable(LitElement) {
       bubbles: true,
       cancelable: true,
       composed: true,
-      detail: this.activeElementDeclaration,
+      detail: this.manifest?.elements.get(this.activeElement ?? ''),
     });
     this.dispatchEvent(event);
   }
@@ -198,18 +182,17 @@ export class Root extends ColorSchemable(LitElement) {
           this.navigation !== undefined,
           () => html`
             ${map(
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              Object.keys(this.navigation!),
-              (group) => html`
+              this.navigation?.entries(),
+              ([group, elements]) => html`
                 <wcp-navigation slot="aside" headline="${group}">
                   ${map(
-                    this.navigation?.[group],
+                    elements,
                     (element) => html`
                       <wcp-navigation-item
                         ?active="${element.tagName === this.activeElement}"
-                        href="#/${getNiceUrl(element)}"
+                        href="#/${element.getNiceUrl()}"
                       >
-                        ${getNiceName(element)}
+                        ${element.getNiceName()}
                       </wcp-navigation-item>
                     `
                   )}
@@ -225,9 +208,15 @@ export class Root extends ColorSchemable(LitElement) {
         </wcp-preview-controls>
         <slot name="preview-frame">
           <wcp-preview-frame initial-preview-tab="${ifDefined(this.initialPreviewTab)}">
-            <wcp-preview-frame-examples .element="${this.activeElementDeclaration}"></wcp-preview-frame-examples>
-            <wcp-preview-frame-readme .element="${this.activeElementDeclaration}"></wcp-preview-frame-readme>
-            <wcp-preview-frame-viewer .element="${this.activeElementDeclaration}"></wcp-preview-frame-viewer>
+            <wcp-preview-frame-examples
+              .element="${this.manifest?.elements.get(this.activeElement ?? '')}"
+            ></wcp-preview-frame-examples>
+            <wcp-preview-frame-readme
+              .element="${this.manifest?.elements.get(this.activeElement ?? '')}"
+            ></wcp-preview-frame-readme>
+            <wcp-preview-frame-viewer
+              .element="${this.manifest?.elements.get(this.activeElement ?? '')}"
+            ></wcp-preview-frame-viewer>
           </wcp-preview-frame>
         </slot>
       </wcp-layout>

@@ -2,10 +2,11 @@ import { LitElement, type TemplateResult, html, unsafeCSS, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
-import type { PreviewFramePlugin } from '@/components/feature/preview-frame/preview-frame.utils';
+import type * as Parsed from '@/utils/parser.types';
 import { ColorSchemable } from '@/utils/color-scheme.utils';
-import { type CustomElementDeclarationWithReadme, hasReadme } from '@/utils/custom-elements-manifest.utils';
 import { renderMarkdown } from '@/utils/markdown.utils';
+
+import type { PreviewFramePlugin } from '@/components/feature/preview-frame/preview-frame.utils';
 
 import styles from './preview-frame-readme.plugin.scss';
 
@@ -17,14 +18,11 @@ import styles from './preview-frame-readme.plugin.scss';
  * @cssprop --wcp-preview-frame-readme-light-highlight-background - Background color of highlighted table rows in light mode.
  */
 @customElement('wcp-preview-frame-readme')
-export class PreviewFrameReadme
-  extends ColorSchemable(LitElement)
-  implements PreviewFramePlugin<CustomElementDeclarationWithReadme>
-{
+export class PreviewFrameReadme extends ColorSchemable(LitElement) implements PreviewFramePlugin {
   static readonly styles = unsafeCSS(styles);
 
   @property({ type: Object })
-  element?: CustomElementDeclarationWithReadme;
+  element?: Parsed.Element;
 
   @property({ type: String, reflect: true })
   readonly name = 'readme';
@@ -34,7 +32,7 @@ export class PreviewFrameReadme
 
   @property({ type: Boolean, reflect: true })
   get available(): boolean {
-    return hasReadme(this.element);
+    return this.element?.hasReadme ?? false;
   }
 
   // disable ShadowDOM
@@ -51,7 +49,7 @@ export class PreviewFrameReadme
   // without ShadowDOM, we need to manually inject the styles
   protected render(): TemplateResult {
     return html`
-      ${hasReadme(this.element) ? unsafeHTML(renderMarkdown(this.element.readme)) : nothing}
+      ${this.element?.hasReadme ? unsafeHTML(renderMarkdown(this.element?.readme ?? '')) : nothing}
       <style>
         ${PreviewFrameReadme.styles}
       </style>

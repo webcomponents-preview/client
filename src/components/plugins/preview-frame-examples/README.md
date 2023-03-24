@@ -2,12 +2,12 @@
 
 ## Fields
 
-| Name        | Privacy | Type                                                | Default      | Description | Inherited From |
-| ----------- | ------- | --------------------------------------------------- | ------------ | ----------- | -------------- |
-| `element`   |         | `CustomElementDeclarationWithExamples \| undefined` |              |             |                |
-| `name`      |         | `string`                                            | `'examples'` |             |                |
-| `label`     |         | `string`                                            | `'Examples'` |             |                |
-| `available` |         | `boolean`                                           |              |             |                |
+| Name        | Privacy | Type                          | Default      | Description | Inherited From |
+| ----------- | ------- | ----------------------------- | ------------ | ----------- | -------------- |
+| `element`   |         | `Parsed.Element \| undefined` |              |             |                |
+| `name`      |         | `string`                      | `'examples'` |             |                |
+| `label`     |         | `string`                      | `'Examples'` |             |                |
+| `available` |         | `boolean`                     |              |             |                |
 
 ## Methods
 

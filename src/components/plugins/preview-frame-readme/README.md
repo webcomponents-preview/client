@@ -2,12 +2,12 @@
 
 ## Fields
 
-| Name        | Privacy | Type                                              | Default    | Description | Inherited From |
-| ----------- | ------- | ------------------------------------------------- | ---------- | ----------- | -------------- |
-| `element`   |         | `CustomElementDeclarationWithReadme \| undefined` |            |             |                |
-| `name`      |         | `string`                                          | `'readme'` |             |                |
-| `label`     |         | `string`                                          | `'Readme'` |             |                |
-| `available` |         | `boolean`                                         |            |             |                |
+| Name        | Privacy | Type                          | Default    | Description | Inherited From |
+| ----------- | ------- | ----------------------------- | ---------- | ----------- | -------------- |
+| `element`   |         | `Parsed.Element \| undefined` |            |             |                |
+| `name`      |         | `string`                      | `'readme'` |             |                |
+| `label`     |         | `string`                      | `'Readme'` |             |                |
+| `available` |         | `boolean`                     |            |             |                |
 
 ## Methods
 
