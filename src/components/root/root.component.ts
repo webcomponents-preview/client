@@ -36,7 +36,6 @@ export class Root extends ColorSchemable(LitElement) {
   #activeElement?: string;
   #title = 'WCP';
 
-  @state()
   manifest?: Manifest;
 
   @state()
@@ -152,6 +151,7 @@ export class Root extends ColorSchemable(LitElement) {
   handleHashChange = (() => {
     const [, activeElement] = window.location.hash.split('#/');
     this.activeElement = activeElement;
+    this.requestUpdate();
   }).bind(this);
 
   override connectedCallback() {
