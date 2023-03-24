@@ -51,7 +51,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   }
 
   protected getAvailableTabs(): HTMLElementTagNameMap['wcp-tabs']['tabs'] {
-    return this._tabs.reduce((tabs, { name, label }) => ({ ...tabs, [name]: label }), {});
+    return this._tabs.reduce((tabs, { name, label }) => ({ ...tabs, [name]: { label } }), {});
   }
 
   protected getActiveTab(): HTMLElementTagNameMap['wcp-tabs']['activeTab'] {
