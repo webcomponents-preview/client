@@ -8,12 +8,14 @@
 
 ## Methods
 
-| Name               | Privacy   | Description | Parameters     | Return                                           | Inherited From |
-| ------------------ | --------- | ----------- | -------------- | ------------------------------------------------ | -------------- |
-| `handleSlotChange` | protected |             | `event: Event` |                                                  |                |
-| `getAvailableTabs` | protected |             |                | `HTMLElementTagNameMap['wcp-tabs']['tabs']`      |                |
-| `getActiveTab`     | protected |             |                | `HTMLElementTagNameMap['wcp-tabs']['activeTab']` |                |
-| `render`           | protected |             |                | `TemplateResult`                                 |                |
+| Name                       | Privacy   | Description | Parameters                                   | Return           | Inherited From |
+| -------------------------- | --------- | ----------- | -------------------------------------------- | ---------------- | -------------- |
+| `handleSlotChange`         | protected |             | `event: Event`                               |                  |                |
+| `handleAvailabilityChange` | protected |             |                                              |                  |                |
+| `handleActiveTabChange`    | protected |             | `{ detail: activeTab }: CustomEvent<string>` |                  |                |
+| `preparePluginTabs`        | protected |             |                                              |                  |                |
+| `alignActiveTab`           | protected |             |                                              |                  |                |
+| `render`                   | protected |             |                                              | `TemplateResult` |                |
 
 ## Attributes
 

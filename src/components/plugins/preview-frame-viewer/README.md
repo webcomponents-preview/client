@@ -5,9 +5,9 @@
 | Name        | Privacy | Type      | Default    | Description | Inherited From |
 | ----------- | ------- | --------- | ---------- | ----------- | -------------- |
 | `element`   |         |           |            |             |                |
+| `available` |         | `boolean` | `true`     |             |                |
 | `name`      |         | `string`  | `'viewer'` |             |                |
 | `label`     |         | `string`  | `'Viewer'` |             |                |
-| `available` |         | `boolean` | `true`     |             |                |
 
 ## Methods
 
@@ -26,8 +26,8 @@
 | Name        | Field     | Inherited From |
 | ----------- | --------- | -------------- |
 | `element`   | element   |                |
+| `available` | available |                |
 | `name`      | name      |                |
 | `label`     | label     |                |
-| `available` | available |                |
 
 <hr/>

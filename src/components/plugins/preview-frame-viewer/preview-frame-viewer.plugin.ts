@@ -23,23 +23,23 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
 
   #element?: Parsed.Element;
 
+  @state()
+  private _elementData?: ElementData;
+
   @property({ type: Object })
   set element(element: Parsed.Element | undefined) {
     this.#element = element;
-    this.elementData = element ? prepareInitialData(element) : undefined;
+    this._elementData = element ? prepareInitialData(element) : undefined;
   }
+
+  @property({ type: Boolean, reflect: true, state: true })
+  readonly available = true;
 
   @property({ type: String, reflect: true })
   readonly name = 'viewer';
 
   @property({ type: String, reflect: true })
   readonly label = 'Viewer';
-
-  @property({ type: Boolean, reflect: true })
-  readonly available = true;
-
-  @state()
-  private elementData?: ElementData;
 
   protected getElementReference(): Element | undefined {
     if (this.#element === undefined) return undefined;
@@ -50,13 +50,13 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
   protected handleControlsInput(event: InputEvent) {
     if (this.#element === undefined) return;
     const form = event.currentTarget as HTMLFormElement;
-    this.elementData = mapFormData(form, this.#element);
+    this._elementData = mapFormData(form, this.#element);
   }
 
   protected renderSlots(): TemplateResult {
     return html`
       ${map(
-        Object.entries(this.elementData?.slots ?? {}),
+        Object.entries(this._elementData?.slots ?? {}),
         ([name, content]) => withStatic(html)`
           ${when(
             name === '',
@@ -82,7 +82,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
                   autocomplete="off"
                   type="checkbox"
                   name="fields.${field.name}"
-                  ?checked="${this.elementData?.fields[field.name]}"
+                  ?checked="${this._elementData?.fields[field.name]}"
                 />
                 <span class="label">${field.name}</span>
                 ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
@@ -100,7 +100,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
                 autocomplete="off"
                 type="text"
                 name="fields.${field.name}"
-                .value="${this.elementData?.fields[field.name] ?? null}"
+                .value="${this._elementData?.fields[field.name] ?? null}"
               />
               ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
             </label>
@@ -117,7 +117,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
                 autocomplete="off"
                 type="number"
                 name="fields.${field.name}"
-                .value="${this.elementData?.fields[field.name] ?? null}"
+                .value="${this._elementData?.fields[field.name] ?? null}"
               />
               ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
             </label>
@@ -134,7 +134,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
                 ${map(
                   field.enumValues,
                   (option) => html`
-                    <option .value="${option}" ?selected="${this.elementData?.fields[field.name] === option}">
+                    <option .value="${option}" ?selected="${this._elementData?.fields[field.name] === option}">
                       ${option}
                     </option>
                   `
@@ -157,7 +157,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
             autocomplete="off"
             type="text"
             name="slots.${slot.name}"
-            .value="${this.elementData?.slots[slot.name]}"
+            .value="${this._elementData?.slots[slot.name]}"
           />
           ${when(slot.hasDescription, () => html`<span class="description">${slot.description}</span>`)}
         </label>
@@ -169,7 +169,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
     if (this.#element === undefined) return html`${nothing}`;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const tag = unsafeStatic(this.#element.tagName!);
-    return withStatic(html)`<${tag} ${spread(this.elementData?.fields ?? {})}>${this.renderSlots()}</${tag}>`;
+    return withStatic(html)`<${tag} ${spread(this._elementData?.fields ?? {})}>${this.renderSlots()}</${tag}>`;
   }
 
   protected render(): TemplateResult {

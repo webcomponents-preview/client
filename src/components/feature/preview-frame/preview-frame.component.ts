@@ -33,7 +33,13 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   @state()
-  private _tabs: PreviewFramePlugin[] = [];
+  private _plugins: PreviewFramePlugin[] = [];
+
+  @state()
+  private _tabs: HTMLElementTagNameMap['wcp-tabs']['tabs'] = {};
+
+  @state()
+  private _activeTab?: HTMLElementTagNameMap['wcp-tabs']['activeTab'];
 
   @property({ type: String, reflect: true, attribute: 'initial-preview-tab' })
   initialPreviewTab?: Config['initialPreviewTab'];
@@ -41,33 +47,77 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   @eventOptions({ passive: true })
   protected handleSlotChange(event: Event) {
     const slot = event.target as HTMLSlotElement;
-    const tabs = findAllPlugins(slot);
+    const plugins = findAllPlugins(slot);
+
     // once the plugins are slotted into their respective targets, the slot
     // change listener may be called again with an empty result set
-    if (tabs.length > 0) {
-      this._tabs = tabs;
-      this._tabs.forEach((tab) => tab.setAttribute('slot', tab.name));
+    if (plugins.length > 0) {
+      this._plugins = plugins;
+      this._plugins.forEach((tab) => tab.setAttribute('slot', tab.name));
+
+      this.preparePluginTabs();
+      this.alignActiveTab();
     }
   }
 
-  protected getAvailableTabs(): HTMLElementTagNameMap['wcp-tabs']['tabs'] {
-    return this._tabs.reduce((tabs, { name, label }) => ({ ...tabs, [name]: { label } }), {});
+  @eventOptions({ passive: true })
+  protected handleAvailabilityChange() {
+    // this event has been triggered by a plugin changing its availability
+    // state, therefore we need to re-evaluate the tabs
+    this.preparePluginTabs();
+    this.alignActiveTab();
   }
 
-  protected getActiveTab(): HTMLElementTagNameMap['wcp-tabs']['activeTab'] {
-    if (this.initialPreviewTab && this._tabs.some(({ name }) => name === this.initialPreviewTab)) {
-      return this.initialPreviewTab;
+  @eventOptions({ passive: true })
+  protected handleActiveTabChange({ detail: activeTab }: CustomEvent<string>) {
+    if (this._activeTab !== activeTab) {
+      this._activeTab = activeTab;
     }
-    return this._tabs[0].name;
+  }
+
+  protected preparePluginTabs() {
+    this._tabs = this._plugins.reduce(
+      (tabs, { available, label, name }) => ({ ...tabs, [name]: { label, disabled: !available } }),
+      {}
+    );
+  }
+
+  protected alignActiveTab() {
+    // either the active tab is not set...
+    if (this._activeTab === undefined) {
+      // ... then we try to set the configured intial one...
+      if (
+        this.initialPreviewTab &&
+        this._plugins.some(({ available, name }) => available && name === this.initialPreviewTab)
+      ) {
+        this._activeTab = this.initialPreviewTab;
+        return;
+      }
+      // ... or the first available one...
+      else if (this._plugins.length > 0) {
+        this._activeTab = this._plugins.filter(({ available }) => available)?.[0]?.name;
+        return;
+      }
+    }
+    // ... or the active tab is not available anymore...
+    else if (!this._plugins.find(({ name }) => name === this._activeTab)?.available) {
+      // ... then we need to set the first available tab
+      this._activeTab = this._plugins.find(({ available }) => available)?.name;
+    }
   }
 
   protected render(): TemplateResult {
     return html`
       ${when(
-        this._tabs.length > 0,
+        this._plugins.length > 0,
         () => html`
-          <wcp-tabs .tabs="${this.getAvailableTabs()}" active-tab="${this.getActiveTab()}">
-            ${map(this._tabs, ({ name }) => html`<slot name="${name}" slot="${name}"></slot>`)}
+          <wcp-tabs
+            .tabs="${this._tabs}"
+            active-tab="${this._activeTab}"
+            @wcp-tabs:active-tab-change="${this.handleActiveTabChange}"
+            @wcp-preview-plugin:availability-change="${this.handleAvailabilityChange}"
+          >
+            ${map(this._plugins, ({ name }) => html`<slot name="${name}" slot="${name}"></slot>`)}
           </wcp-tabs>
         `
       )}

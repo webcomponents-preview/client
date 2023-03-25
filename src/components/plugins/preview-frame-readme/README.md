@@ -2,12 +2,12 @@
 
 ## Fields
 
-| Name        | Privacy | Type                          | Default    | Description | Inherited From |
-| ----------- | ------- | ----------------------------- | ---------- | ----------- | -------------- |
-| `element`   |         | `Parsed.Element \| undefined` |            |             |                |
-| `name`      |         | `string`                      | `'readme'` |             |                |
-| `label`     |         | `string`                      | `'Readme'` |             |                |
-| `available` |         | `boolean`                     |            |             |                |
+| Name        | Privacy | Type      | Default    | Description | Inherited From |
+| ----------- | ------- | --------- | ---------- | ----------- | -------------- |
+| `available` |         | `boolean` | `false`    |             |                |
+| `element`   |         |           |            |             |                |
+| `name`      |         | `string`  | `'readme'` |             |                |
+| `label`     |         | `string`  | `'Readme'` |             |                |
 
 ## Methods
 
@@ -21,10 +21,10 @@
 
 | Name        | Field     | Inherited From |
 | ----------- | --------- | -------------- |
+| `available` | available |                |
 | `element`   | element   |                |
 | `name`      | name      |                |
 | `label`     | label     |                |
-| `available` | available |                |
 
 ## CSS Properties
 

@@ -1,5 +1,5 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
@@ -20,8 +20,30 @@ import styles from './preview-frame-examples.plugin.scss';
 export class PreviewFrameExamples extends ColorSchemable(LitElement) implements PreviewFramePlugin {
   static readonly styles = unsafeCSS(styles);
 
+  @state()
+  private _element?: Parsed.Element;
+
+  @property({ type: Boolean, reflect: true, state: true })
+  available = false;
+
   @property({ type: Object })
-  element?: Parsed.Element;
+  set element(element: Parsed.Element | undefined) {
+    this._element = element;
+    const available = this._element?.hasExamples ?? false;
+
+    // update the property if changed
+    if (this.available !== available) {
+      this.available = available;
+
+      // notify about availability change
+      const event = new CustomEvent('wcp-preview-plugin:availability-change', {
+        detail: this.available,
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(event);
+    }
+  }
 
   @property({ type: String, reflect: true })
   readonly name = 'examples';
@@ -29,15 +51,10 @@ export class PreviewFrameExamples extends ColorSchemable(LitElement) implements 
   @property({ type: String, reflect: true })
   readonly label = 'Examples';
 
-  @property({ type: Boolean, reflect: true })
-  get available(): boolean {
-    return this.element?.hasExamples ?? false;
-  }
-
   protected render(): TemplateResult {
     return html`
       ${map(
-        this.element?.examples ?? [],
+        this._element?.examples ?? [],
         (example: string) => html`<section>${unsafeHTML(renderMarkdown(example))}</section>`
       )}
     `;
@@ -45,6 +62,9 @@ export class PreviewFrameExamples extends ColorSchemable(LitElement) implements 
 }
 
 declare global {
+  interface HTMLElementEventMap {
+    'wcp-preview-plugin:availability-change': CustomEvent<boolean>;
+  }
   interface HTMLElementTagNameMap {
     'wcp-preview-frame-examples': PreviewFrameExamples;
   }
