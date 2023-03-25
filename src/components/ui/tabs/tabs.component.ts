@@ -26,7 +26,7 @@ import styles from './tabs.component.scss';
  * ```
  *
  * @slot tab name - The content of the named tab.
- * @emits wcp-tabs:active-tab-changed - Notifies when the active tab changes
+ * @emits wcp-tabs:active-tab-change - Notifies when the active tab changes
  *
  * @cssprop --wcp-tabs-tablist-gap - The gap between the tablist and the tabpanels
  * @cssprop --wcp-tabs-tablist-spacing - The inner padding of the tablist
@@ -56,8 +56,8 @@ export class Tabs extends ColorSchemable(LitElement) {
   activeTab?: string;
 
   emitActiveTabChange() {
-    const event = new CustomEvent('wcp-tabs:active-tab-changed', {
-      detail: { activeTab: this.activeTab },
+    const event = new CustomEvent('wcp-tabs:active-tab-change', {
+      detail: this.activeTab,
       bubbles: true,
       cancelable: true,
       composed: true,
@@ -68,7 +68,11 @@ export class Tabs extends ColorSchemable(LitElement) {
   @eventOptions({ passive: true })
   handleTabClick(event: Event) {
     const tab = event.target as HTMLButtonElement;
-    this.activeTab = tab.dataset.name as typeof this.activeTab;
+    const activeTab = tab.dataset.name as typeof this.activeTab;
+    if (this.activeTab !== activeTab) {
+      this.activeTab = activeTab;
+      this.emitActiveTabChange();
+    }
   }
 
   @eventOptions({ passive: true })
@@ -140,7 +144,7 @@ export class Tabs extends ColorSchemable(LitElement) {
 
 declare global {
   interface HTMLElementEventMap {
-    'wcp-tabs:active-tab-changed': CustomEvent<{ activeTab?: string }>;
+    'wcp-tabs:active-tab-change': CustomEvent<string>;
   }
   interface HTMLElementTagNameMap {
     'wcp-tabs': Tabs;
