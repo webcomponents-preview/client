@@ -66,17 +66,9 @@
             },
             {
               "kind": "field",
-              "name": "elements",
+              "name": "manifest",
               "type": {
-                "text": "CustomElementDeclaration[]"
-              },
-              "default": "[]"
-            },
-            {
-              "kind": "field",
-              "name": "activeElementDeclaration",
-              "type": {
-                "text": "CustomElementDeclaration | undefined"
+                "text": "Manifest | undefined"
               }
             },
             {
@@ -90,7 +82,7 @@
               "kind": "field",
               "name": "navigation",
               "type": {
-                "text": "Record<string, CustomElementDeclaration[]> | undefined"
+                "text": "Map<string, Element[]> | undefined"
               }
             },
             {
@@ -158,10 +150,6 @@
             },
             {
               "kind": "method",
-              "name": "retrieveActiveElementDeclaration"
-            },
-            {
-              "kind": "method",
               "name": "emitManifestLoaded"
             },
             {
@@ -213,7 +201,7 @@
             "package": "lit"
           },
           "examples": [],
-          "readme": "# class: `Root`\n\n## Fields\n\n| Name                       | Privacy | Type                                                      | Default | Description                                                                                                                                                          | Inherited From |\n| -------------------------- | ------- | --------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |\n| `elements`                 |         | `CustomElementDeclaration[]`                              | `[]`    |                                                                                                                                                                      |                |\n| `activeElementDeclaration` |         | `CustomElementDeclaration \\| undefined`                   |         |                                                                                                                                                                      |                |\n| `initialPreviewTab`        |         | `string \\| undefined`                                     |         |                                                                                                                                                                      |                |\n| `navigation`               |         | `Record<string, CustomElementDeclaration[]> \\| undefined` |         |                                                                                                                                                                      |                |\n| `activeElement`            |         | `string \\| undefined`                                     |         | Sets the currently active element by its tag name. Will be updated at runtime and can&#xA;be preset with an initial value to define the active element at startup.   |                |\n| `inline`                   |         | `boolean`                                                 | `false` | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element. |                |\n| `configUrl`                |         |                                                           |         | Allows to set a url to load a config file from.                                                                                                                      |                |\n| `manifestUrl`              |         |                                                           |         | Defines the location of the custom element manifest file.                                                                                                            |                |\n| `handleHashChange`         |         |                                                           |         |                                                                                                                                                                      |                |\n\n## Methods\n\n| Name                               | Privacy   | Description | Parameters            | Return           | Inherited From |\n| ---------------------------------- | --------- | ----------- | --------------------- | ---------------- | -------------- |\n| `loadConfig`                       |           |             | `configUrl: string`   |                  |                |\n| `loadCustomElementsManifest`       |           |             | `manifestUrl: string` |                  |                |\n| `selectFallbackElement`            |           |             |                       |                  |                |\n| `retrieveActiveElementDeclaration` |           |             |                       |                  |                |\n| `emitManifestLoaded`               |           |             |                       |                  |                |\n| `emitActiveElementChanged`         |           |             |                       |                  |                |\n| `connectedCallback`                |           |             |                       |                  |                |\n| `disconnectedCallback`             |           |             |                       |                  |                |\n| `render`                           | protected |             |                       | `TemplateResult` |                |\n\n## Attributes\n\n| Name             | Field         | Inherited From |\n| ---------------- | ------------- | -------------- |\n| `active-element` | activeElement |                |\n| `inline`         | inline        |                |\n| `config-url`     | configUrl     |                |\n| `manifest-url`   | manifestUrl   |                |\n\n## CSS Properties\n\n| Name                          | Default | Description                                                  |\n| ----------------------------- | ------- | ------------------------------------------------------------ |\n| `--wcp-root-dark-background`  |         | The background color of the root element in dark mode        |\n| `--wcp-root-dark-color`       |         | The text color of the text in the root element in dark mode  |\n| `--wcp-root-light-background` |         | The background color of the root element in light mode       |\n| `--wcp-root-light-color`      |         | The text color of the text in the root element in light mode |\n\n## Slots\n\n| Name               | Description                                                |\n| ------------------ | ---------------------------------------------------------- |\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls.         |\n| `preview-frame`    | Used to be override the existing preview pane.             |\n| `preview-details`  | Can be used to inject additional preview detail panes.     |\n\n<hr/>\n",
+          "readme": "# class: `Root`\n\n## Fields\n\n| Name                | Privacy | Type                                  | Default | Description                                                                                                                                                          | Inherited From |\n| ------------------- | ------- | ------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |\n| `manifest`          |         | `Manifest \\| undefined`               |         |                                                                                                                                                                      |                |\n| `initialPreviewTab` |         | `string \\| undefined`                 |         |                                                                                                                                                                      |                |\n| `navigation`        |         | `Map<string, Element[]> \\| undefined` |         |                                                                                                                                                                      |                |\n| `activeElement`     |         | `string \\| undefined`                 |         | Sets the currently active element by its tag name. Will be updated at runtime and can&#xA;be preset with an initial value to define the active element at startup.   |                |\n| `inline`            |         | `boolean`                             | `false` | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element. |                |\n| `configUrl`         |         |                                       |         | Allows to set a url to load a config file from.                                                                                                                      |                |\n| `manifestUrl`       |         |                                       |         | Defines the location of the custom element manifest file.                                                                                                            |                |\n| `handleHashChange`  |         |                                       |         |                                                                                                                                                                      |                |\n\n## Methods\n\n| Name                         | Privacy   | Description | Parameters            | Return           | Inherited From |\n| ---------------------------- | --------- | ----------- | --------------------- | ---------------- | -------------- |\n| `loadConfig`                 |           |             | `configUrl: string`   |                  |                |\n| `loadCustomElementsManifest` |           |             | `manifestUrl: string` |                  |                |\n| `selectFallbackElement`      |           |             |                       |                  |                |\n| `emitManifestLoaded`         |           |             |                       |                  |                |\n| `emitActiveElementChanged`   |           |             |                       |                  |                |\n| `connectedCallback`          |           |             |                       |                  |                |\n| `disconnectedCallback`       |           |             |                       |                  |                |\n| `render`                     | protected |             |                       | `TemplateResult` |                |\n\n## Attributes\n\n| Name             | Field         | Inherited From |\n| ---------------- | ------------- | -------------- |\n| `active-element` | activeElement |                |\n| `inline`         | inline        |                |\n| `config-url`     | configUrl     |                |\n| `manifest-url`   | manifestUrl   |                |\n\n## CSS Properties\n\n| Name                          | Default | Description                                                  |\n| ----------------------------- | ------- | ------------------------------------------------------------ |\n| `--wcp-root-dark-background`  |         | The background color of the root element in dark mode        |\n| `--wcp-root-dark-color`       |         | The text color of the text in the root element in dark mode  |\n| `--wcp-root-light-background` |         | The background color of the root element in light mode       |\n| `--wcp-root-light-color`      |         | The text color of the text in the root element in light mode |\n\n## Slots\n\n| Name               | Description                                                |\n| ------------------ | ---------------------------------------------------------- |\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls.         |\n| `preview-frame`    | Used to be override the existing preview pane.             |\n| `preview-details`  | Can be used to inject additional preview detail panes.     |\n\n<hr/>\n",
           "groups": [
             "root"
           ],
@@ -719,12 +707,29 @@
           "members": [
             {
               "kind": "field",
-              "name": "_tabs",
+              "name": "_plugins",
               "type": {
                 "text": "PreviewFramePlugin[]"
               },
               "privacy": "private",
               "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "_tabs",
+              "type": {
+                "text": "HTMLElementTagNameMap['wcp-tabs']['tabs']"
+              },
+              "privacy": "private",
+              "default": "{}"
+            },
+            {
+              "kind": "field",
+              "name": "_activeTab",
+              "type": {
+                "text": "HTMLElementTagNameMap['wcp-tabs']['activeTab'] | undefined"
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -750,23 +755,31 @@
             },
             {
               "kind": "method",
-              "name": "getAvailableTabs",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "HTMLElementTagNameMap['wcp-tabs']['tabs']"
-                }
-              }
+              "name": "handleAvailabilityChange",
+              "privacy": "protected"
             },
             {
               "kind": "method",
-              "name": "getActiveTab",
+              "name": "handleActiveTabChange",
               "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "HTMLElementTagNameMap['wcp-tabs']['activeTab']"
+              "parameters": [
+                {
+                  "name": "{ detail: activeTab }",
+                  "type": {
+                    "text": "CustomEvent<string>"
+                  }
                 }
-              }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "preparePluginTabs",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "alignActiveTab",
+              "privacy": "protected"
             }
           ],
           "attributes": [
@@ -791,7 +804,7 @@
           "examples": [
             "```html\n<wcp-preview-frame></wcp-preview-frame>\n```"
           ],
-          "readme": "# class: `PreviewFrame`\n\n## Fields\n\n| Name                | Privacy | Type                                       | Default | Description | Inherited From |\n| ------------------- | ------- | ------------------------------------------ | ------- | ----------- | -------------- |\n| `initialPreviewTab` |         | `Config['initialPreviewTab'] \\| undefined` |         |             |                |\n\n## Methods\n\n| Name               | Privacy   | Description | Parameters     | Return                                           | Inherited From |\n| ------------------ | --------- | ----------- | -------------- | ------------------------------------------------ | -------------- |\n| `handleSlotChange` | protected |             | `event: Event` |                                                  |                |\n| `getAvailableTabs` | protected |             |                | `HTMLElementTagNameMap['wcp-tabs']['tabs']`      |                |\n| `getActiveTab`     | protected |             |                | `HTMLElementTagNameMap['wcp-tabs']['activeTab']` |                |\n| `render`           | protected |             |                | `TemplateResult`                                 |                |\n\n## Attributes\n\n| Name                  | Field             | Inherited From |\n| --------------------- | ----------------- | -------------- |\n| `initial-preview-tab` | initialPreviewTab |                |\n\n## CSS Properties\n\n| Name                                     | Default | Description                                         |\n| ---------------------------------------- | ------- | --------------------------------------------------- |\n| `--wcp-preview-frame-dark-background`    |         | Background color of the preview frame in dark mode  |\n| `--wcp-preview-frame-dark-border-color`  |         | Border color of the example section in dark mode    |\n| `--wcp-preview-frame-dark-color`         |         | Text color of the preview frame in dark mode        |\n| `--wcp-preview-frame-light-background`   |         | Background color of the preview frame in light mode |\n| `--wcp-preview-frame-light-border-color` |         | Border color of the example section in light mode   |\n| `--wcp-preview-frame-light-color`        |         | Text color of the preview frame in light mode       |\n| `--wcp-preview-frame-distance`           |         | Outer margin of the preview frame                   |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the preview frame                  |\n| `--wcp-preview-frame-border-width`       |         | Border width of the example section                 |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the example section                |\n\n<hr/>\n",
+          "readme": "# class: `PreviewFrame`\n\n## Fields\n\n| Name                | Privacy | Type                                       | Default | Description | Inherited From |\n| ------------------- | ------- | ------------------------------------------ | ------- | ----------- | -------------- |\n| `initialPreviewTab` |         | `Config['initialPreviewTab'] \\| undefined` |         |             |                |\n\n## Methods\n\n| Name                       | Privacy   | Description | Parameters                                   | Return           | Inherited From |\n| -------------------------- | --------- | ----------- | -------------------------------------------- | ---------------- | -------------- |\n| `handleSlotChange`         | protected |             | `event: Event`                               |                  |                |\n| `handleAvailabilityChange` | protected |             |                                              |                  |                |\n| `handleActiveTabChange`    | protected |             | `{ detail: activeTab }: CustomEvent<string>` |                  |                |\n| `preparePluginTabs`        | protected |             |                                              |                  |                |\n| `alignActiveTab`           | protected |             |                                              |                  |                |\n| `render`                   | protected |             |                                              | `TemplateResult` |                |\n\n## Attributes\n\n| Name                  | Field             | Inherited From |\n| --------------------- | ----------------- | -------------- |\n| `initial-preview-tab` | initialPreviewTab |                |\n\n## CSS Properties\n\n| Name                                     | Default | Description                                         |\n| ---------------------------------------- | ------- | --------------------------------------------------- |\n| `--wcp-preview-frame-dark-background`    |         | Background color of the preview frame in dark mode  |\n| `--wcp-preview-frame-dark-border-color`  |         | Border color of the example section in dark mode    |\n| `--wcp-preview-frame-dark-color`         |         | Text color of the preview frame in dark mode        |\n| `--wcp-preview-frame-light-background`   |         | Background color of the preview frame in light mode |\n| `--wcp-preview-frame-light-border-color` |         | Border color of the example section in light mode   |\n| `--wcp-preview-frame-light-color`        |         | Text color of the preview frame in light mode       |\n| `--wcp-preview-frame-distance`           |         | Outer margin of the preview frame                   |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the preview frame                  |\n| `--wcp-preview-frame-border-width`       |         | Border width of the example section                 |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the example section                |\n\n<hr/>\n",
           "groups": [
             "feature"
           ],
@@ -1208,10 +1221,25 @@
           "members": [
             {
               "kind": "field",
-              "name": "element",
+              "name": "_element",
               "type": {
-                "text": "CustomElementDeclarationWithExamples | undefined"
+                "text": "Parsed.Element | undefined"
               },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "available",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "element",
               "attribute": "element"
             },
             {
@@ -1235,24 +1263,19 @@
               "default": "'Examples'",
               "attribute": "label",
               "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "readonly": true,
-              "attribute": "available",
-              "reflects": true
             }
           ],
           "attributes": [
             {
-              "name": "element",
+              "name": "available",
               "type": {
-                "text": "CustomElementDeclarationWithExamples | undefined"
+                "text": "boolean"
               },
+              "default": "false",
+              "fieldName": "available"
+            },
+            {
+              "name": "element",
               "fieldName": "element"
             },
             {
@@ -1272,14 +1295,6 @@
               "readonly": true,
               "default": "'Examples'",
               "fieldName": "label"
-            },
-            {
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "readonly": true,
-              "fieldName": "available"
             }
           ],
           "mixins": [
@@ -1293,7 +1308,7 @@
             "package": "lit"
           },
           "examples": [],
-          "readme": "# class: `PreviewFrameExamples`\n\n## Fields\n\n| Name        | Privacy | Type                                                | Default      | Description | Inherited From |\n| ----------- | ------- | --------------------------------------------------- | ------------ | ----------- | -------------- |\n| `element`   |         | `CustomElementDeclarationWithExamples \\| undefined` |              |             |                |\n| `name`      |         | `string`                                            | `'examples'` |             |                |\n| `label`     |         | `string`                                            | `'Examples'` |             |                |\n| `available` |         | `boolean`                                           |              |             |                |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n| `available` | available |                |\n\n## CSS Properties\n\n| Name                                   | Default | Description               |\n| -------------------------------------- | ------- | ------------------------- |\n| `--wcp-preview-frame-examples-spacing` |         | Spacing between examples. |\n\n<hr/>\n",
+          "readme": "# class: `PreviewFrameExamples`\n\n## Fields\n\n| Name        | Privacy | Type      | Default      | Description | Inherited From |\n| ----------- | ------- | --------- | ------------ | ----------- | -------------- |\n| `available` |         | `boolean` | `false`      |             |                |\n| `element`   |         |           |              |             |                |\n| `name`      |         | `string`  | `'examples'` |             |                |\n| `label`     |         | `string`  | `'Examples'` |             |                |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `available` | available |                |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n\n## CSS Properties\n\n| Name                                   | Default | Description               |\n| -------------------------------------- | ------- | ------------------------- |\n| `--wcp-preview-frame-examples-spacing` |         | Spacing between examples. |\n\n<hr/>\n",
           "groups": [
             "plugins"
           ],
@@ -1349,10 +1364,25 @@
           "members": [
             {
               "kind": "field",
-              "name": "element",
+              "name": "_element",
               "type": {
-                "text": "CustomElementDeclarationWithReadme | undefined"
+                "text": "Parsed.Element | undefined"
               },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "available",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "element",
               "attribute": "element"
             },
             {
@@ -1378,26 +1408,21 @@
               "reflects": true
             },
             {
-              "kind": "field",
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "readonly": true,
-              "attribute": "available",
-              "reflects": true
-            },
-            {
               "kind": "method",
               "name": "createRenderRoot"
             }
           ],
           "attributes": [
             {
-              "name": "element",
+              "name": "available",
               "type": {
-                "text": "CustomElementDeclarationWithReadme | undefined"
+                "text": "boolean"
               },
+              "default": "false",
+              "fieldName": "available"
+            },
+            {
+              "name": "element",
               "fieldName": "element"
             },
             {
@@ -1417,14 +1442,6 @@
               "readonly": true,
               "default": "'Readme'",
               "fieldName": "label"
-            },
-            {
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "readonly": true,
-              "fieldName": "available"
             }
           ],
           "mixins": [
@@ -1438,7 +1455,7 @@
             "package": "lit"
           },
           "examples": [],
-          "readme": "# class: `PreviewFrameReadme`\n\n## Fields\n\n| Name        | Privacy | Type                                              | Default    | Description | Inherited From |\n| ----------- | ------- | ------------------------------------------------- | ---------- | ----------- | -------------- |\n| `element`   |         | `CustomElementDeclarationWithReadme \\| undefined` |            |             |                |\n| `name`      |         | `string`                                          | `'readme'` |             |                |\n| `label`     |         | `string`                                          | `'Readme'` |             |                |\n| `available` |         | `boolean`                                         |            |             |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `createRenderRoot`  |           |             |            |                  |                |\n| `connectedCallback` |           |             |            |                  |                |\n| `render`            | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n| `available` | available |                |\n\n## CSS Properties\n\n| Name                                                    | Default | Description                                               |\n| ------------------------------------------------------- | ------- | --------------------------------------------------------- |\n| `--wcp-preview-frame-readme-dark-border-color`          |         | Border color of the readme in dark mode.                  |\n| `--wcp-preview-frame-readme-dark-highlight-background`  |         | Background color of highlighted table rows in dark mode.  |\n| `--wcp-preview-frame-readme-light-border-color`         |         | Border color of the readme in light mode.                 |\n| `--wcp-preview-frame-readme-light-highlight-background` |         | Background color of highlighted table rows in light mode. |\n\n<hr/>\n",
+          "readme": "# class: `PreviewFrameReadme`\n\n## Fields\n\n| Name        | Privacy | Type      | Default    | Description | Inherited From |\n| ----------- | ------- | --------- | ---------- | ----------- | -------------- |\n| `available` |         | `boolean` | `false`    |             |                |\n| `element`   |         |           |            |             |                |\n| `name`      |         | `string`  | `'readme'` |             |                |\n| `label`     |         | `string`  | `'Readme'` |             |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `createRenderRoot`  |           |             |            |                  |                |\n| `connectedCallback` |           |             |            |                  |                |\n| `render`            | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `available` | available |                |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n\n## CSS Properties\n\n| Name                                                    | Default | Description                                               |\n| ------------------------------------------------------- | ------- | --------------------------------------------------------- |\n| `--wcp-preview-frame-readme-dark-border-color`          |         | Border color of the readme in dark mode.                  |\n| `--wcp-preview-frame-readme-dark-highlight-background`  |         | Background color of highlighted table rows in dark mode.  |\n| `--wcp-preview-frame-readme-light-border-color`         |         | Border color of the readme in light mode.                 |\n| `--wcp-preview-frame-readme-light-highlight-background` |         | Background color of highlighted table rows in light mode. |\n\n<hr/>\n",
           "groups": [
             "plugins"
           ],
@@ -1479,13 +1496,32 @@
               "name": "#element",
               "privacy": "private",
               "type": {
-                "text": "CustomElementDeclaration | undefined"
+                "text": "Parsed.Element | undefined"
               }
+            },
+            {
+              "kind": "field",
+              "name": "_elementData",
+              "type": {
+                "text": "ElementData | undefined"
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "element",
               "attribute": "element"
+            },
+            {
+              "kind": "field",
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true,
+              "default": "true",
+              "attribute": "available",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -1510,61 +1546,12 @@
               "reflects": true
             },
             {
-              "kind": "field",
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "readonly": true,
-              "default": "true",
-              "attribute": "available",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "elementData",
-              "type": {
-                "text": "CustomElementData | undefined"
-              },
-              "privacy": "private"
-            },
-            {
               "kind": "method",
               "name": "getElementReference",
               "privacy": "protected",
               "return": {
                 "type": {
                   "text": "Element | undefined"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getFields",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "CustomElementField[]"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getSlots",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "Slot[]"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getSlotsWithData",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "{ slot: Slot; data: string }[]"
                 }
               }
             },
@@ -1602,9 +1589,9 @@
               },
               "parameters": [
                 {
-                  "name": "member",
+                  "name": "field",
                   "type": {
-                    "text": "CustomElementField"
+                    "text": "Parsed.Field"
                   }
                 }
               ]
@@ -1622,7 +1609,7 @@
                 {
                   "name": "slot",
                   "type": {
-                    "text": "Slot"
+                    "text": "Parsed.Slot"
                   }
                 }
               ]
@@ -1644,6 +1631,15 @@
               "fieldName": "element"
             },
             {
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true,
+              "default": "true",
+              "fieldName": "available"
+            },
+            {
               "name": "name",
               "type": {
                 "text": "string"
@@ -1660,15 +1656,6 @@
               "readonly": true,
               "default": "'Viewer'",
               "fieldName": "label"
-            },
-            {
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "readonly": true,
-              "default": "true",
-              "fieldName": "available"
             }
           ],
           "mixins": [
@@ -1681,7 +1668,7 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "readme": "# class: `PreviewFrameViewer`\n\n## Fields\n\n| Name        | Privacy | Type      | Default    | Description | Inherited From |\n| ----------- | ------- | --------- | ---------- | ----------- | -------------- |\n| `element`   |         |           |            |             |                |\n| `name`      |         | `string`  | `'viewer'` |             |                |\n| `label`     |         | `string`  | `'Viewer'` |             |                |\n| `available` |         | `boolean` | `true`     |             |                |\n\n## Methods\n\n| Name                  | Privacy   | Description | Parameters                   | Return                           | Inherited From |\n| --------------------- | --------- | ----------- | ---------------------------- | -------------------------------- | -------------- |\n| `getElementReference` | protected |             |                              | `Element \\| undefined`           |                |\n| `getFields`           | protected |             |                              | `CustomElementField[]`           |                |\n| `getSlots`            | protected |             |                              | `Slot[]`                         |                |\n| `getSlotsWithData`    | protected |             |                              | `{ slot: Slot; data: string }[]` |                |\n| `handleControlsInput` | protected |             | `event: InputEvent`          |                                  |                |\n| `renderSlots`         | protected |             |                              | `TemplateResult`                 |                |\n| `renderFieldControl`  | protected |             | `member: CustomElementField` | `TemplateResult`                 |                |\n| `renderSlotControl`   | protected |             | `slot: Slot`                 | `TemplateResult`                 |                |\n| `renderElement`       | protected |             |                              | `TemplateResult`                 |                |\n| `render`              | protected |             |                              | `TemplateResult`                 |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n| `available` | available |                |\n\n<hr/>\n",
+          "readme": "# class: `PreviewFrameViewer`\n\n## Fields\n\n| Name        | Privacy | Type      | Default    | Description | Inherited From |\n| ----------- | ------- | --------- | ---------- | ----------- | -------------- |\n| `element`   |         |           |            |             |                |\n| `available` |         | `boolean` | `true`     |             |                |\n| `name`      |         | `string`  | `'viewer'` |             |                |\n| `label`     |         | `string`  | `'Viewer'` |             |                |\n\n## Methods\n\n| Name                  | Privacy   | Description | Parameters            | Return                 | Inherited From |\n| --------------------- | --------- | ----------- | --------------------- | ---------------------- | -------------- |\n| `getElementReference` | protected |             |                       | `Element \\| undefined` |                |\n| `handleControlsInput` | protected |             | `event: InputEvent`   |                        |                |\n| `renderSlots`         | protected |             |                       | `TemplateResult`       |                |\n| `renderFieldControl`  | protected |             | `field: Parsed.Field` | `TemplateResult`       |                |\n| `renderSlotControl`   | protected |             | `slot: Parsed.Slot`   | `TemplateResult`       |                |\n| `renderElement`       | protected |             |                       | `TemplateResult`       |                |\n| `render`              | protected |             |                       | `TemplateResult`       |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `available` | available |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n\n<hr/>\n",
           "groups": [
             "plugins"
           ],
@@ -2190,7 +2177,7 @@
               "kind": "field",
               "name": "tabs",
               "type": {
-                "text": "Record<string, string>"
+                "text": "Record<string, { label: string; disabled?: boolean }>"
               },
               "default": "{}",
               "attribute": "tabs"
@@ -2237,7 +2224,7 @@
             {
               "name": "tabs",
               "type": {
-                "text": "Record<string, string>"
+                "text": "Record<string, { label: string; disabled?: boolean }>"
               },
               "default": "{}",
               "fieldName": "tabs"
@@ -2264,7 +2251,7 @@
             "```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}'>\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```",
             "### Active tab preselected\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}' active-tab=\"second\">\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```"
           ],
-          "readme": "# class: `Tabs`\n\n## Fields\n\n| Name        | Privacy | Type                     | Default | Description | Inherited From |\n| ----------- | ------- | ------------------------ | ------- | ----------- | -------------- |\n| `tabFocus`  |         | `number`                 | `0`     |             |                |\n| `tabRoles`  |         | `HTMLElement[]`          |         |             |                |\n| `tabs`      |         | `Record<string, string>` | `{}`    |             |                |\n| `activeTab` |         | `string \\| undefined`    |         |             |                |\n\n## Methods\n\n| Name                  | Privacy   | Description | Parameters             | Return           | Inherited From |\n| --------------------- | --------- | ----------- | ---------------------- | ---------------- | -------------- |\n| `emitActiveTabChange` |           |             |                        |                  |                |\n| `handleTabClick`      |           |             | `event: Event`         |                  |                |\n| `handleKeydown`       |           |             | `event: KeyboardEvent` |                  |                |\n| `render`              | protected |             |                        | `TemplateResult` |                |\n\n## Attributes\n\n| Name         | Field     | Inherited From |\n| ------------ | --------- | -------------- |\n| `tabs`       | tabs      |                |\n| `active-tab` | activeTab |                |\n\n## CSS Properties\n\n| Name                                       | Default | Description                                      |\n| ------------------------------------------ | ------- | ------------------------------------------------ |\n| `--wcp-tabs-tablist-gap`                   |         | The gap between the tablist and the tabpanels    |\n| `--wcp-tabs-tablist-spacing`               |         | The inner padding of the tablist                 |\n| `--wcp-tabs-tab-spacing`                   |         | The inner padding of the tabs                    |\n| `--wcp-tabs-tab-active-border-width`       |         | The border width of the active tab               |\n| `--wcp-tabs-panel-spacing`                 |         | The inner padding of the tabpanels               |\n| `--wcp-tabs-tablist-dark-border-color`     |         | The border color of the tablist in dark mode     |\n| `--wcp-tabs-tab-active-dark-border-color`  |         | The border color of the active tab in dark mode  |\n| `--wcp-tabs-tablist-light-border-color`    |         | The border color of the tablist in light mode    |\n| `--wcp-tabs-tab-active-light-border-color` |         | The border color of the active tab in light mode |\n\n## Slots\n\n| Name  | Description                          |\n| ----- | ------------------------------------ |\n| `tab` | name - The content of the named tab. |\n\n<hr/>\n",
+          "readme": "# class: `Tabs`\n\n## Fields\n\n| Name        | Privacy | Type                                                    | Default | Description | Inherited From |\n| ----------- | ------- | ------------------------------------------------------- | ------- | ----------- | -------------- |\n| `tabFocus`  |         | `number`                                                | `0`     |             |                |\n| `tabRoles`  |         | `HTMLElement[]`                                         |         |             |                |\n| `tabs`      |         | `Record<string, { label: string; disabled?: boolean }>` | `{}`    |             |                |\n| `activeTab` |         | `string \\| undefined`                                   |         |             |                |\n\n## Methods\n\n| Name                  | Privacy   | Description | Parameters             | Return           | Inherited From |\n| --------------------- | --------- | ----------- | ---------------------- | ---------------- | -------------- |\n| `emitActiveTabChange` |           |             |                        |                  |                |\n| `handleTabClick`      |           |             | `event: Event`         |                  |                |\n| `handleKeydown`       |           |             | `event: KeyboardEvent` |                  |                |\n| `render`              | protected |             |                        | `TemplateResult` |                |\n\n## Attributes\n\n| Name         | Field     | Inherited From |\n| ------------ | --------- | -------------- |\n| `tabs`       | tabs      |                |\n| `active-tab` | activeTab |                |\n\n## CSS Properties\n\n| Name                                       | Default | Description                                      |\n| ------------------------------------------ | ------- | ------------------------------------------------ |\n| `--wcp-tabs-tablist-gap`                   |         | The gap between the tablist and the tabpanels    |\n| `--wcp-tabs-tablist-spacing`               |         | The inner padding of the tablist                 |\n| `--wcp-tabs-tab-spacing`                   |         | The inner padding of the tabs                    |\n| `--wcp-tabs-tab-active-border-width`       |         | The border width of the active tab               |\n| `--wcp-tabs-panel-spacing`                 |         | The inner padding of the tabpanels               |\n| `--wcp-tabs-tablist-dark-border-color`     |         | The border color of the tablist in dark mode     |\n| `--wcp-tabs-tab-active-dark-border-color`  |         | The border color of the active tab in dark mode  |\n| `--wcp-tabs-tablist-light-border-color`    |         | The border color of the tablist in light mode    |\n| `--wcp-tabs-tab-active-light-border-color` |         | The border color of the active tab in light mode |\n\n## Slots\n\n| Name  | Description                          |\n| ----- | ------------------------------------ |\n| `tab` | name - The content of the named tab. |\n\n<hr/>\n",
           "groups": [
             "ui"
           ],
