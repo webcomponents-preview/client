@@ -16,7 +16,11 @@ jobs:
         with:
           ref: ${{ github.ref }}
       - name: Read PR ids from GitHub
-        run: ""
+        run: |
+          pr_ids=$(gh api --header 'Accept: application/vnd.github+json' --method GET /repos/${{ github.repository }}/pulls | jq -r '. | map(.number) | join("\\|")')
+          find pr -type d -mindepth 1 -maxdepth 1 ! -regex "^pr\/\(${pr_ids}\)" # -exec rm -rf {}
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Get list of releases from GitHub
         run: ""
 
