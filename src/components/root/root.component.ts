@@ -15,6 +15,7 @@ import {
   groupCustomElements,
 } from '@/utils/custom-elements-manifest.utils';
 
+import logo from '@/assets/icons/logo.svg';
 import styles from './root.component.scss';
 
 /**
@@ -189,7 +190,7 @@ export class Root extends ColorSchemable(LitElement) {
       <wcp-layout>
         <wcp-title slot="aside" title="${this.#title}">
           <slot name="logo" slot="logo">
-            <img src="assets/icons/logo.svg" height="20px" />
+            <img src="${logo}" height="20px" />
           </slot>
         </wcp-title>
 

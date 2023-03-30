@@ -19,3 +19,7 @@ declare module 'esbuild-copy-static-files' {
 declare module '*.scss' {
   export const styles: string;
 }
+
+declare module '*.svg' {
+  export const content: string;
+}

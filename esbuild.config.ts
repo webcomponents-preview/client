@@ -52,6 +52,7 @@ const options: BuildOptions = {
   loader: {
     '.html': 'copy',
     '.md': 'copy',
+    '.svg': 'dataurl',
   },
   logLevel: 'error',
   plugins: [
