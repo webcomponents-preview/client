@@ -8,6 +8,8 @@ on:
 jobs:
   clean:
     name: Clean up orphaned deployments
+    if: |
+      github.event.head_commit.message != 'chore: cleaned up orphaned deployments'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -25,6 +27,17 @@ jobs:
         run: |
           released_versions=$(gh api --header 'Accept: application/vnd.github+json' --method GET /repos/${{ github.repository }}/releases | jq -r '. + [{"tag_name": "latest"}, {"tag_name": "pr"}] | map(.tag_name | sub("\\.";"\\.";"g")) | join("\\|")')
           find . -not -path '*/.*' -type d -mindepth 1 -maxdepth 1 -not -regex "^\.\/\(${released_versions}\)" -exec rm -rf {} \;
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Apply changes
+        run: |
+          if git diff --exit-code; then
+            git config user.name "${GITHUB_ACTOR}"
+            git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+            git add .
+            git commit -m "chore: cleaned up orphaned deployments"
+            git push origin
+          fi
         env:
           GH_TOKEN: ${{ github.token }}
 
