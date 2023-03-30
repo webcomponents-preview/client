@@ -1,5 +1,4 @@
 import { spread } from '@open-wc/lit-helpers';
-import type { CustomElementDeclaration, CustomElementField, Slot } from 'custom-elements-manifest';
 
 import { LitElement, type TemplateResult, html, unsafeCSS, nothing } from 'lit';
 import { unsafeStatic, withStatic } from 'lit/static-html.js';
@@ -10,19 +9,11 @@ import { map } from 'lit/directives/map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
-import type { PreviewFramePlugin } from '@/components/feature/preview-frame/preview-frame.utils';
 import { ColorSchemable } from '@/utils/color-scheme.utils';
+import type * as Parsed from '@/utils/parser.types';
 
-import {
-  CustomElementData,
-  Field,
-  getEnumValues,
-  isControlable,
-  isCustomElementField,
-  mapFormData,
-  prepareInitialElementData,
-  unwrapString,
-} from './preview-frame-viewer.utils';
+import type { PreviewFramePlugin } from '@/components/feature/preview-frame/preview-frame.utils';
+import { type ElementData, mapFormData, prepareInitialData } from './preview-frame-viewer.utils';
 
 import styles from './preview-frame-viewer.plugin.scss';
 
@@ -30,13 +21,19 @@ import styles from './preview-frame-viewer.plugin.scss';
 export class PreviewFrameViewer extends ColorSchemable(LitElement) implements PreviewFramePlugin {
   static readonly styles = unsafeCSS(styles);
 
-  #element?: CustomElementDeclaration;
+  #element?: Parsed.Element;
+
+  @state()
+  private _elementData?: ElementData;
 
   @property({ type: Object })
-  set element(element: CustomElementDeclaration | undefined) {
+  set element(element: Parsed.Element | undefined) {
     this.#element = element;
-    this.elementData = element !== undefined ? prepareInitialElementData(element) : undefined;
+    this._elementData = element ? prepareInitialData(element) : undefined;
   }
+
+  @property({ type: Boolean, reflect: true, state: true })
+  readonly available = true;
 
   @property({ type: String, reflect: true })
   readonly name = 'viewer';
@@ -44,60 +41,36 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
   @property({ type: String, reflect: true })
   readonly label = 'Viewer';
 
-  @property({ type: Boolean, reflect: true })
-  readonly available = true;
-
-  @state()
-  private elementData?: CustomElementData;
-
   protected getElementReference(): Element | undefined {
     if (this.#element === undefined) return undefined;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.renderRoot.querySelector(this.#element.tagName!) ?? undefined;
   }
 
-  protected getFields(): CustomElementField[] {
-    return (this.#element?.members ?? []).filter(
-      (member) => isCustomElementField(member) && isControlable(member)
-    ) as CustomElementField[];
-  }
-
-  protected getSlots(): Slot[] {
-    return this.#element?.slots ?? [];
-  }
-
-  protected getSlotsWithData(): { slot: Slot; data: string }[] {
-    return (
-      this.getSlots()
-        .filter((slot) => this.elementData?.slots && slot.name in this.elementData.slots)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        .map((slot) => ({ slot, data: this.elementData!.slots[slot.name] }))
-    );
-  }
-
   protected handleControlsInput(event: InputEvent) {
     if (this.#element === undefined) return;
     const form = event.currentTarget as HTMLFormElement;
-    this.elementData = mapFormData(form, this.#element);
+    this._elementData = mapFormData(form, this.#element);
   }
 
   protected renderSlots(): TemplateResult {
     return html`
       ${map(
-        this.getSlotsWithData(),
-        ({ slot, data }) => withStatic(html)`
+        Object.entries(this._elementData?.slots ?? {}),
+        ([name, content]) => withStatic(html)`
           ${when(
-            slot.name === '',
-            () => unsafeHTML(data),
-            () => withStatic(html)`<div slot="${slot.name}">${unsafeHTML(data)}</div>`
+            name === '',
+            () => unsafeHTML(content),
+            () => withStatic(html)`<div slot="${name}">${unsafeHTML(content)}</div>`
           )}
         `
       )}
     `;
   }
 
-  protected renderFieldControl(member: CustomElementField): TemplateResult {
-    const field = new Field(member);
+  protected renderFieldControl(field: Parsed.Field): TemplateResult {
+    if (!field.isControlable) return html`${nothing}`;
+
     return html`
       ${when(
         field.isBoolean,
@@ -108,11 +81,11 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
                 <input
                   autocomplete="off"
                   type="checkbox"
-                  name="members.${field.data.name}"
-                  ?checked="${this.elementData?.members[field.data.name]}"
+                  name="fields.${field.name}"
+                  ?checked="${this._elementData?.fields[field.name]}"
                 />
-                <span class="label">${field.data.name}</span>
-                ${when(field.data.description, () => html`<span class="description">${field.data.description}</span>`)}
+                <span class="label">${field.name}</span>
+                ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
               </label>
             </wcp-input>
           `
@@ -122,14 +95,14 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
         () => html`
           <wcp-input>
             <label>
-              <span class="label">${field.data.attribute ?? field.data.name}</span>
+              <span class="label">${field.attribute ?? field.name}</span>
               <input
                 autocomplete="off"
                 type="text"
-                name="members.${field.data.name}"
-                .value="${this.elementData?.members[field.data.name] ?? null}"
+                name="fields.${field.name}"
+                .value="${this._elementData?.fields[field.name] ?? null}"
               />
-              ${when(field.data.description, () => html`<span class="description">${field.data.description}</span>`)}
+              ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
             </label>
           </wcp-input>
         `
@@ -139,14 +112,14 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
         () => html`
           <wcp-input>
             <label>
-              <span class="label">${field.data.attribute ?? field.data.name}</span>
+              <span class="label">${field.attribute ?? field.name}</span>
               <input
                 autocomplete="off"
                 type="number"
-                name="members.${field.data.name}"
-                .value="${this.elementData?.members[field.data.name] ?? null}"
+                name="fields.${field.name}"
+                .value="${this._elementData?.fields[field.name] ?? null}"
               />
-              ${when(field.data.description, () => html`<span class="description">${field.data.description}</span>`)}
+              ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
             </label>
           </wcp-input>
         `
@@ -156,18 +129,18 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
         () => html`
           <wcp-input>
             <label>
-              <span class="label">${field.data.attribute ?? field.data.name}</span>
-              <select autocomplete="off" name="members.${field.data.name}">
+              <span class="label">${field.attribute ?? field.name}</span>
+              <select autocomplete="off" name="fields.${field.name}">
                 ${map(
-                  getEnumValues(field.data).map(unwrapString),
+                  field.enumValues,
                   (option) => html`
-                    <option value="${option}" ?selected="${this.elementData?.members[field.data.name] === option}">
+                    <option .value="${option}" ?selected="${this._elementData?.fields[field.name] === option}">
                       ${option}
                     </option>
                   `
                 )}
               </select>
-              ${when(field.data.description, () => html`<span class="description">${field.data.description}</span>`)}
+              ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
             </label>
           </wcp-input>
         `
@@ -175,7 +148,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
     `;
   }
 
-  protected renderSlotControl(slot: Slot): TemplateResult {
+  protected renderSlotControl(slot: Parsed.Slot): TemplateResult {
     return html`
       <wcp-input>
         <label>
@@ -184,9 +157,9 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
             autocomplete="off"
             type="text"
             name="slots.${slot.name}"
-            value="${this.elementData?.slots[slot.name]}"
+            .value="${this._elementData?.slots[slot.name]}"
           />
-          ${when(slot.description, () => html`<span class="description">${slot.description}</span>`)}
+          ${when(slot.hasDescription, () => html`<span class="description">${slot.description}</span>`)}
         </label>
       </wcp-input>
     `;
@@ -196,13 +169,10 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
     if (this.#element === undefined) return html`${nothing}`;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const tag = unsafeStatic(this.#element.tagName!);
-    return withStatic(html)`<${tag} ${spread(this.elementData?.members ?? {})}>${this.renderSlots()}</${tag}>`;
+    return withStatic(html)`<${tag} ${spread(this._elementData?.fields ?? {})}>${this.renderSlots()}</${tag}>`;
   }
 
   protected render(): TemplateResult {
-    const fields = this.getFields();
-    const slots = this.getSlots();
-
     return html`${keyed(
       this.#element?.tagName ?? '',
       html`
@@ -212,20 +182,20 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
         <wcp-preview-frame-viewer-controls>
           <form @input="${this.handleControlsInput}">
             ${when(
-              fields.length > 0,
+              this.#element?.hasFields,
               () => html`
                 <fieldset>
                   <legend>Fields</legend>
-                  ${map(fields, (member) => this.renderFieldControl(member))}
+                  ${map(this.#element?.fields.values(), (field) => this.renderFieldControl(field))}
                 </fieldset>
               `
             )}
             ${when(
-              slots.length > 0,
+              this.#element?.hasSlots,
               () => html`
                 <fieldset>
                   <legend>Slots</legend>
-                  ${map(slots, (slot) => this.renderSlotControl(slot))}
+                  ${map(this.#element?.slots.values(), (slot) => this.renderSlotControl(slot))}
                 </fieldset>
               `
             )}

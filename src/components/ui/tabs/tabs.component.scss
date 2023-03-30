@@ -46,8 +46,12 @@ button {
   transition: border-bottom-color var(---wcp-fx-default-duration) ease-in-out;
   will-change: border-bottom-color;
 
-  &[aria-selected='true'] {
+  &:enabled[aria-selected='true'] {
     border-bottom-color: var(---wcp-tabs-tab-active-border-color);
+  }
+
+  &:disabled {
+    opacity: .5;
   }
 }
 

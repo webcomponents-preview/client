@@ -5,32 +5,29 @@
 | Name        | Privacy | Type      | Default    | Description | Inherited From |
 | ----------- | ------- | --------- | ---------- | ----------- | -------------- |
 | `element`   |         |           |            |             |                |
+| `available` |         | `boolean` | `true`     |             |                |
 | `name`      |         | `string`  | `'viewer'` |             |                |
 | `label`     |         | `string`  | `'Viewer'` |             |                |
-| `available` |         | `boolean` | `true`     |             |                |
 
 ## Methods
 
-| Name                  | Privacy   | Description | Parameters                   | Return                           | Inherited From |
-| --------------------- | --------- | ----------- | ---------------------------- | -------------------------------- | -------------- |
-| `getElementReference` | protected |             |                              | `Element \| undefined`           |                |
-| `getFields`           | protected |             |                              | `CustomElementField[]`           |                |
-| `getSlots`            | protected |             |                              | `Slot[]`                         |                |
-| `getSlotsWithData`    | protected |             |                              | `{ slot: Slot; data: string }[]` |                |
-| `handleControlsInput` | protected |             | `event: InputEvent`          |                                  |                |
-| `renderSlots`         | protected |             |                              | `TemplateResult`                 |                |
-| `renderFieldControl`  | protected |             | `member: CustomElementField` | `TemplateResult`                 |                |
-| `renderSlotControl`   | protected |             | `slot: Slot`                 | `TemplateResult`                 |                |
-| `renderElement`       | protected |             |                              | `TemplateResult`                 |                |
-| `render`              | protected |             |                              | `TemplateResult`                 |                |
+| Name                  | Privacy   | Description | Parameters            | Return                 | Inherited From |
+| --------------------- | --------- | ----------- | --------------------- | ---------------------- | -------------- |
+| `getElementReference` | protected |             |                       | `Element \| undefined` |                |
+| `handleControlsInput` | protected |             | `event: InputEvent`   |                        |                |
+| `renderSlots`         | protected |             |                       | `TemplateResult`       |                |
+| `renderFieldControl`  | protected |             | `field: Parsed.Field` | `TemplateResult`       |                |
+| `renderSlotControl`   | protected |             | `slot: Parsed.Slot`   | `TemplateResult`       |                |
+| `renderElement`       | protected |             |                       | `TemplateResult`       |                |
+| `render`              | protected |             |                       | `TemplateResult`       |                |
 
 ## Attributes
 
 | Name        | Field     | Inherited From |
 | ----------- | --------- | -------------- |
 | `element`   | element   |                |
+| `available` | available |                |
 | `name`      | name      |                |
 | `label`     | label     |                |
-| `available` | available |                |
 
 <hr/>

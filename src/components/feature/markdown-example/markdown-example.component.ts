@@ -6,7 +6,7 @@ import { ColorSchemable } from '@/utils/color-scheme.utils';
 
 import styles from './markdown-example.component.scss';
 
-const MARKDOWN_EXAMPLE_TABS = { preview: 'Preview', code: 'Code' };
+const MARKDOWN_EXAMPLE_TABS = { preview: { label: 'Preview' }, code: { label: 'Code' } };
 
 /**
  * Shows an inline code example and a preview of the element in the readme.

@@ -26,7 +26,7 @@ import styles from './tabs.component.scss';
  * ```
  *
  * @slot tab name - The content of the named tab.
- * @emits wcp-tabs:active-tab-changed - Notifies when the active tab changes
+ * @emits wcp-tabs:active-tab-change - Notifies when the active tab changes
  *
  * @cssprop --wcp-tabs-tablist-gap - The gap between the tablist and the tabpanels
  * @cssprop --wcp-tabs-tablist-spacing - The inner padding of the tablist
@@ -50,14 +50,14 @@ export class Tabs extends ColorSchemable(LitElement) {
   tabRoles!: HTMLElement[];
 
   @property({ type: Object })
-  tabs: Record<string, string> = {};
+  tabs: Record<string, { label: string; disabled?: boolean }> = {};
 
   @property({ type: String, reflect: true, attribute: 'active-tab' })
   activeTab?: string;
 
   emitActiveTabChange() {
-    const event = new CustomEvent('wcp-tabs:active-tab-changed', {
-      detail: { activeTab: this.activeTab },
+    const event = new CustomEvent('wcp-tabs:active-tab-change', {
+      detail: this.activeTab,
       bubbles: true,
       cancelable: true,
       composed: true,
@@ -68,7 +68,11 @@ export class Tabs extends ColorSchemable(LitElement) {
   @eventOptions({ passive: true })
   handleTabClick(event: Event) {
     const tab = event.target as HTMLButtonElement;
-    this.activeTab = tab.dataset.name as typeof this.activeTab;
+    const activeTab = tab.dataset.name as typeof this.activeTab;
+    if (this.activeTab !== activeTab) {
+      this.activeTab = activeTab;
+      this.emitActiveTabChange();
+    }
   }
 
   @eventOptions({ passive: true })
@@ -102,7 +106,7 @@ export class Tabs extends ColorSchemable(LitElement) {
       <nav part="tablist" role="tablist" aria-label="Sample Tabs" @keydown="${this.handleKeydown}">
         ${map(
           Object.entries(this.tabs),
-          ([tab, label]) => html`
+          ([tab, { label, disabled }]) => html`
             <button
               role="tab"
               aria-selected="${this.activeTab === tab ? 'true' : 'false'}"
@@ -110,6 +114,7 @@ export class Tabs extends ColorSchemable(LitElement) {
               data-name="${tab}"
               id="${tab}-tab"
               tabindex="${this.activeTab === tab ? '0' : '-1'}"
+              ?disabled="${disabled}"
               @click="${this.handleTabClick}"
             >
               ${label}
@@ -139,7 +144,7 @@ export class Tabs extends ColorSchemable(LitElement) {
 
 declare global {
   interface HTMLElementEventMap {
-    'wcp-tabs:active-tab-changed': CustomEvent<{ activeTab?: string }>;
+    'wcp-tabs:active-tab-change': CustomEvent<string>;
   }
   interface HTMLElementTagNameMap {
     'wcp-tabs': Tabs;

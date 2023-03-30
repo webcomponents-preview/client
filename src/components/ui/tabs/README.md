@@ -2,12 +2,12 @@
 
 ## Fields
 
-| Name        | Privacy | Type                     | Default | Description | Inherited From |
-| ----------- | ------- | ------------------------ | ------- | ----------- | -------------- |
-| `tabFocus`  |         | `number`                 | `0`     |             |                |
-| `tabRoles`  |         | `HTMLElement[]`          |         |             |                |
-| `tabs`      |         | `Record<string, string>` | `{}`    |             |                |
-| `activeTab` |         | `string \| undefined`    |         |             |                |
+| Name        | Privacy | Type                                                    | Default | Description | Inherited From |
+| ----------- | ------- | ------------------------------------------------------- | ------- | ----------- | -------------- |
+| `tabFocus`  |         | `number`                                                | `0`     |             |                |
+| `tabRoles`  |         | `HTMLElement[]`                                         |         |             |                |
+| `tabs`      |         | `Record<string, { label: string; disabled?: boolean }>` | `{}`    |             |                |
+| `activeTab` |         | `string \| undefined`                                   |         |             |                |
 
 ## Methods
 
