@@ -1208,6 +1208,7 @@
               "type": {
                 "text": "string"
               },
+              "readonly": true,
               "default": "'examples'",
               "attribute": "name",
               "reflects": true
@@ -1218,6 +1219,7 @@
               "type": {
                 "text": "string"
               },
+              "readonly": true,
               "default": "'Examples'",
               "attribute": "label",
               "reflects": true
@@ -1228,6 +1230,7 @@
               "type": {
                 "text": "boolean"
               },
+              "readonly": true,
               "attribute": "available",
               "reflects": true
             }
@@ -1245,6 +1248,7 @@
               "type": {
                 "text": "string"
               },
+              "readonly": true,
               "default": "'examples'",
               "fieldName": "name"
             },
@@ -1253,6 +1257,7 @@
               "type": {
                 "text": "string"
               },
+              "readonly": true,
               "default": "'Examples'",
               "fieldName": "label"
             },
@@ -1261,6 +1266,7 @@
               "type": {
                 "text": "boolean"
               },
+              "readonly": true,
               "fieldName": "available"
             }
           ],
@@ -1343,6 +1349,7 @@
               "type": {
                 "text": "string"
               },
+              "readonly": true,
               "default": "'readme'",
               "attribute": "name",
               "reflects": true
@@ -1353,6 +1360,7 @@
               "type": {
                 "text": "string"
               },
+              "readonly": true,
               "default": "'Readme'",
               "attribute": "label",
               "reflects": true
@@ -1363,6 +1371,7 @@
               "type": {
                 "text": "boolean"
               },
+              "readonly": true,
               "attribute": "available",
               "reflects": true
             },
@@ -1384,6 +1393,7 @@
               "type": {
                 "text": "string"
               },
+              "readonly": true,
               "default": "'readme'",
               "fieldName": "name"
             },
@@ -1392,6 +1402,7 @@
               "type": {
                 "text": "string"
               },
+              "readonly": true,
               "default": "'Readme'",
               "fieldName": "label"
             },
@@ -1400,6 +1411,7 @@
               "type": {
                 "text": "boolean"
               },
+              "readonly": true,
               "fieldName": "available"
             }
           ],
@@ -1469,6 +1481,7 @@
               "type": {
                 "text": "string"
               },
+              "readonly": true,
               "default": "'viewer'",
               "attribute": "name",
               "reflects": true
@@ -1479,6 +1492,7 @@
               "type": {
                 "text": "string"
               },
+              "readonly": true,
               "default": "'Viewer'",
               "attribute": "label",
               "reflects": true
@@ -1489,6 +1503,7 @@
               "type": {
                 "text": "boolean"
               },
+              "readonly": true,
               "default": "true",
               "attribute": "available",
               "reflects": true
@@ -1591,6 +1606,7 @@
               "type": {
                 "text": "string"
               },
+              "readonly": true,
               "default": "'viewer'",
               "fieldName": "name"
             },
@@ -1599,6 +1615,7 @@
               "type": {
                 "text": "string"
               },
+              "readonly": true,
               "default": "'Viewer'",
               "fieldName": "label"
             },
@@ -1607,6 +1624,7 @@
               "type": {
                 "text": "boolean"
               },
+              "readonly": true,
               "default": "true",
               "fieldName": "available"
             }
@@ -1747,12 +1765,14 @@
                 "text": "boolean"
               },
               "static": true,
+              "readonly": true,
               "default": "true"
             },
             {
               "kind": "field",
               "name": "#internals",
-              "privacy": "private"
+              "privacy": "private",
+              "readonly": true
             },
             {
               "kind": "field",
