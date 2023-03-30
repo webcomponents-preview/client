@@ -18,13 +18,13 @@ jobs:
       - name: Remove PRs
         run: |
           pr_ids=$(gh api --header 'Accept: application/vnd.github+json' --method GET /repos/${{ github.repository }}/pulls | jq -r '. | map(.number) | join("\\|")')
-          find pr -type d -mindepth 1 -maxdepth 1 ! -regex "^pr\/\(${pr_ids}\)" -exec rm -rf {}
+          find pr -type d -mindepth 1 -maxdepth 1 -not -regex "^pr\/\(${pr_ids}\)" -exec rm -rf {} \;
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Remove releases
         run: |
           released_versions=$(gh api --header 'Accept: application/vnd.github+json' --method GET /repos/${{ github.repository }}/releases | jq -r '. + [{"tag_name": "latest"}, {"tag_name": "pr"}] | map(.tag_name | sub("\\.";"\\.";"g")) | join("\\|")')
-          find . -not -path '*/.*' -type d -mindepth 1 -maxdepth 1 -not -regex "^\.\/\(${released_versions}\)" -exec rm -rf {}
+          find . -not -path '*/.*' -type d -mindepth 1 -maxdepth 1 -not -regex "^\.\/\(${released_versions}\)" -exec rm -rf {} \;
         env:
           GH_TOKEN: ${{ github.token }}
 
