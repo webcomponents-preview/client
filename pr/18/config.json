@@ -1,6 +1,0 @@
-{
-  "$schema": "./config.schema.json",
-  "excludeElements": ["wcp-root"],
-  "initialActiveElement": "wcp-button",
-  "initialPreviewTab": "viewer"
-}
