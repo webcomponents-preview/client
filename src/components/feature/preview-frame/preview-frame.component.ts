@@ -69,7 +69,13 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   }
 
   @eventOptions({ passive: true })
-  protected handleActiveTabChange({ detail: activeTab }: CustomEvent<string>) {
+  protected handleActiveTabChange(event: CustomEvent<string>) {
+    const { detail: activeTab, currentTarget, target } = event;
+
+    // ignored bubbled events as they occur from nested tabs
+    if (currentTarget !== target) return;
+
+    // only update the active tab if it has changed
     if (this._activeTab !== activeTab) {
       this._activeTab = activeTab;
     }
