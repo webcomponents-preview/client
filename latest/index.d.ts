@@ -375,7 +375,7 @@ declare module "components/feature/preview-frame/preview-frame.component" {
         initialPreviewTab?: Config['initialPreviewTab'];
         protected handleSlotChange(event: Event): void;
         protected handleAvailabilityChange(): void;
-        protected handleActiveTabChange({ detail: activeTab }: CustomEvent<string>): void;
+        protected handleActiveTabChange(event: CustomEvent<string>): void;
         protected preparePluginTabs(): void;
         protected alignActiveTab(): void;
         protected render(): TemplateResult;
