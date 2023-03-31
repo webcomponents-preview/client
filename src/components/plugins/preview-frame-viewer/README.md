@@ -15,10 +15,8 @@
 | --------------------- | --------- | ----------- | --------------------- | ---------------------- | -------------- |
 | `getElementReference` | protected |             |                       | `Element \| undefined` |                |
 | `handleControlsInput` | protected |             | `event: InputEvent`   |                        |                |
-| `renderSlots`         | protected |             |                       | `TemplateResult`       |                |
 | `renderFieldControl`  | protected |             | `field: Parsed.Field` | `TemplateResult`       |                |
 | `renderSlotControl`   | protected |             | `slot: Parsed.Slot`   | `TemplateResult`       |                |
-| `renderElement`       | protected |             |                       | `TemplateResult`       |                |
 | `render`              | protected |             |                       | `TemplateResult`       |                |
 
 ## Attributes
