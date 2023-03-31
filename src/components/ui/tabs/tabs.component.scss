@@ -40,18 +40,21 @@ button {
   all: unset;
   appearance: none;
   padding: var(---wcp-tabs-tab-spacing);
-  cursor: pointer;
 
   border-bottom: var(---wcp-tabs-tab-active-border-width) solid transparent;
   transition: border-bottom-color var(---wcp-fx-default-duration) ease-in-out;
   will-change: border-bottom-color;
 
-  &:enabled[aria-selected='true'] {
-    border-bottom-color: var(---wcp-tabs-tab-active-border-color);
+  &:enabled {
+    cursor: pointer;
+
+    &[aria-selected='true'] {
+      border-bottom-color: var(---wcp-tabs-tab-active-border-color);
+    }
   }
 
   &:disabled {
-    opacity: .5;
+    opacity: 0.5;
   }
 }
 
