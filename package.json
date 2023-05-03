@@ -87,7 +87,7 @@
     "typescript-json-schema": "0.55.0"
   },
   "engines": {
-    "node": "18.15.0"
+    "node": "^18"
   },
   "overrides": {
     "esbuild": "0.17.14"
