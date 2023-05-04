@@ -26,10 +26,9 @@ export class Readme extends LitElement {
   loading = 'Loading readme...';
 
   protected render(): TemplateResult {
-    // const readme = fetch(this.url)
-    //   .then((response) => response.text())
-    //   .then((text) => unsafeHTML(renderMarkdown(text)) as string);
-    const readme = Promise.resolve('')
+    const readme = fetch(this.url)
+      .then((response) => response.text())
+      .then((text) => unsafeHTML(renderMarkdown(text)) as string);
     return html`${until(readme, html`${this.loading}`)}`;
   }
 }
