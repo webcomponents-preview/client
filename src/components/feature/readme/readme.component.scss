@@ -1,0 +1,10 @@
+@use '@/styles/utils' as utils;
+
+:root {
+  ---wcp-readme-spacing: var(--wcp-readme-spacing, #{0 utils.size(1) utils.size(1)});
+}
+
+:root {
+  display: block;
+  padding: var(--wcp-readme-spacing);
+}
