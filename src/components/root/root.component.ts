@@ -153,7 +153,13 @@ export class Root extends ColorSchemable(LitElement) {
   }
 
   protected renderReadme(url: string): TemplateResult {
-    return html`<wcp-readme url=${url}></wcp-readme>`;
+    // fetch the readme contents and parse it as markdown
+    const markdown = fetch(url).then((response) => response.text());
+    return html`
+      <wcp-readme-frame>
+        <wcp-readme markdown="${until(markdown, '')}"></wcp-readme>
+      </wcp-readme-frame>
+    `;
   }
 
   protected renderElement(tagName: string): TemplateResult {

@@ -9,6 +9,7 @@ export * from './components/feature/preview-controls/preview-controls.component'
 export * from './components/feature/preview-frame/preview-frame.component';
 export * from './components/feature/preview-frame/preview-frame.utils';
 export * from './components/feature/readme/readme.component';
+export * from './components/feature/readme-frame/readme-frame.component';
 export * from './components/feature/toggle-color-scheme/toggle-color-scheme.component';
 export * from './components/feature/toggle-sidebar/toggle-sidebar.component';
 export * from './components/layout/aside/aside.component';

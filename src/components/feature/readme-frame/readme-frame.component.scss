@@ -1,0 +1,16 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-readme-frame-distance: var(--wcp-readme-frame-distance, #{0 utils.size(1)});
+  ---wcp-readme-frame-spacing: var(--wcp-readme-frame-spacing, #{utils.size(1)});
+}
+
+:host {
+  display: block;
+  padding: var(---wcp-readme-frame-spacing);
+
+  @include utils.breakpoint(sm) {
+    margin: var(---wcp-readme-frame-distance);
+  }
+}
