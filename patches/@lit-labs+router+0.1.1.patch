@@ -1,0 +1,11 @@
+diff --git a/node_modules/@lit-labs/router/router.js b/node_modules/@lit-labs/router/router.js
+index 186ab66..6500726 100644
+--- a/node_modules/@lit-labs/router/router.js
++++ b/node_modules/@lit-labs/router/router.js
+@@ -4,5 +4,5 @@ import{Routes as t}from"./routes.js";
+  * Copyright 2021 Google LLC
+  * SPDX-License-Identifier: BSD-3-Clause
+  */
+-const o=location.origin||location.protocol+"//"+location.host;class i extends t{constructor(){super(...arguments),this.m=t=>{const i=0!==t.button||t.metaKey||t.ctrlKey||t.shiftKey;if(t.defaultPrevented||i)return;const s=t.composedPath().find((t=>"A"===t.tagName));if(void 0===s||""!==s.target||s.hasAttribute("download")||"external"===s.getAttribute("rel"))return;const n=s.href;if(""===n||n.startsWith("mailto:"))return;const e=window.location;s.origin===o&&(t.preventDefault(),n!==e.href&&(window.history.pushState({},"",n),this.goto(s.pathname)))},this.R=t=>{this.goto(window.location.pathname)}}hostConnected(){super.hostConnected(),window.addEventListener("click",this.m),window.addEventListener("popstate",this.R),this.goto(window.location.pathname)}hostDisconnected(){super.hostDisconnected(),window.removeEventListener("click",this.m),window.removeEventListener("popstate",this.R)}}export{i as Router};
++const o=location.origin||location.protocol+"//"+location.host;class i extends t{constructor(){super(...arguments),this.m=t=>{const i=0!==t.button||t.metaKey||t.ctrlKey||t.shiftKey;if(t.defaultPrevented||i)return;const s=t.composedPath().find((t=>"A"===t.tagName));if(void 0===s||""!==s.target||s.hasAttribute("download")||"external"===s.getAttribute("rel"))return;const n=s.href;if(""===n||n.startsWith("mailto:"))return;const e=window.location;s.origin===o&&(t.preventDefault(),n!==e.href&&(window.history.pushState({},"",n),this.goto(`${s.pathname}${s.search}${s.hash}`)))},this.R=t=>{this.goto(`${window.location.pathname}${window.location.search}${window.location.hash}`)}}hostConnected(){super.hostConnected(),window.addEventListener("click",this.m),window.addEventListener("popstate",this.R),this.goto(`${window.location.pathname}${window.location.search}${window.location.hash}`)}hostDisconnected(){super.hostDisconnected(),window.removeEventListener("click",this.m),window.removeEventListener("popstate",this.R)}}export{i as Router};
+ //# sourceMappingURL=router.js.map
