@@ -1,5 +1,6 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema';
 
+import { Router } from '@lit-labs/router';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -7,12 +8,18 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/utils/color-scheme.utils';
-import { getConfig } from '@/utils/config.utils';
+import { Config, getConfig } from '@/utils/config.utils';
 import type { Element, Manifest } from '@/utils/parser.types';
 import { parseCEM } from '@/parsers/cem/parse';
 
 import logo from '@/assets/icons/logo.svg';
 import styles from './root.component.scss';
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Property 'UrlPattern' does not exist
+if (!globalThis.URLPattern) {
+  await import('urlpattern-polyfill');
+}
 
 /**
  * @slot logo - Allows setting a custom logo to be displayed in the title.
@@ -33,8 +40,34 @@ import styles from './root.component.scss';
 export class Root extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
-  #activeElement?: string;
   #title = 'WCP';
+
+  #router = new Router(this, [
+    {
+      pattern: new URLPattern({ pathname: '/' }),
+      enter: async () => {
+        const firstElement = this.manifest?.elements.values().next().value.getNiceUrl();
+        const initialElement = this.config?.initialActiveElement ?? firstElement;
+        // await this.#router.goto(`/element/${initialElement}`);
+        return false;
+      },
+    },
+    {
+      path: '/readme/:url',
+      enter: () => {
+        console.log('enter readme');
+        return true;
+      },
+      render: ({ url = '' }) => this.renderReadme(decodeURIComponent(url)),
+    },
+    {
+      path: '/element/:tagName',
+      render: ({ tagName = '' }) => this.renderElement(tagName),
+    },
+  ]);
+
+  @state()
+  config?: Config;
 
   @state()
   manifest?: Manifest;
@@ -52,19 +85,6 @@ export class Root extends ColorSchemable(LitElement) {
   readmes: { name: string; url: string }[] = [];
 
   /**
-   * Sets the currently active element by its tag name. Will be updated at runtime and can
-   * be preset with an initial value to define the active element at startup.
-   */
-  @property({ type: String, reflect: true, attribute: 'active-element' })
-  set activeElement(activeElement: string | undefined) {
-    this.#activeElement = activeElement;
-    this.emitActiveElementChanged();
-  }
-  get activeElement(): string | undefined {
-    return this.#activeElement;
-  }
-
-  /**
    * Flags the component to be displayed inline and not standalone. Requires the surrounding
    * layout to provide the necessary styles like for any other block element.
    */
@@ -75,45 +95,34 @@ export class Root extends ColorSchemable(LitElement) {
    * Allows to set a url to load a config file from.
    */
   @property({ type: String, reflect: true, attribute: 'config-url' })
-  set configUrl(configUrl: string) {
-    this.loadConfig(configUrl);
-  }
+  configUrl?: string;
 
   /**
    * Defines the location of the custom element manifest file.
    */
   @property({ type: String, reflect: true, attribute: 'manifest-url' })
-  set manifestUrl(manifestUrl: string) {
-    this.loadCustomElementsManifest(manifestUrl);
-  }
+  manifestUrl!: string;
 
-  async loadConfig(configUrl: string) {
-    const config = await getConfig(configUrl);
+  async loadConfig(configUrl?: string) {
+    this.config = await getConfig(configUrl);
 
     // update title from config
-    if (config?.title) {
-      this.#title = config.title;
+    if (this.config?.title) {
+      this.#title = this.config.title;
       document.title = this.#title;
     }
     // set initial preview tab
-    if (config?.initialPreviewTab) {
-      this.initialPreviewTab = config.initialPreviewTab;
+    if (this.config?.initialPreviewTab) {
+      this.initialPreviewTab = this.config.initialPreviewTab;
     }
 
     // set additional readmes
-    if (config?.additionalReadmeGroupName) {
-      this.readmesGroup = config.additionalReadmeGroupName;
+    if (this.config?.additionalReadmeGroupName) {
+      this.readmesGroup = this.config.additionalReadmeGroupName;
     }
-    if (config?.additionalReadmes) {
-      this.readmes = config.additionalReadmes;
+    if (this.config?.additionalReadmes) {
+      this.readmes = this.config.additionalReadmes;
     }
-
-    // set initial active element
-    if (config?.initialActiveElement && this.activeElement === undefined) {
-      this.activeElement = config?.initialActiveElement;
-    }
-    // check if a fallback element should be activated
-    this.selectFallbackElement();
   }
 
   async loadCustomElementsManifest(manifestUrl: string) {
@@ -125,20 +134,8 @@ export class Root extends ColorSchemable(LitElement) {
     this.manifest = parseCEM(manifest, config?.excludeElements);
     this.navigation = this.manifest.getGroupedElements(config?.fallbackGroupName ?? 'Components');
 
-    // make sure we have a at least the first element active
-    this.selectFallbackElement();
-
     // notify all others
     this.emitManifestLoaded();
-  }
-
-  async selectFallbackElement() {
-    // do we already have an active element? do we have any elements at all?
-    if (this.activeElement !== undefined || !this.manifest?.elements.size) return;
-
-    // wait for the element to be loaded and then start navigating
-    await this.updateComplete;
-    location.href = `#/${this.manifest?.elements.values().next().value.getNiceUrl()}`;
   }
 
   emitManifestLoaded() {
@@ -151,37 +148,25 @@ export class Root extends ColorSchemable(LitElement) {
     this.dispatchEvent(event);
   }
 
-  emitActiveElementChanged() {
-    const event = new CustomEvent('wcp-root:active-element-changed', {
-      bubbles: true,
-      cancelable: true,
-      composed: true,
-      detail: this.manifest?.elements.get(this.activeElement ?? ''),
-    });
-    this.dispatchEvent(event);
-  }
+  override async connectedCallback() {
+    await this.loadConfig(this.configUrl);
+    await this.loadCustomElementsManifest(this.manifestUrl);
 
-  // since we're not binding this through lit-html, we actually need to bind
-  // this explicitly, so we can add the event listener to the window properly
-  handleHashChange = (() => {
-    const [, activeElement] = window.location.hash.split('#/');
-    this.activeElement = activeElement;
-    this.requestUpdate();
-  }).bind(this);
-
-  override connectedCallback() {
     super.connectedCallback();
-
-    // register hashchange listener
-    window.addEventListener('hashchange', this.handleHashChange, false);
-
-    // check, if we have an active element in the hash
-    this.handleHashChange();
   }
 
-  override disconnectedCallback() {
-    window.removeEventListener('hashchange', this.handleHashChange, false);
-    super.disconnectedCallback();
+  protected renderReadme(url: string): TemplateResult {
+    return html`<wcp-readme url=${url}></wcp-readme>`;
+  }
+
+  protected renderElement(tagName: string): TemplateResult {
+    return html`
+      <wcp-preview-frame initial-preview-tab="${ifDefined(this.initialPreviewTab)}">
+        <wcp-preview-frame-examples .element="${this.manifest?.elements.get(tagName)}"></wcp-preview-frame-examples>
+        <wcp-preview-frame-readme .element="${this.manifest?.elements.get(tagName)}"></wcp-preview-frame-readme>
+        <wcp-preview-frame-viewer .element="${this.manifest?.elements.get(tagName)}"></wcp-preview-frame-viewer>
+      </wcp-preview-frame>
+    `;
   }
 
   protected render(): TemplateResult {
@@ -200,7 +185,9 @@ export class Root extends ColorSchemable(LitElement) {
               ${map(
                 this.readmes,
                 ({ name, url }) => html`
-                  <wcp-navigation-item ?active="${false}" href="#/${url}">${name}</wcp-navigation-item>
+                  <wcp-navigation-item ?active="${false}" href="/readme/${encodeURIComponent(url)}">
+                    ${name}<br />${url}
+                  </wcp-navigation-item>
                 `
               )}
             </wcp-navigation>
@@ -216,10 +203,7 @@ export class Root extends ColorSchemable(LitElement) {
                   ${map(
                     elements,
                     (element) => html`
-                      <wcp-navigation-item
-                        ?active="${element.tagName === this.activeElement}"
-                        href="#/${element.getNiceUrl()}"
-                      >
+                      <wcp-navigation-item ?active="${false}" href="/element/${element.getNiceUrl()}">
                         ${element.getNiceName()}
                       </wcp-navigation-item>
                     `
@@ -229,24 +213,14 @@ export class Root extends ColorSchemable(LitElement) {
             )}
           `
         )}
+
         <wcp-preview-controls>
           <wcp-toggle-sidebar></wcp-toggle-sidebar>
           <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
           <slot name="preview-controls"></slot>
         </wcp-preview-controls>
-        <slot name="preview-frame">
-          <wcp-preview-frame initial-preview-tab="${ifDefined(this.initialPreviewTab)}">
-            <wcp-preview-frame-examples
-              .element="${this.manifest?.elements.get(this.activeElement ?? '')}"
-            ></wcp-preview-frame-examples>
-            <wcp-preview-frame-readme
-              .element="${this.manifest?.elements.get(this.activeElement ?? '')}"
-            ></wcp-preview-frame-readme>
-            <wcp-preview-frame-viewer
-              .element="${this.manifest?.elements.get(this.activeElement ?? '')}"
-            ></wcp-preview-frame-viewer>
-          </wcp-preview-frame>
-        </slot>
+
+        <slot name="preview-frame">${this.#router.outlet()}</slot>
       </wcp-layout>
     `;
   }
