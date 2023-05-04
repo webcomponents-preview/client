@@ -2,6 +2,7 @@ import { LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { html, unsafeStatic } from 'lit/static-html.js';
 import { customElement, property } from 'lit/decorators.js';
 
+import { ColorSchemable } from '@/utils/color-scheme.utils';
 import { renderMarkdown } from '@/utils/markdown.utils';
 
 import styles from './readme.component.scss';
@@ -23,7 +24,7 @@ import styles from './readme.component.scss';
  * ```
  */
 @customElement('wcp-readme')
-export class Readme extends LitElement {
+export class Readme extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   @property({ type: Boolean, reflect: true, attribute: 'add-code-preview' })
