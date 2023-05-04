@@ -49,16 +49,16 @@ export class Root extends ColorSchemable(LitElement) {
       enter: async () => {
         const firstElement = this.manifest?.elements.values().next().value.getNiceUrl();
         const initialElement = this.config?.initialActiveElement ?? firstElement;
-        await this.#router.goto(`/element/${initialElement}`);
+        await this.#router.goto(`/#/element/${initialElement}`);
         return false;
       },
     },
     {
-      path: '/readme/:url',
+      path: '/#/readme/:url',
       render: ({ url = '' }) => this.renderReadme(decodeURIComponent(url)),
     },
     {
-      path: '/element/:tagName',
+      path: '/#/element/:tagName',
       render: ({ tagName = '' }) => this.renderElement(tagName),
     },
   ]);
@@ -188,7 +188,7 @@ export class Root extends ColorSchemable(LitElement) {
               ${map(
                 this.readmes,
                 ({ name, url }) => html`
-                  <wcp-navigation-item ?active="${false}" href="/readme/${encodeURIComponent(url)}">
+                  <wcp-navigation-item ?active="${false}" href="/#/readme/${encodeURIComponent(url)}">
                     ${name}
                   </wcp-navigation-item>
                 `
@@ -206,7 +206,7 @@ export class Root extends ColorSchemable(LitElement) {
                   ${map(
                     elements,
                     (element) => html`
-                      <wcp-navigation-item ?active="${false}" href="/element/${element.getNiceUrl()}">
+                      <wcp-navigation-item ?active="${false}" href="/#/element/${element.getNiceUrl()}">
                         ${element.getNiceName()}
                       </wcp-navigation-item>
                     `
