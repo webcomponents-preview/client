@@ -24,7 +24,7 @@
 | `connectedCallback`          |           |             |                       |                  |                |
 | `renderReadme`               | protected |             | `url: string`         | `TemplateResult` |                |
 | `renderElement`              | protected |             | `tagName: string`     | `TemplateResult` |                |
-| `isActiveRoute`              | protected |             | `route: string`       | `boolean`        |                |
+| `isActiveRoute`              | protected |             | `hash: string`        | `boolean`        |                |
 | `render`                     | protected |             |                       | `TemplateResult` |                |
 
 ## Attributes

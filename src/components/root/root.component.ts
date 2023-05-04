@@ -45,20 +45,20 @@ export class Root extends ColorSchemable(LitElement) {
 
   #router = new Router(this, [
     {
-      pattern: new URLPattern({ pathname: '/' }),
+      path: location.pathname,
       enter: async () => {
         const firstElement = this.manifest?.elements.values().next().value.getNiceUrl();
         const initialElement = this.config?.initialActiveElement ?? firstElement;
-        await this.#router.goto(`/#/element/${initialElement}`);
+        await this.#router.goto(`${location.pathname}#/element/${initialElement}`);
         return false;
       },
     },
     {
-      path: '/#/readme/:url',
+      path: `${location.pathname}#/readme/:url`,
       render: ({ url = '' }) => this.renderReadme(decodeURIComponent(url)),
     },
     {
-      path: '/#/element/:tagName',
+      path: `${location.pathname}#/element/:tagName`,
       render: ({ tagName = '' }) => this.renderElement(tagName),
     },
   ]);
@@ -172,8 +172,8 @@ export class Root extends ColorSchemable(LitElement) {
     `;
   }
 
-  protected isActiveRoute(route: string): boolean {
-    return this.#router.currentPathname === route;
+  protected isActiveRoute(hash: string): boolean {
+    return this.#router.currentPathname === `${location.pathname}${hash}`;
   }
 
   protected render(): TemplateResult {
@@ -193,8 +193,8 @@ export class Root extends ColorSchemable(LitElement) {
                 this.readmes,
                 ({ name, url }) => html`
                   <wcp-navigation-item
-                    ?active="${this.isActiveRoute(`/#/readme/${encodeURIComponent(url)}`)}"
-                    href="/#/readme/${encodeURIComponent(url)}"
+                    ?active="${this.isActiveRoute(`#/readme/${encodeURIComponent(url)}`)}"
+                    href="#/readme/${encodeURIComponent(url)}"
                   >
                     ${name}
                   </wcp-navigation-item>
@@ -214,8 +214,8 @@ export class Root extends ColorSchemable(LitElement) {
                     elements,
                     (element) => html`
                       <wcp-navigation-item
-                        ?active="${this.isActiveRoute(`/#/element/${element.getNiceUrl()}`)}"
-                        href="/#/element/${element.getNiceUrl()}"
+                        ?active="${this.isActiveRoute(`#/element/${element.getNiceUrl()}`)}"
+                        href="#/element/${element.getNiceUrl()}"
                       >
                         ${element.getNiceName()}
                       </wcp-navigation-item>
