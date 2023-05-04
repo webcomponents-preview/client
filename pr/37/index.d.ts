@@ -359,6 +359,8 @@ declare module "components/feature/preview-frame/preview-frame.component" {
      * <wcp-preview-frame></wcp-preview-frame>
      * ```
      *
+     * @slot - The preview frame can be filled with any number of plugins. The plugins will be rendered as tabs.
+     *
      * @cssprop --wcp-preview-frame-dark-background - Background color of the preview frame in dark mode
      * @cssprop --wcp-preview-frame-dark-border-color - Border color of the example section in dark mode
      * @cssprop --wcp-preview-frame-dark-color - Text color of the preview frame in dark mode
@@ -367,10 +369,10 @@ declare module "components/feature/preview-frame/preview-frame.component" {
      * @cssprop --wcp-preview-frame-light-border-color - Border color of the example section in light mode
      * @cssprop --wcp-preview-frame-light-color - Text color of the preview frame in light mode
      *
+     * @cssprop --wcp-preview-frame-border-radius - Border radius of the preview frame
+     * @cssprop --wcp-preview-frame-border-width - Border width of the preview frame
      * @cssprop --wcp-preview-frame-distance - Outer margin of the preview frame
      * @cssprop --wcp-preview-frame-spacing - Inner padding of the preview frame
-     * @cssprop --wcp-preview-frame-border-width - Border width of the example section
-     * @cssprop --wcp-preview-frame-spacing - Inner padding of the example section
      */
     export class PreviewFrame extends PreviewFrame_base {
         static readonly styles: import("lit").CSSResult;
@@ -393,27 +395,60 @@ declare module "components/feature/preview-frame/preview-frame.component" {
 }
 declare module "utils/markdown.utils" {
     export function getCodeExample(slot: HTMLSlotElement): string;
-    export function renderMarkdown(mardown: string): string;
+    export function renderMarkdown(mardown: string, addCodePreview?: boolean): string;
 }
 declare module "components/feature/readme/readme.component" {
     import { LitElement, type TemplateResult } from 'lit';
     /**
      * Displays a Readme file by its URL.
      *
+     * @element wcp-readme
+     *
+     * @cssprop --wcp-readme-dark-border-color - Border color of the readme in dark mode.
+     * @cssprop --wcp-readme-dark-highlight-background - Background color of highlighted table rows in dark mode.
+     *
+     * @cssprop --wcp-readme-light-border-color - Border color of the readme in light mode.
+     * @cssprop --wcp-readme-light-highlight-background - Background color of highlighted table rows in light mode.
+     *
      * @example
      * ```html
-     * <wcp-readme url="/README.md"></wcp-readme>
+     * <wcp-readme markdown="# Hello _World_!"></wcp-readme>
      * ```
      */
     export class Readme extends LitElement {
         static readonly styles: import("lit").CSSResult;
-        url: string;
-        loading: string;
+        readonly showCodePreview = false;
+        readonly markdown = "";
+        connectedCallback(): Promise<void>;
+        createRenderRoot(): this;
         protected render(): TemplateResult;
     }
     global {
         interface HTMLElementTagNameMap {
             'wcp-readme': Readme;
+        }
+    }
+}
+declare module "components/feature/readme-frame/readme-frame.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    /**
+     * @example
+     * ```html
+     * <wcp-readme-frame></wcp-readme-frame>
+     * ```
+     *
+     * @slot - The readme frame is usually filled with a readme element.
+     *
+     * @cssprop --wcp-readme-frame-distance - Outer margin of the preview frame
+     * @cssprop --wcp-readme-frame-spacing - Inner padding of the preview frame
+     */
+    export class ReadmeFrame extends LitElement {
+        static readonly styles: import("lit").CSSResult;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-readme-frame': ReadmeFrame;
         }
     }
 }
@@ -603,13 +638,6 @@ declare module "components/plugins/preview-frame-readme/preview-frame-readme.plu
     const PreviewFrameReadme_base: (new (...args: any[]) => {
         colorScheme?: "light" | "dark" | undefined;
     }) & typeof LitElement;
-    /**
-     * @cssprop --wcp-preview-frame-readme-dark-border-color - Border color of the readme in dark mode.
-     * @cssprop --wcp-preview-frame-readme-dark-highlight-background - Background color of highlighted table rows in dark mode.
-     *
-     * @cssprop --wcp-preview-frame-readme-light-border-color - Border color of the readme in light mode.
-     * @cssprop --wcp-preview-frame-readme-light-highlight-background - Background color of highlighted table rows in light mode.
-     */
     export class PreviewFrameReadme extends PreviewFrameReadme_base implements PreviewFramePlugin {
         static readonly styles: import("lit").CSSResult;
         private _element?;
@@ -617,8 +645,6 @@ declare module "components/plugins/preview-frame-readme/preview-frame-readme.plu
         set element(element: Parsed.Element | undefined);
         readonly name = "readme";
         readonly label = "Readme";
-        createRenderRoot(): this;
-        connectedCallback(): void;
         protected render(): TemplateResult;
     }
     global {
@@ -1106,6 +1132,7 @@ declare module "index" {
     export * from "components/feature/preview-frame/preview-frame.component";
     export * from "components/feature/preview-frame/preview-frame.utils";
     export * from "components/feature/readme/readme.component";
+    export * from "components/feature/readme-frame/readme-frame.component";
     export * from "components/feature/toggle-color-scheme/toggle-color-scheme.component";
     export * from "components/feature/toggle-sidebar/toggle-sidebar.component";
     export * from "components/layout/aside/aside.component";
