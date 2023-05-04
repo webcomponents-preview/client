@@ -172,6 +172,10 @@ export class Root extends ColorSchemable(LitElement) {
     `;
   }
 
+  protected isActiveRoute(route: string): boolean {
+    return this.#router.currentPathname === route;
+  }
+
   protected render(): TemplateResult {
     return html`
       <wcp-layout>
@@ -188,7 +192,10 @@ export class Root extends ColorSchemable(LitElement) {
               ${map(
                 this.readmes,
                 ({ name, url }) => html`
-                  <wcp-navigation-item ?active="${false}" href="/#/readme/${encodeURIComponent(url)}">
+                  <wcp-navigation-item
+                    ?active="${this.isActiveRoute(`/#/readme/${encodeURIComponent(url)}`)}"
+                    href="/#/readme/${encodeURIComponent(url)}"
+                  >
                     ${name}
                   </wcp-navigation-item>
                 `
@@ -206,7 +213,10 @@ export class Root extends ColorSchemable(LitElement) {
                   ${map(
                     elements,
                     (element) => html`
-                      <wcp-navigation-item ?active="${false}" href="/#/element/${element.getNiceUrl()}">
+                      <wcp-navigation-item
+                        ?active="${this.isActiveRoute(`/#/element/${element.getNiceUrl()}`)}"
+                        href="/#/element/${element.getNiceUrl()}"
+                      >
                         ${element.getNiceName()}
                       </wcp-navigation-item>
                     `
