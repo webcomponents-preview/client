@@ -14,6 +14,8 @@ import styles from './preview-frame.component.scss';
  * ```html
  * <wcp-preview-frame></wcp-preview-frame>
  * ```
+ * 
+ * @slot - The preview frame can be filled with any number of plugins. The plugins will be rendered as tabs.
  *
  * @cssprop --wcp-preview-frame-dark-background - Background color of the preview frame in dark mode
  * @cssprop --wcp-preview-frame-dark-border-color - Border color of the example section in dark mode
@@ -23,10 +25,10 @@ import styles from './preview-frame.component.scss';
  * @cssprop --wcp-preview-frame-light-border-color - Border color of the example section in light mode
  * @cssprop --wcp-preview-frame-light-color - Text color of the preview frame in light mode
  *
+ * @cssprop --wcp-preview-frame-border-radius - Border radius of the preview frame
+ * @cssprop --wcp-preview-frame-border-width - Border width of the preview frame
  * @cssprop --wcp-preview-frame-distance - Outer margin of the preview frame
  * @cssprop --wcp-preview-frame-spacing - Inner padding of the preview frame
- * @cssprop --wcp-preview-frame-border-width - Border width of the example section
- * @cssprop --wcp-preview-frame-spacing - Inner padding of the example section
  */
 @customElement('wcp-preview-frame')
 export class PreviewFrame extends ColorSchemable(LitElement) {

@@ -33,9 +33,15 @@
 | `--wcp-preview-frame-light-background`   |         | Background color of the preview frame in light mode |
 | `--wcp-preview-frame-light-border-color` |         | Border color of the example section in light mode   |
 | `--wcp-preview-frame-light-color`        |         | Text color of the preview frame in light mode       |
+| `--wcp-preview-frame-border-radius`      |         | Border radius of the preview frame                  |
+| `--wcp-preview-frame-border-width`       |         | Border width of the preview frame                   |
 | `--wcp-preview-frame-distance`           |         | Outer margin of the preview frame                   |
 | `--wcp-preview-frame-spacing`            |         | Inner padding of the preview frame                  |
-| `--wcp-preview-frame-border-width`       |         | Border width of the example section                 |
-| `--wcp-preview-frame-spacing`            |         | Inner padding of the example section                |
+
+## Slots
+
+| Name | Description                                                                                       |
+| ---- | ------------------------------------------------------------------------------------------------- |
+|      | The preview frame can be filled with any number of plugins. The plugins will be rendered as tabs. |
 
 <hr/>

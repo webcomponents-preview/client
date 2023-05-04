@@ -1,7 +1,6 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { LitElement, type TemplateResult, unsafeCSS } from 'lit';
+import { html, unsafeStatic } from 'lit/static-html.js';
 import { customElement, property } from 'lit/decorators.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { until } from 'lit/directives/until.js';
 
 import { renderMarkdown } from '@/utils/markdown.utils';
 
@@ -10,26 +9,49 @@ import styles from './readme.component.scss';
 /**
  * Displays a Readme file by its URL.
  *
+ * @element wcp-readme
+ *
+ * @cssprop --wcp-readme-dark-border-color - Border color of the readme in dark mode.
+ * @cssprop --wcp-readme-dark-highlight-background - Background color of highlighted table rows in dark mode.
+ *
+ * @cssprop --wcp-readme-light-border-color - Border color of the readme in light mode.
+ * @cssprop --wcp-readme-light-highlight-background - Background color of highlighted table rows in light mode.
+ *
  * @example
  * ```html
- * <wcp-readme url="/README.md"></wcp-readme>
+ * <wcp-readme markdown="# Hello _World_!"></wcp-readme>
  * ```
  */
 @customElement('wcp-readme')
 export class Readme extends LitElement {
   static readonly styles = unsafeCSS(styles);
 
-  @property({ type: String, reflect: true })
-  url!: string;
+  @property({ type: Boolean, reflect: true, attribute: 'add-code-preview' })
+  readonly showCodePreview = false;
 
   @property({ type: String, reflect: true })
-  loading = 'Loading readme...';
+  readonly markdown = '';
+
+  override async connectedCallback() {
+    super.connectedCallback();
+
+    // apply global class for github stylesheet to be applied
+    this.classList.add('markdown-body');
+  }
+
+  // disable ShadowDOM
+  // https://stackoverflow.com/a/55213037/1146207
+  override createRenderRoot() {
+    return this;
+  }
 
   protected render(): TemplateResult {
-    const readme = fetch(this.url)
-      .then((response) => response.text())
-      .then((text) => unsafeHTML(renderMarkdown(text)) as string);
-    return html`${until(readme, html`${this.loading}`)}`;
+    return html`
+      ${unsafeStatic(renderMarkdown(this.markdown, this.showCodePreview))}
+      <style>
+        ${Readme.styles}
+      </style>
+    `;
   }
 }
 

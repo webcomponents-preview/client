@@ -5,6 +5,7 @@ import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
+import { until } from 'lit/directives/until.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/utils/color-scheme.utils';
@@ -54,10 +55,6 @@ export class Root extends ColorSchemable(LitElement) {
     },
     {
       path: '/readme/:url',
-      enter: () => {
-        console.log('enter readme');
-        return true;
-      },
       render: ({ url = '' }) => this.renderReadme(decodeURIComponent(url)),
     },
     {
@@ -186,7 +183,7 @@ export class Root extends ColorSchemable(LitElement) {
                 this.readmes,
                 ({ name, url }) => html`
                   <wcp-navigation-item ?active="${false}" href="/readme/${encodeURIComponent(url)}">
-                    ${name}<br />${url}
+                    ${name}
                   </wcp-navigation-item>
                 `
               )}
