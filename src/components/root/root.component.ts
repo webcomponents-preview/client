@@ -45,6 +45,12 @@ export class Root extends ColorSchemable(LitElement) {
   @state()
   navigation?: Map<string, Element[]>;
 
+  @state()
+  readmesGroup = 'Readme';
+
+  @state()
+  readmes: { name: string; url: string }[] = [];
+
   /**
    * Sets the currently active element by its tag name. Will be updated at runtime and can
    * be preset with an initial value to define the active element at startup.
@@ -92,6 +98,14 @@ export class Root extends ColorSchemable(LitElement) {
     // set initial preview tab
     if (config?.initialPreviewTab) {
       this.initialPreviewTab = config.initialPreviewTab;
+    }
+
+    // set additional readmes
+    if (config?.additionalReadmeGroupName) {
+      this.readmesGroup = config.additionalReadmeGroupName;
+    }
+    if (config?.additionalReadmes) {
+      this.readmes = config.additionalReadmes;
     }
 
     // set initial active element
@@ -179,6 +193,19 @@ export class Root extends ColorSchemable(LitElement) {
           </slot>
         </wcp-title>
 
+        ${when(
+          this.readmes.length > 0,
+          () => html`
+            <wcp-navigation slot="aside" headline="${this.readmesGroup}">
+              ${map(
+                this.readmes,
+                ({ name, url }) => html`
+                  <wcp-navigation-item ?active="${false}" href="#/${url}">${name}</wcp-navigation-item>
+                `
+              )}
+            </wcp-navigation>
+          `
+        )}
         ${when(
           this.navigation !== undefined,
           () => html`
