@@ -48,7 +48,7 @@ export class Root extends ColorSchemable(LitElement) {
       enter: async () => {
         const firstElement = this.manifest?.elements.values().next().value.getNiceUrl();
         const initialElement = this.config?.initialActiveElement ?? firstElement;
-        // await this.#router.goto(`/element/${initialElement}`);
+        await this.#router.goto(`/element/${initialElement}`);
         return false;
       },
     },
