@@ -60,7 +60,7 @@
               "kind": "field",
               "name": "#router",
               "privacy": "private",
-              "default": "new Router(this, [\n    {\n      pattern: new URLPattern({ pathname: '/' }),\n      enter: async () => {\n        const firstElement = this.manifest?.elements.values().next().value.getNiceUrl();\n        const initialElement = this.config?.initialActiveElement ?? firstElement;\n        await this.#router.goto(`/#/element/${initialElement}`);\n        return false;\n      },\n    },\n    {\n      path: '/#/readme/:url',\n      render: ({ url = '' }) => this.renderReadme(decodeURIComponent(url)),\n    },\n    {\n      path: '/#/element/:tagName',\n      render: ({ tagName = '' }) => this.renderElement(tagName),\n    },\n  ])"
+              "default": "new Router(this, [\n    {\n      path: location.pathname,\n      enter: async () => {\n        const firstElement = this.manifest?.elements.values().next().value.getNiceUrl();\n        const initialElement = this.config?.initialActiveElement ?? firstElement;\n        await this.#router.goto(`${location.pathname}#/element/${initialElement}`);\n        return false;\n      },\n    },\n    {\n      path: `${location.pathname}#/readme/:url`,\n      render: ({ url = '' }) => this.renderReadme(decodeURIComponent(url)),\n    },\n    {\n      path: `${location.pathname}#/element/:tagName`,\n      render: ({ tagName = '' }) => this.renderElement(tagName),\n    },\n  ])"
             },
             {
               "kind": "field",
@@ -967,6 +967,12 @@
               "readonly": true,
               "default": "''",
               "fieldName": "markdown"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils"
             }
           ],
           "superclass": {

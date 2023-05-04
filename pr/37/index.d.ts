@@ -399,6 +399,9 @@ declare module "utils/markdown.utils" {
 }
 declare module "components/feature/readme/readme.component" {
     import { LitElement, type TemplateResult } from 'lit';
+    const Readme_base: (new (...args: any[]) => {
+        colorScheme?: "light" | "dark" | undefined;
+    }) & typeof LitElement;
     /**
      * Displays a Readme file by its URL.
      *
@@ -415,7 +418,7 @@ declare module "components/feature/readme/readme.component" {
      * <wcp-readme markdown="# Hello _World_!"></wcp-readme>
      * ```
      */
-    export class Readme extends LitElement {
+    export class Readme extends Readme_base {
         static readonly styles: import("lit").CSSResult;
         readonly showCodePreview = false;
         readonly markdown = "";
