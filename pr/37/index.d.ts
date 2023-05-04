@@ -835,6 +835,7 @@ declare module "components/root/root.component" {
         connectedCallback(): Promise<void>;
         protected renderReadme(url: string): TemplateResult;
         protected renderElement(tagName: string): TemplateResult;
+        protected isActiveRoute(route: string): boolean;
         protected render(): TemplateResult;
     }
     global {
