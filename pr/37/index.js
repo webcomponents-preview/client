@@ -2034,7 +2034,7 @@ wcp-input .description {
         <wcp-preview-frame-readme .element="${this.manifest?.elements.get(d)}"></wcp-preview-frame-readme>
         <wcp-preview-frame-viewer .element="${this.manifest?.elements.get(d)}"></wcp-preview-frame-viewer>
       </wcp-preview-frame>
-    `}isActiveRoute(d){return ml(this,ed).currentPathname===d}render(){return o`
+    `}isActiveRoute(d){return ml(this,ed).currentPathname===`${location.pathname}${d}`}render(){return o`
       <wcp-layout>
         <wcp-title slot="aside" title="${ml(this,dd)}">
           <slot name="logo" slot="logo">
