@@ -999,10 +999,6 @@
           "name": "ReadmeFrame",
           "cssProperties": [
             {
-              "description": "Outer margin of the preview frame",
-              "name": "--wcp-readme-frame-distance"
-            },
-            {
               "description": "Inner padding of the preview frame",
               "name": "--wcp-readme-frame-spacing"
             }
@@ -1021,7 +1017,7 @@
           "examples": [
             "```html\n<wcp-readme-frame></wcp-readme-frame>\n```"
           ],
-          "readme": "# class: `ReadmeFrame`\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## CSS Properties\n\n| Name                          | Default | Description                        |\n| ----------------------------- | ------- | ---------------------------------- |\n| `--wcp-readme-frame-distance` |         | Outer margin of the preview frame  |\n| `--wcp-readme-frame-spacing`  |         | Inner padding of the preview frame |\n\n## Slots\n\n| Name | Description                                               |\n| ---- | --------------------------------------------------------- |\n|      | The readme frame is usually filled with a readme element. |\n\n<hr/>\n",
+          "readme": "# class: `ReadmeFrame`\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## CSS Properties\n\n| Name                         | Default | Description                        |\n| ---------------------------- | ------- | ---------------------------------- |\n| `--wcp-readme-frame-spacing` |         | Inner padding of the preview frame |\n\n## Slots\n\n| Name | Description                                               |\n| ---- | --------------------------------------------------------- |\n|      | The readme frame is usually filled with a readme element. |\n\n<hr/>\n",
           "groups": [
             "feature"
           ],

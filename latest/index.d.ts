@@ -398,6 +398,7 @@ declare module "components/feature/preview-frame/preview-frame.component" {
 }
 declare module "utils/markdown.utils" {
     export function getCodeExample(slot: HTMLSlotElement): string;
+    export function prefixRelativeUrls(markdown: string, path: string): string;
     export function renderMarkdown(mardown: string, addCodePreview?: boolean): string;
 }
 declare module "components/feature/readme/readme.component" {
@@ -445,7 +446,6 @@ declare module "components/feature/readme-frame/readme-frame.component" {
      *
      * @slot - The readme frame is usually filled with a readme element.
      *
-     * @cssprop --wcp-readme-frame-distance - Outer margin of the preview frame
      * @cssprop --wcp-readme-frame-spacing - Inner padding of the preview frame
      */
     export class ReadmeFrame extends LitElement {
@@ -1209,5 +1209,6 @@ declare module "index" {
     export * from "utils/routable.utils";
 }
 declare module "parsers/cem/1.0.0/cem-field.spec" { }
+declare module "utils/markdown.utils.spec" { }
 declare module "utils/parser.utils.spec" { }
 //# sourceMappingURL=index.d.ts.map
