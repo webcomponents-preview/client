@@ -35,5 +35,7 @@ export * from './parsers/cem/1.0.0/cem-slot';
 export * from './utils/color-scheme.utils';
 export * from './utils/config.utils';
 export * from './utils/markdown.utils';
+export * from './utils/mixin.types';
 export * from './utils/parser.types';
 export * from './utils/parser.utils';
+export * from './utils/routable.utils';

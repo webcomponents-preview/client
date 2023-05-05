@@ -1,6 +1,5 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema';
 
-import { Router } from '@lit-labs/router';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -12,15 +11,10 @@ import { ColorSchemable } from '@/utils/color-scheme.utils';
 import { Config, getConfig } from '@/utils/config.utils';
 import type { Element, Manifest } from '@/utils/parser.types';
 import { parseCEM } from '@/parsers/cem/parse';
+import { Routable } from '@/utils/routable.utils';
 
 import logo from '@/assets/icons/logo.svg';
 import styles from './root.component.scss';
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore: Property 'UrlPattern' does not exist
-if (!globalThis.URLPattern) {
-  await import('urlpattern-polyfill');
-}
 
 /**
  * @slot logo - Allows setting a custom logo to be displayed in the title.
@@ -38,30 +32,10 @@ if (!globalThis.URLPattern) {
  * @emits wcp-root:manifest-loaded - Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved.
  */
 @customElement('wcp-root')
-export class Root extends ColorSchemable(LitElement) {
+export class Root extends Routable(ColorSchemable(LitElement)) {
   static readonly styles = unsafeCSS(styles);
 
   #title = 'WCP';
-
-  #router = new Router(this, [
-    {
-      path: location.pathname,
-      enter: async () => {
-        const firstElement = this.manifest?.elements.values().next().value.getNiceUrl();
-        const initialElement = this.config?.initialActiveElement ?? firstElement;
-        await this.#router.goto(`${location.pathname}#/element/${initialElement}`);
-        return false;
-      },
-    },
-    {
-      path: `${location.pathname}#/readme/:url`,
-      render: ({ url = '' }) => this.renderReadme(decodeURIComponent(url)),
-    },
-    {
-      path: `${location.pathname}#/element/:tagName`,
-      render: ({ tagName = '' }) => this.renderElement(tagName),
-    },
-  ]);
 
   @state()
   config?: Config;
@@ -99,6 +73,30 @@ export class Root extends ColorSchemable(LitElement) {
    */
   @property({ type: String, reflect: true, attribute: 'manifest-url' })
   manifestUrl!: string;
+
+  constructor() {
+    super();
+    this.router.registerRoutes([
+      {
+        path: '/',
+        enter: () => {
+          console.log('enter');
+          const firstElement = this.manifest?.elements.values().next().value.getNiceUrl();
+          const initialElement = this.config?.initialActiveElement ?? firstElement;
+          this.router.redirect(`/element/${initialElement}`);
+          return false;
+        },
+      },
+      {
+        path: '/element/:tagName',
+        render: ({ tagName }) => this.renderElement(tagName ?? ''),
+      },
+      {
+        path: '/readme/:url',
+        render: ({ url = '' }) => this.renderReadme(decodeURIComponent(url)),
+      },
+    ]);
+  }
 
   async loadConfig(configUrl?: string) {
     this.config = await getConfig(configUrl);
@@ -172,10 +170,6 @@ export class Root extends ColorSchemable(LitElement) {
     `;
   }
 
-  protected isActiveRoute(hash: string): boolean {
-    return this.#router.currentPathname === `${location.pathname}${hash}`;
-  }
-
   protected render(): TemplateResult {
     return html`
       <wcp-layout>
@@ -193,7 +187,7 @@ export class Root extends ColorSchemable(LitElement) {
                 this.readmes,
                 ({ name, url }) => html`
                   <wcp-navigation-item
-                    ?active="${this.isActiveRoute(`#/readme/${encodeURIComponent(url)}`)}"
+                    ?active="${this.router.isActive(`/readme/${encodeURIComponent(url)}`)}"
                     href="#/readme/${encodeURIComponent(url)}"
                   >
                     ${name}
@@ -214,7 +208,7 @@ export class Root extends ColorSchemable(LitElement) {
                     elements,
                     (element) => html`
                       <wcp-navigation-item
-                        ?active="${this.isActiveRoute(`#/element/${element.getNiceUrl()}`)}"
+                        ?active="${this.router.isActive(`/element/${element.getNiceUrl()}`)}"
                         href="#/element/${element.getNiceUrl()}"
                       >
                         ${element.getNiceName()}
@@ -233,7 +227,7 @@ export class Root extends ColorSchemable(LitElement) {
           <slot name="preview-controls"></slot>
         </wcp-preview-controls>
 
-        <slot name="preview-frame">${this.#router.outlet()}</slot>
+        <slot name="preview-frame">${this.router.outlet()}</slot>
       </wcp-layout>
     `;
   }

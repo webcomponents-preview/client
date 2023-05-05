@@ -18,7 +18,6 @@
     "dist"
   ],
   "scripts": {
-    "postinstall": "patch-package",
     "lint": "eslint --ext .ts src",
     "clean": "shx rm -rf dist",
     "generate:barrel": "barrelsby --config .barrelsby.json",
@@ -40,7 +39,6 @@
     "dev": "run-p -lns dev:*"
   },
   "dependencies": {
-    "@lit-labs/router": "0.1.1",
     "@open-wc/lit-helpers": "0.5.1",
     "css.gg": "2.0.0",
     "element-internals-polyfill": "1.2.6",
@@ -80,7 +78,6 @@
     "jest-environment-jsdom": "29.5.0",
     "jest-junit": "15.0.0",
     "npm-run-all": "4.1.5",
-    "patch-package": "7.0.0",
     "postcss": "8.4.21",
     "postcss-preset-env": "8.3.0",
     "shx": "0.3.4",
