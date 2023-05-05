@@ -11,7 +11,6 @@ import styles from './readme-frame.component.scss';
  *
  * @slot - The readme frame is usually filled with a readme element.
  *
- * @cssprop --wcp-readme-frame-distance - Outer margin of the preview frame
  * @cssprop --wcp-readme-frame-spacing - Inner padding of the preview frame
  */
 @customElement('wcp-readme-frame')

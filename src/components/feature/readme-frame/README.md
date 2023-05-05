@@ -8,10 +8,9 @@
 
 ## CSS Properties
 
-| Name                          | Default | Description                        |
-| ----------------------------- | ------- | ---------------------------------- |
-| `--wcp-readme-frame-distance` |         | Outer margin of the preview frame  |
-| `--wcp-readme-frame-spacing`  |         | Inner padding of the preview frame |
+| Name                         | Default | Description                        |
+| ---------------------------- | ------- | ---------------------------------- |
+| `--wcp-readme-frame-spacing` |         | Inner padding of the preview frame |
 
 ## Slots
 

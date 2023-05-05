@@ -6,6 +6,11 @@ export function getCodeExample(slot: HTMLSlotElement): string {
   return slot.assignedElements().reduce((acc, el) => `${acc}\n${el.outerHTML}`, '');
 }
 
+export function prefixRelativeUrls(markdown: string, path: string): string {
+  // https://regex101.com/r/Hqh28g/2
+  return markdown.replace(/(\[[^\]]*\]\()(?!http|\/)(?:\.\/)?([^)]*)(\))/g, `$1${path}$2$3`);
+}
+
 export function renderMarkdown(mardown: string, addCodePreview = true): string {
   return marked(mardown, {
     highlight(code: string, lang: string) {

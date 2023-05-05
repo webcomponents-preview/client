@@ -9,6 +9,7 @@ import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/utils/color-scheme.utils';
 import { Config, getConfig } from '@/utils/config.utils';
+import { prefixRelativeUrls } from '@/utils/markdown.utils';
 import type { Element, Manifest } from '@/utils/parser.types';
 import { parseCEM } from '@/parsers/cem/parse';
 import { Routable } from '@/utils/routable.utils';
@@ -167,7 +168,10 @@ export class Root extends Routable(ColorSchemable(LitElement)) {
 
   protected renderReadme(url: string): TemplateResult {
     // fetch the readme contents and parse it as markdown
-    const markdown = fetch(url).then((response) => response.text());
+    const path = url.substring(0, url.lastIndexOf('/') + 1);
+    const markdown = fetch(url)
+      .then((response) => response.text())
+      .then((markdown) => prefixRelativeUrls(markdown, path));
     return html`
       <wcp-readme-frame>
         <wcp-readme markdown="${until(markdown, '')}"></wcp-readme>
