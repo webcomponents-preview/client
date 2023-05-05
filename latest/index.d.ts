@@ -1,5 +1,9 @@
+declare module "utils/mixin.types" {
+    export type Constructor<T> = new (...args: any[]) => T;
+}
 declare module "utils/color-scheme.utils" {
     import { LitElement } from 'lit';
+    import type { Constructor } from "utils/mixin.types";
     class ColorSchemableInterface {
         colorScheme?: 'light' | 'dark';
     }
@@ -8,14 +12,13 @@ declare module "utils/color-scheme.utils" {
             'wcp-color-scheme:toggle': CustomEvent<'dark' | 'light' | null>;
         }
     }
-    type Constructor<T> = new (...args: any[]) => T;
     export const ColorSchemable: <T extends Constructor<LitElement>>(superClass: T) => Constructor<ColorSchemableInterface> & T;
 }
 declare module "components/feature/markdown-example/markdown-example.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const MarkdownExample_base: (new (...args: any[]) => {
+    const MarkdownExample_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     /**
      * Shows an inline code example and a preview of the element in the readme.
      * This is used in the markdown formatter to render `html` examples.
@@ -62,9 +65,9 @@ declare module "components/feature/markdown-example/markdown-example.component" 
 }
 declare module "components/feature/navigation/navigation.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Navigation_base: (new (...args: any[]) => {
+    const Navigation_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     /**
      * @example
      * ### Usage with headline
@@ -102,9 +105,9 @@ declare module "components/feature/navigation/navigation.component" {
 }
 declare module "components/feature/navigation-item/navigation-item.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const NavigationItem_base: (new (...args: any[]) => {
+    const NavigationItem_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     /**
      * @example
      * ### Non-interactive
@@ -160,9 +163,9 @@ declare module "components/feature/navigation-item/navigation-item.component" {
 }
 declare module "components/feature/preview-controls/preview-controls.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const PreviewControls_base: (new (...args: any[]) => {
+    const PreviewControls_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     /**
      * @example
      * ```html
@@ -205,6 +208,11 @@ declare module "utils/config.utils" {
         fallbackGroupName: string;
         initialActiveElement: string;
         initialPreviewTab: 'examples' | 'readme' | 'viewer';
+        additionalReadmeGroupName: string;
+        additionalReadmes: {
+            name: string;
+            url: string;
+        }[];
     };
     global {
         interface Window {
@@ -345,14 +353,16 @@ declare module "components/feature/preview-frame/preview-frame.utils" {
 declare module "components/feature/preview-frame/preview-frame.component" {
     import { LitElement, type TemplateResult } from 'lit';
     import type { Config } from "utils/config.utils";
-    const PreviewFrame_base: (new (...args: any[]) => {
+    const PreviewFrame_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     /**
      * @example
      * ```html
      * <wcp-preview-frame></wcp-preview-frame>
      * ```
+     *
+     * @slot - The preview frame can be filled with any number of plugins. The plugins will be rendered as tabs.
      *
      * @cssprop --wcp-preview-frame-dark-background - Background color of the preview frame in dark mode
      * @cssprop --wcp-preview-frame-dark-border-color - Border color of the example section in dark mode
@@ -362,10 +372,10 @@ declare module "components/feature/preview-frame/preview-frame.component" {
      * @cssprop --wcp-preview-frame-light-border-color - Border color of the example section in light mode
      * @cssprop --wcp-preview-frame-light-color - Text color of the preview frame in light mode
      *
+     * @cssprop --wcp-preview-frame-border-radius - Border radius of the preview frame
+     * @cssprop --wcp-preview-frame-border-width - Border width of the preview frame
      * @cssprop --wcp-preview-frame-distance - Outer margin of the preview frame
      * @cssprop --wcp-preview-frame-spacing - Inner padding of the preview frame
-     * @cssprop --wcp-preview-frame-border-width - Border width of the example section
-     * @cssprop --wcp-preview-frame-spacing - Inner padding of the example section
      */
     export class PreviewFrame extends PreviewFrame_base {
         static readonly styles: import("lit").CSSResult;
@@ -386,11 +396,73 @@ declare module "components/feature/preview-frame/preview-frame.component" {
         }
     }
 }
+declare module "utils/markdown.utils" {
+    export function getCodeExample(slot: HTMLSlotElement): string;
+    export function renderMarkdown(mardown: string, addCodePreview?: boolean): string;
+}
+declare module "components/feature/readme/readme.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    const Readme_base: import("index").Constructor<{
+        colorScheme?: "light" | "dark" | undefined;
+    }> & typeof LitElement;
+    /**
+     * Displays a Readme file by its URL.
+     *
+     * @element wcp-readme
+     *
+     * @cssprop --wcp-readme-dark-border-color - Border color of the readme in dark mode.
+     * @cssprop --wcp-readme-dark-highlight-background - Background color of highlighted table rows in dark mode.
+     *
+     * @cssprop --wcp-readme-light-border-color - Border color of the readme in light mode.
+     * @cssprop --wcp-readme-light-highlight-background - Background color of highlighted table rows in light mode.
+     *
+     * @example
+     * ```html
+     * <wcp-readme markdown="# Hello _World_!"></wcp-readme>
+     * ```
+     */
+    export class Readme extends Readme_base {
+        static readonly styles: import("lit").CSSResult;
+        readonly showCodePreview = false;
+        readonly markdown = "";
+        connectedCallback(): Promise<void>;
+        createRenderRoot(): this;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-readme': Readme;
+        }
+    }
+}
+declare module "components/feature/readme-frame/readme-frame.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    /**
+     * @example
+     * ```html
+     * <wcp-readme-frame></wcp-readme-frame>
+     * ```
+     *
+     * @slot - The readme frame is usually filled with a readme element.
+     *
+     * @cssprop --wcp-readme-frame-distance - Outer margin of the preview frame
+     * @cssprop --wcp-readme-frame-spacing - Inner padding of the preview frame
+     */
+    export class ReadmeFrame extends LitElement {
+        static readonly styles: import("lit").CSSResult;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-readme-frame': ReadmeFrame;
+        }
+    }
+}
 declare module "components/feature/toggle-color-scheme/toggle-color-scheme.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const ToggleColorScheme_base: (new (...args: any[]) => {
+    const ToggleColorScheme_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     /**
      * Shows a button to toggle the desired color-scheme.
      *
@@ -434,9 +506,9 @@ declare module "components/feature/toggle-sidebar/toggle-sidebar.component" {
 }
 declare module "components/layout/aside/aside.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Aside_base: (new (...args: any[]) => {
+    const Aside_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     /**
      * To toggle the side bar remotely, you can dispatch a custom event on the global window object:
      * ```js
@@ -535,17 +607,13 @@ declare module "components/layout/main/main.component" {
         }
     }
 }
-declare module "utils/markdown.utils" {
-    export function getCodeExample(slot: HTMLSlotElement): string;
-    export function renderMarkdown(mardown: string): string;
-}
 declare module "components/plugins/preview-frame-examples/preview-frame-examples.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
     import type * as Parsed from "utils/parser.types";
     import type { PreviewFramePlugin } from "components/feature/preview-frame/preview-frame.utils";
-    const PreviewFrameExamples_base: (new (...args: any[]) => {
+    const PreviewFrameExamples_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     /**
      * Shows the examples of a custom element manifest.
      *
@@ -573,16 +641,9 @@ declare module "components/plugins/preview-frame-readme/preview-frame-readme.plu
     import { LitElement, type TemplateResult } from 'lit';
     import type * as Parsed from "utils/parser.types";
     import type { PreviewFramePlugin } from "components/feature/preview-frame/preview-frame.utils";
-    const PreviewFrameReadme_base: (new (...args: any[]) => {
+    const PreviewFrameReadme_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
-    /**
-     * @cssprop --wcp-preview-frame-readme-dark-border-color - Border color of the readme in dark mode.
-     * @cssprop --wcp-preview-frame-readme-dark-highlight-background - Background color of highlighted table rows in dark mode.
-     *
-     * @cssprop --wcp-preview-frame-readme-light-border-color - Border color of the readme in light mode.
-     * @cssprop --wcp-preview-frame-readme-light-highlight-background - Background color of highlighted table rows in light mode.
-     */
+    }> & typeof LitElement;
     export class PreviewFrameReadme extends PreviewFrameReadme_base implements PreviewFramePlugin {
         static readonly styles: import("lit").CSSResult;
         private _element?;
@@ -590,8 +651,6 @@ declare module "components/plugins/preview-frame-readme/preview-frame-readme.plu
         set element(element: Parsed.Element | undefined);
         readonly name = "readme";
         readonly label = "Readme";
-        createRenderRoot(): this;
-        connectedCallback(): void;
         protected render(): TemplateResult;
     }
     global {
@@ -640,9 +699,9 @@ declare module "components/plugins/preview-frame-viewer/preview-frame-viewer.plu
     import { LitElement, type TemplateResult } from 'lit';
     import type * as Parsed from "utils/parser.types";
     import type { PreviewFramePlugin } from "components/feature/preview-frame/preview-frame.utils";
-    const PreviewFrameViewer_base: (new (...args: any[]) => {
+    const PreviewFrameViewer_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     export class PreviewFrameViewer extends PreviewFrameViewer_base implements PreviewFramePlugin {
         #private;
         static readonly styles: import("lit").CSSResult;
@@ -728,13 +787,57 @@ declare module "parsers/cem/parse" {
      */
     export const parseCEM: (data: object, exclude?: string[]) => Manifest;
 }
+declare module "utils/routable.utils" {
+    import type { LitElement, TemplateResult } from 'lit';
+    import type { Constructor } from "utils/mixin.types";
+    class RoutableInterface {
+        router: Router;
+    }
+    export type Params = Record<string, string | undefined>;
+    export type Route = {
+        path: string;
+        enter?: (params: Params, router: Router) => boolean;
+        render?: (params: Params, router: Router) => TemplateResult;
+    };
+    class Router {
+        #private;
+        get currentPath(): string | undefined;
+        registerRoutes(routes: Route[]): void;
+        isActive(path: string): boolean;
+        redirect(path: string): void;
+        constructor(host: LitElement);
+        connect(): void;
+        disconnect(): void;
+        outlet(): TemplateResult;
+    }
+    export const Routable: <T extends Constructor<LitElement>>(superClass: T) => Constructor<RoutableInterface> & T;
+}
 declare module "components/root/root.component" {
     import type { CustomElementDeclaration } from 'custom-elements-manifest/schema';
     import { LitElement, type TemplateResult } from 'lit';
+    import { Config } from "utils/config.utils";
     import type { Element, Manifest } from "utils/parser.types";
-    const Root_base: (new (...args: any[]) => {
+    const Root_base: import("index").Constructor<{
+        router: {
+            readonly "__#5@#host": LitElement;
+            "__#5@#currentPath"?: string | undefined;
+            "__#5@#currentParams": import("@/utils/routable.utils").Params;
+            "__#5@#currentRoute"?: import("@/utils/routable.utils").Route | undefined;
+            "__#5@#routes": import("@/utils/routable.utils").Route[];
+            readonly currentPath: string | undefined;
+            registerRoutes(routes: import("@/utils/routable.utils").Route[]): void;
+            isActive(path: string): boolean;
+            redirect(path: string): void;
+            "__#5@#withBaseUrl"(path?: string): string;
+            "__#5@#createPattern"(path: string): URLPattern;
+            "__#5@#findCurrentRoute": (event: HashChangeEvent) => Promise<void>;
+            connect(): void;
+            disconnect(): void;
+            outlet(): TemplateResult;
+        };
+    }> & import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     /**
      * @slot logo - Allows setting a custom logo to be displayed in the title.
      * @slot preview-controls - Can be used to inject additional preview controls.
@@ -753,15 +856,15 @@ declare module "components/root/root.component" {
     export class Root extends Root_base {
         #private;
         static readonly styles: import("lit").CSSResult;
+        config?: Config;
         manifest?: Manifest;
         initialPreviewTab?: string;
         navigation?: Map<string, Element[]>;
-        /**
-         * Sets the currently active element by its tag name. Will be updated at runtime and can
-         * be preset with an initial value to define the active element at startup.
-         */
-        set activeElement(activeElement: string | undefined);
-        get activeElement(): string | undefined;
+        readmesGroup: string;
+        readmes: {
+            name: string;
+            url: string;
+        }[];
         /**
          * Flags the component to be displayed inline and not standalone. Requires the surrounding
          * layout to provide the necessary styles like for any other block element.
@@ -770,19 +873,18 @@ declare module "components/root/root.component" {
         /**
          * Allows to set a url to load a config file from.
          */
-        set configUrl(configUrl: string);
+        configUrl?: string;
         /**
          * Defines the location of the custom element manifest file.
          */
-        set manifestUrl(manifestUrl: string);
-        loadConfig(configUrl: string): Promise<void>;
+        manifestUrl: string;
+        constructor();
+        loadConfig(configUrl?: string): Promise<void>;
         loadCustomElementsManifest(manifestUrl: string): Promise<void>;
-        selectFallbackElement(): Promise<void>;
         emitManifestLoaded(): void;
-        emitActiveElementChanged(): void;
-        handleHashChange: () => void;
-        connectedCallback(): void;
-        disconnectedCallback(): void;
+        connectedCallback(): Promise<void>;
+        protected renderReadme(url: string): TemplateResult;
+        protected renderElement(tagName: string): TemplateResult;
         protected render(): TemplateResult;
     }
     global {
@@ -798,9 +900,9 @@ declare module "components/root/root.component" {
 declare module "components/ui/button/button.component" {
     import { LitElement, type TemplateResult } from 'lit';
     import 'element-internals-polyfill';
-    const Button_base: (new (...args: any[]) => {
+    const Button_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     /**
      * Shows a button element.
      *
@@ -916,9 +1018,9 @@ declare module "components/ui/button/button.component" {
 }
 declare module "components/ui/code/code.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Code_base: (new (...args: any[]) => {
+    const Code_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     /**
      * Shows a formatted code snippet.
      *
@@ -975,9 +1077,9 @@ declare module "components/ui/icon/icon.component" {
 }
 declare module "components/ui/tabs/tabs.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Tabs_base: (new (...args: any[]) => {
+    const Tabs_base: import("index").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
-    }) & typeof LitElement;
+    }> & typeof LitElement;
     /**
      * @example
      * ```html
@@ -1079,6 +1181,8 @@ declare module "index" {
     export * from "components/feature/preview-controls/preview-controls.component";
     export * from "components/feature/preview-frame/preview-frame.component";
     export * from "components/feature/preview-frame/preview-frame.utils";
+    export * from "components/feature/readme/readme.component";
+    export * from "components/feature/readme-frame/readme-frame.component";
     export * from "components/feature/toggle-color-scheme/toggle-color-scheme.component";
     export * from "components/feature/toggle-sidebar/toggle-sidebar.component";
     export * from "components/layout/aside/aside.component";
@@ -1099,8 +1203,10 @@ declare module "index" {
     export * from "utils/color-scheme.utils";
     export * from "utils/config.utils";
     export * from "utils/markdown.utils";
+    export * from "utils/mixin.types";
     export * from "utils/parser.types";
     export * from "utils/parser.utils";
+    export * from "utils/routable.utils";
 }
 declare module "parsers/cem/1.0.0/cem-field.spec" { }
 declare module "utils/parser.utils.spec" { }
