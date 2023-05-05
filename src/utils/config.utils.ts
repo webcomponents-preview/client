@@ -5,6 +5,11 @@ export type Config = {
   fallbackGroupName: string;
   initialActiveElement: string;
   initialPreviewTab: 'examples' | 'readme' | 'viewer';
+  additionalReadmeGroupName: string;
+  additionalReadmes: {
+    name: string;
+    url: string;
+  }[];
 };
 
 declare global {

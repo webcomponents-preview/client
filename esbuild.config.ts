@@ -68,6 +68,10 @@ const options: BuildOptions = {
       transform,
     }),
     copyPlugin({
+      src: 'README.md',
+      dest: 'dist/README.md',
+    }),
+    copyPlugin({
       src: 'src/config.json',
       dest: 'dist/config.json',
     }),

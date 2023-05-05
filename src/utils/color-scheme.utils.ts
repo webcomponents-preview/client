@@ -1,5 +1,6 @@
 import { LitElement } from 'lit';
 import { property } from 'lit/decorators/property.js';
+import type { Constructor } from '@/utils/mixin.types';
 
 declare class ColorSchemableInterface {
   colorScheme?: 'light' | 'dark';
@@ -10,9 +11,6 @@ declare global {
     'wcp-color-scheme:toggle': CustomEvent<'dark' | 'light' | null>;
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T> = new (...args: any[]) => T;
 
 // module stores global state
 const colorSchemables = new Set<ColorSchemableInterface>();
@@ -28,6 +26,7 @@ function handleColorSchemeChange({ detail }: CustomEvent<'dark' | 'light' | null
 // bind a single listener to keep track of changes
 window.addEventListener('wcp-color-scheme:toggle', handleColorSchemeChange, false);
 
+// provide a mixin to make a component color schemable
 export const ColorSchemable = <T extends Constructor<LitElement>>(superClass: T) => {
   class ColorSchemableElement extends superClass {
     /**

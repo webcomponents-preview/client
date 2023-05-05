@@ -22,21 +22,21 @@
     "clean": "shx rm -rf dist",
     "generate:barrel": "barrelsby --config .barrelsby.json",
     "generate:config": "typescript-json-schema src/utils/config.utils.ts Config --ignoreErrors --out src/config.schema.json",
-    "generate": "run-p --print-name generate:*",
+    "generate": "run-p -lns generate:*",
     "docs": "cross-env NODE_OPTIONS='--loader ts-node/esm' NODE_NO_WARNINGS=1 cem analyze --config custom-elements-manifest.config.ts",
     "test": "jest",
     "test:ci": "jest --ci --passWithNoTests --reporters=default --reporters=jest-junit",
     "test:watch": "jest --watch",
-    "prebuild": "run-s --print-name clean generate",
+    "prebuild": "run-s -lns clean generate",
     "build:components": "ts-node esbuild.config.ts --ci",
     "build:types": "tsc --project tsconfig.types.json",
     "build:docs": "npm run docs",
-    "build": "run-p --print-name build:*",
-    "predev": "run-p --print-name clean generate",
+    "build": "run-p -lns build:*",
+    "predev": "run-p -lns clean generate",
     "dev:components": "ts-node esbuild.config.ts --watch --port 8087",
     "dev:types": "npm run build:types -- --watch",
     "dev:docs": "npm run docs -- --watch",
-    "dev": "run-p --print-name dev:*"
+    "dev": "run-p -lns dev:*"
   },
   "dependencies": {
     "@open-wc/lit-helpers": "0.5.1",
@@ -46,7 +46,8 @@
     "highlight.js": "11.7.0",
     "lit": "2.7.0",
     "marked": "4.3.0",
-    "pretty": "2.0.0"
+    "pretty": "2.0.0",
+    "urlpattern-polyfill": "8.0.2"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "0.8.0",

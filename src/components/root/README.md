@@ -2,16 +2,17 @@
 
 ## Fields
 
-| Name                | Privacy | Type                                  | Default | Description                                                                                                                                                          | Inherited From |
-| ------------------- | ------- | ------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| `manifest`          |         | `Manifest \| undefined`               |         |                                                                                                                                                                      |                |
-| `initialPreviewTab` |         | `string \| undefined`                 |         |                                                                                                                                                                      |                |
-| `navigation`        |         | `Map<string, Element[]> \| undefined` |         |                                                                                                                                                                      |                |
-| `activeElement`     |         | `string \| undefined`                 |         | Sets the currently active element by its tag name. Will be updated at runtime and can&#xA;be preset with an initial value to define the active element at startup.   |                |
-| `inline`            |         | `boolean`                             | `false` | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element. |                |
-| `configUrl`         |         |                                       |         | Allows to set a url to load a config file from.                                                                                                                      |                |
-| `manifestUrl`       |         |                                       |         | Defines the location of the custom element manifest file.                                                                                                            |                |
-| `handleHashChange`  |         |                                       |         |                                                                                                                                                                      |                |
+| Name                | Privacy | Type                                  | Default    | Description                                                                                                                                                          | Inherited From |
+| ------------------- | ------- | ------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| `config`            |         | `Config \| undefined`                 |            |                                                                                                                                                                      |                |
+| `manifest`          |         | `Manifest \| undefined`               |            |                                                                                                                                                                      |                |
+| `initialPreviewTab` |         | `string \| undefined`                 |            |                                                                                                                                                                      |                |
+| `navigation`        |         | `Map<string, Element[]> \| undefined` |            |                                                                                                                                                                      |                |
+| `readmesGroup`      |         | `string`                              | `'Readme'` |                                                                                                                                                                      |                |
+| `readmes`           |         | `{ name: string; url: string }[]`     | `[]`       |                                                                                                                                                                      |                |
+| `inline`            |         | `boolean`                             | `false`    | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element. |                |
+| `configUrl`         |         | `string \| undefined`                 |            | Allows to set a url to load a config file from.                                                                                                                      |                |
+| `manifestUrl`       |         | `string`                              |            | Defines the location of the custom element manifest file.                                                                                                            |                |
 
 ## Methods
 
@@ -19,21 +20,19 @@
 | ---------------------------- | --------- | ----------- | --------------------- | ---------------- | -------------- |
 | `loadConfig`                 |           |             | `configUrl: string`   |                  |                |
 | `loadCustomElementsManifest` |           |             | `manifestUrl: string` |                  |                |
-| `selectFallbackElement`      |           |             |                       |                  |                |
 | `emitManifestLoaded`         |           |             |                       |                  |                |
-| `emitActiveElementChanged`   |           |             |                       |                  |                |
 | `connectedCallback`          |           |             |                       |                  |                |
-| `disconnectedCallback`       |           |             |                       |                  |                |
+| `renderReadme`               | protected |             | `url: string`         | `TemplateResult` |                |
+| `renderElement`              | protected |             | `tagName: string`     | `TemplateResult` |                |
 | `render`                     | protected |             |                       | `TemplateResult` |                |
 
 ## Attributes
 
-| Name             | Field         | Inherited From |
-| ---------------- | ------------- | -------------- |
-| `active-element` | activeElement |                |
-| `inline`         | inline        |                |
-| `config-url`     | configUrl     |                |
-| `manifest-url`   | manifestUrl   |                |
+| Name           | Field       | Inherited From |
+| -------------- | ----------- | -------------- |
+| `inline`       | inline      |                |
+| `config-url`   | configUrl   |                |
+| `manifest-url` | manifestUrl |                |
 
 ## CSS Properties
 

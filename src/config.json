@@ -2,5 +2,12 @@
   "$schema": "./config.schema.json",
   "excludeElements": ["wcp-root"],
   "initialActiveElement": "wcp-button",
-  "initialPreviewTab": "viewer"
+  "initialPreviewTab": "viewer",
+  "additionalReadmeGroupName": "Readme",
+  "additionalReadmes": [
+    {
+      "name": "Web Component Preview",
+      "url": "README.md"
+    }
+  ]
 }
