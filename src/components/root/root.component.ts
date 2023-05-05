@@ -80,20 +80,35 @@ export class Root extends Routable(ColorSchemable(LitElement)) {
       {
         path: '/',
         enter: () => {
-          console.log('enter');
+          // redirect to initial element if defined
+          if (this.config?.initialActiveElement !== undefined) {
+            this.router.redirect(`/element/${this.config.initialActiveElement}`);
+            return false;
+          }
+
+          // redirect to first readme if available
+          const firstReadme = this.readmes[0]?.url;
+          if (firstReadme !== undefined) {
+            this.router.redirect(`/readme/${encodeURIComponent(firstReadme)}`);
+            return false;
+          }
+
+          // redirect to first element
           const firstElement = this.manifest?.elements.values().next().value.getNiceUrl();
-          const initialElement = this.config?.initialActiveElement ?? firstElement;
-          this.router.redirect(`/element/${initialElement}`);
+          this.router.redirect(`/element/${firstElement}`);
           return false;
         },
       },
       {
-        path: '/element/:tagName',
-        render: ({ tagName }) => this.renderElement(tagName ?? ''),
+        path: '/readme/:url',
+        enter: () => {
+          return this.readmes.length > 0;
+        },
+        render: ({ url = '' }) => this.renderReadme(decodeURIComponent(url)),
       },
       {
-        path: '/readme/:url',
-        render: ({ url = '' }) => this.renderReadme(decodeURIComponent(url)),
+        path: '/element/:tagName',
+        render: ({ tagName }) => this.renderElement(tagName ?? ''),
       },
     ]);
   }
