@@ -6,9 +6,27 @@ export function getCodeExample(slot: HTMLSlotElement): string {
   return slot.assignedElements().reduce((acc, el) => `${acc}\n${el.outerHTML}`, '');
 }
 
-export function prefixRelativeUrls(markdown: string, path: string): string {
-  // https://regex101.com/r/Hqh28g/2
-  return markdown.replace(/(\[[^\]]*\]\()(?!http|\/)(?:\.\/)?([^)]*)(\))/g, `$1${path}$2$3`);
+/**
+ * Only relative links will be handled. If a markdown file (*.md, *.mdx) is linked, it will be prefixed with the route additionally.
+ */
+export function prefixRelativeUrls(markdown: string, base: string, route = ''): string {
+  const path = base.substring(0, base.lastIndexOf('/') + 1);
+  // https://regex101.com/r/mi812s/4
+  return markdown.replace(
+    /(\[[^\]]*\]\()(?!(?:[a-z]+:\/\/)|\/)(?:\.\/)?([^)]*?)(\.mdx?)?(?:#(.*))?(\))/gi,
+    (_, before, url = '', ext = '', id = '', after) => {
+      const isMarkdownLink = ext !== '';
+      const hasUrl = url !== '';
+      const isHashLink = id !== '' && !hasUrl;
+      if (isMarkdownLink || isHashLink) {
+        const link = encodeURIComponent(hasUrl ? `${url}${ext}` : base);
+        const hash = id !== '' ? `/${id}` : '';
+        return `${before}${route}${link}${hash}${after}`;
+      }
+      // is any assetic relative link
+      return [before, path, url, ext, after].join('');
+    }
+  );
 }
 
 export function renderMarkdown(mardown: string, addCodePreview = true): string {
