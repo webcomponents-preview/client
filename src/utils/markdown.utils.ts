@@ -19,7 +19,7 @@ export function prefixRelativeUrls(markdown: string, base: string, route = ''): 
       const hasUrl = url !== '';
       const isHashLink = id !== '' && !hasUrl;
       if (isMarkdownLink || isHashLink) {
-        const link = encodeURIComponent(hasUrl ? `${url}${ext}` : base);
+        const link = encodeURIComponent(hasUrl ? `${path}${url}${ext}` : base);
         const hash = id !== '' ? `/${id}` : '';
         return `${before}${route}${link}${hash}${after}`;
       }
