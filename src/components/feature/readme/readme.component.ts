@@ -33,6 +33,9 @@ export class Readme extends ColorSchemable(LitElement) {
   @property({ type: String, reflect: true })
   readonly markdown = '';
 
+  @property({ type: String, reflect: true })
+  readonly hash?: string;
+
   override async connectedCallback() {
     super.connectedCallback();
 
@@ -40,10 +43,28 @@ export class Readme extends ColorSchemable(LitElement) {
     this.classList.add('markdown-body');
   }
 
+  protected updated() {
+    if (this.hash) {
+      this.scrollToId(this.hash);
+    }
+  }
+
   // disable ShadowDOM
   // https://stackoverflow.com/a/55213037/1146207
   override createRenderRoot() {
     return this;
+  }
+
+  scrollToId(section: string) {
+    const element = this.querySelector(`#${section}`);
+    if (element !== null) {
+      // as hash routing may be used, we can't rely on the `:target` pseudo selector, thus we set a class
+      this.querySelectorAll('.target').forEach((el) => el.classList.remove('target'));
+      element.classList.add('target');
+
+      // finally, scroll to the element
+      element.scrollIntoView({ behavior: 'auto' });
+    }
   }
 
   protected render(): TemplateResult {

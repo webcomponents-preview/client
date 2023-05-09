@@ -8,6 +8,10 @@
     {
       "name": "Web Component Preview",
       "url": "README.md"
+    },
+    {
+      "name": "Test inline links",
+      "url": "assets/test.md"
     }
   ]
 }

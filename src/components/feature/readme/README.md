@@ -2,18 +2,21 @@
 
 ## Fields
 
-| Name              | Privacy | Type      | Default | Description | Inherited From |
-| ----------------- | ------- | --------- | ------- | ----------- | -------------- |
-| `showCodePreview` |         | `boolean` | `false` |             |                |
-| `markdown`        |         | `string`  | `''`    |             |                |
+| Name              | Privacy | Type                  | Default | Description | Inherited From |
+| ----------------- | ------- | --------------------- | ------- | ----------- | -------------- |
+| `showCodePreview` |         | `boolean`             | `false` |             |                |
+| `markdown`        |         | `string`              | `''`    |             |                |
+| `hash`            |         | `string \| undefined` |         |             |                |
 
 ## Methods
 
-| Name                | Privacy   | Description | Parameters | Return           | Inherited From |
-| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |
-| `connectedCallback` |           |             |            |                  |                |
-| `createRenderRoot`  |           |             |            |                  |                |
-| `render`            | protected |             |            | `TemplateResult` |                |
+| Name                | Privacy   | Description | Parameters        | Return           | Inherited From |
+| ------------------- | --------- | ----------- | ----------------- | ---------------- | -------------- |
+| `connectedCallback` |           |             |                   |                  |                |
+| `updated`           | protected |             |                   |                  |                |
+| `createRenderRoot`  |           |             |                   |                  |                |
+| `scrollToId`        |           |             | `section: string` |                  |                |
+| `render`            | protected |             |                   | `TemplateResult` |                |
 
 ## Attributes
 
@@ -21,6 +24,7 @@
 | ------------------ | --------------- | -------------- |
 | `add-code-preview` | showCodePreview |                |
 | `markdown`         | markdown        |                |
+| `hash`             | hash            |                |
 
 ## CSS Properties
 
