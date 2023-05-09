@@ -101,11 +101,11 @@ export class Root extends Routable(ColorSchemable(LitElement)) {
         },
       },
       {
-        path: '/readme/:url',
+        path: '/readme/:url/:section?',
         enter: () => {
           return this.readmes.length > 0;
         },
-        render: ({ url = '' }) => this.renderReadme(decodeURIComponent(url)),
+        render: ({ url = '', section }) => this.renderReadme(decodeURIComponent(url), section),
       },
       {
         path: '/element/:tagName',
@@ -166,7 +166,7 @@ export class Root extends Routable(ColorSchemable(LitElement)) {
     super.connectedCallback();
   }
 
-  protected renderReadme(url: string): TemplateResult {
+  protected renderReadme(url: string, section?: string): TemplateResult {
     // fetch the readme contents and parse it as markdown
     const path = url.substring(0, url.lastIndexOf('/') + 1);
     const markdown = fetch(url)
@@ -174,7 +174,7 @@ export class Root extends Routable(ColorSchemable(LitElement)) {
       .then((markdown) => prefixRelativeUrls(markdown, path));
     return html`
       <wcp-readme-frame>
-        <wcp-readme markdown="${until(markdown, '')}"></wcp-readme>
+        <wcp-readme markdown="${until(markdown, '')}" section="${section}"></wcp-readme>
       </wcp-readme-frame>
     `;
   }

@@ -52,6 +52,11 @@ wcp-readme {
       background: none;
     }
 
+    // as hash routing may be used, we can't rely on the `:target` pseudo selector, thus we set a class
+    .target {
+      text-decoration: underline;
+    }
+
     @include utils.color-scheme(false, parent) using ($color-scheme) {
       // prettier-ignore
       table td, table th, table tr,
