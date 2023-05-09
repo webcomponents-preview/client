@@ -398,7 +398,10 @@ declare module "components/feature/preview-frame/preview-frame.component" {
 }
 declare module "utils/markdown.utils" {
     export function getCodeExample(slot: HTMLSlotElement): string;
-    export function prefixRelativeUrls(markdown: string, path: string): string;
+    /**
+     * Only relative links will be handled. If a markdown file (*.md, *.mdx) is linked, it will be prefixed with the route additionally.
+     */
+    export function prefixRelativeUrls(markdown: string, base: string, route?: string): string;
     export function renderMarkdown(mardown: string, addCodePreview?: boolean): string;
 }
 declare module "components/feature/readme/readme.component" {
@@ -426,8 +429,11 @@ declare module "components/feature/readme/readme.component" {
         static readonly styles: import("lit").CSSResult;
         readonly showCodePreview = false;
         readonly markdown = "";
+        readonly hash?: string;
         connectedCallback(): Promise<void>;
+        protected updated(): void;
         createRenderRoot(): this;
+        scrollToId(section: string): void;
         protected render(): TemplateResult;
     }
     global {
@@ -883,7 +889,7 @@ declare module "components/root/root.component" {
         loadCustomElementsManifest(manifestUrl: string): Promise<void>;
         emitManifestLoaded(): void;
         connectedCallback(): Promise<void>;
-        protected renderReadme(url: string): TemplateResult;
+        protected renderReadme(url: string, hash?: string): TemplateResult;
         protected renderElement(tagName: string): TemplateResult;
         protected render(): TemplateResult;
     }
