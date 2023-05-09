@@ -16,15 +16,15 @@
 
 ## Methods
 
-| Name                         | Privacy   | Description | Parameters                     | Return           | Inherited From |
-| ---------------------------- | --------- | ----------- | ------------------------------ | ---------------- | -------------- |
-| `loadConfig`                 |           |             | `configUrl: string`            |                  |                |
-| `loadCustomElementsManifest` |           |             | `manifestUrl: string`          |                  |                |
-| `emitManifestLoaded`         |           |             |                                |                  |                |
-| `connectedCallback`          |           |             |                                |                  |                |
-| `renderReadme`               | protected |             | `url: string, section: string` | `TemplateResult` |                |
-| `renderElement`              | protected |             | `tagName: string`              | `TemplateResult` |                |
-| `render`                     | protected |             |                                | `TemplateResult` |                |
+| Name                         | Privacy   | Description | Parameters                  | Return           | Inherited From |
+| ---------------------------- | --------- | ----------- | --------------------------- | ---------------- | -------------- |
+| `loadConfig`                 |           |             | `configUrl: string`         |                  |                |
+| `loadCustomElementsManifest` |           |             | `manifestUrl: string`       |                  |                |
+| `emitManifestLoaded`         |           |             |                             |                  |                |
+| `connectedCallback`          |           |             |                             |                  |                |
+| `renderReadme`               | protected |             | `url: string, hash: string` | `TemplateResult` |                |
+| `renderElement`              | protected |             | `tagName: string`           | `TemplateResult` |                |
+| `render`                     | protected |             |                             | `TemplateResult` |                |
 
 ## Attributes
 

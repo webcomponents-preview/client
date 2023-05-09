@@ -6,7 +6,7 @@
 | ----------------- | ------- | --------------------- | ------- | ----------- | -------------- |
 | `showCodePreview` |         | `boolean`             | `false` |             |                |
 | `markdown`        |         | `string`              | `''`    |             |                |
-| `section`         |         | `string \| undefined` |         |             |                |
+| `hash`            |         | `string \| undefined` |         |             |                |
 
 ## Methods
 
@@ -15,7 +15,7 @@
 | `connectedCallback` |           |             |                   |                  |                |
 | `updated`           | protected |             |                   |                  |                |
 | `createRenderRoot`  |           |             |                   |                  |                |
-| `scrollToSection`   |           |             | `section: string` |                  |                |
+| `scrollToId`        |           |             | `section: string` |                  |                |
 | `render`            | protected |             |                   | `TemplateResult` |                |
 
 ## Attributes
@@ -24,7 +24,7 @@
 | ------------------ | --------------- | -------------- |
 | `add-code-preview` | showCodePreview |                |
 | `markdown`         | markdown        |                |
-| `section`          | section         |                |
+| `hash`             | hash            |                |
 
 ## CSS Properties
 

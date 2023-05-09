@@ -1,4 +1,4 @@
-import { LitElement, type TemplateResult, unsafeCSS, type PropertyValues } from 'lit';
+import { LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { html, unsafeStatic } from 'lit/static-html.js';
 import { customElement, property } from 'lit/decorators.js';
 
@@ -34,7 +34,7 @@ export class Readme extends ColorSchemable(LitElement) {
   readonly markdown = '';
 
   @property({ type: String, reflect: true })
-  readonly section?: string;
+  readonly hash?: string;
 
   override async connectedCallback() {
     super.connectedCallback();
@@ -44,8 +44,8 @@ export class Readme extends ColorSchemable(LitElement) {
   }
 
   protected updated() {
-    if (this.section) {
-      this.scrollToSection(this.section);
+    if (this.hash) {
+      this.scrollToId(this.hash);
     }
   }
 
@@ -55,7 +55,7 @@ export class Readme extends ColorSchemable(LitElement) {
     return this;
   }
 
-  scrollToSection(section: string) {
+  scrollToId(section: string) {
     const element = this.querySelector(`#${section}`);
     if (element !== null) {
       // as hash routing may be used, we can't rely on the `:target` pseudo selector, thus we set a class
