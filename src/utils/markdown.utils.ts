@@ -26,25 +26,34 @@ export class Renderer extends marked.Renderer {
   }
 }
 
+export function resolveRelativePath(path: string): string {
+  const stripLeadingSlash = (str: string) => str.replace(/^\//, '');
+  const url = new URL(`/${stripLeadingSlash(path)}`, location.origin);
+  return stripLeadingSlash(url.pathname);
+}
+
 /**
  * Only relative links will be handled. If a markdown file (*.md, *.mdx) is linked, it will be prefixed with the route additionally.
  */
-export function prefixRelativeUrls(markdown: string, base: string, route = ''): string {
-  const path = base.substring(0, base.lastIndexOf('/') + 1);
-  // https://regex101.com/r/mi812s/5
+export function prefixRelativeUrls(markdown: string, currentPath: string, basePath = ''): string {
+  const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+  // https://regex101.com/r/mi812s/7
   return markdown.replace(
-    /(\[[^\]]*\]\()(?!(?:[a-z]+:\/\/)|\/)(?:\.\/)?([^)]*?)(\.mdx?)?(?:#(.*?))?(\))/gi,
-    (_, before, url = '', ext = '', id = '', after) => {
+    /((?:\[[^\]]*\]\()|(?:href|src)=["'])(?!(?:[a-z]+:\/\/)|\/)(?:\.\/)?([^)]*?)(\.mdx?)?(?:#(.*?))?(\)|["'])/gi,
+    (_, before, path = '', ext = '', hash = '', after) => {
       const isMarkdownLink = ext !== '';
-      const hasUrl = url !== '';
-      const isHashLink = id !== '' && !hasUrl;
+      const hasPath = path !== '';
+      const hasHash = hash !== '';
+      const isHashLink = hasHash && !hasPath;
       if (isMarkdownLink || isHashLink) {
-        const link = encodeURIComponent(hasUrl ? `${path}${url}${ext}` : base);
-        const hash = id !== '' ? `/${id}` : '';
-        return `${before}${route}${link}${hash}${after}`;
+        const nextPath = hasPath ? resolveRelativePath(`${currentDir}${path}${ext}`) : currentPath;
+        const link = encodeURIComponent(nextPath);
+        const section = hasHash ? `/${hash}` : '';
+        return `${before}${basePath}${link}${section}${after}`;
       }
       // is any assetic relative link
-      return [before, path, url, ext, after].join('');
+      const nextPath = resolveRelativePath(`${currentDir}${path}${ext}`);
+      return [before, nextPath, after].join('');
     }
   );
 }
