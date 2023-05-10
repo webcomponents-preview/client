@@ -36,27 +36,22 @@ export function renderMarkdown(mardown: string, addCodePreview = true): string {
       return hljs.highlight(code, { language }).value;
     },
     renderer: new (class extends marked.Renderer {
-      code(preview: string, language = 'plaintext', isEscaped: boolean): string {
-        // do not use example component for anything but html examples
-        if (language !== 'html') {
-          return super.code(preview, language, isEscaped);
-        }
+      code(code: string, language = 'plaintext', escaped = false): string {
         // prettify and highlight the code
-        let code = pretty(preview);
-        if (this.options.highlight) {
-          code = this.options.highlight(code, language) as string;
+        code = pretty(code, { ocd: true });
+
+        // do not use example component for anything but html examples
+        if (language !== 'html' || !addCodePreview) {
+          return `<wcp-code>${super.code(code, language, escaped)}</wcp-code>`;
         }
+
         // wrap the code in a custom element to preview it
-        return addCodePreview
-          ? `
-            <wcp-markdown-example>
-              <wcp-code slot="code"><pre><code>${code}</code></pre></wcp-code>
-              <div slot="preview">${preview}</div>
-            </wcp-markdown-example>
-          `
-          : `
-            <wcp-code><pre><code>${code}</code></pre></wcp-code>
-          `;
+        return `
+          <wcp-markdown-example>
+            <wcp-code slot="code">${super.code(code, language, escaped)}</wcp-code>
+            <div slot="preview">${code}</div>
+          </wcp-markdown-example>
+        `;
       }
     })(),
   });
