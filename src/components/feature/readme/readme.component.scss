@@ -10,11 +10,15 @@
 
 // prettier-ignore
 wcp-readme {
+  ---wcp-readme-dark-color: var(--wcp-readme-dark-color, var(--wcp-color-grey-96));
+  ---wcp-readme-dark-color-muted: var(--wcp-readme-dark-color-muted, var(--wcp-color-grey-96));
   ---wcp-readme-dark-border-color: var(--wcp-readme-dark-border-color, var(--wcp-color-grey-24));
   ---wcp-readme-dark-highlight-background: var(--wcp-readme-dark-highlight-background, var(--wcp-color-grey-17));
 
-  ---wcp-readme-light-border-color: var(--wcp-readme-light-border-color, var(--wcp-color-grey-80));
-  ---wcp-readme-light-highlight-background: var(--wcp-readme-light-highlight-background, var(--wcp-color-blue-93));
+  ---wcp-readme-light-color: var(--wcp-readme-light-color, var(--wcp-color-grey-17));
+  ---wcp-readme-light-color-muted: var(--wcp-readme-light-color-muted, var(--wcp-color-grey-24));
+  ---wcp-readme-light-border-color: var(--wcp-readme-light-border-color, var(--wcp-color-grey-65));
+  ---wcp-readme-light-highlight-background: var(--wcp-readme-light-highlight-background, var(--wcp-color-blue-91));
 }
 
 // as we do not have Shadow DOM, we can't rely on the :host selector, so
@@ -26,7 +30,6 @@ wcp-readme {
   &.markdown-body {
     // first, reset some defaults, to be inheritted from the global scope
     background-color: inherit;
-    color: inherit;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
@@ -71,8 +74,11 @@ wcp-readme {
     }
 
     @include utils.color-scheme(false, parent) using ($color-scheme) {
+      color: var(---wcp-readme-#{$color-scheme}-color);
+
       blockquote {
         border-left-color: var(---wcp-readme-#{$color-scheme}-border-color);
+        color: var(---wcp-readme-#{$color-scheme}-color);
       }
 
       // prettier-ignore

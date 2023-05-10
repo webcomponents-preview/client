@@ -11,6 +11,7 @@
   --wcp-color-grey-96:  hsl(0, 0%, 96%);
   --wcp-color-grey-90:  hsl(0, 0%, 90%);
   --wcp-color-grey-80:  hsl(0, 0%, 80%);
+  --wcp-color-grey-65:  hsl(0, 0%, 65%);
   --wcp-color-grey-24:  hsl(0, 0%, 24%);
   --wcp-color-grey-17:  hsl(0, 0%, 17%);
 
@@ -22,6 +23,7 @@
   --wcp-color-blue-34: hsl(215, 14%, 34%);
   --wcp-color-blue-55: hsl(215, 14%, 55%);
   --wcp-color-blue-65: hsl(218, 11%, 65%);
+  --wcp-color-blue-80: hsl(220, 13%, 80%);
   --wcp-color-blue-91: hsl(220, 13%, 91%);
   --wcp-color-blue-93: hsl(220, 13%, 93%);
   --wcp-color-blue-96: hsl(220, 14%, 96%);
@@ -39,10 +41,10 @@
 
 // prettier-ignore
 :host {
-  ---wcp-root-dark-background: var(--wcp-root-dark-background, var(--wcp-color-blue-24));
+  ---wcp-root-dark-background: var(--wcp-root-dark-background, var(--wcp-color-blue-17));
   ---wcp-root-dark-color: var(--wcp-root-dark-color, var(--wcp-color-grey-96));
 
-  ---wcp-root-light-background: var(--wcp-root-light-background, var(--wcp-color-blue-34));
+  ---wcp-root-light-background: var(--wcp-root-light-background, var(--wcp-color-blue-80));
   ---wcp-root-light-color: var(--wcp-root-light-color, var(--wcp-color-grey-96));
 
   @include utils.color-scheme() using ($color-scheme) {

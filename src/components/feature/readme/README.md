@@ -30,8 +30,12 @@
 
 | Name                                      | Default | Description                                               |
 | ----------------------------------------- | ------- | --------------------------------------------------------- |
+| `--wcp-readme-dark-color`                 |         | Text color of the readme in dark mode.                    |
+| `--wcp-readme-dark-color-muted`           |         | Muted text color of the readme in dark mode.              |
 | `--wcp-readme-dark-border-color`          |         | Border color of the readme in dark mode.                  |
 | `--wcp-readme-dark-highlight-background`  |         | Background color of highlighted table rows in dark mode.  |
+| `--wcp-readme-light-color`                |         | Text color of the readme in light mode.                   |
+| `--wcp-readme-light-color-muted`          |         | Muted text color of the readme in light mode.             |
 | `--wcp-readme-light-border-color`         |         | Border color of the readme in light mode.                 |
 | `--wcp-readme-light-highlight-background` |         | Background color of highlighted table rows in light mode. |
 

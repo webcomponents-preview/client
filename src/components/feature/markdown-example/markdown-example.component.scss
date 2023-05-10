@@ -7,7 +7,7 @@
   ---wcp-markdown-example-border-width: var(--wcp-markdown-example-border-width, 1px);
 
   ---wcp-markdown-example-dark-border-color: var(--wcp-markdown-example-dark-border-color, var(--wcp-color-grey-24));
-  ---wcp-markdown-example-light-border-color: var(--wcp-markdown-example-light-border-color, var(--wcp-color-grey-80));
+  ---wcp-markdown-example-light-border-color: var(--wcp-markdown-example-light-border-color, var(--wcp-color-grey-65));
 
   @include utils.color-scheme() using ($color-scheme) {
     ---wcp-markdown-example-border-color: var(---wcp-markdown-example-#{$color-scheme}-border-color);
