@@ -2,6 +2,7 @@
 @use 'sass:math';
 @use '@/styles/utils' as utils;
 
+// global custom properies, normally declared in `:root`
 // prettier-ignore
 :host {
   --wcp-base-size: 10px;
@@ -39,6 +40,7 @@
   --wcp-layout-fixed-width: 1200px;
 }
 
+// host (wcp-root) specific custom properies
 // prettier-ignore
 :host {
   ---wcp-root-dark-background: var(--wcp-root-dark-background, var(--wcp-color-blue-17));
@@ -46,11 +48,6 @@
 
   ---wcp-root-light-background: var(--wcp-root-light-background, var(--wcp-color-blue-80));
   ---wcp-root-light-color: var(--wcp-root-light-color, var(--wcp-color-grey-96));
-
-  @include utils.color-scheme() using ($color-scheme) {
-    ---wcp-root-background: var(---wcp-root-#{$color-scheme}-background);
-    ---wcp-root-color: var(---wcp-root-#{$color-scheme}-color);
-  }
 }
 
 :host {
@@ -63,6 +60,11 @@
   font-feature-settings: normal;
   font-size: 15px;
   line-height: 1.3;
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-root-background: var(---wcp-root-#{$color-scheme}-background);
+    ---wcp-root-color: var(---wcp-root-#{$color-scheme}-color);
+  }
 
   @include utils.breakpoint(sm) {
     font-size: 13px;

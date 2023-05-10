@@ -11,11 +11,13 @@
 // prettier-ignore
 wcp-readme {
   ---wcp-readme-dark-color: var(--wcp-readme-dark-color, var(--wcp-color-grey-96));
-  ---wcp-readme-dark-color-muted: var(--wcp-readme-dark-color-muted, var(--wcp-color-grey-96));
+  ---wcp-readme-dark-color-accent: var(--wcp-readme-dark-color-accent, #58a6ff);
+  ---wcp-readme-dark-color-muted: var(--wcp-readme-dark-color-muted, var(--wcp-color-grey-80));
   ---wcp-readme-dark-border-color: var(--wcp-readme-dark-border-color, var(--wcp-color-grey-24));
   ---wcp-readme-dark-highlight-background: var(--wcp-readme-dark-highlight-background, var(--wcp-color-grey-17));
 
   ---wcp-readme-light-color: var(--wcp-readme-light-color, var(--wcp-color-grey-17));
+  ---wcp-readme-light-color-accent: var(--wcp-readme-light-color-accent, #122df5);
   ---wcp-readme-light-color-muted: var(--wcp-readme-light-color-muted, var(--wcp-color-grey-24));
   ---wcp-readme-light-border-color: var(--wcp-readme-light-border-color, var(--wcp-color-grey-65));
   ---wcp-readme-light-highlight-background: var(--wcp-readme-light-highlight-background, var(--wcp-color-blue-91));
@@ -76,9 +78,13 @@ wcp-readme {
     @include utils.color-scheme(false, parent) using ($color-scheme) {
       color: var(---wcp-readme-#{$color-scheme}-color);
 
+      a {
+        color: var(---wcp-readme-#{$color-scheme}-color-accent);
+      }
+
       blockquote {
         border-left-color: var(---wcp-readme-#{$color-scheme}-border-color);
-        color: var(---wcp-readme-#{$color-scheme}-color);
+        color: var(---wcp-readme-#{$color-scheme}-color-muted);
       }
 
       // prettier-ignore
