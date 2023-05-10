@@ -11,9 +11,9 @@ export function getCodeExample(slot: HTMLSlotElement): string {
  */
 export function prefixRelativeUrls(markdown: string, base: string, route = ''): string {
   const path = base.substring(0, base.lastIndexOf('/') + 1);
-  // https://regex101.com/r/mi812s/4
+  // https://regex101.com/r/mi812s/5
   return markdown.replace(
-    /(\[[^\]]*\]\()(?!(?:[a-z]+:\/\/)|\/)(?:\.\/)?([^)]*?)(\.mdx?)?(?:#(.*))?(\))/gi,
+    /(\[[^\]]*\]\()(?!(?:[a-z]+:\/\/)|\/)(?:\.\/)?([^)]*?)(\.mdx?)?(?:#(.*?))?(\))/gi,
     (_, before, url = '', ext = '', id = '', after) => {
       const isMarkdownLink = ext !== '';
       const hasUrl = url !== '';

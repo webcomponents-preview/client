@@ -57,5 +57,10 @@ describe('markdown.utils', () => {
       expect(prefixRelativeUrls('[foo](https://bar.md)', 'baz/foo.md', '/#/')).toBe('[foo](https://bar.md)');
       expect(prefixRelativeUrls('[foo](/bar.md)', 'baz/foo.md', '/#/')).toBe('[foo](/bar.md)');
     });
+
+    it('should replace all occurrences', () => {
+      expect(prefixRelativeUrls('[foo](bar) [foo](bar)', 'baz/foo.md')).toBe('[foo](baz/bar) [foo](baz/bar)');
+      expect(prefixRelativeUrls('[foo](bar.md#hash) [foo](bar.md#hash)', 'baz/foo.md')).toBe('[foo](baz%2Fbar.md/hash) [foo](baz%2Fbar.md/hash)');
+    })
   });
 });
