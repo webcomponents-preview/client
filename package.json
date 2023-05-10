@@ -46,7 +46,6 @@
     "highlight.js": "11.7.0",
     "lit": "2.7.0",
     "marked": "4.3.0",
-    "pretty": "2.0.0",
     "urlpattern-polyfill": "8.0.2"
   },
   "devDependencies": {

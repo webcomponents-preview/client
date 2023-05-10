@@ -1,6 +1,5 @@
 import hljs from 'highlight.js/lib/common';
 import { marked } from 'marked';
-import pretty from 'pretty';
 
 export function getCodeExample(slot: HTMLSlotElement): string {
   return slot.assignedElements().reduce((acc, el) => `${acc}\n${el.outerHTML}`, '');
@@ -37,9 +36,6 @@ export function renderMarkdown(mardown: string, addCodePreview = true): string {
     },
     renderer: new (class extends marked.Renderer {
       code(code: string, language = 'plaintext', escaped = false): string {
-        // prettify and highlight the code
-        code = pretty(code, { ocd: true });
-
         // do not use example component for anything but html examples
         if (language !== 'html' || !addCodePreview) {
           return `<wcp-code>${super.code(code, language, escaped)}</wcp-code>`;
