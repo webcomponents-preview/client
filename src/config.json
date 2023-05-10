@@ -12,6 +12,10 @@
     {
       "name": "Test inline links",
       "url": "assets/test.md"
+    },
+    {
+      "name": "Test code",
+      "url": "assets/code.md"
     }
   ]
 }
