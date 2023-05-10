@@ -53,6 +53,7 @@
     "@custom-elements-manifest/analyzer": "0.8.0",
     "@testing-library/dom": "9.2.0",
     "@testing-library/jest-dom": "5.16.5",
+    "@types/esbuild-copy-static-files": "0.1.0",
     "@types/jest": "29.5.0",
     "@types/marked": "4.0.8",
     "@types/node": "18.15.11",
