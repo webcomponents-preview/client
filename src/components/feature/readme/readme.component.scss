@@ -71,6 +71,10 @@ wcp-readme {
     }
 
     @include utils.color-scheme(false, parent) using ($color-scheme) {
+      blockquote {
+        border-left-color: var(---wcp-readme-#{$color-scheme}-border-color);
+      }
+
       // prettier-ignore
       table td, table th, table tr,
       h1, h2, h3, h4, h5, h6 {
