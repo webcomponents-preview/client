@@ -8,3 +8,7 @@
 section ~ section {
   margin-top: var(---wcp-preview-frame-examples-spacing);
 }
+
+wcp-markdown-example {
+  max-width: var(--wcp-layout-fixed-width);
+}

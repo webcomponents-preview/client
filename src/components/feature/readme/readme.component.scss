@@ -40,8 +40,9 @@ wcp-readme {
     }
 
     // all non-previable code example shall receive the correct border radius
-    > pre {
+    wcp-code pre {
       border-radius: var(--wcp-border-radius);
+      width: fit-content;
     }
 
     table tr {
@@ -50,6 +51,18 @@ wcp-readme {
 
     img {
       background: none;
+    }
+
+    // limit flowing content sizes
+    // prettier-ignore
+    h1, h2, h3, h4, h5, h6, p, ul, ol, dl {
+      max-width: var(--wcp-layout-flowing-width);
+    }
+
+    // enforce a maximum width for fixed content
+    // prettier-ignore
+    table, pre, blockquote {
+      max-width: min(100%, var(--wcp-layout-fixed-width));
     }
 
     // as hash routing may be used, we can't rely on the `:target` pseudo selector, thus we set a class

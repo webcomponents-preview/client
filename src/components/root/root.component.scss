@@ -29,8 +29,12 @@
   --wcp-fx-default-duration: 0.2s;
   --wcp-fx-layout-duration: 0.4s;
 
-  --wcp-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-  'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'
+  --wcp-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  /// flowing contents, e.g. text and other inline contents, should be limited to this width
+  --wcp-layout-flowing-width: 800px;
+  /// fixed contents, e.g. tables and code examples, should be limited to this width
+  --wcp-layout-fixed-width: 1200px;
 }
 
 // prettier-ignore
