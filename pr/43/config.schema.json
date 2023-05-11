@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "additionalReadmeGroupName": {
+            "type": "string"
+        },
+        "additionalReadmes": {
+            "items": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "excludeElements": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "fallbackGroupName": {
+            "type": "string"
+        },
+        "initialActiveElement": {
+            "type": "string"
+        },
+        "initialPreviewTab": {
+            "enum": [
+                "examples",
+                "readme",
+                "viewer"
+            ],
+            "type": "string"
+        },
+        "title": {
+            "type": "string"
+        }
+    },
+    "type": "object"
+}
+
