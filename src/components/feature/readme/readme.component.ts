@@ -12,9 +12,15 @@ import styles from './readme.component.scss';
  *
  * @element wcp-readme
  *
+ * @cssprop --wcp-readme-dark-color - Text color of the readme in dark mode.
+ * @cssprop --wcp-readme-dark-color-accent - Accent text color (e.g. links) of the readme in dark mode.
+ * @cssprop --wcp-readme-dark-color-muted - Muted text color of the readme in dark mode.
  * @cssprop --wcp-readme-dark-border-color - Border color of the readme in dark mode.
  * @cssprop --wcp-readme-dark-highlight-background - Background color of highlighted table rows in dark mode.
  *
+ * @cssprop --wcp-readme-light-color - Text color of the readme in light mode.
+ * @cssprop --wcp-readme-light-color-accent - Accent text color (e.g. links) of the readme in light mode.
+ * @cssprop --wcp-readme-light-color-muted - Muted text color of the readme in light mode.
  * @cssprop --wcp-readme-light-border-color - Border color of the readme in light mode.
  * @cssprop --wcp-readme-light-highlight-background - Background color of highlighted table rows in light mode.
  *

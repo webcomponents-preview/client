@@ -11,7 +11,7 @@
   ---wcp-tabs-tablist-dark-border-color: var(--wcp-tabs-tablist-dark-border-color, var(--wcp-color-grey-24));
   ---wcp-tabs-tab-active-dark-border-color: var(--wcp-tabs-active-tab-border-color, var(--wcp-color-blue-55));
   
-  ---wcp-tabs-tablist-light-border-color: var(--wcp-tabs-tablist-light-border-color, var(--wcp-color-grey-80));
+  ---wcp-tabs-tablist-light-border-color: var(--wcp-tabs-tablist-light-border-color, var(--wcp-color-grey-65));
   ---wcp-tabs-tab-active-light-border-color: var(--wcp-tabs-active-tab-border-color, var(--wcp-color-blue-65));
 
   @include utils.color-scheme() using ($color-scheme) {

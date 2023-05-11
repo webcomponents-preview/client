@@ -10,11 +10,17 @@
 
 // prettier-ignore
 wcp-readme {
+  ---wcp-readme-dark-color: var(--wcp-readme-dark-color, var(--wcp-color-grey-96));
+  ---wcp-readme-dark-color-accent: var(--wcp-readme-dark-color-accent, #58a6ff);
+  ---wcp-readme-dark-color-muted: var(--wcp-readme-dark-color-muted, var(--wcp-color-grey-80));
   ---wcp-readme-dark-border-color: var(--wcp-readme-dark-border-color, var(--wcp-color-grey-24));
   ---wcp-readme-dark-highlight-background: var(--wcp-readme-dark-highlight-background, var(--wcp-color-grey-17));
 
-  ---wcp-readme-light-border-color: var(--wcp-readme-light-border-color, var(--wcp-color-grey-80));
-  ---wcp-readme-light-highlight-background: var(--wcp-readme-light-highlight-background, var(--wcp-color-blue-93));
+  ---wcp-readme-light-color: var(--wcp-readme-light-color, var(--wcp-color-grey-17));
+  ---wcp-readme-light-color-accent: var(--wcp-readme-light-color-accent, #122df5);
+  ---wcp-readme-light-color-muted: var(--wcp-readme-light-color-muted, var(--wcp-color-grey-24));
+  ---wcp-readme-light-border-color: var(--wcp-readme-light-border-color, var(--wcp-color-grey-65));
+  ---wcp-readme-light-highlight-background: var(--wcp-readme-light-highlight-background, var(--wcp-color-blue-91));
 }
 
 // as we do not have Shadow DOM, we can't rely on the :host selector, so
@@ -26,7 +32,6 @@ wcp-readme {
   &.markdown-body {
     // first, reset some defaults, to be inheritted from the global scope
     background-color: inherit;
-    color: inherit;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
@@ -40,8 +45,9 @@ wcp-readme {
     }
 
     // all non-previable code example shall receive the correct border radius
-    > pre {
+    wcp-code pre {
       border-radius: var(--wcp-border-radius);
+      width: fit-content;
     }
 
     table tr {
@@ -52,12 +58,35 @@ wcp-readme {
       background: none;
     }
 
+    // limit flowing content sizes
+    // prettier-ignore
+    h1, h2, h3, h4, h5, h6, p, ul, ol, dl {
+      max-width: var(--wcp-layout-flowing-width);
+    }
+
+    // enforce a maximum width for fixed content
+    // prettier-ignore
+    table, pre, blockquote {
+      max-width: min(100%, var(--wcp-layout-fixed-width));
+    }
+
     // as hash routing may be used, we can't rely on the `:target` pseudo selector, thus we set a class
     .target {
       text-decoration: underline;
     }
 
     @include utils.color-scheme(false, parent) using ($color-scheme) {
+      color: var(---wcp-readme-#{$color-scheme}-color);
+
+      a {
+        color: var(---wcp-readme-#{$color-scheme}-color-accent);
+      }
+
+      blockquote {
+        border-left-color: var(---wcp-readme-#{$color-scheme}-border-color);
+        color: var(---wcp-readme-#{$color-scheme}-color-muted);
+      }
+
       // prettier-ignore
       table td, table th, table tr,
       h1, h2, h3, h4, h5, h6 {

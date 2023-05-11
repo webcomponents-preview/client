@@ -10,8 +10,16 @@
       "url": "README.md"
     },
     {
+      "name": "Test markdown",
+      "url": "assets/markdown.md"
+    },
+    {
       "name": "Test inline links",
-      "url": "assets/test.md"
+      "url": "assets/inline-links.md"
+    },
+    {
+      "name": "Test code",
+      "url": "assets/code.md"
     }
   ]
 }
