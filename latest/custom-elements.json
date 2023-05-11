@@ -623,23 +623,15 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "A wrapper above the preview frame content to contain various controls.",
           "name": "PreviewControls",
           "cssProperties": [
             {
-              "description": "Background color of the preview controls in dark mode",
-              "name": "--wcp-preview-controls-dark-background"
-            },
-            {
-              "description": "Text color of the preview controls in dark mode",
+              "description": "Text color of the controls in dark mode",
               "name": "--wcp-preview-controls-dark-color"
             },
             {
-              "description": "Background color of the preview controls in light mode",
-              "name": "--wcp-preview-controls-light-background"
-            },
-            {
-              "description": "Text color of the preview controls in light mode",
+              "description": "Text color of the controls in light mode",
               "name": "--wcp-preview-controls-light-color"
             },
             {
@@ -668,15 +660,14 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "tagName": "wcp-preview-controls",
           "examples": [
-            "```html\n<wcp-preview-controls></wcp-preview-controls>\n```",
-            "### Usage with controls\n\n```html\n<wcp-preview-controls>\n  <wcp-preview-controls-viewport></wcp-preview-controls-viewport>\n</wcp-preview-controls>\n```"
+            "### Usage with controls\n\n```html\n<wcp-preview-controls>\n  <wcp-toggle-sidebar></wcp-toggle-sidebar>\n  <wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n</wcp-preview-controls>\n```"
           ],
-          "readme": "# class: `PreviewControls`\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## CSS Properties\n\n| Name                                      | Default | Description                                            |\n| ----------------------------------------- | ------- | ------------------------------------------------------ |\n| `--wcp-preview-controls-dark-background`  |         | Background color of the preview controls in dark mode  |\n| `--wcp-preview-controls-dark-color`       |         | Text color of the preview controls in dark mode        |\n| `--wcp-preview-controls-light-background` |         | Background color of the preview controls in light mode |\n| `--wcp-preview-controls-light-color`      |         | Text color of the preview controls in light mode       |\n| `--wcp-preview-controls-height`           |         | Overall height of the preview controls nav bar         |\n| `--wcp-preview-controls-spacing`          |         | Inner spacing, used as padding of the controls         |\n\n## Slots\n\n| Name | Description                       |\n| ---- | --------------------------------- |\n|      | Default slot for navigation items |\n\n<hr/>\n",
+          "readme": "# class: `PreviewControls`, `wcp-preview-controls`\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## CSS Properties\n\n| Name                                 | Default | Description                                    |\n| ------------------------------------ | ------- | ---------------------------------------------- |\n| `--wcp-preview-controls-dark-color`  |         | Text color of the controls in dark mode        |\n| `--wcp-preview-controls-light-color` |         | Text color of the controls in light mode       |\n| `--wcp-preview-controls-height`      |         | Overall height of the preview controls nav bar |\n| `--wcp-preview-controls-spacing`     |         | Inner spacing, used as padding of the controls |\n\n## Slots\n\n| Name | Description                       |\n| ---- | --------------------------------- |\n|      | Default slot for navigation items |\n\n<hr/>\n",
           "groups": [
             "feature"
           ],
-          "tagName": "wcp-preview-controls",
           "customElement": true
         }
       ],
@@ -892,12 +883,36 @@
           "name": "Readme",
           "cssProperties": [
             {
+              "description": "Text color of the readme in dark mode.",
+              "name": "--wcp-readme-dark-color"
+            },
+            {
+              "description": "Accent text color (e.g. links) of the readme in dark mode.",
+              "name": "--wcp-readme-dark-color-accent"
+            },
+            {
+              "description": "Muted text color of the readme in dark mode.",
+              "name": "--wcp-readme-dark-color-muted"
+            },
+            {
               "description": "Border color of the readme in dark mode.",
               "name": "--wcp-readme-dark-border-color"
             },
             {
               "description": "Background color of highlighted table rows in dark mode.",
               "name": "--wcp-readme-dark-highlight-background"
+            },
+            {
+              "description": "Text color of the readme in light mode.",
+              "name": "--wcp-readme-light-color"
+            },
+            {
+              "description": "Accent text color (e.g. links) of the readme in light mode.",
+              "name": "--wcp-readme-light-color-accent"
+            },
+            {
+              "description": "Muted text color of the readme in light mode.",
+              "name": "--wcp-readme-light-color-muted"
             },
             {
               "description": "Border color of the readme in light mode.",
@@ -1000,7 +1015,7 @@
           "examples": [
             "```html\n<wcp-readme markdown=\"# Hello _World_!\"></wcp-readme>\n```"
           ],
-          "readme": "# class: `Readme`, `wcp-readme`\n\n## Fields\n\n| Name              | Privacy | Type                  | Default | Description | Inherited From |\n| ----------------- | ------- | --------------------- | ------- | ----------- | -------------- |\n| `showCodePreview` |         | `boolean`             | `false` |             |                |\n| `markdown`        |         | `string`              | `''`    |             |                |\n| `hash`            |         | `string \\| undefined` |         |             |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters        | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ----------------- | ---------------- | -------------- |\n| `connectedCallback` |           |             |                   |                  |                |\n| `updated`           | protected |             |                   |                  |                |\n| `createRenderRoot`  |           |             |                   |                  |                |\n| `scrollToId`        |           |             | `section: string` |                  |                |\n| `render`            | protected |             |                   | `TemplateResult` |                |\n\n## Attributes\n\n| Name               | Field           | Inherited From |\n| ------------------ | --------------- | -------------- |\n| `add-code-preview` | showCodePreview |                |\n| `markdown`         | markdown        |                |\n| `hash`             | hash            |                |\n\n## CSS Properties\n\n| Name                                      | Default | Description                                               |\n| ----------------------------------------- | ------- | --------------------------------------------------------- |\n| `--wcp-readme-dark-border-color`          |         | Border color of the readme in dark mode.                  |\n| `--wcp-readme-dark-highlight-background`  |         | Background color of highlighted table rows in dark mode.  |\n| `--wcp-readme-light-border-color`         |         | Border color of the readme in light mode.                 |\n| `--wcp-readme-light-highlight-background` |         | Background color of highlighted table rows in light mode. |\n\n<hr/>\n",
+          "readme": "# class: `Readme`, `wcp-readme`\n\n## Fields\n\n| Name              | Privacy | Type                  | Default | Description | Inherited From |\n| ----------------- | ------- | --------------------- | ------- | ----------- | -------------- |\n| `showCodePreview` |         | `boolean`             | `false` |             |                |\n| `markdown`        |         | `string`              | `''`    |             |                |\n| `hash`            |         | `string \\| undefined` |         |             |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters        | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ----------------- | ---------------- | -------------- |\n| `connectedCallback` |           |             |                   |                  |                |\n| `updated`           | protected |             |                   |                  |                |\n| `createRenderRoot`  |           |             |                   |                  |                |\n| `scrollToId`        |           |             | `section: string` |                  |                |\n| `render`            | protected |             |                   | `TemplateResult` |                |\n\n## Attributes\n\n| Name               | Field           | Inherited From |\n| ------------------ | --------------- | -------------- |\n| `add-code-preview` | showCodePreview |                |\n| `markdown`         | markdown        |                |\n| `hash`             | hash            |                |\n\n## CSS Properties\n\n| Name                                      | Default | Description                                                 |\n| ----------------------------------------- | ------- | ----------------------------------------------------------- |\n| `--wcp-readme-dark-color`                 |         | Text color of the readme in dark mode.                      |\n| `--wcp-readme-dark-color-accent`          |         | Accent text color (e.g. links) of the readme in dark mode.  |\n| `--wcp-readme-dark-color-muted`           |         | Muted text color of the readme in dark mode.                |\n| `--wcp-readme-dark-border-color`          |         | Border color of the readme in dark mode.                    |\n| `--wcp-readme-dark-highlight-background`  |         | Background color of highlighted table rows in dark mode.    |\n| `--wcp-readme-light-color`                |         | Text color of the readme in light mode.                     |\n| `--wcp-readme-light-color-accent`         |         | Accent text color (e.g. links) of the readme in light mode. |\n| `--wcp-readme-light-color-muted`          |         | Muted text color of the readme in light mode.               |\n| `--wcp-readme-light-border-color`         |         | Border color of the readme in light mode.                   |\n| `--wcp-readme-light-highlight-background` |         | Background color of highlighted table rows in light mode.   |\n\n<hr/>\n",
           "groups": [
             "feature"
           ],

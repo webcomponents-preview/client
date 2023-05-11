@@ -167,29 +167,27 @@ declare module "components/feature/preview-controls/preview-controls.component" 
         colorScheme?: "light" | "dark" | undefined;
     }> & typeof LitElement;
     /**
-     * @example
-     * ```html
-     * <wcp-preview-controls></wcp-preview-controls>
-     * ```
+     * A wrapper above the preview frame content to contain various controls.
+     *
+     * @element wcp-preview-controls
+     *
+     * @slot - Default slot for navigation items
+     *
+     * @cssprop --wcp-preview-controls-dark-color - Text color of the controls in dark mode
+     * @cssprop --wcp-preview-controls-light-color - Text color of the controls in light mode
+     *
+     * @cssprop --wcp-preview-controls-height - Overall height of the preview controls nav bar
+     * @cssprop --wcp-preview-controls-spacing - Inner spacing, used as padding of the controls
+     *
      * @example
      * ### Usage with controls
      *
      * ```html
      * <wcp-preview-controls>
-     *   <wcp-preview-controls-viewport></wcp-preview-controls-viewport>
+     *   <wcp-toggle-sidebar></wcp-toggle-sidebar>
+     *   <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
      * </wcp-preview-controls>
      * ```
-     *
-     * @slot - Default slot for navigation items
-     *
-     * @cssprop --wcp-preview-controls-dark-background - Background color of the preview controls in dark mode
-     * @cssprop --wcp-preview-controls-dark-color - Text color of the preview controls in dark mode
-     *
-     * @cssprop --wcp-preview-controls-light-background - Background color of the preview controls in light mode
-     * @cssprop --wcp-preview-controls-light-color - Text color of the preview controls in light mode
-     *
-     * @cssprop --wcp-preview-controls-height - Overall height of the preview controls nav bar
-     * @cssprop --wcp-preview-controls-spacing - Inner spacing, used as padding of the controls
      */
     export class PreviewControls extends PreviewControls_base {
         static readonly styles: import("lit").CSSResult;
@@ -397,11 +395,18 @@ declare module "components/feature/preview-frame/preview-frame.component" {
     }
 }
 declare module "utils/markdown.utils" {
+    import { marked } from 'marked';
     export function getCodeExample(slot: HTMLSlotElement): string;
+    export class Renderer extends marked.Renderer {
+        private readonly addCodePreview;
+        constructor(addCodePreview?: boolean);
+        code(code: string, language?: string, escaped?: boolean): string;
+    }
+    export function resolveRelativePath(path: string): string;
     /**
      * Only relative links will be handled. If a markdown file (*.md, *.mdx) is linked, it will be prefixed with the route additionally.
      */
-    export function prefixRelativeUrls(markdown: string, base: string, route?: string): string;
+    export function prefixRelativeUrls(markdown: string, currentPath: string, basePath?: string): string;
     export function renderMarkdown(mardown: string, addCodePreview?: boolean): string;
 }
 declare module "components/feature/readme/readme.component" {
@@ -414,9 +419,15 @@ declare module "components/feature/readme/readme.component" {
      *
      * @element wcp-readme
      *
+     * @cssprop --wcp-readme-dark-color - Text color of the readme in dark mode.
+     * @cssprop --wcp-readme-dark-color-accent - Accent text color (e.g. links) of the readme in dark mode.
+     * @cssprop --wcp-readme-dark-color-muted - Muted text color of the readme in dark mode.
      * @cssprop --wcp-readme-dark-border-color - Border color of the readme in dark mode.
      * @cssprop --wcp-readme-dark-highlight-background - Background color of highlighted table rows in dark mode.
      *
+     * @cssprop --wcp-readme-light-color - Text color of the readme in light mode.
+     * @cssprop --wcp-readme-light-color-accent - Accent text color (e.g. links) of the readme in light mode.
+     * @cssprop --wcp-readme-light-color-muted - Muted text color of the readme in light mode.
      * @cssprop --wcp-readme-light-border-color - Border color of the readme in light mode.
      * @cssprop --wcp-readme-light-highlight-background - Background color of highlighted table rows in light mode.
      *
