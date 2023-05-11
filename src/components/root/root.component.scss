@@ -80,6 +80,22 @@
 }
 
 :host(:not([inline])) {
-  height: 100dvh;
   width: 100vw;
+
+  @supports not (height: 100dvh) {
+    height: 100vh;
+  }
+
+  @supports (height: 100dvh) {
+    height: 100dvh;
+  }
+}
+
+wcp-preview-controls {
+  position: sticky;
+  inset: 0 0 auto;
+
+  @include utils.color-scheme() using ($color-scheme) {
+    background: var(---wcp-root-#{$color-scheme}-background);
+  }
 }
