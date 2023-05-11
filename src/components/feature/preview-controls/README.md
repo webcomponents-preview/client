@@ -1,4 +1,4 @@
-# class: `PreviewControls`
+# class: `PreviewControls`, `wcp-preview-controls`
 
 ## Methods
 

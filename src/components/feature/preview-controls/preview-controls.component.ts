@@ -6,18 +6,9 @@ import { ColorSchemable } from '@/utils/color-scheme.utils';
 import styles from './preview-controls.component.scss';
 
 /**
- * @example
- * ```html
- * <wcp-preview-controls></wcp-preview-controls>
- * ```
- * @example
- * ### Usage with controls
+ * A wrapper above the preview frame content to contain various controls.
  * 
- * ```html
- * <wcp-preview-controls>
- *   <wcp-preview-controls-viewport></wcp-preview-controls-viewport>
- * </wcp-preview-controls>
- * ```
+ * @element wcp-preview-controls
  * 
  * @slot - Default slot for navigation items
  * 
@@ -26,6 +17,16 @@ import styles from './preview-controls.component.scss';
  * 
  * @cssprop --wcp-preview-controls-height - Overall height of the preview controls nav bar
  * @cssprop --wcp-preview-controls-spacing - Inner spacing, used as padding of the controls
+ * 
+ * @example
+ * ### Usage with controls
+ * 
+ * ```html
+ * <wcp-preview-controls>
+ *   <wcp-toggle-sidebar></wcp-toggle-sidebar>
+ *   <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
+ * </wcp-preview-controls>
+ * ```
  */
 @customElement('wcp-preview-controls')
 export class PreviewControls extends ColorSchemable(LitElement) {
