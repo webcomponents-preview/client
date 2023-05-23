@@ -1,0 +1,26 @@
+{
+  "$schema": "./config.schema.json",
+  "excludeElements": ["wcp-root"],
+  "initialActiveElement": "wcp-button",
+  "initialPreviewTab": "viewer",
+  "previewFramePlugins": ["wcp-preview-frame-examples", "wcp-preview-frame-readme", "wcp-preview-frame-viewer"],
+  "additionalReadmeGroupName": "Readme",
+  "additionalReadmes": [
+    {
+      "name": "Web Component Preview",
+      "url": "README.md"
+    },
+    {
+      "name": "Test markdown",
+      "url": "assets/markdown.md"
+    },
+    {
+      "name": "Test inline links",
+      "url": "assets/inline-links.md"
+    },
+    {
+      "name": "Test code",
+      "url": "assets/code.md"
+    }
+  ]
+}
