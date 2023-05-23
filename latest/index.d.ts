@@ -205,7 +205,12 @@ declare module "utils/config.utils" {
         excludeElements: string[];
         fallbackGroupName: string;
         initialActiveElement: string;
-        initialPreviewTab: 'examples' | 'readme' | 'viewer';
+        initialPreviewTab: string;
+        /**
+         * The plugins to be used for the preview frame.
+         * Defaults to `['wcp-preview-frame-viewer', 'wcp-preview-frame-examples', 'wcp-preview-frame-readme']`
+         */
+        previewFramePlugins: string[];
         additionalReadmeGroupName: string;
         additionalReadmes: {
             name: string;

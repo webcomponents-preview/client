@@ -31,12 +31,14 @@
             "type": "string"
         },
         "initialPreviewTab": {
-            "enum": [
-                "examples",
-                "readme",
-                "viewer"
-            ],
             "type": "string"
+        },
+        "previewFramePlugins": {
+            "description": "The plugins to be used for the preview frame.\nDefaults to `['wcp-preview-frame-viewer', 'wcp-preview-frame-examples', 'wcp-preview-frame-readme']`",
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
         },
         "title": {
             "type": "string"
