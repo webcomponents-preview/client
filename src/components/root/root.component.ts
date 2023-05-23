@@ -1,6 +1,7 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema';
 
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { unsafeStatic, withStatic } from 'lit/static-html.js';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
@@ -181,9 +182,12 @@ export class Root extends Routable(ColorSchemable(LitElement)) {
   protected renderElement(tagName: string): TemplateResult {
     return html`
       <wcp-preview-frame initial-preview-tab="${ifDefined(this.initialPreviewTab)}">
-        <wcp-preview-frame-examples .element="${this.manifest?.elements.get(tagName)}"></wcp-preview-frame-examples>
-        <wcp-preview-frame-readme .element="${this.manifest?.elements.get(tagName)}"></wcp-preview-frame-readme>
-        <wcp-preview-frame-viewer .element="${this.manifest?.elements.get(tagName)}"></wcp-preview-frame-viewer>
+        ${map(
+          this.config?.previewFramePlugins ?? [],
+          (plugin) => withStatic(html)`
+          <${unsafeStatic(plugin)} .element="${this.manifest?.elements.get(tagName)}"></${unsafeStatic(plugin)}>
+        `
+        )}
       </wcp-preview-frame>
     `;
   }
