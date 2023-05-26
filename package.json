@@ -20,7 +20,9 @@
   "scripts": {
     "lint": "eslint --ext .ts src",
     "clean": "shx rm -rf dist",
-    "generate:barrel": "barrelsby --config .barrelsby.json",
+    "generate:index:barrel": "barrelsby --config .barrelsby.json",
+    "generate:index:fixup": "shx sed -i \"s/';/\\.js';/g\" src/index.ts",
+    "generate:index": "run-s -lns generate:index:*",
     "generate:config": "typescript-json-schema src/utils/config.utils.ts Config --ignoreErrors --out src/config.schema.json",
     "generate": "run-p -lns generate:*",
     "docs": "cross-env NODE_OPTIONS='--loader ts-node/esm' NODE_NO_WARNINGS=1 cem analyze --config custom-elements-manifest.config.ts",
