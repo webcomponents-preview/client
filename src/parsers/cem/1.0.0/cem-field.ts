@@ -1,7 +1,7 @@
 import type * as CEM from 'custom-elements-manifest';
 import type { Field } from '@/utils/parser.types.js';
 
-import { getEnumValues, unwrapString } from '../utils.js';
+import { WRAPPED_STRING_REGEX, getEnumValues, unwrapString } from '../utils.js';
 
 export const CemField = class {
   #types: string[];
@@ -14,7 +14,7 @@ export const CemField = class {
     return this.#types[0] === 'number';
   }
   get isString(): boolean {
-    return this.#types[0] === 'string' || this.#types[0]?.startsWith(`'`);
+    return this.#types[0] === 'string' || WRAPPED_STRING_REGEX.test(this.#types[0] ?? '');
   }
   get isEnum(): boolean {
     return this.#types.length > 1 && this.#types[1] !== 'undefined';
