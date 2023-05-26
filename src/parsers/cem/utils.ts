@@ -15,8 +15,9 @@ export function isCustomElementField(field?: CEM.ClassMember): field is CEM.Cust
   return field?.kind === 'field';
 }
 
+export const WRAPPED_STRING_REGEX = /^['"`](.*)['"`]$/;
 export function unwrapString(value: string): string {
-  return value.startsWith(`'`) ? value.slice(1, -1) : value;
+  return value.replace(WRAPPED_STRING_REGEX, '$1');
 }
 
 export function getEnumValues(field: CEM.CustomElementField): string[] {
