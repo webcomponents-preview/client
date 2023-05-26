@@ -1,7 +1,7 @@
-import type CEM from 'custom-elements-manifest';
-import type { Field } from '@/utils/parser.types';
+import type * as CEM from 'custom-elements-manifest';
+import type { Field } from '@/utils/parser.types.js';
 
-import { getEnumValues, unwrapString } from '../utils';
+import { getEnumValues, unwrapString } from '../utils.js';
 
 export const CemField = class {
   #types: string[];

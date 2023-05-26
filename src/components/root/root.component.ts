@@ -1,4 +1,4 @@
-import type { CustomElementDeclaration } from 'custom-elements-manifest/schema';
+import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
 
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { unsafeStatic, withStatic } from 'lit/static-html.js';
@@ -8,12 +8,12 @@ import { map } from 'lit/directives/map.js';
 import { until } from 'lit/directives/until.js';
 import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils';
-import { Config, getConfig } from '@/utils/config.utils';
-import { prefixRelativeUrls } from '@/utils/markdown.utils';
-import type { Element, Manifest } from '@/utils/parser.types';
-import { parseCEM } from '@/parsers/cem/parse';
-import { Routable } from '@/utils/routable.utils';
+import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import { Config, getConfig } from '@/utils/config.utils.js';
+import { prefixRelativeUrls } from '@/utils/markdown.utils.js';
+import type { Element, Manifest } from '@/utils/parser.types.js';
+import { parseCEM } from '@/parsers/cem/parse.js';
+import { Routable } from '@/utils/routable.utils.js';
 
 import logo from '@/assets/icons/logo.svg';
 import styles from './root.component.scss';

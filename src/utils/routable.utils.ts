@@ -1,5 +1,5 @@
 import type { LitElement, TemplateResult } from 'lit';
-import type { Constructor } from '@/utils/mixin.types';
+import type { Constructor } from '@/utils/mixin.types.js';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Property 'UrlPattern' does not exist

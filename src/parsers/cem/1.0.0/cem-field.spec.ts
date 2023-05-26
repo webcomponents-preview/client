@@ -1,4 +1,4 @@
-import { CemField } from './cem-field';
+import { CemField } from './cem-field.js';
 
 // prepares a fixture from a given field type text
 function byType(text: string) {

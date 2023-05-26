@@ -1,8 +1,8 @@
-import type CEM from 'custom-elements-manifest';
-import type { Parser, Element } from '@/utils/parser.types';
+import type * as CEM from 'custom-elements-manifest';
+import type { Parser, Element } from '@/utils/parser.types.js';
 
-import { isCustomElementDeclarationWithTagName } from '../utils';
-import { CemElement } from './cem-element';
+import { isCustomElementDeclarationWithTagName } from '../utils.js';
+import { CemElement } from './cem-element.js';
 
 export const CemParser = class {
   #elements: Map<string, Element>;

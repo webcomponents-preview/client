@@ -1,4 +1,4 @@
-import type CEM from 'custom-elements-manifest';
+import type * as CEM from 'custom-elements-manifest';
 
 export type CustomElementDeclarationWithExamples = CEM.CustomElementDeclaration & { examples: string[] };
 export type CustomElementDeclarationWithGroups = CEM.CustomElementDeclaration & { groups: string[] };

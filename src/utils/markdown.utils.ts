@@ -1,4 +1,4 @@
-import hljs from 'highlight.js/lib/common';
+import hljs from 'highlight.js';
 import { marked } from 'marked';
 
 export function getCodeExample(slot: HTMLSlotElement): string {

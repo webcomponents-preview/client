@@ -8,7 +8,7 @@ import { map } from 'lit/directives/map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
-import type { ElementData } from '../preview-frame-viewer.utils';
+import type { ElementData } from '../preview-frame-viewer.utils.js';
 
 import styles from './preview-frame-viewer-stage.component.scss';
 
