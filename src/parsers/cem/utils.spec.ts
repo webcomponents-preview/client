@@ -13,4 +13,18 @@ describe('utils', () => {
       expect(unwrapString('foo')).toBe('foo');
     });
   });
+
+  describe('getEnumValues', () => {
+    it('returns an empty array if the type is unsufficient', () => {
+      expect(getEnumValues({ type: {} } as CEM.CustomElementField)).toEqual([]);
+    });
+
+    it('returns an array for single value enums', () => {
+      expect(getEnumValues({ type: { text: 'foo' } } as CEM.CustomElementField)).toEqual(['foo']);
+    });
+
+    it('returns an array of values', () => {
+      expect(getEnumValues({ type: { text: 'foo | bar' } } as CEM.CustomElementField)).toEqual(['foo', 'bar']);
+    });
+  });
 });

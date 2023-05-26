@@ -21,5 +21,8 @@ export function unwrapString(value: string): string {
 }
 
 export function getEnumValues(field: CEM.CustomElementField): string[] {
-  return field.type?.text.split(' | ') ?? [];
+  const parsed = field.type?.text?.split('|') ?? [];
+  const trimmed = parsed.map((value) => value.trim());
+  const unique = new Set(trimmed);
+  return [...unique].filter((value) => value !== '');
 }
