@@ -20,7 +20,7 @@ export class Renderer extends marked.Renderer {
     return `
       <wcp-markdown-example>
         <wcp-code slot="code">${super.code(code, language, escaped)}</wcp-code>
-        <div slot="preview">${code}</div>
+        <wcp-preview slot="preview">${code}</wcp-preview>
       </wcp-markdown-example>
     `;
   }
