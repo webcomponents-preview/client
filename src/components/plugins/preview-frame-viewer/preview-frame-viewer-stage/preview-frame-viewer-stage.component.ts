@@ -51,7 +51,11 @@ export class PreviewFrameViewerStage extends LitElement {
 
     // prepare the tag name and render it along with the slots and properties
     const tag = unsafeStatic(this.previewTagName);
-    return withStatic(html)`<${tag} ${spread(this.data?.fields ?? {})}>${this.renderSlots()}</${tag}>`;
+    return html`
+      <wcp-preview>
+        ${withStatic(html)`<${tag} ${spread(this.data?.fields ?? {})}>${this.renderSlots()}</${tag}>`}
+      </wcp-preview>
+    `;
   }
 }
 
