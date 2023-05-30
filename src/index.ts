@@ -8,7 +8,6 @@ export * from './components/feature/navigation-item/navigation-item.component.js
 export * from './components/feature/preview/preview.component.js';
 export * from './components/feature/preview-controls/preview-controls.component.js';
 export * from './components/feature/preview-frame/preview-frame.component.js';
-export * from './utils/plugin.utils.js';
 export * from './components/feature/readme/readme.component.js';
 export * from './components/feature/readme-frame/readme-frame.component.js';
 export * from './components/feature/toggle-color-scheme/toggle-color-scheme.component.js';
@@ -39,4 +38,5 @@ export * from './utils/markdown.utils.js';
 export * from './utils/mixin.types.js';
 export * from './utils/parser.types.js';
 export * from './utils/parser.utils.js';
+export * from './utils/plugin.utils.js';
 export * from './utils/routable.utils.js';
