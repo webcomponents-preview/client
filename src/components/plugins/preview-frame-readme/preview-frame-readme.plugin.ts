@@ -3,13 +3,12 @@ import { customElement, property, state } from 'lit/decorators.js';
 
 import type * as Parsed from '@/utils/parser.types.js';
 import { ColorSchemable } from '@/utils/color-scheme.utils.js';
-
-import type { PreviewFramePlugin } from '@/components/feature/preview-frame/preview-frame.utils.js';
+import type { Plugin } from '@/utils/plugin.utils.js';
 
 import styles from './preview-frame-readme.plugin.scss';
 
 @customElement('wcp-preview-frame-readme')
-export class PreviewFrameReadme extends ColorSchemable(LitElement) implements PreviewFramePlugin {
+export class PreviewFrameReadme extends ColorSchemable(LitElement) implements Plugin {
   static readonly styles = unsafeCSS(styles);
 
   @state()
