@@ -6,7 +6,7 @@ import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 import styles from './preview.component.scss';
 
 /**
- * reviews given content.
+ * Previews given content.
  *
  * @example
  * ```html
