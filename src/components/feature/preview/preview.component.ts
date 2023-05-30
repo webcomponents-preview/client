@@ -9,7 +9,7 @@ import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 import { type Config, getConfig } from '@/utils/config.utils.js';
 import { isElementWithin } from '@/utils/dom.utils.js';
 
-import { Button } from '@/components/ui/button/button.component.js';
+import type { Button } from '@/components/ui/button/button.component.js';
 
 import styles from './preview.component.scss';
 
