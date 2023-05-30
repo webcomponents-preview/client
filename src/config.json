@@ -3,6 +3,7 @@
   "excludeElements": ["wcp-root"],
   "initialActiveElement": "wcp-button",
   "initialPreviewTab": "viewer",
+  "previewPlugins": ["wcp-preview-viewport", "wcp-preview-background"],
   "previewFramePlugins": ["wcp-preview-frame-examples", "wcp-preview-frame-readme", "wcp-preview-frame-viewer"],
   "additionalReadmeGroupName": "Readme",
   "additionalReadmes": [
