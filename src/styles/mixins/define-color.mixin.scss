@@ -1,0 +1,34 @@
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:string';
+
+/// Defines the HSL color along with a raw notation to be used for runtime
+/// opacity calculation. As the color is parsed by SASS, any valid color
+/// annotation can be used (the alpha channel will be ignored though).
+///
+/// So these examples will all transform to the same output:
+/// ```scss
+/// define-color('red', hsl(0deg 100% 50%), 1);
+/// ```
+/// Same as:
+/// ```scss
+/// define-color('red', #f00, 1);
+/// ```
+/// Same as:
+/// ```scss
+/// define-color('red', red, 1);
+/// ```
+/// Transforms to:
+/// ```css
+/// --wcp-color-red-raw: hsl(0deg 100% 50%);
+/// --wcp-color-red: hsl(var(--wcp-color-red-raw) / 1);
+/// ```
+///
+@mixin define-color($name, $color, $alpha: 1, $prefix: '--wcp-color-', $rawSuffix: '-raw') {
+  // derive the raw color as hsl list
+  $hsl: (color.hue($color), color.saturation($color), color.lightness($color));
+
+  // define the raw color property as HSL and consume it to define the color property with an alpha channel
+  #{$prefix}#{$name}#{$rawSuffix}: #{list.join($hsl, (), space)};
+  #{$prefix}#{$name}: hsl(var(--wcp-color-#{$name}-raw) / #{$alpha});
+}

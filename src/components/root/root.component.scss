@@ -2,37 +2,45 @@
 @use 'sass:math';
 @use '@/styles/utils' as utils;
 
-// global custom properies, normally declared in `:root`
-// prettier-ignore
+// global custom properties, normally declared in `:root`
 :host {
   --wcp-base-size: 10px;
   --wcp-border-radius: calc(var(--wcp-base-size) * 0.5);
 
-  --wcp-color-grey-100:  hsl(0, 0%, 100%);
-  --wcp-color-grey-96:  hsl(0, 0%, 96%);
-  --wcp-color-grey-90:  hsl(0, 0%, 90%);
-  --wcp-color-grey-80:  hsl(0, 0%, 80%);
-  --wcp-color-grey-65:  hsl(0, 0%, 65%);
-  --wcp-color-grey-24:  hsl(0, 0%, 24%);
-  --wcp-color-grey-17:  hsl(0, 0%, 17%);
+  --wcp-color-opacity: 1;
 
-  --wcp-color-blue-13: hsl(225, 6%, 13%);
-  --wcp-color-blue-17: hsl(215, 28%, 17%);
-  --wcp-color-blue-20: hsl(217, 19%, 20%);
-  --wcp-color-blue-24: hsl(217, 19%, 24%);
-  --wcp-color-blue-27: hsl(217, 19%, 27%);
-  --wcp-color-blue-34: hsl(215, 14%, 34%);
-  --wcp-color-blue-55: hsl(215, 14%, 55%);
-  --wcp-color-blue-65: hsl(218, 11%, 65%);
-  --wcp-color-blue-80: hsl(220, 13%, 80%);
-  --wcp-color-blue-91: hsl(220, 13%, 91%);
-  --wcp-color-blue-93: hsl(220, 13%, 93%);
-  --wcp-color-blue-96: hsl(220, 14%, 96%);
+  /// defines the hsl colors along with a raw notation to be used with runtime opacity calculation, so e.g.:
+  /// ```scss
+  /// define-color('red', hsl(0deg 100% 50%), 1); // will define the following custom properties:
+  /// --wcp-color-red-raw: hsl(0deg 100% 50%);
+  /// --wcp-color-red: hsl(var(--wcp-color-red-raw) / 1);
+  /// ```
+  @include utils.define-color('grey-100', hsl(0deg 0% 100%), var(--wcp-color-opacity));
+  @include utils.define-color('grey-96', hsl(0deg 0% 96%), var(--wcp-color-opacity));
+  @include utils.define-color('grey-90', hsl(0deg 0% 90%), var(--wcp-color-opacity));
+  @include utils.define-color('grey-80', hsl(0deg 0% 80%), var(--wcp-color-opacity));
+  @include utils.define-color('grey-65', hsl(0deg 0% 65%), var(--wcp-color-opacity));
+  @include utils.define-color('grey-24', hsl(0deg 0% 24%), var(--wcp-color-opacity));
+  @include utils.define-color('grey-17', hsl(0deg 0% 17%), var(--wcp-color-opacity));
+
+  @include utils.define-color('blue-13', hsl(225deg 6% 13%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-17', hsl(215deg 28% 17%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-20', hsl(217deg 19% 20%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-24', hsl(217deg 19% 24%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-27', hsl(217deg 19% 27%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-34', hsl(215deg 14% 34%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-55', hsl(215deg 14% 55%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-65', hsl(218deg 11% 65%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-80', hsl(220deg 13% 80%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-91', hsl(220deg 13% 91%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-93', hsl(220deg 13% 93%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-96', hsl(220deg 14% 96%), var(--wcp-color-opacity));
 
   --wcp-fx-default-duration: 0.2s;
   --wcp-fx-layout-duration: 0.4s;
 
-  --wcp-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --wcp-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
   /// flowing contents, e.g. text and other inline contents, should be limited to this width
   --wcp-layout-flowing-width: 800px;
@@ -40,7 +48,7 @@
   --wcp-layout-fixed-width: 1200px;
 }
 
-// host (wcp-root) specific custom properies
+// host (wcp-root) specific custom properties
 // prettier-ignore
 :host {
   ---wcp-root-dark-background: var(--wcp-root-dark-background, var(--wcp-color-blue-17));
