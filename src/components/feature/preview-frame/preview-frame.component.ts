@@ -5,7 +5,7 @@ import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 import type { Config } from '@/utils/config.utils.js';
-import { type Plugin, findAllPlugins } from '@/utils/plugin.utils.js';
+import { type PreviewFramePlugin, findAllPlugins } from '@/utils/plugin.utils.js';
 
 import styles from './preview-frame.component.scss';
 
@@ -35,7 +35,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   static readonly styles = unsafeCSS(styles);
 
   @state()
-  private _plugins: Plugin[] = [];
+  private _plugins: PreviewFramePlugin[] = [];
 
   @state()
   private _tabs: HTMLElementTagNameMap['wcp-tabs']['tabs'] = {};

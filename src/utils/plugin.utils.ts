@@ -11,7 +11,20 @@ export type Plugin = Element & {
   readonly name: string;
   readonly label: string;
   readonly available: boolean;
+};
+
+/**
+ * Type to be used with preview frame plugins.
+ */
+export type PreviewFramePlugin = Plugin & {
   element?: Parsed.Element;
+};
+
+/**
+ * Type to be used with preview plugins.
+ */
+export type PreviewPlugin = Plugin & {
+  container: HTMLElement;
 };
 
 export function isPlugin(element: Element): element is Plugin {

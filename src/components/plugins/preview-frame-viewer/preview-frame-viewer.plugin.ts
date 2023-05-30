@@ -7,14 +7,14 @@ import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
-import type { Plugin } from '@/utils/plugin.utils.js';
+import type { PreviewFramePlugin } from '@/utils/plugin.utils.js';
 
 import { type ElementData, mapFormData, prepareInitialData } from './preview-frame-viewer.utils.js';
 
 import styles from './preview-frame-viewer.plugin.scss';
 
 @customElement('wcp-preview-frame-viewer')
-export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Plugin {
+export class PreviewFrameViewer extends ColorSchemable(LitElement) implements PreviewFramePlugin {
   static readonly styles = unsafeCSS(styles);
 
   #element?: Parsed.Element;
