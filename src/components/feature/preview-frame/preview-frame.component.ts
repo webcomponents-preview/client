@@ -123,7 +123,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
             .tabs="${this._tabs}"
             active-tab="${this._activeTab}"
             @wcp-tabs:active-tab-change="${this.handleActiveTabChange}"
-            @wcp-preview-plugin:availability-change="${this.handleAvailabilityChange}"
+            @wcp-preview-frame-plugin:availability-change="${this.handleAvailabilityChange}"
           >
             ${map(this._plugins, ({ name }) => html`<slot name="${name}" slot="${name}"></slot>`)}
           </wcp-tabs>

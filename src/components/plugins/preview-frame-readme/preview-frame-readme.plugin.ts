@@ -27,7 +27,7 @@ export class PreviewFrameReadme extends ColorSchemable(LitElement) implements Pl
       this.available = available;
 
       // notify about availability change
-      const event = new CustomEvent('wcp-preview-plugin:availability-change', {
+      const event = new CustomEvent('wcp-preview-frame-plugin:availability-change', {
         detail: this.available,
         bubbles: true,
         composed: true,
@@ -54,7 +54,7 @@ export class PreviewFrameReadme extends ColorSchemable(LitElement) implements Pl
 
 declare global {
   interface HTMLElementEventMap {
-    'wcp-preview-plugin:availability-change': CustomEvent<boolean>;
+    'wcp-preview-frame-plugin:availability-change': CustomEvent<boolean>;
   }
   interface HTMLElementTagNameMap {
     'wcp-preview-frame-readme': PreviewFrameReadme;
