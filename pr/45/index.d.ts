@@ -973,9 +973,6 @@ declare module "src/components/plugins/preview-viewport/preview-viewport.plugin"
         protected render(): TemplateResult;
     }
     global {
-        interface HTMLElementEventMap {
-            'wcp-preview-plugin:availability-change': CustomEvent<boolean>;
-        }
         interface HTMLElementTagNameMap {
             'wcp-preview-viewport': PreviewViewport;
         }
