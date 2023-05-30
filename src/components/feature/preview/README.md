@@ -8,10 +8,11 @@
 
 ## Methods
 
-| Name                | Privacy   | Description | Parameters | Return           | Inherited From |
-| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |
-| `connectedCallback` |           |             |            |                  |                |
-| `render`            | protected |             |            | `TemplateResult` |                |
+| Name                   | Privacy   | Description | Parameters | Return           | Inherited From |
+| ---------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |
+| `connectedCallback`    |           |             |            |                  |                |
+| `disconnectedCallback` |           |             |            |                  |                |
+| `render`               | protected |             |            | `TemplateResult` |                |
 
 ## CSS Properties
 

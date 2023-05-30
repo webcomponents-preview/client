@@ -1,7 +1,8 @@
 @use '@/styles/utils' as utils;
 
 :host {
-  ---wcp-preview-menu-border-radius: var(--wcp-frame-menu-border-radius, var(--wcp-border-radius));
+  // about weird border-radii: https://stackoverflow.com/a/29966500/1146207
+  ---wcp-preview-menu-border-radius: var(--wcp-frame-menu-border-radius, 9999px);
   ---wcp-preview-menu-dark-background-raw: var(--wcp-frame-menu-dark-background-raw, var(--wcp-color-blue-96-raw));
   ---wcp-preview-menu-light-background-raw: var(--wcp-frame-menu-light-background-raw, var(--wcp-color-blue-17-raw));
 }
@@ -32,8 +33,11 @@ menu {
   inset: 50% utils.size(5) auto auto;
   transform: translateY(-50%);
 
-  display: block;
+  display: flex;
+  flex-direction: row;
+  gap: utils.size(1);
   margin: 0;
+  padding: 0;
 
   background-color: hsl(var(---wcp-preview-menu-background-raw) / 0.15);
   border-radius: var(---wcp-preview-menu-border-radius);
@@ -41,4 +45,5 @@ menu {
   wcp-button[aria-expanded='false'] ~ & {
     display: none;
   }
+
 }

@@ -20,6 +20,7 @@ export * from './components/plugins/preview-frame-readme/preview-frame-readme.pl
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.plugin.js';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.utils.js';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component.js';
+export * from './components/plugins/preview-viewport/preview-viewport.plugin.js';
 export * from './components/root/root.component.js';
 export * from './components/ui/button/button.component.js';
 export * from './components/ui/code/code.component.js';

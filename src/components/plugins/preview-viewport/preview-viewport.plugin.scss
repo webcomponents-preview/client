@@ -1,0 +1,21 @@
+@use '@/styles/utils' as utils;
+
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: utils.size(0.5);
+}
+
+wcp-button:not([data-viewport]) {
+  margin-left: utils.size(0.5);
+  transition: transform 0.2s ease-in-out;
+
+  &:enabled:hover {
+    transform: rotate(45deg);
+  }
+
+  &.active:hover {
+    transform: rotate(-45deg);
+  }
+}
