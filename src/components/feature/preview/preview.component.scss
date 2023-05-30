@@ -1,10 +1,44 @@
 @use '@/styles/utils' as utils;
 
 :host {
+  ---wcp-preview-menu-border-radius: var(--wcp-frame-menu-border-radius, var(--wcp-border-radius));
+  ---wcp-preview-menu-dark-background-raw: var(--wcp-frame-menu-dark-background-raw, var(--wcp-color-blue-96-raw));
+  ---wcp-preview-menu-light-background-raw: var(--wcp-frame-menu-light-background-raw, var(--wcp-color-blue-17-raw));
+}
+
+:host {
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-preview-menu-background-raw: var(---wcp-preview-menu-#{$color-scheme}-background-raw);
+  }
+}
+
+:host {
   display: block;
   position: relative;
 
   // prevent fixed positioning from breaking out
   // https://stackoverflow.com/a/70422489/1146207
   transform: scale(1);
+}
+
+// the context menu with preview plugins
+nav {
+  position: absolute;
+  inset: 0 0 auto auto;
+}
+
+menu {
+  position: absolute;
+  inset: 50% utils.size(5) auto auto;
+  transform: translateY(-50%);
+
+  display: block;
+  margin: 0;
+
+  background-color: hsl(var(---wcp-preview-menu-background-raw) / 0.15);
+  border-radius: var(---wcp-preview-menu-border-radius);
+
+  wcp-button[aria-expanded='false'] ~ & {
+    display: none;
+  }
 }
