@@ -161,6 +161,205 @@ declare module "src/components/feature/navigation-item/navigation-item.component
         }
     }
 }
+declare module "src/utils/config.utils" {
+    export type Config = {
+        title: string;
+        excludeElements: string[];
+        fallbackGroupName: string;
+        initialActiveElement: string;
+        initialPreviewTab: string;
+        /**
+         * The plugins to be used for the preview.
+         * Defaults to `['wcp-preview-viewport', 'wcp-preview-background']`
+         */
+        previewPlugins: string[];
+        /**
+         * The plugins to be used for the preview frame.
+         * Defaults to `['wcp-preview-frame-viewer', 'wcp-preview-frame-examples', 'wcp-preview-frame-readme']`
+         */
+        previewFramePlugins: string[];
+        additionalReadmeGroupName: string;
+        additionalReadmes: {
+            name: string;
+            url: string;
+        }[];
+    };
+    global {
+        interface Window {
+            wcp: {
+                config: Promise<Config>;
+            };
+        }
+    }
+    export const loadConfig: (url?: string) => Promise<Config>;
+    export const getConfig: (url?: string) => Promise<Config>;
+}
+declare module "src/utils/dom.utils" {
+    export function isElementWithin(element: Element, container?: Element): boolean;
+}
+declare module "src/components/ui/button/button.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import 'element-internals-polyfill';
+    const Button_base: import("@/index.js").Constructor<{
+        colorScheme?: "light" | "dark" | undefined;
+    }> & typeof LitElement;
+    /**
+     * Shows a button element.
+     *
+     * @example
+     * ## Default button
+     *
+     * ```html
+     * <wcp-button>Click me!</wcp-button>
+     * ```
+     *
+     * @example
+     * ## Disabled button
+     *
+     * ```html
+     * <wcp-button disabled>Try to click me!</wcp-button>
+     * ```
+     *
+     * @example
+     * ## Button with icon
+     *
+     * ```html
+     * <wcp-button kind="icon">
+     *  <wcp-icon name="menu"></wcp-icon>
+     * </wcp-button>
+     * ```
+     *
+     * @example
+     * ## Force active state
+     *
+     * ```html
+     * <wcp-button class="active">Link</wcp-button>
+     * ```
+     *
+     * @example
+     * ## Use as link
+     *
+     * ```html
+     * <wcp-button href=".">Link</wcp-button>
+     * ```
+     *
+     * @example
+     * ## Use as native submit button in form
+     *
+     * ```html
+     * <form onsubmit="alert('Submit!'); return false">
+     *  <wcp-button type="submit">Submit</wcp-button>
+     * </form>
+     * ```
+     *
+     * @example
+     * ## Use as native reset button in form
+     *
+     * ```html
+     * <form onreset="alert('Reset!'); return false">
+     *   <wcp-button type="reset">Reset</wcp-button>
+     * </form>
+     * ```
+     *
+     * @slot {Some <i>Button</i>} - Default slot for the button content
+     *
+     * @cssprop --wcp-button-dark-passive-background - Background color of the button if non interactive in dark mode
+     * @cssprop --wcp-button-dark-passive-border-color - Border color of the button if non interactive in dark mode
+     * @cssprop --wcp-button-dark-passive-color - Text color of the button if non interactive in dark mode
+     *
+     * @cssprop --wcp-button-dark-hover-background - Background color of the button if hovered in dark mode
+     * @cssprop --wcp-button-dark-hover-border-color - Border color of the button if hovered in dark mode
+     * @cssprop --wcp-button-dark-hover-color - Text color of the button if hovered in dark mode
+     *
+     * @cssprop --wcp-button-dark-active-background - Background color of the button if active in dark mode
+     * @cssprop --wcp-button-dark-active-border-color - Border color of the button if active in dark mode
+     * @cssprop --wcp-button-dark-active-color - Text color of the button if active in dark mode
+     *
+     * @cssprop --wcp-button-light-passive-background - Background color of the button if non interactive in light mode
+     * @cssprop --wcp-button-light-passive-border-color - Border color of the button if non interactive in light mode
+     * @cssprop --wcp-button-light-passive-color - Text color of the button if non interactive in light mode
+     *
+     * @cssprop --wcp-button-light-hover-background - Background color of the button if hovered in light mode
+     * @cssprop --wcp-button-light-hover-border-color - Border color of the button if hovered in light mode
+     * @cssprop --wcp-button-light-hover-color - Text color of the button if hovered in light mode
+     *
+     * @cssprop --wcp-button-light-active-background - Background color of the button if active in light mode
+     * @cssprop --wcp-button-light-active-border-color - Border color of the button if active in light mode
+     * @cssprop --wcp-button-light-active-color - Text color of the button if active in light mode
+     */
+    export class Button extends Button_base {
+        #private;
+        static readonly formAssociated = true;
+        static readonly styles: import("lit").CSSResult;
+        disabled: boolean;
+        nowrap: boolean;
+        /**
+         * Allows stretching the button across the full width of its container.
+         * This is useful for buttons that are used in a narrow form, or in general
+         * on small viewports, like handheld devices.
+         */
+        stretched: boolean;
+        /**
+         * The kind of button to render. Either like a conventional button, or for
+         * icons. Icon buttons are quadratic and will show a radial background on interaction.
+         */
+        kind: 'button' | 'icon';
+        type: 'button' | 'reset' | 'submit';
+        href?: string;
+        target?: '_self' | '_blank' | '_parent' | '_top';
+        handleButtonClick(): void;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-button': Button;
+        }
+    }
+}
+declare module "src/components/feature/preview/preview.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import { type Config } from "src/utils/config.utils";
+    const Preview_base: import("@/index.js").Constructor<{
+        colorScheme?: "light" | "dark" | undefined;
+    }> & typeof LitElement;
+    /**
+     * Previews given content.
+     *
+     * @element wcp-preview
+     *
+     * @cssprop --wcp-preview-menu-border-radius - Border radius of the expanding menu.
+     * @cssprop --wcp-preview-menu-dark-background-raw - Background color of the expanding menu in dark mode. Must be a raw space-separated HSL color value list.
+     * @cssprop --wcp-preview-menu-light-background-raw - Background color of the expanding menu in light mode. Must be a raw space-separated HSL color value list.
+     *
+     * @slot - The content to preview.
+     *
+     * @example
+     * ```html
+     * <wcp-preview>
+     *   <wcp-button>Example button</wcp-button>
+     * </wcp-preview>
+     * ```
+     */
+    export class Preview extends Preview_base {
+        static readonly styles: import("lit").CSSResult;
+        config?: Config;
+        private nav?;
+        private toggleButton?;
+        private container?;
+        connectedCallback(): Promise<void>;
+        disconnectedCallback(): void;
+        private handleClick;
+        private handleOutsideClick;
+        private handleOutsideClickBound;
+        private handleContainerRef;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-preview': Preview;
+        }
+    }
+}
 declare module "src/components/feature/preview-controls/preview-controls.component" {
     import { LitElement, type TemplateResult } from 'lit';
     const PreviewControls_base: import("@/index.js").Constructor<{
@@ -198,34 +397,6 @@ declare module "src/components/feature/preview-controls/preview-controls.compone
             'wcp-preview-controls': PreviewControls;
         }
     }
-}
-declare module "src/utils/config.utils" {
-    export type Config = {
-        title: string;
-        excludeElements: string[];
-        fallbackGroupName: string;
-        initialActiveElement: string;
-        initialPreviewTab: string;
-        /**
-         * The plugins to be used for the preview frame.
-         * Defaults to `['wcp-preview-frame-viewer', 'wcp-preview-frame-examples', 'wcp-preview-frame-readme']`
-         */
-        previewFramePlugins: string[];
-        additionalReadmeGroupName: string;
-        additionalReadmes: {
-            name: string;
-            url: string;
-        }[];
-    };
-    global {
-        interface Window {
-            wcp: {
-                config: Promise<Config>;
-            };
-        }
-    }
-    export const loadConfig: (url?: string) => Promise<Config>;
-    export const getConfig: (url?: string) => Promise<Config>;
 }
 declare module "src/utils/parser.types" {
     /**
@@ -335,23 +506,34 @@ declare module "src/utils/parser.types" {
         new (data: object, exclude?: string[]): Manifest;
     };
 }
-declare module "src/components/feature/preview-frame/preview-frame.utils" {
+declare module "src/utils/plugin.utils" {
     import type * as Parsed from "src/utils/parser.types";
     /**
-     * Each preview frame plugin must implement this interface.
+     * Each plugin must implement this interface.
      * Additionally, the plugin may emits an event, notifying about
-     * availablitity changes. This custom event should be named
-     * `wcp-preview-plugin:availability-change` and hould carry a
+     * availability changes. This custom event should be named
+     * `wcp-plugin:availability-change` and should carry a
      * boolean flag about its availability in the `detail` property.
      */
-    export type PreviewFramePlugin = Element & {
+    export type Plugin = Element & {
         readonly name: string;
         readonly label: string;
         readonly available: boolean;
+    };
+    /**
+     * Type to be used with preview frame plugins.
+     */
+    export type PreviewFramePlugin = Plugin & {
         element?: Parsed.Element;
     };
-    export function isPreviewFramePlugin(element: Element): element is PreviewFramePlugin;
-    export function findAllPlugins(slot: HTMLSlotElement): PreviewFramePlugin[];
+    /**
+     * Type to be used with preview plugins.
+     */
+    export type PreviewPlugin = Plugin & {
+        container: HTMLElement;
+    };
+    export function isPlugin(element: Element): element is Plugin;
+    export function findAllPlugins(slot: HTMLSlotElement): Plugin[];
 }
 declare module "src/components/feature/preview-frame/preview-frame.component" {
     import { LitElement, type TemplateResult } from 'lit';
@@ -632,7 +814,7 @@ declare module "src/components/layout/main/main.component" {
 declare module "src/components/plugins/preview-frame-examples/preview-frame-examples.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
     import type * as Parsed from "src/utils/parser.types";
-    import type { PreviewFramePlugin } from "src/components/feature/preview-frame/preview-frame.utils";
+    import type { PreviewFramePlugin } from "src/utils/plugin.utils";
     const PreviewFrameExamples_base: import("@/index.js").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
     }> & typeof LitElement;
@@ -652,7 +834,7 @@ declare module "src/components/plugins/preview-frame-examples/preview-frame-exam
     }
     global {
         interface HTMLElementEventMap {
-            'wcp-preview-plugin:availability-change': CustomEvent<boolean>;
+            'wcp-preview-frame-plugin:availability-change': CustomEvent<boolean>;
         }
         interface HTMLElementTagNameMap {
             'wcp-preview-frame-examples': PreviewFrameExamples;
@@ -662,7 +844,7 @@ declare module "src/components/plugins/preview-frame-examples/preview-frame-exam
 declare module "src/components/plugins/preview-frame-readme/preview-frame-readme.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
     import type * as Parsed from "src/utils/parser.types";
-    import type { PreviewFramePlugin } from "src/components/feature/preview-frame/preview-frame.utils";
+    import type { PreviewFramePlugin } from "src/utils/plugin.utils";
     const PreviewFrameReadme_base: import("@/index.js").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
     }> & typeof LitElement;
@@ -677,7 +859,7 @@ declare module "src/components/plugins/preview-frame-readme/preview-frame-readme
     }
     global {
         interface HTMLElementEventMap {
-            'wcp-preview-plugin:availability-change': CustomEvent<boolean>;
+            'wcp-preview-frame-plugin:availability-change': CustomEvent<boolean>;
         }
         interface HTMLElementTagNameMap {
             'wcp-preview-frame-readme': PreviewFrameReadme;
@@ -720,7 +902,7 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
 declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
     import type * as Parsed from "src/utils/parser.types";
-    import type { PreviewFramePlugin } from "src/components/feature/preview-frame/preview-frame.utils";
+    import type { PreviewFramePlugin } from "src/utils/plugin.utils";
     const PreviewFrameViewer_base: import("@/index.js").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
     }> & typeof LitElement;
@@ -765,6 +947,37 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
     global {
         interface HTMLElementTagNameMap {
             'wcp-preview-frame-viewer-stage': PreviewFrameViewerStage;
+        }
+    }
+}
+declare module "src/components/plugins/preview-viewport/preview-viewport.plugin" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import type { PreviewPlugin } from "src/utils/plugin.utils";
+    const PreviewViewport_base: import("@/index.js").Constructor<{
+        colorScheme?: "light" | "dark" | undefined;
+    }> & typeof LitElement;
+    export class PreviewViewport extends PreviewViewport_base implements PreviewPlugin {
+        static readonly styles: import("lit").CSSResult;
+        readonly container: HTMLElement;
+        readonly available = true;
+        readonly name = "viewport";
+        readonly label = "Viewport";
+        private simulateViewport?;
+        invertSimulatedViewport: boolean;
+        protected prepareStyle(): HTMLStyleElement;
+        protected applyPreviewSize(): void;
+        protected applyPreviewScale(): void;
+        private handleSimulateViewport;
+        handleInvertSimulatedViewport(): void;
+        connectedCallback(): void;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementEventMap {
+            'wcp-preview-plugin:availability-change': CustomEvent<boolean>;
+        }
+        interface HTMLElementTagNameMap {
+            'wcp-preview-viewport': PreviewViewport;
         }
     }
 }
@@ -844,18 +1057,18 @@ declare module "src/components/root/root.component" {
     import type { Element, Manifest } from "src/utils/parser.types";
     const Root_base: import("@/index.js").Constructor<{
         router: {
-            readonly "__#5@#host": LitElement;
-            "__#5@#currentPath"?: string | undefined;
-            "__#5@#currentParams": import("@/utils/routable.utils.js").Params;
-            "__#5@#currentRoute"?: import("@/utils/routable.utils.js").Route | undefined;
-            "__#5@#routes": import("@/utils/routable.utils.js").Route[];
+            readonly "__#6@#host": LitElement;
+            "__#6@#currentPath"?: string | undefined;
+            "__#6@#currentParams": import("@/utils/routable.utils.js").Params;
+            "__#6@#currentRoute"?: import("@/utils/routable.utils.js").Route | undefined;
+            "__#6@#routes": import("@/utils/routable.utils.js").Route[];
             readonly currentPath: string | undefined;
             registerRoutes(routes: import("@/utils/routable.utils.js").Route[]): void;
             isActive(path: string): boolean;
             redirect(path: string): void;
-            "__#5@#withBaseUrl"(path?: string): string;
-            "__#5@#createPattern"(path: string): URLPattern;
-            "__#5@#findCurrentRoute": (event: HashChangeEvent) => Promise<void>;
+            "__#6@#withBaseUrl"(path?: string): string;
+            "__#6@#createPattern"(path: string): URLPattern;
+            "__#6@#findCurrentRoute": (event: HashChangeEvent) => Promise<void>;
             connect(): void;
             disconnect(): void;
             outlet(): TemplateResult;
@@ -919,125 +1132,6 @@ declare module "src/components/root/root.component" {
         }
         interface HTMLElementTagNameMap {
             'wcp-root': Root;
-        }
-    }
-}
-declare module "src/components/ui/button/button.component" {
-    import { LitElement, type TemplateResult } from 'lit';
-    import 'element-internals-polyfill';
-    const Button_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
-    /**
-     * Shows a button element.
-     *
-     * @example
-     * ## Default button
-     *
-     * ```html
-     * <wcp-button>Click me!</wcp-button>
-     * ```
-     *
-     * @example
-     * ## Disabled button
-     *
-     * ```html
-     * <wcp-button disabled>Try to click me!</wcp-button>
-     * ```
-     *
-     * @example
-     * ## Button with icon
-     *
-     * ```html
-     * <wcp-button kind="icon">
-     *  <wcp-icon name="menu"></wcp-icon>
-     * </wcp-button>
-     * ```
-     *
-     * @example
-     * ## Force active state
-     *
-     * ```html
-     * <wcp-button class="active">Link</wcp-button>
-     * ```
-     *
-     * @example
-     * ## Use as link
-     *
-     * ```html
-     * <wcp-button href=".">Link</wcp-button>
-     * ```
-     *
-     * @example
-     * ## Use as native submit button in form
-     *
-     * ```html
-     * <form onsubmit="alert('Submit!'); return false">
-     *  <wcp-button type="submit">Submit</wcp-button>
-     * </form>
-     * ```
-     *
-     * @example
-     * ## Use as native reset button in form
-     *
-     * ```html
-     * <form onreset="alert('Reset!'); return false">
-     *   <wcp-button type="reset">Reset</wcp-button>
-     * </form>
-     * ```
-     *
-     * @slot {Some <i>Button</i>} - Default slot for the button content
-     *
-     * @cssprop --wcp-button-dark-passive-background - Background color of the button if non interactive in dark mode
-     * @cssprop --wcp-button-dark-passive-border-color - Border color of the button if non interactive in dark mode
-     * @cssprop --wcp-button-dark-passive-color - Text color of the button if non interactive in dark mode
-     *
-     * @cssprop --wcp-button-dark-hover-background - Background color of the button if hovered in dark mode
-     * @cssprop --wcp-button-dark-hover-border-color - Border color of the button if hovered in dark mode
-     * @cssprop --wcp-button-dark-hover-color - Text color of the button if hovered in dark mode
-     *
-     * @cssprop --wcp-button-dark-active-background - Background color of the button if active in dark mode
-     * @cssprop --wcp-button-dark-active-border-color - Border color of the button if active in dark mode
-     * @cssprop --wcp-button-dark-active-color - Text color of the button if active in dark mode
-     *
-     * @cssprop --wcp-button-light-passive-background - Background color of the button if non interactive in light mode
-     * @cssprop --wcp-button-light-passive-border-color - Border color of the button if non interactive in light mode
-     * @cssprop --wcp-button-light-passive-color - Text color of the button if non interactive in light mode
-     *
-     * @cssprop --wcp-button-light-hover-background - Background color of the button if hovered in light mode
-     * @cssprop --wcp-button-light-hover-border-color - Border color of the button if hovered in light mode
-     * @cssprop --wcp-button-light-hover-color - Text color of the button if hovered in light mode
-     *
-     * @cssprop --wcp-button-light-active-background - Background color of the button if active in light mode
-     * @cssprop --wcp-button-light-active-border-color - Border color of the button if active in light mode
-     * @cssprop --wcp-button-light-active-color - Text color of the button if active in light mode
-     */
-    export class Button extends Button_base {
-        #private;
-        static readonly formAssociated = true;
-        static readonly styles: import("lit").CSSResult;
-        disabled: boolean;
-        nowrap: boolean;
-        /**
-         * Allows stretching the button across the full width of its container.
-         * This is useful for buttons that are used in a narrow form, or in general
-         * on small viewports, like handheld devices.
-         */
-        stretched: boolean;
-        /**
-         * The kind of button to render. Either like a conventional button, or for
-         * icons. Icon buttons are quadrtic and will show a radial background on interaction.
-         */
-        kind: 'button' | 'icon';
-        type: 'button' | 'reset' | 'submit';
-        href?: string;
-        target?: '_self' | '_blank' | '_parent' | '_top';
-        handleButtonClick(): void;
-        protected render(): TemplateResult;
-    }
-    global {
-        interface HTMLElementTagNameMap {
-            'wcp-button': Button;
         }
     }
 }
@@ -1203,9 +1297,9 @@ declare module "src/index" {
     export * from "src/components/feature/markdown-example/markdown-example.component";
     export * from "src/components/feature/navigation/navigation.component";
     export * from "src/components/feature/navigation-item/navigation-item.component";
+    export * from "src/components/feature/preview/preview.component";
     export * from "src/components/feature/preview-controls/preview-controls.component";
     export * from "src/components/feature/preview-frame/preview-frame.component";
-    export * from "src/components/feature/preview-frame/preview-frame.utils";
     export * from "src/components/feature/readme/readme.component";
     export * from "src/components/feature/readme-frame/readme-frame.component";
     export * from "src/components/feature/toggle-color-scheme/toggle-color-scheme.component";
@@ -1218,6 +1312,7 @@ declare module "src/index" {
     export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.plugin";
     export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.utils";
     export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component";
+    export * from "src/components/plugins/preview-viewport/preview-viewport.plugin";
     export * from "src/components/root/root.component";
     export * from "src/components/ui/button/button.component";
     export * from "src/components/ui/code/code.component";
@@ -1227,10 +1322,12 @@ declare module "src/index" {
     export * from "src/parsers/cem/utils";
     export * from "src/utils/color-scheme.utils";
     export * from "src/utils/config.utils";
+    export * from "src/utils/dom.utils";
     export * from "src/utils/markdown.utils";
     export * from "src/utils/mixin.types";
     export * from "src/utils/parser.types";
     export * from "src/utils/parser.utils";
+    export * from "src/utils/plugin.utils";
     export * from "src/utils/routable.utils";
 }
 declare module "jest-root-path-helper" {

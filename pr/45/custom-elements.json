@@ -619,6 +619,144 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/feature/preview/preview.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Previews given content.",
+          "name": "Preview",
+          "cssProperties": [
+            {
+              "description": "Border radius of the expanding menu.",
+              "name": "--wcp-preview-menu-border-radius"
+            },
+            {
+              "description": "Background color of the expanding menu in dark mode. Must be a raw space-separated HSL color value list.",
+              "name": "--wcp-preview-menu-dark-background-raw"
+            },
+            {
+              "description": "Background color of the expanding menu in light mode. Must be a raw space-separated HSL color value list.",
+              "name": "--wcp-preview-menu-light-background-raw"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The content to preview.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "config",
+              "type": {
+                "text": "Config | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "nav",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "toggleButton",
+              "type": {
+                "text": "Button | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "Element | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "handleClick",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "handleOutsideClick",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "handleOutsideClickBound",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "handleContainerRef",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "container",
+                  "optional": true,
+                  "type": {
+                    "text": "Element"
+                  }
+                }
+              ]
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wcp-preview",
+          "examples": [
+            "```html\n<wcp-preview>\n  <wcp-button>Example button</wcp-button>\n</wcp-preview>\n```"
+          ],
+          "readme": "# class: `Preview`, `wcp-preview`\n\n## Fields\n\n| Name     | Privacy | Type                  | Default | Description | Inherited From |\n| -------- | ------- | --------------------- | ------- | ----------- | -------------- |\n| `config` |         | `Config \\| undefined` |         |             |                |\n\n## Methods\n\n| Name                   | Privacy   | Description | Parameters | Return           | Inherited From |\n| ---------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `connectedCallback`    |           |             |            |                  |                |\n| `disconnectedCallback` |           |             |            |                  |                |\n| `render`               | protected |             |            | `TemplateResult` |                |\n\n## CSS Properties\n\n| Name                                      | Default | Description                                                                                               |\n| ----------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |\n| `--wcp-preview-menu-border-radius`        |         | Border radius of the expanding menu.                                                                      |\n| `--wcp-preview-menu-dark-background-raw`  |         | Background color of the expanding menu in dark mode. Must be a raw space-separated HSL color value list.  |\n| `--wcp-preview-menu-light-background-raw` |         | Background color of the expanding menu in light mode. Must be a raw space-separated HSL color value list. |\n\n## Slots\n\n| Name | Description             |\n| ---- | ----------------------- |\n|      | The content to preview. |\n\n<hr/>\n",
+          "groups": [
+            "feature"
+          ],
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Preview",
+          "declaration": {
+            "name": "Preview",
+            "module": "src/components/feature/preview/preview.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview",
+          "declaration": {
+            "name": "Preview",
+            "module": "src/components/feature/preview/preview.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/feature/preview-controls/preview-controls.component.ts",
       "declarations": [
         {
@@ -1919,6 +2057,195 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/plugins/preview-viewport/preview-viewport.plugin.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PreviewViewport",
+          "members": [
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "HTMLElement"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true,
+              "default": "true",
+              "attribute": "available",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "default": "'viewport'",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "default": "'Viewport'",
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "simulateViewport",
+              "type": {
+                "text": "Viewport | undefined"
+              },
+              "privacy": "private",
+              "attribute": "simulate-viewport",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "invertSimulatedViewport",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "invert-simulated-viewport",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "prepareStyle",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "HTMLStyleElement"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "applyPreviewSize",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "applyPreviewScale",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "handleSimulateViewport",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleInvertSimulatedViewport"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true,
+              "default": "true",
+              "fieldName": "available"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "default": "'viewport'",
+              "fieldName": "name"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "default": "'Viewport'",
+              "fieldName": "label"
+            },
+            {
+              "name": "simulate-viewport",
+              "type": {
+                "text": "Viewport | undefined"
+              },
+              "fieldName": "simulateViewport"
+            },
+            {
+              "name": "invert-simulated-viewport",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "invertSimulatedViewport"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/utils/color-scheme.utils.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "readme": "# class: `PreviewViewport`\n\n## Fields\n\n| Name                      | Privacy | Type          | Default      | Description | Inherited From |\n| ------------------------- | ------- | ------------- | ------------ | ----------- | -------------- |\n| `container`               |         | `HTMLElement` |              |             |                |\n| `available`               |         | `boolean`     | `true`       |             |                |\n| `name`                    |         | `string`      | `'viewport'` |             |                |\n| `label`                   |         | `string`      | `'Viewport'` |             |                |\n| `invertSimulatedViewport` |         | `boolean`     | `false`      |             |                |\n\n## Methods\n\n| Name                            | Privacy   | Description | Parameters | Return             | Inherited From |\n| ------------------------------- | --------- | ----------- | ---------- | ------------------ | -------------- |\n| `prepareStyle`                  | protected |             |            | `HTMLStyleElement` |                |\n| `applyPreviewSize`              | protected |             |            |                    |                |\n| `applyPreviewScale`             | protected |             |            |                    |                |\n| `handleInvertSimulatedViewport` |           |             |            |                    |                |\n| `connectedCallback`             |           |             |            |                    |                |\n| `render`                        | protected |             |            | `TemplateResult`   |                |\n\n## Attributes\n\n| Name                        | Field                   | Inherited From |\n| --------------------------- | ----------------------- | -------------- |\n| `available`                 | available               |                |\n| `name`                      | name                    |                |\n| `label`                     | label                   |                |\n| `simulate-viewport`         | simulateViewport        |                |\n| `invert-simulated-viewport` | invertSimulatedViewport |                |\n\n<hr/>\n\n# Variables\n\n| Name        | Description | Type |\n| ----------- | ----------- | ---- |\n| `VIEWPORTS` |             |      |\n| `ICONS`     |             |      |\n\n<hr/>\n\n# Functions\n\n| Name | Description | Parameters | Return |\n| ---- | ----------- | ---------- | ------ |\n|      |             |            |        |\n|      |             |            |        |\n\n<hr/>\n",
+          "groups": [
+            "plugins"
+          ],
+          "tagName": "wcp-preview-viewport",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PreviewViewport",
+          "declaration": {
+            "name": "PreviewViewport",
+            "module": "src/components/plugins/preview-viewport/preview-viewport.plugin.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview-viewport",
+          "declaration": {
+            "name": "PreviewViewport",
+            "module": "src/components/plugins/preview-viewport/preview-viewport.plugin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/ui/button/button.component.ts",
       "declarations": [
         {
@@ -2063,7 +2390,7 @@
                 "text": "'button' | 'icon'"
               },
               "default": "'button'",
-              "description": "The kind of button to render. Either like a conventional button, or for\nicons. Icon buttons are quadrtic and will show a radial background on interaction.",
+              "description": "The kind of button to render. Either like a conventional button, or for\nicons. Icon buttons are quadratic and will show a radial background on interaction.",
               "attribute": "kind",
               "reflects": true
             },
@@ -2132,7 +2459,7 @@
                 "text": "'button' | 'icon'"
               },
               "default": "'button'",
-              "description": "The kind of button to render. Either like a conventional button, or for\nicons. Icon buttons are quadrtic and will show a radial background on interaction.",
+              "description": "The kind of button to render. Either like a conventional button, or for\nicons. Icon buttons are quadratic and will show a radial background on interaction.",
               "fieldName": "kind"
             },
             {
@@ -2177,7 +2504,7 @@
             "## Use as native submit button in form\n\n```html\n<form onsubmit=\"alert('Submit!'); return false\">\n <wcp-button type=\"submit\">Submit</wcp-button>\n</form>\n```",
             "## Use as native reset button in form\n\n```html\n<form onreset=\"alert('Reset!'); return false\">\n  <wcp-button type=\"reset\">Reset</wcp-button>\n</form>\n```"
           ],
-          "readme": "# class: `Button`\n\n## Fields\n\n| Name        | Privacy | Type                                                      | Default    | Description                                                                                                                                                                                      | Inherited From |\n| ----------- | ------- | --------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------- |\n| `disabled`  |         | `boolean`                                                 | `false`    |                                                                                                                                                                                                  |                |\n| `nowrap`    |         | `boolean`                                                 | `false`    |                                                                                                                                                                                                  |                |\n| `stretched` |         | `boolean`                                                 | `false`    | Allows stretching the button across the full width of its container.&#xA;This is useful for buttons that are used in a narrow form, or in general&#xA;on small viewports, like handheld devices. |                |\n| `kind`      |         | `'button' \\| 'icon'`                                      | `'button'` | The kind of button to render. Either like a conventional button, or for&#xA;icons. Icon buttons are quadrtic and will show a radial background on interaction.                                   |                |\n| `type`      |         | `'button' \\| 'reset' \\| 'submit'`                         | `'button'` |                                                                                                                                                                                                  |                |\n| `href`      |         | `string \\| undefined`                                     |            |                                                                                                                                                                                                  |                |\n| `target`    |         | `'_self' \\| '_blank' \\| '_parent' \\| '_top' \\| undefined` |            |                                                                                                                                                                                                  |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `handleButtonClick` |           |             |            |                  |                |\n| `render`            | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `disabled`  | disabled  |                |\n| `nowrap`    | nowrap    |                |\n| `stretched` | stretched |                |\n| `kind`      | kind      |                |\n| `type`      | type      |                |\n| `href`      | href      |                |\n| `target`    | target    |                |\n\n## CSS Properties\n\n| Name                                      | Default | Description                                                     |\n| ----------------------------------------- | ------- | --------------------------------------------------------------- |\n| `--wcp-button-dark-passive-background`    |         | Background color of the button if non interactive in dark mode  |\n| `--wcp-button-dark-passive-border-color`  |         | Border color of the button if non interactive in dark mode      |\n| `--wcp-button-dark-passive-color`         |         | Text color of the button if non interactive in dark mode        |\n| `--wcp-button-dark-hover-background`      |         | Background color of the button if hovered in dark mode          |\n| `--wcp-button-dark-hover-border-color`    |         | Border color of the button if hovered in dark mode              |\n| `--wcp-button-dark-hover-color`           |         | Text color of the button if hovered in dark mode                |\n| `--wcp-button-dark-active-background`     |         | Background color of the button if active in dark mode           |\n| `--wcp-button-dark-active-border-color`   |         | Border color of the button if active in dark mode               |\n| `--wcp-button-dark-active-color`          |         | Text color of the button if active in dark mode                 |\n| `--wcp-button-light-passive-background`   |         | Background color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-border-color` |         | Border color of the button if non interactive in light mode     |\n| `--wcp-button-light-passive-color`        |         | Text color of the button if non interactive in light mode       |\n| `--wcp-button-light-hover-background`     |         | Background color of the button if hovered in light mode         |\n| `--wcp-button-light-hover-border-color`   |         | Border color of the button if hovered in light mode             |\n| `--wcp-button-light-hover-color`          |         | Text color of the button if hovered in light mode               |\n| `--wcp-button-light-active-background`    |         | Background color of the button if active in light mode          |\n| `--wcp-button-light-active-border-color`  |         | Border color of the button if active in light mode              |\n| `--wcp-button-light-active-color`         |         | Text color of the button if active in light mode                |\n\n## Slots\n\n| Name | Description                         |\n| ---- | ----------------------------------- |\n|      | Default slot for the button content |\n\n<hr/>\n",
+          "readme": "# class: `Button`\n\n## Fields\n\n| Name        | Privacy | Type                                                      | Default    | Description                                                                                                                                                                                      | Inherited From |\n| ----------- | ------- | --------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------- |\n| `disabled`  |         | `boolean`                                                 | `false`    |                                                                                                                                                                                                  |                |\n| `nowrap`    |         | `boolean`                                                 | `false`    |                                                                                                                                                                                                  |                |\n| `stretched` |         | `boolean`                                                 | `false`    | Allows stretching the button across the full width of its container.&#xA;This is useful for buttons that are used in a narrow form, or in general&#xA;on small viewports, like handheld devices. |                |\n| `kind`      |         | `'button' \\| 'icon'`                                      | `'button'` | The kind of button to render. Either like a conventional button, or for&#xA;icons. Icon buttons are quadratic and will show a radial background on interaction.                                  |                |\n| `type`      |         | `'button' \\| 'reset' \\| 'submit'`                         | `'button'` |                                                                                                                                                                                                  |                |\n| `href`      |         | `string \\| undefined`                                     |            |                                                                                                                                                                                                  |                |\n| `target`    |         | `'_self' \\| '_blank' \\| '_parent' \\| '_top' \\| undefined` |            |                                                                                                                                                                                                  |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `handleButtonClick` |           |             |            |                  |                |\n| `render`            | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `disabled`  | disabled  |                |\n| `nowrap`    | nowrap    |                |\n| `stretched` | stretched |                |\n| `kind`      | kind      |                |\n| `type`      | type      |                |\n| `href`      | href      |                |\n| `target`    | target    |                |\n\n## CSS Properties\n\n| Name                                      | Default | Description                                                     |\n| ----------------------------------------- | ------- | --------------------------------------------------------------- |\n| `--wcp-button-dark-passive-background`    |         | Background color of the button if non interactive in dark mode  |\n| `--wcp-button-dark-passive-border-color`  |         | Border color of the button if non interactive in dark mode      |\n| `--wcp-button-dark-passive-color`         |         | Text color of the button if non interactive in dark mode        |\n| `--wcp-button-dark-hover-background`      |         | Background color of the button if hovered in dark mode          |\n| `--wcp-button-dark-hover-border-color`    |         | Border color of the button if hovered in dark mode              |\n| `--wcp-button-dark-hover-color`           |         | Text color of the button if hovered in dark mode                |\n| `--wcp-button-dark-active-background`     |         | Background color of the button if active in dark mode           |\n| `--wcp-button-dark-active-border-color`   |         | Border color of the button if active in dark mode               |\n| `--wcp-button-dark-active-color`          |         | Text color of the button if active in dark mode                 |\n| `--wcp-button-light-passive-background`   |         | Background color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-border-color` |         | Border color of the button if non interactive in light mode     |\n| `--wcp-button-light-passive-color`        |         | Text color of the button if non interactive in light mode       |\n| `--wcp-button-light-hover-background`     |         | Background color of the button if hovered in light mode         |\n| `--wcp-button-light-hover-border-color`   |         | Border color of the button if hovered in light mode             |\n| `--wcp-button-light-hover-color`          |         | Text color of the button if hovered in light mode               |\n| `--wcp-button-light-active-background`    |         | Background color of the button if active in light mode          |\n| `--wcp-button-light-active-border-color`  |         | Border color of the button if active in light mode              |\n| `--wcp-button-light-active-color`         |         | Text color of the button if active in light mode                |\n\n## Slots\n\n| Name | Description                         |\n| ---- | ----------------------------------- |\n|      | Default slot for the button content |\n\n<hr/>\n",
           "groups": [
             "ui"
           ],
