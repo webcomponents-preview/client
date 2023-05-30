@@ -117,7 +117,7 @@ export class Button extends ColorSchemable(LitElement) {
 
   /**
    * The kind of button to render. Either like a conventional button, or for
-   * icons. Icon buttons are quadrtic and will show a radial background on interaction.
+   * icons. Icon buttons are quadratic and will show a radial background on interaction.
    */
   @property({ type: String, reflect: true })
   kind: 'button' | 'icon' = 'button';
