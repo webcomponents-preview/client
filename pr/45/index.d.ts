@@ -1039,45 +1039,49 @@ declare module "src/utils/routable.utils" {
     export type Params = Record<string, string | undefined>;
     export type Route = {
         path: string;
-        enter?: (params: Params, router: Router) => boolean;
+        enter?: (params: Params, router: Router) => boolean | Promise<boolean>;
         render?: (params: Params, router: Router) => TemplateResult;
     };
-    class Router {
+    export type RegisterRoutes = (router: Router) => Route[];
+    export class Router {
         #private;
         get currentPath(): string | undefined;
+        /**
+         * Defines the routes for this router.
+         */
         registerRoutes(routes: Route[]): void;
+        /**
+         * Checks if the given path is the currently active.
+         */
         isActive(path: string): boolean;
+        /**
+         * Redirect to a given path. This will trigger a hash change event.
+         */
         redirect(path: string): void;
+        /**
+         * Update the current path without triggering a redirect.
+         */
+        update(path: string): void;
         constructor(host: LitElement);
         connect(): void;
         disconnect(): void;
         outlet(): TemplateResult;
     }
-    export const Routable: <T extends Constructor<LitElement>>(superClass: T) => Constructor<RoutableInterface> & T;
+    export const Routable: (registerRoutes?: RegisterRoutes) => <T extends Constructor<LitElement>>(superClass: T) => Constructor<RoutableInterface> & T;
+}
+declare module "src/components/root/root.routes" {
+    import type { Config } from "src/utils/config.utils";
+    import type { Manifest } from "src/utils/parser.types";
+    import type { Route, Router } from "src/utils/routable.utils";
+    export const prepareRoutes: (router: Router, config: Config, manifest: Manifest) => Route[];
 }
 declare module "src/components/root/root.component" {
     import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
     import { LitElement, type TemplateResult } from 'lit';
-    import { Config } from "src/utils/config.utils";
+    import { type Config } from "src/utils/config.utils";
     import type { Element, Manifest } from "src/utils/parser.types";
     const Root_base: import("@/index.js").Constructor<{
-        router: {
-            readonly "__#6@#host": LitElement;
-            "__#6@#currentPath"?: string | undefined;
-            "__#6@#currentParams": import("@/utils/routable.utils.js").Params;
-            "__#6@#currentRoute"?: import("@/utils/routable.utils.js").Route | undefined;
-            "__#6@#routes": import("@/utils/routable.utils.js").Route[];
-            readonly currentPath: string | undefined;
-            registerRoutes(routes: import("@/utils/routable.utils.js").Route[]): void;
-            isActive(path: string): boolean;
-            redirect(path: string): void;
-            "__#6@#withBaseUrl"(path?: string): string;
-            "__#6@#createPattern"(path: string): URLPattern;
-            "__#6@#findCurrentRoute": (event: HashChangeEvent) => Promise<void>;
-            connect(): void;
-            disconnect(): void;
-            outlet(): TemplateResult;
-        };
+        router: import("@/utils/routable.utils.js").Router;
     }> & import("@/index.js").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
     }> & typeof LitElement;
@@ -1097,17 +1101,10 @@ declare module "src/components/root/root.component" {
      * @emits wcp-root:manifest-loaded - Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved.
      */
     export class Root extends Root_base {
-        #private;
         static readonly styles: import("lit").CSSResult;
         config?: Config;
         manifest?: Manifest;
-        initialPreviewTab?: string;
         navigation?: Map<string, Element[]>;
-        readmesGroup: string;
-        readmes: {
-            name: string;
-            url: string;
-        }[];
         /**
          * Flags the component to be displayed inline and not standalone. Requires the surrounding
          * layout to provide the necessary styles like for any other block element.
@@ -1121,13 +1118,10 @@ declare module "src/components/root/root.component" {
          * Defines the location of the custom element manifest file.
          */
         manifestUrl: string;
-        constructor();
         loadConfig(configUrl?: string): Promise<void>;
         loadCustomElementsManifest(manifestUrl: string): Promise<void>;
         emitManifestLoaded(): void;
         connectedCallback(): Promise<void>;
-        protected renderReadme(url: string, hash?: string): TemplateResult;
-        protected renderElement(tagName: string): TemplateResult;
         protected render(): TemplateResult;
     }
     global {
@@ -1319,6 +1313,7 @@ declare module "src/index" {
     export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component";
     export * from "src/components/plugins/preview-viewport/preview-viewport.plugin";
     export * from "src/components/root/root.component";
+    export * from "src/components/root/root.routes";
     export * from "src/components/ui/button/button.component";
     export * from "src/components/ui/code/code.component";
     export * from "src/components/ui/icon/icon.component";
