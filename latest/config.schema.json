@@ -40,6 +40,13 @@
             },
             "type": "array"
         },
+        "previewPlugins": {
+            "description": "The plugins to be used for the preview.\nDefaults to `['wcp-preview-viewport', 'wcp-preview-background']`",
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
         "title": {
             "type": "string"
         }
