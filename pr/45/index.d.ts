@@ -1053,7 +1053,7 @@ declare module "src/utils/routable.utils" {
         /**
          * Checks if the given path is the currently active.
          */
-        isActive(path: string): boolean;
+        isActive(path: string, exact?: boolean): boolean;
         /**
          * Redirect to a given path. This will trigger a hash change event.
          */
