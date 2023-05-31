@@ -22,6 +22,7 @@ export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.ut
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component.js';
 export * from './components/plugins/preview-viewport/preview-viewport.plugin.js';
 export * from './components/root/root.component.js';
+export * from './components/root/root.routes.js';
 export * from './components/ui/button/button.component.js';
 export * from './components/ui/code/code.component.js';
 export * from './components/ui/icon/icon.component.js';
