@@ -1,14 +1,14 @@
-import type CEM from 'custom-elements-manifest';
-import type { Element, Field, Slot } from '@/utils/parser.types';
+import type * as CEM from 'custom-elements-manifest';
+import type { Element, Field, Slot } from '@/utils/parser.types.js';
 
 import {
   type CustomElementDeclarationWithExamples,
   type CustomElementDeclarationWithGroups,
   type CustomElementDeclarationWithReadme,
   isCustomElementField,
-} from '../utils';
-import { CemField } from './cem-field';
-import { CemSlot } from './cem-slot';
+} from '../utils.js';
+import { CemField } from './cem-field.js';
+import { CemSlot } from './cem-slot.js';
 
 export const CemElement = class {
   #fields: Map<string, Field>;

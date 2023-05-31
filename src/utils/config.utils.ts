@@ -5,11 +5,19 @@ export type Config = {
   fallbackGroupName: string;
   initialActiveElement: string;
   initialPreviewTab: string;
+
+  /**
+   * The plugins to be used for the preview.
+   * Defaults to `['wcp-preview-viewport', 'wcp-preview-background']`
+   */
+  previewPlugins: string[];
+
   /**
    * The plugins to be used for the preview frame.
    * Defaults to `['wcp-preview-frame-viewer', 'wcp-preview-frame-examples', 'wcp-preview-frame-readme']`
    */
   previewFramePlugins: string[];
+
   additionalReadmeGroupName: string;
   additionalReadmes: {
     name: string;

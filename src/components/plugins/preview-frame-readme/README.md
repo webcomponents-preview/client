@@ -1,27 +1,18 @@
-# class: `PreviewFrameReadme`
+# wcp-preview-frame-readme
 
-## Fields
+**Mixins:** ColorSchemable
 
-| Name        | Privacy | Type      | Default    | Description | Inherited From |
-| ----------- | ------- | --------- | ---------- | ----------- | -------------- |
-| `available` |         | `boolean` | `false`    |             |                |
-| `element`   |         |           |            |             |                |
-| `name`      |         | `string`  | `'readme'` |             |                |
-| `label`     |         | `string`  | `'Readme'` |             |                |
+## Properties
 
-## Methods
+| Property    | Attribute   | Modifiers | Type       | Default  |
+|-------------|-------------|-----------|------------|----------|
+| `available` | `available` |           | `boolean`  | false    |
+| `element`   | `element`   |           |            |          |
+| `label`     | `label`     | readonly  | `"Readme"` | "Readme" |
+| `name`      | `name`      | readonly  | `"readme"` | "readme" |
 
-| Name     | Privacy   | Description | Parameters | Return           | Inherited From |
-| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |
-| `render` | protected |             |            | `TemplateResult` |                |
+## Events
 
-## Attributes
-
-| Name        | Field     | Inherited From |
-| ----------- | --------- | -------------- |
-| `available` | available |                |
-| `element`   | element   |                |
-| `name`      | name      |                |
-| `label`     | label     |                |
-
-<hr/>
+| Event                                          |
+|------------------------------------------------|
+| `wcp-preview-frame-plugin:availability-change` |

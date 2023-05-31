@@ -1,7 +1,7 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions } from 'lit/decorators.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils';
+import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 
 import styles from './toggle-color-scheme.component.scss';
 
@@ -15,7 +15,7 @@ import styles from './toggle-color-scheme.component.scss';
  */
 @customElement('wcp-toggle-color-scheme')
 export class ToggleColorScheme extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   override colorScheme = matchMedia('(prefers-color-scheme: dark)').matches ? ('dark' as const) : ('light' as const);
 
@@ -26,7 +26,7 @@ export class ToggleColorScheme extends ColorSchemable(LitElement) {
     window.dispatchEvent(event);
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <wcp-button kind="icon" @click="${this.handleButtonClick}">
         <wcp-icon name="${this.colorScheme === 'dark' ? 'moon' : 'sun'}"></wcp-icon>

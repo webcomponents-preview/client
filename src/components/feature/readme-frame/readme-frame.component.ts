@@ -15,9 +15,9 @@ import styles from './readme-frame.component.scss';
  */
 @customElement('wcp-readme-frame')
 export class ReadmeFrame extends LitElement {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`<slot></slot>`;
   }
 }

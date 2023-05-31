@@ -3,9 +3,9 @@ import { customElement, eventOptions, property, state } from 'lit/decorators.js'
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils';
-import type { Config } from '@/utils/config.utils';
-import { PreviewFramePlugin, findAllPlugins } from './preview-frame.utils';
+import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import type { Config } from '@/utils/config.utils.js';
+import { type PreviewFramePlugin, findAllPlugins } from '@/utils/plugin.utils.js';
 
 import styles from './preview-frame.component.scss';
 
@@ -32,7 +32,7 @@ import styles from './preview-frame.component.scss';
  */
 @customElement('wcp-preview-frame')
 export class PreviewFrame extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @state()
   private _plugins: PreviewFramePlugin[] = [];
@@ -93,7 +93,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   protected alignActiveTab() {
     // either the active tab is not set...
     if (this._activeTab === undefined) {
-      // ... then we try to set the configured intial one...
+      // ... then we try to set the configured initial one...
       if (
         this.initialPreviewTab &&
         this._plugins.some(({ available, name }) => available && name === this.initialPreviewTab)
@@ -114,7 +114,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
     }
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       ${when(
         this._plugins.length > 0,
@@ -123,7 +123,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
             .tabs="${this._tabs}"
             active-tab="${this._activeTab}"
             @wcp-tabs:active-tab-change="${this.handleActiveTabChange}"
-            @wcp-preview-plugin:availability-change="${this.handleAvailabilityChange}"
+            @wcp-preview-frame-plugin:availability-change="${this.handleAvailabilityChange}"
           >
             ${map(this._plugins, ({ name }) => html`<slot name="${name}" slot="${name}"></slot>`)}
           </wcp-tabs>

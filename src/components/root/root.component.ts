@@ -1,22 +1,19 @@
-import type { CustomElementDeclaration } from 'custom-elements-manifest/schema';
+import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
 
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { unsafeStatic, withStatic } from 'lit/static-html.js';
 import { customElement, property, state } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
-import { until } from 'lit/directives/until.js';
 import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils';
-import { Config, getConfig } from '@/utils/config.utils';
-import { prefixRelativeUrls } from '@/utils/markdown.utils';
-import type { Element, Manifest } from '@/utils/parser.types';
-import { parseCEM } from '@/parsers/cem/parse';
-import { Routable } from '@/utils/routable.utils';
+import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import { type Config, getConfig } from '@/utils/config.utils.js';
+import type { Element, Manifest } from '@/utils/parser.types.js';
+import { parseCEM } from '@/parsers/cem/parse.js';
+import { Routable } from '@/utils/routable.utils.js';
 
 import logo from '@/assets/icons/logo.svg';
 import styles from './root.component.scss';
+import { prepareRoutes } from './root.routes.js';
 
 /**
  * @slot logo - Allows setting a custom logo to be displayed in the title.
@@ -34,10 +31,8 @@ import styles from './root.component.scss';
  * @emits wcp-root:manifest-loaded - Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved.
  */
 @customElement('wcp-root')
-export class Root extends Routable(ColorSchemable(LitElement)) {
-  static readonly styles = unsafeCSS(styles);
-
-  #title = 'WCP';
+export class Root extends Routable()(ColorSchemable(LitElement)) {
+  static override readonly styles = unsafeCSS(styles);
 
   @state()
   config?: Config;
@@ -46,16 +41,7 @@ export class Root extends Routable(ColorSchemable(LitElement)) {
   manifest?: Manifest;
 
   @state()
-  initialPreviewTab?: string;
-
-  @state()
   navigation?: Map<string, Element[]>;
-
-  @state()
-  readmesGroup = 'Readme';
-
-  @state()
-  readmes: { name: string; url: string }[] = [];
 
   /**
    * Flags the component to be displayed inline and not standalone. Requires the surrounding
@@ -76,64 +62,12 @@ export class Root extends Routable(ColorSchemable(LitElement)) {
   @property({ type: String, reflect: true, attribute: 'manifest-url' })
   manifestUrl!: string;
 
-  constructor() {
-    super();
-    this.router.registerRoutes([
-      {
-        path: '/',
-        enter: () => {
-          // redirect to initial element if defined
-          if (this.config?.initialActiveElement !== undefined) {
-            this.router.redirect(`/element/${this.config.initialActiveElement}`);
-            return false;
-          }
-
-          // redirect to first readme if available
-          const firstReadme = this.readmes[0]?.url;
-          if (firstReadme !== undefined) {
-            this.router.redirect(`/readme/${encodeURIComponent(firstReadme)}`);
-            return false;
-          }
-
-          // redirect to first element
-          const firstElement = this.manifest?.elements.values().next().value.getNiceUrl();
-          this.router.redirect(`/element/${firstElement}`);
-          return false;
-        },
-      },
-      {
-        path: '/readme/:url/:hash?',
-        enter: () => {
-          return this.readmes.length > 0;
-        },
-        render: ({ url = '', hash }) => this.renderReadme(decodeURIComponent(url), hash),
-      },
-      {
-        path: '/element/:tagName',
-        render: ({ tagName }) => this.renderElement(tagName ?? ''),
-      },
-    ]);
-  }
-
   async loadConfig(configUrl?: string) {
     this.config = await getConfig(configUrl);
 
     // update title from config
-    if (this.config?.title) {
-      this.#title = this.config.title;
-      document.title = this.#title;
-    }
-    // set initial preview tab
-    if (this.config?.initialPreviewTab) {
-      this.initialPreviewTab = this.config.initialPreviewTab;
-    }
-
-    // set additional readmes
-    if (this.config?.additionalReadmeGroupName) {
-      this.readmesGroup = this.config.additionalReadmeGroupName;
-    }
-    if (this.config?.additionalReadmes) {
-      this.readmes = this.config.additionalReadmes;
+    if (this.config.title) {
+      document.title = this.config.title;
     }
   }
 
@@ -161,52 +95,33 @@ export class Root extends Routable(ColorSchemable(LitElement)) {
   }
 
   override async connectedCallback() {
+    // once connected, load the config and the manifest
     await this.loadConfig(this.configUrl);
     await this.loadCustomElementsManifest(this.manifestUrl);
+
+    // prepare and set routes
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const routes = prepareRoutes(this.router, this.config!, this.manifest!);
+    this.router.registerRoutes(routes);
 
     super.connectedCallback();
   }
 
-  protected renderReadme(url: string, hash?: string): TemplateResult {
-    // fetch the readme contents and parse it as markdown
-    const markdown = fetch(url)
-      .then((response) => response.text())
-      .then((markdown) => prefixRelativeUrls(markdown, url, '/#/readme/'));
-    return html`
-      <wcp-readme-frame>
-        <wcp-readme markdown="${until(markdown, '')}" hash="${hash}"></wcp-readme>
-      </wcp-readme-frame>
-    `;
-  }
-
-  protected renderElement(tagName: string): TemplateResult {
-    return html`
-      <wcp-preview-frame initial-preview-tab="${ifDefined(this.initialPreviewTab)}">
-        ${map(
-          this.config?.previewFramePlugins ?? [],
-          (plugin) => withStatic(html)`
-          <${unsafeStatic(plugin)} .element="${this.manifest?.elements.get(tagName)}"></${unsafeStatic(plugin)}>
-        `
-        )}
-      </wcp-preview-frame>
-    `;
-  }
-
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <wcp-layout>
-        <wcp-title slot="aside" title="${this.#title}">
+        <wcp-title slot="aside" title="${this.config?.title}">
           <slot name="logo" slot="logo">
             <img src="${logo}" height="20px" />
           </slot>
         </wcp-title>
 
         ${when(
-          this.readmes.length > 0,
+          this.config?.additionalReadmes.length,
           () => html`
-            <wcp-navigation slot="aside" headline="${this.readmesGroup}">
+            <wcp-navigation slot="aside" headline="${this.config?.additionalReadmeGroupName ?? 'Readmes'}">
               ${map(
-                this.readmes,
+                this.config?.additionalReadmes ?? [],
                 ({ name, url }) => html`
                   <wcp-navigation-item
                     ?active="${this.router.isActive(`/readme/${encodeURIComponent(url)}`)}"

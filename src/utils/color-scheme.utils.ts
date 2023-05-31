@@ -1,6 +1,6 @@
 import { LitElement } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import type { Constructor } from '@/utils/mixin.types';
+import type { Constructor } from '@/utils/mixin.types.js';
 
 declare class ColorSchemableInterface {
   colorScheme?: 'light' | 'dark';

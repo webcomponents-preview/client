@@ -1,16 +1,29 @@
-# class: `ToggleColorScheme`
+# wcp-toggle-color-scheme
 
-## Fields
+Shows a button to toggle the desired color-scheme.
 
-| Name          | Privacy | Type | Default | Description | Inherited From |
-| ------------- | ------- | ---- | ------- | ----------- | -------------- |
-| `colorScheme` |         |      |         |             |                |
+**Mixins:** ColorSchemable
+
+## Example
+
+```html
+<wcp-toggle-color-scheme></wcp-toggle-color-scheme>
+```
+
+## Properties
+
+| Property      | Type                | Default                                          |
+|---------------|---------------------|--------------------------------------------------|
+| `colorScheme` | `"dark" \| "light"` | "matchMedia('(prefers-color-scheme: dark)').matches ? ('dark' as const) : ('light' as const)" |
 
 ## Methods
 
-| Name                | Privacy   | Description | Parameters | Return           | Inherited From |
-| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |
-| `handleButtonClick` |           |             |            |                  |                |
-| `render`            | protected |             |            | `TemplateResult` |                |
+| Method              | Type       |
+|---------------------|------------|
+| `handleButtonClick` | `(): void` |
 
-<hr/>
+## Events
+
+| Event                     |
+|---------------------------|
+| `wcp-color-scheme:toggle` |

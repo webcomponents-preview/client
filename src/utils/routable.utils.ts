@@ -1,5 +1,5 @@
 import type { LitElement, TemplateResult } from 'lit';
-import type { Constructor } from '@/utils/mixin.types';
+import type { Constructor } from '@/utils/mixin.types.js';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Property 'UrlPattern' does not exist
@@ -15,12 +15,14 @@ export type Params = Record<string, string | undefined>;
 
 export type Route = {
   path: string;
-  enter?: (params: Params, router: Router) => boolean;
+  enter?: (params: Params, router: Router) => boolean | Promise<boolean>;
   render?: (params: Params, router: Router) => TemplateResult;
 };
 
+export type RegisterRoutes = (router: Router) => Route[];
+
 // a primitive hash router implementation
-class Router {
+export class Router {
   readonly #host!: LitElement;
   #currentPath?: string;
   #currentParams: Params = {};
@@ -31,16 +33,36 @@ class Router {
     return this.#currentPath;
   }
 
+  /**
+   * Defines the routes for this router.
+   */
   registerRoutes(routes: Route[]) {
     this.#routes = routes;
   }
 
-  isActive(path: string): boolean {
-    return this.#currentPath === path;
+  /**
+   * Checks if the given path is the currently active.
+   */
+  isActive(path: string, exact = false): boolean {
+    const isSamePath = this.#currentPath === path;
+    const isNestedPath = this.#currentPath?.startsWith(`${path}/`) ?? false;
+    return isSamePath || (!exact && isNestedPath);
   }
 
+  /**
+   * Redirect to a given path. This will trigger a hash change event.
+   */
   redirect(path: string) {
     location.hash = path;
+  }
+
+  /**
+   * Update the current path without triggering a redirect.
+   */
+  update(path: string) {
+    const url = new URL(location.href);
+    url.hash = path;
+    history.replaceState({}, '', url);
   }
 
   constructor(host: LitElement) {
@@ -73,7 +95,7 @@ class Router {
 
     // match on enter
     if (typeof nextRoute.enter === 'function') {
-      const success = nextRoute.enter(nextParams, this);
+      const success = await nextRoute.enter(nextParams, this);
       if (success === false) return;
     }
 
@@ -104,22 +126,35 @@ class Router {
 }
 
 // provide a mixin to make a component routable
-export const Routable = <T extends Constructor<LitElement>>(superClass: T) => {
-  class RoutableElement extends superClass {
-    /**
-     * @internal - allows access to routing features
-     */
-    router = new Router(this);
+export const Routable =
+  (registerRoutes?: RegisterRoutes) =>
+  <T extends Constructor<LitElement>>(superClass: T) => {
+    class RoutableElement extends superClass {
+      /**
+       * @internal - allows access to routing features
+       */
+      router = new Router(this);
 
-    override connectedCallback() {
-      super.connectedCallback();
-      this.router.connect();
-    }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      constructor(...args: any[]) {
+        super(...args);
 
-    override disconnectedCallback() {
-      super.disconnectedCallback();
-      this.router.disconnect();
+        // allow setting routes from decorator
+        if (registerRoutes !== undefined) {
+          const routes = registerRoutes(this.router);
+          this.router.registerRoutes(routes);
+        }
+      }
+
+      override connectedCallback() {
+        super.connectedCallback();
+        this.router.connect();
+      }
+
+      override disconnectedCallback() {
+        super.disconnectedCallback();
+        this.router.disconnect();
+      }
     }
-  }
-  return RoutableElement as Constructor<RoutableInterface> & T;
-};
+    return RoutableElement as Constructor<RoutableInterface> & T;
+  };

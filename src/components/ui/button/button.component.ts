@@ -3,7 +3,7 @@ import { customElement, eventOptions, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils';
+import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 
 // Safari still hasn't ElementInternals shipped
 import 'element-internals-polyfill';
@@ -97,7 +97,7 @@ import styles from './button.component.scss';
 @customElement('wcp-button')
 export class Button extends ColorSchemable(LitElement) {
   static readonly formAssociated = true;
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   readonly #internals = this.attachInternals();
 
@@ -117,7 +117,7 @@ export class Button extends ColorSchemable(LitElement) {
 
   /**
    * The kind of button to render. Either like a conventional button, or for
-   * icons. Icon buttons are quadrtic and will show a radial background on interaction.
+   * icons. Icon buttons are quadratic and will show a radial background on interaction.
    */
   @property({ type: String, reflect: true })
   kind: 'button' | 'icon' = 'button';
@@ -143,7 +143,7 @@ export class Button extends ColorSchemable(LitElement) {
     }
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       ${when(
         this.href !== undefined && !this.disabled,

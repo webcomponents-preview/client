@@ -1,48 +1,64 @@
-# class: `Tabs`
+# wcp-tabs
 
-## Fields
+**Mixins:** ColorSchemable
 
-| Name        | Privacy | Type                                                    | Default | Description | Inherited From |
-| ----------- | ------- | ------------------------------------------------------- | ------- | ----------- | -------------- |
-| `tabFocus`  |         | `number`                                                | `0`     |             |                |
-| `tabRoles`  |         | `HTMLElement[]`                                         |         |             |                |
-| `tabs`      |         | `Record<string, { label: string; disabled?: boolean }>` | `{}`    |             |                |
-| `activeTab` |         | `string \| undefined`                                   |         |             |                |
+## Examples
+
+```html
+<wcp-tabs tabs='{"first": "First tab", "second": "Second tab"}'>
+ <div slot="first">First tab content</div>
+ <div slot="second">Second tab content</div>
+</wcp-tabs>
+```
+
+### Active tab preselected
+
+```html
+<wcp-tabs tabs='{"first": "First tab", "second": "Second tab"}' active-tab="second">
+ <div slot="first">First tab content</div>
+ <div slot="second">Second tab content</div>
+</wcp-tabs>
+```
+
+## Properties
+
+| Property    | Attribute    | Type                  | Default |
+|-------------|--------------|-----------------------|---------|
+| `activeTab` | `active-tab` | `string \| undefined` |         |
+| `tabFocus`  |              | `number`              | 0       |
+| `tabRoles`  |              | `object`              |         |
+| `tabs`      | `tabs`       |                       | {}      |
 
 ## Methods
 
-| Name                  | Privacy   | Description | Parameters             | Return           | Inherited From |
-| --------------------- | --------- | ----------- | ---------------------- | ---------------- | -------------- |
-| `emitActiveTabChange` |           |             |                        |                  |                |
-| `handleTabClick`      |           |             | `event: Event`         |                  |                |
-| `handleKeydown`       |           |             | `event: KeyboardEvent` |                  |                |
-| `render`              | protected |             |                        | `TemplateResult` |                |
+| Method                | Type                 |
+|-----------------------|----------------------|
+| `emitActiveTabChange` | `(): void`           |
+| `handleKeydown`       | `(event: any): void` |
+| `handleTabClick`      | `(event: any): void` |
 
-## Attributes
+## Events
 
-| Name         | Field     | Inherited From |
-| ------------ | --------- | -------------- |
-| `tabs`       | tabs      |                |
-| `active-tab` | activeTab |                |
-
-## CSS Properties
-
-| Name                                       | Default | Description                                      |
-| ------------------------------------------ | ------- | ------------------------------------------------ |
-| `--wcp-tabs-tablist-gap`                   |         | The gap between the tablist and the tabpanels    |
-| `--wcp-tabs-tablist-spacing`               |         | The inner padding of the tablist                 |
-| `--wcp-tabs-tab-spacing`                   |         | The inner padding of the tabs                    |
-| `--wcp-tabs-tab-active-border-width`       |         | The border width of the active tab               |
-| `--wcp-tabs-panel-spacing`                 |         | The inner padding of the tabpanels               |
-| `--wcp-tabs-tablist-dark-border-color`     |         | The border color of the tablist in dark mode     |
-| `--wcp-tabs-tab-active-dark-border-color`  |         | The border color of the active tab in dark mode  |
-| `--wcp-tabs-tablist-light-border-color`    |         | The border color of the tablist in light mode    |
-| `--wcp-tabs-tab-active-light-border-color` |         | The border color of the active tab in light mode |
+| Event                        | Description                          |
+|------------------------------|--------------------------------------|
+| `wcp-tabs:active-tab-change` | Notifies when the active tab changes |
 
 ## Slots
 
-| Name  | Description                          |
-| ----- | ------------------------------------ |
-| `tab` | name - The content of the named tab. |
+| Name | Description                              |
+|------|------------------------------------------|
+|      | tab name - The content of the named tab. |
 
-<hr/>
+## CSS Custom Properties
+
+| Property                                   | Description                                      |
+|--------------------------------------------|--------------------------------------------------|
+| `--wcp-tabs-panel-spacing`                 | The inner padding of the tabpanels               |
+| `--wcp-tabs-tab-active-border-width`       | The border width of the active tab               |
+| `--wcp-tabs-tab-active-dark-border-color`  | The border color of the active tab in dark mode  |
+| `--wcp-tabs-tab-active-light-border-color` | The border color of the active tab in light mode |
+| `--wcp-tabs-tab-spacing`                   | The inner padding of the tabs                    |
+| `--wcp-tabs-tablist-dark-border-color`     | The border color of the tablist in dark mode     |
+| `--wcp-tabs-tablist-gap`                   | The gap between the tablist and the tabpanels    |
+| `--wcp-tabs-tablist-light-border-color`    | The border color of the tablist in light mode    |
+| `--wcp-tabs-tablist-spacing`               | The inner padding of the tablist                 |

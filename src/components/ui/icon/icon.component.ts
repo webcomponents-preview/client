@@ -25,12 +25,12 @@ import styles from './icon.component.scss';
  */
 @customElement('wcp-icon')
 export class Icon extends LitElement {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @property({ type: String, reflect: true })
   name!: string;
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`<i class="gg-${this.name}"></i>`;
   }
 }

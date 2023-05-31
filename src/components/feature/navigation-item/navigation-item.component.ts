@@ -2,7 +2,7 @@ import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils';
+import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 
 import styles from './navigation-item.component.scss';
 
@@ -49,7 +49,7 @@ import styles from './navigation-item.component.scss';
  */
 @customElement('wcp-navigation-item')
 export class NavigationItem extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @property({ type: Boolean, reflect: true })
   active = false;
@@ -57,7 +57,7 @@ export class NavigationItem extends ColorSchemable(LitElement) {
   @property({ type: String, reflect: true })
   href?: string;
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       ${when(
         this.href !== undefined,

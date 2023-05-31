@@ -1,10 +1,21 @@
-# class: `ToggleSidebar`
+# wcp-toggle-sidebar
+
+Shows a button to toggle sidebar.
+
+## Example
+
+```html
+<wcp-toggle-sidebar></wcp-toggle-sidebar>
+```
 
 ## Methods
 
-| Name                | Privacy   | Description | Parameters | Return           | Inherited From |
-| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |
-| `handleButtonClick` |           |             |            |                  |                |
-| `render`            | protected |             |            | `TemplateResult` |                |
+| Method              | Type       |
+|---------------------|------------|
+| `handleButtonClick` | `(): void` |
 
-<hr/>
+## Events
+
+| Event              |
+|--------------------|
+| `wcp-aside:toggle` |

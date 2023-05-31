@@ -1,4 +1,4 @@
-import hljs from 'highlight.js/lib/common';
+import hljs from 'highlight.js';
 import { marked } from 'marked';
 
 export function getCodeExample(slot: HTMLSlotElement): string {
@@ -10,7 +10,7 @@ export class Renderer extends marked.Renderer {
     super();
   }
 
-  code(code: string, language = 'plaintext', escaped = false): string {
+  override code(code: string, language = 'plaintext', escaped = false): string {
     // do not use example component for anything but html examples
     if (language !== 'html' || !this.addCodePreview) {
       return `<wcp-code>${super.code(code, language, escaped)}</wcp-code>`;
@@ -20,7 +20,7 @@ export class Renderer extends marked.Renderer {
     return `
       <wcp-markdown-example>
         <wcp-code slot="code">${super.code(code, language, escaped)}</wcp-code>
-        <div slot="preview">${code}</div>
+        <wcp-preview slot="preview">${code}</wcp-preview>
       </wcp-markdown-example>
     `;
   }

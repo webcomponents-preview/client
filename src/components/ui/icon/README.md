@@ -1,27 +1,30 @@
-# class: `Icon`
+# wcp-icon
 
-## Fields
+Shows an icon from the css.gg icon set.
 
-| Name   | Privacy | Type     | Default | Description | Inherited From |
-| ------ | ------- | -------- | ------- | ----------- | -------------- |
-| `name` |         | `string` |         |             |                |
+## Examples
 
-## Methods
+## Use icon
+By setting the name attribute.
 
-| Name     | Privacy   | Description | Parameters | Return           | Inherited From |
-| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |
-| `render` | protected |             |            | `TemplateResult` |                |
+```html
+<wcp-icon name="smartphone"></wcp-icon>
+```
 
-## Attributes
+### Set a custom size
 
-| Name   | Field | Inherited From |
-| ------ | ----- | -------------- |
-| `name` | name  |                |
+```html
+<wcp-icon name="laptop" style="--wcp-icon-size: 44"></wcp-icon>
+```
 
-## CSS Properties
+## Properties
 
-| Name              | Default | Description                                            |
-| ----------------- | ------- | ------------------------------------------------------ |
-| `--wcp-icon-size` |         | Sets the size of the icon as unitless number in pixels |
+| Property | Attribute | Type     |
+|----------|-----------|----------|
+| `name`   | `name`    | `string` |
 
-<hr/>
+## CSS Custom Properties
+
+| Property          | Description                                      |
+|-------------------|--------------------------------------------------|
+| `--wcp-icon-size` | Sets the size of the icon as unitless number in pixels |

@@ -1,24 +1,31 @@
-# class: `PreviewControls`, `wcp-preview-controls`
+# wcp-preview-controls
 
-## Methods
+A wrapper above the preview frame content to contain various controls.
 
-| Name     | Privacy   | Description | Parameters | Return           | Inherited From |
-| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |
-| `render` | protected |             |            | `TemplateResult` |                |
+**Mixins:** ColorSchemable
 
-## CSS Properties
+## Example
 
-| Name                                 | Default | Description                                    |
-| ------------------------------------ | ------- | ---------------------------------------------- |
-| `--wcp-preview-controls-dark-color`  |         | Text color of the controls in dark mode        |
-| `--wcp-preview-controls-light-color` |         | Text color of the controls in light mode       |
-| `--wcp-preview-controls-height`      |         | Overall height of the preview controls nav bar |
-| `--wcp-preview-controls-spacing`     |         | Inner spacing, used as padding of the controls |
+### Usage with controls
+
+```html
+<wcp-preview-controls>
+  <wcp-toggle-sidebar></wcp-toggle-sidebar>
+  <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
+</wcp-preview-controls>
+```
 
 ## Slots
 
 | Name | Description                       |
-| ---- | --------------------------------- |
+|------|-----------------------------------|
 |      | Default slot for navigation items |
 
-<hr/>
+## CSS Custom Properties
+
+| Property                             | Description                                    |
+|--------------------------------------|------------------------------------------------|
+| `--wcp-preview-controls-dark-color`  | Text color of the controls in dark mode        |
+| `--wcp-preview-controls-height`      | Overall height of the preview controls nav bar |
+| `--wcp-preview-controls-light-color` | Text color of the controls in light mode       |
+| `--wcp-preview-controls-spacing`     | Inner spacing, used as padding of the controls |

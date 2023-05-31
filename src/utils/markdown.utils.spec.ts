@@ -1,4 +1,4 @@
-import { prefixRelativeUrls, resolveRelativePath } from './markdown.utils';
+import { prefixRelativeUrls, resolveRelativePath } from './markdown.utils.js';
 
 describe('markdown.utils', () => {
   describe('resolveRelativePath', () => {

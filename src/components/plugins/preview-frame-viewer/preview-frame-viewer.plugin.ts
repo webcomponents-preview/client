@@ -1,25 +1,21 @@
-import { spread } from '@open-wc/lit-helpers';
-
 import { LitElement, type TemplateResult, html, unsafeCSS, nothing } from 'lit';
-import { unsafeStatic, withStatic } from 'lit/static-html.js';
 import { customElement, property, state } from 'lit/decorators.js';
 
 import { keyed } from 'lit/directives/keyed.js';
 import { map } from 'lit/directives/map.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils';
-import type * as Parsed from '@/utils/parser.types';
+import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import type * as Parsed from '@/utils/parser.types.js';
+import type { PreviewFramePlugin } from '@/utils/plugin.utils.js';
 
-import type { PreviewFramePlugin } from '@/components/feature/preview-frame/preview-frame.utils';
-import { type ElementData, mapFormData, prepareInitialData } from './preview-frame-viewer.utils';
+import { type ElementData, mapFormData, prepareInitialData } from './preview-frame-viewer.utils.js';
 
 import styles from './preview-frame-viewer.plugin.scss';
 
 @customElement('wcp-preview-frame-viewer')
 export class PreviewFrameViewer extends ColorSchemable(LitElement) implements PreviewFramePlugin {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   #element?: Parsed.Element;
 
@@ -51,21 +47,6 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
     if (this.#element === undefined) return;
     const form = event.currentTarget as HTMLFormElement;
     this._elementData = mapFormData(form, this.#element);
-  }
-
-  protected renderSlots(): TemplateResult {
-    return html`
-      ${map(
-        Object.entries(this._elementData?.slots ?? {}),
-        ([name, content]) => withStatic(html)`
-          ${when(
-            name === '',
-            () => unsafeHTML(content),
-            () => withStatic(html)`<div slot="${name}">${unsafeHTML(content)}</div>`
-          )}
-        `
-      )}
-    `;
   }
 
   protected renderFieldControl(field: Parsed.Field): TemplateResult {
@@ -165,18 +146,14 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
     `;
   }
 
-  protected renderElement(): TemplateResult {
-    if (this.#element === undefined) return html`${nothing}`;
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const tag = unsafeStatic(this.#element.tagName!);
-    return withStatic(html)`<${tag} ${spread(this._elementData?.fields ?? {})}>${this.renderSlots()}</${tag}>`;
-  }
-
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`${keyed(
       this.#element?.tagName ?? '',
       html`
-        <wcp-preview-frame-viewer-stage>${this.renderElement()}</wcp-preview-frame-viewer-stage>
+        <wcp-preview-frame-viewer-stage
+          preview-tag-name="${this.#element?.tagName}"
+          .data="${this._elementData}"
+        ></wcp-preview-frame-viewer-stage>
 
         <!-- TODO: Move controls into separate element -->
         <wcp-preview-frame-viewer-controls>

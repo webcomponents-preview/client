@@ -8,16 +8,16 @@ import styles from './main.component.scss';
  */
 @customElement('wcp-main')
 export class Main extends LitElement {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   /**
    * Presets the aria role to `main` as we do not use te main element directly
    * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/main_role
    */
   @property({ type: String, reflect: true })
-  role = 'main';
+  override role = 'main';
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`<slot></slot>`;
   }
 }

@@ -1,4 +1,4 @@
-import type * as Parsed from '@/utils/parser.types';
+import type * as Parsed from '@/utils/parser.types.js';
 
 /**
  * Prepares a lit compatible template key for a given field

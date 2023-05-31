@@ -2,8 +2,8 @@ import { LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { html, unsafeStatic } from 'lit/static-html.js';
 import { customElement, property } from 'lit/decorators.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils';
-import { renderMarkdown } from '@/utils/markdown.utils';
+import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import { renderMarkdown } from '@/utils/markdown.utils.js';
 
 import styles from './readme.component.scss';
 
@@ -31,7 +31,7 @@ import styles from './readme.component.scss';
  */
 @customElement('wcp-readme')
 export class Readme extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @property({ type: Boolean, reflect: true, attribute: 'add-code-preview' })
   readonly showCodePreview = false;
@@ -49,7 +49,7 @@ export class Readme extends ColorSchemable(LitElement) {
     this.classList.add('markdown-body');
   }
 
-  protected updated() {
+  protected override updated() {
     if (this.hash) {
       this.scrollToId(this.hash);
     }
@@ -73,7 +73,7 @@ export class Readme extends ColorSchemable(LitElement) {
     }
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       ${unsafeStatic(renderMarkdown(this.markdown, this.showCodePreview))}
       <style>

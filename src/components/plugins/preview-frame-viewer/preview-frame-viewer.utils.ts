@@ -1,5 +1,5 @@
-import type * as Parsed from '@/utils/parser.types';
-import { litKey } from '@/utils/parser.utils';
+import type * as Parsed from '@/utils/parser.types.js';
+import { litKey } from '@/utils/parser.utils.js';
 
 /**
  * State of the custom element.
