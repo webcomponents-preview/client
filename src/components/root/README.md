@@ -1,50 +1,47 @@
-# class: `Root`
+# wcp-root
 
-## Fields
+**Mixins:** ColorSchemable
 
-| Name          | Privacy | Type                                  | Default | Description                                                                                                                                                          | Inherited From |
-| ------------- | ------- | ------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| `config`      |         | `Config \| undefined`                 |         |                                                                                                                                                                      |                |
-| `manifest`    |         | `Manifest \| undefined`               |         |                                                                                                                                                                      |                |
-| `navigation`  |         | `Map<string, Element[]> \| undefined` |         |                                                                                                                                                                      |                |
-| `inline`      |         | `boolean`                             | `false` | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element. |                |
-| `configUrl`   |         | `string \| undefined`                 |         | Allows to set a url to load a config file from.                                                                                                                      |                |
-| `manifestUrl` |         | `string`                              |         | Defines the location of the custom element manifest file.                                                                                                            |                |
+## Properties
+
+| Property      | Attribute      | Type                  | Default | Description                                      |
+|---------------|----------------|-----------------------|---------|--------------------------------------------------|
+| `config`      |                |                       |         |                                                  |
+| `configUrl`   | `config-url`   | `string \| undefined` |         | Allows to set a url to load a config file from.  |
+| `inline`      | `inline`       | `boolean`             | false   | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |
+| `manifest`    |                |                       |         |                                                  |
+| `manifestUrl` | `manifest-url` | `string`              |         | Defines the location of the custom element manifest file. |
+| `navigation`  |                |                       |         |                                                  |
 
 ## Methods
 
-| Name                         | Privacy   | Description | Parameters            | Return           | Inherited From |
-| ---------------------------- | --------- | ----------- | --------------------- | ---------------- | -------------- |
-| `loadConfig`                 |           |             | `configUrl: string`   |                  |                |
-| `loadCustomElementsManifest` |           |             | `manifestUrl: string` |                  |                |
-| `emitManifestLoaded`         |           |             |                       |                  |                |
-| `connectedCallback`          |           |             |                       |                  |                |
-| `render`                     | protected |             |                       | `TemplateResult` |                |
+| Method                       | Type                                     |
+|------------------------------|------------------------------------------|
+| `emitManifestLoaded`         | `(): void`                               |
+| `loadConfig`                 | `(configUrl?: string \| undefined): any` |
+| `loadCustomElementsManifest` | `(manifestUrl: string): any`             |
 
-## Attributes
+## Events
 
-| Name           | Field       | Inherited From |
-| -------------- | ----------- | -------------- |
-| `inline`       | inline      |                |
-| `config-url`   | configUrl   |                |
-| `manifest-url` | manifestUrl |                |
-
-## CSS Properties
-
-| Name                          | Default | Description                                                  |
-| ----------------------------- | ------- | ------------------------------------------------------------ |
-| `--wcp-root-dark-background`  |         | The background color of the root element in dark mode        |
-| `--wcp-root-dark-color`       |         | The text color of the text in the root element in dark mode  |
-| `--wcp-root-light-background` |         | The background color of the root element in light mode       |
-| `--wcp-root-light-color`      |         | The text color of the text in the root element in light mode |
+| Event                             | Description                                      |
+|-----------------------------------|--------------------------------------------------|
+| `wcp-root:active-element-changed` | Fired when the active element changes. Carries the declaration of the new active element with it. |
+| `wcp-root:manifest-loaded`        | Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved. |
 
 ## Slots
 
-| Name               | Description                                                |
-| ------------------ | ---------------------------------------------------------- |
+| Name               | Description                                      |
+|--------------------|--------------------------------------------------|
 | `logo`             | Allows setting a custom logo to be displayed in the title. |
-| `preview-controls` | Can be used to inject additional preview controls.         |
-| `preview-frame`    | Used to be override the existing preview pane.             |
-| `preview-details`  | Can be used to inject additional preview detail panes.     |
+| `preview-controls` | Can be used to inject additional preview controls. |
+| `preview-details`  | Can be used to inject additional preview detail panes. |
+| `preview-frame`    | Used to be override the existing preview pane.   |
 
-<hr/>
+## CSS Custom Properties
+
+| Property                      | Description                                      |
+|-------------------------------|--------------------------------------------------|
+| `--wcp-root-dark-background`  | The background color of the root element in dark mode |
+| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode |
+| `--wcp-root-light-background` | The background color of the root element in light mode |
+| `--wcp-root-light-color`      | The text color of the text in the root element in light mode |

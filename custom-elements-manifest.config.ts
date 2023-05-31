@@ -16,13 +16,7 @@ export default {
     customElementExamplesPlugin(),
     customElementGenerateReadmesPlugin({
       addInlineReadme: true,
-      transformer: 'cem',
-      transformerOptions: {
-        headingOffset: -1,
-        omitDeclarations: ['exports', 'mixins'],
-        omitSections: ['main-heading', 'mixins', 'super-class', 'static-fields', 'static-methods'],
-        private: 'hidden',
-      },
+      transformer: 'wca',
       outputPath(path) {
         if (path === undefined) return '';
         return resolve(dirname(path), 'README.md');

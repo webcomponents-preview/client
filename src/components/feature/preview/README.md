@@ -1,32 +1,34 @@
-# class: `Preview`, `wcp-preview`
+# wcp-preview
 
-## Fields
+Previews given content.
 
-| Name     | Privacy | Type                  | Default | Description | Inherited From |
-| -------- | ------- | --------------------- | ------- | ----------- | -------------- |
-| `config` |         | `Config \| undefined` |         |             |                |
+**Mixins:** ColorSchemable
 
-## Methods
+## Example
 
-| Name                   | Privacy   | Description | Parameters | Return           | Inherited From |
-| ---------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |
-| `connectedCallback`    |           |             |            |                  |                |
-| `disconnectedCallback` |           |             |            |                  |                |
-| `render`               | protected |             |            | `TemplateResult` |                |
+```html
+<wcp-preview>
+  <wcp-button>Example button</wcp-button>
+</wcp-preview>
+```
 
-## CSS Properties
+## Properties
 
-| Name                                      | Default | Description                                                                                               |
-| ----------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| `--wcp-preview-menu-border-radius`        |         | Border radius of the expanding menu.                                                                      |
-| `--wcp-preview-menu-background-opacity`   |         | Opacity of the expanding menu background.                                                                 |
-| `--wcp-preview-menu-dark-background-raw`  |         | Background color of the expanding menu in dark mode. Must be a raw space-separated HSL color value list.  |
-| `--wcp-preview-menu-light-background-raw` |         | Background color of the expanding menu in light mode. Must be a raw space-separated HSL color value list. |
+| Property |
+|----------|
+| `config` |
 
 ## Slots
 
 | Name | Description             |
-| ---- | ----------------------- |
+|------|-------------------------|
 |      | The content to preview. |
 
-<hr/>
+## CSS Custom Properties
+
+| Property                                  | Description                                      |
+|-------------------------------------------|--------------------------------------------------|
+| `--wcp-preview-menu-background-opacity`   | Opacity of the expanding menu background.        |
+| `--wcp-preview-menu-border-radius`        | Border radius of the expanding menu.             |
+| `--wcp-preview-menu-dark-background-raw`  | Background color of the expanding menu in dark mode. Must be a raw space-separated HSL color value list. |
+| `--wcp-preview-menu-light-background-raw` | Background color of the expanding menu in light mode. Must be a raw space-separated HSL color value list. |

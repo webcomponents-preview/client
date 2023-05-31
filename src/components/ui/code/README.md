@@ -1,10 +1,19 @@
-# class: `Code`
+# wcp-code
+
+Shows a formatted code snippet.
+
+**Mixins:** ColorSchemable
+
+## Example
+
+```html
+<wcp-code>
+  <pre><code>Some code</code></pre>
+</wcp-code>
+```
 
 ## Methods
 
-| Name               | Privacy   | Description | Parameters | Return           | Inherited From |
-| ------------------ | --------- | ----------- | ---------- | ---------------- | -------------- |
-| `createRenderRoot` |           |             |            |                  |                |
-| `render`           | protected |             |            | `TemplateResult` |                |
-
-<hr/>
+| Method             | Type       |
+|--------------------|------------|
+| `createRenderRoot` | `(): this` |

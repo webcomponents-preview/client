@@ -1,24 +1,16 @@
-# class: `PreviewFrameViewerStage`
+# wcp-preview-frame-viewer-stage
 
-## Fields
+## Example
 
-| Name             | Privacy | Type                       | Default | Description | Inherited From |
-| ---------------- | ------- | -------------------------- | ------- | ----------- | -------------- |
-| `previewTagName` |         | `string \| undefined`      |         |             |                |
-| `data`           |         | `ElementData \| undefined` |         |             |                |
+```html
+<wcp-preview-frame-viewer-stage>
+  <wcp-button>Example button</wcp-button>
+</wcp-preview-frame-viewer-stage>
+```
 
-## Methods
+## Properties
 
-| Name          | Privacy   | Description | Parameters | Return           | Inherited From |
-| ------------- | --------- | ----------- | ---------- | ---------------- | -------------- |
-| `renderSlots` | protected |             |            | `TemplateResult` |                |
-| `render`      | protected |             |            | `TemplateResult` |                |
-
-## Attributes
-
-| Name               | Field          | Inherited From |
-| ------------------ | -------------- | -------------- |
-| `preview-tag-name` | previewTagName |                |
-| `data`             | data           |                |
-
-<hr/>
+| Property         | Attribute          | Type                  |
+|------------------|--------------------|-----------------------|
+| `data`           | `data`             |                       |
+| `previewTagName` | `preview-tag-name` | `string \| undefined` |

@@ -1,33 +1,26 @@
-# class: `PreviewFrameExamples`
+# wcp-preview-frame-examples
 
-## Fields
+Shows the examples of a custom element manifest.
 
-| Name        | Privacy | Type      | Default      | Description | Inherited From |
-| ----------- | ------- | --------- | ------------ | ----------- | -------------- |
-| `available` |         | `boolean` | `false`      |             |                |
-| `element`   |         |           |              |             |                |
-| `name`      |         | `string`  | `'examples'` |             |                |
-| `label`     |         | `string`  | `'Examples'` |             |                |
+**Mixins:** ColorSchemable
 
-## Methods
+## Properties
 
-| Name     | Privacy   | Description | Parameters | Return           | Inherited From |
-| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |
-| `render` | protected |             |            | `TemplateResult` |                |
+| Property    | Attribute   | Modifiers | Type         | Default    |
+|-------------|-------------|-----------|--------------|------------|
+| `available` | `available` |           | `boolean`    | false      |
+| `element`   | `element`   |           |              |            |
+| `label`     | `label`     | readonly  | `"Examples"` | "Examples" |
+| `name`      | `name`      | readonly  | `"examples"` | "examples" |
 
-## Attributes
+## Events
 
-| Name        | Field     | Inherited From |
-| ----------- | --------- | -------------- |
-| `available` | available |                |
-| `element`   | element   |                |
-| `name`      | name      |                |
-| `label`     | label     |                |
+| Event                                          |
+|------------------------------------------------|
+| `wcp-preview-frame-plugin:availability-change` |
 
-## CSS Properties
+## CSS Custom Properties
 
-| Name                                   | Default | Description               |
-| -------------------------------------- | ------- | ------------------------- |
-| `--wcp-preview-frame-examples-spacing` |         | Spacing between examples. |
-
-<hr/>
+| Property                               | Description               |
+|----------------------------------------|---------------------------|
+| `--wcp-preview-frame-examples-spacing` | Spacing between examples. |
