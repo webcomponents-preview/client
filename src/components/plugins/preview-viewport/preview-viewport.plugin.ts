@@ -88,7 +88,7 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
     this.prepareStyle().textContent += `
       .simulate-viewport-scale {
         transform-origin: 0 0;
-        transform: scale(clamp(0.25, ${scale}, 1));
+        transform: scale(clamp(0.15, ${scale}, 1));
       }
     `;
   }
