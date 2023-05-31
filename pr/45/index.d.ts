@@ -328,6 +328,7 @@ declare module "src/components/feature/preview/preview.component" {
      * @element wcp-preview
      *
      * @cssprop --wcp-preview-menu-border-radius - Border radius of the expanding menu.
+     * @cssprop --wcp-preview-menu-background-opacity - Opacity of the expanding menu background.
      * @cssprop --wcp-preview-menu-dark-background-raw - Background color of the expanding menu in dark mode. Must be a raw space-separated HSL color value list.
      * @cssprop --wcp-preview-menu-light-background-raw - Background color of the expanding menu in light mode. Must be a raw space-separated HSL color value list.
      *
@@ -965,11 +966,18 @@ declare module "src/components/plugins/preview-viewport/preview-viewport.plugin"
         private simulateViewport?;
         invertSimulatedViewport: boolean;
         protected prepareStyle(): HTMLStyleElement;
+        /**
+         * Sets the size of the viewport to simulate its dimensions.
+         */
         protected applyPreviewSize(): void;
+        /**
+         * Scales the sized viewport to fit into the preview container.
+         */
         protected applyPreviewScale(): void;
         private handleSimulateViewport;
         handleInvertSimulatedViewport(): void;
         connectedCallback(): void;
+        disconnectedCallback(): void;
         protected render(): TemplateResult;
     }
     global {
