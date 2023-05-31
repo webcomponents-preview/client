@@ -9,7 +9,7 @@
 
 wcp-button:not([data-viewport]) {
   margin-left: utils.size(0.5);
-  transition: transform 0.2s ease-in-out;
+  transition: transform var(--wcp-fx-default-duration) ease-in-out;
 
   &:enabled:hover {
     transform: rotate(45deg);
