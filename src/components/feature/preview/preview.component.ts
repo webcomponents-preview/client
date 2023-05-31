@@ -19,6 +19,7 @@ import styles from './preview.component.scss';
  * @element wcp-preview
  *
  * @cssprop --wcp-preview-menu-border-radius - Border radius of the expanding menu.
+ * @cssprop --wcp-preview-menu-background-opacity - Opacity of the expanding menu background.
  * @cssprop --wcp-preview-menu-dark-background-raw - Background color of the expanding menu in dark mode. Must be a raw space-separated HSL color value list.
  * @cssprop --wcp-preview-menu-light-background-raw - Background color of the expanding menu in light mode. Must be a raw space-separated HSL color value list.
  *
