@@ -97,7 +97,7 @@ import styles from './button.component.scss';
 @customElement('wcp-button')
 export class Button extends ColorSchemable(LitElement) {
   static readonly formAssociated = true;
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   readonly #internals = this.attachInternals();
 
@@ -143,7 +143,7 @@ export class Button extends ColorSchemable(LitElement) {
     }
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       ${when(
         this.href !== undefined && !this.disabled,

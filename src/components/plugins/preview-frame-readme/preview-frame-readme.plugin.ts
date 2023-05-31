@@ -9,7 +9,7 @@ import styles from './preview-frame-readme.plugin.scss';
 
 @customElement('wcp-preview-frame-readme')
 export class PreviewFrameReadme extends ColorSchemable(LitElement) implements PreviewFramePlugin {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @state()
   private _element?: Parsed.Element;
@@ -43,7 +43,7 @@ export class PreviewFrameReadme extends ColorSchemable(LitElement) implements Pr
   readonly label = 'Readme';
 
   // without ShadowDOM, we need to manually inject the styles
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       ${this.available
         ? html`<wcp-readme add-code-preview markdown="${this._element?.readme ?? ''}"></wcp-readme>`

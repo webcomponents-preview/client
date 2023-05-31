@@ -13,14 +13,14 @@ import styles from './toggle-sidebar.component.scss';
  */
 @customElement('wcp-toggle-sidebar')
 export class ToggleSidebar extends LitElement {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @eventOptions({ passive: true })
   handleButtonClick() {
     window.dispatchEvent(new CustomEvent('wcp-aside:toggle'));
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <wcp-button kind="icon" @click="${this.handleButtonClick}"><wcp-icon name="menu"></wcp-icon></wcp-button>
     `;

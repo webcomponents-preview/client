@@ -26,12 +26,12 @@ import styles from './title.component.scss';
  */
 @customElement('wcp-title')
 export class Title extends LitElement {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @property({ type: String, reflect: true })
-  title!: string;
+  override title!: string;
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <slot name="logo"></slot>
       <h1>${this.title}</h1>

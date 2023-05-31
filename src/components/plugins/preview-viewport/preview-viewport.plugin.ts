@@ -37,7 +37,7 @@ const SCALE_FACTOR = 1;
 
 @customElement('wcp-preview-viewport')
 export class PreviewViewport extends ColorSchemable(LitElement) implements PreviewPlugin {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   readonly container!: HTMLElement;
 
@@ -147,7 +147,7 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
   }
 
   // without ShadowDOM, we need to manually inject the styles
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       ${map(
         VIEWPORTS.keys(),

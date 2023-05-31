@@ -17,7 +17,7 @@ import styles from './code.component.scss';
  */
 @customElement('wcp-code')
 export class Code extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   // disable ShadowDOM
   // https://stackoverflow.com/a/55213037/1146207
@@ -26,7 +26,7 @@ export class Code extends ColorSchemable(LitElement) {
   }
 
   // without ShadowDOM, we need to manually inject the styles
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <style>
         ${Code.styles}

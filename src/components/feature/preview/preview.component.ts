@@ -34,7 +34,7 @@ import styles from './preview.component.scss';
  */
 @customElement('wcp-preview')
 export class Preview extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @state()
   config?: Config;
@@ -87,7 +87,7 @@ export class Preview extends ColorSchemable(LitElement) {
     this.container = container;
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <section>
         <div ${ref(this.handleContainerRef)}>

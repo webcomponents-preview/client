@@ -32,7 +32,7 @@ import styles from './preview-frame.component.scss';
  */
 @customElement('wcp-preview-frame')
 export class PreviewFrame extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @state()
   private _plugins: PreviewFramePlugin[] = [];
@@ -93,7 +93,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   protected alignActiveTab() {
     // either the active tab is not set...
     if (this._activeTab === undefined) {
-      // ... then we try to set the configured intial one...
+      // ... then we try to set the configured initial one...
       if (
         this.initialPreviewTab &&
         this._plugins.some(({ available, name }) => available && name === this.initialPreviewTab)
@@ -114,7 +114,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
     }
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       ${when(
         this._plugins.length > 0,

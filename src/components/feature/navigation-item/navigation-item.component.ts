@@ -49,7 +49,7 @@ import styles from './navigation-item.component.scss';
  */
 @customElement('wcp-navigation-item')
 export class NavigationItem extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @property({ type: Boolean, reflect: true })
   active = false;
@@ -57,7 +57,7 @@ export class NavigationItem extends ColorSchemable(LitElement) {
   @property({ type: String, reflect: true })
   href?: string;
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       ${when(
         this.href !== undefined,

@@ -17,7 +17,7 @@ import styles from './preview-frame-examples.plugin.scss';
  */
 @customElement('wcp-preview-frame-examples')
 export class PreviewFrameExamples extends ColorSchemable(LitElement) implements PreviewFramePlugin {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @state()
   private _element?: Parsed.Element;
@@ -50,7 +50,7 @@ export class PreviewFrameExamples extends ColorSchemable(LitElement) implements 
   @property({ type: String, reflect: true })
   readonly label = 'Examples';
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       ${map(
         this._element?.examples ?? [],

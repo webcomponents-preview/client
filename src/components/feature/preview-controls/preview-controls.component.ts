@@ -30,9 +30,9 @@ import styles from './preview-controls.component.scss';
  */
 @customElement('wcp-preview-controls')
 export class PreviewControls extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`<slot></slot>`;
   }
 }

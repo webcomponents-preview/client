@@ -32,12 +32,12 @@ import styles from './navigation.component.scss';
  */
 @customElement('wcp-navigation')
 export class Navigation extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @property({ type: String, reflect: true })
   headline?: string;
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       ${when(this.headline !== undefined, () => html`<h3>${this.headline}</h3>`)}
       <nav>

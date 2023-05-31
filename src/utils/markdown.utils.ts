@@ -10,7 +10,7 @@ export class Renderer extends marked.Renderer {
     super();
   }
 
-  code(code: string, language = 'plaintext', escaped = false): string {
+  override code(code: string, language = 'plaintext', escaped = false): string {
     // do not use example component for anything but html examples
     if (language !== 'html' || !this.addCodePreview) {
       return `<wcp-code>${super.code(code, language, escaped)}</wcp-code>`;

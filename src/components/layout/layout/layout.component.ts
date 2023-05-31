@@ -17,9 +17,9 @@ import styles from './layout.component.scss';
  */
 @customElement('wcp-layout')
 export class Layout extends LitElement {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <wcp-aside>
         <slot name="aside"></slot>

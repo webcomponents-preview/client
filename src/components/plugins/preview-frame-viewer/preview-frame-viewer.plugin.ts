@@ -15,7 +15,7 @@ import styles from './preview-frame-viewer.plugin.scss';
 
 @customElement('wcp-preview-frame-viewer')
 export class PreviewFrameViewer extends ColorSchemable(LitElement) implements PreviewFramePlugin {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   #element?: Parsed.Element;
 
@@ -146,7 +146,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
     `;
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`${keyed(
       this.#element?.tagName ?? '',
       html`

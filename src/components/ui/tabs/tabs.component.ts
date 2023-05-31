@@ -42,7 +42,7 @@ import styles from './tabs.component.scss';
  */
 @customElement('wcp-tabs')
 export class Tabs extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   tabFocus = 0;
 
@@ -101,7 +101,7 @@ export class Tabs extends ColorSchemable(LitElement) {
     }
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <nav part="tablist" role="tablist" aria-label="Sample Tabs" @keydown="${this.handleKeydown}">
         ${map(

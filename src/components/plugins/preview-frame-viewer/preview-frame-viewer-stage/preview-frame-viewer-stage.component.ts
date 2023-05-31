@@ -22,7 +22,7 @@ import styles from './preview-frame-viewer-stage.component.scss';
  */
 @customElement('wcp-preview-frame-viewer-stage')
 export class PreviewFrameViewerStage extends LitElement {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
   previewTagName?: string;
@@ -45,7 +45,7 @@ export class PreviewFrameViewerStage extends LitElement {
     `;
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     // we need the tag name to be defined and the iframe ready
     if (this.previewTagName === undefined || !this.previewTagName.length) return html`${nothing}`;
 

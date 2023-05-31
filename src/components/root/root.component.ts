@@ -32,7 +32,7 @@ import { prepareRoutes } from './root.routes.js';
  */
 @customElement('wcp-root')
 export class Root extends Routable()(ColorSchemable(LitElement)) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   @state()
   config?: Config;
@@ -107,7 +107,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
     super.connectedCallback();
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <wcp-layout>
         <wcp-title slot="aside" title="${this.config?.title}">

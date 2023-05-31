@@ -31,20 +31,20 @@ import styles from './aside.component.scss';
  */
 @customElement('wcp-aside')
 export class Aside extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
   /**
    * Used to toggle the width of the aside bar
    */
   @property({ type: Boolean, reflect: true })
-  hidden = false;
+  override hidden = false;
 
   /**
    * Presets the aria role to `complementary` as we do not use te aside element directly
    * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/complementary_role
    */
   @property({ type: String, reflect: true })
-  role = 'complementary';
+  override role = 'complementary';
 
   emitToggled() {
     const event = new CustomEvent('wcp-aside:toggled', {
@@ -77,7 +77,7 @@ export class Aside extends ColorSchemable(LitElement) {
     window.removeEventListener('wcp-aside:toggle', this.listenAsideToggle, false);
   }
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <header>
         <wcp-button kind="icon" @click="${this.handleButtonClick}">

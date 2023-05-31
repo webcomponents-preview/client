@@ -44,9 +44,9 @@ const MARKDOWN_EXAMPLE_TABS = { preview: { label: 'Preview' }, code: { label: 'C
  */
 @customElement('wcp-markdown-example')
 export class MarkdownExample extends ColorSchemable(LitElement) {
-  static readonly styles = unsafeCSS(styles);
+  static override readonly styles = unsafeCSS(styles);
 
-  protected render(): TemplateResult {
+  protected override render(): TemplateResult {
     return html`
       <wcp-tabs .tabs="${MARKDOWN_EXAMPLE_TABS}" active-tab="code">
         ${map(Object.keys(MARKDOWN_EXAMPLE_TABS), (tab) => html`<slot name="${tab}" slot="${tab}"></slot>`)}
