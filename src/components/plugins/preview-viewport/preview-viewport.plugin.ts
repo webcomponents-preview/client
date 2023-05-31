@@ -8,8 +8,10 @@ import type { PreviewPlugin } from '@/utils/plugin.utils.js';
 
 import styles from './preview-viewport.plugin.scss';
 
+// utility union to carry the available viewport for simulation
 type Viewport = 'mobile' | 'tablet' | 'desktop' | 'wide';
 
+// maps the available viewport simulations to their dimensions
 const VIEWPORTS = new Map<Viewport, [number, number]>([
   ['mobile', [390, 844]],
   ['tablet', [1024, 768]],
@@ -17,12 +19,21 @@ const VIEWPORTS = new Map<Viewport, [number, number]>([
   ['wide', [1920, 1080]],
 ]);
 
+// maps the available viewport simulations to icons
 const ICONS = new Map<Viewport, string>([
   ['mobile', 'smartphone'],
   ['tablet', 'laptop'],
   ['desktop', 'screen'],
   ['wide', 'screen-wide'],
 ]);
+
+// internal identifiers for styling
+const STYLE_ID = 'preview-plugin-viewport';
+const SIZE_CLASS = 'simulate-viewport-size';
+const SCALE_CLASS = 'simulate-viewport-scale';
+
+// to add some spacing we scale a bit further than actually needed
+const SCALE_FACTOR = 1;
 
 @customElement('wcp-preview-viewport')
 export class PreviewViewport extends ColorSchemable(LitElement) implements PreviewPlugin {
@@ -47,31 +58,39 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
 
   protected prepareStyle(): HTMLStyleElement {
     // check if a style element already exists
-    let style = this.container.querySelector<HTMLStyleElement>('style#preview-plugin-viewport');
+    let style = this.container.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`);
     if (style !== null) return style;
 
     // create a new style element
     style = document.createElement('style');
-    style.id = 'preview-plugin-viewport';
+    style.id = STYLE_ID;
     this.container.append(style);
     return style;
   }
 
+  /**
+   * Sets the size of the viewport to simulate its dimensions.
+   */
   protected applyPreviewSize() {
     if (this.simulateViewport === undefined) return;
     // read the viewport dimensions to apply
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const [w, h] = VIEWPORTS.get(this.simulateViewport)!;
-    // write the style
+    // add the size styling to the style element
     this.prepareStyle().textContent += `
-      .simulate-viewport-size {
+      .${SIZE_CLASS} {
         height: ${this.invertSimulatedViewport ? w : h}px;
         width: ${this.invertSimulatedViewport ? h : w}px;
+        
+        border-radius: 5px;
         outline: 3px solid currentColor;
       }
     `;
   }
 
+  /**
+   * Scales the sized viewport to fit into the preview container.
+   */
   protected applyPreviewScale() {
     if (this.simulateViewport === undefined) return;
     // read the viewport dimensions to apply
@@ -84,11 +103,11 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
       preview.clientWidth / (this.invertSimulatedViewport ? h : w),
       preview.clientHeight / (this.invertSimulatedViewport ? w : h)
     );
-    // write the style
+    // add the scale styling to the style element
     this.prepareStyle().textContent += `
-      .simulate-viewport-scale {
+      .${SCALE_CLASS} {
         transform-origin: 0 0;
-        transform: scale(clamp(0.15, ${scale}, 1));
+        transform: scale(clamp(0.15, ${scale * SCALE_FACTOR}, 1));
       }
     `;
   }
@@ -115,7 +134,16 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
 
   override connectedCallback() {
     super.connectedCallback();
-    this.container.classList.add('simulate-viewport-size', 'simulate-viewport-scale');
+
+    // add the classes to the container to simulate the viewport
+    this.container.classList.add(SIZE_CLASS, SCALE_CLASS);
+  }
+
+  override disconnectedCallback() {
+    // remove the simulation classes from the container
+    this.container.classList.remove(SIZE_CLASS, SCALE_CLASS);
+
+    super.disconnectedCallback();
   }
 
   // without ShadowDOM, we need to manually inject the styles

@@ -12,14 +12,15 @@
 
 ## Methods
 
-| Name                            | Privacy   | Description | Parameters | Return             | Inherited From |
-| ------------------------------- | --------- | ----------- | ---------- | ------------------ | -------------- |
-| `prepareStyle`                  | protected |             |            | `HTMLStyleElement` |                |
-| `applyPreviewSize`              | protected |             |            |                    |                |
-| `applyPreviewScale`             | protected |             |            |                    |                |
-| `handleInvertSimulatedViewport` |           |             |            |                    |                |
-| `connectedCallback`             |           |             |            |                    |                |
-| `render`                        | protected |             |            | `TemplateResult`   |                |
+| Name                            | Privacy   | Description                                                  | Parameters | Return             | Inherited From |
+| ------------------------------- | --------- | ------------------------------------------------------------ | ---------- | ------------------ | -------------- |
+| `prepareStyle`                  | protected |                                                              |            | `HTMLStyleElement` |                |
+| `applyPreviewSize`              | protected | Sets the size of the viewport to simulate its dimensions.    |            |                    |                |
+| `applyPreviewScale`             | protected | Scales the sized viewport to fit into the preview container. |            |                    |                |
+| `handleInvertSimulatedViewport` |           |                                                              |            |                    |                |
+| `connectedCallback`             |           |                                                              |            |                    |                |
+| `disconnectedCallback`          |           |                                                              |            |                    |                |
+| `render`                        | protected |                                                              |            | `TemplateResult`   |                |
 
 ## Attributes
 
@@ -35,10 +36,14 @@
 
 # Variables
 
-| Name        | Description | Type |
-| ----------- | ----------- | ---- |
-| `VIEWPORTS` |             |      |
-| `ICONS`     |             |      |
+| Name           | Description | Type     |
+| -------------- | ----------- | -------- |
+| `VIEWPORTS`    |             |          |
+| `ICONS`        |             |          |
+| `STYLE_ID`     |             | `string` |
+| `SIZE_CLASS`   |             | `string` |
+| `SCALE_CLASS`  |             | `string` |
+| `SCALE_FACTOR` |             | `number` |
 
 <hr/>
 
@@ -46,6 +51,10 @@
 
 | Name | Description | Parameters | Return |
 | ---- | ----------- | ---------- | ------ |
+|      |             |            |        |
+|      |             |            |        |
+|      |             |            |        |
+|      |             |            |        |
 |      |             |            |        |
 |      |             |            |        |
 
