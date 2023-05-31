@@ -33,16 +33,34 @@ export class Router {
     return this.#currentPath;
   }
 
+  /**
+   * Defines the routes for this router.
+   */
   registerRoutes(routes: Route[]) {
     this.#routes = routes;
   }
 
+  /**
+   * Checks if the given path is the currently active.
+   */
   isActive(path: string): boolean {
-    return this.#currentPath === path;
+    return this.#currentPath?.startsWith(path) ?? false;
   }
 
+  /**
+   * Redirect to a given path. This will trigger a hash change event.
+   */
   redirect(path: string) {
     location.hash = path;
+  }
+
+  /**
+   * Update the current path without triggering a redirect.
+   */
+  update(path: string) {
+    const url = new URL(location.href);
+    url.hash = path;
+    history.replaceState({}, '', url);
   }
 
   constructor(host: LitElement) {

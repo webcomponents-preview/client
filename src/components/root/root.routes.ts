@@ -50,9 +50,13 @@ export const prepareRoutes = (router: Router, config: Config, manifest: Manifest
     },
   },
   {
-    path: '/element/:tagName',
-    render: ({ tagName = '' }) => html`
-      <wcp-preview-frame initial-preview-tab="${ifDefined(config.initialPreviewTab)}">
+    path: '/element/:tagName/:plugin?',
+    render: ({ tagName = '', plugin = config.initialPreviewTab }) => html`
+      <wcp-preview-frame
+        initial-preview-tab="${ifDefined(plugin)}"
+        @wcp-tabs:active-tab-change="${({ detail }: CustomEvent<string>) =>
+          router.update(`/element/${tagName}/${detail}`)}"
+      >
         ${map(
           config.previewFramePlugins ?? [],
           (plugin) => withStatic(html)`
