@@ -44,7 +44,7 @@ export class Router {
    * Checks if the given path is the currently active.
    */
   isActive(path: string): boolean {
-    return this.#currentPath?.startsWith(path) ?? false;
+    return this.#currentPath === path;
   }
 
   /**
