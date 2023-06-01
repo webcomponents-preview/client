@@ -110,7 +110,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
   protected override render(): TemplateResult {
     return html`
       <wcp-layout>
-        <wcp-title slot="aside" title="${this.config?.title}">
+        <wcp-title slot="title" title="${this.config?.title}">
           <slot name="logo" slot="logo">
             <img src="${logo}" height="20px" />
           </slot>

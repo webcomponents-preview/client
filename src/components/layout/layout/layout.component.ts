@@ -22,6 +22,7 @@ export class Layout extends LitElement {
   protected override render(): TemplateResult {
     return html`
       <wcp-aside>
+        <slot name="title" slot="header"></slot>
         <slot name="aside"></slot>
       </wcp-aside>
 
