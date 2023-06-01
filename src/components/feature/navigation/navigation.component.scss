@@ -24,6 +24,12 @@
 
 :host {
   display: block;
+}
+
+// set the border on top of the whole element if no headline is given;
+// otherwise, the headline will have this border, which is then part
+// of the sticky headline element 🍭🍭🍭
+:host(:not([headline])) {
   border-top: 1px solid var(---wcp-navigation-border-color);
 }
 
@@ -36,6 +42,7 @@ h3 {
   padding: var(---wcp-navigation-spacing-headline);
 
   background-color: var(---wcp-navigation-headline-background);
+  border-top: 1px solid var(---wcp-navigation-border-color);
   font-size: var(---wcp-navigation-headline-size);
   font-weight: var(---wcp-navigation-headline-weight);
   letter-spacing: var(---wcp-navigation-headline-spacing);
