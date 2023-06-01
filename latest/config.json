@@ -1,5 +1,6 @@
 {
   "$schema": "./config.schema.json",
+  "title": "Web Component Preview",
   "excludeElements": ["wcp-root"],
   "initialActiveElement": "wcp-button",
   "initialPreviewTab": "viewer",

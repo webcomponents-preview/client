@@ -834,20 +834,26 @@
             },
             {
               "kind": "field",
-              "name": "_activeTab",
+              "name": "activePlugin",
               "type": {
-                "text": "HTMLElementTagNameMap['wcp-tabs']['activeTab'] | undefined"
+                "text": "string | undefined"
               },
-              "privacy": "private"
+              "privacy": "private",
+              "attribute": "active-plugin",
+              "reflects": true
             },
             {
-              "kind": "field",
-              "name": "initialPreviewTab",
-              "type": {
-                "text": "Config['initialPreviewTab'] | undefined"
-              },
-              "attribute": "initial-preview-tab",
-              "reflects": true
+              "kind": "method",
+              "name": "emitActivePluginChange",
+              "parameters": [
+                {
+                  "name": "activePlugin",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
             },
             {
               "kind": "method",
@@ -887,17 +893,17 @@
             },
             {
               "kind": "method",
-              "name": "alignActiveTab",
+              "name": "alignActivePlugin",
               "privacy": "protected"
             }
           ],
           "attributes": [
             {
-              "name": "initial-preview-tab",
+              "name": "active-plugin",
               "type": {
-                "text": "Config['initialPreviewTab'] | undefined"
+                "text": "string | undefined"
               },
-              "fieldName": "initialPreviewTab"
+              "fieldName": "activePlugin"
             }
           ],
           "mixins": [
@@ -913,7 +919,7 @@
           "examples": [
             "```html\n<wcp-preview-frame></wcp-preview-frame>\n```"
           ],
-          "readme": "# wcp-preview-frame\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-preview-frame></wcp-preview-frame>\n```\n\n## Properties\n\n| Property            | Attribute             |\n|---------------------|-----------------------|\n| `initialPreviewTab` | `initial-preview-tab` |\n\n## Slots\n\n| Name | Description                                      |\n|------|--------------------------------------------------|\n|      | The preview frame can be filled with any number of plugins. The plugins will be rendered as tabs. |\n\n## CSS Custom Properties\n\n| Property                                 | Description                                      |\n|------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-frame-border-radius`      | Border radius of the preview frame               |\n| `--wcp-preview-frame-border-width`       | Border width of the preview frame                |\n| `--wcp-preview-frame-dark-background`    | Background color of the preview frame in dark mode |\n| `--wcp-preview-frame-dark-border-color`  | Border color of the example section in dark mode |\n| `--wcp-preview-frame-dark-color`         | Text color of the preview frame in dark mode     |\n| `--wcp-preview-frame-distance`           | Outer margin of the preview frame                |\n| `--wcp-preview-frame-light-background`   | Background color of the preview frame in light mode |\n| `--wcp-preview-frame-light-border-color` | Border color of the example section in light mode |\n| `--wcp-preview-frame-light-color`        | Text color of the preview frame in light mode    |\n| `--wcp-preview-frame-spacing`            | Inner padding of the preview frame               |\n",
+          "readme": "# wcp-preview-frame\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-preview-frame></wcp-preview-frame>\n```\n\n## Methods\n\n| Method                   | Type                                         |\n|--------------------------|----------------------------------------------|\n| `emitActivePluginChange` | `(activePlugin?: string \\| undefined): void` |\n\n## Events\n\n| Event                                    |\n|------------------------------------------|\n| `wcp-preview-frame:active-plugin-change` |\n\n## Slots\n\n| Name | Description                                      |\n|------|--------------------------------------------------|\n|      | The preview frame can be filled with any number of plugins. The plugins will be rendered as tabs. |\n\n## CSS Custom Properties\n\n| Property                                 | Description                                      |\n|------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-frame-border-radius`      | Border radius of the preview frame               |\n| `--wcp-preview-frame-border-width`       | Border width of the preview frame                |\n| `--wcp-preview-frame-dark-background`    | Background color of the preview frame in dark mode |\n| `--wcp-preview-frame-dark-border-color`  | Border color of the example section in dark mode |\n| `--wcp-preview-frame-dark-color`         | Text color of the preview frame in dark mode     |\n| `--wcp-preview-frame-distance`           | Outer margin of the preview frame                |\n| `--wcp-preview-frame-light-background`   | Background color of the preview frame in light mode |\n| `--wcp-preview-frame-light-border-color` | Border color of the example section in light mode |\n| `--wcp-preview-frame-light-color`        | Text color of the preview frame in light mode    |\n| `--wcp-preview-frame-spacing`            | Inner padding of the preview frame               |\n",
           "groups": [
             "feature"
           ],
@@ -1311,6 +1317,10 @@
             {
               "description": "Projects elements aside the main content",
               "name": ""
+            },
+            {
+              "description": "Elements in the fixed header of the side bar",
+              "name": "header"
             }
           ],
           "members": [
@@ -1386,7 +1396,7 @@
             "package": "lit"
           },
           "examples": [],
-          "readme": "# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property            | Attribute | Type      | Default                                          | Description                                      |\n|---------------------|-----------|-----------|--------------------------------------------------|--------------------------------------------------|\n| `hidden`            | `hidden`  | `boolean` | false                                            | Used to toggle the width of the aside bar        |\n| `listenAsideToggle` |           |           | \"(({ detail }: CustomEvent<boolean \\| null>) => {\\n    this.hidden = detail ?? !this.hidden;\\n    this.emitToggled();\\n  }).bind(this)\" |                                                  |\n| `role`              | `role`    | `string`  | \"complementary\"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `emitToggled`       | `(): void` |\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event               | Description                                      |\n|---------------------|--------------------------------------------------|\n| `wcp-aside-toggled` | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n| `wcp-aside:toggled` |                                                  |\n\n## Slots\n\n| Name | Description                              |\n|------|------------------------------------------|\n|      | Projects elements aside the main content |\n\n## CSS Custom Properties\n\n| Property                       | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |\n| `--wcp-aside-light-background` | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      | The color of the side bar in light mode          |\n| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |\n| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-size`      | The size of the toggle button                    |\n",
+          "readme": "# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property            | Attribute | Type      | Default                                          | Description                                      |\n|---------------------|-----------|-----------|--------------------------------------------------|--------------------------------------------------|\n| `hidden`            | `hidden`  | `boolean` | false                                            | Used to toggle the width of the aside bar        |\n| `listenAsideToggle` |           |           | \"(({ detail }: CustomEvent<boolean \\| null>) => {\\n    this.hidden = detail ?? !this.hidden;\\n    this.emitToggled();\\n  }).bind(this)\" |                                                  |\n| `role`              | `role`    | `string`  | \"complementary\"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `emitToggled`       | `(): void` |\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event               | Description                                      |\n|---------------------|--------------------------------------------------|\n| `wcp-aside-toggled` | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n| `wcp-aside:toggled` |                                                  |\n\n## Slots\n\n| Name     | Description                                  |\n|----------|----------------------------------------------|\n|          | Projects elements aside the main content     |\n| `header` | Elements in the fixed header of the side bar |\n\n## CSS Custom Properties\n\n| Property                       | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |\n| `--wcp-aside-light-background` | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      | The color of the side bar in light mode          |\n| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |\n| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-size`      | The size of the toggle button                    |\n",
           "groups": [
             "layout"
           ],

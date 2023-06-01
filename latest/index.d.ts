@@ -538,7 +538,6 @@ declare module "src/utils/plugin.utils" {
 }
 declare module "src/components/feature/preview-frame/preview-frame.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    import type { Config } from "src/utils/config.utils";
     const PreviewFrame_base: import("@/index.js").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
     }> & typeof LitElement;
@@ -567,16 +566,19 @@ declare module "src/components/feature/preview-frame/preview-frame.component" {
         static readonly styles: import("lit").CSSResult;
         private _plugins;
         private _tabs;
-        private _activeTab?;
-        initialPreviewTab?: Config['initialPreviewTab'];
+        private activePlugin?;
+        emitActivePluginChange(activePlugin?: string): void;
         protected handleSlotChange(event: Event): void;
         protected handleAvailabilityChange(): void;
         protected handleActiveTabChange(event: CustomEvent<string>): void;
         protected preparePluginTabs(): void;
-        protected alignActiveTab(): void;
+        protected alignActivePlugin(): void;
         protected render(): TemplateResult;
     }
     global {
+        interface HTMLElementEventMap {
+            'wcp-preview-frame:active-plugin-change': CustomEvent<string>;
+        }
         interface HTMLElementTagNameMap {
             'wcp-preview-frame': PreviewFrame;
         }
@@ -725,6 +727,7 @@ declare module "src/components/layout/aside/aside.component" {
      * ```
      *
      * @slot - Projects elements aside the main content
+     * @slot header - Elements in the fixed header of the side bar
      *
      * @event wcp-aside-toggled - Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event.
      *
@@ -1039,10 +1042,28 @@ declare module "src/utils/routable.utils" {
     export type Params = Record<string, string | undefined>;
     export type Route = {
         path: string;
-        enter?: (params: Params, router: Router) => boolean | Promise<boolean>;
+        enter?: (params: Params, router: Router, outgoingParams?: Params) => boolean | Promise<boolean>;
         render?: (params: Params, router: Router) => TemplateResult;
     };
     export type RegisterRoutes = (router: Router) => Route[];
+    export type ParsedUrl = {
+        /**
+         * Cleaned up path, derived from hash
+         */
+        path: string;
+        /**
+         * Prefixed url with base
+         */
+        url: string;
+    };
+    /**
+     * Helps comparing param objects for equality
+     */
+    export function areParamsEqual(a: Params, b: Params): boolean;
+    /**
+     * Merges two given sets of params.
+     */
+    export function mergeParams(oldParams: Params, newParams: Params): Params;
     export class Router {
         #private;
         get currentPath(): string | undefined;
@@ -1061,7 +1082,7 @@ declare module "src/utils/routable.utils" {
         /**
          * Update the current path without triggering a redirect.
          */
-        update(path: string): void;
+        updateCurrent(path: string): void;
         constructor(host: LitElement);
         connect(): void;
         disconnect(): void;
@@ -1072,7 +1093,7 @@ declare module "src/utils/routable.utils" {
 declare module "src/components/root/root.routes" {
     import type { Config } from "src/utils/config.utils";
     import type { Manifest } from "src/utils/parser.types";
-    import type { Route, Router } from "src/utils/routable.utils";
+    import { type Route, type Router } from "src/utils/routable.utils";
     export const prepareRoutes: (router: Router, config: Config, manifest: Manifest) => Route[];
 }
 declare module "src/components/root/root.component" {
