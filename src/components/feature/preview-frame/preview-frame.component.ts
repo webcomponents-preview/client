@@ -4,7 +4,6 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/utils/color-scheme.utils.js';
-import type { Config } from '@/utils/config.utils.js';
 import { type PreviewFramePlugin, findAllPlugins } from '@/utils/plugin.utils.js';
 
 import styles from './preview-frame.component.scss';
@@ -14,7 +13,7 @@ import styles from './preview-frame.component.scss';
  * ```html
  * <wcp-preview-frame></wcp-preview-frame>
  * ```
- * 
+ *
  * @slot - The preview frame can be filled with any number of plugins. The plugins will be rendered as tabs.
  *
  * @cssprop --wcp-preview-frame-dark-background - Background color of the preview frame in dark mode
@@ -40,11 +39,18 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   @state()
   private _tabs: HTMLElementTagNameMap['wcp-tabs']['tabs'] = {};
 
-  @state()
-  private _activeTab?: HTMLElementTagNameMap['wcp-tabs']['activeTab'];
+  @property({ type: String, reflect: true, attribute: 'active-plugin' })
+  private activePlugin?: string;
 
-  @property({ type: String, reflect: true, attribute: 'initial-preview-tab' })
-  initialPreviewTab?: Config['initialPreviewTab'];
+  emitActivePluginChange(activePlugin?: string) {
+    const event = new CustomEvent('wcp-preview-frame:active-plugin-change', {
+      detail: activePlugin,
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+    });
+    this.dispatchEvent(event);
+  }
 
   @eventOptions({ passive: true })
   protected handleSlotChange(event: Event) {
@@ -58,7 +64,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
       this._plugins.forEach((tab) => tab.setAttribute('slot', tab.name));
 
       this.preparePluginTabs();
-      this.alignActiveTab();
+      this.alignActivePlugin();
     }
   }
 
@@ -67,19 +73,16 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
     // this event has been triggered by a plugin changing its availability
     // state, therefore we need to re-evaluate the tabs
     this.preparePluginTabs();
-    this.alignActiveTab();
+    this.alignActivePlugin();
   }
 
   @eventOptions({ passive: true })
   protected handleActiveTabChange(event: CustomEvent<string>) {
-    const { detail: activeTab, currentTarget, target } = event;
+    const { currentTarget, target, detail: activePlugin } = event;
 
-    // ignored bubbled events as they occur from nested tabs
-    if (currentTarget !== target) return;
-
-    // only update the active tab if it has changed
-    if (this._activeTab !== activeTab) {
-      this._activeTab = activeTab;
+    // re-emit as our own event
+    if (currentTarget === target) {
+      this.emitActivePluginChange(activePlugin);
     }
   }
 
@@ -90,27 +93,23 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
     );
   }
 
-  protected alignActiveTab() {
+  protected alignActivePlugin() {
+    let alignedActivePlugin = this.activePlugin;
+
     // either the active tab is not set...
-    if (this._activeTab === undefined) {
-      // ... then we try to set the configured initial one...
-      if (
-        this.initialPreviewTab &&
-        this._plugins.some(({ available, name }) => available && name === this.initialPreviewTab)
-      ) {
-        this._activeTab = this.initialPreviewTab;
-        return;
-      }
-      // ... or the first available one...
-      else if (this._plugins.length > 0) {
-        this._activeTab = this._plugins.filter(({ available }) => available)?.[0]?.name;
-        return;
-      }
+    if (this.activePlugin === undefined && this._plugins.length > 0) {
+      // ... then we try to set the first available...
+      alignedActivePlugin = this._plugins.filter(({ available }) => available)?.[0]?.name;
     }
     // ... or the active tab is not available anymore...
-    else if (!this._plugins.find(({ name }) => name === this._activeTab)?.available) {
+    else if (!this._plugins.find(({ name }) => name === this.activePlugin)?.available) {
       // ... then we need to set the first available tab
-      this._activeTab = this._plugins.find(({ available }) => available)?.name;
+      alignedActivePlugin = this._plugins.find(({ available }) => available)?.name;
+    }
+
+    // if there are changes, let them know! 🏳️‍🌈
+    if (alignedActivePlugin !== this.activePlugin) {
+      this.emitActivePluginChange(alignedActivePlugin);
     }
   }
 
@@ -121,7 +120,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
         () => html`
           <wcp-tabs
             .tabs="${this._tabs}"
-            active-tab="${this._activeTab}"
+            active-tab="${this.activePlugin}"
             @wcp-tabs:active-tab-change="${this.handleActiveTabChange}"
             @wcp-preview-frame-plugin:availability-change="${this.handleAvailabilityChange}"
           >
@@ -135,6 +134,9 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
 }
 
 declare global {
+  interface HTMLElementEventMap {
+    'wcp-preview-frame:active-plugin-change': CustomEvent<string>;
+  }
   interface HTMLElementTagNameMap {
     'wcp-preview-frame': PreviewFrame;
   }

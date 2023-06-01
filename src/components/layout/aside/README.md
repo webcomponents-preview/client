@@ -35,9 +35,10 @@ window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));
 
 ## Slots
 
-| Name | Description                              |
-|------|------------------------------------------|
-|      | Projects elements aside the main content |
+| Name     | Description                                  |
+|----------|----------------------------------------------|
+|          | Projects elements aside the main content     |
+| `header` | Elements in the fixed header of the side bar |
 
 ## CSS Custom Properties
 

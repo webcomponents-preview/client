@@ -15,11 +15,43 @@ export type Params = Record<string, string | undefined>;
 
 export type Route = {
   path: string;
-  enter?: (params: Params, router: Router) => boolean | Promise<boolean>;
+  enter?: (params: Params, router: Router, outgoingParams?: Params) => boolean | Promise<boolean>;
   render?: (params: Params, router: Router) => TemplateResult;
 };
 
 export type RegisterRoutes = (router: Router) => Route[];
+
+export type ParsedUrl = {
+  /**
+   * Cleaned up path, derived from hash
+   */
+  path: string;
+
+  /**
+   * Prefixed url with base
+   */
+  url: string;
+};
+
+/**
+ * Helps comparing param objects for equality
+ */
+export function areParamsEqual(a: Params, b: Params): boolean {
+  return Object.entries(a).every(([key, value]) => b[key] === value);
+}
+
+/**
+ * Merges two given sets of params.
+ */
+export function mergeParams(oldParams: Params, newParams: Params): Params {
+  return Object.entries(newParams).reduce(
+    (params, [key, value]) => {
+      if (value !== undefined) params[key] = value;
+      return params;
+    },
+    { ...oldParams }
+  );
+}
 
 // a primitive hash router implementation
 export class Router {
@@ -53,13 +85,14 @@ export class Router {
    * Redirect to a given path. This will trigger a hash change event.
    */
   redirect(path: string) {
+    console.log(`Redirecting to ${path}`);
     location.hash = path;
   }
 
   /**
    * Update the current path without triggering a redirect.
    */
-  update(path: string) {
+  updateCurrent(path: string) {
     const url = new URL(location.href);
     url.hash = path;
     history.replaceState({}, '', url);
@@ -77,25 +110,47 @@ export class Router {
     return new URLPattern(this.#withBaseUrl(path));
   }
 
+  #parseUrl(url: string): ParsedUrl {
+    const { hash } = new URL(url);
+    const path = hash.replace(/^#/, '');
+    return { path, url: this.#withBaseUrl(path) };
+  }
+
+  #findRouteForUrl(url: string): Route | undefined {
+    return this.#routes.find(({ path }) => this.#createPattern(path).test(url));
+  }
+
   #findCurrentRoute = (async (event: HashChangeEvent) => {
     // find next path and route
-    const { hash } = new URL(event.newURL);
-    const nextPath = hash.replace(/^#/, '');
-    const nextUrl = this.#withBaseUrl(nextPath);
-    const nextRoute = this.#routes.find(({ path }) => this.#createPattern(path).test(nextUrl));
+    const { path: nextPath, url: nextUrl } = this.#parseUrl(event.newURL);
+    const nextRoute = this.#findRouteForUrl(nextUrl);
 
     // no route found
     if (nextRoute === undefined) {
       throw new Error(`No route found for ${nextPath}`);
     }
 
-    // derive new params
-    const pattern = this.#createPattern(nextRoute.path);
-    const nextParams = pattern.exec(nextUrl)?.pathname.groups ?? {};
+    // derive params
+    let outgoingParams: Params | undefined;
+    const nextPattern = this.#createPattern(nextRoute.path);
+    const nextParams = nextPattern.exec(nextUrl)?.pathname.groups ?? {};
+
+    // derive params from current url - as we do not want to have a generic
+    // param handling strategy, we just pass the current params to the onEnter
+    // route method as well and let the implementor decide what to do with them
+    if (event.oldURL !== '') {
+      // we do basically the same as above, but for the old url
+      const { url: pastUrl } = this.#parseUrl(event.oldURL);
+      // we can cast this to "defined", as we know that the current route must exist
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const pastRoute = this.#findRouteForUrl(pastUrl)!;
+      const pastPattern = this.#createPattern(pastRoute.path);
+      outgoingParams = pastPattern.exec(pastUrl)?.pathname.groups ?? {};
+    }
 
     // match on enter
     if (typeof nextRoute.enter === 'function') {
-      const success = await nextRoute.enter(nextParams, this);
+      const success = await nextRoute.enter(nextParams, this, outgoingParams);
       if (success === false) return;
     }
 

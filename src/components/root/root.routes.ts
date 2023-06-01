@@ -7,7 +7,7 @@ import { until } from 'lit/directives/until.js';
 import type { Config } from '@/utils/config.utils.js';
 import { prefixRelativeUrls } from '@/utils/markdown.utils.js';
 import type { Manifest } from '@/utils/parser.types.js';
-import type { Route, Router } from '@/utils/routable.utils.js';
+import { areParamsEqual, mergeParams, type Route, type Router } from '@/utils/routable.utils.js';
 
 export const prepareRoutes = (router: Router, config: Config, manifest: Manifest): Route[] => [
   {
@@ -51,19 +51,39 @@ export const prepareRoutes = (router: Router, config: Config, manifest: Manifest
   },
   {
     path: '/element/:tagName/:plugin?',
-    render: ({ tagName = '', plugin = config.initialPreviewTab }) => html`
-      <wcp-preview-frame
-        initial-preview-tab="${ifDefined(plugin)}"
-        @wcp-tabs:active-tab-change="${({ detail }: CustomEvent<string>) =>
-          router.update(`/element/${tagName}/${detail}`)}"
-      >
-        ${map(
-          config.previewFramePlugins ?? [],
-          (plugin) => withStatic(html)`
+    // fill in existing params if not provided for next route
+    enter: (params, router, outgoingParams) => {
+      // check if the params can be taken over (current route is
+      // the same path with different params)
+      const hasOutgoingParams = outgoingParams !== undefined;
+      const isSamePath = router.currentPath?.startsWith('/element/');
+      const alignedParams = mergeParams(outgoingParams ?? {}, params);
+      const haveParamsChanged = !areParamsEqual(params, alignedParams);
+
+      // digest these insights; redirect and block current route
+      if (hasOutgoingParams && haveParamsChanged && isSamePath) {
+        router.redirect(`/element/${alignedParams.tagName}/${alignedParams.plugin}`);
+        return false;
+      }
+
+      // everything okay here, just go on
+      return true;
+    },
+    render: ({ tagName = '', plugin = config.initialPreviewTab }) => {
+      return html`
+        <wcp-preview-frame
+          active-plugin="${ifDefined(plugin)}"
+          @wcp-preview-frame:active-plugin-change="${({ detail: plugin }: CustomEvent<string>) =>
+            router.redirect(`/element/${tagName}/${plugin}`)}"
+        >
+          ${map(
+            config.previewFramePlugins ?? [],
+            (plugin) => withStatic(html)`
             <${unsafeStatic(plugin)} .element="${manifest.elements.get(tagName)}"></${unsafeStatic(plugin)}>
           `
-        )}
-      </wcp-preview-frame>
-    `,
+          )}
+        </wcp-preview-frame>
+      `;
+    },
   },
 ];
