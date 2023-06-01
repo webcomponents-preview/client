@@ -4,7 +4,7 @@ import { litKey } from './parser.utils.js';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const field = (data: Partial<Parsed.Field>) => data as Parsed.Field;
 
-describe('preview-frame-viewer.utils', () => {
+describe('parser.utils', () => {
   describe('litKey', () => {
     it('delivers property notation', () => {
       expect(litKey(field({ name: 'foo', hasAttribute: false }))).toBe('.foo');
