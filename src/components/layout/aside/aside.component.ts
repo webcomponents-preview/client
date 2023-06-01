@@ -16,6 +16,7 @@ import styles from './aside.component.scss';
  * ```
  *
  * @slot - Projects elements aside the main content
+ * @slot header - Elements in the fixed header of the side bar
  *
  * @event wcp-aside-toggled - Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event.
  *
@@ -80,11 +81,14 @@ export class Aside extends ColorSchemable(LitElement) {
   protected override render(): TemplateResult {
     return html`
       <header>
+        <slot name="header"></slot>
         <wcp-button kind="icon" @click="${this.handleButtonClick}">
           <wcp-icon name="close"></wcp-icon>
         </wcp-button>
       </header>
-      <slot></slot>
+      <section>
+        <slot></slot>
+      </section>
     `;
   }
 }

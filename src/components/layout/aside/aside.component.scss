@@ -25,16 +25,14 @@
   inset: 0;
   z-index: 3;
 
-  display: block;
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   padding: var(---wcp-aside-spacing);
 
   height: 100%;
   max-width: 100%;
   min-width: 100%;
-
-  overflow: auto;
-  overflow-x: hidden;
 
   background-color: var(---wcp-aside-background);
   color: var(---wcp-aside-color);
@@ -65,6 +63,11 @@ header {
   position: sticky;
   inset: 0 0 auto;
   z-index: 4;
+}
+
+section {
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 wcp-button {
