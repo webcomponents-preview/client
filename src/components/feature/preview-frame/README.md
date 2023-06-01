@@ -8,11 +8,17 @@
 <wcp-preview-frame></wcp-preview-frame>
 ```
 
-## Properties
+## Methods
 
-| Property            | Attribute             |
-|---------------------|-----------------------|
-| `initialPreviewTab` | `initial-preview-tab` |
+| Method                   | Type                                         |
+|--------------------------|----------------------------------------------|
+| `emitActivePluginChange` | `(activePlugin?: string \| undefined): void` |
+
+## Events
+
+| Event                                    |
+|------------------------------------------|
+| `wcp-preview-frame:active-plugin-change` |
 
 ## Slots
 
