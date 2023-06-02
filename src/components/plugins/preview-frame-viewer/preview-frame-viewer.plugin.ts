@@ -50,7 +50,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
   }
 
   protected renderFieldControl(field: Parsed.Field): TemplateResult {
-    if (!field.isControlable) return html`${nothing}`;
+    if (!field.isControllable) return html`${nothing}`;
 
     return html`
       ${when(

@@ -25,7 +25,7 @@ export function prepareInitialData(element: Parsed.Element): ElementData {
   return {
     fields:
       Array.from(element.fields.values()).reduce((acc, field) => {
-        if (field.isControlable) {
+        if (field.isControllable) {
           const value = field.default;
           if (value !== undefined) {
             return { ...acc, [litKey(field)]: value };
