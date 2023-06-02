@@ -14,6 +14,7 @@ export * from './components/feature/toggle-color-scheme/toggle-color-scheme.comp
 export * from './components/feature/toggle-sidebar/toggle-sidebar.component.js';
 export * from './components/form/input-checkbox/input-checkbox.component.js';
 export * from './components/form/input-radio/input-radio.component.js';
+export * from './components/form/input-text/input-text.component.js';
 export * from './components/form/radio-menu/radio-menu.component.js';
 export * from './components/layout/aside/aside.component.js';
 export * from './components/layout/layout/layout.component.js';
