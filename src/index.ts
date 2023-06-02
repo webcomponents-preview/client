@@ -37,6 +37,7 @@ export * from './parsers/cem/1.0.0/cem-slot.js';
 export * from './utils/color-scheme.utils.js';
 export * from './utils/config.utils.js';
 export * from './utils/dom.utils.js';
+export * from './utils/form.utils.js';
 export * from './utils/markdown.utils.js';
 export * from './utils/mixin.types.js';
 export * from './utils/parser.types.js';
