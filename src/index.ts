@@ -12,6 +12,7 @@ export * from './components/feature/readme/readme.component.js';
 export * from './components/feature/readme-frame/readme-frame.component.js';
 export * from './components/feature/toggle-color-scheme/toggle-color-scheme.component.js';
 export * from './components/feature/toggle-sidebar/toggle-sidebar.component.js';
+export * from './components/form/input-checkbox/input-checkbox.component.js';
 export * from './components/layout/aside/aside.component.js';
 export * from './components/layout/layout/layout.component.js';
 export * from './components/layout/main/main.component.js';

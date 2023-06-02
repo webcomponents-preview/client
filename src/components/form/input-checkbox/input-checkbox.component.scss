@@ -1,0 +1,70 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-input-checkbox-label-size: var(--wcp-input-checkbox-label-size, var(--wcp-input-label-size, 14px));
+  ---wcp-input-checkbox-label-spacing: var(--wcp-input-checkbox-label-spacing, var(--wcp-input-label-spacing, #{utils.size(1)}));
+  ---wcp-input-checkbox-text-spacing: var(--wcp-input-checkbox-label-spacing, var(--wcp-input-label-spacing, #{utils.size(.5)}));
+  ---wcp-input-checkbox-size: var(--wcp-input-checkbox-size, #{utils.size(2)});
+
+  ---wcp-input-checkbox-dark-background: var(--wcp-input-checkbox-dark-background, var(--wcp-color-grey-100));
+  ---wcp-input-checkbox-dark-border: var(--wcp-input-checkbox-dark-border, var(--wcp-color-blue-65));
+  ---wcp-input-checkbox-dark-passive-color: var(--wcp-input-checkbox-dark-passive-color, var(--wcp-color-grey-80));
+  ---wcp-input-checkbox-dark-active-color: var(--wcp-input-checkbox-dark-active-color, var(--wcp-color-blue-27));
+
+  ---wcp-input-checkbox-light-background: var(--wcp-input-checkbox-light-background, var(--wcp-color-grey-100));
+  ---wcp-input-checkbox-light-border: var(--wcp-input-checkbox-light-border, var(--wcp-color-blue-20));
+  ---wcp-input-checkbox-light-passive-color: var(--wcp-input-checkbox-light-passive-color, var(--wcp-color-grey-80));
+  ---wcp-input-checkbox-light-active-color: var(--wcp-input-checkbox-light-active-color, var(--wcp-color-blue-34));
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(---wcp-input-checkbox-text-spacing);
+  width: fit-content;
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-input-checkbox-background: var(---wcp-input-checkbox-#{$color-scheme}-background);
+    ---wcp-input-checkbox-border: var(---wcp-input-checkbox-#{$color-scheme}-border);
+    ---wcp-input-checkbox-passive-color: var(---wcp-input-checkbox-#{$color-scheme}-passive-color);
+    ---wcp-input-checkbox-active-color: var(---wcp-input-checkbox-#{$color-scheme}-active-color);
+  }
+}
+
+div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+label {
+  display: block;
+  margin-left: var(---wcp-input-checkbox-label-spacing);
+  font-size: var(---wcp-input-checkbox-label-size);
+}
+
+input {
+  all: unset;
+  appearance: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: block;
+
+  // as we're using the border to space the check mark with the background,
+  // we use the outline as actual border; thus, we have to subtract the width
+  // of the outline from the size of the checkbox button and add a padding to
+  // compensate for the outline (which is not part of the `border-box`)
+  // https://www.w3schools.com/css/css_outline.asp
+  height: calc(var(---wcp-input-checkbox-size) - 2px);
+  width: calc(var(---wcp-input-checkbox-size) - 2px);
+  padding: 2px;
+  outline: 2px solid var(---wcp-input-checkbox-border);
+  border: 4px solid var(---wcp-input-checkbox-background);
+  background-color: var(---wcp-input-checkbox-passive-color);
+
+  &:checked {
+    border-width: 2px;
+    background-color: var(---wcp-input-checkbox-active-color);
+  }
+}
