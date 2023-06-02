@@ -41,7 +41,7 @@
 
 | Property                      | Description                                      |
 |-------------------------------|--------------------------------------------------|
-| `--wcp-root-dark-background`  | The background color of the root element in dark mode |
-| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode |
-| `--wcp-root-light-background` | The background color of the root element in light mode |
-| `--wcp-root-light-color`      | The text color of the text in the root element in light mode |
+| `--wcp-root-dark-background`  | The background color of the root element in dark mode. |
+| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode. |
+| `--wcp-root-light-background` | The background color of the root element in light mode. |
+| `--wcp-root-light-color`      | The text color of the text in the root element in light mode. |

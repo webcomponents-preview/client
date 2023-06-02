@@ -21,11 +21,11 @@ import { prepareRoutes } from './root.routes.js';
  * @slot preview-frame - Used to be override the existing preview pane.
  * @slot preview-details - Can be used to inject additional preview detail panes.
  *
- * @cssprop --wcp-root-dark-background - The background color of the root element in dark mode
- * @cssprop --wcp-root-dark-color - The text color of the text in the root element in dark mode
+ * @cssprop --wcp-root-dark-background - The background color of the root element in dark mode.
+ * @cssprop --wcp-root-dark-color - The text color of the text in the root element in dark mode.
  *
- * @cssprop --wcp-root-light-background - The background color of the root element in light mode
- * @cssprop --wcp-root-light-color - The text color of the text in the root element in light mode
+ * @cssprop --wcp-root-light-background - The background color of the root element in light mode.
+ * @cssprop --wcp-root-light-color - The text color of the text in the root element in light mode.
  *
  * @emits wcp-root:active-element-changed - Fired when the active element changes. Carries the declaration of the new active element with it.
  * @emits wcp-root:manifest-loaded - Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved.
