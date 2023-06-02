@@ -1,0 +1,47 @@
+@use 'utils' as utils;
+
+// global custom properties, normally declared in `:root`
+:host {
+  --wcp-base-size: 10px;
+  --wcp-border-radius: calc(var(--wcp-base-size) * 0.5);
+
+  --wcp-color-opacity: 1;
+
+  /// defines the hsl colors along with a raw notation to be used with runtime opacity calculation, so e.g.:
+  /// ```scss
+  /// define-color('red', hsl(0deg 100% 50%), 1); // will define the following custom properties:
+  /// --wcp-color-red-raw: hsl(0deg 100% 50%);
+  /// --wcp-color-red: hsl(var(--wcp-color-red-raw) / 1);
+  /// ```
+  @include utils.define-color('grey-100', hsl(0deg 0% 100%), var(--wcp-color-opacity));
+  @include utils.define-color('grey-96', hsl(0deg 0% 96%), var(--wcp-color-opacity));
+  @include utils.define-color('grey-90', hsl(0deg 0% 90%), var(--wcp-color-opacity));
+  @include utils.define-color('grey-80', hsl(0deg 0% 80%), var(--wcp-color-opacity));
+  @include utils.define-color('grey-65', hsl(0deg 0% 65%), var(--wcp-color-opacity));
+  @include utils.define-color('grey-24', hsl(0deg 0% 24%), var(--wcp-color-opacity));
+  @include utils.define-color('grey-17', hsl(0deg 0% 17%), var(--wcp-color-opacity));
+
+  @include utils.define-color('blue-13', hsl(225deg 6% 13%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-17', hsl(215deg 28% 17%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-20', hsl(217deg 19% 20%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-24', hsl(217deg 19% 24%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-27', hsl(217deg 19% 27%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-34', hsl(215deg 14% 34%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-55', hsl(215deg 14% 55%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-65', hsl(218deg 11% 65%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-80', hsl(220deg 13% 80%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-91', hsl(220deg 13% 91%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-93', hsl(220deg 13% 93%), var(--wcp-color-opacity));
+  @include utils.define-color('blue-96', hsl(220deg 14% 96%), var(--wcp-color-opacity));
+
+  --wcp-fx-default-duration: 0.2s;
+  --wcp-fx-layout-duration: 0.4s;
+
+  --wcp-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  /// flowing contents, e.g. text and other inline contents, should be limited to this width
+  --wcp-layout-flowing-width: 800px;
+  /// fixed contents, e.g. tables and code examples, should be limited to this width
+  --wcp-layout-fixed-width: 1200px;
+}
