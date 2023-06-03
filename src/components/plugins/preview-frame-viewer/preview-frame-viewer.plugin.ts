@@ -57,52 +57,37 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
         field.isBoolean,
         () =>
           html`
-            <wcp-input>
-              <label>
-                <input
-                  autocomplete="off"
-                  type="checkbox"
-                  name="fields.${field.name}"
-                  ?checked="${this._elementData?.fields[field.name]}"
-                />
-                <span class="label">${field.name}</span>
-                ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
-              </label>
-            </wcp-input>
+            <wcp-input-checkbox
+              name="fields.${field.name}"
+              label="${field.name}"
+              ?checked="${this._elementData?.fields[field.name]}"
+            >
+              ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
+            </wcp-input-checkbox>
           `
       )}
       ${when(
         !field.isEnum && field.isString,
         () => html`
-          <wcp-input>
-            <label>
-              <span class="label">${field.attribute ?? field.name}</span>
-              <input
-                autocomplete="off"
-                type="text"
-                name="fields.${field.name}"
-                .value="${this._elementData?.fields[field.name] ?? null}"
-              />
-              ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
-            </label>
-          </wcp-input>
+          <wcp-input-text
+            name="fields.${field.name}"
+            label="${field.attribute ?? field.name}"
+            .value="${this._elementData?.fields[field.name] ?? null}"
+          >
+            ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
+          </wcp-input-text>
         `
       )}
       ${when(
         !field.isEnum && field.isNumber,
         () => html`
-          <wcp-input>
-            <label>
-              <span class="label">${field.attribute ?? field.name}</span>
-              <input
-                autocomplete="off"
-                type="number"
-                name="fields.${field.name}"
-                .value="${this._elementData?.fields[field.name] ?? null}"
-              />
-              ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
-            </label>
-          </wcp-input>
+          <wcp-input-number
+            name="fields.${field.name}"
+            label="${field.attribute ?? field.name}"
+            .value="${this._elementData?.fields[field.name] ?? null}"
+          >
+            ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
+          </wcp-input-number>
         `
       )}
       ${when(
@@ -131,18 +116,13 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
 
   protected renderSlotControl(slot: Parsed.Slot): TemplateResult {
     return html`
-      <wcp-input>
-        <label>
-          <span class="label">${slot.name.trim() ? slot.name : 'Default'}</span>
-          <input
-            autocomplete="off"
-            type="text"
-            name="slots.${slot.name}"
-            .value="${this._elementData?.slots[slot.name]}"
-          />
-          ${when(slot.hasDescription, () => html`<span class="description">${slot.description}</span>`)}
-        </label>
-      </wcp-input>
+      <wcp-input-text
+        name="slots.${slot.name}"
+        label="${slot.name.trim() ? slot.name : 'Default'}"
+        .value="${this._elementData?.slots[slot.name]}"
+      >
+        ${when(slot.hasDescription, () => html`<span class="description">${slot.description}</span>`)}
+      </wcp-input-text>
     `;
   }
 

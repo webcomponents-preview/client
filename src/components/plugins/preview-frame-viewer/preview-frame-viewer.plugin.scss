@@ -20,24 +20,16 @@ wcp-preview-frame-viewer {
   }
 }
 
-wcp-input {
-  display: block;
+fieldset > :not(legend) {
   margin: utils.size(1) 0;
-  width: 100%;
-
-  .label:has(~ input, ~ select) {
-    display: block;
-    margin-bottom: utils.size(0.5);
-  }
 
   &:not(:last-child) {
-    padding-bottom: utils.size(1);
-    border-bottom: 1px solid currentColor;
+    // padding-bottom: utils.size(1);
+    // border-bottom: 1px solid currentColor;
   }
 
   .description {
     display: block;
-    margin-top: utils.size(0.5);
     max-width: 500px;
   }
 }
