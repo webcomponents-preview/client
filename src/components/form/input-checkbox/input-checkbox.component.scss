@@ -32,6 +32,10 @@
   }
 }
 
+:host(:disabled) {
+  opacity: 0.5;
+}
+
 div {
   display: flex;
   flex-direction: row;

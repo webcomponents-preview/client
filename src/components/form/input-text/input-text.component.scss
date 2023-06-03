@@ -29,6 +29,10 @@
   }
 }
 
+:host(:disabled) {
+  opacity: 0.5;
+}
+
 label {
   display: block;
   font-size: var(---wcp-input-text-label-size);
