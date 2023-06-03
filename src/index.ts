@@ -13,6 +13,7 @@ export * from './components/feature/readme-frame/readme-frame.component.js';
 export * from './components/feature/toggle-color-scheme/toggle-color-scheme.component.js';
 export * from './components/feature/toggle-sidebar/toggle-sidebar.component.js';
 export * from './components/form/input-checkbox/input-checkbox.component.js';
+export * from './components/form/input-number/input-number.component.js';
 export * from './components/form/input-radio/input-radio.component.js';
 export * from './components/form/input-text/input-text.component.js';
 export * from './components/form/radio-menu/radio-menu.component.js';

@@ -1,0 +1,55 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-input-number-label-size: var(--wcp-input-number-label-size, var(--wcp-input-label-size, 14px));
+  ---wcp-input-number-label-spacing: var(--wcp-input-number-label-spacing, var(--wcp-input-label-spacing, #{utils.size(1)}));
+  ---wcp-input-number-spacing: var(--wcp-input-number-spacing, #{utils.size(.5)});
+  
+  ---wcp-input-number-dark-background: var(--wcp-input-number-dark-background, transparent);
+  ---wcp-input-number-dark-border: var(--wcp-input-number-dark-border, var(--wcp-color-blue-65));
+  ---wcp-input-number-dark-color: var(--wcp-input-number-dark-color, var(--wcp-color-grey-96));
+  
+  ---wcp-input-number-light-background: var(--wcp-input-number-light-background, transparent);
+  ---wcp-input-number-light-border: var(--wcp-input-number-light-border, var(--wcp-color-blue-20));
+  ---wcp-input-number-light-color: var(--wcp-input-number-light-color, var(--wcp-color-grey-24));
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(---wcp-input-number-label-spacing);
+  width: 100%;
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-input-number-background: var(---wcp-input-number-#{$color-scheme}-background);
+    ---wcp-input-number-border: var(---wcp-input-number-#{$color-scheme}-border);
+    ---wcp-input-number-color: var(---wcp-input-number-#{$color-scheme}-color);
+  }
+}
+
+label {
+  display: block;
+  font-size: var(---wcp-input-number-label-size);
+}
+
+input,
+textarea {
+  all: unset;
+  appearance: none;
+  box-sizing: border-box;
+  display: block;
+  padding: var(---wcp-input-number-spacing);
+  width: 100%;
+  border: 2px solid var(---wcp-input-number-border);
+  background-color: var(---wcp-input-number-background);
+  color: var(---wcp-input-number-color);
+  text-align: left;
+}
+
+textarea {
+  aspect-ratio: 16 / 9;
+  max-height: 200px;
+  resize: vertical;
+}
