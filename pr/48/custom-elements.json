@@ -1285,6 +1285,10 @@
           "name": "InputCheckbox",
           "cssProperties": [
             {
+              "description": "The border radius of the checkbox input.",
+              "name": "--wcp-input-checkbox-border-radius"
+            },
+            {
               "description": "The font size of the label.",
               "name": "--wcp-input-checkbox-label-size"
             },
@@ -1305,12 +1309,8 @@
               "name": "--wcp-input-checkbox-dark-border"
             },
             {
-              "description": "The fill color of the checkbox input when not checked in dark mode.",
-              "name": "--wcp-input-checkbox-dark-passive-color"
-            },
-            {
               "description": "The fill color of the checkbox input when checked in dark mode.",
-              "name": "--wcp-input-checkbox-dark-active-color"
+              "name": "--wcp-input-checkbox-dark-color"
             },
             {
               "description": "The background color of the checkbox input in light mode.",
@@ -1321,12 +1321,8 @@
               "name": "--wcp-input-checkbox-light-border"
             },
             {
-              "description": "The fill color of the checkbox input when not checked in light mode.",
-              "name": "--wcp-input-checkbox-light-passive-color"
-            },
-            {
               "description": "The fill color of the checkbox input when checked in light mode.",
-              "name": "--wcp-input-checkbox-light-active-color"
+              "name": "--wcp-input-checkbox-light-color"
             }
           ],
           "slots": [
@@ -1528,7 +1524,7 @@
             "## With initial value\n```html\n<wcp-input-checkbox checked label=\"With optional initial value\"></wcp-input-checkbox>\n```",
             "## Used within a form\n```html\n<form>\n  <wcp-input-checkbox label=\"Fully form enabled component\"></wcp-input-checkbox>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```"
           ],
-          "readme": "# wcp-input-checkbox\n\nA checkbox input element using the wcp style. Fully form aware.\n\n**Mixins:** ColorSchemable\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-checkbox label=\"With optional label\"></wcp-input-checkbox>\n```\n\n## With initial value\n\n```html\n<wcp-input-checkbox checked label=\"With optional initial value\"></wcp-input-checkbox>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-checkbox label=\"Fully form enabled component\"></wcp-input-checkbox>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type                  | Default    |\n|----------------|----------------|-----------------------|------------|\n| `autocomplete` | `autocomplete` | `boolean`             | false      |\n| `checked`      | `checked`      | `boolean`             | false      |\n| `disabled`     | `disabled`     | `boolean`             | false      |\n| `label`        | `label`        | `string \\| undefined` |            |\n| `name`         | `name`         | `string`              | \"checkbox\" |\n| `required`     | `required`     | `boolean`             | false      |\n| `value`        | `value`        | `string`              | \"on\"       |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n\n## Slots\n\n| Name | Description                                     |\n|------|-------------------------------------------------|\n|      | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                                   | Description                                      |\n|--------------------------------------------|--------------------------------------------------|\n| `--wcp-input-checkbox-dark-active-color`   | The fill color of the checkbox input when checked in dark mode. |\n| `--wcp-input-checkbox-dark-background`     | The background color of the checkbox input in dark mode. |\n| `--wcp-input-checkbox-dark-border`         | The border color of the checkbox input in dark mode. |\n| `--wcp-input-checkbox-dark-passive-color`  | The fill color of the checkbox input when not checked in dark mode. |\n| `--wcp-input-checkbox-label-size`          | The font size of the label.                      |\n| `--wcp-input-checkbox-label-spacing`       | The leading distance of the label to the input.  |\n| `--wcp-input-checkbox-light-active-color`  | The fill color of the checkbox input when checked in light mode. |\n| `--wcp-input-checkbox-light-background`    | The background color of the checkbox input in light mode. |\n| `--wcp-input-checkbox-light-border`        | The border color of the checkbox input in light mode. |\n| `--wcp-input-checkbox-light-passive-color` | The fill color of the checkbox input when not checked in light mode. |\n| `--wcp-input-checkbox-size`                | The size of the checkbox input.                  |\n",
+          "readme": "# wcp-input-checkbox\n\nA checkbox input element using the wcp style. Fully form aware.\n\n**Mixins:** ColorSchemable\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-checkbox label=\"With optional label\"></wcp-input-checkbox>\n```\n\n## With initial value\n\n```html\n<wcp-input-checkbox checked label=\"With optional initial value\"></wcp-input-checkbox>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-checkbox label=\"Fully form enabled component\"></wcp-input-checkbox>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type                  | Default    |\n|----------------|----------------|-----------------------|------------|\n| `autocomplete` | `autocomplete` | `boolean`             | false      |\n| `checked`      | `checked`      | `boolean`             | false      |\n| `disabled`     | `disabled`     | `boolean`             | false      |\n| `label`        | `label`        | `string \\| undefined` |            |\n| `name`         | `name`         | `string`              | \"checkbox\" |\n| `required`     | `required`     | `boolean`             | false      |\n| `value`        | `value`        | `string`              | \"on\"       |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n\n## Slots\n\n| Name | Description                                     |\n|------|-------------------------------------------------|\n|      | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                                | Description                                      |\n|-----------------------------------------|--------------------------------------------------|\n| `--wcp-input-checkbox-border-radius`    | The border radius of the checkbox input.         |\n| `--wcp-input-checkbox-dark-background`  | The background color of the checkbox input in dark mode. |\n| `--wcp-input-checkbox-dark-border`      | The border color of the checkbox input in dark mode. |\n| `--wcp-input-checkbox-dark-color`       | The fill color of the checkbox input when checked in dark mode. |\n| `--wcp-input-checkbox-label-size`       | The font size of the label.                      |\n| `--wcp-input-checkbox-label-spacing`    | The leading distance of the label to the input.  |\n| `--wcp-input-checkbox-light-background` | The background color of the checkbox input in light mode. |\n| `--wcp-input-checkbox-light-border`     | The border color of the checkbox input in light mode. |\n| `--wcp-input-checkbox-light-color`      | The fill color of the checkbox input when checked in light mode. |\n| `--wcp-input-checkbox-size`             | The size of the checkbox input.                  |\n",
           "groups": [
             "form"
           ],
