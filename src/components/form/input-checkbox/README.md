@@ -56,16 +56,15 @@ A checkbox input element using the wcp style. Fully form aware.
 
 ## CSS Custom Properties
 
-| Property                                   | Description                                      |
-|--------------------------------------------|--------------------------------------------------|
-| `--wcp-input-checkbox-dark-active-color`   | The fill color of the checkbox input when checked in dark mode. |
-| `--wcp-input-checkbox-dark-background`     | The background color of the checkbox input in dark mode. |
-| `--wcp-input-checkbox-dark-border`         | The border color of the checkbox input in dark mode. |
-| `--wcp-input-checkbox-dark-passive-color`  | The fill color of the checkbox input when not checked in dark mode. |
-| `--wcp-input-checkbox-label-size`          | The font size of the label.                      |
-| `--wcp-input-checkbox-label-spacing`       | The leading distance of the label to the input.  |
-| `--wcp-input-checkbox-light-active-color`  | The fill color of the checkbox input when checked in light mode. |
-| `--wcp-input-checkbox-light-background`    | The background color of the checkbox input in light mode. |
-| `--wcp-input-checkbox-light-border`        | The border color of the checkbox input in light mode. |
-| `--wcp-input-checkbox-light-passive-color` | The fill color of the checkbox input when not checked in light mode. |
-| `--wcp-input-checkbox-size`                | The size of the checkbox input.                  |
+| Property                                | Description                                      |
+|-----------------------------------------|--------------------------------------------------|
+| `--wcp-input-checkbox-border-radius`    | The border radius of the checkbox input.         |
+| `--wcp-input-checkbox-dark-background`  | The background color of the checkbox input in dark mode. |
+| `--wcp-input-checkbox-dark-border`      | The border color of the checkbox input in dark mode. |
+| `--wcp-input-checkbox-dark-color`       | The fill color of the checkbox input when checked in dark mode. |
+| `--wcp-input-checkbox-label-size`       | The font size of the label.                      |
+| `--wcp-input-checkbox-label-spacing`    | The leading distance of the label to the input.  |
+| `--wcp-input-checkbox-light-background` | The background color of the checkbox input in light mode. |
+| `--wcp-input-checkbox-light-border`     | The border color of the checkbox input in light mode. |
+| `--wcp-input-checkbox-light-color`      | The fill color of the checkbox input when checked in light mode. |
+| `--wcp-input-checkbox-size`             | The size of the checkbox input.                  |

@@ -2,20 +2,19 @@
 
 // prettier-ignore
 :host {
+  ---wcp-input-checkbox-border-radius: var(--wcp-input-checkbox-border-radius, var(--wcp-border-radius));
   ---wcp-input-checkbox-label-size: var(--wcp-input-checkbox-label-size, var(--wcp-input-label-size, 14px));
   ---wcp-input-checkbox-label-spacing: var(--wcp-input-checkbox-label-spacing, var(--wcp-input-label-spacing, #{utils.size(1)}));
   ---wcp-input-checkbox-text-spacing: var(--wcp-input-checkbox-label-spacing, var(--wcp-input-label-spacing, #{utils.size(.5)}));
   ---wcp-input-checkbox-size: var(--wcp-input-checkbox-size, #{utils.size(2)});
 
-  ---wcp-input-checkbox-dark-background: var(--wcp-input-checkbox-dark-background, var(--wcp-color-grey-100));
+  ---wcp-input-checkbox-dark-background: var(--wcp-input-checkbox-dark-background, transparent);
   ---wcp-input-checkbox-dark-border: var(--wcp-input-checkbox-dark-border, var(--wcp-color-blue-65));
-  ---wcp-input-checkbox-dark-passive-color: var(--wcp-input-checkbox-dark-passive-color, var(--wcp-color-grey-80));
-  ---wcp-input-checkbox-dark-active-color: var(--wcp-input-checkbox-dark-active-color, var(--wcp-color-blue-27));
+  ---wcp-input-checkbox-dark-color: var(--wcp-input-checkbox-dark-color, var(--wcp-color-blue-80));
 
-  ---wcp-input-checkbox-light-background: var(--wcp-input-checkbox-light-background, var(--wcp-color-grey-100));
+  ---wcp-input-checkbox-light-background: var(--wcp-input-checkbox-light-background, transparent);
   ---wcp-input-checkbox-light-border: var(--wcp-input-checkbox-light-border, var(--wcp-color-blue-20));
-  ---wcp-input-checkbox-light-passive-color: var(--wcp-input-checkbox-light-passive-color, var(--wcp-color-grey-80));
-  ---wcp-input-checkbox-light-active-color: var(--wcp-input-checkbox-light-active-color, var(--wcp-color-blue-34));
+  ---wcp-input-checkbox-light-color: var(--wcp-input-checkbox-light-color, var(--wcp-color-blue-17));
 }
 
 :host {
@@ -27,13 +26,31 @@
   @include utils.color-scheme() using ($color-scheme) {
     ---wcp-input-checkbox-background: var(---wcp-input-checkbox-#{$color-scheme}-background);
     ---wcp-input-checkbox-border: var(---wcp-input-checkbox-#{$color-scheme}-border);
-    ---wcp-input-checkbox-passive-color: var(---wcp-input-checkbox-#{$color-scheme}-passive-color);
-    ---wcp-input-checkbox-active-color: var(---wcp-input-checkbox-#{$color-scheme}-active-color);
+    ---wcp-input-checkbox-color: var(---wcp-input-checkbox-#{$color-scheme}-color);
   }
 }
 
 :host(:disabled) {
   opacity: 0.5;
+}
+
+:host([checked]) {
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    height: 4px;
+    width: 8px;
+    
+    position: absolute;
+    inset: 5px auto auto 4px;
+    transform: rotate(-45deg);
+
+    border: solid var(---wcp-input-checkbox-color);
+    border-width: 0 0 2px 2px;
+    z-index: 1;
+  }
 }
 
 div {
@@ -51,8 +68,9 @@ label {
 input {
   all: unset;
   appearance: none;
-  cursor: pointer;
+  border-radius: var(---wcp-input-checkbox-border-radius);
   box-sizing: border-box;
+  cursor: pointer;
   display: block;
 
   // as we're using the border to space the check mark with the background,
@@ -63,12 +81,10 @@ input {
   height: calc(var(---wcp-input-checkbox-size) - 2px);
   width: calc(var(---wcp-input-checkbox-size) - 2px);
   padding: 2px;
-  outline: 2px solid var(---wcp-input-checkbox-border);
-  border: 4px solid var(---wcp-input-checkbox-background);
-  background-color: var(---wcp-input-checkbox-passive-color);
+  background-color: var(---wcp-input-checkbox-background);
+  border: 2px solid var(---wcp-input-checkbox-border);
 
   &:checked {
     border-width: 2px;
-    background-color: var(---wcp-input-checkbox-active-color);
   }
 }
