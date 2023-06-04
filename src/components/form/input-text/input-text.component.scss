@@ -2,6 +2,7 @@
 
 // prettier-ignore
 :host {
+  ---wcp-input-text-border-radius: var(--wcp-input-text-border-radius, var(--wcp-border-radius));
   ---wcp-input-text-label-size: var(--wcp-input-text-label-size, var(--wcp-input-label-size, 14px));
   ---wcp-input-text-label-spacing: var(--wcp-input-text-label-spacing, var(--wcp-input-label-spacing, #{utils.size(1)}));
   ---wcp-input-text-spacing: var(--wcp-input-text-spacing, #{utils.size(.5)});
@@ -47,6 +48,7 @@ textarea {
   padding: var(---wcp-input-text-spacing);
   width: 100%;
   border: 2px solid var(---wcp-input-text-border);
+  border-radius: var(---wcp-input-text-border-radius);
   background-color: var(---wcp-input-text-background);
   color: var(---wcp-input-text-color);
   text-align: left;
