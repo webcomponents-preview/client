@@ -63,7 +63,7 @@ input {
   height: calc(var(---wcp-input-radio-size) - 4px);
   width: calc(var(---wcp-input-radio-size) - 4px);
   padding: 2px;
-  outline: 2px solid var(---wcp-input-radio-border);
+  outline: 1px solid var(---wcp-input-radio-border);
   border: 4px solid var(---wcp-input-radio-background);
   border-radius: 50%;
   background-color: var(---wcp-input-radio-passive-color);
