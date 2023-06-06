@@ -1,37 +1,52 @@
 @use '@/styles/utils' as utils;
 
 // prettier-ignore
+// :host {
+//   ---wcp-input-checkbox-border-radius: var(--wcp-input-checkbox-border-radius, var(--wcp-border-radius));
+//   ---wcp-input-checkbox-label-size: var(--wcp-input-checkbox-label-size, var(--wcp-input-label-size, 14px));
+//   ---wcp-input-checkbox-label-spacing: var(--wcp-input-checkbox-label-spacing, var(--wcp-input-label-spacing, #{utils.size(1)}));
+//   ---wcp-input-checkbox-text-spacing: var(--wcp-input-checkbox-label-spacing, var(--wcp-input-label-spacing, #{utils.size(.5)}));
+//   ---wcp-input-checkbox-size: var(--wcp-input-checkbox-size, #{utils.size(2)});
+
+//   ---wcp-input-checkbox-dark-background: var(--wcp-input-checkbox-dark-background, transparent);
+//   ---wcp-input-checkbox-dark-border: var(--wcp-input-checkbox-dark-border, var(--wcp-color-blue-96));
+//   ---wcp-input-checkbox-dark-color: var(--wcp-input-checkbox-dark-color, var(--wcp-color-blue-96));
+
+//   ---wcp-input-checkbox-light-background: var(--wcp-input-checkbox-light-background, transparent);
+//   ---wcp-input-checkbox-light-border: var(--wcp-input-checkbox-light-border, var(--wcp-color-blue-24));
+//   ---wcp-input-checkbox-light-color: var(--wcp-input-checkbox-light-color, var(--wcp-color-blue-24));
+// }
+
 :host {
-  ---wcp-input-checkbox-border-radius: var(--wcp-input-checkbox-border-radius, var(--wcp-border-radius));
-  ---wcp-input-checkbox-label-size: var(--wcp-input-checkbox-label-size, var(--wcp-input-label-size, 14px));
-  ---wcp-input-checkbox-label-spacing: var(--wcp-input-checkbox-label-spacing, var(--wcp-input-label-spacing, #{utils.size(1)}));
-  ---wcp-input-checkbox-text-spacing: var(--wcp-input-checkbox-label-spacing, var(--wcp-input-label-spacing, #{utils.size(.5)}));
   ---wcp-input-checkbox-size: var(--wcp-input-checkbox-size, #{utils.size(2)});
 
-  ---wcp-input-checkbox-dark-background: var(--wcp-input-checkbox-dark-background, transparent);
-  ---wcp-input-checkbox-dark-border: var(--wcp-input-checkbox-dark-border, var(--wcp-color-blue-65));
-  ---wcp-input-checkbox-dark-color: var(--wcp-input-checkbox-dark-color, var(--wcp-color-blue-80));
+  --wcp-editable-label-size: var(--wcp-input-checkbox-label-size, 1em);
+  --wcp-editable-spacing: var(--wcp-input-checkbox-spacing, #{utils.size(1)});
 
-  ---wcp-input-checkbox-light-background: var(--wcp-input-checkbox-light-background, transparent);
-  ---wcp-input-checkbox-light-border: var(--wcp-input-checkbox-light-border, var(--wcp-color-blue-20));
-  ---wcp-input-checkbox-light-color: var(--wcp-input-checkbox-light-color, var(--wcp-color-blue-17));
+  --wcp-editable-passive-border-radius: var(--wcp-input-checkbox-border-radius);
+  --wcp-editable-passive-border-size: var(--wcp-input-checkbox-border-size);
+
+  --wcp-editable-dark-background: var(--wcp-input-checkbox-dark-background);
+  --wcp-editable-dark-border: var(--wcp-input-checkbox-dark-border);
+  --wcp-editable-dark-color: var(--wcp-input-checkbox-dark-color);
+
+  --wcp-editable-light-background: var(--wcp-input-checkbox-light-background);
+  --wcp-editable-light-border: var(--wcp-input-checkbox-light-border);
+  --wcp-editable-light-color: var(--wcp-input-checkbox-light-color);
 }
 
-:host {
-  display: flex;
-  flex-direction: column;
-  gap: var(---wcp-input-checkbox-text-spacing);
-  width: fit-content;
-
-  @include utils.color-scheme() using ($color-scheme) {
-    ---wcp-input-checkbox-background: var(---wcp-input-checkbox-#{$color-scheme}-background);
-    ---wcp-input-checkbox-border: var(---wcp-input-checkbox-#{$color-scheme}-border);
-    ---wcp-input-checkbox-color: var(---wcp-input-checkbox-#{$color-scheme}-color);
-  }
+:host(:focus-within) {
+  ---wcp-editable-border-radius: var(---wcp-editable-passive-border-radius);
+  ---wcp-editable-border-size: var(---wcp-editable-passive-border-size);
 }
 
-:host(:disabled) {
-  opacity: 0.5;
+#input {
+  grid-area: before;
+}
+
+label {
+  grid-area: center;
+  padding-bottom: 0;
 }
 
 :host([checked]) {
@@ -39,52 +54,37 @@
 
   &::after {
     content: '';
+    pointer-events: none;
     display: block;
-    height: 4px;
-    width: 8px;
-    
-    position: absolute;
-    inset: 5px auto auto 4px;
-    transform: rotate(-45deg);
+    height: calc(var(---wcp-input-checkbox-size) * 0.25);
+    width: calc(var(---wcp-input-checkbox-size) * 0.5);
 
-    border: solid var(---wcp-input-checkbox-color);
-    border-width: 0 0 1px 1px;
+    position: absolute;
+    inset: calc(var(---wcp-input-checkbox-size) * 0.5) auto auto calc(var(---wcp-input-checkbox-size) * 0.5);
+    transform: translate(-50%, -50%) rotate(-45deg);
+
+    border: solid var(---wcp-editable-color);
+    border-width: 0 0 var(---wcp-editable-border-size) var(---wcp-editable-border-size);
     z-index: 1;
   }
-}
-
-div {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-label {
-  display: block;
-  margin-left: var(---wcp-input-checkbox-label-spacing);
-  font-size: var(---wcp-input-checkbox-label-size);
 }
 
 input {
   all: unset;
   appearance: none;
-  border-radius: var(---wcp-input-checkbox-border-radius);
   box-sizing: border-box;
   cursor: pointer;
   display: block;
+  margin-right: var(---wcp-editable-spacing);
 
   // as we're using the border to space the check mark with the background,
   // we use the outline as actual border; thus, we have to subtract the width
   // of the outline from the size of the checkbox button and add a padding to
   // compensate for the outline (which is not part of the `border-box`)
   // https://www.w3schools.com/css/css_outline.asp
-  height: calc(var(---wcp-input-checkbox-size) - 2px);
-  width: calc(var(---wcp-input-checkbox-size) - 2px);
-  padding: 2px;
-  background-color: var(---wcp-input-checkbox-background);
-  border: 2px solid var(---wcp-input-checkbox-border);
-
-  &:checked {
-    border-width: 2px;
-  }
+  height: calc(var(---wcp-input-checkbox-size) - calc(var(---wcp-editable-border-size) * 2));
+  width: calc(var(---wcp-input-checkbox-size) - calc(var(---wcp-editable-border-size) * 2));
+  background-color: var(---wcp-editable-background);
+  border: var(---wcp-editable-border-size) solid var(---wcp-editable-border);
+  border-radius: var(---wcp-editable-border-radius);
 }

@@ -1,10 +1,9 @@
 import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 import type { FormAssociated } from '@/utils/form.utils.js';
+import { Editable } from '@/mixins/editable.mixin.js';
 
 // Safari still hasn't ElementInternals shipped
 import 'element-internals-polyfill';
@@ -16,13 +15,16 @@ import styles from './input-checkbox.component.scss';
  * A checkbox input element using the wcp style. Fully form aware.
  *
  * @element wcp-input-checkbox
- * 
- * @slot - Receives optional descriptions below the input.
  *
- * @cssprop --wcp-input-checkbox-border-radius - The border radius of the checkbox input.
- * @cssprop --wcp-input-checkbox-label-size - The font size of the label.
- * @cssprop --wcp-input-checkbox-label-spacing - The leading distance of the label to the input.
+ * @property {string} label - The label of the input element.
+ *
+ * @slot hint - Receives optional descriptions below the input.
+ *
  * @cssprop --wcp-input-checkbox-size - The size of the checkbox input.
+ * @cssprop --wcp-input-checkbox-label-size - The font size of the label.
+ * @cssprop --wcp-input-checkbox-spacing - The leading distance of the label to the input.
+ * @cssprop --wcp-input-checkbox-border-radius - The border radius of the checkbox input.
+ * @cssprop --wcp-input-checkbox-border-size - The border size of the checkbox input.
  *
  * @cssprop --wcp-input-checkbox-dark-background - The background color of the checkbox input in dark mode.
  * @cssprop --wcp-input-checkbox-dark-border - The border color of the checkbox input in dark mode.
@@ -55,16 +57,10 @@ import styles from './input-checkbox.component.scss';
  * ```
  */
 @customElement('wcp-input-checkbox')
-export class InputCheckbox extends ColorSchemable(LitElement) implements FormAssociated<string> {
-  static override readonly styles = unsafeCSS(styles);
-  static readonly formAssociated = true;
-
-  readonly #internals = this.attachInternals();
+export class InputCheckbox extends Editable({ hasBorder: false })(LitElement) implements FormAssociated<string> {
+  static override readonly styles = [super.formStyles, unsafeCSS(styles)];
 
   private initialChecked!: boolean;
-
-  @property({ type: String, reflect: true })
-  label?: string;
 
   @property({ type: String, reflect: true })
   name = 'checkbox';
@@ -89,14 +85,14 @@ export class InputCheckbox extends ColorSchemable(LitElement) implements FormAss
     this.initialChecked = this.checked;
 
     this.checkValidity();
-    this.#internals.setFormValue(this.checked ? this.value ?? null : null);
+    this.internals.setFormValue(this.checked ? this.value ?? null : null);
   }
 
   override attributeChangedCallback(name: string, old: string | null, value: string | null): void {
     super.attributeChangedCallback(name, old, value);
     if (name === 'checked') {
       this.checked = value !== null;
-      this.#internals.setFormValue(this.checked ? this.value ?? null : null);
+      this.internals.setFormValue(this.checked ? this.value ?? null : null);
     }
   }
 
@@ -104,17 +100,17 @@ export class InputCheckbox extends ColorSchemable(LitElement) implements FormAss
     this.checked = this.initialChecked;
 
     this.checkValidity();
-    this.#internals.setFormValue(this.checked ? this.value ?? null : null);
+    this.internals.setFormValue(this.checked ? this.value ?? null : null);
   }
 
   checkValidity(): boolean {
     if (this.required && !this.checked) {
-      this.#internals.setValidity({ valueMissing: true }, 'Invalid input');
+      this.internals.setValidity({ valueMissing: true }, 'Invalid input');
     } else {
-      this.#internals.setValidity({});
+      this.internals.setValidity({});
     }
 
-    return this.#internals.validity.valid;
+    return this.internals.validity.valid;
   }
 
   @eventOptions({ passive: true })
@@ -123,26 +119,22 @@ export class InputCheckbox extends ColorSchemable(LitElement) implements FormAss
     this.checked = input.checked;
 
     this.checkValidity();
-    this.#internals.setFormValue(this.checked ? this.value ?? null : null);
+    this.internals.setFormValue(this.checked ? this.value ?? null : null);
   }
 
-  protected override render() {
+  override renderInput(id: string) {
     return html`
-      <div>
-        <input
-          type="checkbox"
-          id="checkbox"
-          name="${this.name}"
-          autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
-          ?disabled="${this.disabled}"
-          ?required="${this.required}"
-          .checked="${this.checked}"
-          .value="${this.value}"
-          @input="${this.handleInput}"
-        />
-        ${when(this.label !== undefined, () => html`<label for="checkbox">${this.label}</label>`)}
-      </div>
-      <slot></slot>
+      <input
+        type="checkbox"
+        id="${id}"
+        name="${this.name}"
+        autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
+        ?disabled="${this.disabled}"
+        ?required="${this.required}"
+        .checked="${this.checked}"
+        .value="${this.value}"
+        @input="${this.handleInput}"
+      />
     `;
   }
 }
