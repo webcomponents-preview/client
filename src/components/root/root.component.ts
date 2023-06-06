@@ -7,9 +7,9 @@ import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 import { type Config, getConfig } from '@/utils/config.utils.js';
+import { Routable } from '@/mixins/routable.mixin.js';
 import type { Element, Manifest } from '@/utils/parser.types.js';
 import { parseCEM } from '@/parsers/cem/parse.js';
-import { Routable } from '@/utils/routable.utils.js';
 
 import logo from '@/assets/icons/logo.svg';
 import styles from './root.component.scss';
