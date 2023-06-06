@@ -6,6 +6,7 @@ export type FormAssociated<T> = {
   readonly?: boolean;
   required?: boolean;
 
+  label?: string;
   name?: string;
   value?: T;
 

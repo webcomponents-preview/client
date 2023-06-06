@@ -1,0 +1,103 @@
+@use '@/styles/utils' as utils;
+
+:host {
+  ---wcp-editable-label-size: var(--wcp-editable-label-size, 0.8em);
+  ---wcp-editable-spacing: var(--wcp-editable-spacing, #{utils.size(0.5)});
+
+  ---wcp-editable-passive-border-radius: var(--wcp-editable-passive-border-radius, 2px);
+  ---wcp-editable-passive-border-size: var(--wcp-editable-passive-border-size, 1px);
+
+  ---wcp-editable-active-border-radius: var(--wcp-editable-active-border-radius, 2px);
+  ---wcp-editable-active-border-size: var(--wcp-editable-active-border-size, 2px);
+
+  ---wcp-editable-dark-background: var(--wcp-editable-dark-background, transparent);
+  ---wcp-editable-dark-border: var(--wcp-editable-dark-border, var(--wcp-color-blue-96));
+  ---wcp-editable-dark-color: var(--wcp-editable-dark-color, var(--wcp-color-grey-96));
+
+  ---wcp-editable-light-background: var(--wcp-editable-light-background, transparent);
+  ---wcp-editable-light-border: var(--wcp-editable-light-border, var(--wcp-color-blue-24));
+  ---wcp-editable-light-color: var(--wcp-editable-light-color, var(--wcp-color-grey-24));
+}
+
+:host {
+  display: grid;
+  grid-template-columns: min-content 1fr min-content;
+  grid-template-areas:
+    'above above above'
+    'before center after'
+    'below below below';
+  width: 100%;
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-editable-background: var(---wcp-editable-#{$color-scheme}-background);
+    ---wcp-editable-border: var(---wcp-editable-#{$color-scheme}-border);
+    ---wcp-editable-color: var(---wcp-editable-#{$color-scheme}-color);
+  }
+
+  ---wcp-editable-border-radius: var(---wcp-editable-passive-border-radius);
+  ---wcp-editable-border-size: var(---wcp-editable-passive-border-size);
+}
+
+:host(:focus-within) {
+  ---wcp-editable-border-radius: var(---wcp-editable-active-border-radius);
+  ---wcp-editable-border-size: var(---wcp-editable-active-border-size);
+}
+
+label {
+  grid-area: above;
+  padding-bottom: var(---wcp-editable-spacing);
+  font-size: var(---wcp-editable-label-size);
+
+  :required ~ &::after {
+    content: '*';
+  }
+}
+
+#input,
+slot[name='before'],
+slot[name='after'] {
+  transition: opacity var(--wcp-fx-default-duration) ease-out;
+  will-change: opacity;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+#input {
+  grid-area: center;
+  padding: var(---wcp-editable-spacing);
+}
+
+slot[name] {
+  display: block;
+}
+
+slot[name='hint'] {
+  grid-area: below;
+}
+
+slot[name='before'] {
+  grid-area: before;
+}
+
+slot[name='after'] {
+  grid-area: after;
+}
+
+#border {
+  grid-area: before / before / after / after;
+
+  display: block;
+  border: var(---wcp-editable-border-size) solid var(---wcp-editable-border);
+  border-radius: var(---wcp-editable-border-radius);
+  pointer-events: none;
+
+  transition: var(--wcp-fx-default-duration) ease-out;
+  transition-property: border-radius, border-width, opacity;
+  will-change: border-radius, border-width, opacity;
+
+  :disabled ~ & {
+    opacity: 0.5;
+  }
+}
