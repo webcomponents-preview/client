@@ -1,10 +1,9 @@
 import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 import type { FormAssociated } from '@/utils/form.utils.js';
+import { Editable } from '@/mixins/editable.mixin.js';
 
 // Safari still hasn't ElementInternals shipped
 import 'element-internals-polyfill';
@@ -18,7 +17,9 @@ import styles from './input-text.component.scss';
  *
  * @element wcp-input-text
  * 
- * @slot - Receives optional descriptions below the input.
+ * @property {string} label - The label of the input element.
+ * 
+ * @slot hint - Receives optional descriptions below the input.
  * 
  * @cssprop --wcp-input-text-label-size - The font size of the label.
  * @cssprop --wcp-input-text-label-spacing - The spacing between the label and the input.
@@ -57,22 +58,16 @@ import styles from './input-text.component.scss';
  * ```
  */
 @customElement('wcp-input-text')
-export class InputText extends ColorSchemable(LitElement) implements FormAssociated<string> {
-  static readonly formAssociated = true;
-  static override readonly styles = unsafeCSS(styles);
+export class InputText extends Editable()(LitElement) implements FormAssociated<string> {
+  static override readonly styles = [super.formStyles, unsafeCSS(styles)];
 
-  readonly #internals = this.attachInternals();
-
-  private initialValue?: string;
+  #initialValue?: string;
 
   @query('input, textarea')
   input!: HTMLInputElement | HTMLTextAreaElement;
 
-  @property({ type: String, reflect: true })
-  label?: string;
-
-  @property({ type: String, reflect: true })
-  name = 'text';
+  @property({ type: Boolean, reflect: true })
+  multiline = false;
 
   @property({ type: Boolean, reflect: true })
   autocomplete = false;
@@ -81,37 +76,40 @@ export class InputText extends ColorSchemable(LitElement) implements FormAssocia
   disabled = false;
 
   @property({ type: Boolean, reflect: true })
-  multiline = false;
+  readonly = false;
 
   @property({ type: Boolean, reflect: true })
   required = false;
+
+  @property({ type: String, reflect: true })
+  name = 'text';
 
   @property({ type: String, reflect: true })
   value?: string;
 
   protected override firstUpdated(props: PropertyValues<this>): void {
     super.firstUpdated(props);
-    this.initialValue = this.value;
+    this.#initialValue = this.value;
 
     this.checkValidity();
-    this.#internals.setFormValue(this.value ?? null);
+    this.internals.setFormValue(this.value ?? null);
   }
 
   formResetCallback() {
-    this.value = this.initialValue;
+    this.value = this.#initialValue;
 
     this.checkValidity();
-    this.#internals.setFormValue(this.value ?? null);
+    this.internals.setFormValue(this.value ?? null);
   }
 
   checkValidity(): boolean {
     if (!this.input.checkValidity()) {
-      this.#internals.setValidity({ customError: true }, 'Invalid input');
+      this.internals.setValidity({ customError: true }, 'Invalid input');
     } else {
-      this.#internals.setValidity({});
+      this.internals.setValidity({});
     }
 
-    return this.#internals.validity.valid;
+    return this.internals.validity.valid;
   }
 
   @eventOptions({ passive: true })
@@ -120,40 +118,36 @@ export class InputText extends ColorSchemable(LitElement) implements FormAssocia
     this.value = input.value ?? undefined;
 
     this.checkValidity();
-    this.#internals.setFormValue(this.value ?? null);
+    this.internals.setFormValue(this.value ?? null);
   }
 
-  protected override render() {
+  override renderInput(id: string) {
+    if (this.multiline) {
+      return html`
+        <textarea
+          type="text"
+          id="${id}"
+          name="${this.name}"
+          autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
+          ?disabled="${this.disabled}"
+          ?required="${this.required}"
+          .value="${this.value ?? null}"
+          @input="${this.handleInput}"
+        ></textarea>
+      `;
+    }
+
     return html`
-      ${when(this.label !== undefined, () => html`<label for="text">${this.label}</label>`)}
-      ${when(
-        this.multiline,
-        () => html`
-          <textarea
-            type="text"
-            id="text"
-            name="${this.name}"
-            autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
-            ?disabled="${this.disabled}"
-            ?required="${this.required}"
-            .value="${this.value ?? null}"
-            @input="${this.handleInput}"
-          ></textarea>
-        `,
-        () => html`
-          <input
-            type="text"
-            id="text"
-            name="${this.name}"
-            autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
-            ?disabled="${this.disabled}"
-            ?required="${this.required}"
-            .value="${this.value ?? null}"
-            @input="${this.handleInput}"
-          />
-        `
-      )}
-      <slot></slot>
+      <input
+        type="text"
+        id="${id}"
+        name="${this.name}"
+        autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
+        ?disabled="${this.disabled}"
+        ?required="${this.required}"
+        .value="${this.value ?? null}"
+        @input="${this.handleInput}"
+      />
     `;
   }
 }

@@ -3,8 +3,6 @@
 A text input element using the wcp style. Fully form aware.
 Can display multiline text (textarea) if configured to do so.
 
-**Mixins:** ColorSchemable
-
 ## Examples
 
 ## With optional label
@@ -37,16 +35,17 @@ Can display multiline text (textarea) if configured to do so.
 
 ## Properties
 
-| Property       | Attribute      | Type                  | Default |
-|----------------|----------------|-----------------------|---------|
-| `autocomplete` | `autocomplete` | `boolean`             | false   |
-| `disabled`     | `disabled`     | `boolean`             | false   |
-| `input`        |                |                       |         |
-| `label`        | `label`        | `string \| undefined` |         |
-| `multiline`    | `multiline`    | `boolean`             | false   |
-| `name`         | `name`         | `string`              | "text"  |
-| `required`     | `required`     | `boolean`             | false   |
-| `value`        | `value`        | `string \| undefined` |         |
+| Property       | Attribute      | Type                  | Default | Description                     |
+|----------------|----------------|-----------------------|---------|---------------------------------|
+| `autocomplete` | `autocomplete` | `boolean`             | false   |                                 |
+| `disabled`     | `disabled`     | `boolean`             | false   |                                 |
+| `input`        |                |                       |         |                                 |
+| `label`        |                | `string`              |         | The label of the input element. |
+| `multiline`    | `multiline`    | `boolean`             | false   |                                 |
+| `name`         | `name`         | `string`              | "text"  |                                 |
+| `readonly`     | `readonly`     | `boolean`             | false   |                                 |
+| `required`     | `required`     | `boolean`             | false   |                                 |
+| `value`        | `value`        | `string \| undefined` |         |                                 |
 
 ## Methods
 
@@ -55,12 +54,13 @@ Can display multiline text (textarea) if configured to do so.
 | `checkValidity`     | `(): boolean`        |
 | `formResetCallback` | `(): void`           |
 | `handleInput`       | `(event: any): void` |
+| `renderInput`       | `(id: string): any`  |
 
 ## Slots
 
-| Name | Description                                     |
-|------|-------------------------------------------------|
-|      | Receives optional descriptions below the input. |
+| Name   | Description                                     |
+|--------|-------------------------------------------------|
+| `hint` | Receives optional descriptions below the input. |
 
 ## CSS Custom Properties
 
