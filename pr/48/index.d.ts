@@ -719,6 +719,7 @@ declare module "src/utils/form.utils" {
         disabled?: boolean;
         readonly?: boolean;
         required?: boolean;
+        label?: string;
         name?: string;
         value?: T;
         formAssociatedCallback?: (form: HTMLFormElement) => void;
@@ -944,20 +945,39 @@ declare module "src/components/form/input-radio/input-radio.component" {
         }
     }
 }
+declare module "src/mixins/editable.mixin" {
+    import { type LitElement, type TemplateResult, type CSSResultGroup } from 'lit';
+    import { Constructor } from "src/utils/mixin.types";
+    export class EditableInterface {
+        readonly internals: ElementInternals;
+        label?: string;
+        renderInput(id: string): TemplateResult;
+        renderSlot(name: string): TemplateResult;
+    }
+    export interface EditablePrototype {
+        formStyles: CSSResultGroup;
+        formAssociated: true;
+    }
+    export type EditableOptions = {
+        hasHintSlot?: boolean;
+        hasBeforeSlot?: boolean;
+        hasAfterSlot?: boolean;
+        hasBorder?: boolean;
+    };
+    export const Editable: ({ hasHintSlot, hasBeforeSlot, hasAfterSlot, hasBorder, }?: Partial<EditableOptions>) => <T extends Constructor<LitElement>>(superClass: T) => Constructor<EditableInterface> & EditablePrototype & T;
+}
 declare module "src/components/form/input-text/input-text.component" {
     import { LitElement, PropertyValues } from 'lit';
     import type { FormAssociated } from "src/utils/form.utils";
     import 'element-internals-polyfill';
-    const InputText_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const InputText_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A text input element using the wcp style. Fully form aware.
      * Can display multiline text (textarea) if configured to do so.
      *
      * @element wcp-input-text
      *
-     * @slot - Receives optional descriptions below the input.
+     * @slot hint - Receives optional descriptions below the input.
      *
      * @cssprop --wcp-input-text-label-size - The font size of the label.
      * @cssprop --wcp-input-text-label-spacing - The spacing between the label and the input.
@@ -997,22 +1017,20 @@ declare module "src/components/form/input-text/input-text.component" {
      */
     export class InputText extends InputText_base implements FormAssociated<string> {
         #private;
-        static readonly formAssociated = true;
-        static readonly styles: import("lit").CSSResult;
-        private initialValue?;
+        static readonly styles: import("lit").CSSResultGroup[];
         input: HTMLInputElement | HTMLTextAreaElement;
-        label?: string;
-        name: string;
+        multiline: boolean;
         autocomplete: boolean;
         disabled: boolean;
-        multiline: boolean;
+        readonly: boolean;
         required: boolean;
+        name: string;
         value?: string;
         protected firstUpdated(props: PropertyValues<this>): void;
         formResetCallback(): void;
         checkValidity(): boolean;
         handleInput(event: Event): void;
-        protected render(): import("lit-html").TemplateResult<1>;
+        renderInput(id: string): import("lit-html").TemplateResult<1>;
     }
     global {
         interface HTMLElementTagNameMap {
@@ -1367,56 +1385,8 @@ declare module "src/components/plugins/preview-viewport/preview-viewport.plugin"
         }
     }
 }
-declare module "src/parsers/cem/utils" {
-    import type * as CEM from 'custom-elements-manifest';
-    export type CustomElementDeclarationWithExamples = CEM.CustomElementDeclaration & {
-        examples: string[];
-    };
-    export type CustomElementDeclarationWithGroups = CEM.CustomElementDeclaration & {
-        groups: string[];
-    };
-    export type CustomElementDeclarationWithReadme = CEM.CustomElementDeclaration & {
-        readme: string;
-    };
-    export type CustomElementDeclarationWithTagName = CEM.CustomElementDeclaration & {
-        tagName: string[];
-    };
-    export function isCustomElementDeclarationWithTagName(declaration?: CEM.Declaration): declaration is CustomElementDeclarationWithTagName;
-    export function isCustomElementField(field?: CEM.ClassMember): field is CEM.CustomElementField;
-    export const WRAPPED_STRING_REGEX: RegExp;
-    export function unwrapString(value: string): string;
-    export function getEnumValues(field: CEM.CustomElementField): string[];
-}
-declare module "src/parsers/cem/1.0.0/cem-field" {
-    import type { Field } from "src/utils/parser.types";
-    export const CemField: Field;
-}
-declare module "src/parsers/cem/1.0.0/cem-slot" {
-    import type { Slot } from "src/utils/parser.types";
-    export const CemSlot: Slot;
-}
-declare module "src/parsers/cem/1.0.0/cem-element" {
-    import type { Element } from "src/utils/parser.types";
-    export const CemElement: Element;
-}
-declare module "src/parsers/cem/1.0.0/cem-parser" {
-    import type { Parser } from "src/utils/parser.types";
-    export const CemParser: Parser;
-}
-declare module "src/parsers/cem/parse" {
-    import type { Manifest } from "src/utils/parser.types";
-    /**
-     * Parses given manifest data with the appropriate CEM parser.
-     * Will throw an error if no parser for the given schema version is found, or if the given data is invalid.
-     */
-    export const parseCEM: (data: object, exclude?: string[]) => Manifest;
-}
-declare module "src/utils/routable.utils" {
+declare module "src/utils/router.utils" {
     import type { LitElement, TemplateResult } from 'lit';
-    import type { Constructor } from "src/utils/mixin.types";
-    class RoutableInterface {
-        router: Router;
-    }
     export type Params = Record<string, string | undefined>;
     export type Route = {
         path: string;
@@ -1466,12 +1436,64 @@ declare module "src/utils/routable.utils" {
         disconnect(): void;
         outlet(): TemplateResult;
     }
+}
+declare module "src/mixins/routable.mixin" {
+    import type { LitElement } from 'lit';
+    import type { Constructor } from "src/utils/mixin.types";
+    import { type RegisterRoutes, Router } from "src/utils/router.utils";
+    class RoutableInterface {
+        router: Router;
+    }
     export const Routable: (registerRoutes?: RegisterRoutes) => <T extends Constructor<LitElement>>(superClass: T) => Constructor<RoutableInterface> & T;
+}
+declare module "src/parsers/cem/utils" {
+    import type * as CEM from 'custom-elements-manifest';
+    export type CustomElementDeclarationWithExamples = CEM.CustomElementDeclaration & {
+        examples: string[];
+    };
+    export type CustomElementDeclarationWithGroups = CEM.CustomElementDeclaration & {
+        groups: string[];
+    };
+    export type CustomElementDeclarationWithReadme = CEM.CustomElementDeclaration & {
+        readme: string;
+    };
+    export type CustomElementDeclarationWithTagName = CEM.CustomElementDeclaration & {
+        tagName: string[];
+    };
+    export function isCustomElementDeclarationWithTagName(declaration?: CEM.Declaration): declaration is CustomElementDeclarationWithTagName;
+    export function isCustomElementField(field?: CEM.ClassMember): field is CEM.CustomElementField;
+    export const WRAPPED_STRING_REGEX: RegExp;
+    export function unwrapString(value: string): string;
+    export function getEnumValues(field: CEM.CustomElementField): string[];
+}
+declare module "src/parsers/cem/1.0.0/cem-field" {
+    import type { Field } from "src/utils/parser.types";
+    export const CemField: Field;
+}
+declare module "src/parsers/cem/1.0.0/cem-slot" {
+    import type { Slot } from "src/utils/parser.types";
+    export const CemSlot: Slot;
+}
+declare module "src/parsers/cem/1.0.0/cem-element" {
+    import type { Element } from "src/utils/parser.types";
+    export const CemElement: Element;
+}
+declare module "src/parsers/cem/1.0.0/cem-parser" {
+    import type { Parser } from "src/utils/parser.types";
+    export const CemParser: Parser;
+}
+declare module "src/parsers/cem/parse" {
+    import type { Manifest } from "src/utils/parser.types";
+    /**
+     * Parses given manifest data with the appropriate CEM parser.
+     * Will throw an error if no parser for the given schema version is found, or if the given data is invalid.
+     */
+    export const parseCEM: (data: object, exclude?: string[]) => Manifest;
 }
 declare module "src/components/root/root.routes" {
     import type { Config } from "src/utils/config.utils";
     import type { Manifest } from "src/utils/parser.types";
-    import { type Route, type Router } from "src/utils/routable.utils";
+    import { type Route, type Router } from "src/utils/router.utils";
     export const prepareRoutes: (router: Router, config: Config, manifest: Manifest) => Route[];
 }
 declare module "src/components/root/root.component" {
@@ -1480,7 +1502,7 @@ declare module "src/components/root/root.component" {
     import { type Config } from "src/utils/config.utils";
     import type { Element, Manifest } from "src/utils/parser.types";
     const Root_base: import("@/index.js").Constructor<{
-        router: import("@/utils/routable.utils.js").Router;
+        router: import("@/index.js").Router;
     }> & import("@/index.js").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
     }> & typeof LitElement;
@@ -1733,7 +1755,7 @@ declare module "src/index" {
     export * from "src/utils/parser.types";
     export * from "src/utils/parser.utils";
     export * from "src/utils/plugin.utils";
-    export * from "src/utils/routable.utils";
+    export * from "src/utils/router.utils";
 }
 declare module "jest-root-path-helper" {
     const _exports: string;

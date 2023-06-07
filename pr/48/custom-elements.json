@@ -2112,33 +2112,17 @@
           "slots": [
             {
               "description": "Receives optional descriptions below the input.",
-              "name": ""
+              "name": "hint"
             }
           ],
           "members": [
             {
               "kind": "field",
-              "name": "formAssociated",
-              "type": {
-                "text": "boolean"
-              },
-              "static": true,
-              "readonly": true,
-              "default": "true"
-            },
-            {
-              "kind": "field",
-              "name": "#internals",
+              "name": "#initialValue",
               "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "initialValue",
               "type": {
                 "text": "string | undefined"
-              },
-              "privacy": "private"
+              }
             },
             {
               "kind": "field",
@@ -2149,21 +2133,12 @@
             },
             {
               "kind": "field",
-              "name": "label",
+              "name": "multiline",
               "type": {
-                "text": "string | undefined"
+                "text": "boolean"
               },
-              "attribute": "label",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "default": "'text'",
-              "attribute": "name",
+              "default": "false",
+              "attribute": "multiline",
               "reflects": true
             },
             {
@@ -2188,12 +2163,12 @@
             },
             {
               "kind": "field",
-              "name": "multiline",
+              "name": "readonly",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "attribute": "multiline",
+              "attribute": "readonly",
               "reflects": true
             },
             {
@@ -2204,6 +2179,16 @@
               },
               "default": "false",
               "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "attribute": "name",
               "reflects": true
             },
             {
@@ -2239,23 +2224,28 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "method",
+              "name": "renderInput",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
             }
           ],
           "attributes": [
             {
-              "name": "label",
+              "name": "multiline",
               "type": {
-                "text": "string | undefined"
+                "text": "boolean"
               },
-              "fieldName": "label"
-            },
-            {
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "default": "'text'",
-              "fieldName": "name"
+              "default": "false",
+              "fieldName": "multiline"
             },
             {
               "name": "autocomplete",
@@ -2274,12 +2264,12 @@
               "fieldName": "disabled"
             },
             {
-              "name": "multiline",
+              "name": "readonly",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "fieldName": "multiline"
+              "fieldName": "readonly"
             },
             {
               "name": "required",
@@ -2288,6 +2278,14 @@
               },
               "default": "false",
               "fieldName": "required"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "fieldName": "name"
             },
             {
               "name": "value",
@@ -2299,8 +2297,8 @@
           ],
           "mixins": [
             {
-              "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "name": "Editable()",
+              "module": "src/components/form/input-text/input-text.component.ts"
             }
           ],
           "superclass": {
@@ -2314,7 +2312,7 @@
             "## Multiline\n```html\n<wcp-input-text multiline label=\"With multiline value\"></wcp-input-text>\n```",
             "## Used within a form\n```html\n<form>\n  <wcp-input-text label=\"Fully form enabled component\"></wcp-input-text>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```"
           ],
-          "readme": "# wcp-input-text\n\nA text input element using the wcp style. Fully form aware.\nCan display multiline text (textarea) if configured to do so.\n\n**Mixins:** ColorSchemable\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-text label=\"With optional label\"></wcp-input-text>\n```\n\n## With optional initial value\n\n```html\n<wcp-input-text label=\"With optional initial value\" value=\"Foo\"></wcp-input-text>\n```\n\n## Multiline\n\n```html\n<wcp-input-text multiline label=\"With multiline value\"></wcp-input-text>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-text label=\"Fully form enabled component\"></wcp-input-text>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type                  | Default |\n|----------------|----------------|-----------------------|---------|\n| `autocomplete` | `autocomplete` | `boolean`             | false   |\n| `disabled`     | `disabled`     | `boolean`             | false   |\n| `input`        |                |                       |         |\n| `label`        | `label`        | `string \\| undefined` |         |\n| `multiline`    | `multiline`    | `boolean`             | false   |\n| `name`         | `name`         | `string`              | \"text\"  |\n| `required`     | `required`     | `boolean`             | false   |\n| `value`        | `value`        | `string \\| undefined` |         |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n\n## Slots\n\n| Name | Description                                     |\n|------|-------------------------------------------------|\n|      | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                           | Description                                      |\n|------------------------------------|--------------------------------------------------|\n| `--wcp-input-text-dark-background` | The background color of the element in dark mode. |\n| `--wcp-input-text-dark-border`     | The border color of the element in dark mode.    |\n| `--wcp-input-text-dark-color`      | The font color of the input element in dark mode. |\n| `--wcp-input-text-label-size`      | The font size of the label.                      |\n| `--wcp-input-text-label-spacing`   | The spacing between the label and the input.     |\n| `--wcp-input-text-spacing`         | The inner spacing of the input element.          |\n",
+          "readme": "# wcp-input-text\n\nA text input element using the wcp style. Fully form aware.\nCan display multiline text (textarea) if configured to do so.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-text label=\"With optional label\"></wcp-input-text>\n```\n\n## With optional initial value\n\n```html\n<wcp-input-text label=\"With optional initial value\" value=\"Foo\"></wcp-input-text>\n```\n\n## Multiline\n\n```html\n<wcp-input-text multiline label=\"With multiline value\"></wcp-input-text>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-text label=\"Fully form enabled component\"></wcp-input-text>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type                  | Default |\n|----------------|----------------|-----------------------|---------|\n| `autocomplete` | `autocomplete` | `boolean`             | false   |\n| `disabled`     | `disabled`     | `boolean`             | false   |\n| `input`        |                |                       |         |\n| `multiline`    | `multiline`    | `boolean`             | false   |\n| `name`         | `name`         | `string`              | \"text\"  |\n| `readonly`     | `readonly`     | `boolean`             | false   |\n| `required`     | `required`     | `boolean`             | false   |\n| `value`        | `value`        | `string \\| undefined` |         |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n| `renderInput`       | `(id: string): any`  |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                           | Description                                      |\n|------------------------------------|--------------------------------------------------|\n| `--wcp-input-text-dark-background` | The background color of the element in dark mode. |\n| `--wcp-input-text-dark-border`     | The border color of the element in dark mode.    |\n| `--wcp-input-text-dark-color`      | The font color of the input element in dark mode. |\n| `--wcp-input-text-label-size`      | The font size of the label.                      |\n| `--wcp-input-text-label-spacing`   | The spacing between the label and the input.     |\n| `--wcp-input-text-spacing`         | The inner spacing of the input element.          |\n",
           "groups": [
             "form"
           ],
