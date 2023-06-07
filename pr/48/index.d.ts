@@ -728,24 +728,46 @@ declare module "src/utils/form.utils" {
         formStateRestoreCallback?: (state: string | File | FormData | null, mode: 'autocomplete' | 'restore') => void;
     };
 }
+declare module "src/mixins/editable.mixin" {
+    import { type LitElement, type TemplateResult, type CSSResultGroup } from 'lit';
+    import { Constructor } from "src/utils/mixin.types";
+    export class EditableInterface {
+        readonly internals: ElementInternals;
+        label?: string;
+        renderInput(id: string): TemplateResult;
+        renderSlot(name: string): TemplateResult;
+    }
+    export interface EditablePrototype {
+        formStyles: CSSResultGroup;
+        formAssociated: true;
+    }
+    export type EditableOptions = {
+        hasHintSlot?: boolean;
+        hasBeforeSlot?: boolean;
+        hasAfterSlot?: boolean;
+        hasBorder?: boolean;
+    };
+    export const Editable: ({ hasHintSlot, hasBeforeSlot, hasAfterSlot, hasBorder, }?: Partial<EditableOptions>) => <T extends Constructor<LitElement>>(superClass: T) => Constructor<EditableInterface> & EditablePrototype & T;
+}
 declare module "src/components/form/input-checkbox/input-checkbox.component" {
     import { LitElement, PropertyValues } from 'lit';
     import type { FormAssociated } from "src/utils/form.utils";
     import 'element-internals-polyfill';
-    const InputCheckbox_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const InputCheckbox_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A checkbox input element using the wcp style. Fully form aware.
      *
      * @element wcp-input-checkbox
      *
-     * @slot - Receives optional descriptions below the input.
+     * @property {string} label - The label of the input element.
      *
-     * @cssprop --wcp-input-checkbox-border-radius - The border radius of the checkbox input.
-     * @cssprop --wcp-input-checkbox-label-size - The font size of the label.
-     * @cssprop --wcp-input-checkbox-label-spacing - The leading distance of the label to the input.
+     * @slot hint - Receives optional descriptions below the input.
+     *
      * @cssprop --wcp-input-checkbox-size - The size of the checkbox input.
+     * @cssprop --wcp-input-checkbox-label-size - The font size of the label.
+     * @cssprop --wcp-input-checkbox-spacing - The leading distance of the label to the input.
+     * @cssprop --wcp-input-checkbox-border-radius - The border radius of the checkbox input.
+     * @cssprop --wcp-input-checkbox-border-size - The border size of the checkbox input.
      *
      * @cssprop --wcp-input-checkbox-dark-background - The background color of the checkbox input in dark mode.
      * @cssprop --wcp-input-checkbox-dark-border - The border color of the checkbox input in dark mode.
@@ -778,11 +800,8 @@ declare module "src/components/form/input-checkbox/input-checkbox.component" {
      * ```
      */
     export class InputCheckbox extends InputCheckbox_base implements FormAssociated<string> {
-        #private;
-        static readonly styles: import("lit").CSSResult;
-        static readonly formAssociated = true;
+        static readonly styles: import("lit").CSSResultGroup[];
         private initialChecked;
-        label?: string;
         name: string;
         autocomplete: boolean;
         disabled: boolean;
@@ -794,7 +813,7 @@ declare module "src/components/form/input-checkbox/input-checkbox.component" {
         formResetCallback(): void;
         checkValidity(): boolean;
         handleInput(event: Event): void;
-        protected render(): import("lit-html").TemplateResult<1>;
+        renderInput(id: string): import("lit-html").TemplateResult<1>;
     }
     global {
         interface HTMLElementTagNameMap {
@@ -945,27 +964,6 @@ declare module "src/components/form/input-radio/input-radio.component" {
         }
     }
 }
-declare module "src/mixins/editable.mixin" {
-    import { type LitElement, type TemplateResult, type CSSResultGroup } from 'lit';
-    import { Constructor } from "src/utils/mixin.types";
-    export class EditableInterface {
-        readonly internals: ElementInternals;
-        label?: string;
-        renderInput(id: string): TemplateResult;
-        renderSlot(name: string): TemplateResult;
-    }
-    export interface EditablePrototype {
-        formStyles: CSSResultGroup;
-        formAssociated: true;
-    }
-    export type EditableOptions = {
-        hasHintSlot?: boolean;
-        hasBeforeSlot?: boolean;
-        hasAfterSlot?: boolean;
-        hasBorder?: boolean;
-    };
-    export const Editable: ({ hasHintSlot, hasBeforeSlot, hasAfterSlot, hasBorder, }?: Partial<EditableOptions>) => <T extends Constructor<LitElement>>(superClass: T) => Constructor<EditableInterface> & EditablePrototype & T;
-}
 declare module "src/components/form/input-text/input-text.component" {
     import { LitElement, PropertyValues } from 'lit';
     import type { FormAssociated } from "src/utils/form.utils";
@@ -976,6 +974,8 @@ declare module "src/components/form/input-text/input-text.component" {
      * Can display multiline text (textarea) if configured to do so.
      *
      * @element wcp-input-text
+     *
+     * @property {string} label - The label of the input element.
      *
      * @slot hint - Receives optional descriptions below the input.
      *

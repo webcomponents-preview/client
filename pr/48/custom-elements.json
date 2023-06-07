@@ -1285,8 +1285,8 @@
           "name": "InputCheckbox",
           "cssProperties": [
             {
-              "description": "The border radius of the checkbox input.",
-              "name": "--wcp-input-checkbox-border-radius"
+              "description": "The size of the checkbox input.",
+              "name": "--wcp-input-checkbox-size"
             },
             {
               "description": "The font size of the label.",
@@ -1294,11 +1294,15 @@
             },
             {
               "description": "The leading distance of the label to the input.",
-              "name": "--wcp-input-checkbox-label-spacing"
+              "name": "--wcp-input-checkbox-spacing"
             },
             {
-              "description": "The size of the checkbox input.",
-              "name": "--wcp-input-checkbox-size"
+              "description": "The border radius of the checkbox input.",
+              "name": "--wcp-input-checkbox-border-radius"
+            },
+            {
+              "description": "The border size of the checkbox input.",
+              "name": "--wcp-input-checkbox-border-size"
             },
             {
               "description": "The background color of the checkbox input in dark mode.",
@@ -1328,26 +1332,10 @@
           "slots": [
             {
               "description": "Receives optional descriptions below the input.",
-              "name": ""
+              "name": "hint"
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "formAssociated",
-              "type": {
-                "text": "boolean"
-              },
-              "static": true,
-              "readonly": true,
-              "default": "true"
-            },
-            {
-              "kind": "field",
-              "name": "#internals",
-              "privacy": "private",
-              "readonly": true
-            },
             {
               "kind": "field",
               "name": "initialChecked",
@@ -1355,15 +1343,6 @@
                 "text": "boolean"
               },
               "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "attribute": "label",
-              "reflects": true
             },
             {
               "kind": "field",
@@ -1449,16 +1428,29 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "method",
+              "name": "renderInput",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The label of the input element.",
+              "name": "label",
+              "kind": "field"
             }
           ],
           "attributes": [
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "label"
-            },
             {
               "name": "name",
               "type": {
@@ -1510,8 +1502,8 @@
           ],
           "mixins": [
             {
-              "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "name": "Editable({ hasBorder: false })",
+              "module": "src/components/form/input-checkbox/input-checkbox.component.ts"
             }
           ],
           "superclass": {
@@ -1524,7 +1516,7 @@
             "## With initial value\n```html\n<wcp-input-checkbox checked label=\"With optional initial value\"></wcp-input-checkbox>\n```",
             "## Used within a form\n```html\n<form>\n  <wcp-input-checkbox label=\"Fully form enabled component\"></wcp-input-checkbox>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```"
           ],
-          "readme": "# wcp-input-checkbox\n\nA checkbox input element using the wcp style. Fully form aware.\n\n**Mixins:** ColorSchemable\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-checkbox label=\"With optional label\"></wcp-input-checkbox>\n```\n\n## With initial value\n\n```html\n<wcp-input-checkbox checked label=\"With optional initial value\"></wcp-input-checkbox>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-checkbox label=\"Fully form enabled component\"></wcp-input-checkbox>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type                  | Default    |\n|----------------|----------------|-----------------------|------------|\n| `autocomplete` | `autocomplete` | `boolean`             | false      |\n| `checked`      | `checked`      | `boolean`             | false      |\n| `disabled`     | `disabled`     | `boolean`             | false      |\n| `label`        | `label`        | `string \\| undefined` |            |\n| `name`         | `name`         | `string`              | \"checkbox\" |\n| `required`     | `required`     | `boolean`             | false      |\n| `value`        | `value`        | `string`              | \"on\"       |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n\n## Slots\n\n| Name | Description                                     |\n|------|-------------------------------------------------|\n|      | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                                | Description                                      |\n|-----------------------------------------|--------------------------------------------------|\n| `--wcp-input-checkbox-border-radius`    | The border radius of the checkbox input.         |\n| `--wcp-input-checkbox-dark-background`  | The background color of the checkbox input in dark mode. |\n| `--wcp-input-checkbox-dark-border`      | The border color of the checkbox input in dark mode. |\n| `--wcp-input-checkbox-dark-color`       | The fill color of the checkbox input when checked in dark mode. |\n| `--wcp-input-checkbox-label-size`       | The font size of the label.                      |\n| `--wcp-input-checkbox-label-spacing`    | The leading distance of the label to the input.  |\n| `--wcp-input-checkbox-light-background` | The background color of the checkbox input in light mode. |\n| `--wcp-input-checkbox-light-border`     | The border color of the checkbox input in light mode. |\n| `--wcp-input-checkbox-light-color`      | The fill color of the checkbox input when checked in light mode. |\n| `--wcp-input-checkbox-size`             | The size of the checkbox input.                  |\n",
+          "readme": "# wcp-input-checkbox\n\nA checkbox input element using the wcp style. Fully form aware.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-checkbox label=\"With optional label\"></wcp-input-checkbox>\n```\n\n## With initial value\n\n```html\n<wcp-input-checkbox checked label=\"With optional initial value\"></wcp-input-checkbox>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-checkbox label=\"Fully form enabled component\"></wcp-input-checkbox>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type      | Default    | Description                     |\n|----------------|----------------|-----------|------------|---------------------------------|\n| `autocomplete` | `autocomplete` | `boolean` | false      |                                 |\n| `checked`      | `checked`      | `boolean` | false      |                                 |\n| `disabled`     | `disabled`     | `boolean` | false      |                                 |\n| `label`        |                | `string`  |            | The label of the input element. |\n| `name`         | `name`         | `string`  | \"checkbox\" |                                 |\n| `required`     | `required`     | `boolean` | false      |                                 |\n| `value`        | `value`        | `string`  | \"on\"       |                                 |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n| `renderInput`       | `(id: string): any`  |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                                | Description                                      |\n|-----------------------------------------|--------------------------------------------------|\n| `--wcp-input-checkbox-border-radius`    | The border radius of the checkbox input.         |\n| `--wcp-input-checkbox-border-size`      | The border size of the checkbox input.           |\n| `--wcp-input-checkbox-dark-background`  | The background color of the checkbox input in dark mode. |\n| `--wcp-input-checkbox-dark-border`      | The border color of the checkbox input in dark mode. |\n| `--wcp-input-checkbox-dark-color`       | The fill color of the checkbox input when checked in dark mode. |\n| `--wcp-input-checkbox-label-size`       | The font size of the label.                      |\n| `--wcp-input-checkbox-light-background` | The background color of the checkbox input in light mode. |\n| `--wcp-input-checkbox-light-border`     | The border color of the checkbox input in light mode. |\n| `--wcp-input-checkbox-light-color`      | The fill color of the checkbox input when checked in light mode. |\n| `--wcp-input-checkbox-size`             | The size of the checkbox input.                  |\n| `--wcp-input-checkbox-spacing`          | The leading distance of the label to the input.  |\n",
           "groups": [
             "form"
           ],
@@ -2236,6 +2228,14 @@
                   }
                 }
               ]
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The label of the input element.",
+              "name": "label",
+              "kind": "field"
             }
           ],
           "attributes": [
@@ -2312,7 +2312,7 @@
             "## Multiline\n```html\n<wcp-input-text multiline label=\"With multiline value\"></wcp-input-text>\n```",
             "## Used within a form\n```html\n<form>\n  <wcp-input-text label=\"Fully form enabled component\"></wcp-input-text>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```"
           ],
-          "readme": "# wcp-input-text\n\nA text input element using the wcp style. Fully form aware.\nCan display multiline text (textarea) if configured to do so.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-text label=\"With optional label\"></wcp-input-text>\n```\n\n## With optional initial value\n\n```html\n<wcp-input-text label=\"With optional initial value\" value=\"Foo\"></wcp-input-text>\n```\n\n## Multiline\n\n```html\n<wcp-input-text multiline label=\"With multiline value\"></wcp-input-text>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-text label=\"Fully form enabled component\"></wcp-input-text>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type                  | Default |\n|----------------|----------------|-----------------------|---------|\n| `autocomplete` | `autocomplete` | `boolean`             | false   |\n| `disabled`     | `disabled`     | `boolean`             | false   |\n| `input`        |                |                       |         |\n| `multiline`    | `multiline`    | `boolean`             | false   |\n| `name`         | `name`         | `string`              | \"text\"  |\n| `readonly`     | `readonly`     | `boolean`             | false   |\n| `required`     | `required`     | `boolean`             | false   |\n| `value`        | `value`        | `string \\| undefined` |         |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n| `renderInput`       | `(id: string): any`  |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                           | Description                                      |\n|------------------------------------|--------------------------------------------------|\n| `--wcp-input-text-dark-background` | The background color of the element in dark mode. |\n| `--wcp-input-text-dark-border`     | The border color of the element in dark mode.    |\n| `--wcp-input-text-dark-color`      | The font color of the input element in dark mode. |\n| `--wcp-input-text-label-size`      | The font size of the label.                      |\n| `--wcp-input-text-label-spacing`   | The spacing between the label and the input.     |\n| `--wcp-input-text-spacing`         | The inner spacing of the input element.          |\n",
+          "readme": "# wcp-input-text\n\nA text input element using the wcp style. Fully form aware.\nCan display multiline text (textarea) if configured to do so.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-text label=\"With optional label\"></wcp-input-text>\n```\n\n## With optional initial value\n\n```html\n<wcp-input-text label=\"With optional initial value\" value=\"Foo\"></wcp-input-text>\n```\n\n## Multiline\n\n```html\n<wcp-input-text multiline label=\"With multiline value\"></wcp-input-text>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-text label=\"Fully form enabled component\"></wcp-input-text>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type                  | Default | Description                     |\n|----------------|----------------|-----------------------|---------|---------------------------------|\n| `autocomplete` | `autocomplete` | `boolean`             | false   |                                 |\n| `disabled`     | `disabled`     | `boolean`             | false   |                                 |\n| `input`        |                |                       |         |                                 |\n| `label`        |                | `string`              |         | The label of the input element. |\n| `multiline`    | `multiline`    | `boolean`             | false   |                                 |\n| `name`         | `name`         | `string`              | \"text\"  |                                 |\n| `readonly`     | `readonly`     | `boolean`             | false   |                                 |\n| `required`     | `required`     | `boolean`             | false   |                                 |\n| `value`        | `value`        | `string \\| undefined` |         |                                 |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n| `renderInput`       | `(id: string): any`  |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                           | Description                                      |\n|------------------------------------|--------------------------------------------------|\n| `--wcp-input-text-dark-background` | The background color of the element in dark mode. |\n| `--wcp-input-text-dark-border`     | The border color of the element in dark mode.    |\n| `--wcp-input-text-dark-color`      | The font color of the input element in dark mode. |\n| `--wcp-input-text-label-size`      | The font size of the label.                      |\n| `--wcp-input-text-label-spacing`   | The spacing between the label and the input.     |\n| `--wcp-input-text-spacing`         | The inner spacing of the input element.          |\n",
           "groups": [
             "form"
           ],
