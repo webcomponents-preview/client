@@ -3,101 +3,101 @@ $exclude: ':not(wcp-preview *)' !default;
 .markdown-body {
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
-    --color-prettylights-syntax-comment: #8b949e;
-    --color-prettylights-syntax-constant: #79c0ff;
-    --color-prettylights-syntax-entity: #d2a8ff;
-    --color-prettylights-syntax-storage-modifier-import: #c9d1d9;
-    --color-prettylights-syntax-entity-tag: #7ee787;
-    --color-prettylights-syntax-keyword: #ff7b72;
-    --color-prettylights-syntax-string: #a5d6ff;
-    --color-prettylights-syntax-variable: #ffa657;
-    --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
-    --color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
-    --color-prettylights-syntax-invalid-illegal-bg: #8e1519;
-    --color-prettylights-syntax-carriage-return-text: #f0f6fc;
-    --color-prettylights-syntax-carriage-return-bg: #b62324;
-    --color-prettylights-syntax-string-regexp: #7ee787;
-    --color-prettylights-syntax-markup-list: #f2cc60;
-    --color-prettylights-syntax-markup-heading: #1f6feb;
-    --color-prettylights-syntax-markup-italic: #c9d1d9;
-    --color-prettylights-syntax-markup-bold: #c9d1d9;
-    --color-prettylights-syntax-markup-deleted-text: #ffdcd7;
-    --color-prettylights-syntax-markup-deleted-bg: #67060c;
-    --color-prettylights-syntax-markup-inserted-text: #aff5b4;
-    --color-prettylights-syntax-markup-inserted-bg: #033a16;
-    --color-prettylights-syntax-markup-changed-text: #ffdfb6;
-    --color-prettylights-syntax-markup-changed-bg: #5a1e02;
-    --color-prettylights-syntax-markup-ignored-text: #c9d1d9;
-    --color-prettylights-syntax-markup-ignored-bg: #1158c7;
-    --color-prettylights-syntax-meta-diff-range: #d2a8ff;
-    --color-prettylights-syntax-brackethighlighter-angle: #8b949e;
-    --color-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
-    --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
-    --color-fg-default: #c9d1d9;
-    --color-fg-muted: #8b949e;
-    --color-fg-subtle: #6e7681;
-    --color-canvas-default: #0d1117;
-    --color-canvas-subtle: #161b22;
-    --color-border-default: #30363d;
-    --color-border-muted: #21262d;
-    --color-neutral-muted: rgba(110, 118, 129, 0.4);
-    --color-accent-fg: #58a6ff;
-    --color-accent-emphasis: #1f6feb;
-    --color-attention-subtle: rgba(187, 128, 9, 0.15);
-    --color-danger-fg: #f85149;
+    --wcp-github-markdown-color-prettylights-syntax-comment: #8b949e;
+    --wcp-github-markdown-color-prettylights-syntax-constant: #79c0ff;
+    --wcp-github-markdown-color-prettylights-syntax-entity: #d2a8ff;
+    --wcp-github-markdown-color-prettylights-syntax-storage-modifier-import: #c9d1d9;
+    --wcp-github-markdown-color-prettylights-syntax-entity-tag: #7ee787;
+    --wcp-github-markdown-color-prettylights-syntax-keyword: #ff7b72;
+    --wcp-github-markdown-color-prettylights-syntax-string: #a5d6ff;
+    --wcp-github-markdown-color-prettylights-syntax-variable: #ffa657;
+    --wcp-github-markdown-color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
+    --wcp-github-markdown-color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
+    --wcp-github-markdown-color-prettylights-syntax-invalid-illegal-bg: #8e1519;
+    --wcp-github-markdown-color-prettylights-syntax-carriage-return-text: #f0f6fc;
+    --wcp-github-markdown-color-prettylights-syntax-carriage-return-bg: #b62324;
+    --wcp-github-markdown-color-prettylights-syntax-string-regexp: #7ee787;
+    --wcp-github-markdown-color-prettylights-syntax-markup-list: #f2cc60;
+    --wcp-github-markdown-color-prettylights-syntax-markup-heading: #1f6feb;
+    --wcp-github-markdown-color-prettylights-syntax-markup-italic: #c9d1d9;
+    --wcp-github-markdown-color-prettylights-syntax-markup-bold: #c9d1d9;
+    --wcp-github-markdown-color-prettylights-syntax-markup-deleted-text: #ffdcd7;
+    --wcp-github-markdown-color-prettylights-syntax-markup-deleted-bg: #67060c;
+    --wcp-github-markdown-color-prettylights-syntax-markup-inserted-text: #aff5b4;
+    --wcp-github-markdown-color-prettylights-syntax-markup-inserted-bg: #033a16;
+    --wcp-github-markdown-color-prettylights-syntax-markup-changed-text: #ffdfb6;
+    --wcp-github-markdown-color-prettylights-syntax-markup-changed-bg: #5a1e02;
+    --wcp-github-markdown-color-prettylights-syntax-markup-ignored-text: #c9d1d9;
+    --wcp-github-markdown-color-prettylights-syntax-markup-ignored-bg: #1158c7;
+    --wcp-github-markdown-color-prettylights-syntax-meta-diff-range: #d2a8ff;
+    --wcp-github-markdown-color-prettylights-syntax-brackethighlighter-angle: #8b949e;
+    --wcp-github-markdown-color-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
+    --wcp-github-markdown-color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
+    --wcp-github-markdown-color-fg-default: #c9d1d9;
+    --wcp-github-markdown-color-fg-muted: #8b949e;
+    --wcp-github-markdown-color-fg-subtle: #6e7681;
+    --wcp-github-markdown-color-canvas-default: #0d1117;
+    --wcp-github-markdown-color-canvas-subtle: #161b22;
+    --wcp-github-markdown-color-border-default: #30363d;
+    --wcp-github-markdown-color-border-muted: #21262d;
+    --wcp-github-markdown-color-neutral-muted: rgba(110, 118, 129, 0.4);
+    --wcp-github-markdown-color-accent-fg: #58a6ff;
+    --wcp-github-markdown-color-accent-emphasis: #1f6feb;
+    --wcp-github-markdown-color-attention-subtle: rgba(187, 128, 9, 0.15);
+    --wcp-github-markdown-color-danger-fg: #f85149;
   }
 
   @media (prefers-color-scheme: light) {
     color-scheme: light;
-    --color-prettylights-syntax-comment: #6e7781;
-    --color-prettylights-syntax-constant: #0550ae;
-    --color-prettylights-syntax-entity: #8250df;
-    --color-prettylights-syntax-storage-modifier-import: #24292f;
-    --color-prettylights-syntax-entity-tag: #116329;
-    --color-prettylights-syntax-keyword: #cf222e;
-    --color-prettylights-syntax-string: #0a3069;
-    --color-prettylights-syntax-variable: #953800;
-    --color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
-    --color-prettylights-syntax-invalid-illegal-text: #f6f8fa;
-    --color-prettylights-syntax-invalid-illegal-bg: #82071e;
-    --color-prettylights-syntax-carriage-return-text: #f6f8fa;
-    --color-prettylights-syntax-carriage-return-bg: #cf222e;
-    --color-prettylights-syntax-string-regexp: #116329;
-    --color-prettylights-syntax-markup-list: #3b2300;
-    --color-prettylights-syntax-markup-heading: #0550ae;
-    --color-prettylights-syntax-markup-italic: #24292f;
-    --color-prettylights-syntax-markup-bold: #24292f;
-    --color-prettylights-syntax-markup-deleted-text: #82071e;
-    --color-prettylights-syntax-markup-deleted-bg: #ffebe9;
-    --color-prettylights-syntax-markup-inserted-text: #116329;
-    --color-prettylights-syntax-markup-inserted-bg: #dafbe1;
-    --color-prettylights-syntax-markup-changed-text: #953800;
-    --color-prettylights-syntax-markup-changed-bg: #ffd8b5;
-    --color-prettylights-syntax-markup-ignored-text: #eaeef2;
-    --color-prettylights-syntax-markup-ignored-bg: #0550ae;
-    --color-prettylights-syntax-meta-diff-range: #8250df;
-    --color-prettylights-syntax-brackethighlighter-angle: #57606a;
-    --color-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
-    --color-prettylights-syntax-constant-other-reference-link: #0a3069;
-    --color-fg-default: #24292f;
-    --color-fg-muted: #57606a;
-    --color-fg-subtle: #6e7781;
-    --color-canvas-default: #ffffff;
-    --color-canvas-subtle: #f6f8fa;
-    --color-border-default: #d0d7de;
-    --color-border-muted: hsla(210, 18%, 87%, 1);
-    --color-neutral-muted: rgba(175, 184, 193, 0.2);
-    --color-accent-fg: #0969da;
-    --color-accent-emphasis: #0969da;
-    --color-attention-subtle: #fff8c5;
-    --color-danger-fg: #cf222e;
+    --wcp-github-markdown-color-prettylights-syntax-comment: #6e7781;
+    --wcp-github-markdown-color-prettylights-syntax-constant: #0550ae;
+    --wcp-github-markdown-color-prettylights-syntax-entity: #8250df;
+    --wcp-github-markdown-color-prettylights-syntax-storage-modifier-import: #24292f;
+    --wcp-github-markdown-color-prettylights-syntax-entity-tag: #116329;
+    --wcp-github-markdown-color-prettylights-syntax-keyword: #cf222e;
+    --wcp-github-markdown-color-prettylights-syntax-string: #0a3069;
+    --wcp-github-markdown-color-prettylights-syntax-variable: #953800;
+    --wcp-github-markdown-color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
+    --wcp-github-markdown-color-prettylights-syntax-invalid-illegal-text: #f6f8fa;
+    --wcp-github-markdown-color-prettylights-syntax-invalid-illegal-bg: #82071e;
+    --wcp-github-markdown-color-prettylights-syntax-carriage-return-text: #f6f8fa;
+    --wcp-github-markdown-color-prettylights-syntax-carriage-return-bg: #cf222e;
+    --wcp-github-markdown-color-prettylights-syntax-string-regexp: #116329;
+    --wcp-github-markdown-color-prettylights-syntax-markup-list: #3b2300;
+    --wcp-github-markdown-color-prettylights-syntax-markup-heading: #0550ae;
+    --wcp-github-markdown-color-prettylights-syntax-markup-italic: #24292f;
+    --wcp-github-markdown-color-prettylights-syntax-markup-bold: #24292f;
+    --wcp-github-markdown-color-prettylights-syntax-markup-deleted-text: #82071e;
+    --wcp-github-markdown-color-prettylights-syntax-markup-deleted-bg: #ffebe9;
+    --wcp-github-markdown-color-prettylights-syntax-markup-inserted-text: #116329;
+    --wcp-github-markdown-color-prettylights-syntax-markup-inserted-bg: #dafbe1;
+    --wcp-github-markdown-color-prettylights-syntax-markup-changed-text: #953800;
+    --wcp-github-markdown-color-prettylights-syntax-markup-changed-bg: #ffd8b5;
+    --wcp-github-markdown-color-prettylights-syntax-markup-ignored-text: #eaeef2;
+    --wcp-github-markdown-color-prettylights-syntax-markup-ignored-bg: #0550ae;
+    --wcp-github-markdown-color-prettylights-syntax-meta-diff-range: #8250df;
+    --wcp-github-markdown-color-prettylights-syntax-brackethighlighter-angle: #57606a;
+    --wcp-github-markdown-color-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
+    --wcp-github-markdown-color-prettylights-syntax-constant-other-reference-link: #0a3069;
+    --wcp-github-markdown-color-fg-default: #24292f;
+    --wcp-github-markdown-color-fg-muted: #57606a;
+    --wcp-github-markdown-color-fg-subtle: #6e7781;
+    --wcp-github-markdown-color-canvas-default: #ffffff;
+    --wcp-github-markdown-color-canvas-subtle: #f6f8fa;
+    --wcp-github-markdown-color-border-default: #d0d7de;
+    --wcp-github-markdown-color-border-muted: hsla(210, 18%, 87%, 1);
+    --wcp-github-markdown-color-neutral-muted: rgba(175, 184, 193, 0.2);
+    --wcp-github-markdown-color-accent-fg: #0969da;
+    --wcp-github-markdown-color-accent-emphasis: #0969da;
+    --wcp-github-markdown-color-attention-subtle: #fff8c5;
+    --wcp-github-markdown-color-danger-fg: #cf222e;
   }
 
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   margin: 0;
-  color: var(--color-fg-default);
-  background-color: var(--color-canvas-default);
+  color: var(--wcp-github-markdown-color-fg-default);
+  background-color: var(--wcp-github-markdown-color-canvas-default);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji';
   font-size: 16px;
@@ -133,7 +133,7 @@ $exclude: ':not(wcp-preview *)' !default;
       }
 
       .octicon-link {
-        color: var(--color-fg-default);
+        color: var(--wcp-github-markdown-color-fg-default);
         vertical-align: middle;
         visibility: hidden;
       }
@@ -172,7 +172,7 @@ $exclude: ':not(wcp-preview *)' !default;
 
   a#{$exclude} {
     background-color: transparent;
-    color: var(--color-accent-fg);
+    color: var(--wcp-github-markdown-color-accent-fg);
     text-decoration: none;
   }
 
@@ -197,12 +197,12 @@ $exclude: ':not(wcp-preview *)' !default;
     font-weight: var(--base-text-weight-semibold, 600);
     padding-bottom: 0.3em;
     font-size: 2em;
-    border-bottom: 1px solid var(--color-border-muted);
+    border-bottom: 1px solid var(--wcp-github-markdown-color-border-muted);
   }
 
   mark#{$exclude} {
-    background-color: var(--color-attention-subtle);
-    color: var(--color-fg-default);
+    background-color: var(--wcp-github-markdown-color-attention-subtle);
+    color: var(--wcp-github-markdown-color-fg-default);
   }
 
   small#{$exclude} {
@@ -231,7 +231,7 @@ $exclude: ':not(wcp-preview *)' !default;
     border-style: none;
     max-width: 100%;
     box-sizing: content-box;
-    background-color: var(--color-canvas-default);
+    background-color: var(--wcp-github-markdown-color-canvas-default);
   }
 
   code,
@@ -252,11 +252,11 @@ $exclude: ':not(wcp-preview *)' !default;
     box-sizing: content-box;
     overflow: hidden;
     background: transparent;
-    border-bottom: 1px solid var(--color-border-muted);
+    border-bottom: 1px solid var(--wcp-github-markdown-color-border-muted);
     height: 0.25em;
     padding: 0;
     margin: 24px 0;
-    background-color: var(--color-border-default);
+    background-color: var(--wcp-github-markdown-color-border-default);
     border: 0;
   }
 
@@ -311,7 +311,7 @@ $exclude: ':not(wcp-preview *)' !default;
     }
 
     ::placeholder {
-      color: var(--color-fg-subtle);
+      color: var(--wcp-github-markdown-color-fg-subtle);
       opacity: 1;
     }
   }
@@ -364,7 +364,7 @@ $exclude: ':not(wcp-preview *)' !default;
   input[type='radio']:focus,
   input[type='checkbox']:focus {
     &#{$exclude} {
-      outline: 2px solid var(--color-accent-fg);
+      outline: 2px solid var(--wcp-github-markdown-color-accent-fg);
       outline-offset: -2px;
       box-shadow: none;
     }
@@ -384,7 +384,7 @@ $exclude: ':not(wcp-preview *)' !default;
   input[type='radio']:focus-visible,
   input[type='checkbox']:focus-visible {
     &#{$exclude} {
-      outline: 2px solid var(--color-accent-fg);
+      outline: 2px solid var(--wcp-github-markdown-color-accent-fg);
       outline-offset: -2px;
       box-shadow: none;
     }
@@ -406,20 +406,20 @@ $exclude: ':not(wcp-preview *)' !default;
     padding: 3px 5px;
     font: 11px ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
     line-height: 10px;
-    color: var(--color-fg-default);
+    color: var(--wcp-github-markdown-color-fg-default);
     vertical-align: middle;
-    background-color: var(--color-canvas-subtle);
-    border: solid 1px var(--color-neutral-muted);
-    border-bottom-color: var(--color-neutral-muted);
+    background-color: var(--wcp-github-markdown-color-canvas-subtle);
+    border: solid 1px var(--wcp-github-markdown-color-neutral-muted);
+    border-bottom-color: var(--wcp-github-markdown-color-neutral-muted);
     border-radius: 6px;
-    box-shadow: inset 0 -1px 0 var(--color-neutral-muted);
+    box-shadow: inset 0 -1px 0 var(--wcp-github-markdown-color-neutral-muted);
   }
 
   h2#{$exclude} {
     font-weight: var(--base-text-weight-semibold, 600);
     padding-bottom: 0.3em;
     font-size: 1.5em;
-    border-bottom: 1px solid var(--color-border-muted);
+    border-bottom: 1px solid var(--wcp-github-markdown-color-border-muted);
   }
 
   h3#{$exclude} {
@@ -440,7 +440,7 @@ $exclude: ':not(wcp-preview *)' !default;
   h6#{$exclude} {
     font-weight: var(--base-text-weight-semibold, 600);
     font-size: 0.85em;
-    color: var(--color-fg-muted);
+    color: var(--wcp-github-markdown-color-fg-muted);
   }
 
   p#{$exclude} {
@@ -451,8 +451,8 @@ $exclude: ':not(wcp-preview *)' !default;
   blockquote#{$exclude} {
     margin: 0;
     padding: 0 1em;
-    color: var(--color-fg-muted);
-    border-left: 0.25em solid var(--color-border-default);
+    color: var(--wcp-github-markdown-color-fg-muted);
+    border-left: 0.25em solid var(--wcp-github-markdown-color-border-default);
   }
 
   ul,
@@ -540,7 +540,7 @@ $exclude: ':not(wcp-preview *)' !default;
   }
 
   .absent#{$exclude} {
-    color: var(--color-danger-fg);
+    color: var(--wcp-github-markdown-color-danger-fg);
   }
 
   .anchor#{$exclude} {
@@ -673,16 +673,16 @@ $exclude: ':not(wcp-preview *)' !default;
     th,
     td {
       padding: 6px 13px;
-      border: 1px solid var(--color-border-default);
+      border: 1px solid var(--wcp-github-markdown-color-border-default);
     }
 
     tr {
-      background-color: var(--color-canvas-default);
-      border-top: 1px solid var(--color-border-muted);
+      background-color: var(--wcp-github-markdown-color-canvas-default);
+      border-top: 1px solid var(--wcp-github-markdown-color-border-muted);
     }
 
     tr:nth-child(2n) {
-      background-color: var(--color-canvas-subtle);
+      background-color: var(--wcp-github-markdown-color-canvas-subtle);
     }
 
     img {
@@ -718,7 +718,7 @@ $exclude: ':not(wcp-preview *)' !default;
         padding: 7px;
         margin: 13px 0 0;
         overflow: hidden;
-        border: 1px solid var(--color-border-default);
+        border: 1px solid var(--wcp-github-markdown-color-border-default);
 
         img {
           display: block;
@@ -730,7 +730,7 @@ $exclude: ':not(wcp-preview *)' !default;
         display: block;
         padding: 5px 0 0;
         clear: both;
-        color: var(--color-fg-default);
+        color: var(--wcp-github-markdown-color-fg-default);
       }
     }
 
@@ -803,7 +803,7 @@ $exclude: ':not(wcp-preview *)' !default;
       margin: 0;
       font-size: 85%;
       white-space: break-spaces;
-      background-color: var(--color-neutral-muted);
+      background-color: var(--wcp-github-markdown-color-neutral-muted);
       border-radius: 6px;
     }
   }
@@ -854,7 +854,7 @@ $exclude: ':not(wcp-preview *)' !default;
       overflow: auto;
       font-size: 85%;
       line-height: 1.45;
-      background-color: var(--color-canvas-subtle);
+      background-color: var(--wcp-github-markdown-color-canvas-subtle);
       border-radius: 6px;
     }
   }
@@ -888,7 +888,7 @@ $exclude: ':not(wcp-preview *)' !default;
     .blob-num {
       padding: 10px 8px 9px;
       text-align: right;
-      background: var(--color-canvas-default);
+      background: var(--wcp-github-markdown-color-canvas-default);
       border: 0;
     }
 
@@ -898,7 +898,7 @@ $exclude: ':not(wcp-preview *)' !default;
 
     th {
       font-weight: var(--base-text-weight-semibold, 600);
-      background: var(--color-canvas-subtle);
+      background: var(--wcp-github-markdown-color-canvas-subtle);
       border-top: 0;
     }
   }
@@ -915,8 +915,8 @@ $exclude: ':not(wcp-preview *)' !default;
 
   .footnotes#{$exclude} {
     font-size: 12px;
-    color: var(--color-fg-muted);
-    border-top: 1px solid var(--color-border-default);
+    color: var(--wcp-github-markdown-color-fg-muted);
+    border-top: 1px solid var(--wcp-github-markdown-color-border-default);
 
     ol {
       padding-left: 16px;
@@ -932,7 +932,7 @@ $exclude: ':not(wcp-preview *)' !default;
       position: relative;
 
       &:target {
-        color: var(--color-fg-default);
+        color: var(--wcp-github-markdown-color-fg-default);
 
         &::before {
           position: absolute;
@@ -942,7 +942,7 @@ $exclude: ':not(wcp-preview *)' !default;
           left: -24px;
           pointer-events: none;
           content: '';
-          border: 2px solid var(--color-accent-emphasis);
+          border: 2px solid var(--wcp-github-markdown-color-accent-emphasis);
           border-radius: 6px;
         }
       }
@@ -954,36 +954,36 @@ $exclude: ':not(wcp-preview *)' !default;
   }
 
   .pl-c#{$exclude} {
-    color: var(--color-prettylights-syntax-comment);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-comment);
   }
 
   .pl-c1,
   .pl-s .pl-v {
     &#{$exclude} {
-      color: var(--color-prettylights-syntax-constant);
+      color: var(--wcp-github-markdown-color-prettylights-syntax-constant);
     }
   }
 
   .pl-e,
   .pl-en {
     &#{$exclude} {
-      color: var(--color-prettylights-syntax-entity);
+      color: var(--wcp-github-markdown-color-prettylights-syntax-entity);
     }
   }
 
   .pl-smi,
   .pl-s .pl-s1 {
     &#{$exclude} {
-      color: var(--color-prettylights-syntax-storage-modifier-import);
+      color: var(--wcp-github-markdown-color-prettylights-syntax-storage-modifier-import);
     }
   }
 
   .pl-ent#{$exclude} {
-    color: var(--color-prettylights-syntax-entity-tag);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-entity-tag);
   }
 
   .pl-k#{$exclude} {
-    color: var(--color-prettylights-syntax-keyword);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-keyword);
   }
 
   .pl-s,
@@ -994,38 +994,38 @@ $exclude: ':not(wcp-preview *)' !default;
   .pl-sr .pl-sre,
   .pl-sr .pl-sra {
     &#{$exclude} {
-      color: var(--color-prettylights-syntax-string);
+      color: var(--wcp-github-markdown-color-prettylights-syntax-string);
     }
   }
 
   .pl-v,
   .pl-smw {
     &#{$exclude} {
-      color: var(--color-prettylights-syntax-variable);
+      color: var(--wcp-github-markdown-color-prettylights-syntax-variable);
     }
   }
 
   .pl-bu#{$exclude} {
-    color: var(--color-prettylights-syntax-brackethighlighter-unmatched);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-brackethighlighter-unmatched);
   }
 
   .pl-ii#{$exclude} {
-    color: var(--color-prettylights-syntax-invalid-illegal-text);
-    background-color: var(--color-prettylights-syntax-invalid-illegal-bg);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-invalid-illegal-text);
+    background-color: var(--wcp-github-markdown-color-prettylights-syntax-invalid-illegal-bg);
   }
 
   .pl-c2#{$exclude} {
-    color: var(--color-prettylights-syntax-carriage-return-text);
-    background-color: var(--color-prettylights-syntax-carriage-return-bg);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-carriage-return-text);
+    background-color: var(--wcp-github-markdown-color-prettylights-syntax-carriage-return-bg);
   }
 
   .pl-sr#{$exclude} .pl-cce {
     font-weight: bold;
-    color: var(--color-prettylights-syntax-string-regexp);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-string-regexp);
   }
 
   .pl-ml#{$exclude} {
-    color: var(--color-prettylights-syntax-markup-list);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-markup-list);
   }
 
   .pl-mh,
@@ -1033,56 +1033,56 @@ $exclude: ':not(wcp-preview *)' !default;
   .pl-ms {
     &#{$exclude} {
       font-weight: bold;
-      color: var(--color-prettylights-syntax-markup-heading);
+      color: var(--wcp-github-markdown-color-prettylights-syntax-markup-heading);
     }
   }
 
   .pl-mi#{$exclude} {
     font-style: italic;
-    color: var(--color-prettylights-syntax-markup-italic);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-markup-italic);
   }
 
   .pl-mb#{$exclude} {
     font-weight: bold;
-    color: var(--color-prettylights-syntax-markup-bold);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-markup-bold);
   }
 
   .pl-md#{$exclude} {
-    color: var(--color-prettylights-syntax-markup-deleted-text);
-    background-color: var(--color-prettylights-syntax-markup-deleted-bg);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-markup-deleted-text);
+    background-color: var(--wcp-github-markdown-color-prettylights-syntax-markup-deleted-bg);
   }
 
   .pl-mi1#{$exclude} {
-    color: var(--color-prettylights-syntax-markup-inserted-text);
-    background-color: var(--color-prettylights-syntax-markup-inserted-bg);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-markup-inserted-text);
+    background-color: var(--wcp-github-markdown-color-prettylights-syntax-markup-inserted-bg);
   }
 
   .pl-mc#{$exclude} {
-    color: var(--color-prettylights-syntax-markup-changed-text);
-    background-color: var(--color-prettylights-syntax-markup-changed-bg);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-markup-changed-text);
+    background-color: var(--wcp-github-markdown-color-prettylights-syntax-markup-changed-bg);
   }
 
   .pl-mi2#{$exclude} {
-    color: var(--color-prettylights-syntax-markup-ignored-text);
-    background-color: var(--color-prettylights-syntax-markup-ignored-bg);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-markup-ignored-text);
+    background-color: var(--wcp-github-markdown-color-prettylights-syntax-markup-ignored-bg);
   }
 
   .pl-mdr#{$exclude} {
     font-weight: bold;
-    color: var(--color-prettylights-syntax-meta-diff-range);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-meta-diff-range);
   }
 
   .pl-ba#{$exclude} {
-    color: var(--color-prettylights-syntax-brackethighlighter-angle);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-brackethighlighter-angle);
   }
 
   .pl-sg#{$exclude} {
-    color: var(--color-prettylights-syntax-sublimelinter-gutter-mark);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-sublimelinter-gutter-mark);
   }
 
   .pl-corl#{$exclude} {
     text-decoration: underline;
-    color: var(--color-prettylights-syntax-constant-other-reference-link);
+    color: var(--wcp-github-markdown-color-prettylights-syntax-constant-other-reference-link);
   }
 
   g-emoji#{$exclude} {
