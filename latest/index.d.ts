@@ -631,9 +631,7 @@ declare module "src/components/feature/readme/readme.component" {
         readonly showCodePreview = false;
         readonly markdown = "";
         readonly hash?: string;
-        connectedCallback(): Promise<void>;
         protected updated(): void;
-        createRenderRoot(): this;
         scrollToId(section: string): void;
         protected render(): TemplateResult;
     }
