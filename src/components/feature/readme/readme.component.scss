@@ -1,15 +1,11 @@
 @use 'sass:meta' as meta;
-@use 'sass:selector' as selector;
 @use '@/styles/utils' as utils;
 
-// add some default styles from GitHub for the rendered readme for the time being
-@include meta.load-css('github-markdown-css/github-markdown');
-
-// a small example of basic markdown styling can be found in the nextcloud project:
+// a small example of basic markdown styling can be found in the NextCloud project:
 // https://github.com/nextcloud/deck/blob/main/src/css/markdown.scss
 
 // prettier-ignore
-wcp-readme {
+:host {
   ---wcp-readme-dark-color: var(--wcp-readme-dark-color, var(--wcp-color-grey-96));
   ---wcp-readme-dark-color-accent: var(--wcp-readme-dark-color-accent, #58a6ff);
   ---wcp-readme-dark-color-muted: var(--wcp-readme-dark-color-muted, var(--wcp-color-grey-80));
@@ -23,19 +19,33 @@ wcp-readme {
   ---wcp-readme-light-highlight-background: var(--wcp-readme-light-highlight-background, var(--wcp-color-blue-91));
 }
 
-// as we do not have Shadow DOM, we can't rely on the :host selector, so
-// to scope the styles we use the tag name of the component
-wcp-readme {
+// map some theming specific variables to the host scope
+:host {
+  @include utils.color-scheme(false, parent) using ($color-scheme) {
+    ---wcp-readme-border-color: var(---wcp-readme-#{$color-scheme}-border-color);
+    ---wcp-readme-color: var(---wcp-readme-#{$color-scheme}-color);
+    ---wcp-readme-color-accent: var(---wcp-readme-#{$color-scheme}-color-accent);
+    ---wcp-readme-color-muted: var(---wcp-readme-#{$color-scheme}-color-muted);
+    ---wcp-readme-highlight-background: var(---wcp-readme-#{$color-scheme}-highlight-background);
+  }
+}
+
+// add some default styles from GitHub for the rendered readme for the time being
+@include meta.load-css('@/styles/includes/github-markdown.scss');
+
+.markdown-body {
+  // first, reset some defaults, to be inherited from the global scope
+  background-color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+
   display: block;
+  color: var(---wcp-readme-color);
 
   // override some of the github styles to blend in with the rest
-  &.markdown-body {
-    // first, reset some defaults, to be inheritted from the global scope
-    background-color: inherit;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-
+  // limit styles to non-preview contents
+  :not(wcp-preview *) {
     // as these are wrapped in our custom `wcp-readme-example` component,
     // we need to reset the spacing on the projected pre elements
     wcp-readme-example pre {
@@ -44,7 +54,7 @@ wcp-readme {
       padding: 0;
     }
 
-    // all non-previable code example shall receive the correct border radius
+    // all non-previewable code example shall receive the correct border radius
     wcp-code pre {
       border-radius: var(--wcp-border-radius);
       width: fit-content;
@@ -75,32 +85,28 @@ wcp-readme {
       text-decoration: underline;
     }
 
-    @include utils.color-scheme(false, parent) using ($color-scheme) {
-      color: var(---wcp-readme-#{$color-scheme}-color);
+    a {
+      color: var(---wcp-readme-color-accent);
+    }
 
-      a {
-        color: var(---wcp-readme-#{$color-scheme}-color-accent);
-      }
+    blockquote {
+      border-left-color: var(---wcp-readme-border-color);
+      color: var(---wcp-readme-color-muted);
+    }
 
-      blockquote {
-        border-left-color: var(---wcp-readme-#{$color-scheme}-border-color);
-        color: var(---wcp-readme-#{$color-scheme}-color-muted);
-      }
+    // prettier-ignore
+    table td, table th, table tr,
+    h1, h2, h3, h4, h5, h6 {
+      border-color: var(---wcp-readme-border-color);
+    }
 
-      // prettier-ignore
-      table td, table th, table tr,
-      h1, h2, h3, h4, h5, h6 {
-        border-color: var(---wcp-readme-#{$color-scheme}-border-color);
-      }
+    > pre,
+    table tr:nth-child(2n) {
+      background-color: var(---wcp-readme-highlight-background);
+    }
 
-      > pre,
-      table tr:nth-child(2n) {
-        background-color: var(---wcp-readme-#{$color-scheme}-highlight-background);
-      }
-
-      wcp-code pre {
-        background-color: var(---wcp-readme-#{$color-scheme}-highlight-background);
-      }
+    wcp-code pre {
+      background-color: var(---wcp-readme-highlight-background);
     }
   }
 }

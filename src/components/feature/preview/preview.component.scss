@@ -18,10 +18,6 @@
 :host {
   display: block;
   position: relative;
-
-  // prevent fixed positioning from breaking out
-  // https://stackoverflow.com/a/70422489/1146207
-  transform: scale(1);
 }
 
 // the context menu with preview plugins
@@ -47,4 +43,9 @@ menu {
   wcp-button[aria-expanded='false'] ~ & {
     display: none;
   }
+}
+
+section > div {
+  contain: content;
+  isolation: isolate;
 }
