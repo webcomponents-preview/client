@@ -20,10 +20,9 @@ Displays a Readme file by its URL.
 
 ## Methods
 
-| Method             | Type                      |
-|--------------------|---------------------------|
-| `createRenderRoot` | `(): this`                |
-| `scrollToId`       | `(section: string): void` |
+| Method       | Type                      |
+|--------------|---------------------------|
+| `scrollToId` | `(section: string): void` |
 
 ## CSS Custom Properties
 

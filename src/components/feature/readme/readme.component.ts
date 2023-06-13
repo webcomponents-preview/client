@@ -42,23 +42,10 @@ export class Readme extends ColorSchemable(LitElement) {
   @property({ type: String, reflect: true })
   readonly hash?: string;
 
-  override async connectedCallback() {
-    super.connectedCallback();
-
-    // apply global class for github stylesheet to be applied
-    this.classList.add('markdown-body');
-  }
-
   protected override updated() {
     if (this.hash) {
       this.scrollToId(this.hash);
     }
-  }
-
-  // disable ShadowDOM
-  // https://stackoverflow.com/a/55213037/1146207
-  override createRenderRoot() {
-    return this;
   }
 
   scrollToId(section: string) {
@@ -75,10 +62,7 @@ export class Readme extends ColorSchemable(LitElement) {
 
   protected override render(): TemplateResult {
     return html`
-      ${unsafeStatic(renderMarkdown(this.markdown, this.showCodePreview))}
-      <style>
-        ${Readme.styles}
-      </style>
+      <div class="markdown-body">${unsafeStatic(renderMarkdown(this.markdown, this.showCodePreview))}</div>
     `;
   }
 }
