@@ -35,12 +35,6 @@
 
 .markdown-body {
   // first, reset some defaults, to be inherited from the global scope
-  background-color: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-
-  display: block;
   color: var(---wcp-readme-color);
 
   // override some of the github styles to blend in with the rest

@@ -93,17 +93,6 @@ $exclude: ':not(wcp-preview *)' !default;
     --wcp-github-markdown-color-danger-fg: #cf222e;
   }
 
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  margin: 0;
-  color: var(--wcp-github-markdown-color-fg-default);
-  background-color: var(--wcp-github-markdown-color-canvas-default);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji';
-  font-size: 16px;
-  line-height: 1.5;
-  word-wrap: break-word;
-
   .octicon#{$exclude} {
     display: inline-block;
     fill: currentColor;
