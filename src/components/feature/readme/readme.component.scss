@@ -21,7 +21,7 @@
 
 // map some theming specific variables to the host scope
 :host {
-  @include utils.color-scheme(false, parent) using ($color-scheme) {
+  @include utils.color-scheme() using ($color-scheme) {
     ---wcp-readme-border-color: var(---wcp-readme-#{$color-scheme}-border-color);
     ---wcp-readme-color: var(---wcp-readme-#{$color-scheme}-color);
     ---wcp-readme-color-accent: var(---wcp-readme-#{$color-scheme}-color-accent);
