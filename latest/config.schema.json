@@ -30,6 +30,13 @@
         "initialActiveElement": {
             "type": "string"
         },
+        "initialCodePreviewTab": {
+            "enum": [
+                "code",
+                "preview"
+            ],
+            "type": "string"
+        },
         "initialPreviewTab": {
             "type": "string"
         },

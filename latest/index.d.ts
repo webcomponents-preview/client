@@ -1,3 +1,37 @@
+declare module "src/utils/config.utils" {
+    export type Config = {
+        title: string;
+        excludeElements: string[];
+        fallbackGroupName: string;
+        initialActiveElement: string;
+        initialCodePreviewTab: 'code' | 'preview';
+        initialPreviewTab: string;
+        /**
+         * The plugins to be used for the preview.
+         * Defaults to `['wcp-preview-viewport', 'wcp-preview-background']`
+         */
+        previewPlugins: string[];
+        /**
+         * The plugins to be used for the preview frame.
+         * Defaults to `['wcp-preview-frame-viewer', 'wcp-preview-frame-examples', 'wcp-preview-frame-readme']`
+         */
+        previewFramePlugins: string[];
+        additionalReadmeGroupName: string;
+        additionalReadmes: {
+            name: string;
+            url: string;
+        }[];
+    };
+    global {
+        interface Window {
+            wcp: {
+                config: Promise<Config>;
+            };
+        }
+    }
+    export const loadConfig: (url?: string) => Promise<Config>;
+    export const getConfig: (url?: string) => Promise<Config>;
+}
 declare module "src/utils/mixin.types" {
     export type Constructor<T> = new (...args: any[]) => T;
 }
@@ -16,6 +50,7 @@ declare module "src/utils/color-scheme.utils" {
 }
 declare module "src/components/feature/markdown-example/markdown-example.component" {
     import { LitElement, type TemplateResult } from 'lit';
+    import { type Config } from "src/utils/config.utils";
     const MarkdownExample_base: import("@/index.js").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
     }> & typeof LitElement;
@@ -55,6 +90,8 @@ declare module "src/components/feature/markdown-example/markdown-example.compone
      */
     export class MarkdownExample extends MarkdownExample_base {
         static readonly styles: import("lit").CSSResult;
+        config?: Config;
+        connectedCallback(): Promise<void>;
         protected render(): TemplateResult;
     }
     global {
@@ -160,39 +197,6 @@ declare module "src/components/feature/navigation-item/navigation-item.component
             'wcp-navigation-item': NavigationItem;
         }
     }
-}
-declare module "src/utils/config.utils" {
-    export type Config = {
-        title: string;
-        excludeElements: string[];
-        fallbackGroupName: string;
-        initialActiveElement: string;
-        initialPreviewTab: string;
-        /**
-         * The plugins to be used for the preview.
-         * Defaults to `['wcp-preview-viewport', 'wcp-preview-background']`
-         */
-        previewPlugins: string[];
-        /**
-         * The plugins to be used for the preview frame.
-         * Defaults to `['wcp-preview-frame-viewer', 'wcp-preview-frame-examples', 'wcp-preview-frame-readme']`
-         */
-        previewFramePlugins: string[];
-        additionalReadmeGroupName: string;
-        additionalReadmes: {
-            name: string;
-            url: string;
-        }[];
-    };
-    global {
-        interface Window {
-            wcp: {
-                config: Promise<Config>;
-            };
-        }
-    }
-    export const loadConfig: (url?: string) => Promise<Config>;
-    export const getConfig: (url?: string) => Promise<Config>;
 }
 declare module "src/utils/dom.utils" {
     export function isElementWithin(element: Element, container?: Element): boolean;
@@ -566,7 +570,7 @@ declare module "src/components/feature/preview-frame/preview-frame.component" {
         static readonly styles: import("lit").CSSResult;
         private _plugins;
         private _tabs;
-        private activePlugin?;
+        private readonly activePlugin?;
         emitActivePluginChange(activePlugin?: string): void;
         protected handleSlotChange(event: Event): void;
         protected handleAvailabilityChange(): void;
