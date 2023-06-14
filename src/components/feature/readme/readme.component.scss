@@ -39,68 +39,69 @@
 
   // override some of the github styles to blend in with the rest
   // limit styles to non-preview contents
-  :not(wcp-preview *) {
-    // as these are wrapped in our custom `wcp-readme-example` component,
-    // we need to reset the spacing on the projected pre elements
-    wcp-readme-example pre {
-      background: 0;
-      margin: 0;
-      padding: 0;
-    }
 
-    // all non-previewable code example shall receive the correct border radius
-    wcp-code pre {
-      border-radius: var(--wcp-border-radius);
-      width: fit-content;
-    }
+  // as these are wrapped in our custom `wcp-readme-example` component,
+  // we need to reset the spacing on the projected pre elements
+  wcp-readme-example:not(wcp-preview *) pre {
+    background: 0;
+    margin: 0;
+    padding: 0;
+  }
 
-    table tr {
-      background-color: transparent;
-    }
+  table:not(wcp-preview *) tr {
+    background-color: transparent;
+  }
 
-    img {
-      background: none;
-    }
+  img:not(wcp-preview *) {
+    background: none;
+  }
 
-    // limit flowing content sizes
-    // prettier-ignore
-    h1, h2, h3, h4, h5, h6, p, ul, ol, dl {
+  // limit flowing content sizes
+  // prettier-ignore
+  h1, h2, h3, h4, h5, h6, p, ul, ol, dl {
+    &:not(wcp-preview *) {
       max-width: var(--wcp-layout-flowing-width);
     }
+  }
 
-    // enforce a maximum width for fixed content
-    // prettier-ignore
-    table, pre, blockquote {
+  // enforce a maximum width for fixed content
+  // prettier-ignore
+  table, pre, blockquote {
+    &:not(wcp-preview *) {
       max-width: min(100%, var(--wcp-layout-fixed-width));
     }
+  }
 
-    // as hash routing may be used, we can't rely on the `:target` pseudo selector, thus we set a class
-    .target {
-      text-decoration: underline;
-    }
+  // as hash routing may be used, we can't rely on the `:target` pseudo selector, thus we set a class
+  .target:not(wcp-preview *) {
+    text-decoration: underline;
+  }
 
-    a {
-      color: var(---wcp-readme-color-accent);
-    }
+  a:not(wcp-preview *) {
+    color: var(---wcp-readme-color-accent);
+  }
 
-    blockquote {
-      border-left-color: var(---wcp-readme-border-color);
-      color: var(---wcp-readme-color-muted);
-    }
+  blockquote:not(wcp-preview *) {
+    border-left-color: var(---wcp-readme-border-color);
+    color: var(---wcp-readme-color-muted);
+  }
 
-    // prettier-ignore
-    table td, table th, table tr,
-    h1, h2, h3, h4, h5, h6 {
+  // prettier-ignore
+  table td, table th, table tr,
+  h1, h2, h3, h4, h5, h6 {
+    &:not(wcp-preview *) {
       border-color: var(---wcp-readme-border-color);
     }
+  }
 
-    > pre,
-    table tr:nth-child(2n) {
-      background-color: var(---wcp-readme-highlight-background);
-    }
+  > pre,
+  table:not(wcp-preview *) tr:nth-child(2n) {
+    background-color: var(---wcp-readme-highlight-background);
+  }
 
-    wcp-code pre {
-      background-color: var(---wcp-readme-highlight-background);
-    }
+  wcp-code:not(wcp-preview *) pre {
+    background-color: var(---wcp-readme-highlight-background);
+    border-radius: var(--wcp-border-radius);
+    width: fit-content;
   }
 }
