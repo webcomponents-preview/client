@@ -3,6 +3,7 @@
   "title": "Web Component Preview",
   "excludeElements": ["wcp-root"],
   "initialActiveElement": "wcp-button",
+  "initialCodePreviewTab": "preview",
   "initialPreviewTab": "viewer",
   "previewPlugins": ["wcp-preview-viewport"],
   "previewFramePlugins": ["wcp-preview-frame-examples", "wcp-preview-frame-readme", "wcp-preview-frame-viewer"],

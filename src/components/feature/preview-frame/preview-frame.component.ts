@@ -40,7 +40,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   private _tabs: HTMLElementTagNameMap['wcp-tabs']['tabs'] = {};
 
   @property({ type: String, reflect: true, attribute: 'active-plugin' })
-  private activePlugin?: string;
+  private readonly activePlugin?: string;
 
   emitActivePluginChange(activePlugin?: string) {
     const event = new CustomEvent('wcp-preview-frame:active-plugin-change', {

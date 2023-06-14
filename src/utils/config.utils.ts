@@ -4,6 +4,7 @@ export type Config = {
   excludeElements: string[];
   fallbackGroupName: string;
   initialActiveElement: string;
+  initialCodePreviewTab: 'code' | 'preview';
   initialPreviewTab: string;
 
   /**
