@@ -48,4 +48,5 @@ menu {
 section > div {
   contain: content;
   isolation: isolate;
+  overflow: scroll;
 }
