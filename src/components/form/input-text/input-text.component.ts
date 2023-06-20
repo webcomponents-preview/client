@@ -128,7 +128,7 @@ export class InputText extends Editable()(LitElement) implements FormAssociated<
           autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
           ?disabled="${this.disabled}"
           ?required="${this.required}"
-          .value="${this.value ?? null}"
+          .value="${this.value ?? ''}"
           @input="${this.handleInput}"
         ></textarea>
       `;
@@ -142,7 +142,7 @@ export class InputText extends Editable()(LitElement) implements FormAssociated<
         autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
         ?disabled="${this.disabled}"
         ?required="${this.required}"
-        .value="${this.value ?? null}"
+        .value="${this.value ?? ''}"
         @input="${this.handleInput}"
       />
     `;
