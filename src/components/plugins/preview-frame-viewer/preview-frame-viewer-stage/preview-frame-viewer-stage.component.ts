@@ -13,6 +13,8 @@ import type { ElementData } from '../preview-frame-viewer.utils.js';
 import styles from './preview-frame-viewer-stage.component.scss';
 
 /**
+ * @element wcp-preview-frame-viewer-stage
+ * 
  * @example
  * ```html
  * <wcp-preview-frame-viewer-stage>

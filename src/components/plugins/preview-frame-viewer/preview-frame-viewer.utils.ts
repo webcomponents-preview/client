@@ -62,8 +62,8 @@ export function parseFieldValue(
 /**
  * Maps the given form data by the given element definition to a stateful data object
  */
-export function mapFormData(form: HTMLFormElement, element: Parsed.Element): ElementData {
-  const data = new FormData(form);
+export function mapFormData(form: FormData | HTMLFormElement, element: Parsed.Element): ElementData {
+  const data = form instanceof FormData ? form : new FormData(form);
   return Array.from(data.entries()).reduce((acc, [key, value]) => {
     // the name consists of the group and the actual name, separated by a dot
     const [group, name] = key.split('.');

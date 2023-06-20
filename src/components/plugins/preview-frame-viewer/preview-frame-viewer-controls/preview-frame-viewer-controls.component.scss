@@ -1,0 +1,19 @@
+@use '@/styles/utils' as utils;
+
+fieldset {
+  min-width: 0;
+
+  > :not(legend) {
+    margin: utils.size(1) 0;
+
+    &:not(:last-child) {
+      // padding-bottom: utils.size(1);
+      // border-bottom: 1px solid currentColor;
+    }
+
+    .description {
+      display: block;
+      max-width: 500px;
+    }
+  }
+}

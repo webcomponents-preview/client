@@ -23,6 +23,7 @@ export * from './components/plugins/preview-frame-examples/preview-frame-example
 export * from './components/plugins/preview-frame-readme/preview-frame-readme.plugin.js';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.plugin.js';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.utils.js';
+export * from './components/plugins/preview-frame-viewer/preview-frame-viewer-controls/preview-frame-viewer-controls.component.js';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component.js';
 export * from './components/plugins/preview-viewport/preview-viewport.plugin.js';
 export * from './components/root/root.component.js';
