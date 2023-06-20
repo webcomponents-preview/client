@@ -1,22 +1,5 @@
 @use '@/styles/utils' as utils;
 
-// prettier-ignore
-// :host {
-//   ---wcp-input-checkbox-border-radius: var(--wcp-input-checkbox-border-radius, var(--wcp-border-radius));
-//   ---wcp-input-checkbox-label-size: var(--wcp-input-checkbox-label-size, var(--wcp-input-label-size, 14px));
-//   ---wcp-input-checkbox-label-spacing: var(--wcp-input-checkbox-label-spacing, var(--wcp-input-label-spacing, #{utils.size(1)}));
-//   ---wcp-input-checkbox-text-spacing: var(--wcp-input-checkbox-label-spacing, var(--wcp-input-label-spacing, #{utils.size(.5)}));
-//   ---wcp-input-checkbox-size: var(--wcp-input-checkbox-size, #{utils.size(2)});
-
-//   ---wcp-input-checkbox-dark-background: var(--wcp-input-checkbox-dark-background, transparent);
-//   ---wcp-input-checkbox-dark-border: var(--wcp-input-checkbox-dark-border, var(--wcp-color-blue-96));
-//   ---wcp-input-checkbox-dark-color: var(--wcp-input-checkbox-dark-color, var(--wcp-color-blue-96));
-
-//   ---wcp-input-checkbox-light-background: var(--wcp-input-checkbox-light-background, transparent);
-//   ---wcp-input-checkbox-light-border: var(--wcp-input-checkbox-light-border, var(--wcp-color-blue-24));
-//   ---wcp-input-checkbox-light-color: var(--wcp-input-checkbox-light-color, var(--wcp-color-blue-24));
-// }
-
 :host {
   ---wcp-input-checkbox-size: var(--wcp-input-checkbox-size, #{utils.size(2)});
 
@@ -26,6 +9,9 @@
   --wcp-editable-passive-border-radius: var(--wcp-input-checkbox-border-radius);
   --wcp-editable-passive-border-size: var(--wcp-input-checkbox-border-size);
 
+  --wcp-editable-active-border-radius: var(--wcp-input-checkbox-border-radius);
+  --wcp-editable-active-border-size: var(--wcp-input-checkbox-border-size);
+
   --wcp-editable-dark-background: var(--wcp-input-checkbox-dark-background);
   --wcp-editable-dark-border: var(--wcp-input-checkbox-dark-border);
   --wcp-editable-dark-color: var(--wcp-input-checkbox-dark-color);
@@ -33,11 +19,6 @@
   --wcp-editable-light-background: var(--wcp-input-checkbox-light-background);
   --wcp-editable-light-border: var(--wcp-input-checkbox-light-border);
   --wcp-editable-light-color: var(--wcp-input-checkbox-light-color);
-}
-
-:host(:focus-within) {
-  ---wcp-editable-border-radius: var(---wcp-editable-passive-border-radius);
-  ---wcp-editable-border-size: var(---wcp-editable-passive-border-size);
 }
 
 #input {
@@ -60,21 +41,32 @@ label {
     width: calc(var(---wcp-input-checkbox-size) * 0.5);
 
     position: absolute;
-    inset: calc(var(---wcp-input-checkbox-size) * 0.5) auto auto calc(var(---wcp-input-checkbox-size) * 0.5);
+    inset: calc(var(---wcp-input-checkbox-size) * 0.4) auto auto calc(var(---wcp-input-checkbox-size) * 0.5);
     transform: translate(-50%, -50%) rotate(-45deg);
 
     border: solid var(---wcp-editable-color);
     border-width: 0 0 var(---wcp-editable-border-size) var(---wcp-editable-border-size);
     z-index: 1;
+
+    transition: var(--wcp-fx-default-duration) ease-out;
+    transition-property: border-width, height, inset, opacity, width;
+    will-change: border-width, height, inset, opacity, width;
   }
+}
+
+:host([checked][disabled])::after {
+  opacity: 0.5;
 }
 
 input {
   all: unset;
   appearance: none;
-  box-sizing: border-box;
   cursor: pointer;
+
+  box-sizing: border-box;
   display: block;
+  height: 0;
+  width: 0;
   margin-right: var(---wcp-editable-spacing);
 
   // as we're using the border to space the check mark with the background,
@@ -82,9 +74,13 @@ input {
   // of the outline from the size of the checkbox button and add a padding to
   // compensate for the outline (which is not part of the `border-box`)
   // https://www.w3schools.com/css/css_outline.asp
-  height: calc(var(---wcp-input-checkbox-size) - calc(var(---wcp-editable-border-size) * 2));
-  width: calc(var(---wcp-input-checkbox-size) - calc(var(---wcp-editable-border-size) * 2));
   background-color: var(---wcp-editable-background);
-  border: var(---wcp-editable-border-size) solid var(---wcp-editable-border);
+  outline: var(---wcp-editable-border-size) solid var(---wcp-editable-border);
+  outline-offset: calc(var(---wcp-editable-border-size) * -1);
   border-radius: var(---wcp-editable-border-radius);
+
+  // we're doing all transitions directly on the input
+  transition: var(--wcp-fx-default-duration) ease-out;
+  transition-property: border-radius, opacity, outline-offset, outline-width;
+  will-change: border-radius, opacity, outline-offset, outline-width;
 }

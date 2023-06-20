@@ -54,7 +54,10 @@ import styles from './input-checkbox.component.scss';
  * ```
  */
 @customElement('wcp-input-checkbox')
-export class InputCheckbox extends Editable({ hasBorder: false })(LitElement) implements FormAssociated<string> {
+export class InputCheckbox
+  extends Editable({ hasBeforeSlot: false, hasBorder: false })(LitElement)
+  implements FormAssociated<string>
+{
   static override readonly styles = [super.formStyles, unsafeCSS(styles)];
 
   private initialChecked!: boolean;
