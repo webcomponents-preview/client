@@ -5,8 +5,10 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
 import type * as Parsed from '@/utils/parser.types.js';
+import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 
 import type { ElementData } from '../preview-frame-viewer.utils.js';
+
 import styles from './preview-frame-viewer-controls.component.scss';
 
 /**
@@ -15,7 +17,7 @@ import styles from './preview-frame-viewer-controls.component.scss';
  * @emits {CustomEvent<FormData>} wcp-preview-frame-viewer-controls:input - Fires when the user changes a control value.
  */
 @customElement('wcp-preview-frame-viewer-controls')
-export class PreviewFrameViewerControls extends LitElement {
+export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
   @property({ type: Object })

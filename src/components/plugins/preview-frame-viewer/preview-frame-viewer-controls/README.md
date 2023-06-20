@@ -1,5 +1,7 @@
 # wcp-preview-frame-viewer-controls
 
+**Mixins:** ColorSchemable
+
 ## Properties
 
 | Property  | Attribute | Modifiers |

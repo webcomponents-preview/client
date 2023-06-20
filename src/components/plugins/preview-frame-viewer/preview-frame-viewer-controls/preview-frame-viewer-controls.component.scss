@@ -1,19 +1,55 @@
 @use '@/styles/utils' as utils;
 
-fieldset {
-  min-width: 0;
+// prettier-ignore
+:host {
+  ---wcp-preview-frame-viewer-controls-headline-size: var(--wcp-preview-frame-viewer-controls-headline-size, .8em);
+  ---wcp-preview-frame-viewer-controls-headline-weight: var(--wcp-preview-frame-viewer-controls-headline-weight, 200);
+  ---wcp-preview-frame-viewer-controls-headline-spacing: var(--wcp-preview-frame-viewer-controls-headline-spacing, .1em);
 
-  > :not(legend) {
-    margin: utils.size(1) 0;
+  ---wcp-preview-frame-viewer-controls-dark-border-color: var(--wcp-preview-frame-viewer-controls-dark-border-color, var(--wcp-color-grey-24));
+  ---wcp-preview-frame-viewer-controls-light-border-color: var(--wcp-preview-frame-viewer-controls-light-border-color, var(--wcp-color-blue-55));
 
-    &:not(:last-child) {
-      // padding-bottom: utils.size(1);
-      // border-bottom: 1px solid currentColor;
-    }
-
-    .description {
-      display: block;
-      max-width: 500px;
-    }
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-preview-frame-viewer-controls-border-color: var(---wcp-preview-frame-viewer-controls-#{$color-scheme}-border-color);
   }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: utils.size(2);
+}
+
+fieldset {
+  all: unset;
+
+  display: flex;
+  flex-direction: column;
+  gap: utils.size(1);
+}
+
+legend {
+  all: unset;
+  
+  display: block;
+  width: 100%;
+  padding: utils.size(1) 0;
+
+  border-top: 1px solid var(---wcp-preview-frame-viewer-controls-border-color);
+
+  font-size: var(---wcp-preview-frame-viewer-controls-headline-size);
+  font-weight: var(---wcp-preview-frame-viewer-controls-headline-weight);
+  letter-spacing: var(---wcp-preview-frame-viewer-controls-headline-spacing);
+  line-height: 1;
+  text-transform: uppercase;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.description {
+  display: block;
+  max-width: 500px;
+  font-size: 0.8em;
 }

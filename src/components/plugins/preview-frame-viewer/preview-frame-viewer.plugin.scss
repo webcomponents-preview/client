@@ -3,7 +3,8 @@
 :host {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  gap: utils.size(2);
+  padding-top: utils.size(2);
 }
 
 wcp-preview-frame-viewer {
