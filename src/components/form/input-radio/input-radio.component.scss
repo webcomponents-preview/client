@@ -1,75 +1,87 @@
 @use '@/styles/utils' as utils;
 
-// prettier-ignore
 :host {
-  ---wcp-input-radio-label-size: var(--wcp-input-radio-label-size, var(--wcp-input-label-size, 14px));
-  ---wcp-input-radio-label-spacing: var(--wcp-input-radio-label-spacing, var(--wcp-input-label-spacing, #{utils.size(1)}));
-  ---wcp-input-radio-text-spacing: var(--wcp-input-radio-label-spacing, var(--wcp-input-label-spacing, #{utils.size(.5)}));
   ---wcp-input-radio-size: var(--wcp-input-radio-size, #{utils.size(2)});
 
-  ---wcp-input-radio-dark-background: var(--wcp-input-radio-dark-background, var(--wcp-color-grey-100));
-  ---wcp-input-radio-dark-border: var(--wcp-input-radio-dark-border, var(--wcp-color-blue-65));
-  ---wcp-input-radio-dark-passive-color: var(--wcp-input-radio-dark-passive-color, var(--wcp-color-grey-80));
-  ---wcp-input-radio-dark-active-color: var(--wcp-input-radio-dark-active-color, var(--wcp-color-blue-27));
+  --wcp-editable-label-size: var(--wcp-input-radio-label-size, 1em);
+  --wcp-editable-spacing: var(--wcp-input-radio-spacing, #{utils.size(1)});
 
-  ---wcp-input-radio-light-background: var(--wcp-input-radio-light-background, var(--wcp-color-grey-100));
-  ---wcp-input-radio-light-border: var(--wcp-input-radio-light-border, var(--wcp-color-blue-20));
-  ---wcp-input-radio-light-passive-color: var(--wcp-input-radio-light-passive-color, var(--wcp-color-grey-80));
-  ---wcp-input-radio-light-active-color: var(--wcp-input-radio-light-active-color, var(--wcp-color-blue-34));
+  --wcp-editable-passive-border-radius: var(--wcp-input-radio-border-radius);
+  --wcp-editable-passive-border-size: var(--wcp-input-radio-border-size);
+
+  --wcp-editable-active-border-radius: var(--wcp-input-radio-border-radius);
+  --wcp-editable-active-border-size: var(--wcp-input-radio-border-size);
+
+  --wcp-editable-dark-background: var(--wcp-input-radio-dark-background);
+  --wcp-editable-dark-border: var(--wcp-input-radio-dark-border);
+  --wcp-editable-dark-color: var(--wcp-input-radio-dark-color);
+
+  --wcp-editable-light-background: var(--wcp-input-radio-light-background);
+  --wcp-editable-light-border: var(--wcp-input-radio-light-border);
+  --wcp-editable-light-color: var(--wcp-input-radio-light-color);
 }
 
-:host {
-  display: flex;
-  flex-direction: column;
-  gap: var(---wcp-input-radio-text-spacing);
-  width: fit-content;
-
-  @include utils.color-scheme() using ($color-scheme) {
-    ---wcp-input-radio-background: var(---wcp-input-radio-#{$color-scheme}-background);
-    ---wcp-input-radio-border: var(---wcp-input-radio-#{$color-scheme}-border);
-    ---wcp-input-radio-passive-color: var(---wcp-input-radio-#{$color-scheme}-passive-color);
-    ---wcp-input-radio-active-color: var(---wcp-input-radio-#{$color-scheme}-active-color);
-  }
-}
-
-:host(:disabled) {
-  opacity: 0.5;
-}
-
-div {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+#input {
+  grid-area: before;
 }
 
 label {
-  display: block;
-  margin-left: var(---wcp-input-radio-label-spacing);
-  font-size: var(---wcp-input-radio-label-size);
+  grid-area: center;
+  padding-bottom: 0;
+}
+
+:host([checked]) {
+  position: relative;
+
+  &::after {
+    content: '';
+    pointer-events: none;
+
+    display: block;
+    height: calc(var(---wcp-input-radio-size) * 0.5);
+    width: calc(var(---wcp-input-radio-size) * 0.5);
+
+    position: absolute;
+    inset: calc(var(---wcp-input-radio-size) * 0.5) auto auto calc(var(---wcp-input-radio-size) * 0.5);
+    transform: translate(-50%, -50%);
+
+    background: var(---wcp-editable-color);
+    border-radius: 50%;
+    z-index: 1;
+
+    transition: var(--wcp-fx-default-duration) ease-out;
+    transition-property: height, inset, opacity, width;
+    will-change: height, inset, opacity, width;
+  }
+}
+
+:host([checked][disabled])::after {
+  opacity: 0.5;
 }
 
 input {
   all: unset;
   appearance: none;
   cursor: pointer;
+
   box-sizing: border-box;
   display: block;
+  height: 0;
+  width: 0;
+  margin-right: var(---wcp-editable-spacing);
 
   // as we're using the border to space the check mark with the background,
   // we use the outline as actual border; thus, we have to subtract the width
   // of the outline from the size of the radio button and add a padding to
   // compensate for the outline (which is not part of the `border-box`)
   // https://www.w3schools.com/css/css_outline.asp
-  height: calc(var(---wcp-input-radio-size) - 4px);
-  width: calc(var(---wcp-input-radio-size) - 4px);
-  padding: 2px;
-  outline: 1px solid var(---wcp-input-radio-border);
-  border: 4px solid var(---wcp-input-radio-background);
+  background-color: var(---wcp-editable-background);
+  outline: var(---wcp-editable-border-size) solid var(---wcp-editable-border);
+  outline-offset: calc(var(---wcp-editable-border-size) * -1);
   border-radius: 50%;
-  background-color: var(---wcp-input-radio-passive-color);
 
-  &:checked {
-    border-width: 2px;
-    background-color: var(---wcp-input-radio-active-color);
-  }
+  // we're doing all transitions directly on the input
+  transition: var(--wcp-fx-default-duration) ease-out;
+  transition-property: opacity, outline-offset, outline-width;
+  will-change: opacity, outline-offset, outline-width;
 }
