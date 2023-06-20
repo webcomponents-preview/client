@@ -1,3 +1,37 @@
+declare module "src/utils/config.utils" {
+    export type Config = {
+        title: string;
+        excludeElements: string[];
+        fallbackGroupName: string;
+        initialActiveElement: string;
+        initialCodePreviewTab: 'code' | 'preview';
+        initialPreviewTab: string;
+        /**
+         * The plugins to be used for the preview.
+         * Defaults to `['wcp-preview-viewport', 'wcp-preview-background']`
+         */
+        previewPlugins: string[];
+        /**
+         * The plugins to be used for the preview frame.
+         * Defaults to `['wcp-preview-frame-viewer', 'wcp-preview-frame-examples', 'wcp-preview-frame-readme']`
+         */
+        previewFramePlugins: string[];
+        additionalReadmeGroupName: string;
+        additionalReadmes: {
+            name: string;
+            url: string;
+        }[];
+    };
+    global {
+        interface Window {
+            wcp: {
+                config: Promise<Config>;
+            };
+        }
+    }
+    export const loadConfig: (url?: string) => Promise<Config>;
+    export const getConfig: (url?: string) => Promise<Config>;
+}
 declare module "src/utils/mixin.types" {
     export type Constructor<T> = new (...args: any[]) => T;
 }
@@ -16,6 +50,7 @@ declare module "src/utils/color-scheme.utils" {
 }
 declare module "src/components/feature/markdown-example/markdown-example.component" {
     import { LitElement, type TemplateResult } from 'lit';
+    import { type Config } from "src/utils/config.utils";
     const MarkdownExample_base: import("@/index.js").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
     }> & typeof LitElement;
@@ -55,6 +90,8 @@ declare module "src/components/feature/markdown-example/markdown-example.compone
      */
     export class MarkdownExample extends MarkdownExample_base {
         static readonly styles: import("lit").CSSResult;
+        config?: Config;
+        connectedCallback(): Promise<void>;
         protected render(): TemplateResult;
     }
     global {
@@ -160,39 +197,6 @@ declare module "src/components/feature/navigation-item/navigation-item.component
             'wcp-navigation-item': NavigationItem;
         }
     }
-}
-declare module "src/utils/config.utils" {
-    export type Config = {
-        title: string;
-        excludeElements: string[];
-        fallbackGroupName: string;
-        initialActiveElement: string;
-        initialPreviewTab: string;
-        /**
-         * The plugins to be used for the preview.
-         * Defaults to `['wcp-preview-viewport', 'wcp-preview-background']`
-         */
-        previewPlugins: string[];
-        /**
-         * The plugins to be used for the preview frame.
-         * Defaults to `['wcp-preview-frame-viewer', 'wcp-preview-frame-examples', 'wcp-preview-frame-readme']`
-         */
-        previewFramePlugins: string[];
-        additionalReadmeGroupName: string;
-        additionalReadmes: {
-            name: string;
-            url: string;
-        }[];
-    };
-    global {
-        interface Window {
-            wcp: {
-                config: Promise<Config>;
-            };
-        }
-    }
-    export const loadConfig: (url?: string) => Promise<Config>;
-    export const getConfig: (url?: string) => Promise<Config>;
 }
 declare module "src/utils/dom.utils" {
     export function isElementWithin(element: Element, container?: Element): boolean;
@@ -566,7 +570,7 @@ declare module "src/components/feature/preview-frame/preview-frame.component" {
         static readonly styles: import("lit").CSSResult;
         private _plugins;
         private _tabs;
-        private activePlugin?;
+        private readonly activePlugin?;
         emitActivePluginChange(activePlugin?: string): void;
         protected handleSlotChange(event: Event): void;
         protected handleAvailabilityChange(): void;
@@ -631,9 +635,7 @@ declare module "src/components/feature/readme/readme.component" {
         readonly showCodePreview = false;
         readonly markdown = "";
         readonly hash?: string;
-        connectedCallback(): Promise<void>;
         protected updated(): void;
-        createRenderRoot(): this;
         scrollToId(section: string): void;
         protected render(): TemplateResult;
     }
@@ -731,6 +733,7 @@ declare module "src/utils/form.utils" {
 declare module "src/mixins/editable.mixin" {
     import { type LitElement, type TemplateResult, type CSSResultGroup } from 'lit';
     import { Constructor } from "src/utils/mixin.types";
+    import 'element-internals-polyfill';
     export class EditableInterface {
         readonly internals: ElementInternals;
         label?: string;
@@ -752,7 +755,6 @@ declare module "src/mixins/editable.mixin" {
 declare module "src/components/form/input-checkbox/input-checkbox.component" {
     import { LitElement, PropertyValues } from 'lit';
     import type { FormAssociated } from "src/utils/form.utils";
-    import 'element-internals-polyfill';
     const InputCheckbox_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A checkbox input element using the wcp style. Fully form aware.
@@ -824,16 +826,15 @@ declare module "src/components/form/input-checkbox/input-checkbox.component" {
 declare module "src/components/form/input-number/input-number.component" {
     import { LitElement, PropertyValues } from 'lit';
     import type { FormAssociated } from "src/utils/form.utils";
-    import 'element-internals-polyfill';
-    const InputNumber_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const InputNumber_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A numeric input element using the wcp style. Fully form aware.
      *
      * @element wcp-input-number
      *
-     * @slot - Receives optional descriptions below the input.
+     * @property {string} label - The label of the input element.
+     *
+     * @slot hint - Receives optional descriptions below the input.
      *
      * @cssprop --wcp-input-number-label-size - The font size of the label.
      * @cssprop --wcp-input-number-label-spacing - The spacing between the label and the input.
@@ -867,21 +868,19 @@ declare module "src/components/form/input-number/input-number.component" {
      */
     export class InputNumber extends InputNumber_base implements FormAssociated<number> {
         #private;
-        static readonly formAssociated = true;
-        static readonly styles: import("lit").CSSResult;
-        private initialValue?;
+        static readonly styles: import("lit").CSSResultGroup[];
         input: HTMLInputElement;
-        label?: string;
-        name: string;
         autocomplete: boolean;
         disabled: boolean;
+        readonly: boolean;
         required: boolean;
+        name: string;
         value?: number;
         protected firstUpdated(props: PropertyValues<this>): void;
         formResetCallback(): void;
         checkValidity(): boolean;
         handleInput(event: Event): void;
-        protected render(): import("lit-html").TemplateResult<1>;
+        renderInput(id: string): import("lit-html").TemplateResult<1>;
     }
     global {
         interface HTMLElementTagNameMap {
@@ -892,30 +891,29 @@ declare module "src/components/form/input-number/input-number.component" {
 declare module "src/components/form/input-radio/input-radio.component" {
     import { LitElement, PropertyValues } from 'lit';
     import type { FormAssociated } from "src/utils/form.utils";
-    import 'element-internals-polyfill';
-    const InputRadio_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const InputRadio_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A radio input element using the wcp style. Fully form aware.
      *
      * @element wcp-input-radio
      *
-     * @slot - Receives optional descriptions below the input.
+     * @property {string} label - The label of the input element.
      *
-     * @cssprop --wcp-input-radio-label-size - The font size of the label.
-     * @cssprop --wcp-input-radio-label-spacing - The leading distance of the label to the input.
+     * @slot hint - Receives optional descriptions below the input.
+     *
      * @cssprop --wcp-input-radio-size - The size of the radio input.
+     * @cssprop --wcp-input-radio-label-size - The font size of the label.
+     * @cssprop --wcp-input-radio-spacing - The leading distance of the label to the input.
+     * @cssprop --wcp-input-radio-border-radius - The border radius of the radio input.
+     * @cssprop --wcp-input-radio-border-size - The border size of the radio input.
      *
      * @cssprop --wcp-input-radio-dark-background - The background color of the radio input in dark mode.
      * @cssprop --wcp-input-radio-dark-border - The border color of the radio input in dark mode.
-     * @cssprop --wcp-input-radio-dark-passive-color - The fill color of the radio input when not checked in dark mode.
-     * @cssprop --wcp-input-radio-dark-active-color - The fill color of the radio input when checked in dark mode.
+     * @cssprop --wcp-input-radio-dark-color - The fill color of the radio input when checked in dark mode.
      *
      * @cssprop --wcp-input-radio-light-background - The background color of the radio input in light mode.
      * @cssprop --wcp-input-radio-light-border - The border color of the radio input in light mode.
-     * @cssprop --wcp-input-radio-light-passive-color - The fill color of the radio input when not checked in light mode.
-     * @cssprop --wcp-input-radio-light-active-color - The fill color of the radio input when checked in light mode.
+     * @cssprop --wcp-input-radio-light-color - The fill color of the radio input when checked in light mode.
      *
      * @example
      * ## With optional label
@@ -940,11 +938,8 @@ declare module "src/components/form/input-radio/input-radio.component" {
      * ```
      */
     export class InputRadio extends InputRadio_base implements FormAssociated<string> {
-        #private;
-        static readonly styles: import("lit").CSSResult;
-        static readonly formAssociated = true;
+        static readonly styles: import("lit").CSSResultGroup[];
         private initialChecked;
-        label?: string;
         name: string;
         autocomplete: boolean;
         disabled: boolean;
@@ -956,7 +951,7 @@ declare module "src/components/form/input-radio/input-radio.component" {
         formResetCallback(): void;
         checkValidity(): boolean;
         handleInput(event: Event): void;
-        protected render(): import("lit-html").TemplateResult<1>;
+        renderInput(id: string): import("lit-html").TemplateResult<1>;
     }
     global {
         interface HTMLElementTagNameMap {
@@ -967,7 +962,6 @@ declare module "src/components/form/input-radio/input-radio.component" {
 declare module "src/components/form/input-text/input-text.component" {
     import { LitElement, PropertyValues } from 'lit';
     import type { FormAssociated } from "src/utils/form.utils";
-    import 'element-internals-polyfill';
     const InputText_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A text input element using the wcp style. Fully form aware.
@@ -1036,75 +1030,6 @@ declare module "src/components/form/input-text/input-text.component" {
         interface HTMLElementTagNameMap {
             'wcp-input-text': InputText;
         }
-    }
-}
-declare module "src/components/form/radio-menu/radio-menu.component" {
-    import { LitElement, PropertyValues } from 'lit';
-    import type { FormAssociated } from "src/utils/form.utils";
-    import 'element-internals-polyfill';
-    /**
-     * A radio menu element using the WCP style. Fully form aware.
-     *
-     * @element wcp-radio-menu
-     *
-     * @slot - The default slot. Pass the radio buttons here.
-     *
-     * @cssprop --wcp-radio-menu-label-size - The font size of the label.
-     * @cssprop --wcp-radio-menu-label-spacing - The spacing between label and radio buttons.
-     * @cssprop --wcp-radio-menu-option-spacing - The spacing between the radio buttons.
-     *
-     * @example
-     * ## With optional label
-     * ```html
-     * <wcp-radio-menu label="With optional label">
-     *   <wcp-input-radio label="foo" value="foo"></wcp-input-radio>
-     *   <wcp-input-radio label="bar" value="bar"></wcp-input-radio>
-     *   <wcp-input-radio label="baz" value="baz"></wcp-input-radio>
-     * </wcp-radio-menu>
-     * ```
-     *
-     * @example
-     * ## With optional initial value
-     * ```html
-     * <wcp-radio-menu label="With optional initial value">
-     *   <wcp-input-radio label="foo" value="foo"></wcp-input-radio>
-     *   <wcp-input-radio checked label="bar" value="bar"></wcp-input-radio>
-     *   <wcp-input-radio label="baz" value="baz"></wcp-input-radio>
-     * </wcp-radio-menu>
-     * ```
-     *
-     * @example
-     * ## Used within a form
-     * ```html
-     * <form>
-     *   <wcp-radio-menu label="Fully form enabled component">
-     *     <wcp-input-radio label="foo" value="foo"></wcp-input-radio>
-     *     <wcp-input-radio label="bar" value="bar"></wcp-input-radio>
-     *     <wcp-input-radio label="baz" value="baz"></wcp-input-radio>
-     *   </wcp-radio-menu>
-     *   <button type="submit">Submit</button>
-     *   <button type="reset">Reset</button>
-     * </form>
-     * ```
-     */
-    export class RadioMenu extends LitElement implements FormAssociated<string> {
-        #private;
-        static readonly formAssociated = true;
-        static readonly styles: import("lit").CSSResult;
-        private initialValue?;
-        private radios?;
-        label?: string;
-        name: string;
-        disabled: boolean;
-        required: boolean;
-        value?: string;
-        attributeChangedCallback(name: string, old: string | null, value: string | null): void;
-        protected firstUpdated(props: PropertyValues<this>): void;
-        formResetCallback(): void;
-        checkValidity(): boolean;
-        handleSlotChange(): void;
-        handleInput(event: Event): void;
-        protected render(): import("lit-html").TemplateResult<1>;
     }
 }
 declare module "src/components/layout/aside/aside.component" {
@@ -1297,7 +1222,7 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
     /**
      * Maps the given form data by the given element definition to a stateful data object
      */
-    export function mapFormData(form: HTMLFormElement, element: Parsed.Element): ElementData;
+    export function mapFormData(form: FormData | HTMLFormElement, element: Parsed.Element): ElementData;
 }
 declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
@@ -1306,6 +1231,9 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
     const PreviewFrameViewer_base: import("@/index.js").Constructor<{
         colorScheme?: "light" | "dark" | undefined;
     }> & typeof LitElement;
+    /**
+     * @element wcp-preview-frame-viewer
+     */
     export class PreviewFrameViewer extends PreviewFrameViewer_base implements PreviewFramePlugin {
         #private;
         static readonly styles: import("lit").CSSResult;
@@ -1315,9 +1243,7 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
         readonly name = "viewer";
         readonly label = "Viewer";
         protected getElementReference(): Element | undefined;
-        protected handleControlsInput(event: InputEvent): void;
-        protected renderFieldControl(field: Parsed.Field): TemplateResult;
-        protected renderSlotControl(slot: Parsed.Slot): TemplateResult;
+        protected handleControlsInput(event: CustomEvent<FormData>): void;
         protected render(): TemplateResult;
     }
     global {
@@ -1326,10 +1252,39 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
         }
     }
 }
+declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer-controls/preview-frame-viewer-controls.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import type * as Parsed from "src/utils/parser.types";
+    import type { ElementData } from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.utils";
+    /**
+     * @element wcp-preview-frame-viewer-controls
+     *
+     * @emits {CustomEvent<FormData>} wcp-preview-frame-viewer-controls:input - Fires when the user changes a control value.
+     */
+    export class PreviewFrameViewerControls extends LitElement {
+        static readonly styles: import("lit").CSSResult;
+        readonly element?: Parsed.Element;
+        readonly data?: ElementData;
+        protected renderFieldControl(field: Parsed.Field): TemplateResult;
+        protected renderSlotControl(slot: Parsed.Slot): TemplateResult;
+        protected handleFormInput(event: InputEvent): void;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementEventMap {
+            'wcp-preview-frame-viewer-controls:input': CustomEvent<FormData>;
+        }
+        interface HTMLElementTagNameMap {
+            'wcp-preview-frame-viewer-controls': PreviewFrameViewerControls;
+        }
+    }
+}
 declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component" {
     import { LitElement, type TemplateResult } from 'lit';
     import type { ElementData } from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.utils";
     /**
+     * @element wcp-preview-frame-viewer-stage
+     *
      * @example
      * ```html
      * <wcp-preview-frame-viewer-stage>
@@ -1728,7 +1683,6 @@ declare module "src/index" {
     export * from "src/components/form/input-number/input-number.component";
     export * from "src/components/form/input-radio/input-radio.component";
     export * from "src/components/form/input-text/input-text.component";
-    export * from "src/components/form/radio-menu/radio-menu.component";
     export * from "src/components/layout/aside/aside.component";
     export * from "src/components/layout/layout/layout.component";
     export * from "src/components/layout/main/main.component";
@@ -1736,6 +1690,7 @@ declare module "src/index" {
     export * from "src/components/plugins/preview-frame-readme/preview-frame-readme.plugin";
     export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.plugin";
     export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.utils";
+    export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer-controls/preview-frame-viewer-controls.component";
     export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component";
     export * from "src/components/plugins/preview-viewport/preview-viewport.plugin";
     export * from "src/components/root/root.component";
