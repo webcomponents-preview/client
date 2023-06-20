@@ -7,6 +7,9 @@ import { Constructor } from '@/utils/mixin.types.js';
 
 import styles from './editable.mixin.scss';
 
+// Safari still hasn't ElementInternals shipped
+import 'element-internals-polyfill';
+
 export declare class EditableInterface {
   readonly internals: ElementInternals;
   label?: string;

@@ -5,9 +5,6 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import type { FormAssociated } from '@/utils/form.utils.js';
 import { Editable } from '@/mixins/editable.mixin.js';
 
-// Safari still hasn't ElementInternals shipped
-import 'element-internals-polyfill';
-
 // instruct esbuild to load the CSS file as a string
 import styles from './input-checkbox.component.scss';
 

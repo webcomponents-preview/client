@@ -6,9 +6,6 @@ import { when } from 'lit/directives/when.js';
 import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 import type { FormAssociated } from '@/utils/form.utils.js';
 
-// Safari still hasn't ElementInternals shipped
-import 'element-internals-polyfill';
-
 // instruct esbuild to load the CSS file as a string
 import styles from './input-radio.component.scss';
 
