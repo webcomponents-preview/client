@@ -1,10 +1,9 @@
 import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
 import type { FormAssociated } from '@/utils/form.utils.js';
+import { Editable } from '@/mixins/editable.mixin.js';
 
 // instruct esbuild to load the CSS file as a string
 import styles from './input-number.component.scss';
@@ -14,7 +13,9 @@ import styles from './input-number.component.scss';
  *
  * @element wcp-input-number
  * 
- * @slot - Receives optional descriptions below the input.
+ * @property {string} label - The label of the input element.
+ * 
+ * @slot hint - Receives optional descriptions below the input.
  * 
  * @cssprop --wcp-input-number-label-size - The font size of the label.
  * @cssprop --wcp-input-number-label-spacing - The spacing between the label and the input.
@@ -47,22 +48,13 @@ import styles from './input-number.component.scss';
  * ```
  */
 @customElement('wcp-input-number')
-export class InputNumber extends ColorSchemable(LitElement) implements FormAssociated<number> {
-  static readonly formAssociated = true;
-  static override readonly styles = unsafeCSS(styles);
+export class InputNumber extends Editable()(LitElement) implements FormAssociated<number> {
+  static override readonly styles = [super.formStyles, unsafeCSS(styles)];
 
-  readonly #internals = this.attachInternals();
+  #initialValue?: number;
 
-  private initialValue?: number;
-
-  @query('input')
+  @query('input, textarea')
   input!: HTMLInputElement;
-
-  @property({ type: String, reflect: true })
-  label?: string;
-
-  @property({ type: String, reflect: true })
-  name = 'text';
 
   @property({ type: Boolean, reflect: true })
   autocomplete = false;
@@ -71,59 +63,63 @@ export class InputNumber extends ColorSchemable(LitElement) implements FormAssoc
   disabled = false;
 
   @property({ type: Boolean, reflect: true })
+  readonly = false;
+
+  @property({ type: Boolean, reflect: true })
   required = false;
+
+  @property({ type: String, reflect: true })
+  name = 'text';
 
   @property({ type: Number, reflect: true })
   value?: number;
 
   protected override firstUpdated(props: PropertyValues<this>): void {
     super.firstUpdated(props);
-    this.initialValue = this.value;
+    this.#initialValue = this.value;
 
     this.checkValidity();
-    this.#internals.setFormValue(this.value ? `${this.value}` : null);
+    this.internals.setFormValue(this.value ? `${this.value}` : null);
   }
 
   formResetCallback() {
-    this.value = this.initialValue;
+    this.value = this.#initialValue;
 
     this.checkValidity();
-    this.#internals.setFormValue(this.value ? `${this.value}` : null);
+    this.internals.setFormValue(this.value ? `${this.value}` : null);
   }
 
   checkValidity(): boolean {
     if (!this.input.checkValidity()) {
-      this.#internals.setValidity({ customError: true }, 'Invalid input');
+      this.internals.setValidity({ customError: true }, 'Invalid input');
     } else {
-      this.#internals.setValidity({});
+      this.internals.setValidity({});
     }
 
-    return this.#internals.validity.valid;
+    return this.internals.validity.valid;
   }
 
   @eventOptions({ passive: true })
   handleInput(event: Event) {
-    const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement | HTMLTextAreaElement;
     this.value = input.value ? parseFloat(input.value) : undefined;
 
     this.checkValidity();
-    this.#internals.setFormValue(this.value ? `${this.value}` : null);
+    this.internals.setFormValue(this.value ? `${this.value}` : null);
   }
 
-  protected override render() {
+  override renderInput(id: string) {
     return html`
-      ${when(this.label !== undefined, () => html`<label for="number">${this.label}</label>`)}
       <input
         type="number"
-        id="number"
+        id="${id}"
         name="${this.name}"
         autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
         ?disabled="${this.disabled}"
         ?required="${this.required}"
-        .value="${this.value ? `${this.value}` : null}"
+        .value="${this.value ? `${this.value}` : ''}"
         @input="${this.handleInput}"
       />
-      <slot></slot>
     `;
   }
 }

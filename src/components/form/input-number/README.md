@@ -2,8 +2,6 @@
 
 A numeric input element using the wcp style. Fully form aware.
 
-**Mixins:** ColorSchemable
-
 ## Examples
 
 ## With optional label
@@ -30,15 +28,16 @@ A numeric input element using the wcp style. Fully form aware.
 
 ## Properties
 
-| Property       | Attribute      | Type                  | Default |
-|----------------|----------------|-----------------------|---------|
-| `autocomplete` | `autocomplete` | `boolean`             | false   |
-| `disabled`     | `disabled`     | `boolean`             | false   |
-| `input`        |                |                       |         |
-| `label`        | `label`        | `string \| undefined` |         |
-| `name`         | `name`         | `string`              | "text"  |
-| `required`     | `required`     | `boolean`             | false   |
-| `value`        | `value`        | `number \| undefined` |         |
+| Property       | Attribute      | Type                  | Default | Description                     |
+|----------------|----------------|-----------------------|---------|---------------------------------|
+| `autocomplete` | `autocomplete` | `boolean`             | false   |                                 |
+| `disabled`     | `disabled`     | `boolean`             | false   |                                 |
+| `input`        |                |                       |         |                                 |
+| `label`        |                | `string`              |         | The label of the input element. |
+| `name`         | `name`         | `string`              | "text"  |                                 |
+| `readonly`     | `readonly`     | `boolean`             | false   |                                 |
+| `required`     | `required`     | `boolean`             | false   |                                 |
+| `value`        | `value`        | `number \| undefined` |         |                                 |
 
 ## Methods
 
@@ -47,12 +46,13 @@ A numeric input element using the wcp style. Fully form aware.
 | `checkValidity`     | `(): boolean`        |
 | `formResetCallback` | `(): void`           |
 | `handleInput`       | `(event: any): void` |
+| `renderInput`       | `(id: string): any`  |
 
 ## Slots
 
-| Name | Description                                     |
-|------|-------------------------------------------------|
-|      | Receives optional descriptions below the input. |
+| Name   | Description                                     |
+|--------|-------------------------------------------------|
+| `hint` | Receives optional descriptions below the input. |
 
 ## CSS Custom Properties
 
