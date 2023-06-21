@@ -39,7 +39,6 @@ Can display multiline text (textarea) if configured to do so.
 |----------------|----------------|--------------------------------------------------|---------|--------------------------------------------------|
 | `autocomplete` | `autocomplete` | `boolean`                                        | false   |                                                  |
 | `disabled`     | `disabled`     | `boolean`                                        | false   |                                                  |
-| `input`        |                |                                                  |         |                                                  |
 | `label`        |                | `string`                                         |         | The label of the input element.                  |
 | `multiline`    | `multiline`    | `boolean`                                        | false   |                                                  |
 | `name`         | `name`         | `string`                                         | "text"  |                                                  |

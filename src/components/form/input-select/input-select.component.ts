@@ -81,7 +81,7 @@ export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) i
   #initialValue?: string;
 
   @query('select')
-  input!: HTMLSelectElement;
+  private readonly input!: HTMLSelectElement;
 
   @property({ type: Boolean, reflect: true })
   autocomplete = false;

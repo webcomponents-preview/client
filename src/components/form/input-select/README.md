@@ -54,7 +54,6 @@ A numeric input element using the wcp style. Fully form aware.
 |----------------|----------------|-----------------------|---------|---------------------------------|
 | `autocomplete` | `autocomplete` | `boolean`             | false   |                                 |
 | `disabled`     | `disabled`     | `boolean`             | false   |                                 |
-| `input`        |                |                       |         |                                 |
 | `label`        |                | `string`              |         | The label of the input element. |
 | `name`         | `name`         | `string`              | "text"  |                                 |
 | `readonly`     | `readonly`     | `boolean`             | false   |                                 |

@@ -26,7 +26,6 @@
 |-------------|--------------|-----------------------|---------|
 | `activeTab` | `active-tab` | `string \| undefined` |         |
 | `tabFocus`  |              | `number`              | 0       |
-| `tabRoles`  |              | `object`              |         |
 | `tabs`      | `tabs`       |                       | {}      |
 
 ## Methods

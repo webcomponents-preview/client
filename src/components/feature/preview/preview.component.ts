@@ -40,10 +40,10 @@ export class Preview extends ColorSchemable(LitElement) {
   config?: Config;
 
   @query('nav')
-  private nav?: HTMLElement;
+  private readonly nav?: HTMLElement;
 
   @query('wcp-button')
-  private toggleButton?: Button;
+  private readonly toggleButton?: Button;
 
   @state()
   private container?: Element;

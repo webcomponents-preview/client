@@ -47,7 +47,7 @@ export class Tabs extends ColorSchemable(LitElement) {
   tabFocus = 0;
 
   @queryAll('[role="tab"]')
-  tabRoles!: HTMLElement[];
+  private readonly tabRoles!: HTMLElement[];
 
   @property({ type: Object })
   tabs: Record<string, { label: string; disabled?: boolean }> = {};

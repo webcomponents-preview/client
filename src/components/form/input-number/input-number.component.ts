@@ -55,8 +55,8 @@ export class InputNumber extends Editable()(LitElement) implements FormAssociate
 
   #initialValue?: number;
 
-  @query('input, textarea')
-  input!: HTMLInputElement;
+  @query('input')
+  private readonly input!: HTMLInputElement;
 
   @property({ type: Boolean, reflect: true })
   autocomplete = false;
