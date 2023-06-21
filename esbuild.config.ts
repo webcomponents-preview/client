@@ -37,10 +37,26 @@ const {
   },
 });
 
+// we need to bundle the monaco editor worker files
+// https://github.com/microsoft/monaco-editor/blob/main/samples/browser-esm-esbuild/build.js
+await build({
+  entryPoints: [
+    'node_modules/monaco-editor/esm/vs/language/json/json.worker.js',
+    'node_modules/monaco-editor/esm/vs/language/css/css.worker.js',
+    'node_modules/monaco-editor/esm/vs/language/html/html.worker.js',
+    'node_modules/monaco-editor/esm/vs/language/typescript/ts.worker.js',
+    'node_modules/monaco-editor/esm/vs/editor/editor.worker.js',
+  ],
+  bundle: true,
+	format: 'iife',
+  outdir: 'dist/workers',
+});
+
 // prepare common build options
 const options: BuildOptions = {
   sourceRoot: 'src',
   entryPoints: ['src/index.ts', 'src/index.html', 'src/styles/global.scss'],
+  assetNames: '[name]',
   outdir: 'dist',
   platform: 'browser',
   format: 'esm',
@@ -53,15 +69,22 @@ const options: BuildOptions = {
     '.html': 'copy',
     '.md': 'copy',
     '.svg': 'dataurl',
+    // monaco editor ships with ttf fonts
+    '.ttf': 'file',
   },
   logLevel: 'error',
   plugins: [
     sassPlugin({
       type: 'css-text',
+      filter: /\.css$/,
+      importMapper,
+      transform,
+    }),
+    sassPlugin({
+      type: 'css-text',
       filter: /\.(component|mixin|plugin)\.scss$/,
       importMapper,
       transform,
-      
     }),
     sassPlugin({
       type: 'css',
