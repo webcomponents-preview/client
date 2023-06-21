@@ -85,7 +85,7 @@ export class InputText extends Editable()(LitElement) implements FormAssociated<
   name = 'text';
 
   /**
-   * Can be set to to `text`, `email`, `password`, `search`, `tel`, `url`.
+   * Can be set to to `text`, `email`, `password`, `search`, `tel`, or `url`. \
    * Beware that this will be ignored if combined with the `multiline` attribute.
    */
   @property({ type: String, reflect: true })

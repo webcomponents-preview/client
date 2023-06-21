@@ -44,7 +44,7 @@ Can display multiline text (textarea) if configured to do so.
 | `name`         | `name`         | `string`                                         | "text"  |                                                  |
 | `readonly`     | `readonly`     | `boolean`                                        | false   |                                                  |
 | `required`     | `required`     | `boolean`                                        | false   |                                                  |
-| `type`         | `type`         | `"text" \| "email" \| "password" \| "search" \| "tel" \| "url"` | "text"  | Can be set to to `text`, `email`, `password`, `search`, `tel`, `url`.<br />Beware that this will be ignored if combined with the `multiline` attribute. |
+| `type`         | `type`         | `"text" \| "email" \| "password" \| "search" \| "tel" \| "url"` | "text"  | Can be set to to `text`, `email`, `password`, `search`, `tel`, or `url`. \<br />Beware that this will be ignored if combined with the `multiline` attribute. |
 | `value`        | `value`        | `string \| undefined`                            |         |                                                  |
 
 ## Methods
