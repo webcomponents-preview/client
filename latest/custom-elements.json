@@ -12,19 +12,19 @@
           "name": "Root",
           "cssProperties": [
             {
-              "description": "The background color of the root element in dark mode",
+              "description": "The background color of the root element in dark mode.",
               "name": "--wcp-root-dark-background"
             },
             {
-              "description": "The text color of the text in the root element in dark mode",
+              "description": "The text color of the text in the root element in dark mode.",
               "name": "--wcp-root-dark-color"
             },
             {
-              "description": "The background color of the root element in light mode",
+              "description": "The background color of the root element in light mode.",
               "name": "--wcp-root-light-background"
             },
             {
-              "description": "The text color of the text in the root element in light mode",
+              "description": "The text color of the text in the root element in light mode.",
               "name": "--wcp-root-light-color"
             }
           ],
@@ -163,7 +163,7 @@
             },
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -171,7 +171,7 @@
             "package": "lit"
           },
           "examples": [],
-          "readme": "# wcp-root\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property      | Attribute      | Type                  | Default | Description                                      |\n|---------------|----------------|-----------------------|---------|--------------------------------------------------|\n| `config`      |                |                       |         |                                                  |\n| `configUrl`   | `config-url`   | `string \\| undefined` |         | Allows to set a url to load a config file from.  |\n| `inline`      | `inline`       | `boolean`             | false   | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifest`    |                |                       |         |                                                  |\n| `manifestUrl` | `manifest-url` | `string`              |         | Defines the location of the custom element manifest file. |\n| `navigation`  |                |                       |         |                                                  |\n\n## Methods\n\n| Method                       | Type                                     |\n|------------------------------|------------------------------------------|\n| `emitManifestLoaded`         | `(): void`                               |\n| `loadConfig`                 | `(configUrl?: string \\| undefined): any` |\n| `loadCustomElementsManifest` | `(manifestUrl: string): any`             |\n\n## Events\n\n| Event                             | Description                                      |\n|-----------------------------------|--------------------------------------------------|\n| `wcp-root:active-element-changed` | Fired when the active element changes. Carries the declaration of the new active element with it. |\n| `wcp-root:manifest-loaded`        | Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode |\n| `--wcp-root-light-background` | The background color of the root element in light mode |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode |\n",
+          "readme": "# wcp-root\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property      | Attribute      | Type                  | Default | Description                                      |\n|---------------|----------------|-----------------------|---------|--------------------------------------------------|\n| `config`      |                |                       |         |                                                  |\n| `configUrl`   | `config-url`   | `string \\| undefined` |         | Allows to set a url to load a config file from.  |\n| `inline`      | `inline`       | `boolean`             | false   | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifest`    |                |                       |         |                                                  |\n| `manifestUrl` | `manifest-url` | `string`              |         | Defines the location of the custom element manifest file. |\n| `navigation`  |                |                       |         |                                                  |\n\n## Methods\n\n| Method                       | Type                                     |\n|------------------------------|------------------------------------------|\n| `emitManifestLoaded`         | `(): void`                               |\n| `loadConfig`                 | `(configUrl?: string \\| undefined): any` |\n| `loadCustomElementsManifest` | `(manifestUrl: string): any`             |\n\n## Events\n\n| Event                             | Description                                      |\n|-----------------------------------|--------------------------------------------------|\n| `wcp-root:active-element-changed` | Fired when the active element changes. Carries the declaration of the new active element with it. |\n| `wcp-root:manifest-loaded`        | Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode. |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode. |\n| `--wcp-root-light-background` | The background color of the root element in light mode. |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode. |\n",
           "groups": [
             "root"
           ],
@@ -250,7 +250,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -366,7 +366,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -512,7 +512,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -596,7 +596,8 @@
               "type": {
                 "text": "HTMLElement | undefined"
               },
-              "privacy": "private"
+              "privacy": "private",
+              "readonly": true
             },
             {
               "kind": "field",
@@ -604,7 +605,8 @@
               "type": {
                 "text": "Button | undefined"
               },
-              "privacy": "private"
+              "privacy": "private",
+              "readonly": true
             },
             {
               "kind": "field",
@@ -655,7 +657,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -728,7 +730,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -919,7 +921,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -1083,7 +1085,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -1185,10 +1187,6 @@
           "name": "ToggleColorScheme",
           "members": [
             {
-              "kind": "field",
-              "name": "colorScheme"
-            },
-            {
               "kind": "method",
               "name": "handleButtonClick"
             }
@@ -1196,7 +1194,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -1206,7 +1204,7 @@
           "examples": [
             "```html\n<wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n```"
           ],
-          "readme": "# wcp-toggle-color-scheme\n\nShows a button to toggle the desired color-scheme.\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n```\n\n## Properties\n\n| Property      | Type                | Default                                          |\n|---------------|---------------------|--------------------------------------------------|\n| `colorScheme` | `\"dark\" \\| \"light\"` | \"matchMedia('(prefers-color-scheme: dark)').matches ? ('dark' as const) : ('light' as const)\" |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event                     |\n|---------------------------|\n| `wcp-color-scheme:toggle` |\n",
+          "readme": "# wcp-toggle-color-scheme\n\nShows a button to toggle the desired color-scheme.\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n```\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event                     |\n|---------------------------|\n| `wcp-color-scheme:toggle` |\n",
           "groups": [
             "feature"
           ],
@@ -1277,6 +1275,1870 @@
           "declaration": {
             "name": "ToggleSidebar",
             "module": "src/components/feature/toggle-sidebar/toggle-sidebar.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/form/input-checkbox/input-checkbox.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A checkbox input element using the wcp style. Fully form aware.",
+          "name": "InputCheckbox",
+          "cssProperties": [
+            {
+              "description": "The size of the checkbox input.",
+              "name": "--wcp-input-checkbox-size"
+            },
+            {
+              "description": "The font size of the hint.",
+              "name": "--wcp-input-checkbox-hint-size"
+            },
+            {
+              "description": "The font size of the label.",
+              "name": "--wcp-input-checkbox-label-size"
+            },
+            {
+              "description": "The leading distance of the label to the input.",
+              "name": "--wcp-input-checkbox-spacing"
+            },
+            {
+              "description": "The border radius of the checkbox input.",
+              "name": "--wcp-input-checkbox-border-radius"
+            },
+            {
+              "description": "The border size of the checkbox input.",
+              "name": "--wcp-input-checkbox-border-size"
+            },
+            {
+              "description": "The background color of the checkbox input in dark mode.",
+              "name": "--wcp-input-checkbox-dark-background"
+            },
+            {
+              "description": "The border color of the checkbox input in dark mode.",
+              "name": "--wcp-input-checkbox-dark-border"
+            },
+            {
+              "description": "The fill color of the checkbox input when checked in dark mode.",
+              "name": "--wcp-input-checkbox-dark-color"
+            },
+            {
+              "description": "The background color of the checkbox input in light mode.",
+              "name": "--wcp-input-checkbox-light-background"
+            },
+            {
+              "description": "The border color of the checkbox input in light mode.",
+              "name": "--wcp-input-checkbox-light-border"
+            },
+            {
+              "description": "The fill color of the checkbox input when checked in light mode.",
+              "name": "--wcp-input-checkbox-light-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Receives optional descriptions below the input.",
+              "name": "hint"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "initialChecked",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'checkbox'",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "autocomplete",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "autocomplete",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "checked",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "'on'",
+              "attribute": "value",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback"
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleInput",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderInput",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The label of the input element.",
+              "name": "label",
+              "kind": "field"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'checkbox'",
+              "fieldName": "name"
+            },
+            {
+              "name": "autocomplete",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "autocomplete"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "checked"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "'on'",
+              "fieldName": "value"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Editable({ hasBeforeSlot: false, hasBorder: false })",
+              "module": "src/components/form/input-checkbox/input-checkbox.component.ts"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wcp-input-checkbox",
+          "examples": [
+            "## With optional label\n```html\n<wcp-input-checkbox label=\"With optional label\"></wcp-input-checkbox>\n```",
+            "## With initial value\n```html\n<wcp-input-checkbox checked label=\"With optional initial value\"></wcp-input-checkbox>\n```",
+            "## Used within a form\n```html\n<form>\n  <wcp-input-checkbox label=\"Fully form enabled component\"></wcp-input-checkbox>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```"
+          ],
+          "readme": "# wcp-input-checkbox\n\nA checkbox input element using the wcp style. Fully form aware.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-checkbox label=\"With optional label\"></wcp-input-checkbox>\n```\n\n## With initial value\n\n```html\n<wcp-input-checkbox checked label=\"With optional initial value\"></wcp-input-checkbox>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-checkbox label=\"Fully form enabled component\"></wcp-input-checkbox>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type      | Default    | Description                     |\n|----------------|----------------|-----------|------------|---------------------------------|\n| `autocomplete` | `autocomplete` | `boolean` | false      |                                 |\n| `checked`      | `checked`      | `boolean` | false      |                                 |\n| `disabled`     | `disabled`     | `boolean` | false      |                                 |\n| `label`        |                | `string`  |            | The label of the input element. |\n| `name`         | `name`         | `string`  | \"checkbox\" |                                 |\n| `required`     | `required`     | `boolean` | false      |                                 |\n| `value`        | `value`        | `string`  | \"on\"       |                                 |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n| `renderInput`       | `(id: string): any`  |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                                | Description                                      |\n|-----------------------------------------|--------------------------------------------------|\n| `--wcp-input-checkbox-border-radius`    | The border radius of the checkbox input.         |\n| `--wcp-input-checkbox-border-size`      | The border size of the checkbox input.           |\n| `--wcp-input-checkbox-dark-background`  | The background color of the checkbox input in dark mode. |\n| `--wcp-input-checkbox-dark-border`      | The border color of the checkbox input in dark mode. |\n| `--wcp-input-checkbox-dark-color`       | The fill color of the checkbox input when checked in dark mode. |\n| `--wcp-input-checkbox-hint-size`        | The font size of the hint.                       |\n| `--wcp-input-checkbox-label-size`       | The font size of the label.                      |\n| `--wcp-input-checkbox-light-background` | The background color of the checkbox input in light mode. |\n| `--wcp-input-checkbox-light-border`     | The border color of the checkbox input in light mode. |\n| `--wcp-input-checkbox-light-color`      | The fill color of the checkbox input when checked in light mode. |\n| `--wcp-input-checkbox-size`             | The size of the checkbox input.                  |\n| `--wcp-input-checkbox-spacing`          | The leading distance of the label to the input.  |\n",
+          "groups": [
+            "form"
+          ],
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "InputCheckbox",
+          "declaration": {
+            "name": "InputCheckbox",
+            "module": "src/components/form/input-checkbox/input-checkbox.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-input-checkbox",
+          "declaration": {
+            "name": "InputCheckbox",
+            "module": "src/components/form/input-checkbox/input-checkbox.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/form/input-code/input-code.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A text input element using the wcp style. Fully form aware.\nCan display multiline text (textarea) if configured to do so.",
+          "name": "InputCode",
+          "cssProperties": [
+            {
+              "description": "The font size of the hint.",
+              "name": "--wcp-input-code-hint-size"
+            },
+            {
+              "description": "The font size of the label.",
+              "name": "--wcp-input-code-label-size"
+            },
+            {
+              "description": "The inner spacing of the input element.",
+              "name": "--wcp-input-code-spacing"
+            },
+            {
+              "description": "The background color of the element in dark mode.",
+              "name": "--wcp-input-code-dark-background"
+            },
+            {
+              "description": "The border color of the element in dark mode.",
+              "name": "--wcp-input-code-dark-border"
+            },
+            {
+              "description": "The font color of the input element in dark mode.",
+              "name": "--wcp-input-code-dark-color"
+            },
+            {
+              "description": "The background color of the element in light mode.",
+              "name": "--wcp-input-code-light-background"
+            },
+            {
+              "description": "The border color of the element in light mode.",
+              "name": "--wcp-input-code-light-border"
+            },
+            {
+              "description": "The font color of the input element in light mode.",
+              "name": "--wcp-input-code-light-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Receives optional descriptions below the input.",
+              "name": "hint"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "readonly": true,
+              "default": "{ ...super.shadowRootOptions, delegatesFocus: true }"
+            },
+            {
+              "kind": "field",
+              "name": "#editor",
+              "privacy": "private",
+              "type": {
+                "text": "monaco.editor.IStandaloneCodeEditor | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "#editorAutoSizeListener",
+              "privacy": "private",
+              "type": {
+                "text": "monaco.IDisposable | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "#editorModelContentChangeListener",
+              "privacy": "private",
+              "type": {
+                "text": "monaco.IDisposable | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "#initialValue",
+              "privacy": "private",
+              "type": {
+                "text": "string | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "#handleColorSchemeToggle",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "editor",
+              "type": {
+                "text": "HTMLDivElement"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "input",
+              "type": {
+                "text": "HTMLTextAreaElement"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "autosize",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "autosize",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "language",
+              "type": {
+                "text": "'json' | 'html' | 'handlebars' | 'razor' | 'css' | 'sass' | 'less' | 'javascript' | 'typescript'"
+              },
+              "default": "'html'",
+              "attribute": "language",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "value",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "initializeEditor",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "updateEditorTheme",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "updateEditorAutoSize",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "updateEditorDisabled",
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback"
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleColorSchemeToggle"
+            },
+            {
+              "kind": "method",
+              "name": "handleInput",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderInput",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The label of the input element.",
+              "name": "label",
+              "kind": "field"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "autosize",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "autosize"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "fieldName": "name"
+            },
+            {
+              "name": "language",
+              "type": {
+                "text": "'json' | 'html' | 'handlebars' | 'razor' | 'css' | 'sass' | 'less' | 'javascript' | 'typescript'"
+              },
+              "default": "'html'",
+              "fieldName": "language"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Editable()",
+              "module": "src/components/form/input-code/input-code.component.ts"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wcp-input-code",
+          "examples": [
+            "## With optional label\n```html\n<wcp-input-code label=\"With optional label\"></wcp-input-code>\n```",
+            "## With optional initial value\n```html\n<wcp-input-code\n  label=\"With optional initial value\"\n  value=\"<strong>Test</strong>\"\n  language=\"html\"\n></wcp-input-code>\n```",
+            "## With autosize\n```html\n<wcp-input-code\n  autosize\n  label=\"With optional initial value\"\n  value=\"<strong>Test</strong>\"\n  language=\"html\"\n></wcp-input-code>\n```",
+            "## Used within a form\n```html\n<form>\n  <wcp-input-code\n    label=\"Fully form enabled component\"\n    value=\"<strong>Test</strong>\"\n    language=\"html\"\n  ></wcp-input-code>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```"
+          ],
+          "readme": "# wcp-input-code\n\nA text input element using the wcp style. Fully form aware.\nCan display multiline text (textarea) if configured to do so.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-code label=\"With optional label\"></wcp-input-code>\n```\n\n## With optional initial value\n\n```html\n<wcp-input-code\n  label=\"With optional initial value\"\n  value=\"<strong>Test</strong>\"\n  language=\"html\"\n></wcp-input-code>\n```\n\n## With autosize\n\n```html\n<wcp-input-code\n  autosize\n  label=\"With optional initial value\"\n  value=\"<strong>Test</strong>\"\n  language=\"html\"\n></wcp-input-code>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-code\n    label=\"Fully form enabled component\"\n    value=\"<strong>Test</strong>\"\n    language=\"html\"\n  ></wcp-input-code>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property   | Attribute  | Type                                             | Default | Description                     |\n|------------|------------|--------------------------------------------------|---------|---------------------------------|\n| `autosize` | `autosize` | `boolean`                                        | false   |                                 |\n| `disabled` | `disabled` | `boolean`                                        | false   |                                 |\n| `label`    |            | `string`                                         |         | The label of the input element. |\n| `language` | `language` | `\"json\" \\| \"html\" \\| \"handlebars\" \\| \"razor\" \\| \"css\" \\| \"sass\" \\| \"less\" \\| \"javascript\" \\| \"typescript\"` | \"html\"  |                                 |\n| `name`     | `name`     | `string`                                         | \"text\"  |                                 |\n| `readonly` | `readonly` | `boolean`                                        | false   |                                 |\n| `required` | `required` | `boolean`                                        | false   |                                 |\n| `value`    | `value`    | `string \\| undefined`                            |         |                                 |\n\n## Methods\n\n| Method                    | Type                 |\n|---------------------------|----------------------|\n| `checkValidity`           | `(): boolean`        |\n| `formResetCallback`       | `(): void`           |\n| `handleColorSchemeToggle` | `(): void`           |\n| `handleInput`             | `(event: any): void` |\n| `renderInput`             | `(id: string): any`  |\n\n## Events\n\n| Event   |\n|---------|\n| `input` |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                            | Description                                      |\n|-------------------------------------|--------------------------------------------------|\n| `--wcp-input-code-dark-background`  | The background color of the element in dark mode. |\n| `--wcp-input-code-dark-border`      | The border color of the element in dark mode.    |\n| `--wcp-input-code-dark-color`       | The font color of the input element in dark mode. |\n| `--wcp-input-code-hint-size`        | The font size of the hint.                       |\n| `--wcp-input-code-label-size`       | The font size of the label.                      |\n| `--wcp-input-code-light-background` | The background color of the element in light mode. |\n| `--wcp-input-code-light-border`     | The border color of the element in light mode.   |\n| `--wcp-input-code-light-color`      | The font color of the input element in light mode. |\n| `--wcp-input-code-spacing`          | The inner spacing of the input element.          |\n",
+          "groups": [
+            "form"
+          ],
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "InputCode",
+          "declaration": {
+            "name": "InputCode",
+            "module": "src/components/form/input-code/input-code.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-input-code",
+          "declaration": {
+            "name": "InputCode",
+            "module": "src/components/form/input-code/input-code.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/form/input-number/input-number.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A numeric input element using the wcp style. Fully form aware.",
+          "name": "InputNumber",
+          "cssProperties": [
+            {
+              "description": "The font size of the hint.",
+              "name": "--wcp-input-number-hint-size"
+            },
+            {
+              "description": "The font size of the label.",
+              "name": "--wcp-input-number-label-size"
+            },
+            {
+              "description": "The inner spacing of the input element.",
+              "name": "--wcp-input-number-spacing"
+            },
+            {
+              "description": "The background color of the element in dark mode.",
+              "name": "--wcp-input-number-dark-background"
+            },
+            {
+              "description": "The border color of the element in dark mode.",
+              "name": "--wcp-input-number-dark-border"
+            },
+            {
+              "description": "The font color of the input element in dark mode.",
+              "name": "--wcp-input-number-dark-color"
+            },
+            {
+              "description": "The background color of the element in light mode.",
+              "name": "--wcp-input-number-light-background"
+            },
+            {
+              "description": "The border color of the element in light mode.",
+              "name": "--wcp-input-number-light-border"
+            },
+            {
+              "description": "The font color of the input element in light mode.",
+              "name": "--wcp-input-number-light-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Receives optional descriptions below the input.",
+              "name": "hint"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "#initialValue",
+              "privacy": "private",
+              "type": {
+                "text": "number | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "input",
+              "type": {
+                "text": "HTMLInputElement"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "autocomplete",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "autocomplete",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "number | undefined"
+              },
+              "attribute": "value",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback"
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleInput",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderInput",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The label of the input element.",
+              "name": "label",
+              "kind": "field"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "autocomplete",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "autocomplete"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "fieldName": "name"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "number | undefined"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Editable()",
+              "module": "src/components/form/input-number/input-number.component.ts"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wcp-input-number",
+          "examples": [
+            "## With optional label\n```html\n<wcp-input-number label=\"With optional label\"></wcp-input-number>\n```",
+            "## With optional initial value\n```html\n<wcp-input-number label=\"With optional initial value\" value=\"23\"></wcp-input-number>\n```",
+            "## Used within a form\n```html\n<form>\n  <wcp-input-number label=\"Fully form enabled component\"></wcp-input-number>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```"
+          ],
+          "readme": "# wcp-input-number\n\nA numeric input element using the wcp style. Fully form aware.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-number label=\"With optional label\"></wcp-input-number>\n```\n\n## With optional initial value\n\n```html\n<wcp-input-number label=\"With optional initial value\" value=\"23\"></wcp-input-number>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-number label=\"Fully form enabled component\"></wcp-input-number>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type                  | Default | Description                     |\n|----------------|----------------|-----------------------|---------|---------------------------------|\n| `autocomplete` | `autocomplete` | `boolean`             | false   |                                 |\n| `disabled`     | `disabled`     | `boolean`             | false   |                                 |\n| `label`        |                | `string`              |         | The label of the input element. |\n| `name`         | `name`         | `string`              | \"text\"  |                                 |\n| `readonly`     | `readonly`     | `boolean`             | false   |                                 |\n| `required`     | `required`     | `boolean`             | false   |                                 |\n| `value`        | `value`        | `number \\| undefined` |         |                                 |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n| `renderInput`       | `(id: string): any`  |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                              | Description                                      |\n|---------------------------------------|--------------------------------------------------|\n| `--wcp-input-number-dark-background`  | The background color of the element in dark mode. |\n| `--wcp-input-number-dark-border`      | The border color of the element in dark mode.    |\n| `--wcp-input-number-dark-color`       | The font color of the input element in dark mode. |\n| `--wcp-input-number-hint-size`        | The font size of the hint.                       |\n| `--wcp-input-number-label-size`       | The font size of the label.                      |\n| `--wcp-input-number-light-background` | The background color of the element in light mode. |\n| `--wcp-input-number-light-border`     | The border color of the element in light mode.   |\n| `--wcp-input-number-light-color`      | The font color of the input element in light mode. |\n| `--wcp-input-number-spacing`          | The inner spacing of the input element.          |\n",
+          "groups": [
+            "form"
+          ],
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "InputNumber",
+          "declaration": {
+            "name": "InputNumber",
+            "module": "src/components/form/input-number/input-number.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-input-number",
+          "declaration": {
+            "name": "InputNumber",
+            "module": "src/components/form/input-number/input-number.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/form/input-radio/input-radio.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A radio input element using the wcp style. Fully form aware.",
+          "name": "InputRadio",
+          "cssProperties": [
+            {
+              "description": "The size of the radio input.",
+              "name": "--wcp-input-radio-size"
+            },
+            {
+              "description": "The font size of the label.",
+              "name": "--wcp-input-radio-label-size"
+            },
+            {
+              "description": "The font size of the hint.",
+              "name": "--wcp-input-radio-hint-size"
+            },
+            {
+              "description": "The leading distance of the label to the input.",
+              "name": "--wcp-input-radio-spacing"
+            },
+            {
+              "description": "The border radius of the radio input.",
+              "name": "--wcp-input-radio-border-radius"
+            },
+            {
+              "description": "The border size of the radio input.",
+              "name": "--wcp-input-radio-border-size"
+            },
+            {
+              "description": "The background color of the radio input in dark mode.",
+              "name": "--wcp-input-radio-dark-background"
+            },
+            {
+              "description": "The border color of the radio input in dark mode.",
+              "name": "--wcp-input-radio-dark-border"
+            },
+            {
+              "description": "The fill color of the radio input when checked in dark mode.",
+              "name": "--wcp-input-radio-dark-color"
+            },
+            {
+              "description": "The background color of the radio input in light mode.",
+              "name": "--wcp-input-radio-light-background"
+            },
+            {
+              "description": "The border color of the radio input in light mode.",
+              "name": "--wcp-input-radio-light-border"
+            },
+            {
+              "description": "The fill color of the radio input when checked in light mode.",
+              "name": "--wcp-input-radio-light-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Receives optional descriptions below the input.",
+              "name": "hint"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "initialChecked",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'radio'",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "autocomplete",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "autocomplete",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "checked",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "'on'",
+              "attribute": "value",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback"
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleInput",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderInput",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The label of the input element.",
+              "name": "label",
+              "kind": "field"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'radio'",
+              "fieldName": "name"
+            },
+            {
+              "name": "autocomplete",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "autocomplete"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "checked"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "'on'",
+              "fieldName": "value"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Editable({ hasBeforeSlot: false, hasBorder: false })",
+              "module": "src/components/form/input-radio/input-radio.component.ts"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wcp-input-radio",
+          "examples": [
+            "## With optional label\n```html\n<wcp-input-radio label=\"With optional label\"></wcp-input-radio>\n```",
+            "## With initial value\n```html\n<wcp-input-radio checked label=\"With optional initial value\"></wcp-input-radio>\n```",
+            "## Used within a form\n```html\n<form>\n  <wcp-input-radio label=\"Fully form enabled component\"></wcp-input-radio>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```"
+          ],
+          "readme": "# wcp-input-radio\n\nA radio input element using the wcp style. Fully form aware.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-radio label=\"With optional label\"></wcp-input-radio>\n```\n\n## With initial value\n\n```html\n<wcp-input-radio checked label=\"With optional initial value\"></wcp-input-radio>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-radio label=\"Fully form enabled component\"></wcp-input-radio>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type      | Default | Description                     |\n|----------------|----------------|-----------|---------|---------------------------------|\n| `autocomplete` | `autocomplete` | `boolean` | false   |                                 |\n| `checked`      | `checked`      | `boolean` | false   |                                 |\n| `disabled`     | `disabled`     | `boolean` | false   |                                 |\n| `label`        |                | `string`  |         | The label of the input element. |\n| `name`         | `name`         | `string`  | \"radio\" |                                 |\n| `required`     | `required`     | `boolean` | false   |                                 |\n| `value`        | `value`        | `string`  | \"on\"    |                                 |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n| `renderInput`       | `(id: string): any`  |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                             | Description                                      |\n|--------------------------------------|--------------------------------------------------|\n| `--wcp-input-radio-border-radius`    | The border radius of the radio input.            |\n| `--wcp-input-radio-border-size`      | The border size of the radio input.              |\n| `--wcp-input-radio-dark-background`  | The background color of the radio input in dark mode. |\n| `--wcp-input-radio-dark-border`      | The border color of the radio input in dark mode. |\n| `--wcp-input-radio-dark-color`       | The fill color of the radio input when checked in dark mode. |\n| `--wcp-input-radio-hint-size`        | The font size of the hint.                       |\n| `--wcp-input-radio-label-size`       | The font size of the label.                      |\n| `--wcp-input-radio-light-background` | The background color of the radio input in light mode. |\n| `--wcp-input-radio-light-border`     | The border color of the radio input in light mode. |\n| `--wcp-input-radio-light-color`      | The fill color of the radio input when checked in light mode. |\n| `--wcp-input-radio-size`             | The size of the radio input.                     |\n| `--wcp-input-radio-spacing`          | The leading distance of the label to the input.  |\n",
+          "groups": [
+            "form"
+          ],
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "InputRadio",
+          "declaration": {
+            "name": "InputRadio",
+            "module": "src/components/form/input-radio/input-radio.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-input-radio",
+          "declaration": {
+            "name": "InputRadio",
+            "module": "src/components/form/input-radio/input-radio.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/form/input-select/input-select-option.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A helper element to declare options for a `wcp-input-select` element.",
+          "name": "InputSelectOption",
+          "members": [
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "value",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "createRenderRoot",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "Element | ShadowRoot"
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "value"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wcp-input-select-option",
+          "examples": [],
+          "readme": "# wcp-input-select-option\n\nA helper element to declare options for a `wcp-input-select` element.\n\n## Properties\n\n| Property   | Attribute  | Type                  | Default |\n|------------|------------|-----------------------|---------|\n| `disabled` | `disabled` | `boolean`             | false   |\n| `label`    | `label`    | `string \\| undefined` |         |\n| `value`    | `value`    | `string \\| undefined` |         |\n",
+          "groups": [
+            "form"
+          ],
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "InputSelectOption",
+          "declaration": {
+            "name": "InputSelectOption",
+            "module": "src/components/form/input-select/input-select-option.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-input-select-option",
+          "declaration": {
+            "name": "InputSelectOption",
+            "module": "src/components/form/input-select/input-select-option.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/form/input-select/input-select.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A numeric input element using the wcp style. Fully form aware.",
+          "name": "InputSelect",
+          "cssProperties": [
+            {
+              "description": "The size of the arrow icon.",
+              "name": "--wcp-input-select-arrow-size"
+            },
+            {
+              "description": "The font size of the hint.",
+              "name": "--wcp-input-select-hint-size"
+            },
+            {
+              "description": "The font size of the label.",
+              "name": "--wcp-input-select-label-size"
+            },
+            {
+              "description": "The inner spacing of the input element.",
+              "name": "--wcp-input-select-spacing"
+            },
+            {
+              "description": "The background color of the element in dark mode.",
+              "name": "--wcp-input-select-dark-background"
+            },
+            {
+              "description": "The border color of the element in dark mode.",
+              "name": "--wcp-input-select-dark-border"
+            },
+            {
+              "description": "The font color of the input element in dark mode.",
+              "name": "--wcp-input-select-dark-color"
+            },
+            {
+              "description": "The background color of the element in light mode.",
+              "name": "--wcp-input-select-light-background"
+            },
+            {
+              "description": "The border color of the element in light mode.",
+              "name": "--wcp-input-select-light-border"
+            },
+            {
+              "description": "The font color of the input element in light mode.",
+              "name": "--wcp-input-select-light-color"
+            }
+          ],
+          "slots": [
+            {
+              "type": {
+                "text": "<wcp-input-select-option value=\"foo\" label=\"Foo\"></wcp-input-select-option>"
+              },
+              "description": "Projects options into the select elements dropdown menu.",
+              "name": ""
+            },
+            {
+              "description": "Receives optional descriptions below the input.",
+              "name": "hint"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "#initialValue",
+              "privacy": "private",
+              "type": {
+                "text": "string | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "input",
+              "type": {
+                "text": "HTMLSelectElement"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "autocomplete",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "autocomplete",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "value",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback"
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleSlotChange",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleInput",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderInput",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The label of the input element.",
+              "name": "label",
+              "kind": "field"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "autocomplete",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "autocomplete"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "fieldName": "name"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Editable({ hasAfterSlot: false })",
+              "module": "src/components/form/input-select/input-select.component.ts"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wcp-input-select",
+          "examples": [
+            "## With optional label\n```html\n<wcp-input-select label=\"With optional label\">\n  <wcp-input-select-option value=\"foo\" label=\"Foo\"></wcp-input-select-option>\n  <wcp-input-select-option value=\"bar\" label=\"Bar\"></wcp-input-select-option>\n  <wcp-input-select-option value=\"baz\" label=\"Baz\"></wcp-input-select-option>\n</wcp-input-select>\n```",
+            "## With disabled options\n```html\n<wcp-input-select label=\"With disabled options\">\n  <wcp-input-select-option value=\"foo\" label=\"Foo\"></wcp-input-select-option>\n  <wcp-input-select-option value=\"bar\" label=\"Bar\" disabled></wcp-input-select-option>\n  <wcp-input-select-option value=\"baz\" label=\"Baz\"></wcp-input-select-option>\n</wcp-input-select>\n```",
+            "## With optional initial value\n```html\n<wcp-input-select label=\"With optional initial value\" value=\"bar\">\n  <wcp-input-select-option value=\"foo\" label=\"Foo\"></wcp-input-select-option>\n  <wcp-input-select-option value=\"bar\" label=\"Bar\"></wcp-input-select-option>\n  <wcp-input-select-option value=\"baz\" label=\"Baz\"></wcp-input-select-option>\n</wcp-input-select>\n```",
+            "## Used within a form\n```html\n<form>\n  <wcp-input-select label=\"Fully form enabled component\">\n    <wcp-input-select-option value=\"foo\" label=\"Foo\"></wcp-input-select-option>\n    <wcp-input-select-option value=\"bar\" label=\"Bar\"></wcp-input-select-option>\n    <wcp-input-select-option value=\"baz\" label=\"Baz\"></wcp-input-select-option>\n  </wcp-input-select>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```"
+          ],
+          "readme": "# wcp-input-select\n\nA numeric input element using the wcp style. Fully form aware.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-select label=\"With optional label\">\n  <wcp-input-select-option value=\"foo\" label=\"Foo\"></wcp-input-select-option>\n  <wcp-input-select-option value=\"bar\" label=\"Bar\"></wcp-input-select-option>\n  <wcp-input-select-option value=\"baz\" label=\"Baz\"></wcp-input-select-option>\n</wcp-input-select>\n```\n\n## With disabled options\n\n```html\n<wcp-input-select label=\"With disabled options\">\n  <wcp-input-select-option value=\"foo\" label=\"Foo\"></wcp-input-select-option>\n  <wcp-input-select-option value=\"bar\" label=\"Bar\" disabled></wcp-input-select-option>\n  <wcp-input-select-option value=\"baz\" label=\"Baz\"></wcp-input-select-option>\n</wcp-input-select>\n```\n\n## With optional initial value\n\n```html\n<wcp-input-select label=\"With optional initial value\" value=\"bar\">\n  <wcp-input-select-option value=\"foo\" label=\"Foo\"></wcp-input-select-option>\n  <wcp-input-select-option value=\"bar\" label=\"Bar\"></wcp-input-select-option>\n  <wcp-input-select-option value=\"baz\" label=\"Baz\"></wcp-input-select-option>\n</wcp-input-select>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-select label=\"Fully form enabled component\">\n    <wcp-input-select-option value=\"foo\" label=\"Foo\"></wcp-input-select-option>\n    <wcp-input-select-option value=\"bar\" label=\"Bar\"></wcp-input-select-option>\n    <wcp-input-select-option value=\"baz\" label=\"Baz\"></wcp-input-select-option>\n  </wcp-input-select>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type                  | Default | Description                     |\n|----------------|----------------|-----------------------|---------|---------------------------------|\n| `autocomplete` | `autocomplete` | `boolean`             | false   |                                 |\n| `disabled`     | `disabled`     | `boolean`             | false   |                                 |\n| `label`        |                | `string`              |         | The label of the input element. |\n| `name`         | `name`         | `string`              | \"text\"  |                                 |\n| `readonly`     | `readonly`     | `boolean`             | false   |                                 |\n| `required`     | `required`     | `boolean`             | false   |                                 |\n| `value`        | `value`        | `string \\| undefined` |         |                                 |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n| `handleSlotChange`  | `(event: any): void` |\n| `renderInput`       | `(id: string): any`  |\n\n## Slots\n\n| Name   | Description                                      |\n|--------|--------------------------------------------------|\n|        | Projects options into the select elements dropdown menu. |\n| `hint` | Receives optional descriptions below the input.  |\n\n## CSS Custom Properties\n\n| Property                              | Description                                      |\n|---------------------------------------|--------------------------------------------------|\n| `--wcp-input-select-arrow-size`       | The size of the arrow icon.                      |\n| `--wcp-input-select-dark-background`  | The background color of the element in dark mode. |\n| `--wcp-input-select-dark-border`      | The border color of the element in dark mode.    |\n| `--wcp-input-select-dark-color`       | The font color of the input element in dark mode. |\n| `--wcp-input-select-hint-size`        | The font size of the hint.                       |\n| `--wcp-input-select-label-size`       | The font size of the label.                      |\n| `--wcp-input-select-light-background` | The background color of the element in light mode. |\n| `--wcp-input-select-light-border`     | The border color of the element in light mode.   |\n| `--wcp-input-select-light-color`      | The font color of the input element in light mode. |\n| `--wcp-input-select-spacing`          | The inner spacing of the input element.          |\n",
+          "groups": [
+            "form"
+          ],
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "InputSelect",
+          "declaration": {
+            "name": "InputSelect",
+            "module": "src/components/form/input-select/input-select.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-input-select",
+          "declaration": {
+            "name": "InputSelect",
+            "module": "src/components/form/input-select/input-select.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/form/input-text/input-text.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A text input element using the wcp style. Fully form aware.\nCan display multiline text (textarea) if configured to do so.",
+          "name": "InputText",
+          "cssProperties": [
+            {
+              "description": "The font size of the hint.",
+              "name": "--wcp-input-text-hint-size"
+            },
+            {
+              "description": "The font size of the label.",
+              "name": "--wcp-input-text-label-size"
+            },
+            {
+              "description": "The inner spacing of the input element.",
+              "name": "--wcp-input-text-spacing"
+            },
+            {
+              "description": "The background color of the element in dark mode.",
+              "name": "--wcp-input-text-dark-background"
+            },
+            {
+              "description": "The border color of the element in dark mode.",
+              "name": "--wcp-input-text-dark-border"
+            },
+            {
+              "description": "The font color of the input element in dark mode.",
+              "name": "--wcp-input-text-dark-color"
+            },
+            {
+              "description": "The background color of the element in light mode.",
+              "name": "--wcp-input-text-light-background"
+            },
+            {
+              "description": "The border color of the element in light mode.",
+              "name": "--wcp-input-text-light-border"
+            },
+            {
+              "description": "The font color of the input element in light mode.",
+              "name": "--wcp-input-text-light-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Receives optional descriptions below the input.",
+              "name": "hint"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "#initialValue",
+              "privacy": "private",
+              "type": {
+                "text": "string | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "input",
+              "type": {
+                "text": "HTMLInputElement | HTMLTextAreaElement"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "multiline",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "multiline",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "autocomplete",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "autocomplete",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "'text' | 'email' | 'password' | 'search' | 'tel' | 'url'"
+              },
+              "default": "'text'",
+              "description": "Can be set to to `text`, `email`, `password`, `search`, `tel`, or `url`. \\\nBeware that this will be ignored if combined with the `multiline` attribute.",
+              "attribute": "type",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "value",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback"
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleInput",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderInput",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The label of the input element.",
+              "name": "label",
+              "kind": "field"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "multiline",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "multiline"
+            },
+            {
+              "name": "autocomplete",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "autocomplete"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "'text'",
+              "fieldName": "name"
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "'text' | 'email' | 'password' | 'search' | 'tel' | 'url'"
+              },
+              "default": "'text'",
+              "description": "Can be set to to `text`, `email`, `password`, `search`, `tel`, or `url`. \\\nBeware that this will be ignored if combined with the `multiline` attribute.",
+              "fieldName": "type"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Editable()",
+              "module": "src/components/form/input-text/input-text.component.ts"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wcp-input-text",
+          "examples": [
+            "## With optional label\n```html\n<wcp-input-text label=\"With optional label\"></wcp-input-text>\n```",
+            "## With optional initial value\n```html\n<wcp-input-text label=\"With optional initial value\" value=\"Foo\"></wcp-input-text>\n```",
+            "## Multiline\n```html\n<wcp-input-text multiline label=\"With multiline value\"></wcp-input-text>\n```",
+            "## Used within a form\n```html\n<form>\n  <wcp-input-text label=\"Fully form enabled component\"></wcp-input-text>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```"
+          ],
+          "readme": "# wcp-input-text\n\nA text input element using the wcp style. Fully form aware.\nCan display multiline text (textarea) if configured to do so.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-text label=\"With optional label\"></wcp-input-text>\n```\n\n## With optional initial value\n\n```html\n<wcp-input-text label=\"With optional initial value\" value=\"Foo\"></wcp-input-text>\n```\n\n## Multiline\n\n```html\n<wcp-input-text multiline label=\"With multiline value\"></wcp-input-text>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-text label=\"Fully form enabled component\"></wcp-input-text>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type                                             | Default | Description                                      |\n|----------------|----------------|--------------------------------------------------|---------|--------------------------------------------------|\n| `autocomplete` | `autocomplete` | `boolean`                                        | false   |                                                  |\n| `disabled`     | `disabled`     | `boolean`                                        | false   |                                                  |\n| `label`        |                | `string`                                         |         | The label of the input element.                  |\n| `multiline`    | `multiline`    | `boolean`                                        | false   |                                                  |\n| `name`         | `name`         | `string`                                         | \"text\"  |                                                  |\n| `readonly`     | `readonly`     | `boolean`                                        | false   |                                                  |\n| `required`     | `required`     | `boolean`                                        | false   |                                                  |\n| `type`         | `type`         | `\"text\" \\| \"email\" \\| \"password\" \\| \"search\" \\| \"tel\" \\| \"url\"` | \"text\"  | Can be set to to `text`, `email`, `password`, `search`, `tel`, or `url`. \\<br />Beware that this will be ignored if combined with the `multiline` attribute. |\n| `value`        | `value`        | `string \\| undefined`                            |         |                                                  |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n| `renderInput`       | `(id: string): any`  |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                            | Description                                      |\n|-------------------------------------|--------------------------------------------------|\n| `--wcp-input-text-dark-background`  | The background color of the element in dark mode. |\n| `--wcp-input-text-dark-border`      | The border color of the element in dark mode.    |\n| `--wcp-input-text-dark-color`       | The font color of the input element in dark mode. |\n| `--wcp-input-text-hint-size`        | The font size of the hint.                       |\n| `--wcp-input-text-label-size`       | The font size of the label.                      |\n| `--wcp-input-text-light-background` | The background color of the element in light mode. |\n| `--wcp-input-text-light-border`     | The border color of the element in light mode.   |\n| `--wcp-input-text-light-color`      | The font color of the input element in light mode. |\n| `--wcp-input-text-spacing`          | The inner spacing of the input element.          |\n",
+          "groups": [
+            "form"
+          ],
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "InputText",
+          "declaration": {
+            "name": "InputText",
+            "module": "src/components/form/input-text/input-text.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-input-text",
+          "declaration": {
+            "name": "InputText",
+            "module": "src/components/form/input-text/input-text.component.ts"
           }
         }
       ]
@@ -1394,7 +3256,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -1648,7 +3510,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -1773,7 +3635,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -1888,43 +3750,7 @@
                 {
                   "name": "event",
                   "type": {
-                    "text": "InputEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "renderFieldControl",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "field",
-                  "type": {
-                    "text": "Parsed.Field"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "renderSlotControl",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "slot",
-                  "type": {
-                    "text": "Parsed.Slot"
+                    "text": "CustomEvent<FormData>"
                   }
                 }
               ]
@@ -1966,18 +3792,19 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
+          "tagName": "wcp-preview-frame-viewer",
+          "examples": [],
           "readme": "# wcp-preview-frame-viewer\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property    | Attribute   | Modifiers | Type       | Default  |\n|-------------|-------------|-----------|------------|----------|\n| `available` | `available` | readonly  | `true`     | true     |\n| `element`   | `element`   |           |            |          |\n| `label`     | `label`     | readonly  | `\"Viewer\"` | \"Viewer\" |\n| `name`      | `name`      | readonly  | `\"viewer\"` | \"viewer\" |\n",
           "groups": [
             "plugins"
           ],
-          "tagName": "wcp-preview-frame-viewer",
           "customElement": true
         }
       ],
@@ -2157,7 +3984,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -2435,7 +4262,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -2495,7 +4322,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -2667,7 +4494,9 @@
               "name": "tabRoles",
               "type": {
                 "text": "HTMLElement[]"
-              }
+              },
+              "privacy": "private",
+              "readonly": true
             },
             {
               "kind": "field",
@@ -2736,7 +4565,7 @@
           "mixins": [
             {
               "name": "ColorSchemable",
-              "package": "@/utils/color-scheme.utils.js"
+              "package": "@/mixins/color-schemable.mixin.js"
             }
           ],
           "superclass": {
@@ -2747,7 +4576,7 @@
             "```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}'>\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```",
             "### Active tab preselected\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}' active-tab=\"second\">\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```"
           ],
-          "readme": "# wcp-tabs\n\n**Mixins:** ColorSchemable\n\n## Examples\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}'>\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```\n\n### Active tab preselected\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}' active-tab=\"second\">\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```\n\n## Properties\n\n| Property    | Attribute    | Type                  | Default |\n|-------------|--------------|-----------------------|---------|\n| `activeTab` | `active-tab` | `string \\| undefined` |         |\n| `tabFocus`  |              | `number`              | 0       |\n| `tabRoles`  |              | `object`              |         |\n| `tabs`      | `tabs`       |                       | {}      |\n\n## Methods\n\n| Method                | Type                 |\n|-----------------------|----------------------|\n| `emitActiveTabChange` | `(): void`           |\n| `handleKeydown`       | `(event: any): void` |\n| `handleTabClick`      | `(event: any): void` |\n\n## Events\n\n| Event                        | Description                          |\n|------------------------------|--------------------------------------|\n| `wcp-tabs:active-tab-change` | Notifies when the active tab changes |\n\n## Slots\n\n| Name | Description                              |\n|------|------------------------------------------|\n|      | tab name - The content of the named tab. |\n\n## CSS Custom Properties\n\n| Property                                   | Description                                      |\n|--------------------------------------------|--------------------------------------------------|\n| `--wcp-tabs-panel-spacing`                 | The inner padding of the tabpanels               |\n| `--wcp-tabs-tab-active-border-width`       | The border width of the active tab               |\n| `--wcp-tabs-tab-active-dark-border-color`  | The border color of the active tab in dark mode  |\n| `--wcp-tabs-tab-active-light-border-color` | The border color of the active tab in light mode |\n| `--wcp-tabs-tab-spacing`                   | The inner padding of the tabs                    |\n| `--wcp-tabs-tablist-dark-border-color`     | The border color of the tablist in dark mode     |\n| `--wcp-tabs-tablist-gap`                   | The gap between the tablist and the tabpanels    |\n| `--wcp-tabs-tablist-light-border-color`    | The border color of the tablist in light mode    |\n| `--wcp-tabs-tablist-spacing`               | The inner padding of the tablist                 |\n",
+          "readme": "# wcp-tabs\n\n**Mixins:** ColorSchemable\n\n## Examples\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}'>\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```\n\n### Active tab preselected\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}' active-tab=\"second\">\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```\n\n## Properties\n\n| Property    | Attribute    | Type                  | Default |\n|-------------|--------------|-----------------------|---------|\n| `activeTab` | `active-tab` | `string \\| undefined` |         |\n| `tabFocus`  |              | `number`              | 0       |\n| `tabs`      | `tabs`       |                       | {}      |\n\n## Methods\n\n| Method                | Type                 |\n|-----------------------|----------------------|\n| `emitActiveTabChange` | `(): void`           |\n| `handleKeydown`       | `(event: any): void` |\n| `handleTabClick`      | `(event: any): void` |\n\n## Events\n\n| Event                        | Description                          |\n|------------------------------|--------------------------------------|\n| `wcp-tabs:active-tab-change` | Notifies when the active tab changes |\n\n## Slots\n\n| Name | Description                              |\n|------|------------------------------------------|\n|      | tab name - The content of the named tab. |\n\n## CSS Custom Properties\n\n| Property                                   | Description                                      |\n|--------------------------------------------|--------------------------------------------------|\n| `--wcp-tabs-panel-spacing`                 | The inner padding of the tabpanels               |\n| `--wcp-tabs-tab-active-border-width`       | The border width of the active tab               |\n| `--wcp-tabs-tab-active-dark-border-color`  | The border color of the active tab in dark mode  |\n| `--wcp-tabs-tab-active-light-border-color` | The border color of the active tab in light mode |\n| `--wcp-tabs-tab-spacing`                   | The inner padding of the tabs                    |\n| `--wcp-tabs-tablist-dark-border-color`     | The border color of the tablist in dark mode     |\n| `--wcp-tabs-tablist-gap`                   | The gap between the tablist and the tabpanels    |\n| `--wcp-tabs-tablist-light-border-color`    | The border color of the tablist in light mode    |\n| `--wcp-tabs-tablist-spacing`               | The inner padding of the tablist                 |\n",
           "groups": [
             "ui"
           ],
@@ -2878,6 +4707,193 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/plugins/preview-frame-viewer/preview-frame-viewer-controls/preview-frame-viewer-controls.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PreviewFrameViewerControls",
+          "cssProperties": [
+            {
+              "description": "The font size of the headline.",
+              "name": "--wcp-preview-frame-viewer-controls-headline-size"
+            },
+            {
+              "description": "The font weight of the headline.",
+              "name": "--wcp-preview-frame-viewer-controls-headline-weight"
+            },
+            {
+              "description": "The inner spacing of the headline.",
+              "name": "--wcp-preview-frame-viewer-controls-headline-spacing"
+            },
+            {
+              "description": "The border color of the element in dark mode.",
+              "name": "--wcp-preview-frame-viewer-controls-dark-border-color"
+            },
+            {
+              "description": "The border color of the element in light mode.",
+              "name": "--wcp-preview-frame-viewer-controls-light-border-color"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "element",
+              "type": {
+                "text": "Parsed.Element | undefined"
+              },
+              "readonly": true,
+              "attribute": "element"
+            },
+            {
+              "kind": "field",
+              "name": "data",
+              "type": {
+                "text": "ElementData | undefined"
+              },
+              "readonly": true,
+              "attribute": "data"
+            },
+            {
+              "kind": "method",
+              "name": "renderHint",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "content",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderFieldControl",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "field",
+                  "type": {
+                    "text": "Parsed.Field"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderSlotControl",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "slot",
+                  "type": {
+                    "text": "Parsed.Slot"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleFormInput",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "InputEvent"
+                  }
+                }
+              ]
+            }
+          ],
+          "events": [
+            {
+              "name": "wcp-preview-frame-viewer-controls:input",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "element",
+              "type": {
+                "text": "Parsed.Element | undefined"
+              },
+              "readonly": true,
+              "fieldName": "element"
+            },
+            {
+              "name": "data",
+              "type": {
+                "text": "ElementData | undefined"
+              },
+              "readonly": true,
+              "fieldName": "data"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/mixins/color-schemable.mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wcp-preview-frame-viewer-controls",
+          "examples": [],
+          "readme": "# wcp-preview-frame-viewer-controls\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property  | Attribute | Modifiers |\n|-----------|-----------|-----------|\n| `data`    | `data`    | readonly  |\n| `element` | `element` | readonly  |\n\n## Events\n\n| Event                                     | Type                    | Description                                  |\n|-------------------------------------------|-------------------------|----------------------------------------------|\n| `wcp-preview-frame-viewer-controls:input` | `CustomEvent<FormData>` | Fires when the user changes a control value. |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                    |\n|--------------------------------------------------|------------------------------------------------|\n| `--wcp-preview-frame-viewer-controls-dark-border-color` | The border color of the element in dark mode.  |\n| `--wcp-preview-frame-viewer-controls-headline-size` | The font size of the headline.                 |\n| `--wcp-preview-frame-viewer-controls-headline-spacing` | The inner spacing of the headline.             |\n| `--wcp-preview-frame-viewer-controls-headline-weight` | The font weight of the headline.               |\n| `--wcp-preview-frame-viewer-controls-light-border-color` | The border color of the element in light mode. |\n",
+          "groups": [
+            "plugins"
+          ],
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PreviewFrameViewerControls",
+          "declaration": {
+            "name": "PreviewFrameViewerControls",
+            "module": "src/components/plugins/preview-frame-viewer/preview-frame-viewer-controls/preview-frame-viewer-controls.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview-frame-viewer-controls",
+          "declaration": {
+            "name": "PreviewFrameViewerControls",
+            "module": "src/components/plugins/preview-frame-viewer/preview-frame-viewer-controls/preview-frame-viewer-controls.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component.ts",
       "declarations": [
         {
@@ -2933,6 +4949,7 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "tagName": "wcp-preview-frame-viewer-stage",
           "examples": [
             "```html\n<wcp-preview-frame-viewer-stage>\n  <wcp-button>Example button</wcp-button>\n</wcp-preview-frame-viewer-stage>\n```"
           ],
@@ -2940,7 +4957,6 @@
           "groups": [
             "plugins"
           ],
-          "tagName": "wcp-preview-frame-viewer-stage",
           "customElement": true
         }
       ],
