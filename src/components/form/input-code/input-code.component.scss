@@ -38,7 +38,7 @@
 
   :host([autosize]) & {
     height: var(---wcp-input-code-height, auto);
-    min-height: 18px;
+    min-height: 28px;
   }
 
   :host([disabled]) & {

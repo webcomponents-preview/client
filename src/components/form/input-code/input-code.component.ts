@@ -181,12 +181,13 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
   protected updateEditorAutoSize() {
     if (this.autosize) {
       // set height initially
-      this.style.setProperty('---wcp-input-code-height', `${this.#editor?.getContentHeight()}px`);
+      const contentHeight = this.#editor?.getContentHeight() ?? 18;
+      this.style.setProperty('---wcp-input-code-height', `${contentHeight + 10}px`);
 
       // (re-)listen for content height changes
       this.#editorAutoSizeListener?.dispose();
       this.#editorAutoSizeListener = this.#editor?.onDidContentSizeChange(({ contentHeight }) => {
-        this.style.setProperty('---wcp-input-code-height', `${contentHeight}px`);
+        this.style.setProperty('---wcp-input-code-height', `${contentHeight + 10}px`);
       });
     } else {
       // remove height property
