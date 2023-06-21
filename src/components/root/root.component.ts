@@ -1,7 +1,7 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
 
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
@@ -40,6 +40,9 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
 
   @state()
   manifest?: Manifest;
+
+  @state()
+  searchTerms: string[] = [];
 
   @state()
   navigation?: Map<string, Element[]>;
@@ -95,6 +98,17 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
     this.dispatchEvent(event);
   }
 
+  @eventOptions({ capture: false, passive: true })
+  handleSearchInput({ detail }: CustomEvent<string>) {
+    this.searchTerms = detail.toLowerCase().split(' ');
+  }
+
+  matchesSearch(content: string): boolean {
+    if (this.searchTerms.length < 1) return true;
+    const contents = content.toLowerCase();
+    return this.searchTerms.every((term) => contents.includes(term));
+  }
+
   override async connectedCallback() {
     // once connected, load the config and the manifest
     await this.loadConfig(this.configUrl);
@@ -117,19 +131,30 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
           </slot>
         </wcp-title>
 
+        <wcp-navigation-search
+          slot="header"
+          term="${this.searchTerms.join(' ')}"
+          @wcp-navigation-search:search="${this.handleSearchInput}"
+        ></wcp-navigation-search>
+
         ${when(
-          this.config?.additionalReadmes.length,
+          this.config?.additionalReadmes?.length,
           () => html`
             <wcp-navigation slot="aside" headline="${this.config?.additionalReadmeGroupName ?? 'Readmes'}">
               ${map(
                 this.config?.additionalReadmes ?? [],
                 ({ name, url }) => html`
-                  <wcp-navigation-item
-                    ?active="${this.router.isActive(`/readme/${encodeURIComponent(url)}`)}"
-                    href="#/readme/${encodeURIComponent(url)}"
-                  >
-                    ${name}
-                  </wcp-navigation-item>
+                  ${when(
+                    this.matchesSearch(`${this.config?.additionalReadmeGroupName ?? 'Readmes'} ${name}`),
+                    () => html`
+                      <wcp-navigation-item
+                        ?active="${this.router.isActive(`/readme/${encodeURIComponent(url)}`)}"
+                        href="#/readme/${encodeURIComponent(url)}"
+                      >
+                        ${name}
+                      </wcp-navigation-item>
+                    `
+                  )}
                 `
               )}
             </wcp-navigation>
@@ -145,12 +170,17 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
                   ${map(
                     elements,
                     (element) => html`
-                      <wcp-navigation-item
-                        ?active="${this.router.isActive(`/element/${element.getNiceUrl()}`)}"
-                        href="#/element/${element.getNiceUrl()}"
-                      >
-                        ${element.getNiceName()}
-                      </wcp-navigation-item>
+                      ${when(
+                        this.matchesSearch(`${group} ${element.getNiceName()}`),
+                        () => html`
+                          <wcp-navigation-item
+                            ?active="${this.router.isActive(`/element/${element.getNiceUrl()}`)}"
+                            href="#/element/${element.getNiceUrl()}"
+                          >
+                            ${element.getNiceName()}
+                          </wcp-navigation-item>
+                        `
+                      )}
                     `
                   )}
                 </wcp-navigation>

@@ -44,7 +44,7 @@ export const prepareRoutes = (router: Router, config: Config, manifest: Manifest
         .then((markdown) => prefixRelativeUrls(markdown, encoded, '/#/readme/'));
       return html`
         <wcp-readme-frame>
-          <wcp-readme markdown="${until(markdown, '')}" hash="${hash}"></wcp-readme>
+          <wcp-readme markdown="${until(markdown, '')}" hash="${ifDefined(hash)}"></wcp-readme>
         </wcp-readme-frame>
       `;
     },

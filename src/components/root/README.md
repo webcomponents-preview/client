@@ -12,14 +12,17 @@
 | `manifest`    |                |                       |         |                                                  |
 | `manifestUrl` | `manifest-url` | `string`              |         | Defines the location of the custom element manifest file. |
 | `navigation`  |                |                       |         |                                                  |
+| `searchTerms` |                | `object`              | []      |                                                  |
 
 ## Methods
 
 | Method                       | Type                                     |
 |------------------------------|------------------------------------------|
 | `emitManifestLoaded`         | `(): void`                               |
+| `handleSearchInput`          | `({ detail }: any): void`                |
 | `loadConfig`                 | `(configUrl?: string \| undefined): any` |
 | `loadCustomElementsManifest` | `(manifestUrl: string): any`             |
+| `matchesSearch`              | `(content: string): boolean`             |
 
 ## Events
 
