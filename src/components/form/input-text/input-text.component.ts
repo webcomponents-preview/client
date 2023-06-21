@@ -20,10 +20,14 @@ import styles from './input-text.component.scss';
  * @cssprop --wcp-input-text-label-size - The font size of the label.
  * @cssprop --wcp-input-text-label-spacing - The spacing between the label and the input.
  * @cssprop --wcp-input-text-spacing - The inner spacing of the input element.
-
+ *
  * @cssprop --wcp-input-text-dark-background - The background color of the element in dark mode.
  * @cssprop --wcp-input-text-dark-border - The border color of the element in dark mode.
  * @cssprop --wcp-input-text-dark-color - The font color of the input element in dark mode.
+ *
+ * @cssprop --wcp-input-text-light-background - The background color of the element in light mode.
+ * @cssprop --wcp-input-text-light-border - The border color of the element in light mode.
+ * @cssprop --wcp-input-text-light-color - The font color of the input element in light mode.
  * 
  * @example
  * ## With optional label

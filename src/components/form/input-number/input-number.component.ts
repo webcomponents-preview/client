@@ -19,10 +19,14 @@ import styles from './input-number.component.scss';
  * @cssprop --wcp-input-number-label-size - The font size of the label.
  * @cssprop --wcp-input-number-label-spacing - The spacing between the label and the input.
  * @cssprop --wcp-input-number-spacing - The inner spacing of the input element.
-
+ *
  * @cssprop --wcp-input-number-dark-background - The background color of the element in dark mode.
  * @cssprop --wcp-input-number-dark-border - The border color of the element in dark mode.
  * @cssprop --wcp-input-number-dark-color - The font color of the input element in dark mode.
+ *
+ * @cssprop --wcp-input-number-light-background - The background color of the element in light mode.
+ * @cssprop --wcp-input-number-light-border - The border color of the element in light mode.
+ * @cssprop --wcp-input-number-light-color - The font color of the input element in light mode.
  * 
  * @example
  * ## With optional label

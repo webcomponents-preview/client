@@ -65,11 +65,14 @@ Can display multiline text (textarea) if configured to do so.
 
 ## CSS Custom Properties
 
-| Property                           | Description                                      |
-|------------------------------------|--------------------------------------------------|
-| `--wcp-input-text-dark-background` | The background color of the element in dark mode. |
-| `--wcp-input-text-dark-border`     | The border color of the element in dark mode.    |
-| `--wcp-input-text-dark-color`      | The font color of the input element in dark mode. |
-| `--wcp-input-text-label-size`      | The font size of the label.                      |
-| `--wcp-input-text-label-spacing`   | The spacing between the label and the input.     |
-| `--wcp-input-text-spacing`         | The inner spacing of the input element.          |
+| Property                            | Description                                      |
+|-------------------------------------|--------------------------------------------------|
+| `--wcp-input-text-dark-background`  | The background color of the element in dark mode. |
+| `--wcp-input-text-dark-border`      | The border color of the element in dark mode.    |
+| `--wcp-input-text-dark-color`       | The font color of the input element in dark mode. |
+| `--wcp-input-text-label-size`       | The font size of the label.                      |
+| `--wcp-input-text-label-spacing`    | The spacing between the label and the input.     |
+| `--wcp-input-text-light-background` | The background color of the element in light mode. |
+| `--wcp-input-text-light-border`     | The border color of the element in light mode.   |
+| `--wcp-input-text-light-color`      | The font color of the input element in light mode. |
+| `--wcp-input-text-spacing`          | The inner spacing of the input element.          |
