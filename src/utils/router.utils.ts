@@ -1,4 +1,5 @@
 import type { LitElement, TemplateResult } from 'lit';
+import { guard } from 'lit/directives/guard.js';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Property 'UrlPattern' does not exist
@@ -170,7 +171,8 @@ export class Router {
   }
 
   outlet(): TemplateResult {
-    // return this.#routes.find((route) => route.pattern.test(location.hash))?.render();
-    return this.#currentRoute?.render?.(this.#currentParams, this) as TemplateResult;
+    return guard([this.#currentPath, this.#currentRoute, this.#currentParams], () =>
+      this.#currentRoute?.render?.(this.#currentParams, this)
+    ) as TemplateResult;
   }
 }
