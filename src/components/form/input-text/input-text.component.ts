@@ -18,7 +18,6 @@ import styles from './input-text.component.scss';
  * @slot hint - Receives optional descriptions below the input.
  * 
  * @cssprop --wcp-input-text-label-size - The font size of the label.
- * @cssprop --wcp-input-text-label-spacing - The spacing between the label and the input.
  * @cssprop --wcp-input-text-spacing - The inner spacing of the input element.
  *
  * @cssprop --wcp-input-text-dark-background - The background color of the element in dark mode.

@@ -17,7 +17,6 @@ import styles from './input-number.component.scss';
  * @slot hint - Receives optional descriptions below the input.
  * 
  * @cssprop --wcp-input-number-label-size - The font size of the label.
- * @cssprop --wcp-input-number-label-spacing - The spacing between the label and the input.
  * @cssprop --wcp-input-number-spacing - The inner spacing of the input element.
  *
  * @cssprop --wcp-input-number-dark-background - The background color of the element in dark mode.
