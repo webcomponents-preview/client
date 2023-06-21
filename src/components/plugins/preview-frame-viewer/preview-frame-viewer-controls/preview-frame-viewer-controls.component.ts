@@ -107,13 +107,13 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
 
   protected renderSlotControl(slot: Parsed.Slot): TemplateResult {
     return html`
-      <wcp-input-text
+      <wcp-input-code
         name="slots.${slot.name}"
         label="${slot.name.trim() ? slot.name : 'Default'}"
         .value="${this.data?.slots[slot.name]}"
       >
         ${when(slot.hasDescription, () => html`${this.renderHint(slot.description)}`)}
-      </wcp-input-text>
+      </wcp-input-code>
     `;
   }
 
