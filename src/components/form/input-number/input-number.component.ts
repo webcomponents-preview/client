@@ -1,6 +1,5 @@
 import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, query } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 import type { FormAssociated } from '@/utils/form.utils.js';
 import { Editable } from '@/mixins/editable.mixin.js';
@@ -114,7 +113,7 @@ export class InputNumber extends Editable()(LitElement) implements FormAssociate
         type="number"
         id="${id}"
         name="${this.name}"
-        autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
+        autocomplete="${this.autocomplete ? 'on' : 'off'}"
         ?disabled="${this.disabled}"
         ?required="${this.required}"
         .value="${this.value ? `${this.value}` : ''}"

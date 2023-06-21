@@ -1,6 +1,5 @@
 import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 import type { FormAssociated } from '@/utils/form.utils.js';
 import { Editable } from '@/mixins/editable.mixin.js';
@@ -128,7 +127,7 @@ export class InputCheckbox
         type="checkbox"
         id="${id}"
         name="${this.name}"
-        autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
+        autocomplete="${this.autocomplete ? 'on' : 'off'}"
         ?disabled="${this.disabled}"
         ?required="${this.required}"
         .checked="${this.checked}"
