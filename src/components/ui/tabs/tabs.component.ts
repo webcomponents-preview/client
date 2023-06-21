@@ -2,7 +2,7 @@ import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, queryAll } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 
 import styles from './tabs.component.scss';
 

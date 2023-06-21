@@ -2,8 +2,8 @@ import { html, nothing, type LitElement, type TemplateResult, unsafeCSS, type CS
 import { property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
-import { Constructor } from '@/utils/mixin.types.js';
+import type { Constructor } from '@/utils/mixin.types.js';
+import { ColorSchemable, type ColorSchemableInterface } from '@/mixins/color-schemable.mixin.js';
 
 import styles from './editable.mixin.scss';
 
@@ -64,5 +64,5 @@ export const Editable =
         `;
       }
     }
-    return EditableElement as Constructor<EditableInterface> & EditablePrototype & T;
+    return EditableElement as Constructor<EditableInterface & ColorSchemableInterface> & EditablePrototype & T;
   };

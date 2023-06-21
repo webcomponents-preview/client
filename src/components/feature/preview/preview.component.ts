@@ -5,7 +5,7 @@ import { map } from 'lit/directives/map.js';
 import { ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { type Config, getConfig } from '@/utils/config.utils.js';
 import { isElementWithin } from '@/utils/dom.utils.js';
 

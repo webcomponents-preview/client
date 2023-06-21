@@ -4,7 +4,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { keyed } from 'lit/directives/keyed.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import type * as Parsed from '@/utils/parser.types.js';
 import type { PreviewFramePlugin } from '@/utils/plugin.utils.js';
 
