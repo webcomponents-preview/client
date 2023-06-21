@@ -12,6 +12,7 @@ import styles from './layout.component.scss';
  * </wcp-layout>
  * ```
  *
+ * @slot header - Shows contents fixed above the aside
  * @slot aside - Projects elements aside the main content
  * @slot - Receives the content of the main section
  */
@@ -22,7 +23,7 @@ export class Layout extends LitElement {
   protected override render(): TemplateResult {
     return html`
       <wcp-aside>
-        <slot name="title" slot="header"></slot>
+        <slot name="header" slot="header"></slot>
         <slot name="aside"></slot>
       </wcp-aside>
 
