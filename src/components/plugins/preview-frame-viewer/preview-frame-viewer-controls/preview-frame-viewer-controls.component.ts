@@ -13,7 +13,7 @@ import styles from './preview-frame-viewer-controls.component.scss';
 
 /**
  * @element wcp-preview-frame-viewer-controls
- * 
+ *
  * @emits {CustomEvent<FormData>} wcp-preview-frame-viewer-controls:input - Fires when the user changes a control value.
  */
 @customElement('wcp-preview-frame-viewer-controls')
@@ -70,22 +70,19 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
       ${when(
         field.isEnum,
         () => html`
-          <wcp-input>
-            <label>
-              <span class="label">${field.attribute ?? field.name}</span>
-              <select autocomplete="off" name="fields.${field.name}">
-                ${map(
-                  field.enumValues,
-                  (option) => html`
-                    <option .value="${option}" ?selected="${this.data?.fields[field.name] === option}">
-                      ${option}
-                    </option>
-                  `
-                )}
-              </select>
-              ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
-            </label>
-          </wcp-input>
+          <wcp-input-select
+            name="fields.${field.name}"
+            label="${field.attribute ?? field.name}"
+            .value="${this.data?.fields[field.name] as string | undefined}"
+          >
+            ${map(
+              field.enumValues,
+              (option) => html`
+                <wcp-input-select-option label="${option}" .value="${option}"></wcp-input-select-option>
+              `
+            )}
+            ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
+          </wcp-input-select>
         `
       )}
     `;
