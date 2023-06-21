@@ -1,14 +1,9 @@
 import type { LitElement, TemplateResult } from 'lit';
-import type { Constructor } from '@/utils/mixin.types.js';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Property 'UrlPattern' does not exist
 if (!globalThis.URLPattern) {
   await import('urlpattern-polyfill');
-}
-
-declare class RoutableInterface {
-  router: Router;
 }
 
 export type Params = Record<string, string | undefined>;
@@ -179,37 +174,3 @@ export class Router {
     return this.#currentRoute?.render?.(this.#currentParams, this) as TemplateResult;
   }
 }
-
-// provide a mixin to make a component routable
-export const Routable =
-  (registerRoutes?: RegisterRoutes) =>
-  <T extends Constructor<LitElement>>(superClass: T) => {
-    class RoutableElement extends superClass {
-      /**
-       * @internal - allows access to routing features
-       */
-      router = new Router(this);
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      constructor(...args: any[]) {
-        super(...args);
-
-        // allow setting routes from decorator
-        if (registerRoutes !== undefined) {
-          const routes = registerRoutes(this.router);
-          this.router.registerRoutes(routes);
-        }
-      }
-
-      override connectedCallback() {
-        super.connectedCallback();
-        this.router.connect();
-      }
-
-      override disconnectedCallback() {
-        super.disconnectedCallback();
-        this.router.disconnect();
-      }
-    }
-    return RoutableElement as Constructor<RoutableInterface> & T;
-  };

@@ -13,9 +13,9 @@ export type GenericField<T> = {
   isObject: boolean;
 
   /**
-   * Indicates if the field can be controled by the viewer.
+   * Indicates if the field can be controlled by the viewer.
    */
-  isControlable: boolean;
+  isControllable: boolean;
   isOptional: boolean;
 
   hasAttribute: boolean;

@@ -2,7 +2,7 @@ import { LitElement, type TemplateResult, html, unsafeCSS, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 import type * as Parsed from '@/utils/parser.types.js';
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import type { PreviewFramePlugin } from '@/utils/plugin.utils.js';
 
 import styles from './preview-frame-readme.plugin.scss';

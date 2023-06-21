@@ -1,7 +1,7 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions } from 'lit/decorators.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 
 import styles from './toggle-color-scheme.component.scss';
 
@@ -16,8 +16,6 @@ import styles from './toggle-color-scheme.component.scss';
 @customElement('wcp-toggle-color-scheme')
 export class ToggleColorScheme extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
-
-  override colorScheme = matchMedia('(prefers-color-scheme: dark)').matches ? ('dark' as const) : ('light' as const);
 
   @eventOptions({ passive: true })
   handleButtonClick() {

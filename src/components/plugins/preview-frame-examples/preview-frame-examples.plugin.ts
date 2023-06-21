@@ -4,7 +4,7 @@ import { map } from 'lit/directives/map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import type * as Parsed from '@/utils/parser.types.js';
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { renderMarkdown } from '@/utils/markdown.utils.js';
 import type { PreviewFramePlugin } from '@/utils/plugin.utils.js';
 

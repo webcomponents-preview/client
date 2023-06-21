@@ -26,7 +26,7 @@ export const CemField = class {
     return !!this._field.type && !this.isBoolean && !this.isNumber && !this.isString && !this.isArray;
   }
 
-  get isControlable(): boolean {
+  get isControllable(): boolean {
     return this.isPublic && !this.isStatic;
   }
 

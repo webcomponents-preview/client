@@ -3,7 +3,7 @@ import { customElement, eventOptions, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
 
 import styles from './preview-viewport.plugin.scss';

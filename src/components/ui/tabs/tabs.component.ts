@@ -2,7 +2,7 @@ import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, queryAll } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 
 import styles from './tabs.component.scss';
 
@@ -47,7 +47,7 @@ export class Tabs extends ColorSchemable(LitElement) {
   tabFocus = 0;
 
   @queryAll('[role="tab"]')
-  tabRoles!: HTMLElement[];
+  private readonly tabRoles!: HTMLElement[];
 
   @property({ type: Object })
   tabs: Record<string, { label: string; disabled?: boolean }> = {};

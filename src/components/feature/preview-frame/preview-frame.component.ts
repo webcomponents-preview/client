@@ -3,7 +3,7 @@ import { customElement, eventOptions, property, state } from 'lit/decorators.js'
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/utils/color-scheme.utils.js';
+import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { type PreviewFramePlugin, findAllPlugins } from '@/utils/plugin.utils.js';
 
 import styles from './preview-frame.component.scss';

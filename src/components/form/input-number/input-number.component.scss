@@ -1,0 +1,41 @@
+@use '@/styles/utils' as utils;
+
+:host {
+  --wcp-editable-hint-size: var(--wcp-input-number-hint-size);
+  --wcp-editable-label-size: var(--wcp-input-number-label-size);
+  --wcp-editable-spacing: var(--wcp-input-number-spacing);
+
+  --wcp-editable-passive-border-radius: var(--wcp-input-number-border-radius);
+  --wcp-editable-passive-border-size: var(--wcp-input-number-border-size);
+
+  --wcp-editable-active-border-radius: var(--wcp-input-number-border-radius);
+  --wcp-editable-active-border-size: var(--wcp-input-number-border-size);
+
+  --wcp-editable-dark-background: var(--wcp-input-number-dark-background);
+  --wcp-editable-dark-border: var(--wcp-input-number-dark-border);
+  --wcp-editable-dark-color: var(--wcp-input-number-dark-color);
+
+  --wcp-editable-light-background: var(--wcp-input-number-light-background);
+  --wcp-editable-light-border: var(--wcp-input-number-light-border);
+  --wcp-editable-light-color: var(--wcp-input-number-light-color);
+}
+
+input {
+  all: unset;
+  appearance: none;
+  box-sizing: border-box;
+
+  width: 100%;
+  color: var(---wcp-input-number-color);
+  text-align: left;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+}

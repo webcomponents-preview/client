@@ -1,0 +1,47 @@
+@use '@/styles/utils' as utils;
+
+:host {
+  --wcp-editable-hint-size: var(--wcp-input-text-hint-size);
+  --wcp-editable-label-size: var(--wcp-input-text-label-size);
+  --wcp-editable-spacing: var(--wcp-input-text-spacing);
+
+  --wcp-editable-passive-border-radius: var(--wcp-input-text-border-radius);
+  --wcp-editable-passive-border-size: var(--wcp-input-text-border-size);
+
+  --wcp-editable-active-border-radius: var(--wcp-input-text-border-radius);
+  --wcp-editable-active-border-size: var(--wcp-input-text-border-size);
+
+  --wcp-editable-dark-background: var(--wcp-input-text-dark-background);
+  --wcp-editable-dark-border: var(--wcp-input-text-dark-border);
+  --wcp-editable-dark-color: var(--wcp-input-text-dark-color);
+
+  --wcp-editable-light-background: var(--wcp-input-text-light-background);
+  --wcp-editable-light-border: var(--wcp-input-text-light-border);
+  --wcp-editable-light-color: var(--wcp-input-text-light-color);
+}
+
+input,
+textarea {
+  all: unset;
+  appearance: none;
+  box-sizing: border-box;
+
+  width: 100%;
+  color: var(---wcp-input-text-color);
+  text-align: left;
+}
+
+input {
+  &[type='search']::-webkit-search-decoration,
+  &[type='search']::-webkit-search-cancel-button,
+  &[type='search']::-webkit-search-results-button,
+  &[type='search']::-webkit-search-results-decoration {
+    display: none;
+  }
+}
+
+textarea {
+  aspect-ratio: 16 / 9;
+  max-height: 200px;
+  resize: vertical;
+}

@@ -1,23 +1,26 @@
-import { LitElement } from 'lit';
-import { property } from 'lit/decorators/property.js';
-import type { Constructor } from '@/utils/mixin.types.js';
-
-declare class ColorSchemableInterface {
-  colorScheme?: 'light' | 'dark';
-}
+import type { ColorSchemableInterface } from '@/mixins/color-schemable.mixin.js';
 
 declare global {
   interface WindowEventMap {
-    'wcp-color-scheme:toggle': CustomEvent<'dark' | 'light' | null>;
+    'wcp-color-scheme:toggle': CustomEvent<ColorScheme | null>;
   }
 }
 
+export type ColorScheme = 'light' | 'dark';
+
 // module stores global state
 const colorSchemables = new Set<ColorSchemableInterface>();
-let colorSchemeState: 'light' | 'dark' | undefined;
+let colorSchemeState: ColorScheme | undefined = matchMedia('(prefers-color-scheme: dark)').matches
+  ? ('dark' as const)
+  : ('light' as const);
+
+// and makes them accessible
+export const getColorSchemeState = () => colorSchemeState;
+export const addColorSchemable = (element: ColorSchemableInterface) => colorSchemables.add(element);
+export const removeColorSchemable = (element: ColorSchemableInterface) => colorSchemables.delete(element);
 
 // track changes to color scheme
-function handleColorSchemeChange({ detail }: CustomEvent<'dark' | 'light' | null>) {
+function handleColorSchemeChange({ detail }: CustomEvent<ColorScheme | null>) {
   // update state in module
   colorSchemeState = detail ?? undefined;
   colorSchemables.forEach((colorSchemable) => (colorSchemable.colorScheme = colorSchemeState));
@@ -25,25 +28,3 @@ function handleColorSchemeChange({ detail }: CustomEvent<'dark' | 'light' | null
 
 // bind a single listener to keep track of changes
 window.addEventListener('wcp-color-scheme:toggle', handleColorSchemeChange, false);
-
-// provide a mixin to make a component color schemable
-export const ColorSchemable = <T extends Constructor<LitElement>>(superClass: T) => {
-  class ColorSchemableElement extends superClass {
-    /**
-     * @internal - used to reflect the color scheme to the element
-     */
-    @property({ type: String, reflect: true, attribute: 'color-scheme' })
-    colorScheme?: 'light' | 'dark' = colorSchemeState;
-
-    override connectedCallback() {
-      super.connectedCallback();
-      colorSchemables.add(this);
-    }
-
-    override disconnectedCallback() {
-      super.disconnectedCallback();
-      colorSchemables.delete(this);
-    }
-  }
-  return ColorSchemableElement as Constructor<ColorSchemableInterface> & T;
-};

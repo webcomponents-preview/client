@@ -7,7 +7,7 @@ import { until } from 'lit/directives/until.js';
 import type { Config } from '@/utils/config.utils.js';
 import { prefixRelativeUrls } from '@/utils/markdown.utils.js';
 import type { Manifest } from '@/utils/parser.types.js';
-import { areParamsEqual, mergeParams, type Route, type Router } from '@/utils/routable.utils.js';
+import { areParamsEqual, mergeParams, type Route, type Router } from '@/utils/router.utils.js';
 
 export const prepareRoutes = (router: Router, config: Config, manifest: Manifest): Route[] => [
   {

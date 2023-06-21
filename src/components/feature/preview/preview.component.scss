@@ -10,6 +10,14 @@
 }
 
 :host {
+  display: block;
+  position: relative;
+  min-height: 42px;
+
+  // prevent fixed positioning from breaking out
+  // https://stackoverflow.com/a/70422489/1146207
+  transform: scale(1);
+
   @include utils.color-scheme() using ($color-scheme) {
     ---wcp-preview-menu-background-raw: var(---wcp-preview-menu-#{$color-scheme}-background-raw);
   }

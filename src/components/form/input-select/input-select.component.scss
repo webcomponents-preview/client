@@ -1,0 +1,69 @@
+@use '@/styles/utils' as utils;
+
+:host {
+  ---wcp-input-select-arrow-size: var(--wcp-input-select-arrow-size, #{utils.size(0.5)});
+
+  --wcp-editable-hint-size: var(--wcp-input-select-hint-size);
+  --wcp-editable-label-size: var(--wcp-input-select-label-size);
+  --wcp-editable-spacing: var(--wcp-input-select-spacing);
+
+  --wcp-editable-passive-border-radius: var(--wcp-input-select-border-radius);
+  --wcp-editable-passive-border-size: var(--wcp-input-select-border-size);
+
+  --wcp-editable-active-border-radius: var(--wcp-input-select-border-radius);
+  --wcp-editable-active-border-size: var(--wcp-input-select-border-size);
+
+  --wcp-editable-dark-background: var(--wcp-input-select-dark-background);
+  --wcp-editable-dark-border: var(--wcp-input-select-dark-border);
+  --wcp-editable-dark-color: var(--wcp-input-select-dark-color);
+
+  --wcp-editable-light-background: var(--wcp-input-select-light-background);
+  --wcp-editable-light-border: var(--wcp-input-select-light-border);
+  --wcp-editable-light-color: var(--wcp-input-select-light-color);
+}
+
+select {
+  all: unset;
+  appearance: none;
+  box-sizing: border-box;
+
+  width: 100%;
+  color: var(---wcp-input-select-color);
+  text-align: left;
+}
+
+slot:not([name]) {
+  display: none;
+}
+
+#input {
+  grid-area: center / center / center / after;
+}
+
+:host::after {
+  content: '';
+  grid-area: after;
+  align-self: center;
+  pointer-events: none;
+
+  margin: var(---wcp-editable-spacing);
+  margin-top: auto;
+  margin-bottom: auto;
+
+  display: block;
+  height: 0;
+  width: 0;
+
+  border: var(---wcp-input-select-arrow-size) solid;
+  border-color: transparent currentColor currentColor transparent;
+
+  transform-origin: 50% -25%;
+  transform: rotate(45deg);
+
+  transition: opacity var(--wcp-fx-default-duration) ease-out;
+  will-change: opacity;
+}
+
+:host([disabled])::after {
+  opacity: 0.5;
+}
