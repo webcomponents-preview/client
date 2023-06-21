@@ -18,7 +18,7 @@ import styles from './aside.component.scss';
  * @slot - Projects elements aside the main content
  * @slot header - Elements in the fixed header of the side bar
  *
- * @event wcp-aside-toggled - Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event.
+ * @emits wcp-aside:toggled - Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event.
  *
  * @cssprop --wcp-aside-max-width - The maximum width of the aside bar when visible
  * @cssprop --wcp-aside-spacing - Inner padding of the aside bar

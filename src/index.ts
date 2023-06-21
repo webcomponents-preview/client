@@ -4,7 +4,7 @@
 
 export * from './components/feature/markdown-example/markdown-example.component.js';
 export * from './components/feature/navigation/navigation.component.js';
-export * from './components/feature/navigation-item/navigation-item.component.js';
+export * from './components/feature/navigation/navigation-item/navigation-item.component.js';
 export * from './components/feature/preview/preview.component.js';
 export * from './components/feature/preview-controls/preview-controls.component.js';
 export * from './components/feature/preview-frame/preview-frame.component.js';

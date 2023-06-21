@@ -1,5 +1,6 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
@@ -7,6 +8,8 @@ import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import styles from './navigation-item.component.scss';
 
 /**
+ * @element wcp-navigation-item
+ * 
  * @example
  * ### Non-interactive
  *
@@ -61,7 +64,7 @@ export class NavigationItem extends ColorSchemable(LitElement) {
     return html`
       ${when(
         this.href !== undefined,
-        () => html`<a href="${this.href}"><slot></slot></a>`,
+        () => html`<a href="${ifDefined(this.href)}"><slot></slot></a>`,
         () => html`<span><slot></slot></span>`
       )}
     `;

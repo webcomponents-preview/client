@@ -2,6 +2,7 @@ import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d
 
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
@@ -110,7 +111,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
   protected override render(): TemplateResult {
     return html`
       <wcp-layout>
-        <wcp-title slot="title" title="${this.config?.title}">
+        <wcp-title slot="title" title="${ifDefined(this.config?.title)}">
           <slot name="logo" slot="logo">
             <img src="${logo}" height="20px" />
           </slot>

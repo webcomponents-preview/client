@@ -1,5 +1,6 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
@@ -120,7 +121,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
         () => html`
           <wcp-tabs
             .tabs="${this._tabs}"
-            active-tab="${this.activePlugin}"
+            active-tab="${ifDefined(this.activePlugin)}"
             @wcp-tabs:active-tab-change="${this.handleActiveTabChange}"
             @wcp-preview-frame-plugin:availability-change="${this.handleAvailabilityChange}"
           >
