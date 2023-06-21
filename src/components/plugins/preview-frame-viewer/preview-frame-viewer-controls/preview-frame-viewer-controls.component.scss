@@ -50,6 +50,9 @@ legend {
 
 [slot='hint'] {
   display: block;
-  max-width: 500px;
-  font-size: 0.8em;
+  max-width: var(--wcp-layout-flowing-width);
+
+  p {
+    margin: 0;
+  }
 }
