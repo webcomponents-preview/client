@@ -81,6 +81,13 @@ export class InputText extends Editable()(LitElement) implements FormAssociated<
   @property({ type: String, reflect: true })
   name = 'text';
 
+  /**
+   * Can be set to to `text`, `email`, `password`, `search`, `tel`, `url`.
+   * Beware that this will be ignored if combined with the `multiline` attribute.
+   */
+  @property({ type: String, reflect: true })
+  type: 'text' | 'email' | 'password' | 'search' | 'tel' | 'url' = 'text';
+
   @property({ type: String, reflect: true })
   value?: string;
 
@@ -122,7 +129,6 @@ export class InputText extends Editable()(LitElement) implements FormAssociated<
     if (this.multiline) {
       return html`
         <textarea
-          type="text"
           id="${id}"
           name="${this.name}"
           autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
@@ -136,7 +142,7 @@ export class InputText extends Editable()(LitElement) implements FormAssociated<
 
     return html`
       <input
-        type="text"
+        type="${this.type}"
         id="${id}"
         name="${this.name}"
         autocomplete="${ifDefined(this.autocomplete) ? 'on' : 'off'}"
