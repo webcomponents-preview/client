@@ -39,7 +39,7 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
               label="${field.name}"
               ?checked="${Boolean(this.data?.fields[field.name])}"
             >
-              ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
+              ${when(field.description, () => html`<div slot="hint">${field.description}</div>`)}
             </wcp-input-checkbox>
           `
       )}
@@ -51,7 +51,7 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
             label="${field.attribute ?? field.name}"
             .value="${this.data?.fields[field.name] as string | undefined}"
           >
-            ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
+            ${when(field.description, () => html`<div slot="hint">${field.description}</div>`)}
           </wcp-input-text>
         `
       )}
@@ -63,7 +63,7 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
             label="${field.attribute ?? field.name}"
             .value="${this.data?.fields[field.name] as number | undefined}"
           >
-            ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
+            ${when(field.description, () => html`<div slot="hint">${field.description}</div>`)}
           </wcp-input-number>
         `
       )}
@@ -81,7 +81,7 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
                 <wcp-input-select-option label="${option}" .value="${option}"></wcp-input-select-option>
               `
             )}
-            ${when(field.description, () => html`<span class="description">${field.description}</span>`)}
+            ${when(field.description, () => html`<div slot="hint">${field.description}</div>`)}
           </wcp-input-select>
         `
       )}
@@ -95,7 +95,7 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
         label="${slot.name.trim() ? slot.name : 'Default'}"
         .value="${this.data?.slots[slot.name]}"
       >
-        ${when(slot.hasDescription, () => html`<span class="description">${slot.description}</span>`)}
+        ${when(slot.hasDescription, () => html`<div slot="hint">${slot.description}</div>`)}
       </wcp-input-text>
     `;
   }

@@ -30,7 +30,7 @@ fieldset {
 
 legend {
   all: unset;
-  
+
   display: block;
   width: 100%;
   padding: utils.size(1) 0;
@@ -48,7 +48,7 @@ legend {
   white-space: nowrap;
 }
 
-.description {
+[slot='hint'] {
   display: block;
   max-width: 500px;
   font-size: 0.8em;
