@@ -2,7 +2,7 @@
 
 :host {
   ---wcp-editable-label-size: var(--wcp-editable-label-size, 0.8em);
-  ---wcp-editable-spacing: var(--wcp-editable-spacing, #{utils.size(0.5)});
+  ---wcp-editable-spacing: var(--wcp-editable-spacing, #{utils.size(0.5) utils.size(1)});
 
   ---wcp-editable-passive-border-radius: var(--wcp-editable-passive-border-radius, 2px);
   ---wcp-editable-passive-border-size: var(--wcp-editable-passive-border-size, 1px);
@@ -45,7 +45,9 @@
 
 label {
   grid-area: above;
-  padding-bottom: var(---wcp-editable-spacing);
+  padding: var(---wcp-editable-spacing);
+  padding-left: 0;
+  padding-right: 0;
   font-size: var(---wcp-editable-label-size);
 
   :required ~ &::after {
