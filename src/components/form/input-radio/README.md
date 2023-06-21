@@ -62,6 +62,7 @@ A radio input element using the wcp style. Fully form aware.
 | `--wcp-input-radio-dark-background`  | The background color of the radio input in dark mode. |
 | `--wcp-input-radio-dark-border`      | The border color of the radio input in dark mode. |
 | `--wcp-input-radio-dark-color`       | The fill color of the radio input when checked in dark mode. |
+| `--wcp-input-radio-hint-size`        | The font size of the hint.                       |
 | `--wcp-input-radio-label-size`       | The font size of the label.                      |
 | `--wcp-input-radio-light-background` | The background color of the radio input in light mode. |
 | `--wcp-input-radio-light-border`     | The border color of the radio input in light mode. |

@@ -1,6 +1,7 @@
 @use '@/styles/utils' as utils;
 
 :host {
+  ---wcp-editable-hint-size: var(--wcp-editable-hint-size, 0.8em);
   ---wcp-editable-label-size: var(--wcp-editable-label-size, 0.8em);
   ---wcp-editable-spacing: var(--wcp-editable-spacing, #{utils.size(0.5) utils.size(1)});
 
@@ -77,6 +78,14 @@ slot[name] {
 
 slot[name='hint'] {
   grid-area: below;
+  font-size: var(---wcp-editable-hint-size);
+
+  &::slotted([slot='hint']) {
+    padding: var(---wcp-editable-spacing);
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
 }
 
 slot[name='before'] {

@@ -2,6 +2,8 @@
 
 :host {
   ---wcp-input-select-arrow-size: var(--wcp-input-select-arrow-size, #{utils.size(0.5)});
+
+  --wcp-editable-hint-size: var(--wcp-input-select-hint-size);
   --wcp-editable-label-size: var(--wcp-input-select-label-size);
   --wcp-editable-spacing: var(--wcp-input-select-spacing);
 

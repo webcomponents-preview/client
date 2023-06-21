@@ -19,6 +19,7 @@ import styles from './input-select.component.scss';
  * @slot hint - Receives optional descriptions below the input.
  * 
  * @cssprop --wcp-input-select-arrow-size - The size of the arrow icon.
+ * @cssprop --wcp-input-select-hint-size - The font size of the hint.
  * @cssprop --wcp-input-select-label-size - The font size of the label.
  * @cssprop --wcp-input-select-spacing - The inner spacing of the input element.
 

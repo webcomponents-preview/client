@@ -62,6 +62,7 @@ A checkbox input element using the wcp style. Fully form aware.
 | `--wcp-input-checkbox-dark-background`  | The background color of the checkbox input in dark mode. |
 | `--wcp-input-checkbox-dark-border`      | The border color of the checkbox input in dark mode. |
 | `--wcp-input-checkbox-dark-color`       | The fill color of the checkbox input when checked in dark mode. |
+| `--wcp-input-checkbox-hint-size`        | The font size of the hint.                       |
 | `--wcp-input-checkbox-label-size`       | The font size of the label.                      |
 | `--wcp-input-checkbox-light-background` | The background color of the checkbox input in light mode. |
 | `--wcp-input-checkbox-light-border`     | The border color of the checkbox input in light mode. |

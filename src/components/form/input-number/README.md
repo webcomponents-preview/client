@@ -60,6 +60,7 @@ A numeric input element using the wcp style. Fully form aware.
 | `--wcp-input-number-dark-background`  | The background color of the element in dark mode. |
 | `--wcp-input-number-dark-border`      | The border color of the element in dark mode.    |
 | `--wcp-input-number-dark-color`       | The font color of the input element in dark mode. |
+| `--wcp-input-number-hint-size`        | The font size of the hint.                       |
 | `--wcp-input-number-label-size`       | The font size of the label.                      |
 | `--wcp-input-number-light-background` | The background color of the element in light mode. |
 | `--wcp-input-number-light-border`     | The border color of the element in light mode.   |

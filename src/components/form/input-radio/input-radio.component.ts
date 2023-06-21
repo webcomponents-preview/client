@@ -18,6 +18,7 @@ import styles from './input-radio.component.scss';
  *
  * @cssprop --wcp-input-radio-size - The size of the radio input.
  * @cssprop --wcp-input-radio-label-size - The font size of the label.
+ * @cssprop --wcp-input-radio-hint-size - The font size of the hint.
  * @cssprop --wcp-input-radio-spacing - The leading distance of the label to the input.
  * @cssprop --wcp-input-radio-border-radius - The border radius of the radio input.
  * @cssprop --wcp-input-radio-border-size - The border size of the radio input.

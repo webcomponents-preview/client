@@ -3,6 +3,7 @@
 :host {
   ---wcp-input-checkbox-size: var(--wcp-input-checkbox-size, #{utils.size(2)});
 
+  --wcp-editable-hint-size: var(--wcp-input-checkbox-hint-size);
   --wcp-editable-label-size: var(--wcp-input-checkbox-label-size, 1em);
   --wcp-editable-spacing: var(--wcp-input-checkbox-spacing, #{utils.size(1)});
 

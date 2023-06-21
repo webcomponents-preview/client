@@ -17,6 +17,7 @@ import styles from './input-checkbox.component.scss';
  * @slot hint - Receives optional descriptions below the input.
  *
  * @cssprop --wcp-input-checkbox-size - The size of the checkbox input.
+ * @cssprop --wcp-input-checkbox-hint-size - The font size of the hint.
  * @cssprop --wcp-input-checkbox-label-size - The font size of the label.
  * @cssprop --wcp-input-checkbox-spacing - The leading distance of the label to the input.
  * @cssprop --wcp-input-checkbox-border-radius - The border radius of the checkbox input.

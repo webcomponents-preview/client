@@ -3,6 +3,7 @@
 :host {
   ---wcp-input-radio-size: var(--wcp-input-radio-size, #{utils.size(2)});
 
+  --wcp-editable-hint-size: var(--wcp-input-radio-hint-size);
   --wcp-editable-label-size: var(--wcp-input-radio-label-size, 1em);
   --wcp-editable-spacing: var(--wcp-input-radio-spacing, #{utils.size(1)});
 

@@ -17,6 +17,7 @@ import styles from './input-text.component.scss';
  *
  * @slot hint - Receives optional descriptions below the input.
  *
+ * @cssprop --wcp-input-text-hint-size - The font size of the hint.
  * @cssprop --wcp-input-text-label-size - The font size of the label.
  * @cssprop --wcp-input-text-spacing - The inner spacing of the input element.
  *

@@ -1,6 +1,7 @@
 @use '@/styles/utils' as utils;
 
 :host {
+  --wcp-editable-hint-size: var(--wcp-input-number-hint-size);
   --wcp-editable-label-size: var(--wcp-input-number-label-size);
   --wcp-editable-spacing: var(--wcp-input-number-spacing);
 

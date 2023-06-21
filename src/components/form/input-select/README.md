@@ -85,6 +85,7 @@ A numeric input element using the wcp style. Fully form aware.
 | `--wcp-input-select-dark-background`  | The background color of the element in dark mode. |
 | `--wcp-input-select-dark-border`      | The border color of the element in dark mode.    |
 | `--wcp-input-select-dark-color`       | The font color of the input element in dark mode. |
+| `--wcp-input-select-hint-size`        | The font size of the hint.                       |
 | `--wcp-input-select-label-size`       | The font size of the label.                      |
 | `--wcp-input-select-light-background` | The background color of the element in light mode. |
 | `--wcp-input-select-light-border`     | The border color of the element in light mode.   |
