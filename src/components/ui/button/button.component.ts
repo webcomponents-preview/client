@@ -148,12 +148,24 @@ export class Button extends ColorSchemable(LitElement) {
       ${when(
         this.href !== undefined && !this.disabled,
         () => html`
-          <a class="button" type="${this.type}" href="${this.href}" target="${ifDefined(this.target)}">
+          <a
+            part="button"
+            class="button"
+            type="${this.type}"
+            href="${ifDefined(this.href)}"
+            target="${ifDefined(this.target)}"
+          >
             <slot></slot>
           </a>
         `,
         () => html`
-          <button class="button" ?disabled="${this.disabled}" type="${this.type}" @click="${this.handleButtonClick}">
+          <button
+            part="button"
+            class="button"
+            ?disabled="${this.disabled}"
+            type="${this.type}"
+            @click="${this.handleButtonClick}"
+          >
             <slot></slot>
           </button>
         `

@@ -1,0 +1,32 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-navigation-search-spacing: var(--wcp-navigation-search-spacing, 0 #{utils.size(1) utils.size(1)});
+  ---wcp-navigation-search-dark-border: var(--wcp-navigation-search-dark-border, var(--wcp-color-grey-24));
+  ---wcp-navigation-search-light-border: var(--wcp-navigation-search-light-border, var(--wcp-color-blue-24));
+}
+
+:host {
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-navigation-search-border: var(---wcp-navigation-search-#{$color-scheme}-border);
+  }
+
+  --wcp-input-text-dark-border: var(---wcp-navigation-search-dark-border);
+  --wcp-input-text-light-border: var(---wcp-navigation-search-light-border);
+
+  display: block;
+  padding: var(---wcp-navigation-search-spacing);
+}
+
+wcp-icon[name='search'] {
+  --wcp-icon-size: 18;
+  color: var(---wcp-navigation-search-border);
+  padding-left: utils.size(1);
+  pointer-events: none;
+}
+
+wcp-button::part(button) {
+  color: var(---wcp-navigation-search-border);
+  padding: utils.size(0.5);
+}
