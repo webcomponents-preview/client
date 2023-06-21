@@ -36,24 +36,30 @@ declare module "src/utils/mixin.types" {
     export type Constructor<T> = new (...args: any[]) => T;
 }
 declare module "src/utils/color-scheme.utils" {
-    import { LitElement } from 'lit';
-    import type { Constructor } from "src/utils/mixin.types";
-    class ColorSchemableInterface {
-        colorScheme?: 'light' | 'dark';
-    }
+    import type { ColorSchemableInterface } from "src/mixins/color-schemable.mixin";
     global {
         interface WindowEventMap {
-            'wcp-color-scheme:toggle': CustomEvent<'dark' | 'light' | null>;
+            'wcp-color-scheme:toggle': CustomEvent<ColorScheme | null>;
         }
+    }
+    export type ColorScheme = 'light' | 'dark';
+    export const getColorSchemeState: () => ColorScheme | undefined;
+    export const addColorSchemable: (element: ColorSchemableInterface) => Set<ColorSchemableInterface>;
+    export const removeColorSchemable: (element: ColorSchemableInterface) => boolean;
+}
+declare module "src/mixins/color-schemable.mixin" {
+    import { LitElement } from 'lit';
+    import type { Constructor } from "src/utils/mixin.types";
+    import { type ColorScheme } from "src/utils/color-scheme.utils";
+    export class ColorSchemableInterface {
+        colorScheme?: ColorScheme;
     }
     export const ColorSchemable: <T extends Constructor<LitElement>>(superClass: T) => Constructor<ColorSchemableInterface> & T;
 }
 declare module "src/components/feature/markdown-example/markdown-example.component" {
     import { LitElement, type TemplateResult } from 'lit';
     import { type Config } from "src/utils/config.utils";
-    const MarkdownExample_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const MarkdownExample_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows an inline code example and a preview of the element in the readme.
      * This is used in the markdown formatter to render `html` examples.
@@ -102,9 +108,7 @@ declare module "src/components/feature/markdown-example/markdown-example.compone
 }
 declare module "src/components/feature/navigation/navigation.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Navigation_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const Navigation_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @example
      * ### Usage with headline
@@ -142,9 +146,7 @@ declare module "src/components/feature/navigation/navigation.component" {
 }
 declare module "src/components/feature/navigation-item/navigation-item.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const NavigationItem_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const NavigationItem_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @example
      * ### Non-interactive
@@ -204,9 +206,7 @@ declare module "src/utils/dom.utils" {
 declare module "src/components/ui/button/button.component" {
     import { LitElement, type TemplateResult } from 'lit';
     import 'element-internals-polyfill';
-    const Button_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const Button_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows a button element.
      *
@@ -323,9 +323,7 @@ declare module "src/components/ui/button/button.component" {
 declare module "src/components/feature/preview/preview.component" {
     import { LitElement, type TemplateResult } from 'lit';
     import { type Config } from "src/utils/config.utils";
-    const Preview_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const Preview_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Previews given content.
      *
@@ -348,8 +346,8 @@ declare module "src/components/feature/preview/preview.component" {
     export class Preview extends Preview_base {
         static readonly styles: import("lit").CSSResult;
         config?: Config;
-        private nav?;
-        private toggleButton?;
+        private readonly nav?;
+        private readonly toggleButton?;
         private container?;
         connectedCallback(): Promise<void>;
         disconnectedCallback(): void;
@@ -367,9 +365,7 @@ declare module "src/components/feature/preview/preview.component" {
 }
 declare module "src/components/feature/preview-controls/preview-controls.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const PreviewControls_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const PreviewControls_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * A wrapper above the preview frame content to contain various controls.
      *
@@ -542,9 +538,7 @@ declare module "src/utils/plugin.utils" {
 }
 declare module "src/components/feature/preview-frame/preview-frame.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const PreviewFrame_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const PreviewFrame_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @example
      * ```html
@@ -605,9 +599,7 @@ declare module "src/utils/markdown.utils" {
 }
 declare module "src/components/feature/readme/readme.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Readme_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const Readme_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Displays a Readme file by its URL.
      *
@@ -669,9 +661,7 @@ declare module "src/components/feature/readme-frame/readme-frame.component" {
 }
 declare module "src/components/feature/toggle-color-scheme/toggle-color-scheme.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const ToggleColorScheme_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const ToggleColorScheme_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows a button to toggle the desired color-scheme.
      *
@@ -682,7 +672,6 @@ declare module "src/components/feature/toggle-color-scheme/toggle-color-scheme.c
      */
     export class ToggleColorScheme extends ToggleColorScheme_base {
         static readonly styles: import("lit").CSSResult;
-        colorScheme: "light" | "dark";
         handleButtonClick(): void;
         protected render(): TemplateResult;
     }
@@ -732,7 +721,8 @@ declare module "src/utils/form.utils" {
 }
 declare module "src/mixins/editable.mixin" {
     import { type LitElement, type TemplateResult, type CSSResultGroup } from 'lit';
-    import { Constructor } from "src/utils/mixin.types";
+    import type { Constructor } from "src/utils/mixin.types";
+    import { type ColorSchemableInterface } from "src/mixins/color-schemable.mixin";
     import 'element-internals-polyfill';
     export class EditableInterface {
         readonly internals: ElementInternals;
@@ -750,12 +740,12 @@ declare module "src/mixins/editable.mixin" {
         hasAfterSlot?: boolean;
         hasBorder?: boolean;
     };
-    export const Editable: ({ hasHintSlot, hasBeforeSlot, hasAfterSlot, hasBorder, }?: Partial<EditableOptions>) => <T extends Constructor<LitElement>>(superClass: T) => Constructor<EditableInterface> & EditablePrototype & T;
+    export const Editable: ({ hasHintSlot, hasBeforeSlot, hasAfterSlot, hasBorder, }?: Partial<EditableOptions>) => <T extends Constructor<LitElement>>(superClass: T) => Constructor<EditableInterface & ColorSchemableInterface> & EditablePrototype & T;
 }
 declare module "src/components/form/input-checkbox/input-checkbox.component" {
     import { LitElement, PropertyValues } from 'lit';
     import type { FormAssociated } from "src/utils/form.utils";
-    const InputCheckbox_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    const InputCheckbox_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A checkbox input element using the wcp style. Fully form aware.
      *
@@ -766,6 +756,7 @@ declare module "src/components/form/input-checkbox/input-checkbox.component" {
      * @slot hint - Receives optional descriptions below the input.
      *
      * @cssprop --wcp-input-checkbox-size - The size of the checkbox input.
+     * @cssprop --wcp-input-checkbox-hint-size - The font size of the hint.
      * @cssprop --wcp-input-checkbox-label-size - The font size of the label.
      * @cssprop --wcp-input-checkbox-spacing - The leading distance of the label to the input.
      * @cssprop --wcp-input-checkbox-border-radius - The border radius of the checkbox input.
@@ -823,10 +814,114 @@ declare module "src/components/form/input-checkbox/input-checkbox.component" {
         }
     }
 }
+declare module "src/components/form/input-code/input-code.component" {
+    import { LitElement, type PropertyValues } from 'lit';
+    import type { FormAssociated } from "src/utils/form.utils";
+    const InputCode_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    /**
+     * A text input element using the wcp style. Fully form aware.
+     * Can display multiline text (textarea) if configured to do so.
+     *
+     * @element wcp-input-code
+     *
+     * @property {string} label - The label of the input element.
+     *
+     * @slot hint - Receives optional descriptions below the input.
+     *
+     * @cssprop --wcp-input-code-hint-size - The font size of the hint.
+     * @cssprop --wcp-input-code-label-size - The font size of the label.
+     * @cssprop --wcp-input-code-spacing - The inner spacing of the input element.
+     *
+     * @cssprop --wcp-input-code-dark-background - The background color of the element in dark mode.
+     * @cssprop --wcp-input-code-dark-border - The border color of the element in dark mode.
+     * @cssprop --wcp-input-code-dark-color - The font color of the input element in dark mode.
+     *
+     * @cssprop --wcp-input-code-light-background - The background color of the element in light mode.
+     * @cssprop --wcp-input-code-light-border - The border color of the element in light mode.
+     * @cssprop --wcp-input-code-light-color - The font color of the input element in light mode.
+     *
+     * @example
+     * ## With optional label
+     * ```html
+     * <wcp-input-code label="With optional label"></wcp-input-code>
+     * ```
+     *
+     * @example
+     * ## With optional initial value
+     * ```html
+     * <wcp-input-code
+     *   label="With optional initial value"
+     *   value="<strong>Test</strong>"
+     *   language="html"
+     * ></wcp-input-code>
+     * ```
+     *
+     * @example
+     * ## With autosize
+     * ```html
+     * <wcp-input-code
+     *   autosize
+     *   label="With optional initial value"
+     *   value="<strong>Test</strong>"
+     *   language="html"
+     * ></wcp-input-code>
+     * ```
+     *
+     * @example
+     * ## Used within a form
+     * ```html
+     * <form>
+     *   <wcp-input-code
+     *     label="Fully form enabled component"
+     *     value="<strong>Test</strong>"
+     *     language="html"
+     *   ></wcp-input-code>
+     *   <button type="submit">Submit</button>
+     *   <button type="reset">Reset</button>
+     * </form>
+     * ```
+     */
+    export class InputCode extends InputCode_base implements FormAssociated<string> {
+        #private;
+        static readonly shadowRootOptions: {
+            delegatesFocus: boolean;
+            mode: ShadowRootMode;
+            slotAssignment?: SlotAssignmentMode | undefined;
+        };
+        static readonly styles: import("lit").CSSResultGroup[];
+        private readonly editor;
+        private readonly input;
+        autosize: boolean;
+        disabled: boolean;
+        readonly: boolean;
+        required: boolean;
+        name: string;
+        language: 'json' | 'html' | 'handlebars' | 'razor' | 'css' | 'sass' | 'less' | 'javascript' | 'typescript';
+        value?: string;
+        protected firstUpdated(props: PropertyValues<this>): void;
+        protected initializeEditor(): void;
+        protected updateEditorTheme(): void;
+        protected updateEditorAutoSize(): void;
+        protected updateEditorDisabled(): void;
+        connectedCallback(): void;
+        disconnectedCallback(): void;
+        formResetCallback(): void;
+        checkValidity(): boolean;
+        protected updated(changedProperties: PropertyValues<this>): void;
+        handleColorSchemeToggle(): void;
+        handleInput(event: Event): void;
+        renderInput(id: string): import("lit-html").TemplateResult<1>;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-input-code': InputCode;
+        }
+    }
+}
 declare module "src/components/form/input-number/input-number.component" {
     import { LitElement, PropertyValues } from 'lit';
     import type { FormAssociated } from "src/utils/form.utils";
-    const InputNumber_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    const InputNumber_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A numeric input element using the wcp style. Fully form aware.
      *
@@ -836,13 +931,17 @@ declare module "src/components/form/input-number/input-number.component" {
      *
      * @slot hint - Receives optional descriptions below the input.
      *
+     * @cssprop --wcp-input-number-hint-size - The font size of the hint.
      * @cssprop --wcp-input-number-label-size - The font size of the label.
-     * @cssprop --wcp-input-number-label-spacing - The spacing between the label and the input.
      * @cssprop --wcp-input-number-spacing - The inner spacing of the input element.
-    
+     *
      * @cssprop --wcp-input-number-dark-background - The background color of the element in dark mode.
      * @cssprop --wcp-input-number-dark-border - The border color of the element in dark mode.
      * @cssprop --wcp-input-number-dark-color - The font color of the input element in dark mode.
+     *
+     * @cssprop --wcp-input-number-light-background - The background color of the element in light mode.
+     * @cssprop --wcp-input-number-light-border - The border color of the element in light mode.
+     * @cssprop --wcp-input-number-light-color - The font color of the input element in light mode.
      *
      * @example
      * ## With optional label
@@ -869,7 +968,7 @@ declare module "src/components/form/input-number/input-number.component" {
     export class InputNumber extends InputNumber_base implements FormAssociated<number> {
         #private;
         static readonly styles: import("lit").CSSResultGroup[];
-        input: HTMLInputElement;
+        private readonly input;
         autocomplete: boolean;
         disabled: boolean;
         readonly: boolean;
@@ -891,7 +990,7 @@ declare module "src/components/form/input-number/input-number.component" {
 declare module "src/components/form/input-radio/input-radio.component" {
     import { LitElement, PropertyValues } from 'lit';
     import type { FormAssociated } from "src/utils/form.utils";
-    const InputRadio_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    const InputRadio_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A radio input element using the wcp style. Fully form aware.
      *
@@ -903,6 +1002,7 @@ declare module "src/components/form/input-radio/input-radio.component" {
      *
      * @cssprop --wcp-input-radio-size - The size of the radio input.
      * @cssprop --wcp-input-radio-label-size - The font size of the label.
+     * @cssprop --wcp-input-radio-hint-size - The font size of the hint.
      * @cssprop --wcp-input-radio-spacing - The leading distance of the label to the input.
      * @cssprop --wcp-input-radio-border-radius - The border radius of the radio input.
      * @cssprop --wcp-input-radio-border-size - The border size of the radio input.
@@ -959,10 +1059,123 @@ declare module "src/components/form/input-radio/input-radio.component" {
         }
     }
 }
+declare module "src/components/form/input-select/input-select-option.component" {
+    import { LitElement } from 'lit';
+    /**
+     * A helper element to declare options for a `wcp-input-select` element.
+     *
+     * @element wcp-input-select-option
+     */
+    export class InputSelectOption extends LitElement {
+        disabled: boolean;
+        value?: string;
+        label?: string;
+        protected createRenderRoot(): Element | ShadowRoot;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-input-select-option': InputSelectOption;
+        }
+    }
+}
+declare module "src/components/form/input-select/input-select.component" {
+    import { LitElement, PropertyValues } from 'lit';
+    import type { FormAssociated } from "src/utils/form.utils";
+    const InputSelect_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    /**
+     * A numeric input element using the wcp style. Fully form aware.
+     *
+     * @element wcp-input-select
+     *
+     * @property {string} label - The label of the input element.
+     *
+     * @slot {<wcp-input-select-option value="foo" label="Foo"></wcp-input-select-option>} - Projects options into the select elements dropdown menu.
+     * @slot hint - Receives optional descriptions below the input.
+     *
+     * @cssprop --wcp-input-select-arrow-size - The size of the arrow icon.
+     * @cssprop --wcp-input-select-hint-size - The font size of the hint.
+     * @cssprop --wcp-input-select-label-size - The font size of the label.
+     * @cssprop --wcp-input-select-spacing - The inner spacing of the input element.
+    
+     * @cssprop --wcp-input-select-dark-background - The background color of the element in dark mode.
+     * @cssprop --wcp-input-select-dark-border - The border color of the element in dark mode.
+     * @cssprop --wcp-input-select-dark-color - The font color of the input element in dark mode.
+     *
+     * @cssprop --wcp-input-select-light-background - The background color of the element in light mode.
+     * @cssprop --wcp-input-select-light-border - The border color of the element in light mode.
+     * @cssprop --wcp-input-select-light-color - The font color of the input element in light mode.
+     *
+     * @example
+     * ## With optional label
+     * ```html
+     * <wcp-input-select label="With optional label">
+     *   <wcp-input-select-option value="foo" label="Foo"></wcp-input-select-option>
+     *   <wcp-input-select-option value="bar" label="Bar"></wcp-input-select-option>
+     *   <wcp-input-select-option value="baz" label="Baz"></wcp-input-select-option>
+     * </wcp-input-select>
+     * ```
+     *
+     * @example
+     * ## With disabled options
+     * ```html
+     * <wcp-input-select label="With disabled options">
+     *   <wcp-input-select-option value="foo" label="Foo"></wcp-input-select-option>
+     *   <wcp-input-select-option value="bar" label="Bar" disabled></wcp-input-select-option>
+     *   <wcp-input-select-option value="baz" label="Baz"></wcp-input-select-option>
+     * </wcp-input-select>
+     * ```
+     *
+     * @example
+     * ## With optional initial value
+     * ```html
+     * <wcp-input-select label="With optional initial value" value="bar">
+     *   <wcp-input-select-option value="foo" label="Foo"></wcp-input-select-option>
+     *   <wcp-input-select-option value="bar" label="Bar"></wcp-input-select-option>
+     *   <wcp-input-select-option value="baz" label="Baz"></wcp-input-select-option>
+     * </wcp-input-select>
+     * ```
+     *
+     * @example
+     * ## Used within a form
+     * ```html
+     * <form>
+     *   <wcp-input-select label="Fully form enabled component">
+     *     <wcp-input-select-option value="foo" label="Foo"></wcp-input-select-option>
+     *     <wcp-input-select-option value="bar" label="Bar"></wcp-input-select-option>
+     *     <wcp-input-select-option value="baz" label="Baz"></wcp-input-select-option>
+     *   </wcp-input-select>
+     *   <button type="submit">Submit</button>
+     *   <button type="reset">Reset</button>
+     * </form>
+     * ```
+     */
+    export class InputSelect extends InputSelect_base implements FormAssociated<string> {
+        #private;
+        static readonly styles: import("lit").CSSResultGroup[];
+        private readonly input;
+        autocomplete: boolean;
+        disabled: boolean;
+        readonly: boolean;
+        required: boolean;
+        name: string;
+        value?: string;
+        protected firstUpdated(props: PropertyValues<this>): void;
+        formResetCallback(): void;
+        checkValidity(): boolean;
+        handleSlotChange(event: Event): void;
+        handleInput(event: Event): void;
+        renderInput(id: string): import("lit-html").TemplateResult<1>;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-input-select': InputSelect;
+        }
+    }
+}
 declare module "src/components/form/input-text/input-text.component" {
     import { LitElement, PropertyValues } from 'lit';
     import type { FormAssociated } from "src/utils/form.utils";
-    const InputText_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    const InputText_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A text input element using the wcp style. Fully form aware.
      * Can display multiline text (textarea) if configured to do so.
@@ -973,13 +1186,17 @@ declare module "src/components/form/input-text/input-text.component" {
      *
      * @slot hint - Receives optional descriptions below the input.
      *
+     * @cssprop --wcp-input-text-hint-size - The font size of the hint.
      * @cssprop --wcp-input-text-label-size - The font size of the label.
-     * @cssprop --wcp-input-text-label-spacing - The spacing between the label and the input.
      * @cssprop --wcp-input-text-spacing - The inner spacing of the input element.
-    
+     *
      * @cssprop --wcp-input-text-dark-background - The background color of the element in dark mode.
      * @cssprop --wcp-input-text-dark-border - The border color of the element in dark mode.
      * @cssprop --wcp-input-text-dark-color - The font color of the input element in dark mode.
+     *
+     * @cssprop --wcp-input-text-light-background - The background color of the element in light mode.
+     * @cssprop --wcp-input-text-light-border - The border color of the element in light mode.
+     * @cssprop --wcp-input-text-light-color - The font color of the input element in light mode.
      *
      * @example
      * ## With optional label
@@ -1012,13 +1229,18 @@ declare module "src/components/form/input-text/input-text.component" {
     export class InputText extends InputText_base implements FormAssociated<string> {
         #private;
         static readonly styles: import("lit").CSSResultGroup[];
-        input: HTMLInputElement | HTMLTextAreaElement;
+        private readonly input;
         multiline: boolean;
         autocomplete: boolean;
         disabled: boolean;
         readonly: boolean;
         required: boolean;
         name: string;
+        /**
+         * Can be set to to `text`, `email`, `password`, `search`, `tel`, or `url`. \
+         * Beware that this will be ignored if combined with the `multiline` attribute.
+         */
+        type: 'text' | 'email' | 'password' | 'search' | 'tel' | 'url';
         value?: string;
         protected firstUpdated(props: PropertyValues<this>): void;
         formResetCallback(): void;
@@ -1034,9 +1256,7 @@ declare module "src/components/form/input-text/input-text.component" {
 }
 declare module "src/components/layout/aside/aside.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Aside_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const Aside_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * To toggle the side bar remotely, you can dispatch a custom event on the global window object:
      * ```js
@@ -1140,9 +1360,7 @@ declare module "src/components/plugins/preview-frame-examples/preview-frame-exam
     import { LitElement, type TemplateResult } from 'lit';
     import type * as Parsed from "src/utils/parser.types";
     import type { PreviewFramePlugin } from "src/utils/plugin.utils";
-    const PreviewFrameExamples_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const PreviewFrameExamples_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows the examples of a custom element manifest.
      *
@@ -1170,9 +1388,7 @@ declare module "src/components/plugins/preview-frame-readme/preview-frame-readme
     import { LitElement, type TemplateResult } from 'lit';
     import type * as Parsed from "src/utils/parser.types";
     import type { PreviewFramePlugin } from "src/utils/plugin.utils";
-    const PreviewFrameReadme_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const PreviewFrameReadme_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     export class PreviewFrameReadme extends PreviewFrameReadme_base implements PreviewFramePlugin {
         static readonly styles: import("lit").CSSResult;
         private _element?;
@@ -1228,9 +1444,7 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
     import { LitElement, type TemplateResult } from 'lit';
     import type * as Parsed from "src/utils/parser.types";
     import type { PreviewFramePlugin } from "src/utils/plugin.utils";
-    const PreviewFrameViewer_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const PreviewFrameViewer_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @element wcp-preview-frame-viewer
      */
@@ -1256,15 +1470,24 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
     import { LitElement, type TemplateResult } from 'lit';
     import type * as Parsed from "src/utils/parser.types";
     import type { ElementData } from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.utils";
+    const PreviewFrameViewerControls_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @element wcp-preview-frame-viewer-controls
      *
+     * @cssprop --wcp-preview-frame-viewer-controls-headline-size - The font size of the headline.
+     * @cssprop --wcp-preview-frame-viewer-controls-headline-weight - The font weight of the headline.
+     * @cssprop --wcp-preview-frame-viewer-controls-headline-spacing - The inner spacing of the headline.
+     *
+     * @cssprop --wcp-preview-frame-viewer-controls-dark-border-color - The border color of the element in dark mode.
+     * @cssprop --wcp-preview-frame-viewer-controls-light-border-color - The border color of the element in light mode.
+     *
      * @emits {CustomEvent<FormData>} wcp-preview-frame-viewer-controls:input - Fires when the user changes a control value.
      */
-    export class PreviewFrameViewerControls extends LitElement {
+    export class PreviewFrameViewerControls extends PreviewFrameViewerControls_base {
         static readonly styles: import("lit").CSSResult;
         readonly element?: Parsed.Element;
         readonly data?: ElementData;
+        protected renderHint(content?: string): TemplateResult;
         protected renderFieldControl(field: Parsed.Field): TemplateResult;
         protected renderSlotControl(slot: Parsed.Slot): TemplateResult;
         protected handleFormInput(event: InputEvent): void;
@@ -1308,9 +1531,7 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
 declare module "src/components/plugins/preview-viewport/preview-viewport.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
     import type { PreviewPlugin } from "src/utils/plugin.utils";
-    const PreviewViewport_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const PreviewViewport_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     export class PreviewViewport extends PreviewViewport_base implements PreviewPlugin {
         static readonly styles: import("lit").CSSResult;
         readonly container: HTMLElement;
@@ -1458,9 +1679,7 @@ declare module "src/components/root/root.component" {
     import type { Element, Manifest } from "src/utils/parser.types";
     const Root_base: import("@/index.js").Constructor<{
         router: import("@/index.js").Router;
-    }> & import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    }> & import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @slot logo - Allows setting a custom logo to be displayed in the title.
      * @slot preview-controls - Can be used to inject additional preview controls.
@@ -1512,9 +1731,7 @@ declare module "src/components/root/root.component" {
 }
 declare module "src/components/ui/code/code.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Code_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const Code_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows a formatted code snippet.
      *
@@ -1571,9 +1788,7 @@ declare module "src/components/ui/icon/icon.component" {
 }
 declare module "src/components/ui/tabs/tabs.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Tabs_base: import("@/index.js").Constructor<{
-        colorScheme?: "light" | "dark" | undefined;
-    }> & typeof LitElement;
+    const Tabs_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @example
      * ```html
@@ -1611,7 +1826,7 @@ declare module "src/components/ui/tabs/tabs.component" {
     export class Tabs extends Tabs_base {
         static readonly styles: import("lit").CSSResult;
         tabFocus: number;
-        tabRoles: HTMLElement[];
+        private readonly tabRoles;
         tabs: Record<string, {
             label: string;
             disabled?: boolean;
@@ -1680,8 +1895,11 @@ declare module "src/index" {
     export * from "src/components/feature/toggle-color-scheme/toggle-color-scheme.component";
     export * from "src/components/feature/toggle-sidebar/toggle-sidebar.component";
     export * from "src/components/form/input-checkbox/input-checkbox.component";
+    export * from "src/components/form/input-code/input-code.component";
     export * from "src/components/form/input-number/input-number.component";
     export * from "src/components/form/input-radio/input-radio.component";
+    export * from "src/components/form/input-select/input-select-option.component";
+    export * from "src/components/form/input-select/input-select.component";
     export * from "src/components/form/input-text/input-text.component";
     export * from "src/components/layout/aside/aside.component";
     export * from "src/components/layout/layout/layout.component";
