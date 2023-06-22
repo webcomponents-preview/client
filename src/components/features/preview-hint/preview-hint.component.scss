@@ -1,0 +1,71 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-preview-hint-dark-background: var(--wcp-preview-hint-dark-background, #8575ee);
+  ---wcp-preview-hint-light-background: var(--wcp-preview-hint-light-background, #8575ee);
+
+  ---wcp-preview-hint-dark-stroke: var(--wcp-preview-hint-dark-stroke, #5e23aa);
+  ---wcp-preview-hint-light-stroke: var(--wcp-preview-hint-light-stroke, #5e23aa);
+}
+
+:host {
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-preview-hint-background: var(---wcp-preview-hint-#{$color-scheme}-background);
+    ---wcp-preview-hint-stroke: var(---wcp-preview-hint-#{$color-scheme}-stroke);
+  }
+
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+button {
+  all: unset;
+
+  position: absolute;
+  inset: 0 0 auto auto;
+  transform: translate(50%, -50%);
+  z-index: 3;
+
+  display: block;
+  height: 20px;
+  width: 20px;
+
+  background-color: red;
+  border-radius: 50%;
+
+  pointer-events: all;
+  cursor: pointer;
+}
+
+:host(:hover) {
+  border: 1px dashed var(---wcp-preview-hint-stroke);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  &::before {
+    z-index: 0;
+    background-color: var(---wcp-preview-hint-background);
+    mix-blend-mode: multiply;
+    opacity: 0.7;
+  }
+
+  &::after {
+    z-index: 1;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      var(---wcp-preview-hint-stroke) 10px,
+      var(---wcp-preview-hint-stroke) 11px
+    );
+    mask-image: repeating-linear-gradient(-45deg, transparent, transparent 3px, black 3px, black 10px);
+  }
+}

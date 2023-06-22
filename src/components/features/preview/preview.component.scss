@@ -53,8 +53,19 @@ menu {
   }
 }
 
-section > div {
+section {
+  position: relative;
+  isolation: isolate;
+}
+
+#stage {
   contain: content;
   isolation: isolate;
   overflow: auto;
+}
+
+#overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }

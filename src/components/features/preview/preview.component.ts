@@ -48,16 +48,29 @@ export class Preview extends ColorSchemable(LitElement) {
   @state()
   private container?: Element;
 
+  @state()
+  private previewElements: Element[] = [];
+
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
   previewTagName?: string;
+
+  #handleRouteChange = () => this.requestUpdate();
+  #handleViewportChange = () => this.requestUpdate();
+  #handleOutsideClickBound = this.handleOutsideClick.bind(this);
 
   override async connectedCallback() {
     this.config = await getConfig();
     super.connectedCallback();
+
+    window.addEventListener('hashchange', this.#handleRouteChange, false);
+    this.addEventListener('wcp-preview-viewport:changed', this.#handleViewportChange, false);
   }
 
   override disconnectedCallback() {
-    this.removeEventListener('click', this.handleOutsideClickBound, false);
+    window.removeEventListener('hashchange', this.#handleRouteChange, false);
+    this.removeEventListener('click', this.#handleOutsideClickBound, false);
+    this.removeEventListener('wcp-preview-viewport:changed', this.#handleViewportChange, false);
+
     super.disconnectedCallback();
   }
 
@@ -67,15 +80,15 @@ export class Preview extends ColorSchemable(LitElement) {
     this.toggleButton?.setAttribute('aria-expanded', String(!expanded));
 
     if (!expanded) {
-      window.addEventListener('click', this.handleOutsideClickBound, false);
+      window.addEventListener('click', this.#handleOutsideClickBound, false);
     } else {
-      window.removeEventListener('click', this.handleOutsideClickBound, false);
+      window.removeEventListener('click', this.#handleOutsideClickBound, false);
     }
   }
 
   @eventOptions({ passive: true })
   private handleOutsideClick(event: Event) {
-    const target = event.composedPath()[0] as Element;
+    const target = event.composedPath()[0] as HTMLElement;
     const expanded = this.toggleButton?.matches('[aria-expanded="true"]');
     const within = isElementWithin(target, this.nav);
 
@@ -84,18 +97,42 @@ export class Preview extends ColorSchemable(LitElement) {
     }
   }
 
-  private handleOutsideClickBound = this.handleOutsideClick.bind(this);
-
   private handleContainerRef(container?: Element) {
     this.container = container;
+  }
+
+  @eventOptions({ passive: true })
+  private handleSlotChange(event: Event) {
+    // hold on, no preview tag name? no preview!
+    if (this.previewTagName === undefined) return;
+
+    // gather all slotted elements
+    const slot = event.target as HTMLSlotElement;
+    const assigned = slot.assignedElements({ flatten: true });
+
+    // collect all elements that match the preview tag name
+    this.previewElements = assigned
+      .filter((element) => element.tagName.toLowerCase() === this.previewTagName)
+      .concat(assigned.flatMap((element) => [...element.querySelectorAll(this.previewTagName!)]));
   }
 
   protected override render(): TemplateResult {
     return html`
       <section>
-        <div ${ref(this.handleContainerRef)}>
-          <slot></slot>
+        <div id="stage" ${ref(this.handleContainerRef)}>
+          <slot @slotchange="${this.handleSlotChange}"></slot>
         </div>
+        ${when(
+          this.previewTagName !== undefined,
+          () => html`
+            <div id="overlay">
+              ${map(
+                this.previewElements,
+                (element) => html`<wcp-preview-hint debug .element="${element}"></wcp-preview-hint>`
+              )}
+            </div>
+          `
+        )}
       </section>
 
       <nav>

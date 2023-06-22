@@ -55,7 +55,7 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
   private simulateViewport?: Viewport;
 
   @property({ type: Boolean, reflect: true, attribute: 'invert-simulated-viewport' })
-  invertSimulatedViewport = false;
+  private invertSimulatedViewport = false;
 
   protected prepareStyle(): HTMLStyleElement {
     // check if a style element already exists
@@ -113,24 +113,42 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
     `;
   }
 
+  private emitChange() {
+    const detail = { viewport: this.simulateViewport, inverted: this.invertSimulatedViewport };
+    const event = new CustomEvent('wcp-preview-viewport:changed', { detail, bubbles: true, composed: true });
+    this.dispatchEvent(event);
+  }
+
   @eventOptions({ passive: true })
   private handleSimulateViewport(event: Event) {
+    // update state
     const { dataset } = event.currentTarget as HTMLButtonElement;
     const viewport = dataset.viewport as Viewport;
     this.simulateViewport = this.simulateViewport === viewport ? undefined : viewport;
+
+    // apply visual changes
     if (this.simulateViewport === undefined) {
       this.prepareStyle().textContent = '';
     } else {
       this.applyPreviewSize();
       this.applyPreviewScale();
     }
+
+    // notify
+    this.emitChange();
   }
 
   @eventOptions({ passive: true })
   handleInvertSimulatedViewport() {
+    // update state
     this.invertSimulatedViewport = !this.invertSimulatedViewport;
+
+    // apply visual changes
     this.applyPreviewSize();
     this.applyPreviewScale();
+
+    // notify
+    this.emitChange();
   }
 
   override connectedCallback() {
@@ -177,6 +195,10 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
 }
 
 declare global {
+  interface HTMLElementEventMap {
+    'wcp-preview-viewport:changed': CustomEvent<{ viewport: Viewport; inverted: boolean }>;
+  }
+
   interface HTMLElementTagNameMap {
     'wcp-preview-viewport': PreviewViewport;
   }

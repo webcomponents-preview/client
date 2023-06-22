@@ -9,6 +9,7 @@ export * from './components/features/navigation/navigation-search/navigation-sea
 export * from './components/features/preview/preview.component.js';
 export * from './components/features/preview-controls/preview-controls.component.js';
 export * from './components/features/preview-frame/preview-frame.component.js';
+export * from './components/features/preview-hint/preview-hint.component.js';
 export * from './components/features/readme/readme.component.js';
 export * from './components/features/readme-frame/readme-frame.component.js';
 export * from './components/features/toggle-color-scheme/toggle-color-scheme.component.js';
