@@ -217,11 +217,11 @@ declare module "src/components/features/navigation/navigation-search/navigation-
      * @cssprop --wcp-navigation-search-light-border - The border color of the search input in light mode.
      */
     export class NavigationSearch extends NavigationSearch_base {
+        #private;
         static readonly styles: import("lit").CSSResult;
         term: string;
         protected handleSearchInput(event: InputEvent): void;
         protected handleResetClick(): void;
-        protected updateSearchTerm(term: string): void;
         protected render(): TemplateResult;
     }
     global {
@@ -1736,6 +1736,7 @@ declare module "src/components/root/root-navigation/root-navigation.component" {
     export class RootNavigation extends LitElement {
         #private;
         currentPath?: string;
+        minSearchLength: number;
         searchTerms: string[];
         items: GroupedNavigationItems;
         set router(router: Router);

@@ -3916,6 +3916,16 @@
             },
             {
               "kind": "field",
+              "name": "minSearchLength",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "attribute": "min-search-length",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "searchTerms",
               "type": {
                 "text": "string[]"
@@ -3957,13 +3967,23 @@
               ]
             }
           ],
+          "attributes": [
+            {
+              "name": "min-search-length",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "fieldName": "minSearchLength"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
           "tagName": "wcp-root-navigation",
           "examples": [],
-          "readme": "# wcp-root-navigation\n\nManages the main root-navigation in the application root.\n\n## Properties\n\n| Property      | Type                  | Default     |\n|---------------|-----------------------|-------------|\n| `currentPath` | `string \\| undefined` |             |\n| `items`       |                       | \"new Map()\" |\n| `router`      |                       |             |\n| `searchTerms` | `object`              | []          |\n\n## Methods\n\n| Method           | Type                         |\n|------------------|------------------------------|\n| `#matchesSearch` | `(content: string): boolean` |\n",
+          "readme": "# wcp-root-navigation\n\nManages the main root-navigation in the application root.\n\n## Properties\n\n| Property          | Attribute           | Type                  | Default     |\n|-------------------|---------------------|-----------------------|-------------|\n| `currentPath`     |                     | `string \\| undefined` |             |\n| `items`           |                     |                       | \"new Map()\" |\n| `minSearchLength` | `min-search-length` | `number`              | 1           |\n| `router`          |                     |                       |             |\n| `searchTerms`     |                     | `object`              | []          |\n\n## Methods\n\n| Method           | Type                         |\n|------------------|------------------------------|\n| `#matchesSearch` | `(content: string): boolean` |\n",
           "groups": [
             "root"
           ],
@@ -4876,8 +4896,7 @@
             },
             {
               "kind": "method",
-              "name": "updateSearchTerm",
-              "privacy": "protected",
+              "name": "#updateSearchTerm",
               "parameters": [
                 {
                   "name": "term",
@@ -4918,7 +4937,7 @@
           },
           "tagName": "wcp-navigation-search",
           "examples": [],
-          "readme": "# wcp-navigation-search\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property | Attribute | Type     | Default |\n|----------|-----------|----------|---------|\n| `term`   | `term`    | `string` | \"\"      |\n\n## Events\n\n| Event                          | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `wcp-navigation-search:search` | Fired when the search term changes. Carries the new search term with it. |\n\n## CSS Custom Properties\n\n| Property                               | Description                                      |\n|----------------------------------------|--------------------------------------------------|\n| `--wcp-navigation-search-dark-border`  | The border color of the search input in dark mode. |\n| `--wcp-navigation-search-light-border` | The border color of the search input in light mode. |\n| `--wcp-navigation-search-spacing`      | The spacing around the search input.             |\n",
+          "readme": "# wcp-navigation-search\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property | Attribute | Type     | Default |\n|----------|-----------|----------|---------|\n| `term`   | `term`    | `string` | \"\"      |\n\n## Methods\n\n| Method              | Type                   |\n|---------------------|------------------------|\n| `#updateSearchTerm` | `(term: string): void` |\n\n## Events\n\n| Event                          | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `wcp-navigation-search:search` | Fired when the search term changes. Carries the new search term with it. |\n\n## CSS Custom Properties\n\n| Property                               | Description                                      |\n|----------------------------------------|--------------------------------------------------|\n| `--wcp-navigation-search-dark-border`  | The border color of the search input in dark mode. |\n| `--wcp-navigation-search-light-border` | The border color of the search input in light mode. |\n| `--wcp-navigation-search-spacing`      | The spacing around the search input.             |\n",
           "groups": [
             "features"
           ],
