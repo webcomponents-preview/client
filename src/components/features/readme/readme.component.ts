@@ -36,7 +36,10 @@ export class Readme extends ColorSchemable(LitElement) {
   @property({ type: Boolean, reflect: true, attribute: 'add-code-preview' })
   readonly showCodePreview = false;
 
-  @property({ type: String, reflect: true })
+  @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
+  readonly previewTagName?: string;
+
+  @property({ type: String })
   readonly markdown = '';
 
   @property({ type: String, reflect: true })
@@ -62,7 +65,9 @@ export class Readme extends ColorSchemable(LitElement) {
 
   protected override render(): TemplateResult {
     return html`
-      <div class="markdown-body">${unsafeStatic(renderMarkdown(this.markdown, this.showCodePreview))}</div>
+      <div class="markdown-body">
+        ${unsafeStatic(renderMarkdown(this.markdown, this.showCodePreview, this.previewTagName))}
+      </div>
     `;
   }
 }

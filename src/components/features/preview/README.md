@@ -14,9 +14,10 @@ Previews given content.
 
 ## Properties
 
-| Property |
-|----------|
-| `config` |
+| Property         | Attribute          | Type                  |
+|------------------|--------------------|-----------------------|
+| `config`         |                    |                       |
+| `previewTagName` | `preview-tag-name` | `string \| undefined` |
 
 ## Slots
 

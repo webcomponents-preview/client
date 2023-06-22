@@ -1,5 +1,6 @@
 import { LitElement, type TemplateResult, html, unsafeCSS, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import type * as Parsed from '@/utils/parser.types.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
@@ -46,7 +47,13 @@ export class PreviewFrameReadme extends ColorSchemable(LitElement) implements Pr
   protected override render(): TemplateResult {
     return html`
       ${this.available
-        ? html`<wcp-readme add-code-preview markdown="${this._element?.readme ?? ''}"></wcp-readme>`
+        ? html`
+            <wcp-readme
+              add-code-preview
+              preview-tag-name="${ifDefined(this._element?.tagName)}"
+              markdown="${this._element?.readme ?? ''}"
+            ></wcp-readme>
+          `
         : nothing}
     `;
   }

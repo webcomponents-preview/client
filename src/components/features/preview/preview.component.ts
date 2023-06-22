@@ -1,6 +1,6 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { unsafeStatic, html as staticHtml } from 'lit/static-html.js';
-import { query, customElement, state, eventOptions } from 'lit/decorators.js';
+import { query, customElement, state, eventOptions, property } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
@@ -47,6 +47,9 @@ export class Preview extends ColorSchemable(LitElement) {
 
   @state()
   private container?: Element;
+
+  @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
+  previewTagName?: string;
 
   override async connectedCallback() {
     this.config = await getConfig();

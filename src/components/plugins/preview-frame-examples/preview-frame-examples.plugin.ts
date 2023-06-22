@@ -54,7 +54,9 @@ export class PreviewFrameExamples extends ColorSchemable(LitElement) implements 
     return html`
       ${map(
         this._element?.examples ?? [],
-        (example: string) => html`<section>${unsafeHTML(renderMarkdown(example))}</section>`
+        (example: string) => html`
+          <section>${unsafeHTML(renderMarkdown(example, true, this._element?.tagName))}</section>
+        `
       )}
     `;
   }

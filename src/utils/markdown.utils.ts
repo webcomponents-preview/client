@@ -6,7 +6,7 @@ export function getCodeExample(slot: HTMLSlotElement): string {
 }
 
 export class Renderer extends marked.Renderer {
-  constructor(private readonly addCodePreview = true) {
+  constructor(private readonly addCodePreview = true, private readonly previewTagName?: string) {
     super();
   }
 
@@ -16,11 +16,14 @@ export class Renderer extends marked.Renderer {
       return `<wcp-code>${super.code(code, language, escaped)}</wcp-code>`;
     }
 
+    // if a tag name is provided, use it to parametrize the preview component
+    const previewTagName = this.previewTagName ? ` preview-tag-name="${this.previewTagName}"` : '';
+
     // wrap the code in a custom element to preview it
     return `
       <wcp-markdown-example>
         <wcp-code slot="code">${super.code(code, language, escaped)}</wcp-code>
-        <wcp-preview slot="preview">${code}</wcp-preview>
+        <wcp-preview slot="preview"${previewTagName}>${code}</wcp-preview>
       </wcp-markdown-example>
     `;
   }
@@ -58,12 +61,12 @@ export function prefixRelativeUrls(markdown: string, currentPath: string, basePa
   );
 }
 
-export function renderMarkdown(mardown: string, addCodePreview = true): string {
+export function renderMarkdown(mardown: string, addCodePreview = true, previewTagName?: string): string {
   return marked(mardown, {
     highlight(code, lang) {
       const language = hljs.getLanguage(lang) ? lang : 'plaintext';
       return hljs.highlight(code, { language }).value;
     },
-    renderer: new Renderer(addCodePreview),
+    renderer: new Renderer(addCodePreview, previewTagName),
   });
 }
