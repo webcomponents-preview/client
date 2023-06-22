@@ -1787,6 +1787,9 @@ declare module "src/components/root/root-navigation/root-navigation.component" {
      * Manages the main root-navigation in the application root.
      *
      * @element wcp-root-navigation
+     *
+     * @cssprop --wcp-root-navigation-empty-message-spacing - The spacing of the empty message.
+     * @cssprop --wcp-root-navigation-empty-message-font-size - The font size of the empty message.
      */
     export class RootNavigation extends LitElement {
         #private;

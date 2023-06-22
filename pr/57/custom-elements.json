@@ -3898,6 +3898,16 @@
           "kind": "class",
           "description": "Manages the main root-navigation in the application root.",
           "name": "RootNavigation",
+          "cssProperties": [
+            {
+              "description": "The spacing of the empty message.",
+              "name": "--wcp-root-navigation-empty-message-spacing"
+            },
+            {
+              "description": "The font size of the empty message.",
+              "name": "--wcp-root-navigation-empty-message-font-size"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -3995,7 +4005,7 @@
           },
           "tagName": "wcp-root-navigation",
           "examples": [],
-          "readme": "# wcp-root-navigation\n\nManages the main root-navigation in the application root.\n\n## Properties\n\n| Property          | Attribute           | Type                  | Default                          |\n|-------------------|---------------------|-----------------------|----------------------------------|\n| `currentPath`     | `current-path`      | `string \\| undefined` |                                  |\n| `emptyMessage`    | `empty-message`     | `string`              | \"No readmes nor elements found.\" |\n| `items`           |                     |                       |                                  |\n| `minSearchLength` | `min-search-length` | `number`              | 1                                |\n| `searchTerms`     |                     | `object`              |                                  |\n",
+          "readme": "# wcp-root-navigation\n\nManages the main root-navigation in the application root.\n\n## Properties\n\n| Property          | Attribute           | Type                  | Default                          |\n|-------------------|---------------------|-----------------------|----------------------------------|\n| `currentPath`     | `current-path`      | `string \\| undefined` |                                  |\n| `emptyMessage`    | `empty-message`     | `string`              | \"No readmes nor elements found.\" |\n| `items`           |                     |                       |                                  |\n| `minSearchLength` | `min-search-length` | `number`              | 1                                |\n| `searchTerms`     |                     | `object`              |                                  |\n\n## CSS Custom Properties\n\n| Property                                        | Description                         |\n|-------------------------------------------------|-------------------------------------|\n| `--wcp-root-navigation-empty-message-font-size` | The font size of the empty message. |\n| `--wcp-root-navigation-empty-message-spacing`   | The spacing of the empty message.   |\n",
           "groups": [
             "root"
           ],
