@@ -1,0 +1,12 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-root-navigation-empty-message-spacing: var(--wcp-root-navigation-empty-message-spacing, #{utils.size(1) utils.size(2)});
+  ---wcp-root-navigation-empty-message-font-size: var(--wcp-root-navigation-empty-message-font-size, 0.8em);
+}
+
+p {
+  margin: var(---wcp-root-navigation-empty-message-spacing);
+  font-size: var(---wcp-root-navigation-empty-message-font-size);
+}

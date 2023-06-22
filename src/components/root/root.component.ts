@@ -133,6 +133,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
           slot="aside"
           min-search-length="2"
           current-path="${ifDefined(this.router.currentPath)}"
+          empty-message="${ifDefined(this.config?.labels.emptyNavigation)}"
           .items="${this.navigationItems}"
         ></wcp-root-navigation>
 
