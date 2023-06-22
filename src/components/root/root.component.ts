@@ -97,7 +97,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
     this.dispatchEvent(event);
   }
 
-  @eventOptions({ capture: false, passive: true })
+  @eventOptions({ passive: true })
   handleSearchInput({ detail }: CustomEvent<string>) {
     this.navigationRef.searchTerms = detail.toLowerCase().split(' ');
   }

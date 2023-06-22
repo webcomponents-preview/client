@@ -26,13 +26,13 @@ export class NavigationSearch extends ColorSchemable(LitElement) {
   @property({ type: String, reflect: true })
   term = '';
 
-  @eventOptions({ capture: false, passive: true })
+  @eventOptions({ passive: true })
   protected handleSearchInput(event: InputEvent) {
     const { value } = event.target as HTMLInputElement;
     this.#updateSearchTerm(value);
   }
 
-  @eventOptions({ capture: false, passive: true })
+  @eventOptions({ passive: true })
   protected handleResetClick() {
     this.#updateSearchTerm('');
   }
