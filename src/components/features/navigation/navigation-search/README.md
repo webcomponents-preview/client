@@ -8,6 +8,12 @@
 |----------|-----------|----------|---------|
 | `term`   | `term`    | `string` | ""      |
 
+## Methods
+
+| Method              | Type                   |
+|---------------------|------------------------|
+| `#updateSearchTerm` | `(term: string): void` |
+
 ## Events
 
 | Event                          | Description                                      |

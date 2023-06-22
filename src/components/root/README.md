@@ -4,15 +4,15 @@
 
 ## Properties
 
-| Property      | Attribute      | Type                  | Default | Description                                      |
-|---------------|----------------|-----------------------|---------|--------------------------------------------------|
-| `config`      |                |                       |         |                                                  |
-| `configUrl`   | `config-url`   | `string \| undefined` |         | Allows to set a url to load a config file from.  |
-| `inline`      | `inline`       | `boolean`             | false   | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |
-| `manifest`    |                |                       |         |                                                  |
-| `manifestUrl` | `manifest-url` | `string`              |         | Defines the location of the custom element manifest file. |
-| `navigation`  |                |                       |         |                                                  |
-| `searchTerms` |                | `object`              | []      |                                                  |
+| Property          | Attribute      | Modifiers | Type                  | Default     | Description                                      |
+|-------------------|----------------|-----------|-----------------------|-------------|--------------------------------------------------|
+| `config`          |                |           |                       |             |                                                  |
+| `configUrl`       | `config-url`   |           | `string \| undefined` |             | Allows to set a url to load a config file from.  |
+| `inline`          | `inline`       |           | `boolean`             | false       | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |
+| `manifest`        |                |           |                       |             |                                                  |
+| `manifestUrl`     | `manifest-url` |           | `string`              |             | Defines the location of the custom element manifest file. |
+| `navigationItems` |                |           |                       | "new Map()" |                                                  |
+| `navigationRef`   |                | readonly  |                       |             |                                                  |
 
 ## Methods
 
@@ -22,7 +22,6 @@
 | `handleSearchInput`          | `({ detail }: any): void`                |
 | `loadConfig`                 | `(configUrl?: string \| undefined): any` |
 | `loadCustomElementsManifest` | `(manifestUrl: string): any`             |
-| `matchesSearch`              | `(content: string): boolean`             |
 
 ## Events
 

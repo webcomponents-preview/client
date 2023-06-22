@@ -1,5 +1,6 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 
@@ -24,15 +25,16 @@ export class NavigationSearch extends ColorSchemable(LitElement) {
   @eventOptions({ capture: false, passive: true })
   protected handleSearchInput(event: InputEvent) {
     const { value } = event.target as HTMLInputElement;
-    this.updateSearchTerm(value);
+    this.#updateSearchTerm(value);
   }
 
   @eventOptions({ capture: false, passive: true })
   protected handleResetClick() {
-    this.updateSearchTerm('');
+    this.#updateSearchTerm('');
   }
 
-  protected updateSearchTerm(term: string) {
+  #updateSearchTerm(term: string) {
+    this.term = term;
     this.dispatchEvent(new CustomEvent('wcp-navigation-search:search', { detail: term }));
   }
 
@@ -40,9 +42,14 @@ export class NavigationSearch extends ColorSchemable(LitElement) {
     return html`
       <wcp-input-text type="search" .value="${this.term}" @input="${this.handleSearchInput}">
         <wcp-icon slot="before" name="search"></wcp-icon>
-        <wcp-button slot="after" kind="icon" @click="${this.handleResetClick}">
-          <wcp-icon name="close"></wcp-icon>
-        </wcp-button>
+        ${when(
+          this.term.length > 0,
+          () => html`
+            <wcp-button slot="after" kind="icon" @click="${this.handleResetClick}">
+              <wcp-icon name="close"></wcp-icon>
+            </wcp-button>
+          `
+        )}
       </wcp-input-text>
     `;
   }
