@@ -134,7 +134,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
         <wcp-root-navigation
           slot="aside"
           min-search-length="2"
-          .router="${this.router}"
+          current-path="${ifDefined(this.router.currentPath)}"
           .items="${this.navigationItems}"
         ></wcp-root-navigation>
 

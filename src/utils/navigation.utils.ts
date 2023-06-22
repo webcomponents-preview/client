@@ -61,3 +61,25 @@ export function prepareNavigation(manifest: Manifest, config: Config): GroupedNa
     items
   );
 }
+
+export function matchesSearch(content: string, terms: string[], minSearchLength = 1): boolean {
+  const contents = content.toLowerCase();
+  return terms.every((term) => term.length < minSearchLength || contents.includes(term));
+}
+
+export function filterItems(
+  items: GroupedNavigationItems,
+  terms: string[],
+  minSearchLength = 1
+): GroupedNavigationItems {
+  // check if we even want to filter
+  if (terms.length < 1) return items;
+
+  // filter the items
+  return new Map(
+    Array.from(items.entries()).map(([group, items]) => [
+      group,
+      new Set([...items].filter(({ name }) => matchesSearch(`${group} ${name}`, terms, minSearchLength))),
+    ])
+  );
+}

@@ -57,6 +57,12 @@ export class Router {
   #currentRoute?: Route;
   #routes: Route[] = [];
 
+  static isActive(path: string, currentPath?: string, exact = false): boolean {
+    const isSamePath = currentPath === path;
+    const isNestedPath = currentPath?.startsWith(`${path}/`) ?? false;
+    return isSamePath || (!exact && isNestedPath);
+  }
+
   get currentPath(): string | undefined {
     return this.#currentPath;
   }
@@ -72,9 +78,7 @@ export class Router {
    * Checks if the given path is the currently active.
    */
   isActive(path: string, exact = false): boolean {
-    const isSamePath = this.#currentPath === path;
-    const isNestedPath = this.#currentPath?.startsWith(`${path}/`) ?? false;
-    return isSamePath || (!exact && isNestedPath);
+    return Router.isActive(path, this.#currentPath, exact);
   }
 
   /**

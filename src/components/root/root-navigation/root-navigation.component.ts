@@ -3,8 +3,8 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
-import type { GroupedNavigationItems } from '@/utils/navigation.utils.js';
-import type { Router } from '@/utils/router.utils.js';
+import { filterItems, type GroupedNavigationItems } from '@/utils/navigation.utils.js';
+import { Router } from '@/utils/router.utils.js';
 
 /**
  * Manages the main root-navigation in the application root.
@@ -13,61 +13,50 @@ import type { Router } from '@/utils/router.utils.js';
  */
 @customElement('wcp-root-navigation')
 export class RootNavigation extends LitElement {
-  #router?: Router;
+  #items: GroupedNavigationItems = new Map();
+  #searchTerms: string[] = [];
 
   @state()
+  private filteredItems: GroupedNavigationItems = new Map();
+
+  @property({ type: String, reflect: true, attribute: 'current-path' })
   currentPath?: string;
 
   @property({ type: Number, reflect: true, attribute: 'min-search-length' })
   minSearchLength = 1;
 
-  @property({ attribute: false })
-  searchTerms: string[] = [];
-
-  @property({ attribute: false })
-  items: GroupedNavigationItems = new Map();
+  @property({ attribute: false, noAccessor: true })
+  set searchTerms(terms: string[]) {
+    this.#searchTerms = terms;
+    this.filteredItems = filterItems(this.#items, this.#searchTerms, this.minSearchLength);
+  }
 
   @property({ attribute: false, noAccessor: true })
-  set router(router: Router) {
-    this.#router = router;
-    window.addEventListener('hashchange', this.#updateCurrentRoute, false);
-  }
-
-  #updateCurrentRoute = () => {
-    this.currentPath = this.#router?.currentPath;
-  };
-
-  #matchesSearch(content: string): boolean {
-    if (this.searchTerms.length < 1) return true;
-    const contents = content.toLowerCase();
-    return this.searchTerms.every((term) => term.length < this.minSearchLength || contents.includes(term));
-  }
-
-  override disconnectedCallback() {
-    window.removeEventListener('hashchange', this.#updateCurrentRoute, false);
-    super.disconnectedCallback();
+  set items(items: GroupedNavigationItems) {
+    this.#items = items;
+    this.filteredItems = filterItems(this.#items, this.#searchTerms, this.minSearchLength);
   }
 
   protected override render(): TemplateResult {
     return html`
       ${map(
-        this.items.entries(),
+        this.filteredItems.entries(),
         ([group, items]) => html`
-          <wcp-navigation headline="${group}">
-            ${map(
-              items,
-              ({ name, link }) => html`
-                ${when(
-                  this.#matchesSearch(`${group} ${name}`),
-                  () => html`
-                    <wcp-navigation-item ?active="${this.#router?.isActive(link)}" href="#${link}">
+          ${when(
+            items.size > 0,
+            () => html`
+              <wcp-navigation headline="${group}">
+                ${map(
+                  items,
+                  ({ name, link }) => html`
+                    <wcp-navigation-item ?active="${Router.isActive(link, this.currentPath)}" href="#${link}">
                       ${name}
                     </wcp-navigation-item>
                   `
                 )}
-              `
-            )}
-          </wcp-navigation>
+              </wcp-navigation>
+            `
+          )}
         `
       )}
     `;
