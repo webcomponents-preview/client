@@ -1,26 +1,59 @@
 declare module "src/utils/config.utils" {
     export type Config = {
-        title: string;
         excludeElements: string[];
-        fallbackGroupName: string;
-        initialActiveElement: string;
+        /**
+         * Allows setting an initial element to be displayed if no other element is selected.
+         * If omitted, the first element will be used.
+         */
+        initialActiveElement?: string;
+        /**
+         * The code previews always consist of two tabs, one for the code and one for the preview.
+         * This property defines the initial tab to be selected.
+         */
         initialCodePreviewTab: 'code' | 'preview';
+        /**
+         * The initial tab to be selected in the preview. Will match the name of the plugin.
+         */
         initialPreviewTab: string;
         /**
          * The plugins to be used for the preview.
-         * Defaults to `['wcp-preview-viewport', 'wcp-preview-background']`
+         * Set to the viewport plugin by default.
          */
         previewPlugins: string[];
         /**
          * The plugins to be used for the preview frame.
-         * Defaults to `['wcp-preview-frame-viewer', 'wcp-preview-frame-examples', 'wcp-preview-frame-readme']`
+         * Defaults to examples, readme and viewer.
          */
         previewFramePlugins: string[];
-        additionalReadmeGroupName: string;
+        /**
+         * Defines readmes to be loaded from external sources to be displayed in the navigation.
+         */
         additionalReadmes: {
             name: string;
             url: string;
         }[];
+        /**
+         * Labels to be translated or customized
+         */
+        labels: {
+            /**
+             * The name of the group to be used for eventually configured additional readmes.
+             */
+            additionalReadmeGroupName: string;
+            /**
+             * If the navigation is empty, either because no readmes nor elements are found or
+             * because the search query does not match any elements, use this label as fallback.
+             */
+            emptyNavigation: string;
+            /**
+             * If no groups for elements are defined, use this label as fallback for all elements
+             */
+            fallbackGroupName: string;
+            /**
+             * The title of the application, displayed in sidebar header and browser tab
+             */
+            title: string;
+        };
     };
     global {
         interface Window {
@@ -29,8 +62,24 @@ declare module "src/utils/config.utils" {
             };
         }
     }
-    export const loadConfig: (url?: string) => Promise<Config>;
-    export const getConfig: (url?: string) => Promise<Config>;
+    export const defaultConfig: {
+        excludeElements: never[];
+        initialActiveElement: undefined;
+        initialCodePreviewTab: "preview";
+        initialPreviewTab: string;
+        previewPlugins: string[];
+        previewFramePlugins: string[];
+        additionalReadmes: never[];
+        labels: {
+            title: string;
+            additionalReadmeGroupName: string;
+            fallbackGroupName: string;
+            emptyNavigation: string;
+        };
+    };
+    export function mergeConfigWithDefaults(config: Partial<Config>): Config;
+    export function loadConfig(url?: string): Promise<Config>;
+    export function getConfig(url?: string): Promise<Config>;
 }
 declare module "src/utils/mixin.types" {
     export type Constructor<T> = new (...args: any[]) => T;
@@ -213,8 +262,12 @@ declare module "src/components/features/navigation/navigation-search/navigation-
      * @emits wcp-navigation-search:search - Fired when the search term changes. Carries the new search term with it.
      *
      * @cssprop --wcp-navigation-search-spacing - The spacing around the search input.
-     * @cssprop --wcp-navigation-search-dark-border - The border color of the search input in dark mode.
-     * @cssprop --wcp-navigation-search-light-border - The border color of the search input in light mode.
+     *
+     * @cssprop --wcp-navigation-search-passive-dark-stroke - The stroke color of the search input in dark mode when not focused.
+     * @cssprop --wcp-navigation-search-passive-light-stroke - The stroke color of the search input in light mode when not focused.
+     *
+     * @cssprop --wcp-navigation-search-active-dark-stroke - The stroke color of the search input in dark mode when focused.
+     * @cssprop --wcp-navigation-search-active-light-stroke - The stroke color of the search input in light mode when focused.
      */
     export class NavigationSearch extends NavigationSearch_base {
         #private;
@@ -1618,6 +1671,8 @@ declare module "src/utils/navigation.utils" {
      * Prepares a grouped navigation structure of readmes and elements.
      */
     export function prepareNavigation(manifest: Manifest, config: Config): GroupedNavigationItems;
+    export function matchesSearch(content: string, terms: string[], minSearchLength?: number): boolean;
+    export function filterItems(items: GroupedNavigationItems, terms: string[], minSearchLength?: number): GroupedNavigationItems;
 }
 declare module "src/utils/router.utils" {
     import type { LitElement, TemplateResult } from 'lit';
@@ -1648,6 +1703,7 @@ declare module "src/utils/router.utils" {
     export function mergeParams(oldParams: Params, newParams: Params): Params;
     export class Router {
         #private;
+        static isActive(path: string, currentPath?: string, exact?: boolean): boolean;
         get currentPath(): string | undefined;
         /**
          * Defines the routes for this router.
@@ -1726,8 +1782,7 @@ declare module "src/parsers/cem/parse" {
 }
 declare module "src/components/root/root-navigation/root-navigation.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    import type { GroupedNavigationItems } from "src/utils/navigation.utils";
-    import type { Router } from "src/utils/router.utils";
+    import { type GroupedNavigationItems } from "src/utils/navigation.utils";
     /**
      * Manages the main root-navigation in the application root.
      *
@@ -1735,12 +1790,13 @@ declare module "src/components/root/root-navigation/root-navigation.component" {
      */
     export class RootNavigation extends LitElement {
         #private;
+        static readonly styles: import("lit").CSSResult;
+        private filteredItems;
         currentPath?: string;
+        emptyMessage: string;
         minSearchLength: number;
-        searchTerms: string[];
-        items: GroupedNavigationItems;
-        set router(router: Router);
-        disconnectedCallback(): void;
+        set searchTerms(terms: string[]);
+        set items(items: GroupedNavigationItems);
         protected render(): TemplateResult;
     }
     global {

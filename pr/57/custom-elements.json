@@ -3901,18 +3901,49 @@
           "members": [
             {
               "kind": "field",
-              "name": "#router",
+              "name": "#items",
               "privacy": "private",
               "type": {
-                "text": "Router | undefined"
-              }
+                "text": "GroupedNavigationItems"
+              },
+              "default": "new Map()"
+            },
+            {
+              "kind": "field",
+              "name": "#searchTerms",
+              "privacy": "private",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "filteredItems",
+              "type": {
+                "text": "GroupedNavigationItems"
+              },
+              "privacy": "private",
+              "default": "new Map()"
             },
             {
               "kind": "field",
               "name": "currentPath",
               "type": {
                 "text": "string | undefined"
-              }
+              },
+              "attribute": "current-path",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "emptyMessage",
+              "type": {
+                "text": "string"
+              },
+              "default": "'No readmes nor elements found.'",
+              "attribute": "empty-message",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3926,48 +3957,29 @@
             },
             {
               "kind": "field",
-              "name": "searchTerms",
-              "type": {
-                "text": "string[]"
-              },
-              "default": "[]"
+              "name": "searchTerms"
             },
             {
               "kind": "field",
-              "name": "items",
-              "type": {
-                "text": "GroupedNavigationItems"
-              },
-              "default": "new Map()"
-            },
-            {
-              "kind": "field",
-              "name": "router"
-            },
-            {
-              "kind": "field",
-              "name": "#updateCurrentRoute",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "#matchesSearch",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "content",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
+              "name": "items"
             }
           ],
           "attributes": [
+            {
+              "name": "current-path",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "currentPath"
+            },
+            {
+              "name": "empty-message",
+              "type": {
+                "text": "string"
+              },
+              "default": "'No readmes nor elements found.'",
+              "fieldName": "emptyMessage"
+            },
             {
               "name": "min-search-length",
               "type": {
@@ -3983,7 +3995,7 @@
           },
           "tagName": "wcp-root-navigation",
           "examples": [],
-          "readme": "# wcp-root-navigation\n\nManages the main root-navigation in the application root.\n\n## Properties\n\n| Property          | Attribute           | Type                  | Default     |\n|-------------------|---------------------|-----------------------|-------------|\n| `currentPath`     |                     | `string \\| undefined` |             |\n| `items`           |                     |                       | \"new Map()\" |\n| `minSearchLength` | `min-search-length` | `number`              | 1           |\n| `router`          |                     |                       |             |\n| `searchTerms`     |                     | `object`              | []          |\n\n## Methods\n\n| Method           | Type                         |\n|------------------|------------------------------|\n| `#matchesSearch` | `(content: string): boolean` |\n",
+          "readme": "# wcp-root-navigation\n\nManages the main root-navigation in the application root.\n\n## Properties\n\n| Property          | Attribute           | Type                  | Default                          |\n|-------------------|---------------------|-----------------------|----------------------------------|\n| `currentPath`     | `current-path`      | `string \\| undefined` |                                  |\n| `emptyMessage`    | `empty-message`     | `string`              | \"No readmes nor elements found.\" |\n| `items`           |                     |                       |                                  |\n| `minSearchLength` | `min-search-length` | `number`              | 1                                |\n| `searchTerms`     |                     | `object`              |                                  |\n",
           "groups": [
             "root"
           ],
@@ -4857,12 +4869,20 @@
               "name": "--wcp-navigation-search-spacing"
             },
             {
-              "description": "The border color of the search input in dark mode.",
-              "name": "--wcp-navigation-search-dark-border"
+              "description": "The stroke color of the search input in dark mode when not focused.",
+              "name": "--wcp-navigation-search-passive-dark-stroke"
             },
             {
-              "description": "The border color of the search input in light mode.",
-              "name": "--wcp-navigation-search-light-border"
+              "description": "The stroke color of the search input in light mode when not focused.",
+              "name": "--wcp-navigation-search-passive-light-stroke"
+            },
+            {
+              "description": "The stroke color of the search input in dark mode when focused.",
+              "name": "--wcp-navigation-search-active-dark-stroke"
+            },
+            {
+              "description": "The stroke color of the search input in light mode when focused.",
+              "name": "--wcp-navigation-search-active-light-stroke"
             }
           ],
           "members": [
@@ -4937,7 +4957,7 @@
           },
           "tagName": "wcp-navigation-search",
           "examples": [],
-          "readme": "# wcp-navigation-search\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property | Attribute | Type     | Default |\n|----------|-----------|----------|---------|\n| `term`   | `term`    | `string` | \"\"      |\n\n## Methods\n\n| Method              | Type                   |\n|---------------------|------------------------|\n| `#updateSearchTerm` | `(term: string): void` |\n\n## Events\n\n| Event                          | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `wcp-navigation-search:search` | Fired when the search term changes. Carries the new search term with it. |\n\n## CSS Custom Properties\n\n| Property                               | Description                                      |\n|----------------------------------------|--------------------------------------------------|\n| `--wcp-navigation-search-dark-border`  | The border color of the search input in dark mode. |\n| `--wcp-navigation-search-light-border` | The border color of the search input in light mode. |\n| `--wcp-navigation-search-spacing`      | The spacing around the search input.             |\n",
+          "readme": "# wcp-navigation-search\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property | Attribute | Type     | Default |\n|----------|-----------|----------|---------|\n| `term`   | `term`    | `string` | \"\"      |\n\n## Methods\n\n| Method              | Type                   |\n|---------------------|------------------------|\n| `#updateSearchTerm` | `(term: string): void` |\n\n## Events\n\n| Event                          | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `wcp-navigation-search:search` | Fired when the search term changes. Carries the new search term with it. |\n\n## CSS Custom Properties\n\n| Property                                       | Description                                      |\n|------------------------------------------------|--------------------------------------------------|\n| `--wcp-navigation-search-active-dark-stroke`   | The stroke color of the search input in dark mode when focused. |\n| `--wcp-navigation-search-active-light-stroke`  | The stroke color of the search input in light mode when focused. |\n| `--wcp-navigation-search-passive-dark-stroke`  | The stroke color of the search input in dark mode when not focused. |\n| `--wcp-navigation-search-passive-light-stroke` | The stroke color of the search input in light mode when not focused. |\n| `--wcp-navigation-search-spacing`              | The spacing around the search input.             |\n",
           "groups": [
             "features"
           ],
