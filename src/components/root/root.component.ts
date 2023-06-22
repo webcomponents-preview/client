@@ -71,9 +71,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
     this.config = await getConfig(configUrl);
 
     // update title from config
-    if (this.config.title) {
-      document.title = this.config.title;
-    }
+    document.title = this.config.labels.title;
   }
 
   async loadCustomElementsManifest(manifestUrl: string) {
@@ -120,7 +118,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
   protected override render(): TemplateResult {
     return html`
       <wcp-layout>
-        <wcp-title slot="header" title="${ifDefined(this.config?.title)}">
+        <wcp-title slot="header" title="${ifDefined(this.config?.labels.title)}">
           <slot name="logo" slot="logo">
             <img src="${logo}" height="20px" />
           </slot>

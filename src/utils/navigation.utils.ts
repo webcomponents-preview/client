@@ -3,8 +3,6 @@ import type { Element, Manifest } from '@/utils/parser.types.js';
 
 const ROUTE_ELEMENTS = '/element';
 const ROUTE_READMES = '/readme';
-const FALLBACK_COMPONENTS_GROUP_NAME = 'Components';
-const FALLBACK_READMES_GROUP_NAME = 'Readmes';
 
 /**
  * Defines the structure of the navigation items.
@@ -37,17 +35,15 @@ export function prepareNavigation(manifest: Manifest, config: Config): GroupedNa
 
   // prepare readme navigation
   if (config.additionalReadmes?.length) {
-    const readmesGroupName = config.additionalReadmeGroupName ?? FALLBACK_READMES_GROUP_NAME;
     const readmes = config.additionalReadmes.reduce(
       (readmes, { name, url }) => readmes.add(prepareReadmeNavigationItem(name, url)),
       new Set<GroupedNavigationItem>()
     );
-    items.set(readmesGroupName, readmes);
+    items.set(config.labels.additionalReadmeGroupName, readmes);
   }
 
   // prepare element navigation
-  const elementsGroupName = config.fallbackGroupName ?? FALLBACK_COMPONENTS_GROUP_NAME;
-  const elements = Array.from(manifest.getGroupedElements(elementsGroupName));
+  const elements = Array.from(manifest.getGroupedElements(config.labels.fallbackGroupName));
 
   return elements.reduce(
     (items, [group, elements]) =>
@@ -75,11 +71,10 @@ export function filterItems(
   // check if we even want to filter
   if (terms.length < 1) return items;
 
-  // filter the items
-  return new Map(
-    Array.from(items.entries()).map(([group, items]) => [
-      group,
-      new Set([...items].filter(({ name }) => matchesSearch(`${group} ${name}`, terms, minSearchLength))),
-    ])
-  );
+  // filter the items, skip empty groups
+  return Array.from(items.entries()).reduce((all, [group, items]) => {
+    const filteredItems = [...items].filter(({ name }) => matchesSearch(`${group} ${name}`, terms, minSearchLength));
+    if (filteredItems.length < 1) return all;
+    return all.set(group, new Set(filteredItems));
+  }, new Map() as GroupedNavigationItems);
 }
