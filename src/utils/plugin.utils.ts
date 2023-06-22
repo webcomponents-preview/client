@@ -24,7 +24,7 @@ export type PreviewFramePlugin = Plugin & {
  * Type to be used with preview plugins.
  */
 export type PreviewPlugin = Plugin & {
-  container: HTMLElement;
+  readonly container: HTMLElement;
 };
 
 export function isPlugin(element: Element): element is Plugin {
