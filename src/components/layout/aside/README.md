@@ -30,8 +30,7 @@ window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));
 
 | Event               | Description                                      |
 |---------------------|--------------------------------------------------|
-| `wcp-aside-toggled` | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |
-| `wcp-aside:toggled` |                                                  |
+| `wcp-aside:toggled` | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |
 
 ## Slots
 

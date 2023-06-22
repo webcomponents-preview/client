@@ -1,48 +1,117 @@
 // this type will be used to derive the config schema from
 export type Config = {
-  title: string;
   excludeElements: string[];
-  fallbackGroupName: string;
-  initialActiveElement: string;
+
+  /**
+   * Allows setting an initial element to be displayed if no other element is selected.
+   * If omitted, the first element will be used.
+   */
+  initialActiveElement?: string;
+
+  /**
+   * The code previews always consist of two tabs, one for the code and one for the preview.
+   * This property defines the initial tab to be selected.
+   */
   initialCodePreviewTab: 'code' | 'preview';
+
+  /**
+   * The initial tab to be selected in the preview. Will match the name of the plugin.
+   */
   initialPreviewTab: string;
 
   /**
    * The plugins to be used for the preview.
-   * Defaults to `['wcp-preview-viewport', 'wcp-preview-background']`
+   * Set to the viewport plugin by default.
    */
   previewPlugins: string[];
 
   /**
    * The plugins to be used for the preview frame.
-   * Defaults to `['wcp-preview-frame-viewer', 'wcp-preview-frame-examples', 'wcp-preview-frame-readme']`
+   * Defaults to examples, readme and viewer.
    */
   previewFramePlugins: string[];
 
-  additionalReadmeGroupName: string;
+  /**
+   * Defines readmes to be loaded from external sources to be displayed in the navigation.
+   */
   additionalReadmes: {
     name: string;
     url: string;
   }[];
+
+  /**
+   * Labels to be translated or customized
+   */
+  labels: {
+    /**
+     * The name of the group to be used for eventually configured additional readmes.
+     */
+    additionalReadmeGroupName: string;
+    /**
+     * If the navigation is empty, either because no readmes nor elements are found or
+     * because the search query does not match any elements, use this label as fallback.
+     */
+    emptyNavigation: string;
+    /**
+     * If no groups for elements are defined, use this label as fallback for all elements
+     */
+    fallbackGroupName: string;
+    /**
+     * The title of the application, displayed in sidebar header and browser tab
+     */
+    title: string;
+  };
 };
 
 declare global {
   interface Window {
     wcp: {
-      // in-memory config cache
+      // in-memory config cache, as we store the promise directly,
+      // we can allow concurrent requests to the config and just
+      // wait for the promise to resolve
       config: Promise<Config>;
     };
   }
 }
 
+// default config, to be customized (even partially)
+export const defaultConfig = {
+  excludeElements: [],
+  initialActiveElement: undefined,
+  initialCodePreviewTab: 'preview',
+  initialPreviewTab: 'viewer',
+  previewPlugins: ['wcp-preview-viewport'],
+  previewFramePlugins: ['wcp-preview-frame-examples', 'wcp-preview-frame-readme', 'wcp-preview-frame-viewer'],
+  additionalReadmes: [],
+  labels: {
+    title: 'Web Component Preview',
+    additionalReadmeGroupName: 'Readmes',
+    fallbackGroupName: 'Components',
+    emptyNavigation: 'No readmes nor elements found.',
+  },
+} satisfies Config;
+
+// merge the default config with the given config
+export function mergeConfigWithDefaults(config: Partial<Config>): Config {
+  return {
+    ...defaultConfig,
+    ...config,
+    labels: {
+      ...defaultConfig.labels,
+      ...config.labels,
+    },
+  };
+}
+
 // mostly used internally
-export const loadConfig = async (url = 'config.json'): Promise<Config> => {
+export async function loadConfig(url = 'config.json'): Promise<Config> {
   const response = await fetch(url);
-  return response.json();
-};
+  const config = await response.json();
+  return mergeConfigWithDefaults(config);
+}
 
 // convenience function to retrieve the config
-export const getConfig = async (url?: string) => {
+export async function getConfig(url?: string) {
   if (window.wcp === undefined) {
     window.wcp = {} as Window['wcp'];
   }
@@ -50,4 +119,4 @@ export const getConfig = async (url?: string) => {
     window.wcp.config = loadConfig(url);
   }
   return window.wcp.config;
-};
+}

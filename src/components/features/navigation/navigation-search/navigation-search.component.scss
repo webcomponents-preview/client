@@ -1,0 +1,50 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-navigation-search-spacing: var(--wcp-navigation-search-spacing, 0 #{utils.size(1) utils.size(1)});
+  ---wcp-navigation-search-passive-dark-stroke: var(--wcp-navigation-search-passive-dark-stroke, var(--wcp-color-grey-24));
+  ---wcp-navigation-search-passive-light-stroke: var(--wcp-navigation-search-passive-light-stroke, var(--wcp-color-blue-24));
+
+  // derive themed colors
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-navigation-search-passive-stroke: var(---wcp-navigation-search-passive-#{$color-scheme}-stroke);
+  }
+}
+
+// set default state colors
+:host {
+  ---wcp-navigation-search-stroke: var(---wcp-navigation-search-passive-stroke);
+  // set border color to internally used text input element
+  --wcp-input-text-dark-border: var(---wcp-navigation-search-passive-dark-stroke);
+  --wcp-input-text-light-border: var(---wcp-navigation-search-passive-light-stroke);
+}
+
+// set active state colors
+:host(:focus-within) {
+  ---wcp-navigation-search-stroke: var(---wcp-navigation-search-active-stroke);
+  // set border color to internally used text input element
+  --wcp-input-text-dark-border: var(---wcp-navigation-search-active-dark-stroke);
+  --wcp-input-text-light-border: var(---wcp-navigation-search-active-light-stroke);
+}
+
+:host {
+  display: block;
+  padding: var(---wcp-navigation-search-spacing);
+}
+
+wcp-icon[name='search'] {
+  --wcp-icon-size: 18;
+  color: var(---wcp-navigation-search-stroke);
+  padding-left: utils.size(1);
+  pointer-events: none;
+}
+
+wcp-button {
+  margin: utils.size(.3) utils.size(.3) 0 0;
+
+  &::part(button) {
+    color: var(---wcp-navigation-search-stroke);
+    padding: utils.size(0.1);
+  }
+}

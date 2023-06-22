@@ -1,19 +1,21 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
 
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
-import { map } from 'lit/directives/map.js';
-import { when } from 'lit/directives/when.js';
+import { customElement, eventOptions, property, query, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { type Config, getConfig } from '@/utils/config.utils.js';
+import { type GroupedNavigationItems, prepareNavigation } from '@/utils/navigation.utils.js';
 import { Routable } from '@/mixins/routable.mixin.js';
-import type { Element, Manifest } from '@/utils/parser.types.js';
+import type { Manifest } from '@/utils/parser.types.js';
 import { parseCEM } from '@/parsers/cem/parse.js';
+
+import type { RootNavigation } from './root-navigation/root-navigation.component.js';
+import { prepareRoutes } from './root.routes.js';
 
 import logo from '@/assets/icons/logo.svg';
 import styles from './root.component.scss';
-import { prepareRoutes } from './root.routes.js';
 
 /**
  * @slot logo - Allows setting a custom logo to be displayed in the title.
@@ -41,7 +43,10 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
   manifest?: Manifest;
 
   @state()
-  navigation?: Map<string, Element[]>;
+  navigationItems: GroupedNavigationItems = new Map();
+
+  @query('wcp-root-navigation')
+  readonly navigationRef!: RootNavigation;
 
   /**
    * Flags the component to be displayed inline and not standalone. Requires the surrounding
@@ -66,9 +71,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
     this.config = await getConfig(configUrl);
 
     // update title from config
-    if (this.config.title) {
-      document.title = this.config.title;
-    }
+    document.title = this.config.labels.title;
   }
 
   async loadCustomElementsManifest(manifestUrl: string) {
@@ -78,7 +81,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
 
     // store the elements and derive navigation
     this.manifest = parseCEM(manifest, config?.excludeElements);
-    this.navigation = this.manifest.getGroupedElements(config?.fallbackGroupName ?? 'Components');
+    this.navigationItems = prepareNavigation(this.manifest, config);
 
     // notify all others
     this.emitManifestLoaded();
@@ -92,6 +95,11 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
       detail: this.manifest?.elements,
     });
     this.dispatchEvent(event);
+  }
+
+  @eventOptions({ capture: false, passive: true })
+  handleSearchInput({ detail }: CustomEvent<string>) {
+    this.navigationRef.searchTerms = detail.toLowerCase().split(' ');
   }
 
   override async connectedCallback() {
@@ -110,53 +118,24 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
   protected override render(): TemplateResult {
     return html`
       <wcp-layout>
-        <wcp-title slot="title" title="${this.config?.title}">
+        <wcp-title slot="header" title="${ifDefined(this.config?.labels.title)}">
           <slot name="logo" slot="logo">
             <img src="${logo}" height="20px" />
           </slot>
         </wcp-title>
 
-        ${when(
-          this.config?.additionalReadmes.length,
-          () => html`
-            <wcp-navigation slot="aside" headline="${this.config?.additionalReadmeGroupName ?? 'Readmes'}">
-              ${map(
-                this.config?.additionalReadmes ?? [],
-                ({ name, url }) => html`
-                  <wcp-navigation-item
-                    ?active="${this.router.isActive(`/readme/${encodeURIComponent(url)}`)}"
-                    href="#/readme/${encodeURIComponent(url)}"
-                  >
-                    ${name}
-                  </wcp-navigation-item>
-                `
-              )}
-            </wcp-navigation>
-          `
-        )}
-        ${when(
-          this.navigation !== undefined,
-          () => html`
-            ${map(
-              this.navigation?.entries(),
-              ([group, elements]) => html`
-                <wcp-navigation slot="aside" headline="${group}">
-                  ${map(
-                    elements,
-                    (element) => html`
-                      <wcp-navigation-item
-                        ?active="${this.router.isActive(`/element/${element.getNiceUrl()}`)}"
-                        href="#/element/${element.getNiceUrl()}"
-                      >
-                        ${element.getNiceName()}
-                      </wcp-navigation-item>
-                    `
-                  )}
-                </wcp-navigation>
-              `
-            )}
-          `
-        )}
+        <wcp-navigation-search
+          slot="header"
+          @wcp-navigation-search:search="${this.handleSearchInput}"
+        ></wcp-navigation-search>
+
+        <wcp-root-navigation
+          slot="aside"
+          min-search-length="2"
+          current-path="${ifDefined(this.router.currentPath)}"
+          empty-message="${ifDefined(this.config?.labels.emptyNavigation)}"
+          .items="${this.navigationItems}"
+        ></wcp-root-navigation>
 
         <wcp-preview-controls>
           <wcp-toggle-sidebar></wcp-toggle-sidebar>

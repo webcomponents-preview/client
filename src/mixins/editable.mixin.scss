@@ -59,6 +59,7 @@ label {
 #input,
 slot[name='before'],
 slot[name='after'] {
+  align-self: center;
   transition: opacity var(--wcp-fx-default-duration) ease-out;
   will-change: opacity;
 
