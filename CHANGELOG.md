@@ -1,5 +1,24 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+# [0.2.0](https://github.com/webcomponents-preview/client/compare/0.1.0...0.2.0) (2023-06-22)
+
+
+### Bug Fixes
+
+* **wcp-input-code:** align autosize ([90b9213](https://github.com/webcomponents-preview/client/commit/90b92131d8acb8f26233483772655efc28c09c93))
+
+
+### Features
+
+* **wcp-navigation-search:** introduce component ([e030067](https://github.com/webcomponents-preview/client/commit/e03006724122d7f390e5056f8d6c01f74f9404b3))
+* **wcp-root-navigation:** add empty message ([f48285a](https://github.com/webcomponents-preview/client/commit/f48285a06203a767af46625706034571d45281f1))
+* **wcp-root:** add simple search ([4139f00](https://github.com/webcomponents-preview/client/commit/4139f0055e7f3bd6d7e773941e279a760ec8f183))
+
+
+### Performance Improvements
+
+* prevent router outlet from re-rendering ([ac3adf9](https://github.com/webcomponents-preview/client/commit/ac3adf953aac5a35527f3e8da153bf3cb90dd243))
+
 # [0.1.0](https://github.com/webcomponents-preview/client/compare/0.0.52...0.1.0) (2023-06-21)
 
 
