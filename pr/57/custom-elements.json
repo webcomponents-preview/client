@@ -3928,7 +3928,6 @@
               "type": {
                 "text": "GroupedNavigationItems"
               },
-              "readonly": true,
               "default": "new Map()"
             },
             {
@@ -3964,7 +3963,7 @@
           },
           "tagName": "wcp-root-navigation",
           "examples": [],
-          "readme": "# wcp-root-navigation\n\nManages the main root-navigation in the application root.\n\n## Properties\n\n| Property      | Modifiers | Type                  | Default     |\n|---------------|-----------|-----------------------|-------------|\n| `currentPath` |           | `string \\| undefined` |             |\n| `items`       | readonly  |                       | \"new Map()\" |\n| `router`      |           |                       |             |\n| `searchTerms` |           | `object`              | []          |\n\n## Methods\n\n| Method           | Type                         |\n|------------------|------------------------------|\n| `#matchesSearch` | `(content: string): boolean` |\n",
+          "readme": "# wcp-root-navigation\n\nManages the main root-navigation in the application root.\n\n## Properties\n\n| Property      | Type                  | Default     |\n|---------------|-----------------------|-------------|\n| `currentPath` | `string \\| undefined` |             |\n| `items`       |                       | \"new Map()\" |\n| `router`      |                       |             |\n| `searchTerms` | `object`              | []          |\n\n## Methods\n\n| Method           | Type                         |\n|------------------|------------------------------|\n| `#matchesSearch` | `(content: string): boolean` |\n",
           "groups": [
             "root"
           ],

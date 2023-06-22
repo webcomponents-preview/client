@@ -1737,7 +1737,7 @@ declare module "src/components/root/root-navigation/root-navigation.component" {
         #private;
         currentPath?: string;
         searchTerms: string[];
-        readonly items: GroupedNavigationItems;
+        items: GroupedNavigationItems;
         set router(router: Router);
         disconnectedCallback(): void;
         protected render(): TemplateResult;
