@@ -22,8 +22,10 @@
 
 ## CSS Custom Properties
 
-| Property                               | Description                                      |
-|----------------------------------------|--------------------------------------------------|
-| `--wcp-navigation-search-dark-border`  | The border color of the search input in dark mode. |
-| `--wcp-navigation-search-light-border` | The border color of the search input in light mode. |
-| `--wcp-navigation-search-spacing`      | The spacing around the search input.             |
+| Property                                       | Description                                      |
+|------------------------------------------------|--------------------------------------------------|
+| `--wcp-navigation-search-active-dark-stroke`   | The stroke color of the search input in dark mode when focused. |
+| `--wcp-navigation-search-active-light-stroke`  | The stroke color of the search input in light mode when focused. |
+| `--wcp-navigation-search-passive-dark-stroke`  | The stroke color of the search input in dark mode when not focused. |
+| `--wcp-navigation-search-passive-light-stroke` | The stroke color of the search input in light mode when not focused. |
+| `--wcp-navigation-search-spacing`              | The spacing around the search input.             |

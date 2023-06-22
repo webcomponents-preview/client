@@ -12,8 +12,12 @@ import styles from './navigation-search.component.scss';
  * @emits wcp-navigation-search:search - Fired when the search term changes. Carries the new search term with it.
  *
  * @cssprop --wcp-navigation-search-spacing - The spacing around the search input.
- * @cssprop --wcp-navigation-search-dark-border - The border color of the search input in dark mode.
- * @cssprop --wcp-navigation-search-light-border - The border color of the search input in light mode.
+ * 
+ * @cssprop --wcp-navigation-search-passive-dark-stroke - The stroke color of the search input in dark mode when not focused.
+ * @cssprop --wcp-navigation-search-passive-light-stroke - The stroke color of the search input in light mode when not focused.
+ * 
+ * @cssprop --wcp-navigation-search-active-dark-stroke - The stroke color of the search input in dark mode when focused.
+ * @cssprop --wcp-navigation-search-active-light-stroke - The stroke color of the search input in light mode when focused.
  */
 @customElement('wcp-navigation-search')
 export class NavigationSearch extends ColorSchemable(LitElement) {
