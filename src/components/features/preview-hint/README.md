@@ -6,7 +6,14 @@ Shows a hint to a given preview element.
 
 ## Properties
 
-| Property  | Attribute | Type      | Default |
-|-----------|-----------|-----------|---------|
-| `debug`   | `debug`   | `boolean` | false   |
-| `element` |           |           |         |
+| Property       | Attribute | Type      | Default |
+|----------------|-----------|-----------|---------|
+| `debug`        | `debug`   | `boolean` | false   |
+| `element`      |           |           |         |
+| `scrollParent` |           |           |         |
+
+## Methods
+
+| Method           | Type       |
+|------------------|------------|
+| `updatePosition` | `(): void` |

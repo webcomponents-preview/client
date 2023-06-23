@@ -28,4 +28,5 @@ slot[name='code']::slotted(pre) {
 
 wcp-tabs::part(preview-panel) {
   padding: 0;
+  overflow: hidden;
 }

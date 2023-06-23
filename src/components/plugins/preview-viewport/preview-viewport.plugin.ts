@@ -30,6 +30,8 @@ const ICONS = new Map<Viewport, string>([
 
 // internal identifiers for styling
 const STYLE_ID = 'preview-plugin-viewport';
+const DECORATION_CLASS = 'simulate-viewport-decoration';
+const PROPORTION_CLASS = 'simulate-viewport-proportion';
 const SIZE_CLASS = 'simulate-viewport-size';
 const SCALE_CLASS = 'simulate-viewport-scale';
 
@@ -57,6 +59,24 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
   @property({ type: Boolean, reflect: true, attribute: 'invert-simulated-viewport' })
   private invertSimulatedViewport = false;
 
+  protected get defaultStyle(): string {
+    return `
+      .${DECORATION_CLASS} {
+        border-radius: 10px;
+        outline: 1px solid currentColor;
+        overflow: hidden;
+      }
+    `;
+  }
+
+  protected removeStyle() {
+    this.container.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`)?.remove();
+  }
+
+  protected resetStyle() {
+    this.prepareStyle().textContent = this.defaultStyle;
+  }
+
   protected prepareStyle(): HTMLStyleElement {
     // check if a style element already exists
     let style = this.container.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`);
@@ -65,6 +85,7 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
     // create a new style element
     style = document.createElement('style');
     style.id = STYLE_ID;
+    style.textContent = this.defaultStyle;
     this.container.append(style);
     return style;
   }
@@ -74,17 +95,22 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
    */
   protected applyPreviewSize() {
     if (this.simulateViewport === undefined) return;
+
     // read the viewport dimensions to apply
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const [w, h] = VIEWPORTS.get(this.simulateViewport)!;
     // add the size styling to the style element
     this.prepareStyle().textContent += `
       .${SIZE_CLASS} {
+        position: absolute;
+        inset: 0 auto auto 0;
         height: ${this.invertSimulatedViewport ? w : h}px;
         width: ${this.invertSimulatedViewport ? h : w}px;
-        
-        border-radius: 5px;
-        outline: 3px solid currentColor;
+      }
+
+      .${PROPORTION_CLASS} {
+        aspect-ratio: ${this.invertSimulatedViewport ? `${h} / ${w}` : `${w} / ${h}`};
+        width: min(${this.invertSimulatedViewport ? h : w}px, 100%);
       }
     `;
   }
@@ -94,15 +120,16 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
    */
   protected applyPreviewScale() {
     if (this.simulateViewport === undefined) return;
+
     // read the viewport dimensions to apply
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const [w, h] = VIEWPORTS.get(this.simulateViewport)!;
     // derive the scale to fit the viewport into the preview
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const preview = this.container.parentElement!;
+    const preview = this.container.parentElement!.parentElement!;
     const scale = Math.min(
-      preview.clientWidth / (this.invertSimulatedViewport ? h : w),
-      preview.clientHeight / (this.invertSimulatedViewport ? w : h)
+      (preview.clientWidth - 20) / (this.invertSimulatedViewport ? h : w),
+      (preview.clientHeight - 20) / (this.invertSimulatedViewport ? w : h)
     );
     // add the scale styling to the style element
     this.prepareStyle().textContent += `
@@ -111,6 +138,26 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
         transform: scale(clamp(0.15, ${scale * SCALE_FACTOR}, 1));
       }
     `;
+  }
+
+  protected applyPreviewDimensions() {
+    // remove our stuff if we are not simulating a viewport
+    if (this.simulateViewport === undefined) {
+      this.removeStyle();
+      this.container.parentElement?.classList.remove(DECORATION_CLASS, PROPORTION_CLASS);
+      this.container.classList.remove(SIZE_CLASS, SCALE_CLASS);
+    }
+    // apply visual changes
+    else {
+      this.resetStyle();
+      this.container.parentElement?.classList.add(DECORATION_CLASS, PROPORTION_CLASS);
+      this.container.classList.add(SIZE_CLASS, SCALE_CLASS);
+      this.applyPreviewSize();
+      this.applyPreviewScale();
+    }
+
+    // notify
+    this.emitChange();
   }
 
   private emitChange() {
@@ -127,15 +174,7 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
     this.simulateViewport = this.simulateViewport === viewport ? undefined : viewport;
 
     // apply visual changes
-    if (this.simulateViewport === undefined) {
-      this.prepareStyle().textContent = '';
-    } else {
-      this.applyPreviewSize();
-      this.applyPreviewScale();
-    }
-
-    // notify
-    this.emitChange();
+    this.applyPreviewDimensions();
   }
 
   @eventOptions({ passive: true })
@@ -144,24 +183,11 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
     this.invertSimulatedViewport = !this.invertSimulatedViewport;
 
     // apply visual changes
-    this.applyPreviewSize();
-    this.applyPreviewScale();
-
-    // notify
-    this.emitChange();
-  }
-
-  override connectedCallback() {
-    super.connectedCallback();
-
-    // add the classes to the container to simulate the viewport
-    this.container.classList.add(SIZE_CLASS, SCALE_CLASS);
+    this.applyPreviewDimensions();
   }
 
   override disconnectedCallback() {
-    // remove the simulation classes from the container
-    this.container.classList.remove(SIZE_CLASS, SCALE_CLASS);
-
+    this.removeStyle();
     super.disconnectedCallback();
   }
 

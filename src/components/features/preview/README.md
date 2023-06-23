@@ -19,6 +19,12 @@ Previews given content.
 | `config`         |                    |                       |
 | `previewTagName` | `preview-tag-name` | `string \| undefined` |
 
+## Methods
+
+| Method                    | Type       |
+|---------------------------|------------|
+| `#syncStageOverlayScroll` | `(): void` |
+
 ## Slots
 
 | Name | Description             |

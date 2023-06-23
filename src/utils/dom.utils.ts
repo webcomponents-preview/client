@@ -23,7 +23,7 @@ export function isElementWithin(element: Element, container: Element = document.
  */
 export function getRelativeBoundary(
   element: HTMLElement,
-  parent: Element | null = element.offsetParent
+  parent: Element | null = element.offsetParent,
 ): Pick<DOMRect, 'x' | 'y' | 'height' | 'width'> {
   const { height, width, x, y } = element.getBoundingClientRect();
   const { x: relX = 0, y: relY = 0 } = parent?.getBoundingClientRect() ?? {};

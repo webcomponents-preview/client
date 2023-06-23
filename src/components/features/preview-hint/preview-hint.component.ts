@@ -15,17 +15,33 @@ import styles from './preview-hint.component.scss';
 export class PreviewHint extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
+  #element?: HTMLElement;
+  #scrollParent?: HTMLElement;
+
   @property({ type: Boolean, reflect: true })
   debug = false;
 
   @property({ attribute: false, noAccessor: true })
-  set element(element: HTMLElement | undefined) {
-    if (element === undefined) {
+  set element(element: HTMLElement | undefined) {
+    this.#element = element;
+    this.updatePosition();
+  }
+
+  @property({ attribute: false, noAccessor: true })
+  set scrollParent(element: HTMLElement | undefined) {
+    this.#scrollParent = element;
+    this.updatePosition();
+  }
+
+  updatePosition() {
+    if (this.#element === undefined) {
       this.removeAttribute('style');
     } else {
-      const { height, width, x, y } = getRelativeBoundary(element);
-      this.style.setProperty('top', `${y}px`);
-      this.style.setProperty('left', `${x}px`);
+      const { height, width, x, y } = getRelativeBoundary(this.#element, this.#scrollParent);
+      const { scrollTop = 0, scrollLeft = 0 } = this.#scrollParent ?? {};
+      
+      this.style.setProperty('top', `${y + scrollTop}px`);
+      this.style.setProperty('left', `${x + scrollLeft}px`);
       this.style.setProperty('height', `${height}px`);
       this.style.setProperty('width', `${width}px`);
     }

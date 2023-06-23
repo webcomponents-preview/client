@@ -56,13 +56,19 @@ menu {
 section {
   position: relative;
   isolation: isolate;
+  padding: 10px;
+}
+
+#wrapper {
+  position: relative;
+  margin: 0 auto;
 }
 
 #stage {
+  display: block;
   contain: content;
   isolation: isolate;
   overflow: auto;
-  padding: 10px;
 }
 
 #overlay {
