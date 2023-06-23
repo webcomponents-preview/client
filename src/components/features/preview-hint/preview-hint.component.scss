@@ -2,12 +2,16 @@
 
 // prettier-ignore
 :host {
-  ---wcp-preview-hint-debug-border-width: var(--wcp-preview-hint-debug-border-width, 1px);
+  ---wcp-preview-hint-button-passive-background: var(--wcp-preview-hint-button-passive-background, #d22f2f);
+  ---wcp-preview-hint-button-active-background: var(--wcp-preview-hint-button-active-background, #dd4f4f);
+  ---wcp-preview-hint-button-passive-size: var(--wcp-preview-hint-button-passive-size, 10px);
+  ---wcp-preview-hint-button-active-size: var(--wcp-preview-hint-button-active-size, 20px);
+
   ---wcp-preview-hint-debug-border-width: var(--wcp-preview-hint-debug-border-width, 1px);
   ---wcp-preview-hint-debug-background-opacity: var(--wcp-preview-hint-debug-background-opacity, 0.7);
   
   ---wcp-preview-hint-debug-stripe-distance: var(--wcp-preview-hint-debug-stripe-distance, 10px);
-  ---wcp-preview-hint-debug-stripe-tilt: var(--wcp-preview-hint-debug-stripe-title, 45deg);
+  ---wcp-preview-hint-debug-stripe-tilt: var(--wcp-preview-hint-debug-stripe-tilt, 45deg);
   ---wcp-preview-hint-debug-stripe-width: var(--wcp-preview-hint-debug-stripe-width, 1px);
   ---wcp-preview-hint-debug-stripe-dash-size: var(--wcp-preview-hint-debug-stripe-dash-size, 5px);
   ---wcp-preview-hint-debug-stripe-dash-gap: var(--wcp-preview-hint-debug-stripe-dash-gap, 3px);
@@ -25,10 +29,18 @@
     ---wcp-preview-hint-debug-stroke: var(---wcp-preview-hint-debug-#{$color-scheme}-stroke);
   }
 
+  ---wcp-preview-hint-button-background: var(---wcp-preview-hint-button-passive-background);
+  ---wcp-preview-hint-button-size: var(---wcp-preview-hint-button-passive-size);
+
   position: absolute;
   display: block;
   box-sizing: border-box;
   pointer-events: none;
+}
+
+:host(:hover) {
+  ---wcp-preview-hint-button-background: var(---wcp-preview-hint-button-active-background);
+  ---wcp-preview-hint-button-size: var(---wcp-preview-hint-button-active-size);
 }
 
 button {
@@ -40,14 +52,21 @@ button {
   z-index: 3;
 
   display: block;
-  height: 20px;
-  width: 20px;
+  aspect-ratio: 1 / 1;
+  width: var(---wcp-preview-hint-button-size);
 
-  background-color: red;
+  background-clip: content-box;
+  background-color: var(---wcp-preview-hint-button-background);
+  border: calc(var(---wcp-preview-hint-button-active-size) - var(---wcp-preview-hint-button-passive-size)) solid
+    transparent;
   border-radius: 50%;
 
   pointer-events: all;
   cursor: pointer;
+
+  transition: var(--wcp-fx-default-duration) ease-out;
+  transition-property: background-color, border-width, width;
+  will-change: background-color, border-width, width;
 
   // compensate the border when positioning relative to the parent
   :host([debug]:hover) & {
