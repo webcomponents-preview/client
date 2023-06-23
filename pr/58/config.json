@@ -1,0 +1,23 @@
+{
+  "$schema": "./config.schema.json",
+  "excludeElements": ["wcp-root"],
+  "initialActiveElement": "wcp-button",
+  "additionalReadmes": [
+    {
+      "name": "Web Component Preview",
+      "url": "README.md"
+    },
+    {
+      "name": "Test markdown",
+      "url": "assets/markdown.md"
+    },
+    {
+      "name": "Test inline links",
+      "url": "assets/inline-links.md"
+    },
+    {
+      "name": "Test code",
+      "url": "assets/code.md"
+    }
+  ]
+}
