@@ -2,17 +2,27 @@
 
 // prettier-ignore
 :host {
-  ---wcp-preview-hint-dark-background: var(--wcp-preview-hint-dark-background, #8575ee);
-  ---wcp-preview-hint-light-background: var(--wcp-preview-hint-light-background, #8575ee);
+  ---wcp-preview-hint-debug-border-width: var(--wcp-preview-hint-debug-border-width, 1px);
+  ---wcp-preview-hint-debug-border-width: var(--wcp-preview-hint-debug-border-width, 1px);
+  ---wcp-preview-hint-debug-background-opacity: var(--wcp-preview-hint-debug-background-opacity, 0.7);
+  
+  ---wcp-preview-hint-debug-stripe-distance: var(--wcp-preview-hint-debug-stripe-distance, 10px);
+  ---wcp-preview-hint-debug-stripe-tilt: var(--wcp-preview-hint-debug-stripe-title, 45deg);
+  ---wcp-preview-hint-debug-stripe-width: var(--wcp-preview-hint-debug-stripe-width, 1px);
+  ---wcp-preview-hint-debug-stripe-dash-size: var(--wcp-preview-hint-debug-stripe-dash-size, 5px);
+  ---wcp-preview-hint-debug-stripe-dash-gap: var(--wcp-preview-hint-debug-stripe-dash-gap, 3px);
 
-  ---wcp-preview-hint-dark-stroke: var(--wcp-preview-hint-dark-stroke, #5e23aa);
-  ---wcp-preview-hint-light-stroke: var(--wcp-preview-hint-light-stroke, #5e23aa);
+  ---wcp-preview-hint-debug-dark-background: var(--wcp-preview-hint-debug-dark-background, #8575ee);
+  ---wcp-preview-hint-debug-dark-stroke: var(--wcp-preview-hint-debug-dark-stroke, #5e23aa);
+  
+  ---wcp-preview-hint-debug-light-background: var(--wcp-preview-hint-debug-light-background, #8575ee);
+  ---wcp-preview-hint-debug-light-stroke: var(--wcp-preview-hint-debug-light-stroke, #5e23aa);
 }
 
 :host {
   @include utils.color-scheme() using ($color-scheme) {
-    ---wcp-preview-hint-background: var(---wcp-preview-hint-#{$color-scheme}-background);
-    ---wcp-preview-hint-stroke: var(---wcp-preview-hint-#{$color-scheme}-stroke);
+    ---wcp-preview-hint-debug-background: var(---wcp-preview-hint-debug-#{$color-scheme}-background);
+    ---wcp-preview-hint-debug-stroke: var(---wcp-preview-hint-debug-#{$color-scheme}-stroke);
   }
 
   position: absolute;
@@ -38,10 +48,16 @@ button {
 
   pointer-events: all;
   cursor: pointer;
+
+  // compensate the border when positioning relative to the parent
+  :host([debug]:hover) & {
+    top: calc(var(---wcp-preview-hint-debug-border-width) * -1);
+    right: calc(var(---wcp-preview-hint-debug-border-width) * -1);
+  }
 }
 
-:host(:hover) {
-  border: 1px dashed var(---wcp-preview-hint-stroke);
+:host([debug]:hover) {
+  border: var(---wcp-preview-hint-debug-border-width) dashed var(---wcp-preview-hint-debug-stroke);
 
   &::before,
   &::after {
@@ -52,20 +68,28 @@ button {
 
   &::before {
     z-index: 0;
-    background-color: var(---wcp-preview-hint-background);
+    background-color: var(---wcp-preview-hint-debug-background);
+    opacity: var(---wcp-preview-hint-debug-background-opacity);
     mix-blend-mode: multiply;
-    opacity: 0.7;
   }
 
   &::after {
     z-index: 1;
+    // prettier-ignore
     background: repeating-linear-gradient(
-      45deg,
+      var(---wcp-preview-hint-debug-stripe-tilt),
       transparent,
-      transparent 10px,
-      var(---wcp-preview-hint-stroke) 10px,
-      var(---wcp-preview-hint-stroke) 11px
+      transparent var(---wcp-preview-hint-debug-stripe-distance),
+      var(---wcp-preview-hint-debug-stroke) var(---wcp-preview-hint-debug-stripe-distance),
+      var(---wcp-preview-hint-debug-stroke) calc(var(---wcp-preview-hint-debug-stripe-distance) + var(---wcp-preview-hint-debug-stripe-width))
     );
-    mask-image: repeating-linear-gradient(-45deg, transparent, transparent 3px, black 3px, black 10px);
+    // prettier-ignore
+    mask-image: repeating-linear-gradient(
+      calc(var(---wcp-preview-hint-debug-stripe-tilt) + 90deg),
+      transparent,
+      transparent var(---wcp-preview-hint-debug-stripe-dash-gap),
+      black var(---wcp-preview-hint-debug-stripe-dash-gap),
+      black calc(var(---wcp-preview-hint-debug-stripe-dash-gap) + var(---wcp-preview-hint-debug-stripe-dash-size))
+    );
   }
 }

@@ -2,6 +2,7 @@ import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
+import { getRelativeBoundary } from '@/utils/dom.utils.js';
 
 import styles from './preview-hint.component.scss';
 
@@ -18,12 +19,16 @@ export class PreviewHint extends ColorSchemable(LitElement) {
   debug = false;
 
   @property({ attribute: false, noAccessor: true })
-  set element(element: Element) {
-    const { height, width } = element.getBoundingClientRect();
-    this.style.setProperty('top', `${0}px`);
-    this.style.setProperty('left', `${0}px`);
-    this.style.setProperty('height', `${height}px`);
-    this.style.setProperty('width', `${width}px`);
+  set element(element: HTMLElement | undefined) {
+    if (element === undefined) {
+      this.removeAttribute('style');
+    } else {
+      const { height, width, x, y } = getRelativeBoundary(element);
+      this.style.setProperty('top', `${y}px`);
+      this.style.setProperty('left', `${x}px`);
+      this.style.setProperty('height', `${height}px`);
+      this.style.setProperty('width', `${width}px`);
+    }
   }
 
   protected override render(): TemplateResult {

@@ -49,7 +49,7 @@ export class Preview extends ColorSchemable(LitElement) {
   private container?: Element;
 
   @state()
-  private previewElements: Element[] = [];
+  private previewElements: HTMLElement[] = [];
 
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
   previewTagName?: string;
@@ -108,12 +108,12 @@ export class Preview extends ColorSchemable(LitElement) {
 
     // gather all slotted elements
     const slot = event.target as HTMLSlotElement;
-    const assigned = slot.assignedElements({ flatten: true });
+    const assigned = slot.assignedElements({ flatten: true }) as HTMLElement[];
 
     // collect all elements that match the preview tag name
     this.previewElements = assigned
       .filter((element) => element.tagName.toLowerCase() === this.previewTagName)
-      .concat(assigned.flatMap((element) => [...element.querySelectorAll(this.previewTagName!)]));
+      .concat(assigned.flatMap((element) => [...element.querySelectorAll<HTMLElement>(this.previewTagName!)]));
   }
 
   protected override render(): TemplateResult {
@@ -121,18 +121,18 @@ export class Preview extends ColorSchemable(LitElement) {
       <section>
         <div id="stage" ${ref(this.handleContainerRef)}>
           <slot @slotchange="${this.handleSlotChange}"></slot>
+          ${when(
+            this.previewTagName !== undefined,
+            () => html`
+              <div id="overlay">
+                ${map(
+                  this.previewElements,
+                  (element) => html`<wcp-preview-hint debug .element="${element}"></wcp-preview-hint>`
+                )}
+              </div>
+            `
+          )}
         </div>
-        ${when(
-          this.previewTagName !== undefined,
-          () => html`
-            <div id="overlay">
-              ${map(
-                this.previewElements,
-                (element) => html`<wcp-preview-hint debug .element="${element}"></wcp-preview-hint>`
-              )}
-            </div>
-          `
-        )}
       </section>
 
       <nav>

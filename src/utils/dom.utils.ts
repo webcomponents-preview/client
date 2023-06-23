@@ -16,3 +16,16 @@ export function isElementWithin(element: Element, container: Element = document.
   }
   return false;
 }
+
+/**
+ * Delivers the relative boundary of an element to an optional parent.
+ * If the parent element is omitted, the offset parent of the element is used.
+ */
+export function getRelativeBoundary(
+  element: HTMLElement,
+  parent: Element | null = element.offsetParent
+): Pick<DOMRect, 'x' | 'y' | 'height' | 'width'> {
+  const { height, width, x, y } = element.getBoundingClientRect();
+  const { x: relX = 0, y: relY = 0 } = parent?.getBoundingClientRect() ?? {};
+  return { height, width, x: x - relX, y: y - relY };
+}
