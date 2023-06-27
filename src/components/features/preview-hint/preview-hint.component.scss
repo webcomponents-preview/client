@@ -52,7 +52,7 @@ button {
   z-index: 3;
 
   display: block;
-  aspect-ratio: 1 / 1;
+  height: var(---wcp-preview-hint-button-size);
   width: var(---wcp-preview-hint-button-size);
 
   background-clip: content-box;
@@ -65,8 +65,8 @@ button {
   cursor: pointer;
 
   transition: var(--wcp-fx-default-duration) ease-out;
-  transition-property: background-color, border-width, width;
-  will-change: background-color, border-width, width;
+  transition-property: background-color, border-width, height, width;
+  will-change: background-color, border-width, height, width;
 
   // compensate the border when positioning relative to the parent
   :host([debug]:hover) & {
