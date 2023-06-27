@@ -982,6 +982,12 @@
           "members": [
             {
               "kind": "field",
+              "name": "#observer",
+              "privacy": "private",
+              "default": "new ResizeObserver(() => this.updatePosition())"
+            },
+            {
+              "kind": "field",
               "name": "#element",
               "privacy": "private",
               "type": {
@@ -1017,6 +1023,11 @@
             {
               "kind": "method",
               "name": "updatePosition"
+            },
+            {
+              "kind": "method",
+              "name": "#observeElement",
+              "privacy": "private"
             }
           ],
           "attributes": [

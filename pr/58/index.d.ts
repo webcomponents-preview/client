@@ -446,6 +446,7 @@ declare module "src/components/features/preview-hint/preview-hint.component" {
         set element(element: HTMLElement | undefined);
         set scrollParent(element: HTMLElement | undefined);
         updatePosition(): void;
+        disconnectedCallback(): void;
         protected render(): TemplateResult;
     }
     global {
