@@ -411,50 +411,6 @@ declare module "src/components/ui/button/button.component" {
         }
     }
 }
-declare module "src/components/features/preview-hint/preview-hint.component" {
-    import { LitElement, type TemplateResult } from 'lit';
-    const PreviewHint_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
-    /**
-     * Shows a hint to a given preview element.
-     *
-     * @element wcp-preview-hint
-     *
-     * @cssprop --wcp-preview-hint-button-passive-background - The background color of the hint button in passive state.
-     * @cssprop --wcp-preview-hint-button-active-background - The background color of the hint button in active state.
-     * @cssprop --wcp-preview-hint-button-passive-size - Size of the hint button in passive state.
-     * @cssprop --wcp-preview-hint-button-active-size - Size of the hint button in active state.
-     *
-     * @cssprop --wcp-preview-hint-debug-border-width - Border width of the debugging fields.
-     * @cssprop --wcp-preview-hint-debug-background-opacity - Opacity of the debugging fields background.
-     *
-     * @cssprop --wcp-preview-hint-debug-stripe-distance - Distance of the stripes of the debugging field background.
-     * @cssprop --wcp-preview-hint-debug-stripe-tilt - Tilt of the stripes of the debugging field background in degrees.
-     * @cssprop --wcp-preview-hint-debug-stripe-width - Width of the stripes of the debugging field background.
-     * @cssprop --wcp-preview-hint-debug-stripe-dash-size - Length of the dashes of the debugging field background.
-     * @cssprop --wcp-preview-hint-debug-stripe-dash-gap - Gap between the dashes of the debugging field background.
-     *
-     * @cssprop --wcp-preview-hint-debug-dark-background - Debugging field background color in dark mode.
-     * @cssprop --wcp-preview-hint-debug-dark-stroke - Debugging field dash and border color in dark mode.
-     *
-     * @cssprop --wcp-preview-hint-debug-light-background - Debugging field background color in light mode.
-     * @cssprop --wcp-preview-hint-debug-light-stroke - Debugging field dash and border color in light mode.
-     */
-    export class PreviewHint extends PreviewHint_base {
-        #private;
-        static readonly styles: import("lit").CSSResult;
-        debug: boolean;
-        set element(element: HTMLElement | undefined);
-        set scrollParent(element: HTMLElement | undefined);
-        updatePosition(): void;
-        disconnectedCallback(): void;
-        protected render(): TemplateResult;
-    }
-    global {
-        interface HTMLElementTagNameMap {
-            'wcp-preview-hint': PreviewHint;
-        }
-    }
-}
 declare module "src/components/features/preview/preview.component" {
     import { LitElement, type TemplateResult } from 'lit';
     import { type Config } from "src/utils/config.utils";
@@ -484,18 +440,13 @@ declare module "src/components/features/preview/preview.component" {
         config?: Config;
         private readonly nav?;
         private readonly toggleButton?;
-        private readonly overlay?;
-        private readonly hints?;
         private container?;
-        private previewElements;
         previewTagName?: string;
         connectedCallback(): Promise<void>;
         disconnectedCallback(): void;
         private handleClick;
         private handleOutsideClick;
         private handleContainerRef;
-        private handleSlotChange;
-        private handleStageScroll;
         protected render(): TemplateResult;
     }
     global {
@@ -673,6 +624,7 @@ declare module "src/utils/plugin.utils" {
      */
     export type PreviewPlugin = Plugin & {
         readonly container: HTMLElement;
+        readonly previewTagName: string;
     };
     export function isPlugin(element: Element): element is Plugin;
     export function findAllPlugins(slot: HTMLSlotElement): Plugin[];
@@ -1672,6 +1624,73 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
         }
     }
 }
+declare module "src/components/plugins/preview-viewer-link/preview-viewer-link.plugin" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import type { PreviewPlugin } from "src/utils/plugin.utils";
+    export class PreviewViewerLink extends LitElement implements PreviewPlugin {
+        #private;
+        static readonly styles: import("lit").CSSResult;
+        readonly container: HTMLElement;
+        readonly previewTagName: string;
+        readonly available = true;
+        readonly name = "viewport";
+        readonly label = "Viewport";
+        enabled: boolean;
+        connectedCallback(): void;
+        disconnectedCallback(): void;
+        private handleInput;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-preview-viewer-link': PreviewViewerLink;
+        }
+    }
+}
+declare module "src/components/plugins/preview-viewer-link/preview-viewer-link-hint/preview-viewer-link-hint.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    const PreviewViewerLinkHint_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    /**
+     * Shows a hint to a given preview element.
+     *
+     * @element wcp-preview-viewer-link-hint
+     *
+     * @cssprop --wcp-preview-viewer-link-hint-button-passive-background - The background color of the hint button in passive state.
+     * @cssprop --wcp-preview-viewer-link-hint-button-active-background - The background color of the hint button in active state.
+     * @cssprop --wcp-preview-viewer-link-hint-button-passive-size - Size of the hint button in passive state.
+     * @cssprop --wcp-preview-viewer-link-hint-button-active-size - Size of the hint button in active state.
+     *
+     * @cssprop --wcp-preview-viewer-link-hint-debug-border-width - Border width of the debugging fields.
+     * @cssprop --wcp-preview-viewer-link-hint-debug-background-opacity - Opacity of the debugging fields background.
+     *
+     * @cssprop --wcp-preview-viewer-link-hint-debug-stripe-distance - Distance of the stripes of the debugging field background.
+     * @cssprop --wcp-preview-viewer-link-hint-debug-stripe-tilt - Tilt of the stripes of the debugging field background in degrees.
+     * @cssprop --wcp-preview-viewer-link-hint-debug-stripe-width - Width of the stripes of the debugging field background.
+     * @cssprop --wcp-preview-viewer-link-hint-debug-stripe-dash-size - Length of the dashes of the debugging field background.
+     * @cssprop --wcp-preview-viewer-link-hint-debug-stripe-dash-gap - Gap between the dashes of the debugging field background.
+     *
+     * @cssprop --wcp-preview-viewer-link-hint-debug-dark-background - Debugging field background color in dark mode.
+     * @cssprop --wcp-preview-viewer-link-hint-debug-dark-stroke - Debugging field dash and border color in dark mode.
+     *
+     * @cssprop --wcp-preview-viewer-link-hint-debug-light-background - Debugging field background color in light mode.
+     * @cssprop --wcp-preview-viewer-link-hint-debug-light-stroke - Debugging field dash and border color in light mode.
+     */
+    export class PreviewViewerLinkHint extends PreviewViewerLinkHint_base {
+        #private;
+        static readonly styles: import("lit").CSSResult;
+        debug: boolean;
+        set element(element: HTMLElement | undefined);
+        set scrollParent(element: HTMLElement | undefined);
+        updatePosition(): void;
+        disconnectedCallback(): void;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-preview-viewer-link-hint': PreviewViewerLinkHint;
+        }
+    }
+}
 declare module "src/components/plugins/preview-viewport/preview-viewport.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
     import type { PreviewPlugin } from "src/utils/plugin.utils";
@@ -1680,6 +1699,7 @@ declare module "src/components/plugins/preview-viewport/preview-viewport.plugin"
     export class PreviewViewport extends PreviewViewport_base implements PreviewPlugin {
         static readonly styles: import("lit").CSSResult;
         readonly container: HTMLElement;
+        readonly previewTagName: string;
         readonly available = true;
         readonly name = "viewport";
         readonly label = "Viewport";
@@ -2105,7 +2125,6 @@ declare module "src/index" {
     export * from "src/components/features/preview/preview.component";
     export * from "src/components/features/preview-controls/preview-controls.component";
     export * from "src/components/features/preview-frame/preview-frame.component";
-    export * from "src/components/features/preview-hint/preview-hint.component";
     export * from "src/components/features/readme/readme.component";
     export * from "src/components/features/readme-frame/readme-frame.component";
     export * from "src/components/features/toggle-color-scheme/toggle-color-scheme.component";
@@ -2126,6 +2145,8 @@ declare module "src/index" {
     export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.utils";
     export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer-controls/preview-frame-viewer-controls.component";
     export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component";
+    export * from "src/components/plugins/preview-viewer-link/preview-viewer-link.plugin";
+    export * from "src/components/plugins/preview-viewer-link/preview-viewer-link-hint/preview-viewer-link-hint.component";
     export * from "src/components/plugins/preview-viewport/preview-viewport.plugin";
     export * from "src/components/root/root.component";
     export * from "src/components/root/root.routes";

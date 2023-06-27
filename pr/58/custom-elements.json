@@ -484,38 +484,11 @@
             },
             {
               "kind": "field",
-              "name": "overlay",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "hints",
-              "type": {
-                "text": "PreviewHint[] | undefined"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
               "name": "container",
               "type": {
                 "text": "HTMLElement | undefined"
               },
               "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "previewElements",
-              "type": {
-                "text": "HTMLElement[]"
-              },
-              "privacy": "private",
-              "default": "[]"
             },
             {
               "kind": "field",
@@ -533,17 +506,8 @@
             },
             {
               "kind": "field",
-              "name": "#handleViewportChange",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
               "name": "#handleOutsideClickBound",
               "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "#syncStageOverlayScroll"
             },
             {
               "kind": "method",
@@ -576,24 +540,6 @@
                   }
                 }
               ]
-            },
-            {
-              "kind": "method",
-              "name": "handleSlotChange",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleStageScroll",
-              "privacy": "private"
             }
           ],
           "attributes": [
@@ -619,7 +565,7 @@
           "examples": [
             "```html\n<wcp-preview>\n  <wcp-button>Example button</wcp-button>\n</wcp-preview>\n```"
           ],
-          "readme": "# wcp-preview\n\nPreviews given content.\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-preview>\n  <wcp-button>Example button</wcp-button>\n</wcp-preview>\n```\n\n## Properties\n\n| Property         | Attribute          | Type                  |\n|------------------|--------------------|-----------------------|\n| `config`         |                    |                       |\n| `previewTagName` | `preview-tag-name` | `string \\| undefined` |\n\n## Methods\n\n| Method                    | Type       |\n|---------------------------|------------|\n| `#syncStageOverlayScroll` | `(): void` |\n\n## Slots\n\n| Name | Description             |\n|------|-------------------------|\n|      | The content to preview. |\n\n## CSS Custom Properties\n\n| Property                                  | Description                                      |\n|-------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-menu-background-opacity`   | Opacity of the expanding menu background.        |\n| `--wcp-preview-menu-border-radius`        | Border radius of the expanding menu.             |\n| `--wcp-preview-menu-dark-background-raw`  | Background color of the expanding menu in dark mode. Must be a raw space-separated HSL color value list. |\n| `--wcp-preview-menu-light-background-raw` | Background color of the expanding menu in light mode. Must be a raw space-separated HSL color value list. |\n",
+          "readme": "# wcp-preview\n\nPreviews given content.\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-preview>\n  <wcp-button>Example button</wcp-button>\n</wcp-preview>\n```\n\n## Properties\n\n| Property         | Attribute          | Type                  |\n|------------------|--------------------|-----------------------|\n| `config`         |                    |                       |\n| `previewTagName` | `preview-tag-name` | `string \\| undefined` |\n\n## Slots\n\n| Name | Description             |\n|------|-------------------------|\n|      | The content to preview. |\n\n## CSS Custom Properties\n\n| Property                                  | Description                                      |\n|-------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-menu-background-opacity`   | Opacity of the expanding menu background.        |\n| `--wcp-preview-menu-border-radius`        | Border radius of the expanding menu.             |\n| `--wcp-preview-menu-dark-background-raw`  | Background color of the expanding menu in dark mode. Must be a raw space-separated HSL color value list. |\n| `--wcp-preview-menu-light-background-raw` | Background color of the expanding menu in light mode. Must be a raw space-separated HSL color value list. |\n",
           "groups": [
             "features"
           ],
@@ -905,175 +851,6 @@
           "declaration": {
             "name": "PreviewFrame",
             "module": "src/components/features/preview-frame/preview-frame.component.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/features/preview-hint/preview-hint.component.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Shows a hint to a given preview element.",
-          "name": "PreviewHint",
-          "cssProperties": [
-            {
-              "description": "The background color of the hint button in passive state.",
-              "name": "--wcp-preview-hint-button-passive-background"
-            },
-            {
-              "description": "The background color of the hint button in active state.",
-              "name": "--wcp-preview-hint-button-active-background"
-            },
-            {
-              "description": "Size of the hint button in passive state.",
-              "name": "--wcp-preview-hint-button-passive-size"
-            },
-            {
-              "description": "Size of the hint button in active state.",
-              "name": "--wcp-preview-hint-button-active-size"
-            },
-            {
-              "description": "Border width of the debugging fields.",
-              "name": "--wcp-preview-hint-debug-border-width"
-            },
-            {
-              "description": "Opacity of the debugging fields background.",
-              "name": "--wcp-preview-hint-debug-background-opacity"
-            },
-            {
-              "description": "Distance of the stripes of the debugging field background.",
-              "name": "--wcp-preview-hint-debug-stripe-distance"
-            },
-            {
-              "description": "Tilt of the stripes of the debugging field background in degrees.",
-              "name": "--wcp-preview-hint-debug-stripe-tilt"
-            },
-            {
-              "description": "Width of the stripes of the debugging field background.",
-              "name": "--wcp-preview-hint-debug-stripe-width"
-            },
-            {
-              "description": "Length of the dashes of the debugging field background.",
-              "name": "--wcp-preview-hint-debug-stripe-dash-size"
-            },
-            {
-              "description": "Gap between the dashes of the debugging field background.",
-              "name": "--wcp-preview-hint-debug-stripe-dash-gap"
-            },
-            {
-              "description": "Debugging field background color in dark mode.",
-              "name": "--wcp-preview-hint-debug-dark-background"
-            },
-            {
-              "description": "Debugging field dash and border color in dark mode.",
-              "name": "--wcp-preview-hint-debug-dark-stroke"
-            },
-            {
-              "description": "Debugging field background color in light mode.",
-              "name": "--wcp-preview-hint-debug-light-background"
-            },
-            {
-              "description": "Debugging field dash and border color in light mode.",
-              "name": "--wcp-preview-hint-debug-light-stroke"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "#observer",
-              "privacy": "private",
-              "default": "new ResizeObserver(() => this.updatePosition())"
-            },
-            {
-              "kind": "field",
-              "name": "#element",
-              "privacy": "private",
-              "type": {
-                "text": "HTMLElement | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "#scrollParent",
-              "privacy": "private",
-              "type": {
-                "text": "HTMLElement | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "debug",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "debug",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "element"
-            },
-            {
-              "kind": "field",
-              "name": "scrollParent"
-            },
-            {
-              "kind": "method",
-              "name": "updatePosition"
-            },
-            {
-              "kind": "method",
-              "name": "#observeElement",
-              "privacy": "private"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "debug",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "debug"
-            }
-          ],
-          "mixins": [
-            {
-              "name": "ColorSchemable",
-              "package": "@/mixins/color-schemable.mixin.js"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "wcp-preview-hint",
-          "examples": [],
-          "readme": "# wcp-preview-hint\n\nShows a hint to a given preview element.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property       | Attribute | Type      | Default |\n|----------------|-----------|-----------|---------|\n| `debug`        | `debug`   | `boolean` | false   |\n| `element`      |           |           |         |\n| `scrollParent` |           |           |         |\n\n## Methods\n\n| Method           | Type       |\n|------------------|------------|\n| `updatePosition` | `(): void` |\n\n## CSS Custom Properties\n\n| Property                                       | Description                                      |\n|------------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-hint-button-active-background`  | The background color of the hint button in active state. |\n| `--wcp-preview-hint-button-active-size`        | Size of the hint button in active state.         |\n| `--wcp-preview-hint-button-passive-background` | The background color of the hint button in passive state. |\n| `--wcp-preview-hint-button-passive-size`       | Size of the hint button in passive state.        |\n| `--wcp-preview-hint-debug-background-opacity`  | Opacity of the debugging fields background.      |\n| `--wcp-preview-hint-debug-border-width`        | Border width of the debugging fields.            |\n| `--wcp-preview-hint-debug-dark-background`     | Debugging field background color in dark mode.   |\n| `--wcp-preview-hint-debug-dark-stroke`         | Debugging field dash and border color in dark mode. |\n| `--wcp-preview-hint-debug-light-background`    | Debugging field background color in light mode.  |\n| `--wcp-preview-hint-debug-light-stroke`        | Debugging field dash and border color in light mode. |\n| `--wcp-preview-hint-debug-stripe-dash-gap`     | Gap between the dashes of the debugging field background. |\n| `--wcp-preview-hint-debug-stripe-dash-size`    | Length of the dashes of the debugging field background. |\n| `--wcp-preview-hint-debug-stripe-distance`     | Distance of the stripes of the debugging field background. |\n| `--wcp-preview-hint-debug-stripe-tilt`         | Tilt of the stripes of the debugging field background in degrees. |\n| `--wcp-preview-hint-debug-stripe-width`        | Width of the stripes of the debugging field background. |\n",
-          "groups": [
-            "features"
-          ],
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "PreviewHint",
-          "declaration": {
-            "name": "PreviewHint",
-            "module": "src/components/features/preview-hint/preview-hint.component.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-preview-hint",
-          "declaration": {
-            "name": "PreviewHint",
-            "module": "src/components/features/preview-hint/preview-hint.component.ts"
           }
         }
       ]
@@ -3964,6 +3741,227 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/components/plugins/preview-viewer-link/preview-viewer-link.plugin.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PreviewViewerLink",
+          "members": [
+            {
+              "kind": "field",
+              "name": "#overlay",
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "HTMLElement"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "previewTagName",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true,
+              "default": "true",
+              "attribute": "available",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "default": "'viewport'",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "default": "'Viewport'",
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "enabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "enabled",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "#attachOverlay"
+            },
+            {
+              "kind": "method",
+              "name": "#detachOverlay"
+            },
+            {
+              "kind": "method",
+              "name": "#findContainerSlot",
+              "return": {
+                "type": {
+                  "text": "HTMLSlotElement | undefined"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "#observeContainerSlot"
+            },
+            {
+              "kind": "method",
+              "name": "#unobserveContainerSlot"
+            },
+            {
+              "kind": "method",
+              "name": "#observeContainerScroll"
+            },
+            {
+              "kind": "method",
+              "name": "#unobserveContainerScroll"
+            },
+            {
+              "kind": "method",
+              "name": "#handleContainerScroll"
+            },
+            {
+              "kind": "method",
+              "name": "#handleContainerSlotChange"
+            },
+            {
+              "kind": "method",
+              "name": "#attachHints"
+            },
+            {
+              "kind": "method",
+              "name": "#attachHint",
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#setupHints"
+            },
+            {
+              "kind": "method",
+              "name": "#teardownHints"
+            },
+            {
+              "kind": "method",
+              "name": "handleInput",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true,
+              "default": "true",
+              "fieldName": "available"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "default": "'viewport'",
+              "fieldName": "name"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "default": "'Viewport'",
+              "fieldName": "label"
+            },
+            {
+              "name": "enabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "enabled"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "readme": "# wcp-preview-viewer-link\n\n## Properties\n\n| Property         | Attribute   | Modifiers | Type         | Default    |\n|------------------|-------------|-----------|--------------|------------|\n| `available`      | `available` | readonly  | `true`       | true       |\n| `container`      |             | readonly  |              |            |\n| `enabled`        | `enabled`   |           | `boolean`    | false      |\n| `label`          | `label`     | readonly  | `\"Viewport\"` | \"Viewport\" |\n| `name`           | `name`      | readonly  | `\"viewport\"` | \"viewport\" |\n| `previewTagName` |             | readonly  | `string`     |            |\n\n## Methods\n\n| Method                       | Type                   |\n|------------------------------|------------------------|\n| `#attachHint`                | `(element: any): void` |\n| `#attachHints`               | `(): void`             |\n| `#attachOverlay`             | `(): void`             |\n| `#detachOverlay`             | `(): void`             |\n| `#findContainerSlot`         | `(): any`              |\n| `#handleContainerScroll`     | `(): void`             |\n| `#handleContainerSlotChange` | `(): void`             |\n| `#observeContainerScroll`    | `(): void`             |\n| `#observeContainerSlot`      | `(): void`             |\n| `#setupHints`                | `(): void`             |\n| `#teardownHints`             | `(): void`             |\n| `#unobserveContainerScroll`  | `(): void`             |\n| `#unobserveContainerSlot`    | `(): void`             |\n",
+          "groups": [
+            "plugins"
+          ],
+          "tagName": "wcp-preview-viewer-link",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PreviewViewerLink",
+          "declaration": {
+            "name": "PreviewViewerLink",
+            "module": "src/components/plugins/preview-viewer-link/preview-viewer-link.plugin.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview-viewer-link",
+          "declaration": {
+            "name": "PreviewViewerLink",
+            "module": "src/components/plugins/preview-viewer-link/preview-viewer-link.plugin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/components/plugins/preview-viewport/preview-viewport.plugin.ts",
       "declarations": [
         {
@@ -3976,6 +3974,14 @@
               "name": "container",
               "type": {
                 "text": "HTMLElement"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "previewTagName",
+              "type": {
+                "text": "string"
               },
               "readonly": true
             },
@@ -4156,7 +4162,7 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "readme": "# wcp-preview-viewport\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property    | Attribute   | Modifiers | Type         | Default    |\n|-------------|-------------|-----------|--------------|------------|\n| `available` | `available` | readonly  | `true`       | true       |\n| `container` |             | readonly  |              |            |\n| `label`     | `label`     | readonly  | `\"Viewport\"` | \"Viewport\" |\n| `name`      | `name`      | readonly  | `\"viewport\"` | \"viewport\" |\n\n## Methods\n\n| Method                          | Type       |\n|---------------------------------|------------|\n| `handleInvertSimulatedViewport` | `(): void` |\n\n## Events\n\n| Event                          |\n|--------------------------------|\n| `wcp-preview-viewport:changed` |\n",
+          "readme": "# wcp-preview-viewport\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute   | Modifiers | Type         | Default    |\n|------------------|-------------|-----------|--------------|------------|\n| `available`      | `available` | readonly  | `true`       | true       |\n| `container`      |             | readonly  |              |            |\n| `label`          | `label`     | readonly  | `\"Viewport\"` | \"Viewport\" |\n| `name`           | `name`      | readonly  | `\"viewport\"` | \"viewport\" |\n| `previewTagName` |             | readonly  | `string`     |            |\n\n## Methods\n\n| Method                          | Type       |\n|---------------------------------|------------|\n| `handleInvertSimulatedViewport` | `(): void` |\n\n## Events\n\n| Event                          |\n|--------------------------------|\n| `wcp-preview-viewport:changed` |\n",
           "groups": [
             "plugins"
           ],
@@ -5556,6 +5562,175 @@
           "declaration": {
             "name": "PreviewFrameViewerStage",
             "module": "src/components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/plugins/preview-viewer-link/preview-viewer-link-hint/preview-viewer-link-hint.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Shows a hint to a given preview element.",
+          "name": "PreviewViewerLinkHint",
+          "cssProperties": [
+            {
+              "description": "The background color of the hint button in passive state.",
+              "name": "--wcp-preview-viewer-link-hint-button-passive-background"
+            },
+            {
+              "description": "The background color of the hint button in active state.",
+              "name": "--wcp-preview-viewer-link-hint-button-active-background"
+            },
+            {
+              "description": "Size of the hint button in passive state.",
+              "name": "--wcp-preview-viewer-link-hint-button-passive-size"
+            },
+            {
+              "description": "Size of the hint button in active state.",
+              "name": "--wcp-preview-viewer-link-hint-button-active-size"
+            },
+            {
+              "description": "Border width of the debugging fields.",
+              "name": "--wcp-preview-viewer-link-hint-debug-border-width"
+            },
+            {
+              "description": "Opacity of the debugging fields background.",
+              "name": "--wcp-preview-viewer-link-hint-debug-background-opacity"
+            },
+            {
+              "description": "Distance of the stripes of the debugging field background.",
+              "name": "--wcp-preview-viewer-link-hint-debug-stripe-distance"
+            },
+            {
+              "description": "Tilt of the stripes of the debugging field background in degrees.",
+              "name": "--wcp-preview-viewer-link-hint-debug-stripe-tilt"
+            },
+            {
+              "description": "Width of the stripes of the debugging field background.",
+              "name": "--wcp-preview-viewer-link-hint-debug-stripe-width"
+            },
+            {
+              "description": "Length of the dashes of the debugging field background.",
+              "name": "--wcp-preview-viewer-link-hint-debug-stripe-dash-size"
+            },
+            {
+              "description": "Gap between the dashes of the debugging field background.",
+              "name": "--wcp-preview-viewer-link-hint-debug-stripe-dash-gap"
+            },
+            {
+              "description": "Debugging field background color in dark mode.",
+              "name": "--wcp-preview-viewer-link-hint-debug-dark-background"
+            },
+            {
+              "description": "Debugging field dash and border color in dark mode.",
+              "name": "--wcp-preview-viewer-link-hint-debug-dark-stroke"
+            },
+            {
+              "description": "Debugging field background color in light mode.",
+              "name": "--wcp-preview-viewer-link-hint-debug-light-background"
+            },
+            {
+              "description": "Debugging field dash and border color in light mode.",
+              "name": "--wcp-preview-viewer-link-hint-debug-light-stroke"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "#observer",
+              "privacy": "private",
+              "default": "new ResizeObserver(() => this.updatePosition())"
+            },
+            {
+              "kind": "field",
+              "name": "#element",
+              "privacy": "private",
+              "type": {
+                "text": "HTMLElement | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "#scrollParent",
+              "privacy": "private",
+              "type": {
+                "text": "HTMLElement | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "debug",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "debug",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "element"
+            },
+            {
+              "kind": "field",
+              "name": "scrollParent"
+            },
+            {
+              "kind": "method",
+              "name": "updatePosition"
+            },
+            {
+              "kind": "method",
+              "name": "#observeElement",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "debug",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "debug"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/mixins/color-schemable.mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "wcp-preview-viewer-link-hint",
+          "examples": [],
+          "readme": "# wcp-preview-viewer-link-hint\n\nShows a hint to a given preview element.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property       | Attribute | Type      | Default |\n|----------------|-----------|-----------|---------|\n| `debug`        | `debug`   | `boolean` | false   |\n| `element`      |           |           |         |\n| `scrollParent` |           |           |         |\n\n## Methods\n\n| Method           | Type       |\n|------------------|------------|\n| `updatePosition` | `(): void` |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                      |\n|--------------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-viewer-link-hint-button-active-background` | The background color of the hint button in active state. |\n| `--wcp-preview-viewer-link-hint-button-active-size` | Size of the hint button in active state.         |\n| `--wcp-preview-viewer-link-hint-button-passive-background` | The background color of the hint button in passive state. |\n| `--wcp-preview-viewer-link-hint-button-passive-size` | Size of the hint button in passive state.        |\n| `--wcp-preview-viewer-link-hint-debug-background-opacity` | Opacity of the debugging fields background.      |\n| `--wcp-preview-viewer-link-hint-debug-border-width` | Border width of the debugging fields.            |\n| `--wcp-preview-viewer-link-hint-debug-dark-background` | Debugging field background color in dark mode.   |\n| `--wcp-preview-viewer-link-hint-debug-dark-stroke` | Debugging field dash and border color in dark mode. |\n| `--wcp-preview-viewer-link-hint-debug-light-background` | Debugging field background color in light mode.  |\n| `--wcp-preview-viewer-link-hint-debug-light-stroke` | Debugging field dash and border color in light mode. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-dash-gap` | Gap between the dashes of the debugging field background. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-dash-size` | Length of the dashes of the debugging field background. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-distance` | Distance of the stripes of the debugging field background. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-tilt` | Tilt of the stripes of the debugging field background in degrees. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-width` | Width of the stripes of the debugging field background. |\n",
+          "groups": [
+            "plugins"
+          ],
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PreviewViewerLinkHint",
+          "declaration": {
+            "name": "PreviewViewerLinkHint",
+            "module": "src/components/plugins/preview-viewer-link/preview-viewer-link-hint/preview-viewer-link-hint.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview-viewer-link-hint",
+          "declaration": {
+            "name": "PreviewViewerLinkHint",
+            "module": "src/components/plugins/preview-viewer-link/preview-viewer-link-hint/preview-viewer-link-hint.component.ts"
           }
         }
       ]
