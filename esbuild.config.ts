@@ -41,14 +41,14 @@ const {
 // https://github.com/microsoft/monaco-editor/blob/main/samples/browser-esm-esbuild/build.js
 await build({
   entryPoints: [
-    'node_modules/monaco-editor/esm/vs/language/json/json.worker.js',
-    'node_modules/monaco-editor/esm/vs/language/css/css.worker.js',
+    // 'node_modules/monaco-editor/esm/vs/language/json/json.worker.js',
+    // 'node_modules/monaco-editor/esm/vs/language/css/css.worker.js',
     'node_modules/monaco-editor/esm/vs/language/html/html.worker.js',
-    'node_modules/monaco-editor/esm/vs/language/typescript/ts.worker.js',
+    // 'node_modules/monaco-editor/esm/vs/language/typescript/ts.worker.js',
     'node_modules/monaco-editor/esm/vs/editor/editor.worker.js',
   ],
   bundle: true,
-	format: 'iife',
+  format: 'iife',
   outdir: 'dist/workers',
 });
 
