@@ -153,12 +153,11 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
     this.#editor = monaco.editor.create(this.editor, {
       value: this.value,
       language: this.language,
-      scrollBeyondLastLine: false,
       automaticLayout: true,
       wordWrap: 'on',
       wrappingStrategy: 'advanced',
       minimap: { enabled: false },
-      overviewRulerLanes: 0,
+      overviewRulerBorder: false,
     });
 
     // bind change listener and sync updated value
@@ -180,6 +179,16 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
 
   protected updateEditorAutoSize() {
     if (this.autosize) {
+      // configure scroll handling
+      this.#editor?.updateOptions({
+        overviewRulerLanes: 0,
+        scrollBeyondLastLine: false,
+        scrollbar: {
+          handleMouseWheel: false,
+          vertical: 'hidden',
+        },
+      });
+
       // set height initially
       const contentHeight = this.#editor?.getContentHeight() ?? 18;
       this.style.setProperty('---wcp-input-code-height', `${contentHeight + 10}px`);
@@ -190,6 +199,16 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
         this.style.setProperty('---wcp-input-code-height', `${contentHeight + 10}px`);
       });
     } else {
+      // configure scroll handling
+      this.#editor?.updateOptions({
+        overviewRulerLanes: undefined,
+        scrollBeyondLastLine: undefined,
+        scrollbar: {
+          handleMouseWheel: true,
+          vertical: 'auto',
+        },
+      });
+
       // remove height property
       this.style.removeProperty('---wcp-input-code-height');
 
