@@ -70,9 +70,3 @@ section {
   isolation: isolate;
   overflow: auto;
 }
-
-#overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}

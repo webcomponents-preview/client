@@ -4,12 +4,13 @@
 
 ## Properties
 
-| Property    | Attribute   | Modifiers | Type         | Default    |
-|-------------|-------------|-----------|--------------|------------|
-| `available` | `available` | readonly  | `true`       | true       |
-| `container` |             | readonly  |              |            |
-| `label`     | `label`     | readonly  | `"Viewport"` | "Viewport" |
-| `name`      | `name`      | readonly  | `"viewport"` | "viewport" |
+| Property         | Attribute   | Modifiers | Type         | Default    |
+|------------------|-------------|-----------|--------------|------------|
+| `available`      | `available` | readonly  | `true`       | true       |
+| `container`      |             | readonly  |              |            |
+| `label`          | `label`     | readonly  | `"Viewport"` | "Viewport" |
+| `name`           | `name`      | readonly  | `"viewport"` | "viewport" |
+| `previewTagName` |             | readonly  | `string`     |            |
 
 ## Methods
 

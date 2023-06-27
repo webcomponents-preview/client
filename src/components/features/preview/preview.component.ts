@@ -1,6 +1,6 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { unsafeStatic, html as staticHtml } from 'lit/static-html.js';
-import { query, customElement, state, eventOptions, property, queryAll } from 'lit/decorators.js';
+import { query, customElement, state, eventOptions, property } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
@@ -10,7 +10,6 @@ import { type Config, getConfig } from '@/utils/config.utils.js';
 import { isElementWithin } from '@/utils/dom.utils.js';
 
 import type { Button } from '@/components/ui/button/button.component.js';
-import type { PreviewHint } from '@/components/features/preview-hint/preview-hint.component.js';
 
 import styles from './preview.component.scss';
 
@@ -46,45 +45,25 @@ export class Preview extends ColorSchemable(LitElement) {
   @query('wcp-button')
   private readonly toggleButton?: Button;
 
-  @query('#overlay')
-  private readonly overlay?: HTMLElement;
-
-  @queryAll('wcp-preview-hint')
-  private readonly hints?: PreviewHint[];
-
   @state()
   private container?: HTMLElement;
-
-  @state()
-  private previewElements: HTMLElement[] = [];
 
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
   previewTagName?: string;
 
   #handleRouteChange = () => this.requestUpdate();
-  #handleViewportChange = () => {
-    this.hints?.forEach((hint) => hint.updatePosition());
-    this.requestUpdate();
-  };
   #handleOutsideClickBound = this.handleOutsideClick.bind(this);
-
-  #syncStageOverlayScroll() {
-    if (!this.overlay) return;
-    this.overlay.style.transform = `translateY(-${this.container?.scrollTop ?? 0}px)`;
-  }
 
   override async connectedCallback() {
     this.config = await getConfig();
     super.connectedCallback();
 
     window.addEventListener('hashchange', this.#handleRouteChange, false);
-    this.addEventListener('wcp-preview-viewport:changed', this.#handleViewportChange, false);
   }
 
   override disconnectedCallback() {
     window.removeEventListener('hashchange', this.#handleRouteChange, false);
     this.removeEventListener('click', this.#handleOutsideClickBound, false);
-    this.removeEventListener('wcp-preview-viewport:changed', this.#handleViewportChange, false);
 
     super.disconnectedCallback();
   }
@@ -116,53 +95,13 @@ export class Preview extends ColorSchemable(LitElement) {
     this.container = container as HTMLDivElement | undefined;
   }
 
-  @eventOptions({ passive: true })
-  private handleSlotChange(event: Event) {
-    // hold on, no preview tag name? no preview!
-    if (this.previewTagName === undefined) return;
-
-    // gather all slotted elements
-    const slot = event.target as HTMLSlotElement;
-    const assigned = slot.assignedElements({ flatten: true }) as HTMLElement[];
-
-    // collect all elements that match the preview tag name
-    this.previewElements = assigned
-      .filter((element) => element.tagName.toLowerCase() === this.previewTagName)
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      .concat(assigned.flatMap((element) => [...element.querySelectorAll<HTMLElement>(this.previewTagName!)]));
-  }
-
-  @eventOptions({ passive: true })
-  private handleStageScroll() {
-    this.#syncStageOverlayScroll();
-  }
-
   protected override render(): TemplateResult {
     return html`
       <section>
         <div id="wrapper">
-          <div id="stage" ${ref(this.handleContainerRef)} @scroll="${this.handleStageScroll}">
-            <slot @slotchange="${this.handleSlotChange}"></slot>
+          <div id="stage" ${ref(this.handleContainerRef)}>
+            <slot></slot>
           </div>
-
-          ${when(
-            this.container !== undefined && this.previewTagName !== undefined,
-            () => html`
-              <div id="overlay">
-                ${map(
-                  this.previewElements,
-                  (element) =>
-                    html`
-                      <wcp-preview-hint
-                        debug
-                        .element="${element}"
-                        .scrollParent="${this.container}"
-                      ></wcp-preview-hint>
-                    `
-                )}
-              </div>
-            `
-          )}
         </div>
       </section>
 
@@ -178,8 +117,12 @@ export class Preview extends ColorSchemable(LitElement) {
               ${map(
                 this.config?.previewPlugins ?? [],
                 (plugin, index) => html`
-                  ${when(index > 0, () => html`<hr />`)}
-                  ${staticHtml`<${unsafeStatic(plugin)} .container="${this.container}"></${unsafeStatic(plugin)}>`}
+                  ${when(index > 0, () => html`<hr />`)} ${staticHtml`
+                    <${unsafeStatic(plugin)}
+                      .container="${this.container}"
+                      .previewTagName="${this.previewTagName}"
+                    ></${unsafeStatic(plugin)}>
+                  `}
                 `
               )}
             </menu>

@@ -9,7 +9,6 @@ export * from './components/features/navigation/navigation-search/navigation-sea
 export * from './components/features/preview/preview.component.js';
 export * from './components/features/preview-controls/preview-controls.component.js';
 export * from './components/features/preview-frame/preview-frame.component.js';
-export * from './components/features/preview-hint/preview-hint.component.js';
 export * from './components/features/readme/readme.component.js';
 export * from './components/features/readme-frame/readme-frame.component.js';
 export * from './components/features/toggle-color-scheme/toggle-color-scheme.component.js';
@@ -30,6 +29,8 @@ export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.pl
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.utils.js';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer-controls/preview-frame-viewer-controls.component.js';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component.js';
+export * from './components/plugins/preview-viewer-link/preview-viewer-link.plugin.js';
+export * from './components/plugins/preview-viewer-link/preview-viewer-link-hint/preview-viewer-link-hint.component.js';
 export * from './components/plugins/preview-viewport/preview-viewport.plugin.js';
 export * from './components/root/root.component.js';
 export * from './components/root/root.routes.js';
