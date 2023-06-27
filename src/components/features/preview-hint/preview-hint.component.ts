@@ -10,7 +10,7 @@ import styles from './preview-hint.component.scss';
  * Shows a hint to a given preview element.
  *
  * @element wcp-preview-hint
- * 
+ *
  * @cssprop --wcp-preview-hint-button-passive-background - The background color of the hint button in passive state.
  * @cssprop --wcp-preview-hint-button-active-background - The background color of the hint button in active state.
  * @cssprop --wcp-preview-hint-button-passive-size - Size of the hint button in passive state.
@@ -35,6 +35,7 @@ import styles from './preview-hint.component.scss';
 export class PreviewHint extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
+  #observer = new ResizeObserver(() => this.updatePosition());
   #element?: HTMLElement;
   #scrollParent?: HTMLElement;
 
@@ -44,6 +45,7 @@ export class PreviewHint extends ColorSchemable(LitElement) {
   @property({ attribute: false, noAccessor: true })
   set element(element: HTMLElement | undefined) {
     this.#element = element;
+    this.#observeElement();
     this.updatePosition();
   }
 
@@ -58,13 +60,27 @@ export class PreviewHint extends ColorSchemable(LitElement) {
       this.removeAttribute('style');
     } else {
       const { height, width, x, y } = getRelativeBoundary(this.#element, this.#scrollParent);
-      const { scrollTop = 0, scrollLeft = 0 } = this.#scrollParent ?? {};
+      const { scrollTop = 0, scrollLeft = 0 } = this.#scrollParent ?? (this.#element.offsetParent as HTMLElement) ?? {};
 
-      this.style.setProperty('top', `${y + scrollTop}px`);
-      this.style.setProperty('left', `${x + scrollLeft}px`);
+      this.style.setProperty('top', `${x + scrollTop}px`);
+      this.style.setProperty('left', `${y + scrollLeft}px`);
       this.style.setProperty('height', `${height}px`);
       this.style.setProperty('width', `${width}px`);
     }
+  }
+
+  /**
+   * @private
+   */
+  #observeElement() {
+    if (!this.#element) return;
+    this.#observer.disconnect();
+    this.#observer.observe(this.#element);
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.#observer.disconnect();
   }
 
   protected override render(): TemplateResult {
