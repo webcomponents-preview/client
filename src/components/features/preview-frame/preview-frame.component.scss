@@ -48,6 +48,10 @@ wcp-tabs {
     top: 0;
     z-index: 1;
     background-color: var(---wcp-preview-frame-background);
+
+    // improve the height to an explicit size to align the tabs separator
+    // with the one left in the sidebar below the search input
+    min-height: utils.size(4);
   }
 
   &::part(element-panel:not([hidden])) {
