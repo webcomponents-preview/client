@@ -27,9 +27,7 @@ Previews given content.
 
 ## CSS Custom Properties
 
-| Property                                  | Description                                      |
-|-------------------------------------------|--------------------------------------------------|
-| `--wcp-preview-menu-background-opacity`   | Opacity of the expanding menu background.        |
-| `--wcp-preview-menu-border-radius`        | Border radius of the expanding menu.             |
-| `--wcp-preview-menu-dark-background-raw`  | Background color of the expanding menu in dark mode. Must be a raw space-separated HSL color value list. |
-| `--wcp-preview-menu-light-background-raw` | Background color of the expanding menu in light mode. Must be a raw space-separated HSL color value list. |
+| Property                                | Description                                    |
+|-----------------------------------------|------------------------------------------------|
+| `--wcp-preview-menu-dark-border-color`  | Border color of the plugin menu in dark mode.  |
+| `--wcp-preview-menu-light-border-color` | Border color of the plugin menu in light mode. |

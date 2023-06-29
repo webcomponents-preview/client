@@ -1,56 +1,44 @@
 @use '@/styles/utils' as utils;
 
 :host {
-  // about weird border-radii: https://stackoverflow.com/a/29966500/1146207
-  ---wcp-preview-menu-border-radius: var(--wcp-frame-menu-border-radius, 9999px);
-  ---wcp-preview-menu-background-opacity: var(--wcp-preview-menu-background-opacity, 0.85);
-
-  ---wcp-preview-menu-dark-background-raw: var(--wcp-frame-menu-dark-background-raw, var(--wcp-color-blue-24-raw));
-  ---wcp-preview-menu-light-background-raw: var(--wcp-frame-menu-light-background-raw, var(--wcp-color-blue-80-raw));
+  ---wcp-preview-menu-dark-border-color: var(--wcp-frame-menu-dark-border-color, var(--wcp-color-grey-24));
+  ---wcp-preview-menu-light-border-color: var(--wcp-frame-menu-light-border-color, var(--wcp-color-grey-65));
 }
 
 :host {
   display: block;
   position: relative;
-  min-height: 42px;
-
-  // prevent fixed positioning from breaking out
-  // https://stackoverflow.com/a/70422489/1146207
-  transform: scale(1);
+  min-height: utils.size(4.2);
 
   @include utils.color-scheme() using ($color-scheme) {
-    ---wcp-preview-menu-background-raw: var(---wcp-preview-menu-#{$color-scheme}-background-raw);
+    ---wcp-preview-menu-border-color: var(---wcp-preview-menu-#{$color-scheme}-border-color);
   }
 }
 
 :host {
-  display: block;
-  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
-// the context menu with preview plugins
 nav {
-  position: absolute;
-  inset: 0 0 auto auto;
-}
-
-menu {
-  position: absolute;
-  inset: 50% utils.size(5) auto auto;
-  transform: translateY(-50%);
-
   display: flex;
   flex-direction: row;
-  gap: utils.size(1);
+  flex-wrap: wrap;
+  gap: 0 utils.size(1);
+
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid var(---wcp-preview-menu-border-color);
+}
+
+hr {
   margin: 0;
   padding: 0;
+  height: utils.size(2.2);
+  width: 1px;
 
-  background-color: hsl(var(---wcp-preview-menu-background-raw) / var(---wcp-preview-menu-background-opacity));
-  border-radius: var(---wcp-preview-menu-border-radius);
-
-  wcp-button[aria-expanded='false'] ~ & {
-    display: none;
-  }
+  background-color: var(---wcp-preview-menu-border-color);
+  border: 0;
 }
 
 section {
