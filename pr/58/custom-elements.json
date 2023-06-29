@@ -5150,6 +5150,14 @@
               "name": "--wcp-navigation-search-spacing"
             },
             {
+              "description": "The border color of the search input in dark mode.",
+              "name": "--wcp-navigation-search-dark-border-color"
+            },
+            {
+              "description": "The border color of the search input in light mode.",
+              "name": "--wcp-navigation-search-light-border-color"
+            },
+            {
               "description": "The stroke color of the search input in dark mode when not focused.",
               "name": "--wcp-navigation-search-passive-dark-stroke"
             },
@@ -5238,7 +5246,7 @@
           },
           "tagName": "wcp-navigation-search",
           "examples": [],
-          "readme": "# wcp-navigation-search\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property | Attribute | Type     | Default |\n|----------|-----------|----------|---------|\n| `term`   | `term`    | `string` | \"\"      |\n\n## Methods\n\n| Method              | Type                   |\n|---------------------|------------------------|\n| `#updateSearchTerm` | `(term: string): void` |\n\n## Events\n\n| Event                          | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `wcp-navigation-search:search` | Fired when the search term changes. Carries the new search term with it. |\n\n## CSS Custom Properties\n\n| Property                                       | Description                                      |\n|------------------------------------------------|--------------------------------------------------|\n| `--wcp-navigation-search-active-dark-stroke`   | The stroke color of the search input in dark mode when focused. |\n| `--wcp-navigation-search-active-light-stroke`  | The stroke color of the search input in light mode when focused. |\n| `--wcp-navigation-search-passive-dark-stroke`  | The stroke color of the search input in dark mode when not focused. |\n| `--wcp-navigation-search-passive-light-stroke` | The stroke color of the search input in light mode when not focused. |\n| `--wcp-navigation-search-spacing`              | The spacing around the search input.             |\n",
+          "readme": "# wcp-navigation-search\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property | Attribute | Type     | Default |\n|----------|-----------|----------|---------|\n| `term`   | `term`    | `string` | \"\"      |\n\n## Methods\n\n| Method              | Type                   |\n|---------------------|------------------------|\n| `#updateSearchTerm` | `(term: string): void` |\n\n## Events\n\n| Event                          | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `wcp-navigation-search:search` | Fired when the search term changes. Carries the new search term with it. |\n\n## CSS Custom Properties\n\n| Property                                       | Description                                      |\n|------------------------------------------------|--------------------------------------------------|\n| `--wcp-navigation-search-active-dark-stroke`   | The stroke color of the search input in dark mode when focused. |\n| `--wcp-navigation-search-active-light-stroke`  | The stroke color of the search input in light mode when focused. |\n| `--wcp-navigation-search-dark-border-color`    | The border color of the search input in dark mode. |\n| `--wcp-navigation-search-light-border-color`   | The border color of the search input in light mode. |\n| `--wcp-navigation-search-passive-dark-stroke`  | The stroke color of the search input in dark mode when not focused. |\n| `--wcp-navigation-search-passive-light-stroke` | The stroke color of the search input in light mode when not focused. |\n| `--wcp-navigation-search-spacing`              | The spacing around the search input.             |\n",
           "groups": [
             "features"
           ],
