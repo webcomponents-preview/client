@@ -38,6 +38,14 @@ Shows a button element.
 <wcp-button href=".">Link</wcp-button>
 ```
 
+## Displaced to the right
+
+```html
+<wcp-button style="position:relative;left:calc(100% - 40px);transform:translateX(-100%)">
+  Try to find me!
+</wcp-button>
+```
+
 ## Use as native submit button in form
 
 ```html
