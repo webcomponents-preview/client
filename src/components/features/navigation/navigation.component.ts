@@ -8,7 +8,7 @@ import styles from './navigation.component.scss';
 
 /**
  * @element wcp-navigation
- * 
+ *
  * @example
  * ### Usage with headline
  *
@@ -41,7 +41,7 @@ export class Navigation extends ColorSchemable(LitElement) {
 
   protected override render(): TemplateResult {
     return html`
-      ${when(this.headline !== undefined, () => html`<h3>${this.headline}</h3>`)}
+      ${when(this.headline !== undefined, () => html`<h3><span>${this.headline}</span></h3>`)}
       <nav>
         <slot></slot>
       </nav>
