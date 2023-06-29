@@ -62,8 +62,8 @@ export class PreviewViewerLinkHint extends ColorSchemable(LitElement) {
       const { height, width, x, y } = getRelativeBoundary(this.#element, this.#scrollParent);
       const { scrollTop = 0, scrollLeft = 0 } = this.#scrollParent ?? (this.#element.offsetParent as HTMLElement) ?? {};
 
-      this.style.setProperty('top', `${x + scrollTop}px`);
-      this.style.setProperty('left', `${y + scrollLeft}px`);
+      this.style.setProperty('top', `${y + scrollTop}px`);
+      this.style.setProperty('left', `${x + scrollLeft}px`);
       this.style.setProperty('height', `${height}px`);
       this.style.setProperty('width', `${width}px`);
     }
