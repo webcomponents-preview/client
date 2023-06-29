@@ -22,7 +22,7 @@ export class PreviewFrameExamples extends ColorSchemable(LitElement) implements 
   @state()
   private _element?: Parsed.Element;
 
-  @property({ type: Boolean, reflect: true, state: true })
+  @property({ type: Boolean, reflect: true })
   available = false;
 
   @property({ type: Object })

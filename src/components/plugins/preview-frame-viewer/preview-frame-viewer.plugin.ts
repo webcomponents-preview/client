@@ -30,7 +30,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
     this._elementData = element ? prepareInitialData(element) : undefined;
   }
 
-  @property({ type: Boolean, reflect: true, state: true })
+  @property({ type: Boolean, reflect: true })
   readonly available = true;
 
   @property({ type: String, reflect: true })

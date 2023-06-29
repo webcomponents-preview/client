@@ -15,7 +15,7 @@ export class PreviewFrameReadme extends ColorSchemable(LitElement) implements Pr
   @state()
   private _element?: Parsed.Element;
 
-  @property({ type: Boolean, reflect: true, state: true })
+  @property({ type: Boolean, reflect: true })
   available = false;
 
   @property({ type: Object })
