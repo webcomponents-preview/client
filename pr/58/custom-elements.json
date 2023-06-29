@@ -434,20 +434,12 @@
           "name": "Preview",
           "cssProperties": [
             {
-              "description": "Border radius of the expanding menu.",
-              "name": "--wcp-preview-menu-border-radius"
+              "description": "Border color of the plugin menu in dark mode.",
+              "name": "--wcp-preview-menu-dark-border-color"
             },
             {
-              "description": "Opacity of the expanding menu background.",
-              "name": "--wcp-preview-menu-background-opacity"
-            },
-            {
-              "description": "Background color of the expanding menu in dark mode. Must be a raw space-separated HSL color value list.",
-              "name": "--wcp-preview-menu-dark-background-raw"
-            },
-            {
-              "description": "Background color of the expanding menu in light mode. Must be a raw space-separated HSL color value list.",
-              "name": "--wcp-preview-menu-light-background-raw"
+              "description": "Border color of the plugin menu in light mode.",
+              "name": "--wcp-preview-menu-light-border-color"
             }
           ],
           "slots": [
@@ -463,24 +455,6 @@
               "type": {
                 "text": "Config | undefined"
               }
-            },
-            {
-              "kind": "field",
-              "name": "nav",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "toggleButton",
-              "type": {
-                "text": "Button | undefined"
-              },
-              "privacy": "private",
-              "readonly": true
             },
             {
               "kind": "field",
@@ -503,29 +477,6 @@
               "kind": "field",
               "name": "#handleRouteChange",
               "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "#handleOutsideClickBound",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "handleClick",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "handleOutsideClick",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
             },
             {
               "kind": "method",
@@ -565,7 +516,7 @@
           "examples": [
             "```html\n<wcp-preview>\n  <wcp-button>Example button</wcp-button>\n</wcp-preview>\n```"
           ],
-          "readme": "# wcp-preview\n\nPreviews given content.\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-preview>\n  <wcp-button>Example button</wcp-button>\n</wcp-preview>\n```\n\n## Properties\n\n| Property         | Attribute          | Type                  |\n|------------------|--------------------|-----------------------|\n| `config`         |                    |                       |\n| `previewTagName` | `preview-tag-name` | `string \\| undefined` |\n\n## Slots\n\n| Name | Description             |\n|------|-------------------------|\n|      | The content to preview. |\n\n## CSS Custom Properties\n\n| Property                                  | Description                                      |\n|-------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-menu-background-opacity`   | Opacity of the expanding menu background.        |\n| `--wcp-preview-menu-border-radius`        | Border radius of the expanding menu.             |\n| `--wcp-preview-menu-dark-background-raw`  | Background color of the expanding menu in dark mode. Must be a raw space-separated HSL color value list. |\n| `--wcp-preview-menu-light-background-raw` | Background color of the expanding menu in light mode. Must be a raw space-separated HSL color value list. |\n",
+          "readme": "# wcp-preview\n\nPreviews given content.\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-preview>\n  <wcp-button>Example button</wcp-button>\n</wcp-preview>\n```\n\n## Properties\n\n| Property         | Attribute          | Type                  |\n|------------------|--------------------|-----------------------|\n| `config`         |                    |                       |\n| `previewTagName` | `preview-tag-name` | `string \\| undefined` |\n\n## Slots\n\n| Name | Description             |\n|------|-------------------------|\n|      | The content to preview. |\n\n## CSS Custom Properties\n\n| Property                                | Description                                    |\n|-----------------------------------------|------------------------------------------------|\n| `--wcp-preview-menu-dark-border-color`  | Border color of the plugin menu in dark mode.  |\n| `--wcp-preview-menu-light-border-color` | Border color of the plugin menu in light mode. |\n",
           "groups": [
             "features"
           ],
@@ -3788,7 +3739,7 @@
                 "text": "string"
               },
               "readonly": true,
-              "default": "'viewport'",
+              "default": "'viewer-link'",
               "attribute": "name",
               "reflects": true
             },
@@ -3799,8 +3750,19 @@
                 "text": "string"
               },
               "readonly": true,
-              "default": "'Viewport'",
+              "default": "'Show in viewer'",
               "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "toggleLabel",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "default": "'Highlight'",
+              "attribute": "toggle-label",
               "reflects": true
             },
             {
@@ -3908,7 +3870,7 @@
                 "text": "string"
               },
               "readonly": true,
-              "default": "'viewport'",
+              "default": "'viewer-link'",
               "fieldName": "name"
             },
             {
@@ -3917,8 +3879,17 @@
                 "text": "string"
               },
               "readonly": true,
-              "default": "'Viewport'",
+              "default": "'Show in viewer'",
               "fieldName": "label"
+            },
+            {
+              "name": "toggle-label",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "default": "'Highlight'",
+              "fieldName": "toggleLabel"
             },
             {
               "name": "enabled",
@@ -3933,7 +3904,7 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "readme": "# wcp-preview-viewer-link\n\n## Properties\n\n| Property         | Attribute   | Modifiers | Type         | Default    |\n|------------------|-------------|-----------|--------------|------------|\n| `available`      | `available` | readonly  | `true`       | true       |\n| `container`      |             | readonly  |              |            |\n| `enabled`        | `enabled`   |           | `boolean`    | false      |\n| `label`          | `label`     | readonly  | `\"Viewport\"` | \"Viewport\" |\n| `name`           | `name`      | readonly  | `\"viewport\"` | \"viewport\" |\n| `previewTagName` |             | readonly  | `string`     |            |\n\n## Methods\n\n| Method                       | Type                   |\n|------------------------------|------------------------|\n| `#attachHint`                | `(element: any): void` |\n| `#attachHints`               | `(): void`             |\n| `#attachOverlay`             | `(): void`             |\n| `#detachOverlay`             | `(): void`             |\n| `#findContainerSlot`         | `(): any`              |\n| `#handleContainerScroll`     | `(): void`             |\n| `#handleContainerSlotChange` | `(): void`             |\n| `#observeContainerScroll`    | `(): void`             |\n| `#observeContainerSlot`      | `(): void`             |\n| `#setupHints`                | `(): void`             |\n| `#teardownHints`             | `(): void`             |\n| `#unobserveContainerScroll`  | `(): void`             |\n| `#unobserveContainerSlot`    | `(): void`             |\n",
+          "readme": "# wcp-preview-viewer-link\n\n## Properties\n\n| Property         | Attribute      | Modifiers | Type               | Default          |\n|------------------|----------------|-----------|--------------------|------------------|\n| `available`      | `available`    | readonly  | `true`             | true             |\n| `container`      |                | readonly  |                    |                  |\n| `enabled`        | `enabled`      |           | `boolean`          | false            |\n| `label`          | `label`        | readonly  | `\"Show in viewer\"` | \"Show in viewer\" |\n| `name`           | `name`         | readonly  | `\"viewer-link\"`    | \"viewer-link\"    |\n| `previewTagName` |                | readonly  | `string`           |                  |\n| `toggleLabel`    | `toggle-label` | readonly  | `\"Highlight\"`      | \"Highlight\"      |\n\n## Methods\n\n| Method                       | Type                   |\n|------------------------------|------------------------|\n| `#attachHint`                | `(element: any): void` |\n| `#attachHints`               | `(): void`             |\n| `#attachOverlay`             | `(): void`             |\n| `#detachOverlay`             | `(): void`             |\n| `#findContainerSlot`         | `(): any`              |\n| `#handleContainerScroll`     | `(): void`             |\n| `#handleContainerSlotChange` | `(): void`             |\n| `#observeContainerScroll`    | `(): void`             |\n| `#observeContainerSlot`      | `(): void`             |\n| `#setupHints`                | `(): void`             |\n| `#teardownHints`             | `(): void`             |\n| `#unobserveContainerScroll`  | `(): void`             |\n| `#unobserveContainerSlot`    | `(): void`             |\n",
           "groups": [
             "plugins"
           ],
@@ -4587,10 +4558,11 @@
             "## Button with icon\n\n```html\n<wcp-button kind=\"icon\">\n <wcp-icon name=\"menu\"></wcp-icon>\n</wcp-button>\n```",
             "## Force active state\n\n```html\n<wcp-button class=\"active\">Link</wcp-button>\n```",
             "## Use as link\n\n```html\n<wcp-button href=\".\">Link</wcp-button>\n```",
+            "## Displaced to the right\n\n```html\n<wcp-button style=\"position:relative;left:calc(100% - 40px);transform:translateX(-100%)\">\n  Try to find me!\n</wcp-button>\n```",
             "## Use as native submit button in form\n\n```html\n<form onsubmit=\"alert('Submit!'); return false\">\n <wcp-button type=\"submit\">Submit</wcp-button>\n</form>\n```",
             "## Use as native reset button in form\n\n```html\n<form onreset=\"alert('Reset!'); return false\">\n  <wcp-button type=\"reset\">Reset</wcp-button>\n</form>\n```"
           ],
-          "readme": "# wcp-button\n\nShows a button element.\n\n**Mixins:** ColorSchemable\n\n## Examples\n\n## Default button\n\n```html\n<wcp-button>Click me!</wcp-button>\n```\n\n## Disabled button\n\n```html\n<wcp-button disabled>Try to click me!</wcp-button>\n```\n\n## Button with icon\n\n```html\n<wcp-button kind=\"icon\">\n <wcp-icon name=\"menu\"></wcp-icon>\n</wcp-button>\n```\n\n## Force active state\n\n```html\n<wcp-button class=\"active\">Link</wcp-button>\n```\n\n## Use as link\n\n```html\n<wcp-button href=\".\">Link</wcp-button>\n```\n\n## Use as native submit button in form\n\n```html\n<form onsubmit=\"alert('Submit!'); return false\">\n <wcp-button type=\"submit\">Submit</wcp-button>\n</form>\n```\n\n## Use as native reset button in form\n\n```html\n<form onreset=\"alert('Reset!'); return false\">\n  <wcp-button type=\"reset\">Reset</wcp-button>\n</form>\n```\n\n## Properties\n\n| Property    | Attribute   | Type                                             | Default  | Description                                      |\n|-------------|-------------|--------------------------------------------------|----------|--------------------------------------------------|\n| `disabled`  | `disabled`  | `boolean`                                        | false    |                                                  |\n| `href`      | `href`      | `string \\| undefined`                            |          |                                                  |\n| `kind`      | `kind`      | `\"button\" \\| \"icon\"`                             | \"button\" | The kind of button to render. Either like a conventional button, or for<br />icons. Icon buttons are quadratic and will show a radial background on interaction. |\n| `nowrap`    | `nowrap`    | `boolean`                                        | false    |                                                  |\n| `stretched` | `stretched` | `boolean`                                        | false    | Allows stretching the button across the full width of its container.<br />This is useful for buttons that are used in a narrow form, or in general<br />on small viewports, like handheld devices. |\n| `target`    | `target`    | `\"_self\" \\| \"_blank\" \\| \"_parent\" \\| \"_top\" \\| undefined` |          |                                                  |\n| `type`      | `type`      | `\"button\" \\| \"reset\" \\| \"submit\"`                | \"button\" |                                                  |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Slots\n\n| Name | Description                         |\n|------|-------------------------------------|\n|      | Default slot for the button content |\n\n## CSS Custom Properties\n\n| Property                                  | Description                                      |\n|-------------------------------------------|--------------------------------------------------|\n| `--wcp-button-dark-active-background`     | Background color of the button if active in dark mode |\n| `--wcp-button-dark-active-border-color`   | Border color of the button if active in dark mode |\n| `--wcp-button-dark-active-color`          | Text color of the button if active in dark mode  |\n| `--wcp-button-dark-hover-background`      | Background color of the button if hovered in dark mode |\n| `--wcp-button-dark-hover-border-color`    | Border color of the button if hovered in dark mode |\n| `--wcp-button-dark-hover-color`           | Text color of the button if hovered in dark mode |\n| `--wcp-button-dark-passive-background`    | Background color of the button if non interactive in dark mode |\n| `--wcp-button-dark-passive-border-color`  | Border color of the button if non interactive in dark mode |\n| `--wcp-button-dark-passive-color`         | Text color of the button if non interactive in dark mode |\n| `--wcp-button-light-active-background`    | Background color of the button if active in light mode |\n| `--wcp-button-light-active-border-color`  | Border color of the button if active in light mode |\n| `--wcp-button-light-active-color`         | Text color of the button if active in light mode |\n| `--wcp-button-light-hover-background`     | Background color of the button if hovered in light mode |\n| `--wcp-button-light-hover-border-color`   | Border color of the button if hovered in light mode |\n| `--wcp-button-light-hover-color`          | Text color of the button if hovered in light mode |\n| `--wcp-button-light-passive-background`   | Background color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-border-color` | Border color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-color`        | Text color of the button if non interactive in light mode |\n",
+          "readme": "# wcp-button\n\nShows a button element.\n\n**Mixins:** ColorSchemable\n\n## Examples\n\n## Default button\n\n```html\n<wcp-button>Click me!</wcp-button>\n```\n\n## Disabled button\n\n```html\n<wcp-button disabled>Try to click me!</wcp-button>\n```\n\n## Button with icon\n\n```html\n<wcp-button kind=\"icon\">\n <wcp-icon name=\"menu\"></wcp-icon>\n</wcp-button>\n```\n\n## Force active state\n\n```html\n<wcp-button class=\"active\">Link</wcp-button>\n```\n\n## Use as link\n\n```html\n<wcp-button href=\".\">Link</wcp-button>\n```\n\n## Displaced to the right\n\n```html\n<wcp-button style=\"position:relative;left:calc(100% - 40px);transform:translateX(-100%)\">\n  Try to find me!\n</wcp-button>\n```\n\n## Use as native submit button in form\n\n```html\n<form onsubmit=\"alert('Submit!'); return false\">\n <wcp-button type=\"submit\">Submit</wcp-button>\n</form>\n```\n\n## Use as native reset button in form\n\n```html\n<form onreset=\"alert('Reset!'); return false\">\n  <wcp-button type=\"reset\">Reset</wcp-button>\n</form>\n```\n\n## Properties\n\n| Property    | Attribute   | Type                                             | Default  | Description                                      |\n|-------------|-------------|--------------------------------------------------|----------|--------------------------------------------------|\n| `disabled`  | `disabled`  | `boolean`                                        | false    |                                                  |\n| `href`      | `href`      | `string \\| undefined`                            |          |                                                  |\n| `kind`      | `kind`      | `\"button\" \\| \"icon\"`                             | \"button\" | The kind of button to render. Either like a conventional button, or for<br />icons. Icon buttons are quadratic and will show a radial background on interaction. |\n| `nowrap`    | `nowrap`    | `boolean`                                        | false    |                                                  |\n| `stretched` | `stretched` | `boolean`                                        | false    | Allows stretching the button across the full width of its container.<br />This is useful for buttons that are used in a narrow form, or in general<br />on small viewports, like handheld devices. |\n| `target`    | `target`    | `\"_self\" \\| \"_blank\" \\| \"_parent\" \\| \"_top\" \\| undefined` |          |                                                  |\n| `type`      | `type`      | `\"button\" \\| \"reset\" \\| \"submit\"`                | \"button\" |                                                  |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Slots\n\n| Name | Description                         |\n|------|-------------------------------------|\n|      | Default slot for the button content |\n\n## CSS Custom Properties\n\n| Property                                  | Description                                      |\n|-------------------------------------------|--------------------------------------------------|\n| `--wcp-button-dark-active-background`     | Background color of the button if active in dark mode |\n| `--wcp-button-dark-active-border-color`   | Border color of the button if active in dark mode |\n| `--wcp-button-dark-active-color`          | Text color of the button if active in dark mode  |\n| `--wcp-button-dark-hover-background`      | Background color of the button if hovered in dark mode |\n| `--wcp-button-dark-hover-border-color`    | Border color of the button if hovered in dark mode |\n| `--wcp-button-dark-hover-color`           | Text color of the button if hovered in dark mode |\n| `--wcp-button-dark-passive-background`    | Background color of the button if non interactive in dark mode |\n| `--wcp-button-dark-passive-border-color`  | Border color of the button if non interactive in dark mode |\n| `--wcp-button-dark-passive-color`         | Text color of the button if non interactive in dark mode |\n| `--wcp-button-light-active-background`    | Background color of the button if active in light mode |\n| `--wcp-button-light-active-border-color`  | Border color of the button if active in light mode |\n| `--wcp-button-light-active-color`         | Text color of the button if active in light mode |\n| `--wcp-button-light-hover-background`     | Background color of the button if hovered in light mode |\n| `--wcp-button-light-hover-border-color`   | Border color of the button if hovered in light mode |\n| `--wcp-button-light-hover-color`          | Text color of the button if hovered in light mode |\n| `--wcp-button-light-passive-background`   | Background color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-border-color` | Border color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-color`        | Text color of the button if non interactive in light mode |\n",
           "groups": [
             "ui"
           ],
