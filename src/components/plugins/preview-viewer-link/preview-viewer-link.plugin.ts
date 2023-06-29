@@ -18,10 +18,13 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
   readonly available = true;
 
   @property({ type: String, reflect: true })
-  readonly name = 'viewport';
+  readonly name = 'viewer-link';
 
   @property({ type: String, reflect: true })
-  readonly label = 'Viewport';
+  readonly label = 'Show in viewer';
+
+  @property({ type: String, reflect: true, attribute: 'toggle-label' })
+  readonly toggleLabel = 'Highlight';
 
   @property({ type: Boolean, reflect: true })
   enabled = false;
@@ -129,7 +132,7 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
   protected override render(): TemplateResult {
     return html`
       <wcp-input-checkbox
-        label="Highlight elements"
+        label="${this.toggleLabel}"
         ?checked="${this.enabled}"
         @input="${this.handleInput}"
       ></wcp-input-checkbox>
