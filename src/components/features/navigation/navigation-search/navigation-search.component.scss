@@ -31,6 +31,7 @@
 :host {
   display: block;
   padding: var(---wcp-navigation-search-spacing);
+  line-height: 1;
 }
 
 wcp-icon[name='search'] {
@@ -41,7 +42,7 @@ wcp-icon[name='search'] {
 }
 
 wcp-button {
-  margin: utils.size(.3) utils.size(.3) 0 0;
+  margin: utils.size(.1) utils.size(.3) 0 0;
 
   &::part(button) {
     color: var(---wcp-navigation-search-stroke);
