@@ -55,6 +55,9 @@ export class PreviewViewerLinkHint extends ColorSchemable(LitElement) {
     this.updatePosition();
   }
 
+  /**
+   * Allows to update the position of the hint.
+   */
   updatePosition() {
     if (this.#element === undefined) {
       this.removeAttribute('style');
