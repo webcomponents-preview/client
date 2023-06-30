@@ -3834,6 +3834,10 @@
             },
             {
               "kind": "method",
+              "name": "#detachHints"
+            },
+            {
+              "kind": "method",
               "name": "#setupHints"
             },
             {
@@ -3904,7 +3908,7 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "readme": "# wcp-preview-viewer-link\n\n## Properties\n\n| Property         | Attribute      | Modifiers | Type               | Default          |\n|------------------|----------------|-----------|--------------------|------------------|\n| `available`      | `available`    | readonly  | `true`             | true             |\n| `container`      |                | readonly  |                    |                  |\n| `enabled`        | `enabled`      |           | `boolean`          | false            |\n| `label`          | `label`        | readonly  | `\"Show in viewer\"` | \"Show in viewer\" |\n| `name`           | `name`         | readonly  | `\"viewer-link\"`    | \"viewer-link\"    |\n| `previewTagName` |                | readonly  | `string`           |                  |\n| `toggleLabel`    | `toggle-label` | readonly  | `\"Highlight\"`      | \"Highlight\"      |\n\n## Methods\n\n| Method                       | Type                   |\n|------------------------------|------------------------|\n| `#attachHint`                | `(element: any): void` |\n| `#attachHints`               | `(): void`             |\n| `#attachOverlay`             | `(): void`             |\n| `#detachOverlay`             | `(): void`             |\n| `#findContainerSlot`         | `(): any`              |\n| `#handleContainerScroll`     | `(): void`             |\n| `#handleContainerSlotChange` | `(): void`             |\n| `#observeContainerScroll`    | `(): void`             |\n| `#observeContainerSlot`      | `(): void`             |\n| `#setupHints`                | `(): void`             |\n| `#teardownHints`             | `(): void`             |\n| `#unobserveContainerScroll`  | `(): void`             |\n| `#unobserveContainerSlot`    | `(): void`             |\n",
+          "readme": "# wcp-preview-viewer-link\n\n## Properties\n\n| Property         | Attribute      | Modifiers | Type               | Default          |\n|------------------|----------------|-----------|--------------------|------------------|\n| `available`      | `available`    | readonly  | `true`             | true             |\n| `container`      |                | readonly  |                    |                  |\n| `enabled`        | `enabled`      |           | `boolean`          | false            |\n| `label`          | `label`        | readonly  | `\"Show in viewer\"` | \"Show in viewer\" |\n| `name`           | `name`         | readonly  | `\"viewer-link\"`    | \"viewer-link\"    |\n| `previewTagName` |                | readonly  | `string`           |                  |\n| `toggleLabel`    | `toggle-label` | readonly  | `\"Highlight\"`      | \"Highlight\"      |\n\n## Methods\n\n| Method                       | Type                   |\n|------------------------------|------------------------|\n| `#attachHint`                | `(element: any): void` |\n| `#attachHints`               | `(): void`             |\n| `#attachOverlay`             | `(): void`             |\n| `#detachHints`               | `(): void`             |\n| `#detachOverlay`             | `(): void`             |\n| `#findContainerSlot`         | `(): any`              |\n| `#handleContainerScroll`     | `(): void`             |\n| `#handleContainerSlotChange` | `(): void`             |\n| `#observeContainerScroll`    | `(): void`             |\n| `#observeContainerSlot`      | `(): void`             |\n| `#setupHints`                | `(): void`             |\n| `#teardownHints`             | `(): void`             |\n| `#unobserveContainerScroll`  | `(): void`             |\n| `#unobserveContainerSlot`    | `(): void`             |\n",
           "groups": [
             "plugins"
           ],
@@ -5659,11 +5663,24 @@
             },
             {
               "kind": "method",
-              "name": "updatePosition"
+              "name": "updatePosition",
+              "description": "Allows to update the position of the hint."
             },
             {
               "kind": "method",
-              "name": "#observeElement",
+              "name": "#observeElement"
+            },
+            {
+              "kind": "method",
+              "name": "#observeStage"
+            },
+            {
+              "kind": "method",
+              "name": "#unobserveStage"
+            },
+            {
+              "kind": "field",
+              "name": "#handleStageChange",
               "privacy": "private"
             }
           ],
@@ -5689,7 +5706,7 @@
           },
           "tagName": "wcp-preview-viewer-link-hint",
           "examples": [],
-          "readme": "# wcp-preview-viewer-link-hint\n\nShows a hint to a given preview element.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property       | Attribute | Type      | Default |\n|----------------|-----------|-----------|---------|\n| `debug`        | `debug`   | `boolean` | false   |\n| `element`      |           |           |         |\n| `scrollParent` |           |           |         |\n\n## Methods\n\n| Method           | Type       |\n|------------------|------------|\n| `updatePosition` | `(): void` |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                      |\n|--------------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-viewer-link-hint-button-active-background` | The background color of the hint button in active state. |\n| `--wcp-preview-viewer-link-hint-button-active-size` | Size of the hint button in active state.         |\n| `--wcp-preview-viewer-link-hint-button-passive-background` | The background color of the hint button in passive state. |\n| `--wcp-preview-viewer-link-hint-button-passive-size` | Size of the hint button in passive state.        |\n| `--wcp-preview-viewer-link-hint-debug-background-opacity` | Opacity of the debugging fields background.      |\n| `--wcp-preview-viewer-link-hint-debug-border-width` | Border width of the debugging fields.            |\n| `--wcp-preview-viewer-link-hint-debug-dark-background` | Debugging field background color in dark mode.   |\n| `--wcp-preview-viewer-link-hint-debug-dark-stroke` | Debugging field dash and border color in dark mode. |\n| `--wcp-preview-viewer-link-hint-debug-light-background` | Debugging field background color in light mode.  |\n| `--wcp-preview-viewer-link-hint-debug-light-stroke` | Debugging field dash and border color in light mode. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-dash-gap` | Gap between the dashes of the debugging field background. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-dash-size` | Length of the dashes of the debugging field background. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-distance` | Distance of the stripes of the debugging field background. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-tilt` | Tilt of the stripes of the debugging field background in degrees. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-width` | Width of the stripes of the debugging field background. |\n",
+          "readme": "# wcp-preview-viewer-link-hint\n\nShows a hint to a given preview element.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property       | Attribute | Type      | Default |\n|----------------|-----------|-----------|---------|\n| `debug`        | `debug`   | `boolean` | false   |\n| `element`      |           |           |         |\n| `scrollParent` |           |           |         |\n\n## Methods\n\n| Method            | Type       | Description                                |\n|-------------------|------------|--------------------------------------------|\n| `#observeElement` | `(): void` |                                            |\n| `#observeStage`   | `(): void` |                                            |\n| `#unobserveStage` | `(): void` |                                            |\n| `updatePosition`  | `(): void` | Allows to update the position of the hint. |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                      |\n|--------------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-viewer-link-hint-button-active-background` | The background color of the hint button in active state. |\n| `--wcp-preview-viewer-link-hint-button-active-size` | Size of the hint button in active state.         |\n| `--wcp-preview-viewer-link-hint-button-passive-background` | The background color of the hint button in passive state. |\n| `--wcp-preview-viewer-link-hint-button-passive-size` | Size of the hint button in passive state.        |\n| `--wcp-preview-viewer-link-hint-debug-background-opacity` | Opacity of the debugging fields background.      |\n| `--wcp-preview-viewer-link-hint-debug-border-width` | Border width of the debugging fields.            |\n| `--wcp-preview-viewer-link-hint-debug-dark-background` | Debugging field background color in dark mode.   |\n| `--wcp-preview-viewer-link-hint-debug-dark-stroke` | Debugging field dash and border color in dark mode. |\n| `--wcp-preview-viewer-link-hint-debug-light-background` | Debugging field background color in light mode.  |\n| `--wcp-preview-viewer-link-hint-debug-light-stroke` | Debugging field dash and border color in light mode. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-dash-gap` | Gap between the dashes of the debugging field background. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-dash-size` | Length of the dashes of the debugging field background. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-distance` | Distance of the stripes of the debugging field background. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-tilt` | Tilt of the stripes of the debugging field background in degrees. |\n| `--wcp-preview-viewer-link-hint-debug-stripe-width` | Width of the stripes of the debugging field background. |\n",
           "groups": [
             "plugins"
           ],

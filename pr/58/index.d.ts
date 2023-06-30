@@ -1562,7 +1562,11 @@ declare module "src/components/plugins/preview-viewer-link/preview-viewer-link-h
         debug: boolean;
         set element(element: HTMLElement | undefined);
         set scrollParent(element: HTMLElement | undefined);
+        /**
+         * Allows to update the position of the hint.
+         */
         updatePosition(): void;
+        connectedCallback(): void;
         disconnectedCallback(): void;
         protected render(): TemplateResult;
     }
