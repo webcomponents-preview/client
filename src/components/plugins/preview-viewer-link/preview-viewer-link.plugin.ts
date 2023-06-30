@@ -33,6 +33,7 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
     this.#overlay.id = 'overlay';
     this.#overlay.style.position = 'absolute';
     this.#overlay.style.inset = '0';
+    this.#overlay.style.isolation = 'isolate';
     this.#overlay.style.pointerEvents = 'none';
     this.container.parentElement?.append(this.#overlay);
   }
