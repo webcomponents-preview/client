@@ -19,6 +19,7 @@
 | `#attachHint`                | `(element: any): void` |
 | `#attachHints`               | `(): void`             |
 | `#attachOverlay`             | `(): void`             |
+| `#detachHints`               | `(): void`             |
 | `#detachOverlay`             | `(): void`             |
 | `#findContainerSlot`         | `(): any`              |
 | `#handleContainerScroll`     | `(): void`             |

@@ -92,6 +92,10 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
     this.#overlay.append(hint);
   }
 
+  #detachHints() {
+    this.#overlay.innerHTML = '';
+  }
+
   #setupHints() {
     if (this.enabled) {
       this.#attachOverlay();
@@ -108,6 +112,7 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
     this.#unobserveContainerSlot();
     this.#unobserveContainerScroll();
 
+    this.#detachHints();
     this.#detachOverlay();
   }
 
