@@ -14,9 +14,12 @@ Shows a hint to a given preview element.
 
 ## Methods
 
-| Method           | Type       | Description                                |
-|------------------|------------|--------------------------------------------|
-| `updatePosition` | `(): void` | Allows to update the position of the hint. |
+| Method            | Type       | Description                                |
+|-------------------|------------|--------------------------------------------|
+| `#observeElement` | `(): void` |                                            |
+| `#observeStage`   | `(): void` |                                            |
+| `#unobserveStage` | `(): void` |                                            |
+| `updatePosition`  | `(): void` | Allows to update the position of the hint. |
 
 ## CSS Custom Properties
 

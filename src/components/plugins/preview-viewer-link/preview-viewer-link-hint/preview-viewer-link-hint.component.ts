@@ -72,18 +72,33 @@ export class PreviewViewerLinkHint extends ColorSchemable(LitElement) {
     }
   }
 
-  /**
-   * @private
-   */
   #observeElement() {
     if (!this.#element) return;
     this.#observer.disconnect();
     this.#observer.observe(this.#element);
   }
 
+  #observeStage() {
+    window.addEventListener('wcp-preview-viewport:changed', this.#handleStageChange, false);
+  }
+
+  #unobserveStage() {
+    window.removeEventListener('wcp-preview-viewport:changed', this.#handleStageChange, false);
+  }
+
+  #handleStageChange = () => {
+    this.updatePosition();
+  };
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.#observeStage();
+  }
+
   override disconnectedCallback() {
-    super.disconnectedCallback();
+    this.#unobserveStage();
     this.#observer.disconnect();
+    super.disconnectedCallback();
   }
 
   protected override render(): TemplateResult {
