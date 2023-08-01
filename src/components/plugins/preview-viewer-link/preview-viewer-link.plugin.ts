@@ -1,5 +1,6 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
 
@@ -22,9 +23,6 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
 
   @property({ type: String, reflect: true })
   readonly label = 'Show in viewer';
-
-  @property({ type: String, reflect: true, attribute: 'toggle-label' })
-  readonly toggleLabel = 'Highlight';
 
   @property({ type: Boolean, reflect: true })
   enabled = false;
@@ -128,20 +126,22 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
   }
 
   @eventOptions({ passive: true })
-  private handleInput(event: Event) {
-    const { checked } = event.target as HTMLInputElement;
-    this.enabled = checked;
+  private handleClick() {
+    this.enabled = !this.enabled;
     this.#setupHints();
   }
 
   // without ShadowDOM, we need to manually inject the styles
   protected override render(): TemplateResult {
     return html`
-      <wcp-input-checkbox
-        label="${this.toggleLabel}"
-        ?checked="${this.enabled}"
-        @input="${this.handleInput}"
-      ></wcp-input-checkbox>
+      <wcp-button
+        kind="icon"
+        class="${classMap({ active: this.enabled })}"
+        ?disabled="${!this.available}"
+        @click="${this.handleClick}"
+      >
+        <wcp-icon name="terminal" style="--wcp-icon-size: 19"></wcp-icon>
+      </wcp-button>
     `;
   }
 }
