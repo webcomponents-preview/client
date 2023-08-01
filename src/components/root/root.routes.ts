@@ -50,7 +50,7 @@ export const prepareRoutes = (router: Router, config: Config, manifest: Manifest
     },
   },
   {
-    path: '/element/:tagName/:plugin?',
+    path: '/element/:tagName/:pluginName?/:pluginData?',
     // fill in existing params if not provided for next route
     enter: (params, router, outgoingParams) => {
       // check if the params can be taken over (current route is
@@ -62,24 +62,30 @@ export const prepareRoutes = (router: Router, config: Config, manifest: Manifest
 
       // digest these insights; redirect and block current route
       if (hasOutgoingParams && haveParamsChanged && isSamePath) {
-        router.redirect(`/element/${alignedParams.tagName}/${alignedParams.plugin}`);
+        const { tagName, pluginName } = alignedParams;
+        router.redirect(`/element/${tagName}/${pluginName}`);
         return false;
       }
 
       // everything okay here, just go on
       return true;
     },
-    render: ({ tagName = '', plugin = config.initialPreviewTab }) => {
+    render: ({ tagName = '', pluginName = config.initialPreviewTab, pluginData }) => {
       return html`
         <wcp-preview-frame
-          active-plugin="${ifDefined(plugin)}"
-          @wcp-preview-frame:active-plugin-change="${({ detail: plugin }: CustomEvent<string>) =>
-            router.redirect(`/element/${tagName}/${plugin}`)}"
+          active-plugin="${ifDefined(pluginName)}"
+          @wcp-preview-frame:active-plugin-change="${({ detail: pluginName }: CustomEvent<string>) =>
+            router.redirect(`/element/${tagName}/${pluginName}`)}"
         >
           ${map(
             config.previewFramePlugins ?? [],
-            (plugin) => withStatic(html)`
-            <${unsafeStatic(plugin)} .element="${manifest.elements.get(tagName)}"></${unsafeStatic(plugin)}>
+            (previewFramePlugin) => withStatic(html)`
+            <${unsafeStatic(previewFramePlugin)}
+              .element="${manifest.elements.get(tagName)}"
+              .data="${ifDefined(pluginData)}"
+              @wcp-preview-frame-plugin:data-change="${({ detail: pluginData }: CustomEvent<string>) =>
+                router.redirect(`/element/${tagName}/${pluginName}/${pluginData}`)}"
+            ></${unsafeStatic(previewFramePlugin)}>
           `
           )}
         </wcp-preview-frame>

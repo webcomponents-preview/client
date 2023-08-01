@@ -1,5 +1,12 @@
 import type * as Parsed from '@/utils/parser.types.js';
 
+// Preview Frame Plugins may emit a plugin data change event.
+declare global {
+  interface HTMLElementEventMap {
+    'wcp-preview-frame-plugin:data-change': CustomEvent<string>;
+  }
+}
+
 /**
  * Each plugin must implement this interface.
  * Additionally, the plugin may emits an event, notifying about
@@ -18,6 +25,7 @@ export type Plugin = Element & {
  */
 export type PreviewFramePlugin = Plugin & {
   element?: Parsed.Element;
+  data?: string;
 };
 
 /**
