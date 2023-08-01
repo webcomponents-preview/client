@@ -16,11 +16,17 @@ export type ElementData = {
   slots: Record<string, string>;
 };
 
+/**
+ * Empty state object of the element data.
+ */
 export const EMPTY_ELEMENT_DATA: ElementData = {
   fields: {},
   slots: {},
 };
 
+/**
+ * Prepares an initial state object for the given element definition.
+ */
 export function prepareInitialData(element: Parsed.Element): ElementData {
   return {
     fields:

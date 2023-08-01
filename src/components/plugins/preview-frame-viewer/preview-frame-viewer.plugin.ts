@@ -22,14 +22,15 @@ const URI_DATA_PARAM_COMPRESSION: CompressionFormat = 'deflate-raw';
 export class PreviewFrameViewer extends ColorSchemable(LitElement) implements PreviewFramePlugin {
   static override readonly styles = unsafeCSS(styles);
 
-  #element?: Parsed.Element;
+  @state()
+  private _element?: Parsed.Element;
 
   @state()
   private _elementData?: ElementData;
 
-  @property({ type: Object })
-  set element(element: Parsed.Element | undefined) {
-    this.#element = element;
+  @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
+  set previewTagName(previewTagName: string) {
+    this._element = window.wcp.manifest.elements.get(previewTagName);
   }
 
   @property({ type: String })
@@ -59,16 +60,16 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
   }
 
   protected getElementReference(): Element | undefined {
-    if (this.#element === undefined) return undefined;
+    if (this._element === undefined) return undefined;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.renderRoot.querySelector(this.#element.tagName!) ?? undefined;
+    return this.renderRoot.querySelector(this._element.tagName!) ?? undefined;
   }
 
   @eventOptions({ passive: true })
   protected async handleControlsInput({ detail }: CustomEvent<FormData>) {
-    if (this.#element === undefined) return;
+    if (this._element === undefined) return;
     // prepare the data to be set as compressed url param
-    const data = mapFormData(detail, this.#element);
+    const data = mapFormData(detail, this._element);
     const param = encodeURIComponent(await compress(JSON.stringify(data), URI_DATA_PARAM_COMPRESSION));
 
     // dispatch the event to update the url param
@@ -78,22 +79,22 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
 
   protected override firstUpdated() {
     // set initial state from element if no data is given
-    if (this.#element && this._elementData === undefined) {
-      this._elementData = prepareInitialData(this.#element);
+    if (this._element && this._elementData === undefined) {
+      this._elementData = prepareInitialData(this._element);
     }
   }
 
   protected override render(): TemplateResult {
     return html`${keyed(
-      this.#element?.tagName ?? '',
+      this._element?.tagName ?? '',
       html`
         <wcp-preview-frame-viewer-stage
-          preview-tag-name="${ifDefined(this.#element?.tagName)}"
+          preview-tag-name="${ifDefined(this._element?.tagName)}"
           .data="${this._elementData}"
         ></wcp-preview-frame-viewer-stage>
 
         <wcp-preview-frame-viewer-controls
-          .element="${this.#element}"
+          preview-tag-name="${ifDefined(this._element?.tagName)}"
           .data="${this._elementData}"
           @wcp-preview-frame-viewer-controls:input="${this.handleControlsInput}"
         ></wcp-preview-frame-viewer-controls>

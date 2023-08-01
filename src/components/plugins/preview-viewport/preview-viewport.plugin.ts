@@ -43,6 +43,8 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
   static override readonly styles = unsafeCSS(styles);
 
   readonly container!: HTMLElement;
+
+  @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
   readonly previewTagName!: string;
 
   @property({ type: Boolean, reflect: true })

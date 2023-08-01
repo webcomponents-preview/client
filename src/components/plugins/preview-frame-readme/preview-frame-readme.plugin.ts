@@ -18,9 +18,9 @@ export class PreviewFrameReadme extends ColorSchemable(LitElement) implements Pr
   @property({ type: Boolean, reflect: true })
   available = false;
 
-  @property({ type: Object })
-  set element(element: Parsed.Element | undefined) {
-    this._element = element;
+  @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
+  set previewTagName(previewTagName: string) {
+    this._element = window.wcp.manifest.elements.get(previewTagName);
     const available = this._element?.hasReadme ?? false;
 
     // update the property if changed

@@ -2,7 +2,9 @@ import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
+import { compress } from '@/utils/compression.utils.js';
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
+import { readCurrentElementData } from './preview-viewer-link.utils.js';
 
 import styles from './preview-viewer-link.plugin.scss';
 
@@ -13,6 +15,8 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
   readonly #overlay = document.createElement('div');
 
   readonly container!: HTMLElement;
+
+  @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
   readonly previewTagName!: string;
 
   @property({ type: Boolean, reflect: true })
@@ -78,7 +82,6 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
     // attach hints to all previewed elements
     assigned
       .filter((element) => element.tagName.toLowerCase() === this.previewTagName)
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       .concat(assigned.flatMap((element) => [...element.querySelectorAll<HTMLElement>(this.previewTagName)]))
       .forEach((element) => this.#attachHint(element));
   }
@@ -88,6 +91,7 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
     hint.debug = true;
     hint.element = element;
     hint.scrollParent = this.container;
+    hint.addEventListener('click', () => this.#openViewer(element), false);
     this.#overlay.append(hint);
   }
 
@@ -115,6 +119,17 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
     this.#detachOverlay();
   }
 
+  async #openViewer(element: HTMLElement) {
+    // 1. gather element state (properties, attributes, slot contents, inline styles)
+    const data = readCurrentElementData(element);
+    const param = encodeURIComponent(await compress(JSON.stringify(data), 'deflate-raw'));
+    // 2. prepare a stateful preview link
+    const tagName = window.wcp.manifest.elements.get(this.previewTagName)?.getNiceUrl();
+    const link = `/element/${tagName}/viewer/${param}`;
+    // 3. open the preview link in the viewer tab
+    location.hash = link;
+  }
+
   override connectedCallback() {
     super.connectedCallback();
     this.#setupHints();
@@ -126,7 +141,7 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
   }
 
   @eventOptions({ passive: true })
-  private handleClick() {
+  private handleToggleClick() {
     this.enabled = !this.enabled;
     this.#setupHints();
   }
@@ -138,7 +153,7 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
         kind="icon"
         class="${classMap({ active: this.enabled })}"
         ?disabled="${!this.available}"
-        @click="${this.handleClick}"
+        @click="${this.handleToggleClick}"
       >
         <wcp-icon name="terminal" style="--wcp-icon-size: 19"></wcp-icon>
       </wcp-button>

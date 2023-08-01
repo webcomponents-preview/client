@@ -83,6 +83,10 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
     this.manifest = parseCEM(manifest, config?.excludeElements);
     this.navigationItems = prepareNavigation(this.manifest, config);
 
+    // store the manifest in global scope as well, to be accessible for all others
+    window.wcp = window.wcp ?? {};
+    window.wcp.manifest = this.manifest;
+
     // notify all others
     this.emitManifestLoaded();
   }
@@ -150,6 +154,17 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
 }
 
 declare global {
+  interface WCP {
+    // in-memory manifest cache, as we store the promise directly,
+    // we can allow concurrent requests to the config and just
+    // wait for the promise to resolve
+    manifest: Manifest;
+  }
+
+  interface Window {
+    wcp: WCP;
+  }
+
   interface HTMLElementEventMap {
     'wcp-root:active-element-changed': CustomEvent<CustomElementDeclaration | undefined>;
     'wcp-root:manifest-loaded': CustomEvent<CustomElementDeclaration[]>;

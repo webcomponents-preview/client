@@ -62,8 +62,8 @@ export const prepareRoutes = (router: Router, config: Config, manifest: Manifest
 
       // digest these insights; redirect and block current route
       if (hasOutgoingParams && haveParamsChanged && isSamePath) {
-        const { tagName, pluginName } = alignedParams;
-        router.redirect(`/element/${tagName}/${pluginName}`);
+        const { tagName, pluginName, pluginData } = alignedParams;
+        router.redirect('/element', tagName, pluginName, pluginData);
         return false;
       }
 
@@ -75,16 +75,16 @@ export const prepareRoutes = (router: Router, config: Config, manifest: Manifest
         <wcp-preview-frame
           active-plugin="${ifDefined(pluginName)}"
           @wcp-preview-frame:active-plugin-change="${({ detail: pluginName }: CustomEvent<string>) =>
-            router.redirect(`/element/${tagName}/${pluginName}`)}"
+            router.redirect('/element', tagName, pluginName)}"
         >
           ${map(
             config.previewFramePlugins ?? [],
             (previewFramePlugin) => withStatic(html)`
             <${unsafeStatic(previewFramePlugin)}
-              .element="${manifest.elements.get(tagName)}"
+              preview-tag-name="${tagName}"
               .data="${ifDefined(pluginData)}"
               @wcp-preview-frame-plugin:data-change="${({ detail: pluginData }: CustomEvent<string>) =>
-                router.redirect(`/element/${tagName}/${pluginName}/${pluginData}`)}"
+                router.redirect('/element', tagName, pluginName, pluginData)}"
             ></${unsafeStatic(previewFramePlugin)}>
           `
           )}

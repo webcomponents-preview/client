@@ -83,7 +83,8 @@ export class Router {
   /**
    * Redirect to a given path. This will trigger a hash change event.
    */
-  redirect(path: string) {
+  redirect(...slugs: (string | undefined)[]) {
+    const path = slugs.filter(Boolean).join('/');
     console.log(`Redirecting to ${path}`);
     location.hash = path;
   }

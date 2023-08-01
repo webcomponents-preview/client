@@ -4,10 +4,10 @@
 
 ## Properties
 
-| Property  | Attribute | Modifiers |
-|-----------|-----------|-----------|
-| `data`    | `data`    | readonly  |
-| `element` | `element` | readonly  |
+| Property         | Attribute          | Modifiers | Type                  |
+|------------------|--------------------|-----------|-----------------------|
+| `data`           | `data`             | readonly  |                       |
+| `previewTagName` | `preview-tag-name` |           | `string \| undefined` |
 
 ## Events
 

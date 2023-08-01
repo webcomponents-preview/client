@@ -1,5 +1,3 @@
-import type * as Parsed from '@/utils/parser.types.js';
-
 // Preview Frame Plugins may emit a plugin data change event.
 declare global {
   interface HTMLElementEventMap {
@@ -18,14 +16,14 @@ export type Plugin = Element & {
   readonly name: string;
   readonly label: string;
   readonly available: boolean;
+  readonly previewTagName: string;
 };
 
 /**
  * Type to be used with preview frame plugins.
  */
 export type PreviewFramePlugin = Plugin & {
-  element?: Parsed.Element;
-  data?: string;
+  readonly data?: string;
 };
 
 /**
@@ -33,7 +31,6 @@ export type PreviewFramePlugin = Plugin & {
  */
 export type PreviewPlugin = Plugin & {
   readonly container: HTMLElement;
-  readonly previewTagName: string;
 };
 
 export function isPlugin(element: Element): element is Plugin {

@@ -30,8 +30,8 @@ import styles from './preview-frame-viewer-controls.component.scss';
 export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
-  @property({ type: Object })
-  readonly element?: Parsed.Element;
+  @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
+  previewTagName?: string;
 
   @property({ type: Object })
   readonly data?: ElementData;
@@ -134,23 +134,24 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
   }
 
   protected override render(): TemplateResult {
+    const element = window.wcp.manifest.elements.get(this.previewTagName ?? '');
     return html`
       <form @input="${this.handleFormInput}">
         ${when(
-          this.element?.hasFields,
+          element?.hasFields,
           () => html`
             <fieldset>
               <legend>Fields</legend>
-              ${map(this.element?.fields.values(), (field) => this.renderFieldControl(field))}
+              ${map(element?.fields.values(), (field) => this.renderFieldControl(field))}
             </fieldset>
           `
         )}
         ${when(
-          this.element?.hasSlots,
+          element?.hasSlots,
           () => html`
             <fieldset>
               <legend>Slots</legend>
-              ${map(this.element?.slots.values(), (slot) => this.renderSlotControl(slot))}
+              ${map(element?.slots.values(), (slot) => this.renderSlotControl(slot))}
             </fieldset>
           `
         )}

@@ -4,12 +4,12 @@
 
 ## Properties
 
-| Property    | Attribute   | Modifiers | Type       | Default  |
-|-------------|-------------|-----------|------------|----------|
-| `available` | `available` |           | `boolean`  | false    |
-| `element`   | `element`   |           |            |          |
-| `label`     | `label`     | readonly  | `"Readme"` | "Readme" |
-| `name`      | `name`      | readonly  | `"readme"` | "readme" |
+| Property         | Attribute          | Modifiers | Type       | Default  |
+|------------------|--------------------|-----------|------------|----------|
+| `available`      | `available`        |           | `boolean`  | false    |
+| `label`          | `label`            | readonly  | `"Readme"` | "Readme" |
+| `name`           | `name`             | readonly  | `"readme"` | "readme" |
+| `previewTagName` | `preview-tag-name` |           | `string`   |          |
 
 ## Events
 

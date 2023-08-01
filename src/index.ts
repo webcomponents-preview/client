@@ -30,6 +30,7 @@ export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.ut
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer-controls/preview-frame-viewer-controls.component.js';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component.js';
 export * from './components/plugins/preview-viewer-link/preview-viewer-link.plugin.js';
+export * from './components/plugins/preview-viewer-link/preview-viewer-link.utils.js';
 export * from './components/plugins/preview-viewer-link/preview-viewer-link-hint/preview-viewer-link-hint.component.js';
 export * from './components/plugins/preview-viewport/preview-viewport.plugin.js';
 export * from './components/root/root.component.js';

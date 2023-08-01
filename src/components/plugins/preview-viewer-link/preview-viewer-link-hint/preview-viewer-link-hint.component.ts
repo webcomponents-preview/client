@@ -73,7 +73,7 @@ export class PreviewViewerLinkHint extends ColorSchemable(LitElement) {
   }
 
   #observeElement() {
-    if (!this.#element) return;
+    if (this.#element === undefined) return;
     this.#observer.disconnect();
     this.#observer.observe(this.#element);
   }

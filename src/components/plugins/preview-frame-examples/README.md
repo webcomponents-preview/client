@@ -6,12 +6,12 @@ Shows the examples of a custom element manifest.
 
 ## Properties
 
-| Property    | Attribute   | Modifiers | Type         | Default    |
-|-------------|-------------|-----------|--------------|------------|
-| `available` | `available` |           | `boolean`    | false      |
-| `element`   | `element`   |           |              |            |
-| `label`     | `label`     | readonly  | `"Examples"` | "Examples" |
-| `name`      | `name`      | readonly  | `"examples"` | "examples" |
+| Property         | Attribute          | Modifiers | Type         | Default    |
+|------------------|--------------------|-----------|--------------|------------|
+| `available`      | `available`        |           | `boolean`    | false      |
+| `label`          | `label`            | readonly  | `"Examples"` | "Examples" |
+| `name`           | `name`             | readonly  | `"examples"` | "examples" |
+| `previewTagName` | `preview-tag-name` |           | `string`     |            |
 
 ## Events
 

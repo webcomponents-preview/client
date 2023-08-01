@@ -64,13 +64,15 @@ export type Config = {
 };
 
 declare global {
+  interface WCP {
+    // in-memory config cache, as we store the promise directly,
+    // we can allow concurrent requests to the config and just
+    // wait for the promise to resolve
+    config: Promise<Config>;
+  }
+
   interface Window {
-    wcp: {
-      // in-memory config cache, as we store the promise directly,
-      // we can allow concurrent requests to the config and just
-      // wait for the promise to resolve
-      config: Promise<Config>;
-    };
+    wcp: WCP;
   }
 }
 

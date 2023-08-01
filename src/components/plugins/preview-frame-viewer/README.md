@@ -4,13 +4,13 @@
 
 ## Properties
 
-| Property    | Attribute   | Modifiers | Type                  | Default  |
-|-------------|-------------|-----------|-----------------------|----------|
-| `available` | `available` | readonly  | `true`                | true     |
-| `data`      | `data`      |           | `string \| undefined` |          |
-| `element`   | `element`   |           |                       |          |
-| `label`     | `label`     | readonly  | `"Viewer"`            | "Viewer" |
-| `name`      | `name`      | readonly  | `"viewer"`            | "viewer" |
+| Property         | Attribute          | Modifiers | Type                  | Default  |
+|------------------|--------------------|-----------|-----------------------|----------|
+| `available`      | `available`        | readonly  | `true`                | true     |
+| `data`           | `data`             |           | `string \| undefined` |          |
+| `label`          | `label`            | readonly  | `"Viewer"`            | "Viewer" |
+| `name`           | `name`             | readonly  | `"viewer"`            | "viewer" |
+| `previewTagName` | `preview-tag-name` |           | `string`              |          |
 
 ## Methods
 

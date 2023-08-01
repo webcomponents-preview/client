@@ -79,7 +79,7 @@ export class Preview extends ColorSchemable(LitElement) {
                 ${when(index > 0, () => html`<hr />`)} ${staticHtml`
                   <${unsafeStatic(plugin)}
                     .container="${this.container}"
-                    .previewTagName="${this.previewTagName}"
+                    preview-tag-name="${this.previewTagName}"
                   ></${unsafeStatic(plugin)}>
                 `}
               `
