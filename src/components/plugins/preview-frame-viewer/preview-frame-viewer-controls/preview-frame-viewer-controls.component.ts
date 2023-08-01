@@ -8,6 +8,7 @@ import { when } from 'lit/directives/when.js';
 import type * as Parsed from '@/utils/parser.types.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { renderMarkdown } from '@/utils/markdown.utils.js';
+import { litKey } from '@/utils/parser.utils.js';
 
 import type { ElementData } from '../preview-frame-viewer.utils.js';
 
@@ -45,6 +46,7 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
 
   protected renderFieldControl(field: Parsed.Field): TemplateResult {
     if (!field.isControllable) return html`${nothing}`;
+    const key = litKey(field);
 
     return html`
       ${when(
@@ -54,7 +56,7 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
             <wcp-input-checkbox
               name="fields.${field.name}"
               label="${field.name}"
-              ?checked="${Boolean(this.data?.fields[field.name])}"
+              ?checked="${Boolean(this.data?.fields[key])}"
             >
               ${this.renderHint(field.description)}
             </wcp-input-checkbox>
@@ -66,7 +68,7 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
           <wcp-input-text
             name="fields.${field.name}"
             label="${field.attribute ?? field.name}"
-            .value="${this.data?.fields[field.name] as string | undefined}"
+            .value="${this.data?.fields[key] as string | undefined}"
           >
             ${this.renderHint(field.description)}
           </wcp-input-text>
@@ -78,7 +80,7 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
           <wcp-input-number
             name="fields.${field.name}"
             label="${field.attribute ?? field.name}"
-            .value="${this.data?.fields[field.name] as number | undefined}"
+            .value="${this.data?.fields[key] as number | undefined}"
           >
             ${this.renderHint(field.description)}
           </wcp-input-number>
@@ -90,7 +92,7 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
           <wcp-input-select
             name="fields.${field.name}"
             label="${field.attribute ?? field.name}"
-            .value="${this.data?.fields[field.name] as string | undefined}"
+            .value="${this.data?.fields[key] as string | undefined}"
           >
             ${map(
               field.enumValues,
