@@ -56,10 +56,11 @@ declare module "src/utils/config.utils" {
         };
     };
     global {
+        interface WCP {
+            config: Promise<Config>;
+        }
         interface Window {
-            wcp: {
-                config: Promise<Config>;
-            };
+            wcp: WCP;
         }
     }
     export const defaultConfig: {
@@ -363,116 +364,12 @@ declare module "src/components/features/preview-controls/preview-controls.compon
         }
     }
 }
-declare module "src/utils/parser.types" {
-    /**
-     * Wraps custom element field declarations to provide additional meta data.
-     */
-    export type GenericField<T> = {
-        name: string;
-        isBoolean: T extends boolean ? true : false;
-        isNumber: T extends number ? true : false;
-        isString: T extends string ? true : false;
-        isArray: T extends [] ? true : false;
-        isEnum: T extends string ? boolean : false;
-        isObject: boolean;
-        /**
-         * Indicates if the field can be controlled by the viewer.
-         */
-        isControllable: boolean;
-        isOptional: boolean;
-        hasAttribute: boolean;
-        attribute?: string;
-        hasDefault: boolean;
-        default?: T;
-        hasDescription: boolean;
-        description?: string;
-        isStatic: boolean;
-        isPublic: boolean;
-        isPrivate: boolean;
-        isProtected: boolean;
-        enumValues: string[];
-        new (element: object): Field;
-    };
-    export type Field = GenericField<boolean> | GenericField<number> | GenericField<string> | GenericField<[]> | GenericField<unknown>;
-    export type Slot = {
-        /**
-         * Contains the default type of the slot.
-         */
-        default: string;
-        /**
-         * Default slots should have an empty name ('').
-         */
-        name: '' | string;
-        new (element: object): Slot;
-    } & ({
-        hasDescription: true;
-        description: string;
-    } | {
-        hasDescription: false;
-        description: undefined;
-    });
-    /**
-     * Wraps custom element declarations to provide additional meta data.
-     */
-    export type Element = {
-        /**
-         * Contains all fields, keyed by their property name.
-         */
-        fields: Map<string, Field>;
-        hasFields: boolean;
-        /**
-         * Contains all slots, keyed by their name.
-         * The default slot always has an empty name ('').
-         */
-        slots: Map<string, Slot>;
-        hasSlots: boolean;
-        name: string;
-        tagName: string;
-        getNiceName(): string;
-        getNiceUrl(): string;
-        new (element: object): Element;
-    } & ({
-        hasGroups: true;
-        groups: [string, ...string[]];
-    } | {
-        hasGroups: false;
-        groups: [];
-    }) & ({
-        hasReadme: true;
-        readme: string;
-    } | {
-        hasReadme: false;
-        readme: undefined;
-    }) & ({
-        hasExamples: true;
-        examples: [string, ...string[]];
-    } | {
-        hasExamples: false;
-        examples: [];
-    });
-    /**
-     * Wraps a manifest to provide additional meta data.
-     */
-    export type Manifest = {
-        /**
-         * Contains all custom elements, keyed by their tag name.
-         */
-        elements: Map<string, Element>;
-        /**
-         * Delivers the elements grouped.
-         */
-        getGroupedElements(fallbackGroupName: string): Map<string, Element[]>;
-    };
-    export type Parser = {
-        /**
-         * Parses the given data to a manifest with some meta data.
-         * Allow the exclusion of certain elements by their tag name.
-         */
-        new (data: object, exclude?: string[]): Manifest;
-    };
-}
 declare module "src/utils/plugin.utils" {
-    import type * as Parsed from "src/utils/parser.types";
+    global {
+        interface HTMLElementEventMap {
+            'wcp-preview-frame-plugin:data-change': CustomEvent<string>;
+        }
+    }
     /**
      * Each plugin must implement this interface.
      * Additionally, the plugin may emits an event, notifying about
@@ -484,19 +381,19 @@ declare module "src/utils/plugin.utils" {
         readonly name: string;
         readonly label: string;
         readonly available: boolean;
+        readonly previewTagName: string;
     };
     /**
      * Type to be used with preview frame plugins.
      */
     export type PreviewFramePlugin = Plugin & {
-        element?: Parsed.Element;
+        readonly data?: string;
     };
     /**
      * Type to be used with preview plugins.
      */
     export type PreviewPlugin = Plugin & {
         readonly container: HTMLElement;
-        readonly previewTagName: string;
     };
     export function isPlugin(element: Element): element is Plugin;
     export function findAllPlugins(slot: HTMLSlotElement): Plugin[];
@@ -1324,9 +1221,116 @@ declare module "src/components/layout/main/main.component" {
         }
     }
 }
+declare module "src/utils/parser.types" {
+    /**
+     * Wraps custom element field declarations to provide additional meta data.
+     */
+    export type GenericField<T> = {
+        name: string;
+        isBoolean: T extends boolean ? true : false;
+        isNumber: T extends number ? true : false;
+        isString: T extends string ? true : false;
+        isArray: T extends [] ? true : false;
+        isEnum: T extends string ? boolean : false;
+        isObject: boolean;
+        /**
+         * Indicates if the field can be controlled by the viewer.
+         */
+        isControllable: boolean;
+        isOptional: boolean;
+        hasAttribute: boolean;
+        attribute?: string;
+        hasDefault: boolean;
+        default?: T;
+        hasDescription: boolean;
+        description?: string;
+        isStatic: boolean;
+        isPublic: boolean;
+        isPrivate: boolean;
+        isProtected: boolean;
+        enumValues: string[];
+        new (element: object): Field;
+    };
+    export type Field = GenericField<boolean> | GenericField<number> | GenericField<string> | GenericField<[]> | GenericField<unknown>;
+    export type Slot = {
+        /**
+         * Contains the default type of the slot.
+         */
+        default: string;
+        /**
+         * Default slots should have an empty name ('').
+         */
+        name: '' | string;
+        new (element: object): Slot;
+    } & ({
+        hasDescription: true;
+        description: string;
+    } | {
+        hasDescription: false;
+        description: undefined;
+    });
+    /**
+     * Wraps custom element declarations to provide additional meta data.
+     */
+    export type Element = {
+        /**
+         * Contains all fields, keyed by their property name.
+         */
+        fields: Map<string, Field>;
+        hasFields: boolean;
+        /**
+         * Contains all slots, keyed by their name.
+         * The default slot always has an empty name ('').
+         */
+        slots: Map<string, Slot>;
+        hasSlots: boolean;
+        name: string;
+        tagName: string;
+        getNiceName(): string;
+        getNiceUrl(): string;
+        new (element: object): Element;
+    } & ({
+        hasGroups: true;
+        groups: [string, ...string[]];
+    } | {
+        hasGroups: false;
+        groups: [];
+    }) & ({
+        hasReadme: true;
+        readme: string;
+    } | {
+        hasReadme: false;
+        readme: undefined;
+    }) & ({
+        hasExamples: true;
+        examples: [string, ...string[]];
+    } | {
+        hasExamples: false;
+        examples: [];
+    });
+    /**
+     * Wraps a manifest to provide additional meta data.
+     */
+    export type Manifest = {
+        /**
+         * Contains all custom elements, keyed by their tag name.
+         */
+        elements: Map<string, Element>;
+        /**
+         * Delivers the elements grouped.
+         */
+        getGroupedElements(fallbackGroupName: string): Map<string, Element[]>;
+    };
+    export type Parser = {
+        /**
+         * Parses the given data to a manifest with some meta data.
+         * Allow the exclusion of certain elements by their tag name.
+         */
+        new (data: object, exclude?: string[]): Manifest;
+    };
+}
 declare module "src/components/plugins/preview-frame-examples/preview-frame-examples.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
-    import type * as Parsed from "src/utils/parser.types";
     import type { PreviewFramePlugin } from "src/utils/plugin.utils";
     const PreviewFrameExamples_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
@@ -1338,7 +1342,7 @@ declare module "src/components/plugins/preview-frame-examples/preview-frame-exam
         static readonly styles: import("lit").CSSResult;
         private _element?;
         available: boolean;
-        set element(element: Parsed.Element | undefined);
+        set previewTagName(previewTagName: string);
         readonly name = "examples";
         readonly label = "Examples";
         protected render(): TemplateResult;
@@ -1354,14 +1358,13 @@ declare module "src/components/plugins/preview-frame-examples/preview-frame-exam
 }
 declare module "src/components/plugins/preview-frame-readme/preview-frame-readme.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
-    import type * as Parsed from "src/utils/parser.types";
     import type { PreviewFramePlugin } from "src/utils/plugin.utils";
     const PreviewFrameReadme_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     export class PreviewFrameReadme extends PreviewFrameReadme_base implements PreviewFramePlugin {
         static readonly styles: import("lit").CSSResult;
         private _element?;
         available: boolean;
-        set element(element: Parsed.Element | undefined);
+        set previewTagName(previewTagName: string);
         readonly name = "readme";
         readonly label = "Readme";
         protected render(): TemplateResult;
@@ -1374,6 +1377,24 @@ declare module "src/components/plugins/preview-frame-readme/preview-frame-readme
             'wcp-preview-frame-readme': PreviewFrameReadme;
         }
     }
+}
+declare module "src/utils/compression.utils" {
+    /**
+     *	Compress a string with browser native APIs into a string representation
+     *
+     * @param data - Input string that should be compressed
+     * @param encoding - Compression algorithm to use
+     * @returns The compressed string
+     */
+    export function compress(data: string, encoding: CompressionFormat): Promise<string>;
+    /**
+     * Decompress a string representation with browser native APIs in to a normal js string
+     *
+     * @param data - String that should be decompressed
+     * @param encoding - Decompression algorithm to use
+     * @returns The decompressed string
+     */
+    export function decompress(data: string, encoding: CompressionFormat): Promise<string>;
 }
 declare module "src/utils/parser.utils" {
     import type * as Parsed from "src/utils/parser.types";
@@ -1397,7 +1418,13 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
          */
         slots: Record<string, string>;
     };
+    /**
+     * Empty state object of the element data.
+     */
     export const EMPTY_ELEMENT_DATA: ElementData;
+    /**
+     * Prepares an initial state object for the given element definition.
+     */
     export function prepareInitialData(element: Parsed.Element): ElementData;
     /**
      * Retrieve the current value of a given field parsed to the correct type
@@ -1410,7 +1437,6 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
 }
 declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
-    import type * as Parsed from "src/utils/parser.types";
     import type { PreviewFramePlugin } from "src/utils/plugin.utils";
     const PreviewFrameViewer_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
@@ -1419,13 +1445,16 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
     export class PreviewFrameViewer extends PreviewFrameViewer_base implements PreviewFramePlugin {
         #private;
         static readonly styles: import("lit").CSSResult;
+        private _element?;
         private _elementData?;
-        set element(element: Parsed.Element | undefined);
+        set previewTagName(previewTagName: string);
+        set data(data: string | undefined);
         readonly available = true;
         readonly name = "viewer";
         readonly label = "Viewer";
         protected getElementReference(): Element | undefined;
-        protected handleControlsInput(event: CustomEvent<FormData>): void;
+        protected handleControlsInput({ detail }: CustomEvent<FormData>): Promise<void>;
+        protected firstUpdated(): void;
         protected render(): TemplateResult;
     }
     global {
@@ -1453,7 +1482,7 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
      */
     export class PreviewFrameViewerControls extends PreviewFrameViewerControls_base {
         static readonly styles: import("lit").CSSResult;
-        readonly element?: Parsed.Element;
+        previewTagName?: string;
         readonly data?: ElementData;
         protected renderHint(content?: string): TemplateResult;
         protected renderFieldControl(field: Parsed.Field): TemplateResult;
@@ -1496,6 +1525,13 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
         }
     }
 }
+declare module "src/components/plugins/preview-viewer-link/preview-viewer-link.utils" {
+    import { ElementData } from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.utils";
+    /**
+     * Prepares an initial state object for the given element definition.
+     */
+    export function readCurrentElementData(ref: HTMLElement): ElementData;
+}
 declare module "src/components/plugins/preview-viewer-link/preview-viewer-link.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
     import type { PreviewPlugin } from "src/utils/plugin.utils";
@@ -1507,11 +1543,10 @@ declare module "src/components/plugins/preview-viewer-link/preview-viewer-link.p
         readonly available = true;
         readonly name = "viewer-link";
         readonly label = "Show in viewer";
-        readonly toggleLabel = "Highlight";
         enabled: boolean;
         connectedCallback(): void;
         disconnectedCallback(): void;
-        private handleInput;
+        private handleToggleClick;
         protected render(): TemplateResult;
     }
     global {
@@ -1689,7 +1724,7 @@ declare module "src/utils/router.utils" {
         /**
          * Redirect to a given path. This will trigger a hash change event.
          */
-        redirect(path: string): void;
+        redirect(...slugs: (string | undefined)[]): void;
         /**
          * Update the current path without triggering a redirect.
          */
@@ -1839,6 +1874,12 @@ declare module "src/components/root/root.component" {
         protected render(): TemplateResult;
     }
     global {
+        interface WCP {
+            manifest: Manifest;
+        }
+        interface Window {
+            wcp: WCP;
+        }
         interface HTMLElementEventMap {
             'wcp-root:active-element-changed': CustomEvent<CustomElementDeclaration | undefined>;
             'wcp-root:manifest-loaded': CustomEvent<CustomElementDeclaration[]>;
@@ -2157,6 +2198,7 @@ declare module "src/index" {
     export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer-controls/preview-frame-viewer-controls.component";
     export * from "src/components/plugins/preview-frame-viewer/preview-frame-viewer-stage/preview-frame-viewer-stage.component";
     export * from "src/components/plugins/preview-viewer-link/preview-viewer-link.plugin";
+    export * from "src/components/plugins/preview-viewer-link/preview-viewer-link.utils";
     export * from "src/components/plugins/preview-viewer-link/preview-viewer-link-hint/preview-viewer-link-hint.component";
     export * from "src/components/plugins/preview-viewport/preview-viewport.plugin";
     export * from "src/components/root/root.component";
@@ -2169,6 +2211,7 @@ declare module "src/index" {
     export * from "src/components/ui/title/title.component";
     export * from "src/parsers/cem/utils";
     export * from "src/utils/color-scheme.utils";
+    export * from "src/utils/compression.utils";
     export * from "src/utils/config.utils";
     export * from "src/utils/dom.utils";
     export * from "src/utils/form.utils";

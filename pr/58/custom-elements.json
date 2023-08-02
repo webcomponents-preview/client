@@ -3312,8 +3312,9 @@
             },
             {
               "kind": "field",
-              "name": "element",
-              "attribute": "element"
+              "name": "previewTagName",
+              "attribute": "preview-tag-name",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3348,8 +3349,8 @@
               "fieldName": "available"
             },
             {
-              "name": "element",
-              "fieldName": "element"
+              "name": "preview-tag-name",
+              "fieldName": "previewTagName"
             },
             {
               "name": "name",
@@ -3381,7 +3382,7 @@
             "package": "lit"
           },
           "examples": [],
-          "readme": "# wcp-preview-frame-examples\n\nShows the examples of a custom element manifest.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property    | Attribute   | Modifiers | Type         | Default    |\n|-------------|-------------|-----------|--------------|------------|\n| `available` | `available` |           | `boolean`    | false      |\n| `element`   | `element`   |           |              |            |\n| `label`     | `label`     | readonly  | `\"Examples\"` | \"Examples\" |\n| `name`      | `name`      | readonly  | `\"examples\"` | \"examples\" |\n\n## Events\n\n| Event                                          |\n|------------------------------------------------|\n| `wcp-preview-frame-plugin:availability-change` |\n\n## CSS Custom Properties\n\n| Property                               | Description               |\n|----------------------------------------|---------------------------|\n| `--wcp-preview-frame-examples-spacing` | Spacing between examples. |\n",
+          "readme": "# wcp-preview-frame-examples\n\nShows the examples of a custom element manifest.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type         | Default    |\n|------------------|--------------------|-----------|--------------|------------|\n| `available`      | `available`        |           | `boolean`    | false      |\n| `label`          | `label`            | readonly  | `\"Examples\"` | \"Examples\" |\n| `name`           | `name`             | readonly  | `\"examples\"` | \"examples\" |\n| `previewTagName` | `preview-tag-name` |           | `string`     |            |\n\n## Events\n\n| Event                                          |\n|------------------------------------------------|\n| `wcp-preview-frame-plugin:availability-change` |\n\n## CSS Custom Properties\n\n| Property                               | Description               |\n|----------------------------------------|---------------------------|\n| `--wcp-preview-frame-examples-spacing` | Spacing between examples. |\n",
           "groups": [
             "plugins"
           ],
@@ -3437,8 +3438,9 @@
             },
             {
               "kind": "field",
-              "name": "element",
-              "attribute": "element"
+              "name": "previewTagName",
+              "attribute": "preview-tag-name",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3473,8 +3475,8 @@
               "fieldName": "available"
             },
             {
-              "name": "element",
-              "fieldName": "element"
+              "name": "preview-tag-name",
+              "fieldName": "previewTagName"
             },
             {
               "name": "name",
@@ -3505,7 +3507,7 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "readme": "# wcp-preview-frame-readme\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property    | Attribute   | Modifiers | Type       | Default  |\n|-------------|-------------|-----------|------------|----------|\n| `available` | `available` |           | `boolean`  | false    |\n| `element`   | `element`   |           |            |          |\n| `label`     | `label`     | readonly  | `\"Readme\"` | \"Readme\" |\n| `name`      | `name`      | readonly  | `\"readme\"` | \"readme\" |\n\n## Events\n\n| Event                                          |\n|------------------------------------------------|\n| `wcp-preview-frame-plugin:availability-change` |\n",
+          "readme": "# wcp-preview-frame-readme\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type       | Default  |\n|------------------|--------------------|-----------|------------|----------|\n| `available`      | `available`        |           | `boolean`  | false    |\n| `label`          | `label`            | readonly  | `\"Readme\"` | \"Readme\" |\n| `name`           | `name`             | readonly  | `\"readme\"` | \"readme\" |\n| `previewTagName` | `preview-tag-name` |           | `string`   |          |\n\n## Events\n\n| Event                                          |\n|------------------------------------------------|\n| `wcp-preview-frame-plugin:availability-change` |\n",
           "groups": [
             "plugins"
           ],
@@ -3543,11 +3545,11 @@
           "members": [
             {
               "kind": "field",
-              "name": "#element",
-              "privacy": "private",
+              "name": "_element",
               "type": {
                 "text": "Parsed.Element | undefined"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -3559,8 +3561,14 @@
             },
             {
               "kind": "field",
-              "name": "element",
-              "attribute": "element"
+              "name": "previewTagName",
+              "attribute": "preview-tag-name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "data",
+              "attribute": "data"
             },
             {
               "kind": "field",
@@ -3597,6 +3605,19 @@
             },
             {
               "kind": "method",
+              "name": "#prepareElementData",
+              "parameters": [
+                {
+                  "name": "data",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
               "name": "getElementReference",
               "privacy": "protected",
               "return": {
@@ -3611,7 +3632,7 @@
               "privacy": "protected",
               "parameters": [
                 {
-                  "name": "event",
+                  "name": "{ detail }",
                   "type": {
                     "text": "CustomEvent<FormData>"
                   }
@@ -3621,8 +3642,12 @@
           ],
           "attributes": [
             {
-              "name": "element",
-              "fieldName": "element"
+              "name": "preview-tag-name",
+              "fieldName": "previewTagName"
+            },
+            {
+              "name": "data",
+              "fieldName": "data"
             },
             {
               "name": "available",
@@ -3664,7 +3689,7 @@
           },
           "tagName": "wcp-preview-frame-viewer",
           "examples": [],
-          "readme": "# wcp-preview-frame-viewer\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property    | Attribute   | Modifiers | Type       | Default  |\n|-------------|-------------|-----------|------------|----------|\n| `available` | `available` | readonly  | `true`     | true     |\n| `element`   | `element`   |           |            |          |\n| `label`     | `label`     | readonly  | `\"Viewer\"` | \"Viewer\" |\n| `name`      | `name`      | readonly  | `\"viewer\"` | \"viewer\" |\n",
+          "readme": "# wcp-preview-frame-viewer\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type                  | Default  |\n|------------------|--------------------|-----------|-----------------------|----------|\n| `available`      | `available`        | readonly  | `true`                | true     |\n| `data`           | `data`             |           | `string \\| undefined` |          |\n| `label`          | `label`            | readonly  | `\"Viewer\"`            | \"Viewer\" |\n| `name`           | `name`             | readonly  | `\"viewer\"`            | \"viewer\" |\n| `previewTagName` | `preview-tag-name` |           | `string`              |          |\n\n## Methods\n\n| Method                | Type                                |\n|-----------------------|-------------------------------------|\n| `#prepareElementData` | `(data?: string \\| undefined): any` |\n\n## Events\n\n| Event                                  |\n|----------------------------------------|\n| `wcp-preview-frame-plugin:data-change` |\n",
           "groups": [
             "plugins"
           ],
@@ -3719,7 +3744,9 @@
               "type": {
                 "text": "string"
               },
-              "readonly": true
+              "readonly": true,
+              "attribute": "preview-tag-name",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3752,17 +3779,6 @@
               "readonly": true,
               "default": "'Show in viewer'",
               "attribute": "label",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "toggleLabel",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'Highlight'",
-              "attribute": "toggle-label",
               "reflects": true
             },
             {
@@ -3846,19 +3862,31 @@
             },
             {
               "kind": "method",
-              "name": "handleInput",
-              "privacy": "private",
+              "name": "#openViewer",
               "parameters": [
                 {
-                  "name": "event",
+                  "name": "element",
                   "type": {
-                    "text": "Event"
+                    "text": "HTMLElement"
                   }
                 }
               ]
+            },
+            {
+              "kind": "method",
+              "name": "handleToggleClick",
+              "privacy": "private"
             }
           ],
           "attributes": [
+            {
+              "name": "preview-tag-name",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "fieldName": "previewTagName"
+            },
             {
               "name": "available",
               "type": {
@@ -3887,15 +3915,6 @@
               "fieldName": "label"
             },
             {
-              "name": "toggle-label",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'Highlight'",
-              "fieldName": "toggleLabel"
-            },
-            {
               "name": "enabled",
               "type": {
                 "text": "boolean"
@@ -3908,7 +3927,7 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "readme": "# wcp-preview-viewer-link\n\n## Properties\n\n| Property         | Attribute      | Modifiers | Type               | Default          |\n|------------------|----------------|-----------|--------------------|------------------|\n| `available`      | `available`    | readonly  | `true`             | true             |\n| `container`      |                | readonly  |                    |                  |\n| `enabled`        | `enabled`      |           | `boolean`          | false            |\n| `label`          | `label`        | readonly  | `\"Show in viewer\"` | \"Show in viewer\" |\n| `name`           | `name`         | readonly  | `\"viewer-link\"`    | \"viewer-link\"    |\n| `previewTagName` |                | readonly  | `string`           |                  |\n| `toggleLabel`    | `toggle-label` | readonly  | `\"Highlight\"`      | \"Highlight\"      |\n\n## Methods\n\n| Method                       | Type                   |\n|------------------------------|------------------------|\n| `#attachHint`                | `(element: any): void` |\n| `#attachHints`               | `(): void`             |\n| `#attachOverlay`             | `(): void`             |\n| `#detachHints`               | `(): void`             |\n| `#detachOverlay`             | `(): void`             |\n| `#findContainerSlot`         | `(): any`              |\n| `#handleContainerScroll`     | `(): void`             |\n| `#handleContainerSlotChange` | `(): void`             |\n| `#observeContainerScroll`    | `(): void`             |\n| `#observeContainerSlot`      | `(): void`             |\n| `#setupHints`                | `(): void`             |\n| `#teardownHints`             | `(): void`             |\n| `#unobserveContainerScroll`  | `(): void`             |\n| `#unobserveContainerSlot`    | `(): void`             |\n",
+          "readme": "# wcp-preview-viewer-link\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type               | Default          |\n|------------------|--------------------|-----------|--------------------|------------------|\n| `available`      | `available`        | readonly  | `true`             | true             |\n| `container`      |                    | readonly  |                    |                  |\n| `enabled`        | `enabled`          |           | `boolean`          | false            |\n| `label`          | `label`            | readonly  | `\"Show in viewer\"` | \"Show in viewer\" |\n| `name`           | `name`             | readonly  | `\"viewer-link\"`    | \"viewer-link\"    |\n| `previewTagName` | `preview-tag-name` | readonly  | `string`           |                  |\n\n## Methods\n\n| Method                       | Type                   |\n|------------------------------|------------------------|\n| `#attachHint`                | `(element: any): void` |\n| `#attachHints`               | `(): void`             |\n| `#attachOverlay`             | `(): void`             |\n| `#detachHints`               | `(): void`             |\n| `#detachOverlay`             | `(): void`             |\n| `#findContainerSlot`         | `(): any`              |\n| `#handleContainerScroll`     | `(): void`             |\n| `#handleContainerSlotChange` | `(): void`             |\n| `#observeContainerScroll`    | `(): void`             |\n| `#observeContainerSlot`      | `(): void`             |\n| `#openViewer`                | `(element: any): any`  |\n| `#setupHints`                | `(): void`             |\n| `#teardownHints`             | `(): void`             |\n| `#unobserveContainerScroll`  | `(): void`             |\n| `#unobserveContainerSlot`    | `(): void`             |\n",
           "groups": [
             "plugins"
           ],
@@ -3958,7 +3977,9 @@
               "type": {
                 "text": "string"
               },
-              "readonly": true
+              "readonly": true,
+              "attribute": "preview-tag-name",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -4085,6 +4106,14 @@
           ],
           "attributes": [
             {
+              "name": "preview-tag-name",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "fieldName": "previewTagName"
+            },
+            {
               "name": "available",
               "type": {
                 "text": "boolean"
@@ -4137,7 +4166,7 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "readme": "# wcp-preview-viewport\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute   | Modifiers | Type         | Default    |\n|------------------|-------------|-----------|--------------|------------|\n| `available`      | `available` | readonly  | `true`       | true       |\n| `container`      |             | readonly  |              |            |\n| `label`          | `label`     | readonly  | `\"Viewport\"` | \"Viewport\" |\n| `name`           | `name`      | readonly  | `\"viewport\"` | \"viewport\" |\n| `previewTagName` |             | readonly  | `string`     |            |\n\n## Methods\n\n| Method                          | Type       |\n|---------------------------------|------------|\n| `handleInvertSimulatedViewport` | `(): void` |\n\n## Events\n\n| Event                          |\n|--------------------------------|\n| `wcp-preview-viewport:changed` |\n",
+          "readme": "# wcp-preview-viewport\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type         | Default    |\n|------------------|--------------------|-----------|--------------|------------|\n| `available`      | `available`        | readonly  | `true`       | true       |\n| `container`      |                    | readonly  |              |            |\n| `label`          | `label`            | readonly  | `\"Viewport\"` | \"Viewport\" |\n| `name`           | `name`             | readonly  | `\"viewport\"` | \"viewport\" |\n| `previewTagName` | `preview-tag-name` | readonly  | `string`     |            |\n\n## Methods\n\n| Method                          | Type       |\n|---------------------------------|------------|\n| `handleInvertSimulatedViewport` | `(): void` |\n\n## Events\n\n| Event                          |\n|--------------------------------|\n| `wcp-preview-viewport:changed` |\n",
           "groups": [
             "plugins"
           ],
@@ -5309,12 +5338,12 @@
           "members": [
             {
               "kind": "field",
-              "name": "element",
+              "name": "previewTagName",
               "type": {
-                "text": "Parsed.Element | undefined"
+                "text": "string | undefined"
               },
-              "readonly": true,
-              "attribute": "element"
+              "attribute": "preview-tag-name",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -5409,12 +5438,11 @@
           ],
           "attributes": [
             {
-              "name": "element",
+              "name": "preview-tag-name",
               "type": {
-                "text": "Parsed.Element | undefined"
+                "text": "string | undefined"
               },
-              "readonly": true,
-              "fieldName": "element"
+              "fieldName": "previewTagName"
             },
             {
               "name": "data",
@@ -5437,7 +5465,7 @@
           },
           "tagName": "wcp-preview-frame-viewer-controls",
           "examples": [],
-          "readme": "# wcp-preview-frame-viewer-controls\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property  | Attribute | Modifiers |\n|-----------|-----------|-----------|\n| `data`    | `data`    | readonly  |\n| `element` | `element` | readonly  |\n\n## Events\n\n| Event                                     | Type                    | Description                                  |\n|-------------------------------------------|-------------------------|----------------------------------------------|\n| `wcp-preview-frame-viewer-controls:input` | `CustomEvent<FormData>` | Fires when the user changes a control value. |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                    |\n|--------------------------------------------------|------------------------------------------------|\n| `--wcp-preview-frame-viewer-controls-dark-border-color` | The border color of the element in dark mode.  |\n| `--wcp-preview-frame-viewer-controls-headline-size` | The font size of the headline.                 |\n| `--wcp-preview-frame-viewer-controls-headline-spacing` | The inner spacing of the headline.             |\n| `--wcp-preview-frame-viewer-controls-headline-weight` | The font weight of the headline.               |\n| `--wcp-preview-frame-viewer-controls-light-border-color` | The border color of the element in light mode. |\n",
+          "readme": "# wcp-preview-frame-viewer-controls\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type                  |\n|------------------|--------------------|-----------|-----------------------|\n| `data`           | `data`             | readonly  |                       |\n| `previewTagName` | `preview-tag-name` |           | `string \\| undefined` |\n\n## Events\n\n| Event                                     | Type                    | Description                                  |\n|-------------------------------------------|-------------------------|----------------------------------------------|\n| `wcp-preview-frame-viewer-controls:input` | `CustomEvent<FormData>` | Fires when the user changes a control value. |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                    |\n|--------------------------------------------------|------------------------------------------------|\n| `--wcp-preview-frame-viewer-controls-dark-border-color` | The border color of the element in dark mode.  |\n| `--wcp-preview-frame-viewer-controls-headline-size` | The font size of the headline.                 |\n| `--wcp-preview-frame-viewer-controls-headline-spacing` | The inner spacing of the headline.             |\n| `--wcp-preview-frame-viewer-controls-headline-weight` | The font weight of the headline.               |\n| `--wcp-preview-frame-viewer-controls-light-border-color` | The border color of the element in light mode. |\n",
           "groups": [
             "plugins"
           ],
