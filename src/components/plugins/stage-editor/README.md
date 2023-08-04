@@ -16,9 +16,9 @@ Allows editing a custom element.
 
 ## Methods
 
-| Method                | Type                                |
-|-----------------------|-------------------------------------|
-| `#prepareElementData` | `(data?: string \| undefined): any` |
+| Method                | Type                                      |
+|-----------------------|-------------------------------------------|
+| `#prepareElementData` | `(compressed?: string \| undefined): any` |
 
 ## Events
 

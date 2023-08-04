@@ -1,6 +1,6 @@
 import { html, LitElement, type TemplateResult, unsafeCSS, nothing } from 'lit';
 import { unsafeStatic, withStatic } from 'lit/static-html.js';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
@@ -43,6 +43,24 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
 
   @property({ type: Object })
   readonly data?: ElementData;
+
+  @eventOptions({ passive: true })
+  protected handleFormInput(event: InputEvent): void {
+    if (this._element === undefined) return;
+
+    // prepare form data
+    const form = event.currentTarget as HTMLFormElement;
+    const formData = alignFormDataWebkit(new FormData(form), form.elements, this._element);
+
+    // broadcast form data
+    this.dispatchEvent(
+      new CustomEvent('wcp-stage-editor-controls:input', {
+        bubbles: true,
+        composed: true,
+        detail: formData,
+      })
+    );
+  }
 
   // content is derived from documentation which can be written in markdown
   protected renderHint(content?: string): TemplateResult {
@@ -126,21 +144,6 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
         ${when(slot.hasDescription, () => html`${this.renderHint(slot.description)}`)}
       </wcp-input-code>
     `;
-  }
-
-  protected handleFormInput(event: InputEvent): void {
-    if (this._element === undefined) return;
-
-    const form = event.currentTarget as HTMLFormElement;
-    const formData = alignFormDataWebkit(new FormData(form), form.elements, this._element);
-
-    this.dispatchEvent(
-      new CustomEvent('wcp-stage-editor-controls:input', {
-        bubbles: true,
-        composed: true,
-        detail: formData,
-      })
-    );
   }
 
   protected override render(): TemplateResult {

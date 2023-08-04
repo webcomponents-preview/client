@@ -140,9 +140,6 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
     super.firstUpdated(props);
     this.#initialValue = this.value;
 
-    this.checkValidity();
-    this.internals.setFormValue(this.value ?? null);
-
     this.initializeEditor();
     this.updateEditorTheme();
     this.updateEditorAutoSize();
@@ -236,11 +233,16 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
     super.disconnectedCallback();
   }
 
-  formResetCallback() {
-    this.value = this.#initialValue;
+  override attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+    super.attributeChangedCallback(name, oldValue, newValue);
 
+    if (name !== 'value') return;
     this.checkValidity();
     this.internals.setFormValue(this.value ?? null);
+  }
+
+  formResetCallback() {
+    this.value = this.#initialValue;
   }
 
   checkValidity(): boolean {
@@ -282,9 +284,6 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
   handleInput(event: Event) {
     const input = event.target as HTMLInputElement | HTMLTextAreaElement;
     this.value = input.value === '' ? undefined : input.value;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.value ?? null);
   }
 
   override renderInput(id: string) {

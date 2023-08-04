@@ -1,5 +1,8 @@
+import { compress, decompress } from '@/utils/compression.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
 import { litKey } from '@/utils/parser.utils.js';
+
+const URI_DATA_PARAM_COMPRESSION: CompressionFormat = 'deflate-raw';
 
 /**
  * State of the custom element.
@@ -83,7 +86,7 @@ export function alignFormDataWebkit(
       if (!checkbox.checked) formData.delete(name);
     });
 
-  //
+  // give away aligned form data
   return formData;
 }
 
@@ -111,4 +114,20 @@ export function mapFormData(data: FormData, element: Parsed.Element): ElementDat
 
     return acc;
   }, EMPTY_ELEMENT_DATA);
+}
+
+/**
+ * Prepares the data to be set as compressed url param
+ */
+export async function compressFormData(formData: FormData, element: Parsed.Element): Promise<string> {
+  const data = mapFormData(formData, element);
+  return encodeURIComponent(await compress(JSON.stringify(data), URI_DATA_PARAM_COMPRESSION));
+}
+
+/**
+ * Decompresses and parses the given element data
+ */
+export async function decompressElementData(compressed: string): Promise<ElementData> {
+  const raw = await decompress(decodeURIComponent(compressed), URI_DATA_PARAM_COMPRESSION);
+  return JSON.parse(raw);
 }
