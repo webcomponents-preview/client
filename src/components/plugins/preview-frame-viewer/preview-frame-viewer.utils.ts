@@ -66,10 +66,31 @@ export function parseFieldValue(
 }
 
 /**
+ * There seems to be a bug in Safari with the native FormAssociated implementation regarding
+ * checkboxes: https://bugs.webkit.org/show_bug.cgi?id=259781
+ */
+export function alignFormDataWebkit(
+  formData: FormData,
+  elements: HTMLFormControlsCollection,
+  element: Parsed.Element
+): FormData {
+  // filter out unchecked checkboxes for Safari
+  Array.from(element.fields.entries())
+    .filter(([, field]) => field.isControllable && field.isBoolean)
+    .forEach(([, field]) => {
+      const name = `fields.${field.name}`;
+      const checkbox = elements.namedItem(name) as HTMLInputElement;
+      if (!checkbox.checked) formData.delete(name);
+    });
+
+  //
+  return formData;
+}
+
+/**
  * Maps the given form data by the given element definition to a stateful data object
  */
-export function mapFormData(form: FormData | HTMLFormElement, element: Parsed.Element): ElementData {
-  const data = form instanceof FormData ? form : new FormData(form);
+export function mapFormData(data: FormData, element: Parsed.Element): ElementData {
   return Array.from(data.entries()).reduce((acc, [key, value]) => {
     // the name consists of the group and the actual name, separated by a dot
     const [group, name] = key.split('.');

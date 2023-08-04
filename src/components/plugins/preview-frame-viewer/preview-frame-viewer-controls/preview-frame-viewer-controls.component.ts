@@ -1,6 +1,6 @@
 import { html, LitElement, type TemplateResult, unsafeCSS, nothing } from 'lit';
 import { unsafeStatic, withStatic } from 'lit/static-html.js';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
@@ -10,7 +10,7 @@ import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { renderMarkdown } from '@/utils/markdown.utils.js';
 import { litKey } from '@/utils/parser.utils.js';
 
-import type { ElementData } from '../preview-frame-viewer.utils.js';
+import { alignFormDataWebkit, type ElementData } from '../preview-frame-viewer.utils.js';
 
 import styles from './preview-frame-viewer-controls.component.scss';
 
@@ -30,8 +30,13 @@ import styles from './preview-frame-viewer-controls.component.scss';
 export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
+  @state()
+  private _element?: Parsed.Element;
+
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
-  previewTagName?: string;
+  set previewTagName(previewTagName: string) {
+    this._element = window.wcp.manifest.elements.get(previewTagName);
+  }
 
   @property({ type: Object })
   readonly data?: ElementData;
@@ -121,8 +126,10 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
   }
 
   protected handleFormInput(event: InputEvent): void {
+    if (this._element === undefined) return;
+
     const form = event.currentTarget as HTMLFormElement;
-    const formData = new FormData(form);
+    const formData = alignFormDataWebkit(new FormData(form), form.elements, this._element);
 
     this.dispatchEvent(
       new CustomEvent('wcp-preview-frame-viewer-controls:input', {
@@ -134,24 +141,23 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
   }
 
   protected override render(): TemplateResult {
-    const element = window.wcp.manifest.elements.get(this.previewTagName ?? '');
     return html`
       <form @input="${this.handleFormInput}">
         ${when(
-          element?.hasFields,
+          this._element?.hasFields,
           () => html`
             <fieldset>
               <legend>Fields</legend>
-              ${map(element?.fields.values(), (field) => this.renderFieldControl(field))}
+              ${map(this._element?.fields.values(), (field) => this.renderFieldControl(field))}
             </fieldset>
           `
         )}
         ${when(
-          element?.hasSlots,
+          this._element?.hasSlots,
           () => html`
             <fieldset>
               <legend>Slots</legend>
-              ${map(element?.slots.values(), (slot) => this.renderSlotControl(slot))}
+              ${map(this._element?.slots.values(), (slot) => this.renderSlotControl(slot))}
             </fieldset>
           `
         )}

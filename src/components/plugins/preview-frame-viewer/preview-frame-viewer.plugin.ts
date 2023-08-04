@@ -68,6 +68,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
   @eventOptions({ passive: true })
   protected async handleControlsInput({ detail }: CustomEvent<FormData>) {
     if (this._element === undefined) return;
+
     // prepare the data to be set as compressed url param
     const data = mapFormData(detail, this._element);
     const param = encodeURIComponent(await compress(JSON.stringify(data), URI_DATA_PARAM_COMPRESSION));
