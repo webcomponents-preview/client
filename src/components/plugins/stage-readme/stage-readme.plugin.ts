@@ -9,6 +9,11 @@ import type { StagePlugin } from '@/utils/plugin.utils.js';
 
 import styles from './stage-readme.plugin.scss';
 
+/**
+ * Shows the readme of a custom element.
+ *
+ * @element wcp-stage-readme
+ */
 @customElement('wcp-stage-readme')
 export class StageReadme extends ColorSchemable(LitElement) implements StagePlugin {
   static override readonly styles = unsafeCSS(styles);

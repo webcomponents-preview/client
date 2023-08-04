@@ -1,5 +1,7 @@
 # wcp-preview-editor-link
 
+Links all found custom elements in a preview with their current state to the editor to be further played around with.
+
 ## Properties
 
 | Property         | Attribute          | Modifiers | Type               | Default          |

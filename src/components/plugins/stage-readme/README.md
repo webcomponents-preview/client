@@ -1,5 +1,7 @@
 # wcp-stage-readme
 
+Shows the readme of a custom element.
+
 **Mixins:** ColorSchemable
 
 ## Properties

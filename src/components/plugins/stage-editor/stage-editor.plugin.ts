@@ -17,6 +17,8 @@ import styles from './stage-editor.plugin.scss';
 const URI_DATA_PARAM_COMPRESSION: CompressionFormat = 'deflate-raw';
 
 /**
+ * Allows editing a custom element.
+ * 
  * @element wcp-stage-editor
  */
 @customElement('wcp-stage-editor')

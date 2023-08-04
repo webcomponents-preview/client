@@ -1,5 +1,7 @@
 # wcp-preview-simulate-viewports
 
+Simulates various viewports for a custom element preview.
+
 **Mixins:** ColorSchemable
 
 ## Properties

@@ -1,5 +1,7 @@
 # wcp-stage-editor
 
+Allows editing a custom element.
+
 **Mixins:** ColorSchemable
 
 ## Properties
