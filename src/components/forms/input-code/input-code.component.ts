@@ -268,6 +268,9 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
     if (changedProperties.has('autosize')) {
       this.updateEditorAutoSize();
     }
+    if (changedProperties.has('value') && this.value !== model?.getValue()) {
+      this.#editor?.setValue(this.value ?? '');
+    }
   }
 
   @eventOptions({ passive: true })
