@@ -9,15 +9,15 @@ import { getManifest } from '@/utils/manifest.utils.js';
 import { renderMarkdown } from '@/utils/markdown.utils.js';
 import type { StagePlugin } from '@/utils/plugin.utils.js';
 
-import styles from './preview-frame-examples.plugin.scss';
+import styles from './stage-examples.plugin.scss';
 
 /**
  * Shows the examples of a custom element manifest.
  *
- * @cssprop --wcp-preview-frame-examples-spacing - Spacing between examples.
+ * @cssprop --wcp-stage-examples-spacing - Spacing between examples.
  */
-@customElement('wcp-preview-frame-examples')
-export class PreviewFrameExamples extends ColorSchemable(LitElement) implements StagePlugin {
+@customElement('wcp-stage-examples')
+export class StageExamples extends ColorSchemable(LitElement) implements StagePlugin {
   static override readonly styles = unsafeCSS(styles);
 
   readonly #manifest = getManifest();
@@ -38,7 +38,7 @@ export class PreviewFrameExamples extends ColorSchemable(LitElement) implements 
       this.available = available;
 
       // notify about availability change
-      const event = new CustomEvent('wcp-preview-frame-plugin:availability-change', {
+      const event = new CustomEvent('wcp-stage-plugin:availability-change', {
         detail: this.available,
         bubbles: true,
         composed: true,
@@ -67,9 +67,9 @@ export class PreviewFrameExamples extends ColorSchemable(LitElement) implements 
 
 declare global {
   interface HTMLElementEventMap {
-    'wcp-preview-frame-plugin:availability-change': CustomEvent<boolean>;
+    'wcp-stage-plugin:availability-change': CustomEvent<boolean>;
   }
   interface HTMLElementTagNameMap {
-    'wcp-preview-frame-examples': PreviewFrameExamples;
+    'wcp-stage-examples': StageExamples;
   }
 }

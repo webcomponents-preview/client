@@ -1,4 +1,4 @@
-# wcp-preview-frame-examples
+# wcp-stage-examples
 
 Shows the examples of a custom element manifest.
 
@@ -15,12 +15,12 @@ Shows the examples of a custom element manifest.
 
 ## Events
 
-| Event                                          |
-|------------------------------------------------|
-| `wcp-preview-frame-plugin:availability-change` |
+| Event                                  |
+|----------------------------------------|
+| `wcp-stage-plugin:availability-change` |
 
 ## CSS Custom Properties
 
-| Property                               | Description               |
-|----------------------------------------|---------------------------|
-| `--wcp-preview-frame-examples-spacing` | Spacing between examples. |
+| Property                       | Description               |
+|--------------------------------|---------------------------|
+| `--wcp-stage-examples-spacing` | Spacing between examples. |
