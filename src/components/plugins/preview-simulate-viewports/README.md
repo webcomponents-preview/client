@@ -1,4 +1,4 @@
-# wcp-preview-viewport
+# wcp-preview-simulate-viewports
 
 **Mixins:** ColorSchemable
 
@@ -20,6 +20,6 @@
 
 ## Events
 
-| Event                          |
-|--------------------------------|
-| `wcp-preview-viewport:changed` |
+| Event                                    |
+|------------------------------------------|
+| `wcp-preview-simulate-viewports:changed` |

@@ -7,7 +7,7 @@ import { map } from 'lit/directives/map.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
 
-import styles from './preview-viewport.plugin.scss';
+import styles from './preview-simulate-viewports.plugin.scss';
 
 // utility union to carry the available viewport for simulation
 type Viewport = 'mobile' | 'tablet' | 'desktop' | 'wide';
@@ -38,8 +38,8 @@ const SCALE_CLASS = 'simulate-viewport-scale';
 // to add some spacing we scale a bit further than actually needed
 const SCALE_FACTOR = 1;
 
-@customElement('wcp-preview-viewport')
-export class PreviewViewport extends ColorSchemable(LitElement) implements PreviewPlugin {
+@customElement('wcp-preview-simulate-viewports')
+export class PreviewSimulateViewports extends ColorSchemable(LitElement) implements PreviewPlugin {
   static override readonly styles = unsafeCSS(styles);
 
   readonly container!: HTMLElement;
@@ -165,7 +165,7 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
 
   private emitChange() {
     const detail = { viewport: this.simulateViewport, inverted: this.invertSimulatedViewport };
-    const event = new CustomEvent('wcp-preview-viewport:changed', { detail, bubbles: true, composed: true });
+    const event = new CustomEvent('wcp-preview-simulate-viewports:changed', { detail, bubbles: true, composed: true });
     this.dispatchEvent(event);
   }
 
@@ -225,10 +225,10 @@ export class PreviewViewport extends ColorSchemable(LitElement) implements Previ
 
 declare global {
   interface HTMLElementEventMap {
-    'wcp-preview-viewport:changed': CustomEvent<{ viewport: Viewport; inverted: boolean }>;
+    'wcp-preview-simulate-viewports:changed': CustomEvent<{ viewport: Viewport; inverted: boolean }>;
   }
 
   interface HTMLElementTagNameMap {
-    'wcp-preview-viewport': PreviewViewport;
+    'wcp-preview-simulate-viewports': PreviewSimulateViewports;
   }
 }

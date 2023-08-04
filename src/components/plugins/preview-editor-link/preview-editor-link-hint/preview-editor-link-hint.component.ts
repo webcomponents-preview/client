@@ -79,11 +79,11 @@ export class PreviewEditorLinkHint extends ColorSchemable(LitElement) {
   }
 
   #observeStage() {
-    window.addEventListener('wcp-preview-viewport:changed', this.#handleStageChange, false);
+    window.addEventListener('wcp-preview-simulate-viewports:changed', this.#handleStageChange, false);
   }
 
   #unobserveStage() {
-    window.removeEventListener('wcp-preview-viewport:changed', this.#handleStageChange, false);
+    window.removeEventListener('wcp-preview-simulate-viewports:changed', this.#handleStageChange, false);
   }
 
   #handleStageChange = () => {

@@ -79,7 +79,7 @@ export const defaultConfig = {
   initialActiveElement: undefined,
   initialCodePreviewTab: 'preview',
   initialPreviewTab: 'viewer',
-  previewPlugins: ['wcp-preview-viewport', 'wcp-preview-editor-link'],
+  previewPlugins: ['wcp-preview-simulate-viewports', 'wcp-preview-editor-link'],
   previewFramePlugins: ['wcp-stage-examples', 'wcp-stage-readme', 'wcp-stage-editor'],
   additionalReadmes: [],
   labels: {

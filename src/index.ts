@@ -26,7 +26,7 @@ export * from './components/layout/main/main.component.js';
 export * from './components/plugins/preview-editor-link/preview-editor-link.plugin.js';
 export * from './components/plugins/preview-editor-link/preview-editor-link.utils.js';
 export * from './components/plugins/preview-editor-link/preview-editor-link-hint/preview-editor-link-hint.component.js';
-export * from './components/plugins/preview-viewport/preview-viewport.plugin.js';
+export * from './components/plugins/preview-simulate-viewports/preview-simulate-viewports.plugin.js';
 export * from './components/plugins/stage-editor/stage-editor.plugin.js';
 export * from './components/plugins/stage-editor/stage-editor.utils.js';
 export * from './components/plugins/stage-editor/stage-editor-controls/stage-editor-controls.component.js';
