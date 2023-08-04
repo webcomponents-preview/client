@@ -1,87 +1,3 @@
-declare module "src/utils/config.utils" {
-    export type Config = {
-        excludeElements: string[];
-        /**
-         * Allows setting an initial element to be displayed if no other element is selected.
-         * If omitted, the first element will be used.
-         */
-        initialActiveElement?: string;
-        /**
-         * The code previews always consist of two tabs, one for the code and one for the preview.
-         * This property defines the initial tab to be selected.
-         */
-        initialCodePreviewTab: 'code' | 'preview';
-        /**
-         * The initial tab to be selected in the preview. Will match the name of the plugin.
-         */
-        initialPreviewTab: string;
-        /**
-         * The plugins to be used for the preview.
-         * Set to the viewport plugin by default.
-         */
-        previewPlugins: string[];
-        /**
-         * The plugins to be used for the preview frame.
-         * Defaults to examples, readme and viewer.
-         */
-        previewFramePlugins: string[];
-        /**
-         * Defines readmes to be loaded from external sources to be displayed in the navigation.
-         */
-        additionalReadmes: {
-            name: string;
-            url: string;
-        }[];
-        /**
-         * Labels to be translated or customized
-         */
-        labels: {
-            /**
-             * The name of the group to be used for eventually configured additional readmes.
-             */
-            additionalReadmeGroupName: string;
-            /**
-             * If the navigation is empty, either because no readmes nor elements are found or
-             * because the search query does not match any elements, use this label as fallback.
-             */
-            emptyNavigation: string;
-            /**
-             * If no groups for elements are defined, use this label as fallback for all elements
-             */
-            fallbackGroupName: string;
-            /**
-             * The title of the application, displayed in sidebar header and browser tab
-             */
-            title: string;
-        };
-    };
-    global {
-        interface WCP {
-            config: Promise<Config>;
-        }
-        interface Window {
-            wcp: WCP;
-        }
-    }
-    export const defaultConfig: {
-        excludeElements: never[];
-        initialActiveElement: undefined;
-        initialCodePreviewTab: "preview";
-        initialPreviewTab: string;
-        previewPlugins: string[];
-        previewFramePlugins: string[];
-        additionalReadmes: never[];
-        labels: {
-            title: string;
-            additionalReadmeGroupName: string;
-            fallbackGroupName: string;
-            emptyNavigation: string;
-        };
-    };
-    export function mergeConfigWithDefaults(config: Partial<Config>): Config;
-    export function loadConfig(url?: string): Promise<Config>;
-    export function getConfig(url?: string): Promise<Config>;
-}
 declare module "src/utils/mixin.types" {
     export type Constructor<T> = new (...args: any[]) => T;
 }
@@ -108,7 +24,6 @@ declare module "src/mixins/color-schemable.mixin" {
 }
 declare module "src/components/features/markdown-example/markdown-example.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    import { type Config } from "src/utils/config.utils";
     const MarkdownExample_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows an inline code example and a preview of the element in the readme.
@@ -146,8 +61,6 @@ declare module "src/components/features/markdown-example/markdown-example.compon
      */
     export class MarkdownExample extends MarkdownExample_base {
         static readonly styles: import("lit").CSSResult;
-        config?: Config;
-        connectedCallback(): Promise<void>;
         protected render(): TemplateResult;
     }
     global {
@@ -292,7 +205,6 @@ declare module "src/components/features/navigation/navigation-search/navigation-
 }
 declare module "src/components/features/preview/preview.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    import { type Config } from "src/utils/config.utils";
     const Preview_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Previews given content.
@@ -314,7 +226,6 @@ declare module "src/components/features/preview/preview.component" {
     export class Preview extends Preview_base {
         #private;
         static readonly styles: import("lit").CSSResult;
-        config?: Config;
         private container?;
         previewTagName?: string;
         connectedCallback(): Promise<void>;
@@ -1608,7 +1519,7 @@ declare module "src/utils/router.utils" {
     }
 }
 declare module "src/components/plugins/preview-viewer-link/preview-viewer-link.utils" {
-    import { ElementData } from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.utils";
+    import type { ElementData } from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.utils";
     /**
      * Prepares an initial state object for the given element definition.
      */
@@ -1731,6 +1642,90 @@ declare module "src/components/plugins/preview-viewport/preview-viewport.plugin"
         }
     }
 }
+declare module "src/utils/config.utils" {
+    export type Config = {
+        excludeElements: string[];
+        /**
+         * Allows setting an initial element to be displayed if no other element is selected.
+         * If omitted, the first element will be used.
+         */
+        initialActiveElement?: string;
+        /**
+         * The code previews always consist of two tabs, one for the code and one for the preview.
+         * This property defines the initial tab to be selected.
+         */
+        initialCodePreviewTab: 'code' | 'preview';
+        /**
+         * The initial tab to be selected in the preview. Will match the name of the plugin.
+         */
+        initialPreviewTab: string;
+        /**
+         * The plugins to be used for the preview.
+         * Set to the viewport plugin by default.
+         */
+        previewPlugins: string[];
+        /**
+         * The plugins to be used for the preview frame.
+         * Defaults to examples, readme and viewer.
+         */
+        previewFramePlugins: string[];
+        /**
+         * Defines readmes to be loaded from external sources to be displayed in the navigation.
+         */
+        additionalReadmes: {
+            name: string;
+            url: string;
+        }[];
+        /**
+         * Labels to be translated or customized
+         */
+        labels: {
+            /**
+             * The name of the group to be used for eventually configured additional readmes.
+             */
+            additionalReadmeGroupName: string;
+            /**
+             * If the navigation is empty, either because no readmes nor elements are found or
+             * because the search query does not match any elements, use this label as fallback.
+             */
+            emptyNavigation: string;
+            /**
+             * If no groups for elements are defined, use this label as fallback for all elements
+             */
+            fallbackGroupName: string;
+            /**
+             * The title of the application, displayed in sidebar header and browser tab
+             */
+            title: string;
+        };
+    };
+    global {
+        interface WCP {
+            config: Config;
+        }
+        interface Window {
+            wcp: WCP;
+        }
+    }
+    export const defaultConfig: {
+        excludeElements: never[];
+        initialActiveElement: undefined;
+        initialCodePreviewTab: "preview";
+        initialPreviewTab: string;
+        previewPlugins: string[];
+        previewFramePlugins: string[];
+        additionalReadmes: never[];
+        labels: {
+            title: string;
+            additionalReadmeGroupName: string;
+            fallbackGroupName: string;
+            emptyNavigation: string;
+        };
+    };
+    export function mergeConfigWithDefaults(config: Partial<Config>): Config;
+    export function loadConfig(url?: string): Promise<Config>;
+    export function getConfig(): Config;
+}
 declare module "src/utils/navigation.utils" {
     import type { Config } from "src/utils/config.utils";
     import type { Element, Manifest } from "src/utils/parser.types";
@@ -1765,6 +1760,38 @@ declare module "src/mixins/routable.mixin" {
         router: Router;
     }
     export const Routable: (registerRoutes?: RegisterRoutes) => <T extends Constructor<LitElement>>(superClass: T) => Constructor<RoutableInterface> & T;
+}
+declare module "src/components/root/root-navigation/root-navigation.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import { type GroupedNavigationItems } from "src/utils/navigation.utils";
+    /**
+     * Manages the main root-navigation in the application root.
+     *
+     * @element wcp-root-navigation
+     *
+     * @cssprop --wcp-root-navigation-empty-message-spacing - The spacing of the empty message.
+     * @cssprop --wcp-root-navigation-empty-message-font-size - The font size of the empty message.
+     */
+    export class RootNavigation extends LitElement {
+        #private;
+        static readonly styles: import("lit").CSSResult;
+        private filteredItems;
+        currentPath?: string;
+        emptyMessage: string;
+        minSearchLength: number;
+        set searchTerms(terms: string[]);
+        set items(items: GroupedNavigationItems);
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-root-navigation': RootNavigation;
+        }
+    }
+}
+declare module "src/components/root/root.routes" {
+    import { type Route } from "src/utils/router.utils";
+    export const prepareRoutes: () => Route[];
 }
 declare module "src/parsers/cem/utils" {
     import type * as CEM from 'custom-elements-manifest';
@@ -1810,46 +1837,23 @@ declare module "src/parsers/cem/parse" {
      */
     export const parseCEM: (data: object, exclude?: string[]) => Manifest;
 }
-declare module "src/components/root/root-navigation/root-navigation.component" {
-    import { LitElement, type TemplateResult } from 'lit';
-    import { type GroupedNavigationItems } from "src/utils/navigation.utils";
-    /**
-     * Manages the main root-navigation in the application root.
-     *
-     * @element wcp-root-navigation
-     *
-     * @cssprop --wcp-root-navigation-empty-message-spacing - The spacing of the empty message.
-     * @cssprop --wcp-root-navigation-empty-message-font-size - The font size of the empty message.
-     */
-    export class RootNavigation extends LitElement {
-        #private;
-        static readonly styles: import("lit").CSSResult;
-        private filteredItems;
-        currentPath?: string;
-        emptyMessage: string;
-        minSearchLength: number;
-        set searchTerms(terms: string[]);
-        set items(items: GroupedNavigationItems);
-        protected render(): TemplateResult;
-    }
+declare module "src/utils/manifest.utils" {
+    import type { Manifest } from "src/utils/parser.types";
     global {
-        interface HTMLElementTagNameMap {
-            'wcp-root-navigation': RootNavigation;
+        interface WCP {
+            manifest: Manifest;
+        }
+        interface Window {
+            wcp: WCP;
         }
     }
-}
-declare module "src/components/root/root.routes" {
-    import type { Config } from "src/utils/config.utils";
-    import type { Manifest } from "src/utils/parser.types";
-    import { type Route } from "src/utils/router.utils";
-    export const prepareRoutes: (config: Config, manifest: Manifest) => Route[];
+    export function loadManifest(manifestUrl: string, excludeElements: string[]): Promise<Manifest>;
+    export function getManifest(): Manifest;
 }
 declare module "src/components/root/root.component" {
     import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
     import { LitElement, type TemplateResult } from 'lit';
-    import { type Config } from "src/utils/config.utils";
     import { type GroupedNavigationItems } from "src/utils/navigation.utils";
-    import type { Manifest } from "src/utils/parser.types";
     import type { RootNavigation } from "src/components/root/root-navigation/root-navigation.component";
     const Root_base: import("@/index.js").Constructor<{
         router: import("@/index.js").Router;
@@ -1867,12 +1871,10 @@ declare module "src/components/root/root.component" {
      * @cssprop --wcp-root-light-color - The text color of the text in the root element in light mode.
      *
      * @emits wcp-root:active-element-changed - Fired when the active element changes. Carries the declaration of the new active element with it.
-     * @emits wcp-root:manifest-loaded - Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved.
      */
     export class Root extends Root_base {
         static readonly styles: import("lit").CSSResult;
-        config?: Config;
-        manifest?: Manifest;
+        private ready;
         navigationItems: GroupedNavigationItems;
         readonly navigationRef: RootNavigation;
         /**
@@ -1888,23 +1890,13 @@ declare module "src/components/root/root.component" {
          * Defines the location of the custom element manifest file.
          */
         manifestUrl: string;
-        loadConfig(configUrl?: string): Promise<void>;
-        loadCustomElementsManifest(manifestUrl: string): Promise<void>;
-        emitManifestLoaded(): void;
         handleSearchInput({ detail }: CustomEvent<string>): void;
         connectedCallback(): Promise<void>;
         protected render(): TemplateResult;
     }
     global {
-        interface WCP {
-            manifest: Manifest;
-        }
-        interface Window {
-            wcp: WCP;
-        }
         interface HTMLElementEventMap {
             'wcp-root:active-element-changed': CustomEvent<CustomElementDeclaration | undefined>;
-            'wcp-root:manifest-loaded': CustomEvent<CustomElementDeclaration[]>;
         }
         interface HTMLElementTagNameMap {
             'wcp-root': Root;
@@ -2237,6 +2229,7 @@ declare module "src/index" {
     export * from "src/utils/config.utils";
     export * from "src/utils/dom.utils";
     export * from "src/utils/form.utils";
+    export * from "src/utils/manifest.utils";
     export * from "src/utils/markdown.utils";
     export * from "src/utils/mixin.types";
     export * from "src/utils/navigation.utils";
