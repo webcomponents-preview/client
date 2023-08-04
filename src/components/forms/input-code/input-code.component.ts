@@ -233,7 +233,7 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
     super.disconnectedCallback();
   }
 
-  override attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+  override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     super.attributeChangedCallback(name, oldValue, newValue);
 
     if (name !== 'value') return;
