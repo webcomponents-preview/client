@@ -1,5 +1,5 @@
 import { litKey } from '@/utils/parser.utils.js';
-import { ElementData } from '../preview-frame-viewer/preview-frame-viewer.utils.js';
+import type { ElementData } from '../preview-frame-viewer/preview-frame-viewer.utils.js';
 
 /**
  * Prepares an initial state object for the given element definition.
@@ -17,10 +17,23 @@ export function readCurrentElementData(ref: HTMLElement): ElementData {
         }
         return acc;
       }, {}) ?? {},
-    // TODO: add support for slots as well
-    // Array.from(element.slots.values()).reduce((acc, slot) => {
-    //   return { ...acc, [slot.name]: slot.default };
-    // }, {}) ?? {},
-    slots: {},
+    slots:
+      Array.from(element?.slots.values() ?? []).reduce((acc, slot) => {
+        // find the slot and gather all assigned nodes
+        const selector = slot.name === '' ? ':not([name])' : `[name="${slot.name}"]`;
+        const root = ref.shadowRoot ?? ref;
+        const nodes = root.querySelector<HTMLSlotElement>(`slot${selector}`)?.assignedNodes() ?? [];
+
+        // read node contents into string
+        const value =
+          nodes.reduce((content, node) => {
+            if (node instanceof HTMLElement) return `${content}${node.outerHTML}`;
+            else if (node instanceof Text) return `${content}${node.textContent}`;
+            else return content;
+          }, '') ?? slot.default;
+
+        // deliver combined result
+        return { ...acc, [slot.name]: value };
+      }, {}) ?? {},
   };
 }
