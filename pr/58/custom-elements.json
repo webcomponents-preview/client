@@ -1801,7 +1801,7 @@
               "kind": "field",
               "name": "input",
               "type": {
-                "text": "HTMLInputElement"
+                "text": "HTMLInputElement | undefined"
               },
               "privacy": "private",
               "readonly": true
@@ -2739,7 +2739,7 @@
               "kind": "field",
               "name": "input",
               "type": {
-                "text": "HTMLInputElement | HTMLTextAreaElement"
+                "text": "HTMLInputElement | HTMLTextAreaElement | undefined"
               },
               "privacy": "private",
               "readonly": true

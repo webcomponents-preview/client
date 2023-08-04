@@ -766,7 +766,7 @@ declare module "src/components/forms/input-code/input-code.component" {
         protected updateEditorDisabled(): void;
         connectedCallback(): void;
         disconnectedCallback(): void;
-        attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+        attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void;
         formResetCallback(): void;
         checkValidity(): boolean;
         protected updated(changedProperties: PropertyValues<this>): void;
@@ -830,7 +830,7 @@ declare module "src/components/forms/input-number/input-number.component" {
     export class InputNumber extends InputNumber_base implements FormAssociated<number> {
         #private;
         static readonly styles: import("lit").CSSResultGroup[];
-        private readonly input;
+        private readonly input?;
         autocomplete: boolean;
         disabled: boolean;
         readonly: boolean;
@@ -840,6 +840,7 @@ declare module "src/components/forms/input-number/input-number.component" {
         protected firstUpdated(props: PropertyValues<this>): void;
         formResetCallback(): void;
         checkValidity(): boolean;
+        attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void;
         handleInput(event: Event): void;
         renderInput(id: string): import("lit-html").TemplateResult<1>;
     }
@@ -1024,6 +1025,7 @@ declare module "src/components/forms/input-select/input-select.component" {
         protected firstUpdated(props: PropertyValues<this>): void;
         formResetCallback(): void;
         checkValidity(): boolean;
+        attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void;
         handleSlotChange(event: Event): void;
         handleInput(event: Event): void;
         renderInput(id: string): import("lit-html").TemplateResult<1>;
@@ -1091,7 +1093,7 @@ declare module "src/components/forms/input-text/input-text.component" {
     export class InputText extends InputText_base implements FormAssociated<string> {
         #private;
         static readonly styles: import("lit").CSSResultGroup[];
-        private readonly input;
+        private readonly input?;
         multiline: boolean;
         autocomplete: boolean;
         disabled: boolean;
@@ -1107,6 +1109,7 @@ declare module "src/components/forms/input-text/input-text.component" {
         protected firstUpdated(props: PropertyValues<this>): void;
         formResetCallback(): void;
         checkValidity(): boolean;
+        attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void;
         handleInput(event: Event): void;
         renderInput(id: string): import("lit-html").TemplateResult<1>;
     }
