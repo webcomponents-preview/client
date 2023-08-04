@@ -23,9 +23,35 @@ export function isElementWithin(element: Element, container: Element = document.
  */
 export function getRelativeBoundary(
   element: HTMLElement,
-  parent: Element | null = element.offsetParent,
+  parent: Element | null = element.offsetParent
 ): Pick<DOMRect, 'x' | 'y' | 'height' | 'width'> {
   const { height, width, x, y } = element.getBoundingClientRect();
   const { x: relX = 0, y: relY = 0 } = parent?.getBoundingClientRect() ?? {};
   return { height, width, x: x - relX, y: y - relY };
+}
+
+/**
+ * Returns the list of ancestor elements by reference to a given element.
+ */
+export function getAncestorPath(
+  element: Element,
+  check: (element: Element) => boolean = () => true
+): (Element | Document)[] {
+  const ancestors: Element[] = [];
+  let currentElement: Element | null = element;
+  while (currentElement !== null) {
+    if (!check(currentElement)) break;
+    ancestors.unshift(currentElement);
+    currentElement = currentElement.parentElement ?? (currentElement.getRootNode() as ShadowRoot).host ?? null;
+  }
+  return ancestors;
+}
+
+/**
+ * Determine if an element is a descendant of another element by tag name.
+ */
+export function isDescendantOf(element: Element, ancestor: string): boolean {
+  let isMatch = false;
+  getAncestorPath(element, ({ tagName }) => !(isMatch = tagName.toLowerCase() === ancestor));
+  return isMatch;
 }

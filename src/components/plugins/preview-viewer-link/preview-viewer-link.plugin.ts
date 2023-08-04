@@ -3,6 +3,7 @@ import { customElement, eventOptions, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { compress } from '@/utils/compression.utils.js';
+import { isDescendantOf } from '@/utils/dom.utils.js';
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
 import { Router } from '@/utils/router.utils.js';
 
@@ -22,7 +23,7 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
   readonly previewTagName!: string;
 
   @property({ type: Boolean, reflect: true })
-  readonly available = true;
+  available = true;
 
   @property({ type: String, reflect: true })
   readonly name = 'viewer-link';
@@ -32,6 +33,19 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
 
   @property({ type: Boolean, reflect: true })
   enabled = false;
+
+  #checkAvailability() {
+    // check if the previewed element is in a viewer
+    this.available = !isDescendantOf(this, 'wcp-preview-frame-viewer');
+
+    // notify about availability change
+    const event = new CustomEvent('wcp-preview-plugin:availability-change', {
+      detail: this.available,
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(event);
+  }
 
   #attachOverlay() {
     this.#overlay.id = 'overlay';
@@ -134,11 +148,18 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
 
   override connectedCallback() {
     super.connectedCallback();
+
     this.#setupHints();
+    this.#checkAvailability();
+  }
+
+  adoptedCallback() {
+    this.#checkAvailability();
   }
 
   override disconnectedCallback() {
     this.#teardownHints();
+
     super.disconnectedCallback();
   }
 
