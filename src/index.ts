@@ -23,7 +23,6 @@ export * from './components/forms/input-text/input-text.component.js';
 export * from './components/layout/aside/aside.component.js';
 export * from './components/layout/layout/layout.component.js';
 export * from './components/layout/main/main.component.js';
-export * from './components/plugins/preview-frame-readme/preview-frame-readme.plugin.js';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.plugin.js';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer.utils.js';
 export * from './components/plugins/preview-frame-viewer/preview-frame-viewer-controls/preview-frame-viewer-controls.component.js';
@@ -33,6 +32,7 @@ export * from './components/plugins/preview-viewer-link/preview-viewer-link.util
 export * from './components/plugins/preview-viewer-link/preview-viewer-link-hint/preview-viewer-link-hint.component.js';
 export * from './components/plugins/preview-viewport/preview-viewport.plugin.js';
 export * from './components/plugins/stage-examples/stage-examples.plugin.js';
+export * from './components/plugins/stage-readme/stage-readme.plugin.js';
 export * from './components/root/root.component.js';
 export * from './components/root/root.routes.js';
 export * from './components/root/root-navigation/root-navigation.component.js';

@@ -1,4 +1,4 @@
-# wcp-preview-frame-readme
+# wcp-stage-readme
 
 **Mixins:** ColorSchemable
 
@@ -13,6 +13,6 @@
 
 ## Events
 
-| Event                                          |
-|------------------------------------------------|
-| `wcp-preview-frame-plugin:availability-change` |
+| Event                                  |
+|----------------------------------------|
+| `wcp-stage-plugin:availability-change` |
