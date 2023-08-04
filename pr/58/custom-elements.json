@@ -2105,11 +2105,20 @@
           "members": [
             {
               "kind": "field",
-              "name": "initialChecked",
+              "name": "#checked",
+              "privacy": "private",
               "type": {
                 "text": "boolean"
               },
-              "privacy": "private"
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "#initialChecked",
+              "privacy": "private",
+              "type": {
+                "text": "boolean"
+              }
             },
             {
               "kind": "field",
@@ -2147,7 +2156,6 @@
               "type": {
                 "text": "boolean"
               },
-              "default": "false",
               "attribute": "checked",
               "reflects": true
             },
@@ -2247,7 +2255,6 @@
               "type": {
                 "text": "boolean"
               },
-              "default": "false",
               "fieldName": "checked"
             },
             {
@@ -2283,7 +2290,7 @@
             "## With initial value\n```html\n<wcp-input-radio checked label=\"With optional initial value\"></wcp-input-radio>\n```",
             "## Used within a form\n```html\n<form>\n  <wcp-input-radio label=\"Fully form enabled component\"></wcp-input-radio>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```"
           ],
-          "readme": "# wcp-input-radio\n\nA radio input element using the wcp style. Fully form aware.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-radio label=\"With optional label\"></wcp-input-radio>\n```\n\n## With initial value\n\n```html\n<wcp-input-radio checked label=\"With optional initial value\"></wcp-input-radio>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-radio label=\"Fully form enabled component\"></wcp-input-radio>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type      | Default | Description                     |\n|----------------|----------------|-----------|---------|---------------------------------|\n| `autocomplete` | `autocomplete` | `boolean` | false   |                                 |\n| `checked`      | `checked`      | `boolean` | false   |                                 |\n| `disabled`     | `disabled`     | `boolean` | false   |                                 |\n| `label`        |                | `string`  |         | The label of the input element. |\n| `name`         | `name`         | `string`  | \"radio\" |                                 |\n| `required`     | `required`     | `boolean` | false   |                                 |\n| `value`        | `value`        | `string`  | \"on\"    |                                 |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n| `renderInput`       | `(id: string): any`  |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                             | Description                                      |\n|--------------------------------------|--------------------------------------------------|\n| `--wcp-input-radio-border-radius`    | The border radius of the radio input.            |\n| `--wcp-input-radio-border-size`      | The border size of the radio input.              |\n| `--wcp-input-radio-dark-background`  | The background color of the radio input in dark mode. |\n| `--wcp-input-radio-dark-border`      | The border color of the radio input in dark mode. |\n| `--wcp-input-radio-dark-color`       | The fill color of the radio input when checked in dark mode. |\n| `--wcp-input-radio-hint-size`        | The font size of the hint.                       |\n| `--wcp-input-radio-label-size`       | The font size of the label.                      |\n| `--wcp-input-radio-light-background` | The background color of the radio input in light mode. |\n| `--wcp-input-radio-light-border`     | The border color of the radio input in light mode. |\n| `--wcp-input-radio-light-color`      | The fill color of the radio input when checked in light mode. |\n| `--wcp-input-radio-size`             | The size of the radio input.                     |\n| `--wcp-input-radio-spacing`          | The leading distance of the label to the input.  |\n",
+          "readme": "# wcp-input-radio\n\nA radio input element using the wcp style. Fully form aware.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-radio label=\"With optional label\"></wcp-input-radio>\n```\n\n## With initial value\n\n```html\n<wcp-input-radio checked label=\"With optional initial value\"></wcp-input-radio>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-radio label=\"Fully form enabled component\"></wcp-input-radio>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property       | Attribute      | Type      | Default | Description                     |\n|----------------|----------------|-----------|---------|---------------------------------|\n| `autocomplete` | `autocomplete` | `boolean` | false   |                                 |\n| `checked`      | `checked`      | `boolean` |         |                                 |\n| `disabled`     | `disabled`     | `boolean` | false   |                                 |\n| `label`        |                | `string`  |         | The label of the input element. |\n| `name`         | `name`         | `string`  | \"radio\" |                                 |\n| `required`     | `required`     | `boolean` | false   |                                 |\n| `value`        | `value`        | `string`  | \"on\"    |                                 |\n\n## Methods\n\n| Method              | Type                 |\n|---------------------|----------------------|\n| `checkValidity`     | `(): boolean`        |\n| `formResetCallback` | `(): void`           |\n| `handleInput`       | `(event: any): void` |\n| `renderInput`       | `(id: string): any`  |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                             | Description                                      |\n|--------------------------------------|--------------------------------------------------|\n| `--wcp-input-radio-border-radius`    | The border radius of the radio input.            |\n| `--wcp-input-radio-border-size`      | The border size of the radio input.              |\n| `--wcp-input-radio-dark-background`  | The background color of the radio input in dark mode. |\n| `--wcp-input-radio-dark-border`      | The border color of the radio input in dark mode. |\n| `--wcp-input-radio-dark-color`       | The fill color of the radio input when checked in dark mode. |\n| `--wcp-input-radio-hint-size`        | The font size of the hint.                       |\n| `--wcp-input-radio-label-size`       | The font size of the label.                      |\n| `--wcp-input-radio-light-background` | The background color of the radio input in light mode. |\n| `--wcp-input-radio-light-border`     | The border color of the radio input in light mode. |\n| `--wcp-input-radio-light-color`      | The fill color of the radio input when checked in light mode. |\n| `--wcp-input-radio-size`             | The size of the radio input.                     |\n| `--wcp-input-radio-spacing`          | The leading distance of the label to the input.  |\n",
           "groups": [
             "forms"
           ],
@@ -3754,7 +3761,6 @@
               "type": {
                 "text": "boolean"
               },
-              "readonly": true,
               "default": "true",
               "attribute": "available",
               "reflects": true
@@ -3790,6 +3796,10 @@
               "default": "false",
               "attribute": "enabled",
               "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "#checkAvailability"
             },
             {
               "kind": "method",
@@ -3892,7 +3902,6 @@
               "type": {
                 "text": "boolean"
               },
-              "readonly": true,
               "default": "true",
               "fieldName": "available"
             },
@@ -3927,7 +3936,7 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "readme": "# wcp-preview-viewer-link\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type               | Default          |\n|------------------|--------------------|-----------|--------------------|------------------|\n| `available`      | `available`        | readonly  | `true`             | true             |\n| `container`      |                    | readonly  |                    |                  |\n| `enabled`        | `enabled`          |           | `boolean`          | false            |\n| `label`          | `label`            | readonly  | `\"Show in viewer\"` | \"Show in viewer\" |\n| `name`           | `name`             | readonly  | `\"viewer-link\"`    | \"viewer-link\"    |\n| `previewTagName` | `preview-tag-name` | readonly  | `string`           |                  |\n\n## Methods\n\n| Method                       | Type                   |\n|------------------------------|------------------------|\n| `#attachHint`                | `(element: any): void` |\n| `#attachHints`               | `(): void`             |\n| `#attachOverlay`             | `(): void`             |\n| `#detachHints`               | `(): void`             |\n| `#detachOverlay`             | `(): void`             |\n| `#findContainerSlot`         | `(): any`              |\n| `#handleContainerScroll`     | `(): void`             |\n| `#handleContainerSlotChange` | `(): void`             |\n| `#observeContainerScroll`    | `(): void`             |\n| `#observeContainerSlot`      | `(): void`             |\n| `#openViewer`                | `(element: any): any`  |\n| `#setupHints`                | `(): void`             |\n| `#teardownHints`             | `(): void`             |\n| `#unobserveContainerScroll`  | `(): void`             |\n| `#unobserveContainerSlot`    | `(): void`             |\n",
+          "readme": "# wcp-preview-viewer-link\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type               | Default          |\n|------------------|--------------------|-----------|--------------------|------------------|\n| `available`      | `available`        |           | `boolean`          | true             |\n| `container`      |                    | readonly  |                    |                  |\n| `enabled`        | `enabled`          |           | `boolean`          | false            |\n| `label`          | `label`            | readonly  | `\"Show in viewer\"` | \"Show in viewer\" |\n| `name`           | `name`             | readonly  | `\"viewer-link\"`    | \"viewer-link\"    |\n| `previewTagName` | `preview-tag-name` | readonly  | `string`           |                  |\n\n## Methods\n\n| Method                       | Type                   |\n|------------------------------|------------------------|\n| `#attachHint`                | `(element: any): void` |\n| `#attachHints`               | `(): void`             |\n| `#attachOverlay`             | `(): void`             |\n| `#checkAvailability`         | `(): void`             |\n| `#detachHints`               | `(): void`             |\n| `#detachOverlay`             | `(): void`             |\n| `#findContainerSlot`         | `(): any`              |\n| `#handleContainerScroll`     | `(): void`             |\n| `#handleContainerSlotChange` | `(): void`             |\n| `#observeContainerScroll`    | `(): void`             |\n| `#observeContainerSlot`      | `(): void`             |\n| `#openViewer`                | `(element: any): any`  |\n| `#setupHints`                | `(): void`             |\n| `#teardownHints`             | `(): void`             |\n| `#unobserveContainerScroll`  | `(): void`             |\n| `#unobserveContainerSlot`    | `(): void`             |\n| `adoptedCallback`            | `(): void`             |\n\n## Events\n\n| Event                                    |\n|------------------------------------------|\n| `wcp-preview-plugin:availability-change` |\n",
           "groups": [
             "plugins"
           ],
@@ -5338,10 +5347,15 @@
           "members": [
             {
               "kind": "field",
-              "name": "previewTagName",
+              "name": "_element",
               "type": {
-                "text": "string | undefined"
+                "text": "Parsed.Element | undefined"
               },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "previewTagName",
               "attribute": "preview-tag-name",
               "reflects": true
             },
@@ -5439,9 +5453,6 @@
           "attributes": [
             {
               "name": "preview-tag-name",
-              "type": {
-                "text": "string | undefined"
-              },
               "fieldName": "previewTagName"
             },
             {
@@ -5465,7 +5476,7 @@
           },
           "tagName": "wcp-preview-frame-viewer-controls",
           "examples": [],
-          "readme": "# wcp-preview-frame-viewer-controls\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type                  |\n|------------------|--------------------|-----------|-----------------------|\n| `data`           | `data`             | readonly  |                       |\n| `previewTagName` | `preview-tag-name` |           | `string \\| undefined` |\n\n## Events\n\n| Event                                     | Type                    | Description                                  |\n|-------------------------------------------|-------------------------|----------------------------------------------|\n| `wcp-preview-frame-viewer-controls:input` | `CustomEvent<FormData>` | Fires when the user changes a control value. |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                    |\n|--------------------------------------------------|------------------------------------------------|\n| `--wcp-preview-frame-viewer-controls-dark-border-color` | The border color of the element in dark mode.  |\n| `--wcp-preview-frame-viewer-controls-headline-size` | The font size of the headline.                 |\n| `--wcp-preview-frame-viewer-controls-headline-spacing` | The inner spacing of the headline.             |\n| `--wcp-preview-frame-viewer-controls-headline-weight` | The font weight of the headline.               |\n| `--wcp-preview-frame-viewer-controls-light-border-color` | The border color of the element in light mode. |\n",
+          "readme": "# wcp-preview-frame-viewer-controls\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type     |\n|------------------|--------------------|-----------|----------|\n| `data`           | `data`             | readonly  |          |\n| `previewTagName` | `preview-tag-name` |           | `string` |\n\n## Events\n\n| Event                                     | Type                    | Description                                  |\n|-------------------------------------------|-------------------------|----------------------------------------------|\n| `wcp-preview-frame-viewer-controls:input` | `CustomEvent<FormData>` | Fires when the user changes a control value. |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                    |\n|--------------------------------------------------|------------------------------------------------|\n| `--wcp-preview-frame-viewer-controls-dark-border-color` | The border color of the element in dark mode.  |\n| `--wcp-preview-frame-viewer-controls-headline-size` | The font size of the headline.                 |\n| `--wcp-preview-frame-viewer-controls-headline-spacing` | The inner spacing of the headline.             |\n| `--wcp-preview-frame-viewer-controls-headline-weight` | The font weight of the headline.               |\n| `--wcp-preview-frame-viewer-controls-light-border-color` | The border color of the element in light mode. |\n",
           "groups": [
             "plugins"
           ],

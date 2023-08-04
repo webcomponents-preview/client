@@ -396,29 +396,6 @@
   };
   Disposable.None = Object.freeze({ dispose() {
   } });
-  var SafeDisposable = class {
-    constructor() {
-      this.dispose = () => {
-      };
-      this.unset = () => {
-      };
-      this.isset = () => false;
-      trackDisposable(this);
-    }
-    set(fn) {
-      let callback = fn;
-      this.unset = () => callback = void 0;
-      this.isset = () => callback !== void 0;
-      this.dispose = () => {
-        if (callback) {
-          callback();
-          callback = void 0;
-          markAsDisposed(this);
-        }
-      };
-      return this;
-    }
-  };
   var DisposableMap = class {
     constructor() {
       this._store = /* @__PURE__ */ new Map();
@@ -582,161 +559,14 @@
     }
   };
 
-  // node_modules/monaco-editor/esm/vs/nls.js
-  var isPseudo = typeof document !== "undefined" && document.location && document.location.hash.indexOf("pseudo=true") >= 0;
-  function _format(message, args) {
-    let result;
-    if (args.length === 0) {
-      result = message;
-    } else {
-      result = message.replace(/\{(\d+)\}/g, (match, rest) => {
-        const index = rest[0];
-        const arg = args[index];
-        let result2 = match;
-        if (typeof arg === "string") {
-          result2 = arg;
-        } else if (typeof arg === "number" || typeof arg === "boolean" || arg === void 0 || arg === null) {
-          result2 = String(arg);
-        }
-        return result2;
-      });
-    }
-    if (isPseudo) {
-      result = "\uFF3B" + result.replace(/[aouei]/g, "$&$&") + "\uFF3D";
-    }
-    return result;
-  }
-  function localize(data, message, ...args) {
-    return _format(message, args);
-  }
-  function getConfiguredDefaultLocale(_) {
-    return void 0;
-  }
-
-  // node_modules/monaco-editor/esm/vs/base/common/platform.js
-  var _a;
-  var LANGUAGE_DEFAULT = "en";
-  var _isWindows = false;
-  var _isMacintosh = false;
-  var _isLinux = false;
-  var _isLinuxSnap = false;
-  var _isNative = false;
-  var _isWeb = false;
-  var _isElectron = false;
-  var _isIOS = false;
-  var _isCI = false;
-  var _isMobile = false;
-  var _locale = void 0;
-  var _language = LANGUAGE_DEFAULT;
-  var _platformLocale = LANGUAGE_DEFAULT;
-  var _translationsConfigFile = void 0;
-  var _userAgent = void 0;
-  var globals = typeof self === "object" ? self : typeof global === "object" ? global : {};
-  var nodeProcess = void 0;
-  if (typeof globals.vscode !== "undefined" && typeof globals.vscode.process !== "undefined") {
-    nodeProcess = globals.vscode.process;
-  } else if (typeof process !== "undefined") {
-    nodeProcess = process;
-  }
-  var isElectronProcess = typeof ((_a = nodeProcess === null || nodeProcess === void 0 ? void 0 : nodeProcess.versions) === null || _a === void 0 ? void 0 : _a.electron) === "string";
-  var isElectronRenderer = isElectronProcess && (nodeProcess === null || nodeProcess === void 0 ? void 0 : nodeProcess.type) === "renderer";
-  if (typeof navigator === "object" && !isElectronRenderer) {
-    _userAgent = navigator.userAgent;
-    _isWindows = _userAgent.indexOf("Windows") >= 0;
-    _isMacintosh = _userAgent.indexOf("Macintosh") >= 0;
-    _isIOS = (_userAgent.indexOf("Macintosh") >= 0 || _userAgent.indexOf("iPad") >= 0 || _userAgent.indexOf("iPhone") >= 0) && !!navigator.maxTouchPoints && navigator.maxTouchPoints > 0;
-    _isLinux = _userAgent.indexOf("Linux") >= 0;
-    _isMobile = (_userAgent === null || _userAgent === void 0 ? void 0 : _userAgent.indexOf("Mobi")) >= 0;
-    _isWeb = true;
-    const configuredLocale = getConfiguredDefaultLocale(
-      // This call _must_ be done in the file that calls `nls.getConfiguredDefaultLocale`
-      // to ensure that the NLS AMD Loader plugin has been loaded and configured.
-      // This is because the loader plugin decides what the default locale is based on
-      // how it's able to resolve the strings.
-      localize({ key: "ensureLoaderPluginIsLoaded", comment: ["{Locked}"] }, "_")
-    );
-    _locale = configuredLocale || LANGUAGE_DEFAULT;
-    _language = _locale;
-    _platformLocale = navigator.language;
-  } else if (typeof nodeProcess === "object") {
-    _isWindows = nodeProcess.platform === "win32";
-    _isMacintosh = nodeProcess.platform === "darwin";
-    _isLinux = nodeProcess.platform === "linux";
-    _isLinuxSnap = _isLinux && !!nodeProcess.env["SNAP"] && !!nodeProcess.env["SNAP_REVISION"];
-    _isElectron = isElectronProcess;
-    _isCI = !!nodeProcess.env["CI"] || !!nodeProcess.env["BUILD_ARTIFACTSTAGINGDIRECTORY"];
-    _locale = LANGUAGE_DEFAULT;
-    _language = LANGUAGE_DEFAULT;
-    const rawNlsConfig = nodeProcess.env["VSCODE_NLS_CONFIG"];
-    if (rawNlsConfig) {
-      try {
-        const nlsConfig = JSON.parse(rawNlsConfig);
-        const resolved = nlsConfig.availableLanguages["*"];
-        _locale = nlsConfig.locale;
-        _platformLocale = nlsConfig.osLocale;
-        _language = resolved ? resolved : LANGUAGE_DEFAULT;
-        _translationsConfigFile = nlsConfig._translationsConfigFile;
-      } catch (e) {
-      }
-    }
-    _isNative = true;
-  } else {
-    console.error("Unable to resolve platform.");
-  }
-  var _platform = 0;
-  if (_isMacintosh) {
-    _platform = 1;
-  } else if (_isWindows) {
-    _platform = 3;
-  } else if (_isLinux) {
-    _platform = 2;
-  }
-  var isWindows = _isWindows;
-  var isMacintosh = _isMacintosh;
-  var isWebWorker = _isWeb && typeof globals.importScripts === "function";
-  var userAgent = _userAgent;
-  var setTimeout0IsFaster = typeof globals.postMessage === "function" && !globals.importScripts;
-  var setTimeout0 = (() => {
-    if (setTimeout0IsFaster) {
-      const pending = [];
-      globals.addEventListener("message", (e) => {
-        if (e.data && e.data.vscodeScheduleAsyncWork) {
-          for (let i = 0, len = pending.length; i < len; i++) {
-            const candidate = pending[i];
-            if (candidate.id === e.data.vscodeScheduleAsyncWork) {
-              pending.splice(i, 1);
-              candidate.callback();
-              return;
-            }
-          }
-        }
-      });
-      let lastId = 0;
-      return (callback) => {
-        const myId = ++lastId;
-        pending.push({
-          id: myId,
-          callback
-        });
-        globals.postMessage({ vscodeScheduleAsyncWork: myId }, "*");
-      };
-    }
-    return (callback) => setTimeout(callback);
-  })();
-  var isChrome = !!(userAgent && userAgent.indexOf("Chrome") >= 0);
-  var isFirefox = !!(userAgent && userAgent.indexOf("Firefox") >= 0);
-  var isSafari = !!(!isChrome && (userAgent && userAgent.indexOf("Safari") >= 0));
-  var isEdge = !!(userAgent && userAgent.indexOf("Edg/") >= 0);
-  var isAndroid = !!(userAgent && userAgent.indexOf("Android") >= 0);
-
   // node_modules/monaco-editor/esm/vs/base/common/stopwatch.js
-  var hasPerformanceNow = globals.performance && typeof globals.performance.now === "function";
+  var hasPerformanceNow = globalThis.performance && typeof globalThis.performance.now === "function";
   var StopWatch = class _StopWatch {
-    static create(highResolution = true) {
+    static create(highResolution) {
       return new _StopWatch(highResolution);
     }
     constructor(highResolution) {
-      this._highResolution = hasPerformanceNow && highResolution;
+      this._now = hasPerformanceNow && highResolution === false ? Date.now : globalThis.performance.now.bind(globalThis.performance);
       this._startTime = this._now();
       this._stopTime = -1;
     }
@@ -748,9 +578,6 @@
         return this._stopTime - this._startTime;
       }
       return this._now() - this._startTime;
-    }
-    _now() {
-      return this._highResolution ? globals.performance.now() : Date.now();
     }
   };
 
@@ -1122,6 +949,7 @@
           }
         };
         observable.addObserver(observer);
+        observable.reportChanges();
         return {
           dispose() {
             observable.removeObserver(observer);
@@ -1141,7 +969,7 @@
       _EventProfiling.all.add(this);
     }
     start(listenerCount) {
-      this._stopWatch = new StopWatch(true);
+      this._stopWatch = new StopWatch();
       this.listenerCount = listenerCount;
     }
     stop() {
@@ -1209,21 +1037,28 @@
       console.warn(this.value.split("\n").slice(2).join("\n"));
     }
   };
-  var Listener = class {
-    constructor(callback, callbackThis, stack) {
-      this.callback = callback;
-      this.callbackThis = callbackThis;
-      this.stack = stack;
-      this.subscription = new SafeDisposable();
+  var UniqueContainer = class {
+    constructor(value) {
+      this.value = value;
     }
-    invoke(e) {
-      this.callback.call(this.callbackThis, e);
+  };
+  var compactionThreshold = 2;
+  var forEachListener = (listeners, fn) => {
+    if (listeners instanceof UniqueContainer) {
+      fn(listeners);
+    } else {
+      for (let i = 0; i < listeners.length; i++) {
+        const l = listeners[i];
+        if (l) {
+          fn(l);
+        }
+      }
     }
   };
   var Emitter = class {
     constructor(options) {
       var _a4, _b, _c, _d, _e;
-      this._disposed = false;
+      this._size = 0;
       this._options = options;
       this._leakageMon = _globalLeakWarningThreshold > 0 || ((_a4 = this._options) === null || _a4 === void 0 ? void 0 : _a4.leakWarningThreshold) ? new LeakageMonitor((_c = (_b = this._options) === null || _b === void 0 ? void 0 : _b.leakWarningThreshold) !== null && _c !== void 0 ? _c : _globalLeakWarningThreshold) : void 0;
       this._perfMon = ((_d = this._options) === null || _d === void 0 ? void 0 : _d._profName) ? new EventProfiling(this._options._profName) : void 0;
@@ -1233,22 +1068,22 @@
       var _a4, _b, _c, _d;
       if (!this._disposed) {
         this._disposed = true;
+        if (((_a4 = this._deliveryQueue) === null || _a4 === void 0 ? void 0 : _a4.current) === this) {
+          this._deliveryQueue.reset();
+        }
         if (this._listeners) {
           if (_enableDisposeWithListenerWarning) {
-            const listeners = Array.from(this._listeners);
+            const listeners = this._listeners;
             queueMicrotask(() => {
-              var _a5;
-              for (const listener of listeners) {
-                if (listener.subscription.isset()) {
-                  listener.subscription.unset();
-                  (_a5 = listener.stack) === null || _a5 === void 0 ? void 0 : _a5.print();
-                }
-              }
+              forEachListener(listeners, (l) => {
+                var _a5;
+                return (_a5 = l.stack) === null || _a5 === void 0 ? void 0 : _a5.print();
+              });
             });
           }
-          this._listeners.clear();
+          this._listeners = void 0;
+          this._size = 0;
         }
-        (_a4 = this._deliveryQueue) === null || _a4 === void 0 ? void 0 : _a4.clear(this);
         (_c = (_b = this._options) === null || _b === void 0 ? void 0 : _b.onDidRemoveLastListener) === null || _c === void 0 ? void 0 : _c.call(_b);
         (_d = this._leakageMon) === null || _d === void 0 ? void 0 : _d.dispose();
       }
@@ -1258,127 +1093,155 @@
      * to events from this Emitter
      */
     get event() {
-      if (!this._event) {
-        this._event = (callback, thisArgs, disposables) => {
-          var _a4, _b, _c;
-          if (!this._listeners) {
-            this._listeners = new LinkedList();
-          }
-          if (this._leakageMon && this._listeners.size > this._leakageMon.threshold * 3) {
-            console.warn(`[${this._leakageMon.name}] REFUSES to accept new listeners because it exceeded its threshold by far`);
-            return Disposable.None;
-          }
-          const firstListener = this._listeners.isEmpty();
-          if (firstListener && ((_a4 = this._options) === null || _a4 === void 0 ? void 0 : _a4.onWillAddFirstListener)) {
-            this._options.onWillAddFirstListener(this);
-          }
-          let removeMonitor;
-          let stack;
-          if (this._leakageMon && this._listeners.size >= Math.ceil(this._leakageMon.threshold * 0.2)) {
-            stack = Stacktrace.create();
-            removeMonitor = this._leakageMon.check(stack, this._listeners.size + 1);
-          }
-          if (_enableDisposeWithListenerWarning) {
-            stack = stack !== null && stack !== void 0 ? stack : Stacktrace.create();
-          }
-          const listener = new Listener(callback, thisArgs, stack);
-          const removeListener = this._listeners.push(listener);
-          if (firstListener && ((_b = this._options) === null || _b === void 0 ? void 0 : _b.onDidAddFirstListener)) {
-            this._options.onDidAddFirstListener(this);
-          }
-          if ((_c = this._options) === null || _c === void 0 ? void 0 : _c.onDidAddListener) {
-            this._options.onDidAddListener(this, callback, thisArgs);
-          }
-          const result = listener.subscription.set(() => {
-            var _a5, _b2;
-            removeMonitor === null || removeMonitor === void 0 ? void 0 : removeMonitor();
-            if (!this._disposed) {
-              (_b2 = (_a5 = this._options) === null || _a5 === void 0 ? void 0 : _a5.onWillRemoveListener) === null || _b2 === void 0 ? void 0 : _b2.call(_a5, this);
-              removeListener();
-              if (this._options && this._options.onDidRemoveLastListener) {
-                const hasListeners = this._listeners && !this._listeners.isEmpty();
-                if (!hasListeners) {
-                  this._options.onDidRemoveLastListener(this);
-                }
-              }
-            }
-          });
-          if (disposables instanceof DisposableStore) {
-            disposables.add(result);
-          } else if (Array.isArray(disposables)) {
-            disposables.push(result);
-          }
-          return result;
-        };
-      }
+      var _a4;
+      (_a4 = this._event) !== null && _a4 !== void 0 ? _a4 : this._event = (callback, thisArgs, disposables) => {
+        var _a5, _b, _c, _d, _e;
+        if (this._leakageMon && this._size > this._leakageMon.threshold * 3) {
+          console.warn(`[${this._leakageMon.name}] REFUSES to accept new listeners because it exceeded its threshold by far`);
+          return Disposable.None;
+        }
+        if (this._disposed) {
+          return Disposable.None;
+        }
+        if (thisArgs) {
+          callback = callback.bind(thisArgs);
+        }
+        const contained = new UniqueContainer(callback);
+        let removeMonitor;
+        let stack;
+        if (this._leakageMon && this._size >= Math.ceil(this._leakageMon.threshold * 0.2)) {
+          contained.stack = Stacktrace.create();
+          removeMonitor = this._leakageMon.check(contained.stack, this._size + 1);
+        }
+        if (_enableDisposeWithListenerWarning) {
+          contained.stack = stack !== null && stack !== void 0 ? stack : Stacktrace.create();
+        }
+        if (!this._listeners) {
+          (_b = (_a5 = this._options) === null || _a5 === void 0 ? void 0 : _a5.onWillAddFirstListener) === null || _b === void 0 ? void 0 : _b.call(_a5, this);
+          this._listeners = contained;
+          (_d = (_c = this._options) === null || _c === void 0 ? void 0 : _c.onDidAddFirstListener) === null || _d === void 0 ? void 0 : _d.call(_c, this);
+        } else if (this._listeners instanceof UniqueContainer) {
+          (_e = this._deliveryQueue) !== null && _e !== void 0 ? _e : this._deliveryQueue = new EventDeliveryQueuePrivate();
+          this._listeners = [this._listeners, contained];
+        } else {
+          this._listeners.push(contained);
+        }
+        this._size++;
+        const result = toDisposable(() => {
+          removeMonitor === null || removeMonitor === void 0 ? void 0 : removeMonitor();
+          this._removeListener(contained);
+        });
+        if (disposables instanceof DisposableStore) {
+          disposables.add(result);
+        } else if (Array.isArray(disposables)) {
+          disposables.push(result);
+        }
+        return result;
+      };
       return this._event;
+    }
+    _removeListener(listener) {
+      var _a4, _b, _c, _d;
+      (_b = (_a4 = this._options) === null || _a4 === void 0 ? void 0 : _a4.onWillRemoveListener) === null || _b === void 0 ? void 0 : _b.call(_a4, this);
+      if (!this._listeners) {
+        return;
+      }
+      if (this._size === 1) {
+        this._listeners = void 0;
+        (_d = (_c = this._options) === null || _c === void 0 ? void 0 : _c.onDidRemoveLastListener) === null || _d === void 0 ? void 0 : _d.call(_c, this);
+        this._size = 0;
+        return;
+      }
+      const listeners = this._listeners;
+      const index = listeners.indexOf(listener);
+      if (index === -1) {
+        console.log("disposed?", this._disposed);
+        console.log("size?", this._size);
+        console.log("arr?", JSON.stringify(this._listeners));
+        throw new Error("Attempted to dispose unknown listener");
+      }
+      this._size--;
+      listeners[index] = void 0;
+      const adjustDeliveryQueue = this._deliveryQueue.current === this;
+      if (this._size * compactionThreshold <= listeners.length) {
+        let n = 0;
+        for (let i = 0; i < listeners.length; i++) {
+          if (listeners[i]) {
+            listeners[n++] = listeners[i];
+          } else if (adjustDeliveryQueue) {
+            this._deliveryQueue.end--;
+            if (n < this._deliveryQueue.i) {
+              this._deliveryQueue.i--;
+            }
+          }
+        }
+        listeners.length = n;
+      }
+    }
+    _deliver(listener, value) {
+      var _a4;
+      if (!listener) {
+        return;
+      }
+      const errorHandler2 = ((_a4 = this._options) === null || _a4 === void 0 ? void 0 : _a4.onListenerError) || onUnexpectedError;
+      if (!errorHandler2) {
+        listener.value(value);
+        return;
+      }
+      try {
+        listener.value(value);
+      } catch (e) {
+        errorHandler2(e);
+      }
+    }
+    /** Delivers items in the queue. Assumes the queue is ready to go. */
+    _deliverQueue(dq) {
+      const listeners = dq.current._listeners;
+      while (dq.i < dq.end) {
+        this._deliver(listeners[dq.i++], dq.value);
+      }
+      dq.reset();
     }
     /**
      * To be kept private to fire an event to
      * subscribers
      */
     fire(event) {
-      var _a4, _b, _c;
-      if (this._listeners) {
-        if (!this._deliveryQueue) {
-          this._deliveryQueue = new PrivateEventDeliveryQueue((_a4 = this._options) === null || _a4 === void 0 ? void 0 : _a4.onListenerError);
-        }
-        for (const listener of this._listeners) {
-          this._deliveryQueue.push(this, listener, event);
-        }
-        (_b = this._perfMon) === null || _b === void 0 ? void 0 : _b.start(this._deliveryQueue.size);
-        this._deliveryQueue.deliver();
-        (_c = this._perfMon) === null || _c === void 0 ? void 0 : _c.stop();
+      var _a4, _b, _c, _d;
+      if ((_a4 = this._deliveryQueue) === null || _a4 === void 0 ? void 0 : _a4.current) {
+        this._deliverQueue(this._deliveryQueue);
+        (_b = this._perfMon) === null || _b === void 0 ? void 0 : _b.stop();
       }
+      (_c = this._perfMon) === null || _c === void 0 ? void 0 : _c.start(this._size);
+      if (!this._listeners) {
+      } else if (this._listeners instanceof UniqueContainer) {
+        this._deliver(this._listeners, event);
+      } else {
+        const dq = this._deliveryQueue;
+        dq.enqueue(this, event, this._listeners.length);
+        this._deliverQueue(dq);
+      }
+      (_d = this._perfMon) === null || _d === void 0 ? void 0 : _d.stop();
     }
     hasListeners() {
-      if (!this._listeners) {
-        return false;
-      }
-      return !this._listeners.isEmpty();
+      return this._size > 0;
     }
   };
-  var EventDeliveryQueue = class {
-    constructor(_onListenerError = onUnexpectedError) {
-      this._onListenerError = _onListenerError;
-      this._queue = new LinkedList();
+  var EventDeliveryQueuePrivate = class {
+    constructor() {
+      this.i = -1;
+      this.end = 0;
     }
-    get size() {
-      return this._queue.size;
+    enqueue(emitter, value, end) {
+      this.i = 0;
+      this.end = end;
+      this.current = emitter;
+      this.value = value;
     }
-    push(emitter, listener, event) {
-      this._queue.push(new EventDeliveryQueueElement(emitter, listener, event));
-    }
-    clear(emitter) {
-      const newQueue = new LinkedList();
-      for (const element of this._queue) {
-        if (element.emitter !== emitter) {
-          newQueue.push(element);
-        }
-      }
-      this._queue = newQueue;
-    }
-    deliver() {
-      while (this._queue.size > 0) {
-        const element = this._queue.shift();
-        try {
-          element.listener.invoke(element.event);
-        } catch (e) {
-          this._onListenerError(e);
-        }
-      }
-    }
-  };
-  var PrivateEventDeliveryQueue = class extends EventDeliveryQueue {
-    clear(emitter) {
-      this._queue.clear();
-    }
-  };
-  var EventDeliveryQueueElement = class {
-    constructor(emitter, listener, event) {
-      this.emitter = emitter;
-      this.listener = listener;
-      this.event = event;
+    reset() {
+      this.i = this.end;
+      this.current = void 0;
+      this.value = void 0;
     }
   };
 
@@ -1390,10 +1253,9 @@
   // node_modules/monaco-editor/esm/vs/base/common/objects.js
   function getAllPropertyNames(obj) {
     let res = [];
-    let proto = Object.getPrototypeOf(obj);
-    while (Object.prototype !== proto) {
-      res = res.concat(Object.getOwnPropertyNames(proto));
-      proto = Object.getPrototypeOf(proto);
+    while (Object.prototype !== obj) {
+      res = res.concat(Object.getOwnPropertyNames(obj));
+      obj = Object.getPrototypeOf(obj);
     }
     return res;
   }
@@ -1419,6 +1281,153 @@
     }
     return result;
   }
+
+  // node_modules/monaco-editor/esm/vs/nls.js
+  var isPseudo = typeof document !== "undefined" && document.location && document.location.hash.indexOf("pseudo=true") >= 0;
+  function _format(message, args) {
+    let result;
+    if (args.length === 0) {
+      result = message;
+    } else {
+      result = message.replace(/\{(\d+)\}/g, (match, rest) => {
+        const index = rest[0];
+        const arg = args[index];
+        let result2 = match;
+        if (typeof arg === "string") {
+          result2 = arg;
+        } else if (typeof arg === "number" || typeof arg === "boolean" || arg === void 0 || arg === null) {
+          result2 = String(arg);
+        }
+        return result2;
+      });
+    }
+    if (isPseudo) {
+      result = "\uFF3B" + result.replace(/[aouei]/g, "$&$&") + "\uFF3D";
+    }
+    return result;
+  }
+  function localize(data, message, ...args) {
+    return _format(message, args);
+  }
+  function getConfiguredDefaultLocale(_) {
+    return void 0;
+  }
+
+  // node_modules/monaco-editor/esm/vs/base/common/platform.js
+  var _a;
+  var LANGUAGE_DEFAULT = "en";
+  var _isWindows = false;
+  var _isMacintosh = false;
+  var _isLinux = false;
+  var _isLinuxSnap = false;
+  var _isNative = false;
+  var _isWeb = false;
+  var _isElectron = false;
+  var _isIOS = false;
+  var _isCI = false;
+  var _isMobile = false;
+  var _locale = void 0;
+  var _language = LANGUAGE_DEFAULT;
+  var _platformLocale = LANGUAGE_DEFAULT;
+  var _translationsConfigFile = void 0;
+  var _userAgent = void 0;
+  var globals = typeof self === "object" ? self : typeof global === "object" ? global : {};
+  var nodeProcess = void 0;
+  if (typeof globals.vscode !== "undefined" && typeof globals.vscode.process !== "undefined") {
+    nodeProcess = globals.vscode.process;
+  } else if (typeof process !== "undefined") {
+    nodeProcess = process;
+  }
+  var isElectronProcess = typeof ((_a = nodeProcess === null || nodeProcess === void 0 ? void 0 : nodeProcess.versions) === null || _a === void 0 ? void 0 : _a.electron) === "string";
+  var isElectronRenderer = isElectronProcess && (nodeProcess === null || nodeProcess === void 0 ? void 0 : nodeProcess.type) === "renderer";
+  if (typeof navigator === "object" && !isElectronRenderer) {
+    _userAgent = navigator.userAgent;
+    _isWindows = _userAgent.indexOf("Windows") >= 0;
+    _isMacintosh = _userAgent.indexOf("Macintosh") >= 0;
+    _isIOS = (_userAgent.indexOf("Macintosh") >= 0 || _userAgent.indexOf("iPad") >= 0 || _userAgent.indexOf("iPhone") >= 0) && !!navigator.maxTouchPoints && navigator.maxTouchPoints > 0;
+    _isLinux = _userAgent.indexOf("Linux") >= 0;
+    _isMobile = (_userAgent === null || _userAgent === void 0 ? void 0 : _userAgent.indexOf("Mobi")) >= 0;
+    _isWeb = true;
+    const configuredLocale = getConfiguredDefaultLocale(
+      // This call _must_ be done in the file that calls `nls.getConfiguredDefaultLocale`
+      // to ensure that the NLS AMD Loader plugin has been loaded and configured.
+      // This is because the loader plugin decides what the default locale is based on
+      // how it's able to resolve the strings.
+      localize({ key: "ensureLoaderPluginIsLoaded", comment: ["{Locked}"] }, "_")
+    );
+    _locale = configuredLocale || LANGUAGE_DEFAULT;
+    _language = _locale;
+    _platformLocale = navigator.language;
+  } else if (typeof nodeProcess === "object") {
+    _isWindows = nodeProcess.platform === "win32";
+    _isMacintosh = nodeProcess.platform === "darwin";
+    _isLinux = nodeProcess.platform === "linux";
+    _isLinuxSnap = _isLinux && !!nodeProcess.env["SNAP"] && !!nodeProcess.env["SNAP_REVISION"];
+    _isElectron = isElectronProcess;
+    _isCI = !!nodeProcess.env["CI"] || !!nodeProcess.env["BUILD_ARTIFACTSTAGINGDIRECTORY"];
+    _locale = LANGUAGE_DEFAULT;
+    _language = LANGUAGE_DEFAULT;
+    const rawNlsConfig = nodeProcess.env["VSCODE_NLS_CONFIG"];
+    if (rawNlsConfig) {
+      try {
+        const nlsConfig = JSON.parse(rawNlsConfig);
+        const resolved = nlsConfig.availableLanguages["*"];
+        _locale = nlsConfig.locale;
+        _platformLocale = nlsConfig.osLocale;
+        _language = resolved ? resolved : LANGUAGE_DEFAULT;
+        _translationsConfigFile = nlsConfig._translationsConfigFile;
+      } catch (e) {
+      }
+    }
+    _isNative = true;
+  } else {
+    console.error("Unable to resolve platform.");
+  }
+  var _platform = 0;
+  if (_isMacintosh) {
+    _platform = 1;
+  } else if (_isWindows) {
+    _platform = 3;
+  } else if (_isLinux) {
+    _platform = 2;
+  }
+  var isWindows = _isWindows;
+  var isMacintosh = _isMacintosh;
+  var isWebWorker = _isWeb && typeof globals.importScripts === "function";
+  var userAgent = _userAgent;
+  var setTimeout0IsFaster = typeof globals.postMessage === "function" && !globals.importScripts;
+  var setTimeout0 = (() => {
+    if (setTimeout0IsFaster) {
+      const pending = [];
+      globals.addEventListener("message", (e) => {
+        if (e.data && e.data.vscodeScheduleAsyncWork) {
+          for (let i = 0, len = pending.length; i < len; i++) {
+            const candidate = pending[i];
+            if (candidate.id === e.data.vscodeScheduleAsyncWork) {
+              pending.splice(i, 1);
+              candidate.callback();
+              return;
+            }
+          }
+        }
+      });
+      let lastId = 0;
+      return (callback) => {
+        const myId = ++lastId;
+        pending.push({
+          id: myId,
+          callback
+        });
+        globals.postMessage({ vscodeScheduleAsyncWork: myId }, "*");
+      };
+    }
+    return (callback) => setTimeout(callback);
+  })();
+  var isChrome = !!(userAgent && userAgent.indexOf("Chrome") >= 0);
+  var isFirefox = !!(userAgent && userAgent.indexOf("Firefox") >= 0);
+  var isSafari = !!(!isChrome && (userAgent && userAgent.indexOf("Safari") >= 0));
+  var isEdge = !!(userAgent && userAgent.indexOf("Edg/") >= 0);
+  var isAndroid = !!(userAgent && userAgent.indexOf("Android") >= 0);
 
   // node_modules/monaco-editor/esm/vs/base/common/cache.js
   var LRUCachedFunction = class {
@@ -7443,6 +7452,112 @@
     DocumentHighlightKind4[DocumentHighlightKind4["Read"] = 1] = "Read";
     DocumentHighlightKind4[DocumentHighlightKind4["Write"] = 2] = "Write";
   })(DocumentHighlightKind || (DocumentHighlightKind = {}));
+  var symbolKindNames = {
+    [
+      17
+      /* SymbolKind.Array */
+    ]: localize("Array", "array"),
+    [
+      16
+      /* SymbolKind.Boolean */
+    ]: localize("Boolean", "boolean"),
+    [
+      4
+      /* SymbolKind.Class */
+    ]: localize("Class", "class"),
+    [
+      13
+      /* SymbolKind.Constant */
+    ]: localize("Constant", "constant"),
+    [
+      8
+      /* SymbolKind.Constructor */
+    ]: localize("Constructor", "constructor"),
+    [
+      9
+      /* SymbolKind.Enum */
+    ]: localize("Enum", "enumeration"),
+    [
+      21
+      /* SymbolKind.EnumMember */
+    ]: localize("EnumMember", "enumeration member"),
+    [
+      23
+      /* SymbolKind.Event */
+    ]: localize("Event", "event"),
+    [
+      7
+      /* SymbolKind.Field */
+    ]: localize("Field", "field"),
+    [
+      0
+      /* SymbolKind.File */
+    ]: localize("File", "file"),
+    [
+      11
+      /* SymbolKind.Function */
+    ]: localize("Function", "function"),
+    [
+      10
+      /* SymbolKind.Interface */
+    ]: localize("Interface", "interface"),
+    [
+      19
+      /* SymbolKind.Key */
+    ]: localize("Key", "key"),
+    [
+      5
+      /* SymbolKind.Method */
+    ]: localize("Method", "method"),
+    [
+      1
+      /* SymbolKind.Module */
+    ]: localize("Module", "module"),
+    [
+      2
+      /* SymbolKind.Namespace */
+    ]: localize("Namespace", "namespace"),
+    [
+      20
+      /* SymbolKind.Null */
+    ]: localize("Null", "null"),
+    [
+      15
+      /* SymbolKind.Number */
+    ]: localize("Number", "number"),
+    [
+      18
+      /* SymbolKind.Object */
+    ]: localize("Object", "object"),
+    [
+      24
+      /* SymbolKind.Operator */
+    ]: localize("Operator", "operator"),
+    [
+      3
+      /* SymbolKind.Package */
+    ]: localize("Package", "package"),
+    [
+      6
+      /* SymbolKind.Property */
+    ]: localize("Property", "property"),
+    [
+      14
+      /* SymbolKind.String */
+    ]: localize("String", "string"),
+    [
+      22
+      /* SymbolKind.Struct */
+    ]: localize("Struct", "struct"),
+    [
+      25
+      /* SymbolKind.TypeParameter */
+    ]: localize("TypeParameter", "type parameter"),
+    [
+      12
+      /* SymbolKind.Variable */
+    ]: localize("Variable", "variable")
+  };
   var SymbolKinds;
   (function(SymbolKinds2) {
     const byKind = /* @__PURE__ */ new Map();
@@ -7629,144 +7744,147 @@
     EditorOption2[EditorOption2["accessibilitySupport"] = 2] = "accessibilitySupport";
     EditorOption2[EditorOption2["accessibilityPageSize"] = 3] = "accessibilityPageSize";
     EditorOption2[EditorOption2["ariaLabel"] = 4] = "ariaLabel";
-    EditorOption2[EditorOption2["autoClosingBrackets"] = 5] = "autoClosingBrackets";
-    EditorOption2[EditorOption2["screenReaderAnnounceInlineSuggestion"] = 6] = "screenReaderAnnounceInlineSuggestion";
-    EditorOption2[EditorOption2["autoClosingDelete"] = 7] = "autoClosingDelete";
-    EditorOption2[EditorOption2["autoClosingOvertype"] = 8] = "autoClosingOvertype";
-    EditorOption2[EditorOption2["autoClosingQuotes"] = 9] = "autoClosingQuotes";
-    EditorOption2[EditorOption2["autoIndent"] = 10] = "autoIndent";
-    EditorOption2[EditorOption2["automaticLayout"] = 11] = "automaticLayout";
-    EditorOption2[EditorOption2["autoSurround"] = 12] = "autoSurround";
-    EditorOption2[EditorOption2["bracketPairColorization"] = 13] = "bracketPairColorization";
-    EditorOption2[EditorOption2["guides"] = 14] = "guides";
-    EditorOption2[EditorOption2["codeLens"] = 15] = "codeLens";
-    EditorOption2[EditorOption2["codeLensFontFamily"] = 16] = "codeLensFontFamily";
-    EditorOption2[EditorOption2["codeLensFontSize"] = 17] = "codeLensFontSize";
-    EditorOption2[EditorOption2["colorDecorators"] = 18] = "colorDecorators";
-    EditorOption2[EditorOption2["colorDecoratorsLimit"] = 19] = "colorDecoratorsLimit";
-    EditorOption2[EditorOption2["columnSelection"] = 20] = "columnSelection";
-    EditorOption2[EditorOption2["comments"] = 21] = "comments";
-    EditorOption2[EditorOption2["contextmenu"] = 22] = "contextmenu";
-    EditorOption2[EditorOption2["copyWithSyntaxHighlighting"] = 23] = "copyWithSyntaxHighlighting";
-    EditorOption2[EditorOption2["cursorBlinking"] = 24] = "cursorBlinking";
-    EditorOption2[EditorOption2["cursorSmoothCaretAnimation"] = 25] = "cursorSmoothCaretAnimation";
-    EditorOption2[EditorOption2["cursorStyle"] = 26] = "cursorStyle";
-    EditorOption2[EditorOption2["cursorSurroundingLines"] = 27] = "cursorSurroundingLines";
-    EditorOption2[EditorOption2["cursorSurroundingLinesStyle"] = 28] = "cursorSurroundingLinesStyle";
-    EditorOption2[EditorOption2["cursorWidth"] = 29] = "cursorWidth";
-    EditorOption2[EditorOption2["disableLayerHinting"] = 30] = "disableLayerHinting";
-    EditorOption2[EditorOption2["disableMonospaceOptimizations"] = 31] = "disableMonospaceOptimizations";
-    EditorOption2[EditorOption2["domReadOnly"] = 32] = "domReadOnly";
-    EditorOption2[EditorOption2["dragAndDrop"] = 33] = "dragAndDrop";
-    EditorOption2[EditorOption2["dropIntoEditor"] = 34] = "dropIntoEditor";
-    EditorOption2[EditorOption2["emptySelectionClipboard"] = 35] = "emptySelectionClipboard";
-    EditorOption2[EditorOption2["experimentalWhitespaceRendering"] = 36] = "experimentalWhitespaceRendering";
-    EditorOption2[EditorOption2["extraEditorClassName"] = 37] = "extraEditorClassName";
-    EditorOption2[EditorOption2["fastScrollSensitivity"] = 38] = "fastScrollSensitivity";
-    EditorOption2[EditorOption2["find"] = 39] = "find";
-    EditorOption2[EditorOption2["fixedOverflowWidgets"] = 40] = "fixedOverflowWidgets";
-    EditorOption2[EditorOption2["folding"] = 41] = "folding";
-    EditorOption2[EditorOption2["foldingStrategy"] = 42] = "foldingStrategy";
-    EditorOption2[EditorOption2["foldingHighlight"] = 43] = "foldingHighlight";
-    EditorOption2[EditorOption2["foldingImportsByDefault"] = 44] = "foldingImportsByDefault";
-    EditorOption2[EditorOption2["foldingMaximumRegions"] = 45] = "foldingMaximumRegions";
-    EditorOption2[EditorOption2["unfoldOnClickAfterEndOfLine"] = 46] = "unfoldOnClickAfterEndOfLine";
-    EditorOption2[EditorOption2["fontFamily"] = 47] = "fontFamily";
-    EditorOption2[EditorOption2["fontInfo"] = 48] = "fontInfo";
-    EditorOption2[EditorOption2["fontLigatures"] = 49] = "fontLigatures";
-    EditorOption2[EditorOption2["fontSize"] = 50] = "fontSize";
-    EditorOption2[EditorOption2["fontWeight"] = 51] = "fontWeight";
-    EditorOption2[EditorOption2["fontVariations"] = 52] = "fontVariations";
-    EditorOption2[EditorOption2["formatOnPaste"] = 53] = "formatOnPaste";
-    EditorOption2[EditorOption2["formatOnType"] = 54] = "formatOnType";
-    EditorOption2[EditorOption2["glyphMargin"] = 55] = "glyphMargin";
-    EditorOption2[EditorOption2["gotoLocation"] = 56] = "gotoLocation";
-    EditorOption2[EditorOption2["hideCursorInOverviewRuler"] = 57] = "hideCursorInOverviewRuler";
-    EditorOption2[EditorOption2["hover"] = 58] = "hover";
-    EditorOption2[EditorOption2["inDiffEditor"] = 59] = "inDiffEditor";
-    EditorOption2[EditorOption2["inlineSuggest"] = 60] = "inlineSuggest";
-    EditorOption2[EditorOption2["letterSpacing"] = 61] = "letterSpacing";
-    EditorOption2[EditorOption2["lightbulb"] = 62] = "lightbulb";
-    EditorOption2[EditorOption2["lineDecorationsWidth"] = 63] = "lineDecorationsWidth";
-    EditorOption2[EditorOption2["lineHeight"] = 64] = "lineHeight";
-    EditorOption2[EditorOption2["lineNumbers"] = 65] = "lineNumbers";
-    EditorOption2[EditorOption2["lineNumbersMinChars"] = 66] = "lineNumbersMinChars";
-    EditorOption2[EditorOption2["linkedEditing"] = 67] = "linkedEditing";
-    EditorOption2[EditorOption2["links"] = 68] = "links";
-    EditorOption2[EditorOption2["matchBrackets"] = 69] = "matchBrackets";
-    EditorOption2[EditorOption2["minimap"] = 70] = "minimap";
-    EditorOption2[EditorOption2["mouseStyle"] = 71] = "mouseStyle";
-    EditorOption2[EditorOption2["mouseWheelScrollSensitivity"] = 72] = "mouseWheelScrollSensitivity";
-    EditorOption2[EditorOption2["mouseWheelZoom"] = 73] = "mouseWheelZoom";
-    EditorOption2[EditorOption2["multiCursorMergeOverlapping"] = 74] = "multiCursorMergeOverlapping";
-    EditorOption2[EditorOption2["multiCursorModifier"] = 75] = "multiCursorModifier";
-    EditorOption2[EditorOption2["multiCursorPaste"] = 76] = "multiCursorPaste";
-    EditorOption2[EditorOption2["multiCursorLimit"] = 77] = "multiCursorLimit";
-    EditorOption2[EditorOption2["occurrencesHighlight"] = 78] = "occurrencesHighlight";
-    EditorOption2[EditorOption2["overviewRulerBorder"] = 79] = "overviewRulerBorder";
-    EditorOption2[EditorOption2["overviewRulerLanes"] = 80] = "overviewRulerLanes";
-    EditorOption2[EditorOption2["padding"] = 81] = "padding";
-    EditorOption2[EditorOption2["pasteAs"] = 82] = "pasteAs";
-    EditorOption2[EditorOption2["parameterHints"] = 83] = "parameterHints";
-    EditorOption2[EditorOption2["peekWidgetDefaultFocus"] = 84] = "peekWidgetDefaultFocus";
-    EditorOption2[EditorOption2["definitionLinkOpensInPeek"] = 85] = "definitionLinkOpensInPeek";
-    EditorOption2[EditorOption2["quickSuggestions"] = 86] = "quickSuggestions";
-    EditorOption2[EditorOption2["quickSuggestionsDelay"] = 87] = "quickSuggestionsDelay";
-    EditorOption2[EditorOption2["readOnly"] = 88] = "readOnly";
-    EditorOption2[EditorOption2["renameOnType"] = 89] = "renameOnType";
-    EditorOption2[EditorOption2["renderControlCharacters"] = 90] = "renderControlCharacters";
-    EditorOption2[EditorOption2["renderFinalNewline"] = 91] = "renderFinalNewline";
-    EditorOption2[EditorOption2["renderLineHighlight"] = 92] = "renderLineHighlight";
-    EditorOption2[EditorOption2["renderLineHighlightOnlyWhenFocus"] = 93] = "renderLineHighlightOnlyWhenFocus";
-    EditorOption2[EditorOption2["renderValidationDecorations"] = 94] = "renderValidationDecorations";
-    EditorOption2[EditorOption2["renderWhitespace"] = 95] = "renderWhitespace";
-    EditorOption2[EditorOption2["revealHorizontalRightPadding"] = 96] = "revealHorizontalRightPadding";
-    EditorOption2[EditorOption2["roundedSelection"] = 97] = "roundedSelection";
-    EditorOption2[EditorOption2["rulers"] = 98] = "rulers";
-    EditorOption2[EditorOption2["scrollbar"] = 99] = "scrollbar";
-    EditorOption2[EditorOption2["scrollBeyondLastColumn"] = 100] = "scrollBeyondLastColumn";
-    EditorOption2[EditorOption2["scrollBeyondLastLine"] = 101] = "scrollBeyondLastLine";
-    EditorOption2[EditorOption2["scrollPredominantAxis"] = 102] = "scrollPredominantAxis";
-    EditorOption2[EditorOption2["selectionClipboard"] = 103] = "selectionClipboard";
-    EditorOption2[EditorOption2["selectionHighlight"] = 104] = "selectionHighlight";
-    EditorOption2[EditorOption2["selectOnLineNumbers"] = 105] = "selectOnLineNumbers";
-    EditorOption2[EditorOption2["showFoldingControls"] = 106] = "showFoldingControls";
-    EditorOption2[EditorOption2["showUnused"] = 107] = "showUnused";
-    EditorOption2[EditorOption2["snippetSuggestions"] = 108] = "snippetSuggestions";
-    EditorOption2[EditorOption2["smartSelect"] = 109] = "smartSelect";
-    EditorOption2[EditorOption2["smoothScrolling"] = 110] = "smoothScrolling";
-    EditorOption2[EditorOption2["stickyScroll"] = 111] = "stickyScroll";
-    EditorOption2[EditorOption2["stickyTabStops"] = 112] = "stickyTabStops";
-    EditorOption2[EditorOption2["stopRenderingLineAfter"] = 113] = "stopRenderingLineAfter";
-    EditorOption2[EditorOption2["suggest"] = 114] = "suggest";
-    EditorOption2[EditorOption2["suggestFontSize"] = 115] = "suggestFontSize";
-    EditorOption2[EditorOption2["suggestLineHeight"] = 116] = "suggestLineHeight";
-    EditorOption2[EditorOption2["suggestOnTriggerCharacters"] = 117] = "suggestOnTriggerCharacters";
-    EditorOption2[EditorOption2["suggestSelection"] = 118] = "suggestSelection";
-    EditorOption2[EditorOption2["tabCompletion"] = 119] = "tabCompletion";
-    EditorOption2[EditorOption2["tabIndex"] = 120] = "tabIndex";
-    EditorOption2[EditorOption2["unicodeHighlighting"] = 121] = "unicodeHighlighting";
-    EditorOption2[EditorOption2["unusualLineTerminators"] = 122] = "unusualLineTerminators";
-    EditorOption2[EditorOption2["useShadowDOM"] = 123] = "useShadowDOM";
-    EditorOption2[EditorOption2["useTabStops"] = 124] = "useTabStops";
-    EditorOption2[EditorOption2["wordBreak"] = 125] = "wordBreak";
-    EditorOption2[EditorOption2["wordSeparators"] = 126] = "wordSeparators";
-    EditorOption2[EditorOption2["wordWrap"] = 127] = "wordWrap";
-    EditorOption2[EditorOption2["wordWrapBreakAfterCharacters"] = 128] = "wordWrapBreakAfterCharacters";
-    EditorOption2[EditorOption2["wordWrapBreakBeforeCharacters"] = 129] = "wordWrapBreakBeforeCharacters";
-    EditorOption2[EditorOption2["wordWrapColumn"] = 130] = "wordWrapColumn";
-    EditorOption2[EditorOption2["wordWrapOverride1"] = 131] = "wordWrapOverride1";
-    EditorOption2[EditorOption2["wordWrapOverride2"] = 132] = "wordWrapOverride2";
-    EditorOption2[EditorOption2["wrappingIndent"] = 133] = "wrappingIndent";
-    EditorOption2[EditorOption2["wrappingStrategy"] = 134] = "wrappingStrategy";
-    EditorOption2[EditorOption2["showDeprecated"] = 135] = "showDeprecated";
-    EditorOption2[EditorOption2["inlayHints"] = 136] = "inlayHints";
-    EditorOption2[EditorOption2["editorClassName"] = 137] = "editorClassName";
-    EditorOption2[EditorOption2["pixelRatio"] = 138] = "pixelRatio";
-    EditorOption2[EditorOption2["tabFocusMode"] = 139] = "tabFocusMode";
-    EditorOption2[EditorOption2["layoutInfo"] = 140] = "layoutInfo";
-    EditorOption2[EditorOption2["wrappingInfo"] = 141] = "wrappingInfo";
-    EditorOption2[EditorOption2["defaultColorDecorators"] = 142] = "defaultColorDecorators";
+    EditorOption2[EditorOption2["ariaRequired"] = 5] = "ariaRequired";
+    EditorOption2[EditorOption2["autoClosingBrackets"] = 6] = "autoClosingBrackets";
+    EditorOption2[EditorOption2["screenReaderAnnounceInlineSuggestion"] = 7] = "screenReaderAnnounceInlineSuggestion";
+    EditorOption2[EditorOption2["autoClosingDelete"] = 8] = "autoClosingDelete";
+    EditorOption2[EditorOption2["autoClosingOvertype"] = 9] = "autoClosingOvertype";
+    EditorOption2[EditorOption2["autoClosingQuotes"] = 10] = "autoClosingQuotes";
+    EditorOption2[EditorOption2["autoIndent"] = 11] = "autoIndent";
+    EditorOption2[EditorOption2["automaticLayout"] = 12] = "automaticLayout";
+    EditorOption2[EditorOption2["autoSurround"] = 13] = "autoSurround";
+    EditorOption2[EditorOption2["bracketPairColorization"] = 14] = "bracketPairColorization";
+    EditorOption2[EditorOption2["guides"] = 15] = "guides";
+    EditorOption2[EditorOption2["codeLens"] = 16] = "codeLens";
+    EditorOption2[EditorOption2["codeLensFontFamily"] = 17] = "codeLensFontFamily";
+    EditorOption2[EditorOption2["codeLensFontSize"] = 18] = "codeLensFontSize";
+    EditorOption2[EditorOption2["colorDecorators"] = 19] = "colorDecorators";
+    EditorOption2[EditorOption2["colorDecoratorsLimit"] = 20] = "colorDecoratorsLimit";
+    EditorOption2[EditorOption2["columnSelection"] = 21] = "columnSelection";
+    EditorOption2[EditorOption2["comments"] = 22] = "comments";
+    EditorOption2[EditorOption2["contextmenu"] = 23] = "contextmenu";
+    EditorOption2[EditorOption2["copyWithSyntaxHighlighting"] = 24] = "copyWithSyntaxHighlighting";
+    EditorOption2[EditorOption2["cursorBlinking"] = 25] = "cursorBlinking";
+    EditorOption2[EditorOption2["cursorSmoothCaretAnimation"] = 26] = "cursorSmoothCaretAnimation";
+    EditorOption2[EditorOption2["cursorStyle"] = 27] = "cursorStyle";
+    EditorOption2[EditorOption2["cursorSurroundingLines"] = 28] = "cursorSurroundingLines";
+    EditorOption2[EditorOption2["cursorSurroundingLinesStyle"] = 29] = "cursorSurroundingLinesStyle";
+    EditorOption2[EditorOption2["cursorWidth"] = 30] = "cursorWidth";
+    EditorOption2[EditorOption2["disableLayerHinting"] = 31] = "disableLayerHinting";
+    EditorOption2[EditorOption2["disableMonospaceOptimizations"] = 32] = "disableMonospaceOptimizations";
+    EditorOption2[EditorOption2["domReadOnly"] = 33] = "domReadOnly";
+    EditorOption2[EditorOption2["dragAndDrop"] = 34] = "dragAndDrop";
+    EditorOption2[EditorOption2["dropIntoEditor"] = 35] = "dropIntoEditor";
+    EditorOption2[EditorOption2["emptySelectionClipboard"] = 36] = "emptySelectionClipboard";
+    EditorOption2[EditorOption2["experimentalWhitespaceRendering"] = 37] = "experimentalWhitespaceRendering";
+    EditorOption2[EditorOption2["extraEditorClassName"] = 38] = "extraEditorClassName";
+    EditorOption2[EditorOption2["fastScrollSensitivity"] = 39] = "fastScrollSensitivity";
+    EditorOption2[EditorOption2["find"] = 40] = "find";
+    EditorOption2[EditorOption2["fixedOverflowWidgets"] = 41] = "fixedOverflowWidgets";
+    EditorOption2[EditorOption2["folding"] = 42] = "folding";
+    EditorOption2[EditorOption2["foldingStrategy"] = 43] = "foldingStrategy";
+    EditorOption2[EditorOption2["foldingHighlight"] = 44] = "foldingHighlight";
+    EditorOption2[EditorOption2["foldingImportsByDefault"] = 45] = "foldingImportsByDefault";
+    EditorOption2[EditorOption2["foldingMaximumRegions"] = 46] = "foldingMaximumRegions";
+    EditorOption2[EditorOption2["unfoldOnClickAfterEndOfLine"] = 47] = "unfoldOnClickAfterEndOfLine";
+    EditorOption2[EditorOption2["fontFamily"] = 48] = "fontFamily";
+    EditorOption2[EditorOption2["fontInfo"] = 49] = "fontInfo";
+    EditorOption2[EditorOption2["fontLigatures"] = 50] = "fontLigatures";
+    EditorOption2[EditorOption2["fontSize"] = 51] = "fontSize";
+    EditorOption2[EditorOption2["fontWeight"] = 52] = "fontWeight";
+    EditorOption2[EditorOption2["fontVariations"] = 53] = "fontVariations";
+    EditorOption2[EditorOption2["formatOnPaste"] = 54] = "formatOnPaste";
+    EditorOption2[EditorOption2["formatOnType"] = 55] = "formatOnType";
+    EditorOption2[EditorOption2["glyphMargin"] = 56] = "glyphMargin";
+    EditorOption2[EditorOption2["gotoLocation"] = 57] = "gotoLocation";
+    EditorOption2[EditorOption2["hideCursorInOverviewRuler"] = 58] = "hideCursorInOverviewRuler";
+    EditorOption2[EditorOption2["hover"] = 59] = "hover";
+    EditorOption2[EditorOption2["inDiffEditor"] = 60] = "inDiffEditor";
+    EditorOption2[EditorOption2["inlineSuggest"] = 61] = "inlineSuggest";
+    EditorOption2[EditorOption2["letterSpacing"] = 62] = "letterSpacing";
+    EditorOption2[EditorOption2["lightbulb"] = 63] = "lightbulb";
+    EditorOption2[EditorOption2["lineDecorationsWidth"] = 64] = "lineDecorationsWidth";
+    EditorOption2[EditorOption2["lineHeight"] = 65] = "lineHeight";
+    EditorOption2[EditorOption2["lineNumbers"] = 66] = "lineNumbers";
+    EditorOption2[EditorOption2["lineNumbersMinChars"] = 67] = "lineNumbersMinChars";
+    EditorOption2[EditorOption2["linkedEditing"] = 68] = "linkedEditing";
+    EditorOption2[EditorOption2["links"] = 69] = "links";
+    EditorOption2[EditorOption2["matchBrackets"] = 70] = "matchBrackets";
+    EditorOption2[EditorOption2["minimap"] = 71] = "minimap";
+    EditorOption2[EditorOption2["mouseStyle"] = 72] = "mouseStyle";
+    EditorOption2[EditorOption2["mouseWheelScrollSensitivity"] = 73] = "mouseWheelScrollSensitivity";
+    EditorOption2[EditorOption2["mouseWheelZoom"] = 74] = "mouseWheelZoom";
+    EditorOption2[EditorOption2["multiCursorMergeOverlapping"] = 75] = "multiCursorMergeOverlapping";
+    EditorOption2[EditorOption2["multiCursorModifier"] = 76] = "multiCursorModifier";
+    EditorOption2[EditorOption2["multiCursorPaste"] = 77] = "multiCursorPaste";
+    EditorOption2[EditorOption2["multiCursorLimit"] = 78] = "multiCursorLimit";
+    EditorOption2[EditorOption2["occurrencesHighlight"] = 79] = "occurrencesHighlight";
+    EditorOption2[EditorOption2["overviewRulerBorder"] = 80] = "overviewRulerBorder";
+    EditorOption2[EditorOption2["overviewRulerLanes"] = 81] = "overviewRulerLanes";
+    EditorOption2[EditorOption2["padding"] = 82] = "padding";
+    EditorOption2[EditorOption2["pasteAs"] = 83] = "pasteAs";
+    EditorOption2[EditorOption2["parameterHints"] = 84] = "parameterHints";
+    EditorOption2[EditorOption2["peekWidgetDefaultFocus"] = 85] = "peekWidgetDefaultFocus";
+    EditorOption2[EditorOption2["definitionLinkOpensInPeek"] = 86] = "definitionLinkOpensInPeek";
+    EditorOption2[EditorOption2["quickSuggestions"] = 87] = "quickSuggestions";
+    EditorOption2[EditorOption2["quickSuggestionsDelay"] = 88] = "quickSuggestionsDelay";
+    EditorOption2[EditorOption2["readOnly"] = 89] = "readOnly";
+    EditorOption2[EditorOption2["readOnlyMessage"] = 90] = "readOnlyMessage";
+    EditorOption2[EditorOption2["renameOnType"] = 91] = "renameOnType";
+    EditorOption2[EditorOption2["renderControlCharacters"] = 92] = "renderControlCharacters";
+    EditorOption2[EditorOption2["renderFinalNewline"] = 93] = "renderFinalNewline";
+    EditorOption2[EditorOption2["renderLineHighlight"] = 94] = "renderLineHighlight";
+    EditorOption2[EditorOption2["renderLineHighlightOnlyWhenFocus"] = 95] = "renderLineHighlightOnlyWhenFocus";
+    EditorOption2[EditorOption2["renderValidationDecorations"] = 96] = "renderValidationDecorations";
+    EditorOption2[EditorOption2["renderWhitespace"] = 97] = "renderWhitespace";
+    EditorOption2[EditorOption2["revealHorizontalRightPadding"] = 98] = "revealHorizontalRightPadding";
+    EditorOption2[EditorOption2["roundedSelection"] = 99] = "roundedSelection";
+    EditorOption2[EditorOption2["rulers"] = 100] = "rulers";
+    EditorOption2[EditorOption2["scrollbar"] = 101] = "scrollbar";
+    EditorOption2[EditorOption2["scrollBeyondLastColumn"] = 102] = "scrollBeyondLastColumn";
+    EditorOption2[EditorOption2["scrollBeyondLastLine"] = 103] = "scrollBeyondLastLine";
+    EditorOption2[EditorOption2["scrollPredominantAxis"] = 104] = "scrollPredominantAxis";
+    EditorOption2[EditorOption2["selectionClipboard"] = 105] = "selectionClipboard";
+    EditorOption2[EditorOption2["selectionHighlight"] = 106] = "selectionHighlight";
+    EditorOption2[EditorOption2["selectOnLineNumbers"] = 107] = "selectOnLineNumbers";
+    EditorOption2[EditorOption2["showFoldingControls"] = 108] = "showFoldingControls";
+    EditorOption2[EditorOption2["showUnused"] = 109] = "showUnused";
+    EditorOption2[EditorOption2["snippetSuggestions"] = 110] = "snippetSuggestions";
+    EditorOption2[EditorOption2["smartSelect"] = 111] = "smartSelect";
+    EditorOption2[EditorOption2["smoothScrolling"] = 112] = "smoothScrolling";
+    EditorOption2[EditorOption2["stickyScroll"] = 113] = "stickyScroll";
+    EditorOption2[EditorOption2["stickyTabStops"] = 114] = "stickyTabStops";
+    EditorOption2[EditorOption2["stopRenderingLineAfter"] = 115] = "stopRenderingLineAfter";
+    EditorOption2[EditorOption2["suggest"] = 116] = "suggest";
+    EditorOption2[EditorOption2["suggestFontSize"] = 117] = "suggestFontSize";
+    EditorOption2[EditorOption2["suggestLineHeight"] = 118] = "suggestLineHeight";
+    EditorOption2[EditorOption2["suggestOnTriggerCharacters"] = 119] = "suggestOnTriggerCharacters";
+    EditorOption2[EditorOption2["suggestSelection"] = 120] = "suggestSelection";
+    EditorOption2[EditorOption2["tabCompletion"] = 121] = "tabCompletion";
+    EditorOption2[EditorOption2["tabIndex"] = 122] = "tabIndex";
+    EditorOption2[EditorOption2["unicodeHighlighting"] = 123] = "unicodeHighlighting";
+    EditorOption2[EditorOption2["unusualLineTerminators"] = 124] = "unusualLineTerminators";
+    EditorOption2[EditorOption2["useShadowDOM"] = 125] = "useShadowDOM";
+    EditorOption2[EditorOption2["useTabStops"] = 126] = "useTabStops";
+    EditorOption2[EditorOption2["wordBreak"] = 127] = "wordBreak";
+    EditorOption2[EditorOption2["wordSeparators"] = 128] = "wordSeparators";
+    EditorOption2[EditorOption2["wordWrap"] = 129] = "wordWrap";
+    EditorOption2[EditorOption2["wordWrapBreakAfterCharacters"] = 130] = "wordWrapBreakAfterCharacters";
+    EditorOption2[EditorOption2["wordWrapBreakBeforeCharacters"] = 131] = "wordWrapBreakBeforeCharacters";
+    EditorOption2[EditorOption2["wordWrapColumn"] = 132] = "wordWrapColumn";
+    EditorOption2[EditorOption2["wordWrapOverride1"] = 133] = "wordWrapOverride1";
+    EditorOption2[EditorOption2["wordWrapOverride2"] = 134] = "wordWrapOverride2";
+    EditorOption2[EditorOption2["wrappingIndent"] = 135] = "wrappingIndent";
+    EditorOption2[EditorOption2["wrappingStrategy"] = 136] = "wrappingStrategy";
+    EditorOption2[EditorOption2["showDeprecated"] = 137] = "showDeprecated";
+    EditorOption2[EditorOption2["inlayHints"] = 138] = "inlayHints";
+    EditorOption2[EditorOption2["editorClassName"] = 139] = "editorClassName";
+    EditorOption2[EditorOption2["pixelRatio"] = 140] = "pixelRatio";
+    EditorOption2[EditorOption2["tabFocusMode"] = 141] = "tabFocusMode";
+    EditorOption2[EditorOption2["layoutInfo"] = 142] = "layoutInfo";
+    EditorOption2[EditorOption2["wrappingInfo"] = 143] = "wrappingInfo";
+    EditorOption2[EditorOption2["defaultColorDecorators"] = 144] = "defaultColorDecorators";
+    EditorOption2[EditorOption2["colorDecoratorsActivatedOn"] = 145] = "colorDecoratorsActivatedOn";
   })(EditorOption || (EditorOption = {}));
   var EndOfLinePreference;
   (function(EndOfLinePreference2) {
@@ -8488,6 +8606,23 @@
     static fromRange(range) {
       return new _LineRange(range.startLineNumber, range.endLineNumber);
     }
+    static subtract(a, b) {
+      if (!b) {
+        return [a];
+      }
+      if (a.startLineNumber < b.startLineNumber && b.endLineNumberExclusive < a.endLineNumberExclusive) {
+        return [
+          new _LineRange(a.startLineNumber, b.startLineNumber),
+          new _LineRange(b.endLineNumberExclusive, a.endLineNumberExclusive)
+        ];
+      } else if (b.startLineNumber <= a.startLineNumber && a.endLineNumberExclusive <= b.endLineNumberExclusive) {
+        return [];
+      } else if (b.endLineNumberExclusive < a.endLineNumberExclusive) {
+        return [new _LineRange(Math.max(b.endLineNumberExclusive, a.startLineNumber), a.endLineNumberExclusive)];
+      } else {
+        return [new _LineRange(a.startLineNumber, Math.min(b.startLineNumber, a.endLineNumberExclusive))];
+      }
+    }
     /**
      * @param lineRanges An array of sorted line ranges.
      */
@@ -8553,6 +8688,12 @@
     }
     static ofLength(startLineNumber, length) {
       return new _LineRange(startLineNumber, startLineNumber + length);
+    }
+    /**
+     * @internal
+     */
+    static deserialize(lineRange) {
+      return new _LineRange(lineRange[0], lineRange[1]);
     }
     constructor(startLineNumber, endLineNumberExclusive) {
       if (startLineNumber > endLineNumberExclusive) {
@@ -8624,12 +8765,34 @@
     toExclusiveRange() {
       return new Range(this.startLineNumber, 1, this.endLineNumberExclusive, 1);
     }
+    mapToLineArray(f) {
+      const result = [];
+      for (let lineNumber = this.startLineNumber; lineNumber < this.endLineNumberExclusive; lineNumber++) {
+        result.push(f(lineNumber));
+      }
+      return result;
+    }
+    forEach(f) {
+      for (let lineNumber = this.startLineNumber; lineNumber < this.endLineNumberExclusive; lineNumber++) {
+        f(lineNumber);
+      }
+    }
+    /**
+     * @internal
+     */
+    serialize() {
+      return [this.startLineNumber, this.endLineNumberExclusive];
+    }
+    includes(lineNumber) {
+      return this.startLineNumber <= lineNumber && lineNumber < this.endLineNumberExclusive;
+    }
   };
 
   // node_modules/monaco-editor/esm/vs/editor/common/diff/linesDiffComputer.js
   var LinesDiff = class {
-    constructor(changes, hitTimeout) {
+    constructor(changes, moves, hitTimeout) {
       this.changes = changes;
+      this.moves = moves;
       this.hitTimeout = hitTimeout;
     }
   };
@@ -8663,14 +8826,42 @@
     get changedLineCount() {
       return Math.max(this.originalRange.length, this.modifiedRange.length);
     }
+    flip() {
+      var _a4;
+      return new _LineRangeMapping(this.modifiedRange, this.originalRange, (_a4 = this.innerChanges) === null || _a4 === void 0 ? void 0 : _a4.map((c) => c.flip()));
+    }
   };
-  var RangeMapping = class {
+  var RangeMapping = class _RangeMapping {
     constructor(originalRange, modifiedRange) {
       this.originalRange = originalRange;
       this.modifiedRange = modifiedRange;
     }
     toString() {
       return `{${this.originalRange.toString()}->${this.modifiedRange.toString()}}`;
+    }
+    flip() {
+      return new _RangeMapping(this.modifiedRange, this.originalRange);
+    }
+  };
+  var SimpleLineRangeMapping = class _SimpleLineRangeMapping {
+    constructor(original, modified) {
+      this.original = original;
+      this.modified = modified;
+    }
+    toString() {
+      return `{${this.original.toString()}->${this.modified.toString()}}`;
+    }
+    flip() {
+      return new _SimpleLineRangeMapping(this.modified, this.original);
+    }
+  };
+  var MovedText = class _MovedText {
+    constructor(lineRangeMapping, changes) {
+      this.lineRangeMapping = lineRangeMapping;
+      this.changes = changes;
+    }
+    flip() {
+      return new _MovedText(this.lineRangeMapping.flip(), this.changes.map((c) => c.flip()));
     }
   };
 
@@ -8716,7 +8907,7 @@
         return checkAdjacentItems(changes, (m1, m2) => m2.originalRange.startLineNumber - m1.originalRange.endLineNumberExclusive === m2.modifiedRange.startLineNumber - m1.modifiedRange.endLineNumberExclusive && // There has to be an unchanged line in between (otherwise both diffs should have been joined)
         m1.originalRange.endLineNumberExclusive < m2.originalRange.startLineNumber && m1.modifiedRange.endLineNumberExclusive < m2.modifiedRange.startLineNumber);
       });
-      return new LinesDiff(changes, result.quitEarly);
+      return new LinesDiff(changes, [], result.quitEarly);
     }
   };
   function computeDiff(originalSequence, modifiedSequence, continueProcessingPredicate, pretty) {
@@ -9144,6 +9335,9 @@
     containsRange(other) {
       return this.start <= other.start && other.endExclusive <= this.endExclusive;
     }
+    contains(offset) {
+      return this.start <= offset && offset < this.endExclusive;
+    }
     /**
      * for all numbers n: range1.contains(n) or range2.contains(n) => range1.join(range2).contains(n)
      * The joined range is the smallest range that contains both ranges.
@@ -9193,6 +9387,12 @@
     }
     join(other) {
       return new _SequenceDiff(this.seq1Range.join(other.seq1Range), this.seq2Range.join(other.seq2Range));
+    }
+    delta(offset) {
+      if (offset === 0) {
+        return this;
+      }
+      return new _SequenceDiff(this.seq1Range.delta(offset), this.seq2Range.delta(offset));
     }
   };
   var InfiniteTimeout = class {
@@ -9336,59 +9536,140 @@
     }
     return result;
   }
-  function joinSequenceDiffs(sequence1, sequence2, sequenceDiffs) {
-    const result = [];
-    if (sequenceDiffs.length > 0) {
-      result.push(sequenceDiffs[0]);
+  function removeRandomMatches(sequence1, sequence2, sequenceDiffs) {
+    let diffs = sequenceDiffs;
+    if (diffs.length === 0) {
+      return diffs;
     }
+    let counter = 0;
+    let shouldRepeat;
+    do {
+      shouldRepeat = false;
+      const result = [
+        diffs[0]
+      ];
+      for (let i = 1; i < diffs.length; i++) {
+        let shouldJoinDiffs = function(before, after) {
+          const unchangedRange = new OffsetRange(lastResult.seq1Range.endExclusive, cur.seq1Range.start);
+          const unchangedLineCount = sequence1.countLinesIn(unchangedRange);
+          if (unchangedLineCount > 5 || unchangedRange.length > 500) {
+            return false;
+          }
+          const unchangedText = sequence1.getText(unchangedRange).trim();
+          if (unchangedText.length > 20 || unchangedText.split(/\r\n|\r|\n/).length > 1) {
+            return false;
+          }
+          const beforeLineCount1 = sequence1.countLinesIn(before.seq1Range);
+          const beforeSeq1Length = before.seq1Range.length;
+          const beforeLineCount2 = sequence2.countLinesIn(before.seq2Range);
+          const beforeSeq2Length = before.seq2Range.length;
+          const afterLineCount1 = sequence1.countLinesIn(after.seq1Range);
+          const afterSeq1Length = after.seq1Range.length;
+          const afterLineCount2 = sequence2.countLinesIn(after.seq2Range);
+          const afterSeq2Length = after.seq2Range.length;
+          const max = 2 * 40 + 50;
+          function cap(v) {
+            return Math.min(v, max);
+          }
+          if (Math.pow(Math.pow(cap(beforeLineCount1 * 40 + beforeSeq1Length), 1.5) + Math.pow(cap(beforeLineCount2 * 40 + beforeSeq2Length), 1.5), 1.5) + Math.pow(Math.pow(cap(afterLineCount1 * 40 + afterSeq1Length), 1.5) + Math.pow(cap(afterLineCount2 * 40 + afterSeq2Length), 1.5), 1.5) > Math.pow(Math.pow(max, 1.5), 1.5) * 1.3) {
+            return true;
+          }
+          return false;
+        };
+        const cur = diffs[i];
+        const lastResult = result[result.length - 1];
+        const shouldJoin = shouldJoinDiffs(lastResult, cur);
+        if (shouldJoin) {
+          shouldRepeat = true;
+          result[result.length - 1] = result[result.length - 1].join(cur);
+        } else {
+          result.push(cur);
+        }
+      }
+      diffs = result;
+    } while (counter++ < 10 && shouldRepeat);
+    return diffs;
+  }
+  function joinSequenceDiffs(sequence1, sequence2, sequenceDiffs) {
+    if (sequenceDiffs.length === 0) {
+      return sequenceDiffs;
+    }
+    const result = [];
+    result.push(sequenceDiffs[0]);
     for (let i = 1; i < sequenceDiffs.length; i++) {
-      const lastResult = result[result.length - 1];
-      const cur = sequenceDiffs[i];
-      if (cur.seq1Range.isEmpty) {
-        let all = true;
-        const length = cur.seq1Range.start - lastResult.seq1Range.endExclusive;
-        for (let i2 = 1; i2 <= length; i2++) {
-          if (sequence2.getElement(cur.seq2Range.start - i2) !== sequence2.getElement(cur.seq2Range.endExclusive - i2)) {
-            all = false;
+      const prevResult = result[result.length - 1];
+      let cur = sequenceDiffs[i];
+      if (cur.seq1Range.isEmpty || cur.seq2Range.isEmpty) {
+        const length = cur.seq1Range.start - prevResult.seq1Range.endExclusive;
+        let d;
+        for (d = 1; d <= length; d++) {
+          if (sequence1.getElement(cur.seq1Range.start - d) !== sequence1.getElement(cur.seq1Range.endExclusive - d) || sequence2.getElement(cur.seq2Range.start - d) !== sequence2.getElement(cur.seq2Range.endExclusive - d)) {
             break;
           }
         }
-        if (all) {
-          result[result.length - 1] = new SequenceDiff(lastResult.seq1Range, new OffsetRange(lastResult.seq2Range.start, cur.seq2Range.endExclusive - length));
+        d--;
+        if (d === length) {
+          result[result.length - 1] = new SequenceDiff(new OffsetRange(prevResult.seq1Range.start, cur.seq1Range.endExclusive - length), new OffsetRange(prevResult.seq2Range.start, cur.seq2Range.endExclusive - length));
           continue;
         }
+        cur = cur.delta(-d);
       }
       result.push(cur);
     }
-    return result;
+    const result2 = [];
+    for (let i = 0; i < result.length - 1; i++) {
+      const nextResult = result[i + 1];
+      let cur = result[i];
+      if (cur.seq1Range.isEmpty || cur.seq2Range.isEmpty) {
+        const length = nextResult.seq1Range.start - cur.seq1Range.endExclusive;
+        let d;
+        for (d = 0; d < length; d++) {
+          if (sequence1.getElement(cur.seq1Range.start + d) !== sequence1.getElement(cur.seq1Range.endExclusive + d) || sequence2.getElement(cur.seq2Range.start + d) !== sequence2.getElement(cur.seq2Range.endExclusive + d)) {
+            break;
+          }
+        }
+        if (d === length) {
+          result[i + 1] = new SequenceDiff(new OffsetRange(cur.seq1Range.start + length, nextResult.seq1Range.endExclusive), new OffsetRange(cur.seq2Range.start + length, nextResult.seq2Range.endExclusive));
+          continue;
+        }
+        if (d > 0) {
+          cur = cur.delta(d);
+        }
+      }
+      result2.push(cur);
+    }
+    if (result.length > 0) {
+      result2.push(result[result.length - 1]);
+    }
+    return result2;
   }
   function shiftSequenceDiffs(sequence1, sequence2, sequenceDiffs) {
     if (!sequence1.getBoundaryScore || !sequence2.getBoundaryScore) {
       return sequenceDiffs;
     }
     for (let i = 0; i < sequenceDiffs.length; i++) {
+      const prevDiff = i > 0 ? sequenceDiffs[i - 1] : void 0;
       const diff = sequenceDiffs[i];
+      const nextDiff = i + 1 < sequenceDiffs.length ? sequenceDiffs[i + 1] : void 0;
+      const seq1ValidRange = new OffsetRange(prevDiff ? prevDiff.seq1Range.start + 1 : 0, nextDiff ? nextDiff.seq1Range.endExclusive - 1 : sequence1.length);
+      const seq2ValidRange = new OffsetRange(prevDiff ? prevDiff.seq2Range.start + 1 : 0, nextDiff ? nextDiff.seq2Range.endExclusive - 1 : sequence2.length);
       if (diff.seq1Range.isEmpty) {
-        const seq2PrevEndExclusive = i > 0 ? sequenceDiffs[i - 1].seq2Range.endExclusive : -1;
-        const seq2NextStart = i + 1 < sequenceDiffs.length ? sequenceDiffs[i + 1].seq2Range.start : sequence2.length;
-        sequenceDiffs[i] = shiftDiffToBetterPosition(diff, sequence1, sequence2, seq2NextStart, seq2PrevEndExclusive);
+        sequenceDiffs[i] = shiftDiffToBetterPosition(diff, sequence1, sequence2, seq1ValidRange, seq2ValidRange);
       } else if (diff.seq2Range.isEmpty) {
-        const seq1PrevEndExclusive = i > 0 ? sequenceDiffs[i - 1].seq1Range.endExclusive : -1;
-        const seq1NextStart = i + 1 < sequenceDiffs.length ? sequenceDiffs[i + 1].seq1Range.start : sequence1.length;
-        sequenceDiffs[i] = shiftDiffToBetterPosition(diff.reverse(), sequence2, sequence1, seq1NextStart, seq1PrevEndExclusive).reverse();
+        sequenceDiffs[i] = shiftDiffToBetterPosition(diff.reverse(), sequence2, sequence1, seq2ValidRange, seq1ValidRange).reverse();
       }
     }
     return sequenceDiffs;
   }
-  function shiftDiffToBetterPosition(diff, sequence1, sequence2, seq2NextStart, seq2PrevEndExclusive) {
-    const maxShiftLimit = 20;
+  function shiftDiffToBetterPosition(diff, sequence1, sequence2, seq1ValidRange, seq2ValidRange) {
+    const maxShiftLimit = 100;
     let deltaBefore = 1;
-    while (diff.seq2Range.start - deltaBefore > seq2PrevEndExclusive && sequence2.getElement(diff.seq2Range.start - deltaBefore) === sequence2.getElement(diff.seq2Range.endExclusive - deltaBefore) && deltaBefore < maxShiftLimit) {
+    while (diff.seq1Range.start - deltaBefore >= seq1ValidRange.start && diff.seq2Range.start - deltaBefore >= seq2ValidRange.start && sequence2.getElement(diff.seq2Range.start - deltaBefore) === sequence2.getElement(diff.seq2Range.endExclusive - deltaBefore) && deltaBefore < maxShiftLimit) {
       deltaBefore++;
     }
     deltaBefore--;
     let deltaAfter = 0;
-    while (diff.seq2Range.start + deltaAfter < seq2NextStart && sequence2.getElement(diff.seq2Range.start + deltaAfter) === sequence2.getElement(diff.seq2Range.endExclusive + deltaAfter) && deltaAfter < maxShiftLimit) {
+    while (diff.seq1Range.start + deltaAfter < seq1ValidRange.endExclusive && diff.seq2Range.endExclusive + deltaAfter < seq2ValidRange.endExclusive && sequence2.getElement(diff.seq2Range.start + deltaAfter) === sequence2.getElement(diff.seq2Range.endExclusive + deltaAfter) && deltaAfter < maxShiftLimit) {
       deltaAfter++;
     }
     if (deltaBefore === 0 && deltaAfter === 0) {
@@ -9406,10 +9687,7 @@
         bestDelta = delta;
       }
     }
-    if (bestDelta !== 0) {
-      return new SequenceDiff(diff.seq1Range.delta(bestDelta), diff.seq2Range.delta(bestDelta));
-    }
-    return diff;
+    return diff.delta(bestDelta);
   }
 
   // node_modules/monaco-editor/esm/vs/editor/common/diff/algorithms/myersDiffAlgorithm.js
@@ -9434,14 +9712,19 @@
       loop:
         while (true) {
           d++;
-          for (k = -d; k <= d; k += 2) {
-            if (!timeout.isValid()) {
-              return DiffAlgorithmResult.trivialTimedOut(seq1, seq2);
-            }
-            const maxXofDLineTop = k === d ? -1 : V.get(k + 1);
-            const maxXofDLineLeft = k === -d ? -1 : V.get(k - 1) + 1;
+          if (!timeout.isValid()) {
+            return DiffAlgorithmResult.trivialTimedOut(seq1, seq2);
+          }
+          const lowerBound = -Math.min(d, seq2.length + d % 2);
+          const upperBound = Math.min(d, seq1.length + d % 2);
+          for (k = lowerBound; k <= upperBound; k += 2) {
+            const maxXofDLineTop = k === upperBound ? -1 : V.get(k + 1);
+            const maxXofDLineLeft = k === lowerBound ? -1 : V.get(k - 1) + 1;
             const x = Math.min(Math.max(maxXofDLineTop, maxXofDLineLeft), seq1.length);
             const y = x - k;
+            if (x > seq1.length || y > seq2.length) {
+              continue;
+            }
             const newMaxX = getXAfterSnake(x, y);
             V.set(k, newMaxX);
             const lastPath = x === maxXofDLineTop ? paths.get(k + 1) : paths.get(k - 1);
@@ -9542,6 +9825,17 @@
       this.myersDiffingAlgorithm = new MyersDiffAlgorithm();
     }
     computeDiff(originalLines, modifiedLines, options) {
+      if (originalLines.length === 1 && originalLines[0].length === 0 || modifiedLines.length === 1 && modifiedLines[0].length === 0) {
+        return {
+          changes: [
+            new LineRangeMapping(new LineRange(1, originalLines.length + 1), new LineRange(1, modifiedLines.length + 1), [
+              new RangeMapping(new Range(1, 1, originalLines.length, originalLines[0].length + 1), new Range(1, 1, modifiedLines.length, modifiedLines[0].length + 1))
+            ])
+          ],
+          hitTimeout: false,
+          moves: []
+        };
+      }
       const timeout = options.maxComputationTimeMs === 0 ? InfiniteTimeout.instance : new DateTimeout(options.maxComputationTimeMs);
       const considerWhitespaceChanges = !options.ignoreTrimWhitespace;
       const perfectHashes = /* @__PURE__ */ new Map();
@@ -9603,17 +9897,76 @@
       }
       scanForWhitespaceChanges(originalLines.length - seq1LastStart);
       const changes = lineRangeMappingFromRangeMappings(alignments, originalLines, modifiedLines);
-      return new LinesDiff(changes, hitTimeout);
+      const moves = [];
+      if (options.computeMoves) {
+        const deletions = changes.filter((c) => c.modifiedRange.isEmpty && c.originalRange.length >= 3).map((d) => new LineRangeFragment(d.originalRange, originalLines));
+        const insertions = new Set(changes.filter((c) => c.originalRange.isEmpty && c.modifiedRange.length >= 3).map((d) => new LineRangeFragment(d.modifiedRange, modifiedLines)));
+        for (const deletion of deletions) {
+          let highestSimilarity = -1;
+          let best;
+          for (const insertion of insertions) {
+            const similarity = deletion.computeSimilarity(insertion);
+            if (similarity > highestSimilarity) {
+              highestSimilarity = similarity;
+              best = insertion;
+            }
+          }
+          if (highestSimilarity > 0.9 && best) {
+            const moveChanges = this.refineDiff(originalLines, modifiedLines, new SequenceDiff(new OffsetRange(deletion.range.startLineNumber - 1, deletion.range.endLineNumberExclusive - 1), new OffsetRange(best.range.startLineNumber - 1, best.range.endLineNumberExclusive - 1)), timeout, considerWhitespaceChanges);
+            const mappings = lineRangeMappingFromRangeMappings(moveChanges.mappings, originalLines, modifiedLines, true);
+            insertions.delete(best);
+            moves.push(new MovedText(new SimpleLineRangeMapping(deletion.range, best.range), mappings));
+          }
+        }
+      }
+      assertFn(() => {
+        function validatePosition(pos, lines) {
+          if (pos.lineNumber < 1 || pos.lineNumber > lines.length) {
+            return false;
+          }
+          const line = lines[pos.lineNumber - 1];
+          if (pos.column < 1 || pos.column > line.length + 1) {
+            return false;
+          }
+          return true;
+        }
+        function validateRange(range, lines) {
+          if (range.startLineNumber < 1 || range.startLineNumber > lines.length + 1) {
+            return false;
+          }
+          if (range.endLineNumberExclusive < 1 || range.endLineNumberExclusive > lines.length + 1) {
+            return false;
+          }
+          return true;
+        }
+        for (const c of changes) {
+          if (!c.innerChanges) {
+            return false;
+          }
+          for (const ic of c.innerChanges) {
+            const valid = validatePosition(ic.modifiedRange.getStartPosition(), modifiedLines) && validatePosition(ic.modifiedRange.getEndPosition(), modifiedLines) && validatePosition(ic.originalRange.getStartPosition(), originalLines) && validatePosition(ic.originalRange.getEndPosition(), originalLines);
+            if (!valid) {
+              return false;
+            }
+          }
+          if (!validateRange(c.modifiedRange, modifiedLines) || !validateRange(c.originalRange, originalLines)) {
+            return false;
+          }
+        }
+        return true;
+      });
+      return new LinesDiff(changes, moves, hitTimeout);
     }
     refineDiff(originalLines, modifiedLines, diff, timeout, considerWhitespaceChanges) {
-      const sourceSlice = new Slice(originalLines, diff.seq1Range, considerWhitespaceChanges);
-      const targetSlice = new Slice(modifiedLines, diff.seq2Range, considerWhitespaceChanges);
-      const diffResult = sourceSlice.length + targetSlice.length < 500 ? this.dynamicProgrammingDiffing.compute(sourceSlice, targetSlice, timeout) : this.myersDiffingAlgorithm.compute(sourceSlice, targetSlice, timeout);
+      const slice1 = new LinesSliceCharSequence(originalLines, diff.seq1Range, considerWhitespaceChanges);
+      const slice2 = new LinesSliceCharSequence(modifiedLines, diff.seq2Range, considerWhitespaceChanges);
+      const diffResult = slice1.length + slice2.length < 500 ? this.dynamicProgrammingDiffing.compute(slice1, slice2, timeout) : this.myersDiffingAlgorithm.compute(slice1, slice2, timeout);
       let diffs = diffResult.diffs;
-      diffs = optimizeSequenceDiffs(sourceSlice, targetSlice, diffs);
-      diffs = coverFullWords(sourceSlice, targetSlice, diffs);
-      diffs = smoothenSequenceDiffs(sourceSlice, targetSlice, diffs);
-      const result = diffs.map((d) => new RangeMapping(sourceSlice.translateRange(d.seq1Range), targetSlice.translateRange(d.seq2Range)));
+      diffs = optimizeSequenceDiffs(slice1, slice2, diffs);
+      diffs = coverFullWords(slice1, slice2, diffs);
+      diffs = smoothenSequenceDiffs(slice1, slice2, diffs);
+      diffs = removeRandomMatches(slice1, slice2, diffs);
+      const result = diffs.map((d) => new RangeMapping(slice1.translateRange(d.seq1Range), slice2.translateRange(d.seq2Range)));
       return {
         mappings: result,
         hitTimeout: diffResult.hitTimeout
@@ -9696,7 +10049,7 @@
     }
     return result;
   }
-  function lineRangeMappingFromRangeMappings(alignments, originalLines, modifiedLines) {
+  function lineRangeMappingFromRangeMappings(alignments, originalLines, modifiedLines, dontAssertStartLine = false) {
     const changes = [];
     for (const g of group(alignments.map((a) => getLineRangeMapping(a, originalLines, modifiedLines)), (a1, a2) => a1.originalRange.overlapOrTouch(a2.originalRange) || a1.modifiedRange.overlapOrTouch(a2.modifiedRange))) {
       const first = g[0];
@@ -9704,6 +10057,11 @@
       changes.push(new LineRangeMapping(first.originalRange.join(last.originalRange), first.modifiedRange.join(last.modifiedRange), g.map((a) => a.innerChanges[0])));
     }
     assertFn(() => {
+      if (!dontAssertStartLine) {
+        if (changes.length > 0 && changes[0].originalRange.startLineNumber !== changes[0].modifiedRange.startLineNumber) {
+          return false;
+        }
+      }
       return checkAdjacentItems(changes, (m1, m2) => m2.originalRange.startLineNumber - m1.originalRange.endLineNumberExclusive === m2.modifiedRange.startLineNumber - m1.modifiedRange.endLineNumberExclusive && // There has to be an unchanged line in between (otherwise both diffs should have been joined)
       m1.originalRange.endLineNumberExclusive < m2.originalRange.startLineNumber && m1.modifiedRange.endLineNumberExclusive < m2.modifiedRange.startLineNumber);
     });
@@ -9712,11 +10070,11 @@
   function getLineRangeMapping(rangeMapping, originalLines, modifiedLines) {
     let lineStartDelta = 0;
     let lineEndDelta = 0;
-    if (rangeMapping.modifiedRange.startColumn - 1 >= modifiedLines[rangeMapping.modifiedRange.startLineNumber - 1].length && rangeMapping.originalRange.startColumn - 1 >= originalLines[rangeMapping.originalRange.startLineNumber - 1].length) {
-      lineStartDelta = 1;
-    }
     if (rangeMapping.modifiedRange.endColumn === 1 && rangeMapping.originalRange.endColumn === 1 && rangeMapping.originalRange.startLineNumber + lineStartDelta <= rangeMapping.originalRange.endLineNumber && rangeMapping.modifiedRange.startLineNumber + lineStartDelta <= rangeMapping.modifiedRange.endLineNumber) {
       lineEndDelta = -1;
+    }
+    if (rangeMapping.modifiedRange.startColumn - 1 >= modifiedLines[rangeMapping.modifiedRange.startLineNumber - 1].length && rangeMapping.originalRange.startColumn - 1 >= originalLines[rangeMapping.originalRange.startLineNumber - 1].length && rangeMapping.originalRange.startLineNumber <= rangeMapping.originalRange.endLineNumber + lineEndDelta && rangeMapping.modifiedRange.startLineNumber <= rangeMapping.modifiedRange.endLineNumber + lineEndDelta) {
+      lineStartDelta = 1;
     }
     const originalLineRange = new LineRange(rangeMapping.originalRange.startLineNumber + lineStartDelta, rangeMapping.originalRange.endLineNumber + 1 + lineEndDelta);
     const modifiedLineRange = new LineRange(rangeMapping.modifiedRange.startLineNumber + lineStartDelta, rangeMapping.modifiedRange.endLineNumber + 1 + lineEndDelta);
@@ -9764,7 +10122,7 @@
     }
     return i;
   }
-  var Slice = class {
+  var LinesSliceCharSequence = class {
     constructor(lines, lineRange, considerWhitespaceChanges) {
       this.lines = lines;
       this.considerWhitespaceChanges = considerWhitespaceChanges;
@@ -9804,7 +10162,10 @@
       return `Slice: "${this.text}"`;
     }
     get text() {
-      return [...this.elements].map((e) => String.fromCharCode(e)).join("");
+      return this.getText(new OffsetRange(0, this.length));
+    }
+    getText(range) {
+      return this.elements.slice(range.start, range.endExclusive).map((e) => String.fromCharCode(e)).join("");
     }
     getElement(offset) {
       return this.elements[offset];
@@ -9843,8 +10204,8 @@
           i = k + 1;
         }
       }
-      const offsetOfPrevLineBreak = i === 0 ? 0 : this.firstCharOffsetByLineMinusOne[i - 1];
-      return new Position(this.lineRange.start + i + 1, offset - offsetOfPrevLineBreak + 1 + this.offsetByLine[i]);
+      const offsetOfFirstCharInLine = i === 0 ? 0 : this.firstCharOffsetByLineMinusOne[i - 1];
+      return new Position(this.lineRange.start + i + 1, offset - offsetOfFirstCharInLine + 1 + this.offsetByLine[i]);
     }
     translateRange(range) {
       return Range.fromPositions(this.translateOffset(range.start), this.translateOffset(range.endExclusive));
@@ -9868,6 +10229,9 @@
         end++;
       }
       return new OffsetRange(start, end);
+    }
+    countLinesIn(range) {
+      return this.translateOffset(range.endExclusive).lineNumber - this.translateOffset(range.start).lineNumber;
     }
   };
   function isWordChar(charCode) {
@@ -9932,11 +10296,50 @@
   function isSpace(charCode) {
     return charCode === 32 || charCode === 9;
   }
+  var chrKeys = /* @__PURE__ */ new Map();
+  function getKey(chr) {
+    let key = chrKeys.get(chr);
+    if (key === void 0) {
+      key = chrKeys.size;
+      chrKeys.set(chr, key);
+    }
+    return key;
+  }
+  var LineRangeFragment = class {
+    constructor(range, lines) {
+      this.range = range;
+      this.lines = lines;
+      this.histogram = [];
+      let counter = 0;
+      for (let i = range.startLineNumber - 1; i < range.endLineNumberExclusive - 1; i++) {
+        const line = lines[i];
+        for (let j = 0; j < line.length; j++) {
+          counter++;
+          const chr = line[j];
+          const key2 = getKey(chr);
+          this.histogram[key2] = (this.histogram[key2] || 0) + 1;
+        }
+        counter++;
+        const key = getKey("\n");
+        this.histogram[key] = (this.histogram[key] || 0) + 1;
+      }
+      this.totalCount = counter;
+    }
+    computeSimilarity(other) {
+      var _a4, _b;
+      let sumDifferences = 0;
+      const maxLength = Math.max(this.histogram.length, other.histogram.length);
+      for (let i = 0; i < maxLength; i++) {
+        sumDifferences += Math.abs(((_a4 = this.histogram[i]) !== null && _a4 !== void 0 ? _a4 : 0) - ((_b = other.histogram[i]) !== null && _b !== void 0 ? _b : 0));
+      }
+      return 1 - sumDifferences / (this.totalCount + other.totalCount);
+    }
+  };
 
   // node_modules/monaco-editor/esm/vs/editor/common/diff/linesDiffComputers.js
   var linesDiffComputers = {
-    legacy: new SmartLinesDiffComputer(),
-    advanced: new StandardLinesDiffComputer()
+    getLegacy: () => new SmartLinesDiffComputer(),
+    getAdvanced: () => new StandardLinesDiffComputer()
   };
 
   // node_modules/monaco-editor/esm/vs/base/common/color.js
@@ -10464,7 +10867,7 @@
   }
   function computeColors(model) {
     const result = [];
-    const initialValidationRegex = /\b(rgb|rgba|hsl|hsla)(\([0-9\s,.\%]*\))|(#)([A-Fa-f0-9]{6})\b|(#)([A-Fa-f0-9]{8})\b/gm;
+    const initialValidationRegex = /\b(rgb|rgba|hsl|hsla)(\([0-9\s,.\%]*\))|(#)([A-Fa-f0-9]{3})\b|(#)([A-Fa-f0-9]{4})\b|(#)([A-Fa-f0-9]{6})\b|(#)([A-Fa-f0-9]{8})\b/gm;
     const initialValidationMatches = _findMatches(model, initialValidationRegex);
     if (initialValidationMatches.length > 0) {
       for (const initialMatch of initialValidationMatches) {
@@ -10757,15 +11160,13 @@
       });
     }
     static computeDiff(originalTextModel, modifiedTextModel, options, algorithm) {
-      const diffAlgorithm = algorithm === "advanced" ? linesDiffComputers.advanced : linesDiffComputers.legacy;
+      const diffAlgorithm = algorithm === "advanced" ? linesDiffComputers.getAdvanced() : linesDiffComputers.getLegacy();
       const originalLines = originalTextModel.getLinesContent();
       const modifiedLines = modifiedTextModel.getLinesContent();
       const result = diffAlgorithm.computeDiff(originalLines, modifiedLines, options);
       const identical = result.changes.length > 0 ? false : this._modelsAreIdentical(originalTextModel, modifiedTextModel);
-      return {
-        identical,
-        quitEarly: result.hitTimeout,
-        changes: result.changes.map((m) => {
+      function getLineChanges(changes) {
+        return changes.map((m) => {
           var _a4;
           return [m.originalRange.startLineNumber, m.originalRange.endLineNumberExclusive, m.modifiedRange.startLineNumber, m.modifiedRange.endLineNumberExclusive, (_a4 = m.innerChanges) === null || _a4 === void 0 ? void 0 : _a4.map((m2) => [
             m2.originalRange.startLineNumber,
@@ -10777,7 +11178,19 @@
             m2.modifiedRange.endLineNumber,
             m2.modifiedRange.endColumn
           ])];
-        })
+        });
+      }
+      return {
+        identical,
+        quitEarly: result.hitTimeout,
+        changes: getLineChanges(result.changes),
+        moves: result.moves.map((m) => [
+          m.lineRangeMapping.original.startLineNumber,
+          m.lineRangeMapping.original.endLineNumberExclusive,
+          m.lineRangeMapping.modified.startLineNumber,
+          m.lineRangeMapping.modified.endLineNumberExclusive,
+          getLineChanges(m.changes)
+        ])
       };
     }
     static _modelsAreIdentical(original, modified) {
@@ -10869,7 +11282,7 @@
     }
     textualSuggest(modelUrls, leadingWord, wordDef, wordDefFlags) {
       return __awaiter2(this, void 0, void 0, function* () {
-        const sw = new StopWatch(true);
+        const sw = new StopWatch();
         const wordDefRegExp = new RegExp(wordDef, wordDefFlags);
         const seen = /* @__PURE__ */ new Set();
         outer:
@@ -27031,7 +27444,7 @@
 monaco-editor/esm/vs/language/html/html.worker.js:
   (*!-----------------------------------------------------------------------------
    * Copyright (c) Microsoft Corporation. All rights reserved.
-   * Version: 0.39.0(ff3621a3fa6389873be5412d17554294ea1b0941)
+   * Version: 0.41.0(38e1e3d097f84e336c311d071a9ffb5191d4ffd1)
    * Released under the MIT license
    * https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt
    *-----------------------------------------------------------------------------*)

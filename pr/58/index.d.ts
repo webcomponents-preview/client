@@ -367,6 +367,7 @@ declare module "src/components/features/preview-controls/preview-controls.compon
 declare module "src/utils/plugin.utils" {
     global {
         interface HTMLElementEventMap {
+            'wcp-preview-plugin:data-change': CustomEvent<string>;
             'wcp-preview-frame-plugin:data-change': CustomEvent<string>;
         }
     }
@@ -902,16 +903,16 @@ declare module "src/components/forms/input-radio/input-radio.component" {
      * ```
      */
     export class InputRadio extends InputRadio_base implements FormAssociated<string> {
+        #private;
         static readonly styles: import("lit").CSSResultGroup[];
-        private initialChecked;
         name: string;
         autocomplete: boolean;
         disabled: boolean;
-        checked: boolean;
+        set checked(checked: boolean);
+        get checked(): boolean;
         required: boolean;
         value: string;
         protected firstUpdated(props: PropertyValues<this>): void;
-        attributeChangedCallback(name: string, old: string | null, value: string | null): void;
         formResetCallback(): void;
         checkValidity(): boolean;
         handleInput(event: Event): void;
@@ -1431,9 +1432,14 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
      */
     export function parseFieldValue(field: Parsed.Field, value: unknown): ElementData['fields'][keyof ElementData['fields']];
     /**
+     * There seems to be a bug in Safari with the native FormAssociated implementation regarding
+     * checkboxes: https://bugs.webkit.org/show_bug.cgi?id=259781
+     */
+    export function alignFormDataWebkit(formData: FormData, elements: HTMLFormControlsCollection, element: Parsed.Element): FormData;
+    /**
      * Maps the given form data by the given element definition to a stateful data object
      */
-    export function mapFormData(form: FormData | HTMLFormElement, element: Parsed.Element): ElementData;
+    export function mapFormData(data: FormData, element: Parsed.Element): ElementData;
 }
 declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
@@ -1466,7 +1472,7 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
 declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer-controls/preview-frame-viewer-controls.component" {
     import { LitElement, type TemplateResult } from 'lit';
     import type * as Parsed from "src/utils/parser.types";
-    import type { ElementData } from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.utils";
+    import { type ElementData } from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.utils";
     const PreviewFrameViewerControls_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @element wcp-preview-frame-viewer-controls
@@ -1482,7 +1488,8 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
      */
     export class PreviewFrameViewerControls extends PreviewFrameViewerControls_base {
         static readonly styles: import("lit").CSSResult;
-        previewTagName?: string;
+        private _element?;
+        set previewTagName(previewTagName: string);
         readonly data?: ElementData;
         protected renderHint(content?: string): TemplateResult;
         protected renderFieldControl(field: Parsed.Field): TemplateResult;
@@ -1525,6 +1532,81 @@ declare module "src/components/plugins/preview-frame-viewer/preview-frame-viewer
         }
     }
 }
+declare module "src/utils/dom.utils" {
+    export function isElementWithin(element: Element, container?: Element): boolean;
+    /**
+     * Delivers the relative boundary of an element to an optional parent.
+     * If the parent element is omitted, the offset parent of the element is used.
+     */
+    export function getRelativeBoundary(element: HTMLElement, parent?: Element | null): Pick<DOMRect, 'x' | 'y' | 'height' | 'width'>;
+    /**
+     * Returns the list of ancestor elements by reference to a given element.
+     */
+    export function getAncestorPath(element: Element, check?: (element: Element) => boolean): (Element | Document)[];
+    /**
+     * Determine if an element is a descendant of another element by tag name.
+     */
+    export function isDescendantOf(element: Element, ancestor: string): boolean;
+}
+declare module "src/utils/router.utils" {
+    import type { LitElement, TemplateResult } from 'lit';
+    export type Params = Record<string, string | undefined>;
+    export type Route = {
+        path: string;
+        enter?: (params: Params, router: Router, outgoingParams?: Params) => boolean | Promise<boolean>;
+        render?: (params: Params, router: Router) => TemplateResult;
+    };
+    export type RegisterRoutes = (router: Router) => Route[];
+    export type ParsedUrl = {
+        /**
+         * Cleaned up path, derived from hash
+         */
+        path: string;
+        /**
+         * Prefixed url with base
+         */
+        url: string;
+    };
+    /**
+     * Helps comparing param objects for equality
+     */
+    export function areParamsEqual(a: Params, b: Params, exclude?: string[]): boolean;
+    /**
+     * Merges two given sets of params.
+     */
+    export function mergeParams(oldParams: Params, newParams: Params, exclude?: string[]): Params;
+    export class Router {
+        #private;
+        static isActive(path: string, currentPath?: string, exact?: boolean): boolean;
+        /**
+         * Redirect to a given path. This will trigger a hash change event.
+         */
+        static navigate(...slugs: (string | undefined)[]): void;
+        get currentPath(): string | undefined;
+        /**
+         * Defines the routes for this router.
+         */
+        registerRoutes(routes: Route[]): void;
+        /**
+         * Checks if the given path is the currently active.
+         */
+        isActive(path: string, exact?: boolean): boolean;
+        /**
+         * Redirect to a given path. This will trigger a hash change event.
+         * @alias Router.navigate
+         * @todo check whether this should be removed in favor of the static method
+         */
+        redirect(...slugs: (string | undefined)[]): void;
+        /**
+         * Update the current path without triggering a redirect.
+         */
+        updateCurrent(path: string): void;
+        constructor(host: LitElement);
+        connect(): void;
+        disconnect(): void;
+        outlet(): TemplateResult;
+    }
+}
 declare module "src/components/plugins/preview-viewer-link/preview-viewer-link.utils" {
     import { ElementData } from "src/components/plugins/preview-frame-viewer/preview-frame-viewer.utils";
     /**
@@ -1540,11 +1622,12 @@ declare module "src/components/plugins/preview-viewer-link/preview-viewer-link.p
         static readonly styles: import("lit").CSSResult;
         readonly container: HTMLElement;
         readonly previewTagName: string;
-        readonly available = true;
+        available: boolean;
         readonly name = "viewer-link";
         readonly label = "Show in viewer";
         enabled: boolean;
         connectedCallback(): void;
+        adoptedCallback(): void;
         disconnectedCallback(): void;
         private handleToggleClick;
         protected render(): TemplateResult;
@@ -1554,14 +1637,6 @@ declare module "src/components/plugins/preview-viewer-link/preview-viewer-link.p
             'wcp-preview-viewer-link': PreviewViewerLink;
         }
     }
-}
-declare module "src/utils/dom.utils" {
-    export function isElementWithin(element: Element, container?: Element): boolean;
-    /**
-     * Delivers the relative boundary of an element to an optional parent.
-     * If the parent element is omitted, the offset parent of the element is used.
-     */
-    export function getRelativeBoundary(element: HTMLElement, parent?: Element | null): Pick<DOMRect, 'x' | 'y' | 'height' | 'width'>;
 }
 declare module "src/components/plugins/preview-viewer-link/preview-viewer-link-hint/preview-viewer-link-hint.component" {
     import { LitElement, type TemplateResult } from 'lit';
@@ -1682,59 +1757,6 @@ declare module "src/utils/navigation.utils" {
     export function matchesSearch(content: string, terms: string[], minSearchLength?: number): boolean;
     export function filterItems(items: GroupedNavigationItems, terms: string[], minSearchLength?: number): GroupedNavigationItems;
 }
-declare module "src/utils/router.utils" {
-    import type { LitElement, TemplateResult } from 'lit';
-    export type Params = Record<string, string | undefined>;
-    export type Route = {
-        path: string;
-        enter?: (params: Params, router: Router, outgoingParams?: Params) => boolean | Promise<boolean>;
-        render?: (params: Params, router: Router) => TemplateResult;
-    };
-    export type RegisterRoutes = (router: Router) => Route[];
-    export type ParsedUrl = {
-        /**
-         * Cleaned up path, derived from hash
-         */
-        path: string;
-        /**
-         * Prefixed url with base
-         */
-        url: string;
-    };
-    /**
-     * Helps comparing param objects for equality
-     */
-    export function areParamsEqual(a: Params, b: Params): boolean;
-    /**
-     * Merges two given sets of params.
-     */
-    export function mergeParams(oldParams: Params, newParams: Params): Params;
-    export class Router {
-        #private;
-        static isActive(path: string, currentPath?: string, exact?: boolean): boolean;
-        get currentPath(): string | undefined;
-        /**
-         * Defines the routes for this router.
-         */
-        registerRoutes(routes: Route[]): void;
-        /**
-         * Checks if the given path is the currently active.
-         */
-        isActive(path: string, exact?: boolean): boolean;
-        /**
-         * Redirect to a given path. This will trigger a hash change event.
-         */
-        redirect(...slugs: (string | undefined)[]): void;
-        /**
-         * Update the current path without triggering a redirect.
-         */
-        updateCurrent(path: string): void;
-        constructor(host: LitElement);
-        connect(): void;
-        disconnect(): void;
-        outlet(): TemplateResult;
-    }
-}
 declare module "src/mixins/routable.mixin" {
     import type { LitElement } from 'lit';
     import type { Constructor } from "src/utils/mixin.types";
@@ -1819,8 +1841,8 @@ declare module "src/components/root/root-navigation/root-navigation.component" {
 declare module "src/components/root/root.routes" {
     import type { Config } from "src/utils/config.utils";
     import type { Manifest } from "src/utils/parser.types";
-    import { type Route, type Router } from "src/utils/router.utils";
-    export const prepareRoutes: (router: Router, config: Config, manifest: Manifest) => Route[];
+    import { type Route } from "src/utils/router.utils";
+    export const prepareRoutes: (config: Config, manifest: Manifest) => Route[];
 }
 declare module "src/components/root/root.component" {
     import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
