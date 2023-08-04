@@ -82,25 +82,23 @@ export class InputCheckbox
 
   protected override firstUpdated(props: PropertyValues<this>): void {
     super.firstUpdated(props);
+    this.internals.role = 'checkbox';
     this.initialChecked = this.checked;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.checked ? this.value ?? null : null);
   }
 
   override attributeChangedCallback(name: string, old: string | null, value: string | null): void {
     super.attributeChangedCallback(name, old, value);
     if (name === 'checked') {
       this.checked = value !== null;
-      this.internals.setFormValue(this.checked ? this.value ?? null : null);
+      this.checkValidity();
+
+      this.internals.ariaChecked = String(this.checked);
+      this.internals.setFormValue(this.checked ? this.value ?? null : null, null);
     }
   }
 
   formResetCallback() {
     this.checked = this.initialChecked;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.checked ? this.value ?? null : null);
   }
 
   checkValidity(): boolean {
@@ -117,9 +115,6 @@ export class InputCheckbox
   handleInput(event: Event) {
     const input = event.target as HTMLInputElement;
     this.checked = input.checked;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.checked ? this.value ?? null : null);
   }
 
   override renderInput(id: string) {
@@ -131,7 +126,7 @@ export class InputCheckbox
         autocomplete="${this.autocomplete ? 'on' : 'off'}"
         ?disabled="${this.disabled}"
         ?required="${this.required}"
-        .checked="${this.checked}"
+        ?checked="${this.checked}"
         .value="${this.value}"
         @input="${this.handleInput}"
       />
