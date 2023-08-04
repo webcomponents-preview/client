@@ -1,0 +1,24 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-topbar-dark-color: var(--wcp-topbar-dark-color, var(--wcp-color-grey-96));
+  ---wcp-topbar-light-color: var(--wcp-topbar-light-color, var(--wcp-color-grey-17));
+
+  ---wcp-topbar-height: var(--wcp-topbar-height, #{utils.size(5)});
+  ---wcp-topbar-spacing: var(--wcp-topbar-spacing, #{utils.size(.5) utils.size(1)});
+}
+
+:host {
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 auto;
+
+  box-sizing: border-box;
+  height: var(---wcp-topbar-height);
+  padding: var(---wcp-topbar-spacing);
+
+  @include utils.color-scheme() using ($color-scheme) {
+    color: var(---wcp-topbar-#{$color-scheme}-color);
+  }
+}

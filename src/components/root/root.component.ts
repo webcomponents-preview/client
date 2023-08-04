@@ -111,11 +111,11 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
               .items="${this.navigationItems}"
             ></wcp-root-navigation>
 
-            <wcp-preview-controls>
+            <wcp-topbar>
               <wcp-toggle-sidebar></wcp-toggle-sidebar>
               <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
               <slot name="preview-controls"></slot>
-            </wcp-preview-controls>
+            </wcp-topbar>
 
             <slot name="preview-frame">${this.router.outlet()}</slot>
           </wcp-layout>
