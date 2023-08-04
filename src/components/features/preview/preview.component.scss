@@ -31,6 +31,10 @@ nav {
   border-bottom: 1px solid var(---wcp-preview-menu-border-color);
 }
 
+.plugin:not([available]) {
+  display: none;
+}
+
 hr {
   margin: 0;
   padding: 0;
@@ -39,6 +43,10 @@ hr {
 
   background-color: var(---wcp-preview-menu-border-color);
   border: 0;
+
+  &:has(+ .plugin:not([available])) {
+    display: none;
+  }
 }
 
 section {
