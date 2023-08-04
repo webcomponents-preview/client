@@ -1,6 +1,6 @@
 import { getManifest } from '@/utils/manifest.utils.js';
 import { litKey } from '@/utils/parser.utils.js';
-import type { ElementData } from '../preview-frame-viewer/preview-frame-viewer.utils.js';
+import type { ElementData } from '../stage-editor/stage-editor.utils.js';
 
 /**
  * Prepares an initial state object for the given element definition.

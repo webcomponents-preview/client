@@ -39,7 +39,7 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
 
   #checkAvailability() {
     // check if the previewed element is in a viewer
-    this.available = !isDescendantOf(this, 'wcp-preview-frame-viewer');
+    this.available = !isDescendantOf(this, 'wcp-stage-editor');
 
     // notify about availability change
     const event = new CustomEvent('wcp-preview-plugin:availability-change', {

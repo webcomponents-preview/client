@@ -10,17 +10,17 @@ import { getManifest } from '@/utils/manifest.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
 import type { StagePlugin } from '@/utils/plugin.utils.js';
 
-import { type ElementData, mapFormData, prepareInitialData } from './preview-frame-viewer.utils.js';
+import { type ElementData, mapFormData, prepareInitialData } from './stage-editor.utils.js';
 
-import styles from './preview-frame-viewer.plugin.scss';
+import styles from './stage-editor.plugin.scss';
 
 const URI_DATA_PARAM_COMPRESSION: CompressionFormat = 'deflate-raw';
 
 /**
- * @element wcp-preview-frame-viewer
+ * @element wcp-stage-editor
  */
-@customElement('wcp-preview-frame-viewer')
-export class PreviewFrameViewer extends ColorSchemable(LitElement) implements StagePlugin {
+@customElement('wcp-stage-editor')
+export class StageEditor extends ColorSchemable(LitElement) implements StagePlugin {
   static override readonly styles = unsafeCSS(styles);
 
   readonly #manifest = getManifest();
@@ -45,10 +45,10 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements St
   readonly available = true;
 
   @property({ type: String, reflect: true })
-  readonly name = 'viewer';
+  readonly name = 'editor';
 
   @property({ type: String, reflect: true })
-  readonly label = 'Viewer';
+  readonly label = 'Editor';
 
   async #prepareElementData(data?: string) {
     // read element data from compressed data param
@@ -92,16 +92,16 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements St
     return html`${keyed(
       this._element?.tagName ?? '',
       html`
-        <wcp-preview-frame-viewer-stage
+        <wcp-stage-editor-preview
           preview-tag-name="${ifDefined(this._element?.tagName)}"
           .data="${this._elementData}"
-        ></wcp-preview-frame-viewer-stage>
+        ></wcp-stage-editor-preview>
 
-        <wcp-preview-frame-viewer-controls
+        <wcp-stage-editor-controls
           preview-tag-name="${ifDefined(this._element?.tagName)}"
           .data="${this._elementData}"
-          @wcp-preview-frame-viewer-controls:input="${this.handleControlsInput}"
-        ></wcp-preview-frame-viewer-controls>
+          @wcp-stage-editor-controls:input="${this.handleControlsInput}"
+        ></wcp-stage-editor-controls>
       `
     )}`;
   }
@@ -109,6 +109,6 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements St
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wcp-preview-frame-viewer': PreviewFrameViewer;
+    'wcp-stage-editor': StageEditor;
   }
 }

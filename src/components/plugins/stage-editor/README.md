@@ -1,4 +1,4 @@
-# wcp-preview-frame-viewer
+# wcp-stage-editor
 
 **Mixins:** ColorSchemable
 
@@ -8,8 +8,8 @@
 |------------------|--------------------|-----------|-----------------------|----------|
 | `available`      | `available`        | readonly  | `true`                | true     |
 | `data`           | `data`             |           | `string \| undefined` |          |
-| `label`          | `label`            | readonly  | `"Viewer"`            | "Viewer" |
-| `name`           | `name`             | readonly  | `"viewer"`            | "viewer" |
+| `label`          | `label`            | readonly  | `"Editor"`            | "Editor" |
+| `name`           | `name`             | readonly  | `"editor"`            | "editor" |
 | `previewTagName` | `preview-tag-name` |           | `string`              |          |
 
 ## Methods

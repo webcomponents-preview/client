@@ -11,24 +11,24 @@ import { getManifest } from '@/utils/manifest.utils.js';
 import { renderMarkdown } from '@/utils/markdown.utils.js';
 import { litKey } from '@/utils/parser.utils.js';
 
-import { alignFormDataWebkit, type ElementData } from '../preview-frame-viewer.utils.js';
+import { alignFormDataWebkit, type ElementData } from '../stage-editor.utils.js';
 
-import styles from './preview-frame-viewer-controls.component.scss';
+import styles from './stage-editor-controls.component.scss';
 
 /**
- * @element wcp-preview-frame-viewer-controls
+ * @element wcp-stage-editor-controls
  *
- * @cssprop --wcp-preview-frame-viewer-controls-headline-size - The font size of the headline.
- * @cssprop --wcp-preview-frame-viewer-controls-headline-weight - The font weight of the headline.
- * @cssprop --wcp-preview-frame-viewer-controls-headline-spacing - The inner spacing of the headline.
+ * @cssprop --wcp-stage-editor-controls-headline-size - The font size of the headline.
+ * @cssprop --wcp-stage-editor-controls-headline-weight - The font weight of the headline.
+ * @cssprop --wcp-stage-editor-controls-headline-spacing - The inner spacing of the headline.
  *
- * @cssprop --wcp-preview-frame-viewer-controls-dark-border-color - The border color of the element in dark mode.
- * @cssprop --wcp-preview-frame-viewer-controls-light-border-color - The border color of the element in light mode.
+ * @cssprop --wcp-stage-editor-controls-dark-border-color - The border color of the element in dark mode.
+ * @cssprop --wcp-stage-editor-controls-light-border-color - The border color of the element in light mode.
  *
- * @emits {CustomEvent<FormData>} wcp-preview-frame-viewer-controls:input - Fires when the user changes a control value.
+ * @emits {CustomEvent<FormData>} wcp-stage-editor-controls:input - Fires when the user changes a control value.
  */
-@customElement('wcp-preview-frame-viewer-controls')
-export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
+@customElement('wcp-stage-editor-controls')
+export class StageEditorControls extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
   readonly #manifest = getManifest();
@@ -135,7 +135,7 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
     const formData = alignFormDataWebkit(new FormData(form), form.elements, this._element);
 
     this.dispatchEvent(
-      new CustomEvent('wcp-preview-frame-viewer-controls:input', {
+      new CustomEvent('wcp-stage-editor-controls:input', {
         bubbles: true,
         composed: true,
         detail: formData,
@@ -171,10 +171,10 @@ export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
 
 declare global {
   interface HTMLElementEventMap {
-    'wcp-preview-frame-viewer-controls:input': CustomEvent<FormData>;
+    'wcp-stage-editor-controls:input': CustomEvent<FormData>;
   }
 
   interface HTMLElementTagNameMap {
-    'wcp-preview-frame-viewer-controls': PreviewFrameViewerControls;
+    'wcp-stage-editor-controls': StageEditorControls;
   }
 }

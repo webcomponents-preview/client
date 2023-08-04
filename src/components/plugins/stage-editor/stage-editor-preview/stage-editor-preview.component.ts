@@ -8,22 +8,22 @@ import { map } from 'lit/directives/map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 
-import type { ElementData } from '../preview-frame-viewer.utils.js';
+import type { ElementData } from '../stage-editor.utils.js';
 
-import styles from './preview-frame-viewer-stage.component.scss';
+import styles from './stage-editor-preview.component.scss';
 
 /**
- * @element wcp-preview-frame-viewer-stage
+ * @element wcp-stage-editor-preview
  *
  * @example
  * ```html
- * <wcp-preview-frame-viewer-stage>
+ * <wcp-stage-editor-preview>
  *   <wcp-button>Example button</wcp-button>
- * </wcp-preview-frame-viewer-stage>
+ * </wcp-stage-editor-preview>
  * ```
  */
-@customElement('wcp-preview-frame-viewer-stage')
-export class PreviewFrameViewerStage extends LitElement {
+@customElement('wcp-stage-editor-preview')
+export class StageEditorPreview extends LitElement {
   static override readonly styles = unsafeCSS(styles);
 
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
@@ -63,6 +63,6 @@ export class PreviewFrameViewerStage extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wcp-preview-frame-viewer-stage': PreviewFrameViewerStage;
+    'wcp-stage-editor-preview': StageEditorPreview;
   }
 }

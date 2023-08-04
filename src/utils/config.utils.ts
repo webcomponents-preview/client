@@ -80,7 +80,7 @@ export const defaultConfig = {
   initialCodePreviewTab: 'preview',
   initialPreviewTab: 'viewer',
   previewPlugins: ['wcp-preview-viewport', 'wcp-preview-viewer-link'],
-  previewFramePlugins: ['wcp-stage-examples', 'wcp-stage-readme', 'wcp-preview-frame-viewer'],
+  previewFramePlugins: ['wcp-stage-examples', 'wcp-stage-readme', 'wcp-stage-editor'],
   additionalReadmes: [],
   labels: {
     title: 'Web Component Preview',

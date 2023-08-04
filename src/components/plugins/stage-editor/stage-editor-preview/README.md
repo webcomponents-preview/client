@@ -1,11 +1,11 @@
-# wcp-preview-frame-viewer-stage
+# wcp-stage-editor-preview
 
 ## Example
 
 ```html
-<wcp-preview-frame-viewer-stage>
+<wcp-stage-editor-preview>
   <wcp-button>Example button</wcp-button>
-</wcp-preview-frame-viewer-stage>
+</wcp-stage-editor-preview>
 ```
 
 ## Properties
