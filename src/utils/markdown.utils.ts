@@ -64,6 +64,7 @@ export function prefixRelativeUrls(markdown: string, currentPath: string, basePa
 export function renderMarkdown(mardown: string, addCodePreview = true, previewTagName?: string): string {
   return marked(mardown, {
     highlight(code, lang) {
+      if (lang === undefined) return code;
       const language = hljs.getLanguage(lang) ? lang : 'plaintext';
       return hljs.highlight(code, { language }).value;
     },
