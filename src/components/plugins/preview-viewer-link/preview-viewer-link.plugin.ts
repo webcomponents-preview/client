@@ -4,6 +4,7 @@ import { classMap } from 'lit/directives/class-map.js';
 
 import { compress } from '@/utils/compression.utils.js';
 import { isDescendantOf } from '@/utils/dom.utils.js';
+import { getManifest } from '@/utils/manifest.utils.js';
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
 import { Router } from '@/utils/router.utils.js';
 
@@ -14,6 +15,8 @@ import styles from './preview-viewer-link.plugin.scss';
 @customElement('wcp-preview-viewer-link')
 export class PreviewViewerLink extends LitElement implements PreviewPlugin {
   static override readonly styles = unsafeCSS(styles);
+
+  readonly #manifest = getManifest();
 
   readonly #overlay = document.createElement('div');
 
@@ -139,7 +142,7 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
     const data = readCurrentElementData(element);
     const param = encodeURIComponent(await compress(JSON.stringify(data), 'deflate-raw'));
     // 2. prepare a stateful preview link
-    const tagName = window.wcp.manifest.elements.get(this.previewTagName)?.getNiceUrl();
+    const tagName = this.#manifest.elements.get(this.previewTagName)?.getNiceUrl();
     const link = `/element/${tagName}/viewer/${param}`;
     // 3. open the preview link in the viewer tab
     Router.navigate(link);

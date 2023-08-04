@@ -1,3 +1,4 @@
+import { getManifest } from '@/utils/manifest.utils.js';
 import { litKey } from '@/utils/parser.utils.js';
 import type { ElementData } from '../preview-frame-viewer/preview-frame-viewer.utils.js';
 
@@ -5,7 +6,7 @@ import type { ElementData } from '../preview-frame-viewer/preview-frame-viewer.u
  * Prepares an initial state object for the given element definition.
  */
 export function readCurrentElementData(ref: HTMLElement): ElementData {
-  const element = window.wcp.manifest.elements.get(ref.tagName.toLowerCase());
+  const element = getManifest().elements.get(ref.tagName.toLowerCase());
   return {
     fields:
       Array.from(element?.fields.values() ?? []).reduce((acc, field) => {

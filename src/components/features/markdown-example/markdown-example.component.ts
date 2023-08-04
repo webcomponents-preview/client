@@ -4,6 +4,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
+import { getConfig } from '@/utils/config.utils.js';
 
 import styles from './markdown-example.component.scss';
 
@@ -47,9 +48,11 @@ const MARKDOWN_EXAMPLE_TABS = { preview: { label: 'Preview' }, code: { label: 'C
 export class MarkdownExample extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
+  readonly #config = getConfig();
+
   protected override render(): TemplateResult {
     return html`
-      <wcp-tabs .tabs="${MARKDOWN_EXAMPLE_TABS}" active-tab="${ifDefined(window.wcp.config.initialCodePreviewTab)}">
+      <wcp-tabs .tabs="${MARKDOWN_EXAMPLE_TABS}" active-tab="${ifDefined(this.#config.initialCodePreviewTab)}">
         ${map(Object.keys(MARKDOWN_EXAMPLE_TABS), (tab) => html`<slot name="${tab}" slot="${tab}"></slot>`)}
       </wcp-tabs>
     `;

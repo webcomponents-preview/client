@@ -4,6 +4,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 import { until } from 'lit/directives/until.js';
 
+import { getManifest } from '@/utils/manifest.utils.js';
 import { prefixRelativeUrls } from '@/utils/markdown.utils.js';
 import { areParamsEqual, mergeParams, type Route, Router } from '@/utils/router.utils.js';
 
@@ -25,7 +26,7 @@ export const prepareRoutes = (): Route[] => [
       }
 
       // redirect to first element
-      const firstElement = window.wcp.manifest.elements.values().next().value.getNiceUrl();
+      const firstElement = getManifest().elements.values().next().value.getNiceUrl();
       Router.navigate(`/element/${firstElement}`);
       return false;
     },

@@ -5,6 +5,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import type * as Parsed from '@/utils/parser.types.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
+import { getManifest } from '@/utils/manifest.utils.js';
 import { renderMarkdown } from '@/utils/markdown.utils.js';
 import type { PreviewFramePlugin } from '@/utils/plugin.utils.js';
 
@@ -19,6 +20,8 @@ import styles from './preview-frame-examples.plugin.scss';
 export class PreviewFrameExamples extends ColorSchemable(LitElement) implements PreviewFramePlugin {
   static override readonly styles = unsafeCSS(styles);
 
+  readonly #manifest = getManifest();
+
   @state()
   private _element?: Parsed.Element;
 
@@ -27,7 +30,7 @@ export class PreviewFrameExamples extends ColorSchemable(LitElement) implements 
 
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
   set previewTagName(previewTagName: string) {
-    this._element = window.wcp.manifest.elements.get(previewTagName);
+    this._element = this.#manifest.elements.get(previewTagName);
     const available = this._element?.hasExamples ?? false;
 
     // update the property if changed

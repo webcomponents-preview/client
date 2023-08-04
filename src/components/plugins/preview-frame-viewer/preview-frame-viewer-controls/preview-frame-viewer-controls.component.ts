@@ -7,6 +7,7 @@ import { when } from 'lit/directives/when.js';
 
 import type * as Parsed from '@/utils/parser.types.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
+import { getManifest } from '@/utils/manifest.utils.js';
 import { renderMarkdown } from '@/utils/markdown.utils.js';
 import { litKey } from '@/utils/parser.utils.js';
 
@@ -30,12 +31,14 @@ import styles from './preview-frame-viewer-controls.component.scss';
 export class PreviewFrameViewerControls extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
+  readonly #manifest = getManifest();
+
   @state()
   private _element?: Parsed.Element;
 
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
   set previewTagName(previewTagName: string) {
-    this._element = window.wcp.manifest.elements.get(previewTagName);
+    this._element = this.#manifest.elements.get(previewTagName);
   }
 
   @property({ type: Object })

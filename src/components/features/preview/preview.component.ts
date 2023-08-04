@@ -6,6 +6,7 @@ import { ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
+import { getConfig } from '@/utils/config.utils.js';
 
 import styles from './preview.component.scss';
 
@@ -29,6 +30,8 @@ import styles from './preview.component.scss';
 @customElement('wcp-preview')
 export class Preview extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
+
+  readonly #config = getConfig();
 
   @state()
   private container?: HTMLElement;
@@ -69,7 +72,7 @@ export class Preview extends ColorSchemable(LitElement) {
         () => html`
           <nav>
             ${map(
-              window.wcp.config.previewPlugins ?? [],
+              this.#config.previewPlugins ?? [],
               (plugin, index) => html`
                 ${when(index > 0, () => html`<hr />`)} ${staticHtml`
                   <${unsafeStatic(plugin)}

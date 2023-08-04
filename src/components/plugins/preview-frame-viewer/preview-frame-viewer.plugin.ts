@@ -6,6 +6,7 @@ import { keyed } from 'lit/directives/keyed.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { compress, decompress } from '@/utils/compression.utils.js';
+import { getManifest } from '@/utils/manifest.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
 import type { PreviewFramePlugin } from '@/utils/plugin.utils.js';
 
@@ -22,6 +23,8 @@ const URI_DATA_PARAM_COMPRESSION: CompressionFormat = 'deflate-raw';
 export class PreviewFrameViewer extends ColorSchemable(LitElement) implements PreviewFramePlugin {
   static override readonly styles = unsafeCSS(styles);
 
+  readonly #manifest = getManifest();
+
   @state()
   private _element?: Parsed.Element;
 
@@ -30,7 +33,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
 
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
   set previewTagName(previewTagName: string) {
-    this._element = window.wcp.manifest.elements.get(previewTagName);
+    this._element = this.#manifest.elements.get(previewTagName);
   }
 
   @property({ type: String })
