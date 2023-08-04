@@ -36,7 +36,7 @@
   position: absolute;
   display: block;
   box-sizing: border-box;
-  pointer-events: none;
+  cursor: pointer;
 }
 
 :host(:hover) {
@@ -64,21 +64,18 @@ button {
     solid transparent;
   border-radius: 50%;
 
-  pointer-events: all;
-  cursor: pointer;
-
   transition: var(--wcp-fx-default-duration) ease-out;
   transition-property: background-color, border-width, height, width;
   will-change: background-color, border-width, height, width;
 
   // compensate the border when positioning relative to the parent
-  :host([debug]:hover) & {
+  :host([debug]) & {
     top: calc(var(---wcp-preview-viewer-link-hint-debug-border-width) * -1);
     right: calc(var(---wcp-preview-viewer-link-hint-debug-border-width) * -1);
   }
 }
 
-:host([debug]:hover) {
+:host([debug]) {
   border: var(---wcp-preview-viewer-link-hint-debug-border-width) dashed
     var(---wcp-preview-viewer-link-hint-debug-stroke);
 
