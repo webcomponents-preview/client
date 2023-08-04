@@ -1,0 +1,67 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-stage-dark-background: var(--wcp-stage-dark-background, var(--wcp-color-blue-13));
+  ---wcp-stage-dark-border-color: var(--wcp-stage-border-color, var(--wcp-color-grey-24));
+  ---wcp-stage-dark-color: var(--wcp-stage-dark-color, var(--wcp-color-grey-96));
+  
+  ---wcp-stage-light-background: var(--wcp-stage-light-background, var(--wcp-color-grey-96));
+  ---wcp-stage-light-border-color: var(--wcp-stage-border-color, var(--wcp-color-grey-80));
+  ---wcp-stage-light-color: var(--wcp-stage-light-color, var(--wcp-color-grey-17));
+
+  ---wcp-stage-border-radius: var(--wcp-stage-border-radius, var(--wcp-border-radius));
+  ---wcp-stage-border-width: var(--wcp-stage-border-width, 1px);
+  ---wcp-stage-distance: var(--wcp-stage-distance, #{0 utils.size(1)});
+  ---wcp-stage-spacing: var(--wcp-stage-spacing, #{0 utils.size(1) utils.size(1)});
+
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-stage-background: var(---wcp-stage-#{$color-scheme}-background);
+    ---wcp-stage-border-color: var(---wcp-stage-#{$color-scheme}-border-color);
+    ---wcp-stage-color: var(---wcp-stage-#{$color-scheme}-color);
+  }
+}
+
+:host {
+  flex: 1 1 auto;
+  flex-direction: column;
+
+  display: flex;
+  overflow: auto;
+  padding: var(---wcp-stage-spacing);
+
+  background-color: var(---wcp-stage-background);
+  color: var(---wcp-stage-color);
+
+  @include utils.breakpoint(sm) {
+    margin: var(---wcp-stage-distance);
+    border-top-right-radius: var(---wcp-stage-border-radius);
+    border-top-left-radius: var(---wcp-stage-border-radius);
+  }
+}
+
+wcp-tabs {
+  flex: 1 0 auto;
+
+  &::part(tablist) {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(---wcp-stage-background);
+
+    // improve the height to an explicit size to align the tabs separator
+    // with the one left in the sidebar below the search input
+    min-height: utils.size(4);
+  }
+
+  &::part(element-panel:not([hidden])) {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+  }
+}
+
+// hide the default slot, as we use it only initially to collect all plugins
+slot:not([name]) {
+  display: none;
+}

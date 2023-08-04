@@ -8,7 +8,7 @@ import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { compress, decompress } from '@/utils/compression.utils.js';
 import { getManifest } from '@/utils/manifest.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
-import type { PreviewFramePlugin } from '@/utils/plugin.utils.js';
+import type { StagePlugin } from '@/utils/plugin.utils.js';
 
 import { type ElementData, mapFormData, prepareInitialData } from './preview-frame-viewer.utils.js';
 
@@ -20,7 +20,7 @@ const URI_DATA_PARAM_COMPRESSION: CompressionFormat = 'deflate-raw';
  * @element wcp-preview-frame-viewer
  */
 @customElement('wcp-preview-frame-viewer')
-export class PreviewFrameViewer extends ColorSchemable(LitElement) implements PreviewFramePlugin {
+export class PreviewFrameViewer extends ColorSchemable(LitElement) implements StagePlugin {
   static override readonly styles = unsafeCSS(styles);
 
   readonly #manifest = getManifest();
@@ -77,7 +77,7 @@ export class PreviewFrameViewer extends ColorSchemable(LitElement) implements Pr
     const param = encodeURIComponent(await compress(JSON.stringify(data), URI_DATA_PARAM_COMPRESSION));
 
     // dispatch the event to update the url param
-    const event = new CustomEvent('wcp-preview-frame-plugin:data-change', { detail: param });
+    const event = new CustomEvent('wcp-stage-plugin:data-change', { detail: param });
     this.dispatchEvent(event);
   }
 

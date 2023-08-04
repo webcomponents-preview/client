@@ -5,37 +5,37 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
-import { type PreviewFramePlugin, findAllPlugins } from '@/utils/plugin.utils.js';
+import { type StagePlugin, findAllPlugins } from '@/utils/plugin.utils.js';
 
-import styles from './preview-frame.component.scss';
+import styles from './stage.component.scss';
 
 /**
  * @example
  * ```html
- * <wcp-preview-frame></wcp-preview-frame>
+ * <wcp-stage></wcp-stage>
  * ```
  *
  * @slot - The preview frame can be filled with any number of plugins. The plugins will be rendered as tabs.
  *
- * @cssprop --wcp-preview-frame-dark-background - Background color of the preview frame in dark mode
- * @cssprop --wcp-preview-frame-dark-border-color - Border color of the example section in dark mode
- * @cssprop --wcp-preview-frame-dark-color - Text color of the preview frame in dark mode
+ * @cssprop --wcp-stage-dark-background - Background color of the preview frame in dark mode
+ * @cssprop --wcp-stage-dark-border-color - Border color of the example section in dark mode
+ * @cssprop --wcp-stage-dark-color - Text color of the preview frame in dark mode
  *
- * @cssprop --wcp-preview-frame-light-background - Background color of the preview frame in light mode
- * @cssprop --wcp-preview-frame-light-border-color - Border color of the example section in light mode
- * @cssprop --wcp-preview-frame-light-color - Text color of the preview frame in light mode
+ * @cssprop --wcp-stage-light-background - Background color of the preview frame in light mode
+ * @cssprop --wcp-stage-light-border-color - Border color of the example section in light mode
+ * @cssprop --wcp-stage-light-color - Text color of the preview frame in light mode
  *
- * @cssprop --wcp-preview-frame-border-radius - Border radius of the preview frame
- * @cssprop --wcp-preview-frame-border-width - Border width of the preview frame
- * @cssprop --wcp-preview-frame-distance - Outer margin of the preview frame
- * @cssprop --wcp-preview-frame-spacing - Inner padding of the preview frame
+ * @cssprop --wcp-stage-border-radius - Border radius of the preview frame
+ * @cssprop --wcp-stage-border-width - Border width of the preview frame
+ * @cssprop --wcp-stage-distance - Outer margin of the preview frame
+ * @cssprop --wcp-stage-spacing - Inner padding of the preview frame
  */
-@customElement('wcp-preview-frame')
-export class PreviewFrame extends ColorSchemable(LitElement) {
+@customElement('wcp-stage')
+export class Stage extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
   @state()
-  private _plugins: PreviewFramePlugin[] = [];
+  private _plugins: StagePlugin[] = [];
 
   @state()
   private _tabs: HTMLElementTagNameMap['wcp-tabs']['tabs'] = {};
@@ -44,7 +44,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
   private readonly activePlugin?: string;
 
   emitActivePluginChange(activePlugin?: string) {
-    const event = new CustomEvent('wcp-preview-frame:active-plugin-change', {
+    const event = new CustomEvent('wcp-stage:active-plugin-change', {
       detail: activePlugin,
       bubbles: true,
       cancelable: true,
@@ -123,7 +123,7 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
             .tabs="${this._tabs}"
             active-tab="${ifDefined(this.activePlugin)}"
             @wcp-tabs:active-tab-change="${this.handleActiveTabChange}"
-            @wcp-preview-frame-plugin:availability-change="${this.handleAvailabilityChange}"
+            @wcp-stage-plugin:availability-change="${this.handleAvailabilityChange}"
           >
             ${map(this._plugins, ({ name }) => html`<slot name="${name}" slot="${name}"></slot>`)}
           </wcp-tabs>
@@ -136,9 +136,9 @@ export class PreviewFrame extends ColorSchemable(LitElement) {
 
 declare global {
   interface HTMLElementEventMap {
-    'wcp-preview-frame:active-plugin-change': CustomEvent<string>;
+    'wcp-stage:active-plugin-change': CustomEvent<string>;
   }
   interface HTMLElementTagNameMap {
-    'wcp-preview-frame': PreviewFrame;
+    'wcp-stage': Stage;
   }
 }

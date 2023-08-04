@@ -1,8 +1,8 @@
 // Preview Frame Plugins may emit a plugin data change event.
 declare global {
   interface HTMLElementEventMap {
+    'wcp-stage-plugin:data-change': CustomEvent<string>;
     'wcp-preview-plugin:data-change': CustomEvent<string>;
-    'wcp-preview-frame-plugin:data-change': CustomEvent<string>;
   }
 }
 
@@ -21,9 +21,9 @@ export type Plugin = Element & {
 };
 
 /**
- * Type to be used with preview frame plugins.
+ * Type to be used with stage plugins.
  */
-export type PreviewFramePlugin = Plugin & {
+export type StagePlugin = Plugin & {
   readonly data?: string;
 };
 

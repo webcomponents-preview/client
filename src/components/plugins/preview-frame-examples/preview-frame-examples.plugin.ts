@@ -7,7 +7,7 @@ import type * as Parsed from '@/utils/parser.types.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { getManifest } from '@/utils/manifest.utils.js';
 import { renderMarkdown } from '@/utils/markdown.utils.js';
-import type { PreviewFramePlugin } from '@/utils/plugin.utils.js';
+import type { StagePlugin } from '@/utils/plugin.utils.js';
 
 import styles from './preview-frame-examples.plugin.scss';
 
@@ -17,7 +17,7 @@ import styles from './preview-frame-examples.plugin.scss';
  * @cssprop --wcp-preview-frame-examples-spacing - Spacing between examples.
  */
 @customElement('wcp-preview-frame-examples')
-export class PreviewFrameExamples extends ColorSchemable(LitElement) implements PreviewFramePlugin {
+export class PreviewFrameExamples extends ColorSchemable(LitElement) implements StagePlugin {
   static override readonly styles = unsafeCSS(styles);
 
   readonly #manifest = getManifest();

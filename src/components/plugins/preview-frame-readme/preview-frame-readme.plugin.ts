@@ -5,12 +5,12 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import type * as Parsed from '@/utils/parser.types.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { getManifest } from '@/utils/manifest.utils.js';
-import type { PreviewFramePlugin } from '@/utils/plugin.utils.js';
+import type { StagePlugin } from '@/utils/plugin.utils.js';
 
 import styles from './preview-frame-readme.plugin.scss';
 
 @customElement('wcp-preview-frame-readme')
-export class PreviewFrameReadme extends ColorSchemable(LitElement) implements PreviewFramePlugin {
+export class PreviewFrameReadme extends ColorSchemable(LitElement) implements StagePlugin {
   static override readonly styles = unsafeCSS(styles);
   
   readonly #manifest = getManifest();

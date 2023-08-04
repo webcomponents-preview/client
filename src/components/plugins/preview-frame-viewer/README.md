@@ -20,6 +20,6 @@
 
 ## Events
 
-| Event                                  |
-|----------------------------------------|
-| `wcp-preview-frame-plugin:data-change` |
+| Event                          |
+|--------------------------------|
+| `wcp-stage-plugin:data-change` |

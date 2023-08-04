@@ -72,9 +72,9 @@ export const prepareRoutes = (): Route[] => [
     },
     render: ({ tagName = '', pluginName = window.wcp.config.initialPreviewTab, pluginData }) => {
       return html`
-        <wcp-preview-frame
+        <wcp-stage
           active-plugin="${ifDefined(pluginName)}"
-          @wcp-preview-frame:active-plugin-change="${({ detail: pluginName }: CustomEvent<string>) =>
+          @wcp-stage:active-plugin-change="${({ detail: pluginName }: CustomEvent<string>) =>
             Router.navigate('/element', tagName, pluginName)}"
         >
           ${map(
@@ -83,12 +83,12 @@ export const prepareRoutes = (): Route[] => [
             <${unsafeStatic(previewFramePlugin)}
               preview-tag-name="${tagName}"
               .data="${ifDefined(pluginData)}"
-              @wcp-preview-frame-plugin:data-change="${({ detail: pluginData }: CustomEvent<string>) =>
+              @wcp-stage-plugin:data-change="${({ detail: pluginData }: CustomEvent<string>) =>
                 Router.navigate('/element', tagName, pluginName, pluginData)}"
             ></${unsafeStatic(previewFramePlugin)}>
           `
           )}
-        </wcp-preview-frame>
+        </wcp-stage>
       `;
     },
   },
