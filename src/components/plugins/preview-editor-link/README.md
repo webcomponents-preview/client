@@ -1,4 +1,4 @@
-# wcp-preview-viewer-link
+# wcp-preview-editor-link
 
 ## Properties
 

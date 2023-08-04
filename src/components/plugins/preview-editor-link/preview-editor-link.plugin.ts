@@ -8,12 +8,12 @@ import { getManifest } from '@/utils/manifest.utils.js';
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
 import { Router } from '@/utils/router.utils.js';
 
-import { readCurrentElementData } from './preview-viewer-link.utils.js';
+import { readCurrentElementData } from './preview-editor-link.utils.js';
 
-import styles from './preview-viewer-link.plugin.scss';
+import styles from './preview-editor-link.plugin.scss';
 
-@customElement('wcp-preview-viewer-link')
-export class PreviewViewerLink extends LitElement implements PreviewPlugin {
+@customElement('wcp-preview-editor-link')
+export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   static override readonly styles = unsafeCSS(styles);
 
   readonly #manifest = getManifest();
@@ -105,7 +105,7 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
   }
 
   #attachHint(element: HTMLElement) {
-    const hint = document.createElement('wcp-preview-viewer-link-hint');
+    const hint = document.createElement('wcp-preview-editor-link-hint');
     hint.debug = true;
     hint.element = element;
     hint.scrollParent = this.container;
@@ -143,8 +143,8 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
     const param = encodeURIComponent(await compress(JSON.stringify(data), 'deflate-raw'));
     // 2. prepare a stateful preview link
     const tagName = this.#manifest.elements.get(this.previewTagName)?.getNiceUrl();
-    const link = `/element/${tagName}/viewer/${param}`;
-    // 3. open the preview link in the viewer tab
+    const link = `/element/${tagName}/editor/${param}`;
+    // 3. open the preview link in the editor tab
     Router.navigate(link);
   }
 
@@ -188,6 +188,6 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'wcp-preview-viewer-link': PreviewViewerLink;
+    'wcp-preview-editor-link': PreviewEditorLink;
   }
 }
