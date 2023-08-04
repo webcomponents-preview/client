@@ -4,6 +4,8 @@ import { classMap } from 'lit/directives/class-map.js';
 
 import { compress } from '@/utils/compression.utils.js';
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
+import { Router } from '@/utils/router.utils.js';
+
 import { readCurrentElementData } from './preview-viewer-link.utils.js';
 
 import styles from './preview-viewer-link.plugin.scss';
@@ -127,7 +129,7 @@ export class PreviewViewerLink extends LitElement implements PreviewPlugin {
     const tagName = window.wcp.manifest.elements.get(this.previewTagName)?.getNiceUrl();
     const link = `/element/${tagName}/viewer/${param}`;
     // 3. open the preview link in the viewer tab
-    location.hash = link;
+    Router.navigate(link);
   }
 
   override connectedCallback() {

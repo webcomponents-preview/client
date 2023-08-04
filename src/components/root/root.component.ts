@@ -113,7 +113,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
 
     // prepare and set routes
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const routes = prepareRoutes(this.router, this.config!, this.manifest!);
+    const routes = prepareRoutes(this.config!, this.manifest!);
     this.router.registerRoutes(routes);
 
     super.connectedCallback();

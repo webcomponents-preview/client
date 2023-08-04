@@ -17,9 +17,10 @@ export function readCurrentElementData(ref: HTMLElement): ElementData {
         }
         return acc;
       }, {}) ?? {},
-    slots: {},
+    // TODO: add support for slots as well
     // Array.from(element.slots.values()).reduce((acc, slot) => {
     //   return { ...acc, [slot.name]: slot.default };
     // }, {}) ?? {},
+    slots: {},
   };
 }

@@ -65,6 +65,15 @@ export class Router {
     return isSamePath || (!exact && isNestedPath);
   }
 
+  /**
+   * Redirect to a given path. This will trigger a hash change event.
+   */
+  static navigate(...slugs: (string | undefined)[]) {
+    const path = slugs.filter(Boolean).join('/');
+    console.log(`Navigate to ${path}`);
+    location.hash = path;
+  }
+
   get currentPath(): string | undefined {
     return this.#currentPath;
   }
@@ -85,11 +94,11 @@ export class Router {
 
   /**
    * Redirect to a given path. This will trigger a hash change event.
+   * @alias Router.navigate
+   * @todo check whether this should be removed in favor of the static method
    */
   redirect(...slugs: (string | undefined)[]) {
-    const path = slugs.filter(Boolean).join('/');
-    console.log(`Redirecting to ${path}`);
-    location.hash = path;
+    Router.navigate(...slugs);
   }
 
   /**

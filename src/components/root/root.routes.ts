@@ -7,28 +7,28 @@ import { until } from 'lit/directives/until.js';
 import type { Config } from '@/utils/config.utils.js';
 import { prefixRelativeUrls } from '@/utils/markdown.utils.js';
 import type { Manifest } from '@/utils/parser.types.js';
-import { areParamsEqual, mergeParams, type Route, type Router } from '@/utils/router.utils.js';
+import { areParamsEqual, mergeParams, type Route, Router } from '@/utils/router.utils.js';
 
-export const prepareRoutes = (router: Router, config: Config, manifest: Manifest): Route[] => [
+export const prepareRoutes = (config: Config, manifest: Manifest): Route[] => [
   {
     path: '/',
     enter: () => {
       // redirect to initial element if defined
       if (config.initialActiveElement !== undefined) {
-        router.redirect(`/element/${config.initialActiveElement}`);
+        Router.navigate(`/element/${config.initialActiveElement}`);
         return false;
       }
 
       // redirect to first readme if available
       const firstReadme = config.additionalReadmes[0]?.url;
       if (firstReadme !== undefined) {
-        router.redirect(`/readme/${encodeURIComponent(firstReadme)}`);
+        Router.navigate(`/readme/${encodeURIComponent(firstReadme)}`);
         return false;
       }
 
       // redirect to first element
       const firstElement = manifest.elements.values().next().value.getNiceUrl();
-      router.redirect(`/element/${firstElement}`);
+      Router.navigate(`/element/${firstElement}`);
       return false;
     },
   },
@@ -64,7 +64,7 @@ export const prepareRoutes = (router: Router, config: Config, manifest: Manifest
       // digest these insights; redirect and block current route
       if (hasOutgoingParams && haveParamsChanged && isSamePath) {
         const { tagName, pluginName, pluginData } = alignedParams;
-        router.redirect('/element', tagName, pluginName, pluginData);
+        Router.navigate('/element', tagName, pluginName, pluginData);
         return false;
       }
 
@@ -76,7 +76,7 @@ export const prepareRoutes = (router: Router, config: Config, manifest: Manifest
         <wcp-preview-frame
           active-plugin="${ifDefined(pluginName)}"
           @wcp-preview-frame:active-plugin-change="${({ detail: pluginName }: CustomEvent<string>) =>
-            router.redirect('/element', tagName, pluginName)}"
+            Router.navigate('/element', tagName, pluginName)}"
         >
           ${map(
             config.previewFramePlugins ?? [],
@@ -85,7 +85,7 @@ export const prepareRoutes = (router: Router, config: Config, manifest: Manifest
               preview-tag-name="${tagName}"
               .data="${ifDefined(pluginData)}"
               @wcp-preview-frame-plugin:data-change="${({ detail: pluginData }: CustomEvent<string>) =>
-                router.redirect('/element', tagName, pluginName, pluginData)}"
+                Router.navigate('/element', tagName, pluginName, pluginData)}"
             ></${unsafeStatic(previewFramePlugin)}>
           `
           )}
