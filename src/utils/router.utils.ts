@@ -31,16 +31,19 @@ export type ParsedUrl = {
 /**
  * Helps comparing param objects for equality
  */
-export function areParamsEqual(a: Params, b: Params): boolean {
-  return Object.entries(a).every(([key, value]) => b[key] === value);
+export function areParamsEqual(a: Params, b: Params, exclude: string[] = []): boolean {
+  return Object.entries(a)
+    .filter(([key]) => !exclude.includes(key))
+    .every(([key, value]) => b[key] === value);
 }
 
 /**
  * Merges two given sets of params.
  */
-export function mergeParams(oldParams: Params, newParams: Params): Params {
+export function mergeParams(oldParams: Params, newParams: Params, exclude: string[] = []): Params {
   return Object.entries(newParams).reduce(
     (params, [key, value]) => {
+      if (exclude.includes(key)) delete params[key];
       if (value !== undefined) params[key] = value;
       return params;
     },

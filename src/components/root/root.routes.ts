@@ -53,12 +53,13 @@ export const prepareRoutes = (router: Router, config: Config, manifest: Manifest
     path: '/element/:tagName/:pluginName?/:pluginData?',
     // fill in existing params if not provided for next route
     enter: (params, router, outgoingParams) => {
-      // check if the params can be taken over (current route is
-      // the same path with different params)
+      // check if the params can be taken over (current route is the same
+      // path with different params), but exclude pluginData, as they're
+      // specific to the current element and should not be taken over
       const hasOutgoingParams = outgoingParams !== undefined;
       const isSamePath = router.currentPath?.startsWith('/element/');
-      const alignedParams = mergeParams(outgoingParams ?? {}, params);
-      const haveParamsChanged = !areParamsEqual(params, alignedParams);
+      const alignedParams = mergeParams(outgoingParams ?? {}, params, ['pluginData']);
+      const haveParamsChanged = !areParamsEqual(params, alignedParams, ['pluginData']);
 
       // digest these insights; redirect and block current route
       if (hasOutgoingParams && haveParamsChanged && isSamePath) {
