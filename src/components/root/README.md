@@ -6,29 +6,23 @@
 
 | Property          | Attribute      | Modifiers | Type                  | Default     | Description                                      |
 |-------------------|----------------|-----------|-----------------------|-------------|--------------------------------------------------|
-| `config`          |                |           |                       |             |                                                  |
 | `configUrl`       | `config-url`   |           | `string \| undefined` |             | Allows to set a url to load a config file from.  |
 | `inline`          | `inline`       |           | `boolean`             | false       | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |
-| `manifest`        |                |           |                       |             |                                                  |
 | `manifestUrl`     | `manifest-url` |           | `string`              |             | Defines the location of the custom element manifest file. |
 | `navigationItems` |                |           |                       | "new Map()" |                                                  |
 | `navigationRef`   |                | readonly  |                       |             |                                                  |
 
 ## Methods
 
-| Method                       | Type                                     |
-|------------------------------|------------------------------------------|
-| `emitManifestLoaded`         | `(): void`                               |
-| `handleSearchInput`          | `({ detail }: any): void`                |
-| `loadConfig`                 | `(configUrl?: string \| undefined): any` |
-| `loadCustomElementsManifest` | `(manifestUrl: string): any`             |
+| Method              | Type                      |
+|---------------------|---------------------------|
+| `handleSearchInput` | `({ detail }: any): void` |
 
 ## Events
 
 | Event                             | Description                                      |
 |-----------------------------------|--------------------------------------------------|
 | `wcp-root:active-element-changed` | Fired when the active element changes. Carries the declaration of the new active element with it. |
-| `wcp-root:manifest-loaded`        | Fired when the manifest is (re)loaded. This happens after the json is fetched and the containing elements are resolved. |
 
 ## Slots
 

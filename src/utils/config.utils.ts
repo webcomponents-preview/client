@@ -105,17 +105,19 @@ export function mergeConfigWithDefaults(config: Partial<Config>): Config {
 // mostly used internally
 export async function loadConfig(url = 'config.json'): Promise<Config> {
   const response = await fetch(url);
-  const config = await response.json();
-  return mergeConfigWithDefaults(config);
-}
-
-// convenience function to retrieve the config
-export async function getConfig(url?: string): Promise<Config> {
+  const config = mergeConfigWithDefaults(await response.json());
+  
   if (window.wcp === undefined) {
     window.wcp = {} as Window['wcp'];
   }
   if (window.wcp.config === undefined) {
-    window.wcp.config = await loadConfig(url);
+    window.wcp.config = config;
   }
+
+  return getConfig();
+}
+
+// convenience function to retrieve the config
+export function getConfig(): Config {
   return window.wcp.config;
 }

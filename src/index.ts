@@ -55,6 +55,7 @@ export * from './utils/compression.utils.js';
 export * from './utils/config.utils.js';
 export * from './utils/dom.utils.js';
 export * from './utils/form.utils.js';
+export * from './utils/manifest.utils.js';
 export * from './utils/markdown.utils.js';
 export * from './utils/mixin.types.js';
 export * from './utils/navigation.utils.js';
