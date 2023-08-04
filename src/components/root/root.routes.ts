@@ -4,37 +4,35 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 import { until } from 'lit/directives/until.js';
 
-import type { Config } from '@/utils/config.utils.js';
 import { prefixRelativeUrls } from '@/utils/markdown.utils.js';
-import type { Manifest } from '@/utils/parser.types.js';
 import { areParamsEqual, mergeParams, type Route, Router } from '@/utils/router.utils.js';
 
-export const prepareRoutes = (config: Config, manifest: Manifest): Route[] => [
+export const prepareRoutes = (): Route[] => [
   {
     path: '/',
     enter: () => {
       // redirect to initial element if defined
-      if (config.initialActiveElement !== undefined) {
-        Router.navigate(`/element/${config.initialActiveElement}`);
+      if (window.wcp.config.initialActiveElement !== undefined) {
+        Router.navigate(`/element/${window.wcp.config.initialActiveElement}`);
         return false;
       }
 
       // redirect to first readme if available
-      const firstReadme = config.additionalReadmes[0]?.url;
+      const firstReadme = window.wcp.config.additionalReadmes[0]?.url;
       if (firstReadme !== undefined) {
         Router.navigate(`/readme/${encodeURIComponent(firstReadme)}`);
         return false;
       }
 
       // redirect to first element
-      const firstElement = manifest.elements.values().next().value.getNiceUrl();
+      const firstElement = window.wcp.manifest.elements.values().next().value.getNiceUrl();
       Router.navigate(`/element/${firstElement}`);
       return false;
     },
   },
   {
     path: '/readme/:url/:hash?',
-    enter: () => (config.additionalReadmes.length ?? 0) > 0,
+    enter: () => (window.wcp.config.additionalReadmes.length ?? 0) > 0,
     render: ({ url = '', hash }) => {
       // the url is encoded to be able to use it as a param
       const encoded = decodeURIComponent(url);
@@ -71,7 +69,7 @@ export const prepareRoutes = (config: Config, manifest: Manifest): Route[] => [
       // everything okay here, just go on
       return true;
     },
-    render: ({ tagName = '', pluginName = config.initialPreviewTab, pluginData }) => {
+    render: ({ tagName = '', pluginName = window.wcp.config.initialPreviewTab, pluginData }) => {
       return html`
         <wcp-preview-frame
           active-plugin="${ifDefined(pluginName)}"
@@ -79,7 +77,7 @@ export const prepareRoutes = (config: Config, manifest: Manifest): Route[] => [
             Router.navigate('/element', tagName, pluginName)}"
         >
           ${map(
-            config.previewFramePlugins ?? [],
+            window.wcp.config.previewFramePlugins ?? [],
             (previewFramePlugin) => withStatic(html)`
             <${unsafeStatic(previewFramePlugin)}
               preview-tag-name="${tagName}"

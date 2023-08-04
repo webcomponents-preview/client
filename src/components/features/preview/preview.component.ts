@@ -6,7 +6,6 @@ import { ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
-import { type Config, getConfig } from '@/utils/config.utils.js';
 
 import styles from './preview.component.scss';
 
@@ -32,9 +31,6 @@ export class Preview extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
   @state()
-  config?: Config;
-
-  @state()
   private container?: HTMLElement;
 
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
@@ -43,7 +39,6 @@ export class Preview extends ColorSchemable(LitElement) {
   #handleRouteChange = () => this.requestUpdate();
 
   override async connectedCallback() {
-    this.config = await getConfig();
     super.connectedCallback();
 
     window.addEventListener('hashchange', this.#handleRouteChange, false);
@@ -74,7 +69,7 @@ export class Preview extends ColorSchemable(LitElement) {
         () => html`
           <nav>
             ${map(
-              this.config?.previewPlugins ?? [],
+              window.wcp.config.previewPlugins ?? [],
               (plugin, index) => html`
                 ${when(index > 0, () => html`<hr />`)} ${staticHtml`
                   <${unsafeStatic(plugin)}

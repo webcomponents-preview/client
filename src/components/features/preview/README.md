@@ -16,7 +16,6 @@ Previews given content.
 
 | Property         | Attribute          | Type                  |
 |------------------|--------------------|-----------------------|
-| `config`         |                    |                       |
 | `previewTagName` | `preview-tag-name` | `string \| undefined` |
 
 ## Slots

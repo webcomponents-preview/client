@@ -26,12 +26,6 @@ or the enhanced markdown renderer which instruments this element under the hood.
 </wcp-markdown-example>
 ```
 
-## Properties
-
-| Property |
-|----------|
-| `config` |
-
 ## Slots
 
 | Name      | Description              |

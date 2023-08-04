@@ -65,10 +65,7 @@ export type Config = {
 
 declare global {
   interface WCP {
-    // in-memory config cache, as we store the promise directly,
-    // we can allow concurrent requests to the config and just
-    // wait for the promise to resolve
-    config: Promise<Config>;
+    config: Config;
   }
 
   interface Window {
@@ -113,12 +110,12 @@ export async function loadConfig(url = 'config.json'): Promise<Config> {
 }
 
 // convenience function to retrieve the config
-export async function getConfig(url?: string) {
+export async function getConfig(url?: string): Promise<Config> {
   if (window.wcp === undefined) {
     window.wcp = {} as Window['wcp'];
   }
   if (window.wcp.config === undefined) {
-    window.wcp.config = loadConfig(url);
+    window.wcp.config = await loadConfig(url);
   }
   return window.wcp.config;
 }

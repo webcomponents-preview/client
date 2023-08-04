@@ -3,6 +3,7 @@ import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, query, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { type Config, getConfig } from '@/utils/config.utils.js';
@@ -112,8 +113,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
     await this.loadCustomElementsManifest(this.manifestUrl);
 
     // prepare and set routes
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const routes = prepareRoutes(this.config!, this.manifest!);
+    const routes = prepareRoutes();
     this.router.registerRoutes(routes);
 
     super.connectedCallback();
@@ -121,34 +121,39 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
 
   protected override render(): TemplateResult {
     return html`
-      <wcp-layout>
-        <wcp-title slot="header" title="${ifDefined(this.config?.labels.title)}">
-          <slot name="logo" slot="logo">
-            <img src="${logo}" height="20px" />
-          </slot>
-        </wcp-title>
+      ${when(
+        this.config !== undefined && this.manifest !== undefined,
+        () => html`
+          <wcp-layout>
+            <wcp-title slot="header" title="${ifDefined(this.config?.labels.title)}">
+              <slot name="logo" slot="logo">
+                <img src="${logo}" height="20px" />
+              </slot>
+            </wcp-title>
 
-        <wcp-navigation-search
-          slot="header"
-          @wcp-navigation-search:search="${this.handleSearchInput}"
-        ></wcp-navigation-search>
+            <wcp-navigation-search
+              slot="header"
+              @wcp-navigation-search:search="${this.handleSearchInput}"
+            ></wcp-navigation-search>
 
-        <wcp-root-navigation
-          slot="aside"
-          min-search-length="2"
-          current-path="${ifDefined(this.router.currentPath)}"
-          empty-message="${ifDefined(this.config?.labels.emptyNavigation)}"
-          .items="${this.navigationItems}"
-        ></wcp-root-navigation>
+            <wcp-root-navigation
+              slot="aside"
+              min-search-length="2"
+              current-path="${ifDefined(this.router.currentPath)}"
+              empty-message="${ifDefined(this.config?.labels.emptyNavigation)}"
+              .items="${this.navigationItems}"
+            ></wcp-root-navigation>
 
-        <wcp-preview-controls>
-          <wcp-toggle-sidebar></wcp-toggle-sidebar>
-          <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
-          <slot name="preview-controls"></slot>
-        </wcp-preview-controls>
+            <wcp-preview-controls>
+              <wcp-toggle-sidebar></wcp-toggle-sidebar>
+              <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
+              <slot name="preview-controls"></slot>
+            </wcp-preview-controls>
 
-        <slot name="preview-frame">${this.router.outlet()}</slot>
-      </wcp-layout>
+            <slot name="preview-frame">${this.router.outlet()}</slot>
+          </wcp-layout>
+        `
+      )}
     `;
   }
 }
