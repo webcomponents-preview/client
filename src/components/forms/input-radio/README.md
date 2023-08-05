@@ -31,7 +31,7 @@ A radio input element using the wcp style. Fully form aware.
 | Property       | Attribute      | Type      | Default | Description                     |
 |----------------|----------------|-----------|---------|---------------------------------|
 | `autocomplete` | `autocomplete` | `boolean` | false   |                                 |
-| `checked`      | `checked`      | `boolean` | false   |                                 |
+| `checked`      | `checked`      | `boolean` |         |                                 |
 | `disabled`     | `disabled`     | `boolean` | false   |                                 |
 | `label`        |                | `string`  |         | The label of the input element. |
 | `name`         | `name`         | `string`  | "radio" |                                 |

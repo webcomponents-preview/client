@@ -1,4 +1,10 @@
-import type * as Parsed from '@/utils/parser.types.js';
+// Preview Frame Plugins may emit a plugin data change event.
+declare global {
+  interface HTMLElementEventMap {
+    'wcp-stage-plugin:data-change': CustomEvent<string>;
+    'wcp-preview-plugin:data-change': CustomEvent<string>;
+  }
+}
 
 /**
  * Each plugin must implement this interface.
@@ -11,20 +17,21 @@ export type Plugin = Element & {
   readonly name: string;
   readonly label: string;
   readonly available: boolean;
+  readonly previewTagName: string;
 };
 
 /**
- * Type to be used with preview frame plugins.
+ * Type to be used with stage plugins.
  */
-export type PreviewFramePlugin = Plugin & {
-  element?: Parsed.Element;
+export type StagePlugin = Plugin & {
+  readonly data?: string;
 };
 
 /**
  * Type to be used with preview plugins.
  */
 export type PreviewPlugin = Plugin & {
-  container: HTMLElement;
+  readonly container: HTMLElement;
 };
 
 export function isPlugin(element: Element): element is Plugin {

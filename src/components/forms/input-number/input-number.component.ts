@@ -11,11 +11,11 @@ import styles from './input-number.component.scss';
  * A numeric input element using the wcp style. Fully form aware.
  *
  * @element wcp-input-number
- * 
+ *
  * @property {string} label - The label of the input element.
- * 
+ *
  * @slot hint - Receives optional descriptions below the input.
- * 
+ *
  * @cssprop --wcp-input-number-hint-size - The font size of the hint.
  * @cssprop --wcp-input-number-label-size - The font size of the label.
  * @cssprop --wcp-input-number-spacing - The inner spacing of the input element.
@@ -27,19 +27,19 @@ import styles from './input-number.component.scss';
  * @cssprop --wcp-input-number-light-background - The background color of the element in light mode.
  * @cssprop --wcp-input-number-light-border - The border color of the element in light mode.
  * @cssprop --wcp-input-number-light-color - The font color of the input element in light mode.
- * 
+ *
  * @example
  * ## With optional label
  * ```html
  * <wcp-input-number label="With optional label"></wcp-input-number>
  * ```
- * 
+ *
  * @example
  * ## With optional initial value
  * ```html
  * <wcp-input-number label="With optional initial value" value="23"></wcp-input-number>
  * ```
- * 
+ *
  * @example
  * ## Used within a form
  * ```html
@@ -57,7 +57,7 @@ export class InputNumber extends Editable()(LitElement) implements FormAssociate
   #initialValue?: number;
 
   @query('input')
-  private readonly input!: HTMLInputElement;
+  private readonly input?: HTMLInputElement;
 
   @property({ type: Boolean, reflect: true })
   autocomplete = false;
@@ -80,20 +80,14 @@ export class InputNumber extends Editable()(LitElement) implements FormAssociate
   protected override firstUpdated(props: PropertyValues<this>): void {
     super.firstUpdated(props);
     this.#initialValue = this.value;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.value ? `${this.value}` : null);
   }
 
   formResetCallback() {
     this.value = this.#initialValue;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.value ? `${this.value}` : null);
   }
 
   checkValidity(): boolean {
-    if (!this.input.checkValidity()) {
+    if (!this.input?.checkValidity()) {
       this.internals.setValidity({ customError: true }, 'Invalid input');
     } else {
       this.internals.setValidity({});
@@ -102,13 +96,18 @@ export class InputNumber extends Editable()(LitElement) implements FormAssociate
     return this.internals.validity.valid;
   }
 
+  override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    super.attributeChangedCallback(name, oldValue, newValue);
+
+    if (name !== 'value') return;
+    this.checkValidity();
+    this.internals.setFormValue(this.value ? `${this.value}` : null);
+  }
+
   @eventOptions({ passive: true })
   handleInput(event: Event) {
     const input = event.target as HTMLInputElement | HTMLTextAreaElement;
     this.value = input.value ? parseFloat(input.value) : undefined;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.value ? `${this.value}` : null);
   }
 
   override renderInput(id: string) {

@@ -3,11 +3,14 @@
 // prettier-ignore
 :host {
   ---wcp-navigation-search-spacing: var(--wcp-navigation-search-spacing, 0 #{utils.size(1) utils.size(1)});
+  ---wcp-navigation-search-dark-border-color: var(--wcp-navigation-search-dark-border-color, var(--wcp-color-grey-24));
+  ---wcp-navigation-search-light-border-color: var(--wcp-navigation-search-light-border-color, var(--wcp-color-blue-24));
   ---wcp-navigation-search-passive-dark-stroke: var(--wcp-navigation-search-passive-dark-stroke, var(--wcp-color-grey-24));
   ---wcp-navigation-search-passive-light-stroke: var(--wcp-navigation-search-passive-light-stroke, var(--wcp-color-blue-24));
 
   // derive themed colors
   @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-navigation-search-border-color: var(---wcp-navigation-search-#{$color-scheme}-border-color);
     ---wcp-navigation-search-passive-stroke: var(---wcp-navigation-search-passive-#{$color-scheme}-stroke);
   }
 }
@@ -31,6 +34,8 @@
 :host {
   display: block;
   padding: var(---wcp-navigation-search-spacing);
+  line-height: 1;
+  border-bottom: 1px solid var(---wcp-navigation-search-border-color);
 }
 
 wcp-icon[name='search'] {
@@ -41,7 +46,7 @@ wcp-icon[name='search'] {
 }
 
 wcp-button {
-  margin: utils.size(.3) utils.size(.3) 0 0;
+  margin: utils.size(.1) utils.size(.3) 0 0;
 
   &::part(button) {
     color: var(---wcp-navigation-search-stroke);

@@ -49,6 +49,15 @@ import styles from './button.component.scss';
  * ```html
  * <wcp-button href=".">Link</wcp-button>
  * ```
+ * 
+ * @example
+ * ## Displaced to the right
+ *
+ * ```html
+ * <wcp-button style="position:relative;left:calc(100% - 40px);transform:translateX(-100%)">
+ *   Try to find me!
+ * </wcp-button>
+ * ```
  *
  * @example
  * ## Use as native submit button in form

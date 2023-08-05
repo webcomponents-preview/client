@@ -64,7 +64,7 @@ export class InputText extends Editable()(LitElement) implements FormAssociated<
   #initialValue?: string;
 
   @query('input, textarea')
-  private readonly input!: HTMLInputElement | HTMLTextAreaElement;
+  private readonly input?: HTMLInputElement | HTMLTextAreaElement;
 
   @property({ type: Boolean, reflect: true })
   multiline = false;
@@ -97,20 +97,14 @@ export class InputText extends Editable()(LitElement) implements FormAssociated<
   protected override firstUpdated(props: PropertyValues<this>): void {
     super.firstUpdated(props);
     this.#initialValue = this.value;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.value ?? null);
   }
 
   formResetCallback() {
     this.value = this.#initialValue;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.value ?? null);
   }
 
   checkValidity(): boolean {
-    if (!this.input.checkValidity()) {
+    if (!this.input?.checkValidity()) {
       this.internals.setValidity({ customError: true }, 'Invalid input');
     } else {
       this.internals.setValidity({});
@@ -119,13 +113,18 @@ export class InputText extends Editable()(LitElement) implements FormAssociated<
     return this.internals.validity.valid;
   }
 
+  override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    super.attributeChangedCallback(name, oldValue, newValue);
+
+    if (name !== 'value') return;
+    this.checkValidity();
+    this.internals.setFormValue(this.value ?? null);
+  }
+
   @eventOptions({ passive: true })
   handleInput(event: Event) {
     const input = event.target as HTMLInputElement | HTMLTextAreaElement;
     this.value = input.value ?? undefined;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.value ?? null);
   }
 
   override renderInput(id: string) {

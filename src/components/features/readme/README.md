@@ -16,6 +16,7 @@ Displays a Readme file by its URL.
 |-------------------|--------------------|-----------|-----------------------|---------|
 | `hash`            | `hash`             | readonly  | `string \| undefined` |         |
 | `markdown`        | `markdown`         | readonly  | `""`                  | ""      |
+| `previewTagName`  | `preview-tag-name` | readonly  | `string \| undefined` |         |
 | `showCodePreview` | `add-code-preview` | readonly  | `false`               | false   |
 
 ## Methods

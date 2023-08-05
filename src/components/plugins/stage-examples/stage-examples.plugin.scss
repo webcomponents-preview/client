@@ -1,0 +1,14 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-stage-examples-spacing: var(--wcp-stage-examples-spacing, #{utils.size(3)});
+}
+
+section ~ section {
+  margin-top: var(---wcp-stage-examples-spacing);
+}
+
+wcp-markdown-example {
+  max-width: var(--wcp-layout-fixed-width);
+}

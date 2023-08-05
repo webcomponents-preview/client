@@ -64,13 +64,12 @@ export type Config = {
 };
 
 declare global {
+  interface WCP {
+    config: Config;
+  }
+
   interface Window {
-    wcp: {
-      // in-memory config cache, as we store the promise directly,
-      // we can allow concurrent requests to the config and just
-      // wait for the promise to resolve
-      config: Promise<Config>;
-    };
+    wcp: WCP;
   }
 }
 
@@ -80,8 +79,8 @@ export const defaultConfig = {
   initialActiveElement: undefined,
   initialCodePreviewTab: 'preview',
   initialPreviewTab: 'viewer',
-  previewPlugins: ['wcp-preview-viewport'],
-  previewFramePlugins: ['wcp-preview-frame-examples', 'wcp-preview-frame-readme', 'wcp-preview-frame-viewer'],
+  previewPlugins: ['wcp-preview-simulate-viewports', 'wcp-preview-editor-link'],
+  previewFramePlugins: ['wcp-stage-examples', 'wcp-stage-readme', 'wcp-stage-editor'],
   additionalReadmes: [],
   labels: {
     title: 'Web Component Preview',
@@ -106,17 +105,19 @@ export function mergeConfigWithDefaults(config: Partial<Config>): Config {
 // mostly used internally
 export async function loadConfig(url = 'config.json'): Promise<Config> {
   const response = await fetch(url);
-  const config = await response.json();
-  return mergeConfigWithDefaults(config);
-}
-
-// convenience function to retrieve the config
-export async function getConfig(url?: string) {
+  const config = mergeConfigWithDefaults(await response.json());
+  
   if (window.wcp === undefined) {
     window.wcp = {} as Window['wcp'];
   }
   if (window.wcp.config === undefined) {
-    window.wcp.config = loadConfig(url);
+    window.wcp.config = config;
   }
+
+  return getConfig();
+}
+
+// convenience function to retrieve the config
+export function getConfig(): Config {
   return window.wcp.config;
 }

@@ -140,9 +140,6 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
     super.firstUpdated(props);
     this.#initialValue = this.value;
 
-    this.checkValidity();
-    this.internals.setFormValue(this.value ?? null);
-
     this.initializeEditor();
     this.updateEditorTheme();
     this.updateEditorAutoSize();
@@ -153,12 +150,11 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
     this.#editor = monaco.editor.create(this.editor, {
       value: this.value,
       language: this.language,
-      scrollBeyondLastLine: false,
       automaticLayout: true,
       wordWrap: 'on',
       wrappingStrategy: 'advanced',
       minimap: { enabled: false },
-      overviewRulerLanes: 0,
+      overviewRulerBorder: false,
     });
 
     // bind change listener and sync updated value
@@ -180,6 +176,16 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
 
   protected updateEditorAutoSize() {
     if (this.autosize) {
+      // configure scroll handling
+      this.#editor?.updateOptions({
+        overviewRulerLanes: 0,
+        scrollBeyondLastLine: false,
+        scrollbar: {
+          handleMouseWheel: false,
+          vertical: 'hidden',
+        },
+      });
+
       // set height initially
       const contentHeight = this.#editor?.getContentHeight() ?? 18;
       this.style.setProperty('---wcp-input-code-height', `${contentHeight + 10}px`);
@@ -190,6 +196,16 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
         this.style.setProperty('---wcp-input-code-height', `${contentHeight + 10}px`);
       });
     } else {
+      // configure scroll handling
+      this.#editor?.updateOptions({
+        overviewRulerLanes: undefined,
+        scrollBeyondLastLine: undefined,
+        scrollbar: {
+          handleMouseWheel: true,
+          vertical: 'auto',
+        },
+      });
+
       // remove height property
       this.style.removeProperty('---wcp-input-code-height');
 
@@ -217,11 +233,16 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
     super.disconnectedCallback();
   }
 
-  formResetCallback() {
-    this.value = this.#initialValue;
+  override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    super.attributeChangedCallback(name, oldValue, newValue);
 
+    if (name !== 'value') return;
     this.checkValidity();
     this.internals.setFormValue(this.value ?? null);
+  }
+
+  formResetCallback() {
+    this.value = this.#initialValue;
   }
 
   checkValidity(): boolean {
@@ -249,6 +270,9 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
     if (changedProperties.has('autosize')) {
       this.updateEditorAutoSize();
     }
+    if (changedProperties.has('value') && this.value !== model?.getValue()) {
+      this.#editor?.setValue(this.value ?? '');
+    }
   }
 
   @eventOptions({ passive: true })
@@ -260,9 +284,6 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
   handleInput(event: Event) {
     const input = event.target as HTMLInputElement | HTMLTextAreaElement;
     this.value = input.value === '' ? undefined : input.value;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.value ?? null);
   }
 
   override renderInput(id: string) {

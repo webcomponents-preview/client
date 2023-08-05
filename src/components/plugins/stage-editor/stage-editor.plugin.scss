@@ -1,0 +1,18 @@
+@use '@/styles/utils' as utils;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: utils.size(2);
+  padding-top: utils.size(2);
+}
+
+wcp-stage-editor {
+  &-stage {
+    flex: 1 1 auto;
+  }
+
+  &-controls {
+    flex: 0 0 auto;
+  }
+}

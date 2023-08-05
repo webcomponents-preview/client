@@ -1,10 +1,10 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 
-import { type Config, getConfig } from '@/utils/config.utils.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
+import { getConfig } from '@/utils/config.utils.js';
 
 import styles from './markdown-example.component.scss';
 
@@ -48,17 +48,11 @@ const MARKDOWN_EXAMPLE_TABS = { preview: { label: 'Preview' }, code: { label: 'C
 export class MarkdownExample extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
-  @state()
-  config?: Config;
-
-  override async connectedCallback() {
-    this.config = await getConfig();
-    super.connectedCallback();
-  }
+  readonly #config = getConfig();
 
   protected override render(): TemplateResult {
     return html`
-      <wcp-tabs .tabs="${MARKDOWN_EXAMPLE_TABS}" active-tab="${ifDefined(this.config?.initialCodePreviewTab)}">
+      <wcp-tabs .tabs="${MARKDOWN_EXAMPLE_TABS}" active-tab="${ifDefined(this.#config.initialCodePreviewTab)}">
         ${map(Object.keys(MARKDOWN_EXAMPLE_TABS), (tab) => html`<slot name="${tab}" slot="${tab}"></slot>`)}
       </wcp-tabs>
     `;

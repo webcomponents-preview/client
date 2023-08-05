@@ -59,8 +59,9 @@ export class InputRadio
   implements FormAssociated<string>
 {
   static override readonly styles = [super.formStyles, unsafeCSS(styles)];
-
-  private initialChecked!: boolean;
+  
+  #checked = false;
+  #initialChecked!: boolean;
 
   @property({ type: String, reflect: true })
   name = 'radio';
@@ -71,8 +72,17 @@ export class InputRadio
   @property({ type: Boolean, reflect: true })
   disabled = false;
 
-  @property({ type: Boolean, reflect: true })
-  checked = false;
+  @property({ type: Boolean, reflect: true, noAccessor: true })
+  set checked(checked: boolean) {
+    this.#checked = checked;
+    this.checkValidity();
+
+    this.internals.ariaChecked = String(this.checked);
+    this.internals.setFormValue(this.#checked ? this.value ?? null : null);
+  }
+  get checked(): boolean {
+    return this.#checked;
+  }
 
   @property({ type: Boolean, reflect: true })
   required = false;
@@ -82,29 +92,16 @@ export class InputRadio
 
   protected override firstUpdated(props: PropertyValues<this>): void {
     super.firstUpdated(props);
-    this.initialChecked = this.checked;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.checked ? this.value ?? null : null);
-  }
-
-  override attributeChangedCallback(name: string, old: string | null, value: string | null): void {
-    super.attributeChangedCallback(name, old, value);
-    if (name === 'checked') {
-      this.checked = value !== null;
-      this.internals.setFormValue(this.checked ? this.value ?? null : null);
-    }
+    this.internals.role = 'radio';
+    this.#initialChecked = this.#checked;
   }
 
   formResetCallback() {
-    this.checked = this.initialChecked;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.checked ? this.value ?? null : null);
+    this.checked = this.#initialChecked;
   }
 
   checkValidity(): boolean {
-    if (this.required && !this.checked) {
+    if (this.required && !this.#checked) {
       this.internals.setValidity({ valueMissing: true }, 'Invalid input');
     } else {
       this.internals.setValidity({});
@@ -117,9 +114,6 @@ export class InputRadio
   handleInput(event: Event) {
     const input = event.target as HTMLInputElement;
     this.checked = input.checked;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.checked ? this.value ?? null : null);
   }
 
   override renderInput(id: string) {
@@ -131,7 +125,7 @@ export class InputRadio
         autocomplete="${this.autocomplete ? 'on' : 'off'}"
         ?disabled="${this.disabled}"
         ?required="${this.required}"
-        .checked="${this.checked}"
+        ?checked="${this.#checked}"
         .value="${this.value}"
         @input="${this.handleInput}"
       />

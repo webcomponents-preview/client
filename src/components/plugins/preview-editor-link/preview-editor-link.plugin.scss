@@ -1,0 +1,8 @@
+@use '@/styles/utils' as utils;
+
+:host {
+  display: flex;
+  align-items: center;
+
+  min-height: utils.size(4.2);
+}

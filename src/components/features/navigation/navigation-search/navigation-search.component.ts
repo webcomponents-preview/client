@@ -13,6 +13,9 @@ import styles from './navigation-search.component.scss';
  *
  * @cssprop --wcp-navigation-search-spacing - The spacing around the search input.
  * 
+ * @cssprop --wcp-navigation-search-dark-border-color - The border color of the search input in dark mode.
+ * @cssprop --wcp-navigation-search-light-border-color - The border color of the search input in light mode.
+ * 
  * @cssprop --wcp-navigation-search-passive-dark-stroke - The stroke color of the search input in dark mode when not focused.
  * @cssprop --wcp-navigation-search-passive-light-stroke - The stroke color of the search input in light mode when not focused.
  * 
@@ -26,13 +29,13 @@ export class NavigationSearch extends ColorSchemable(LitElement) {
   @property({ type: String, reflect: true })
   term = '';
 
-  @eventOptions({ capture: false, passive: true })
+  @eventOptions({ passive: true })
   protected handleSearchInput(event: InputEvent) {
     const { value } = event.target as HTMLInputElement;
     this.#updateSearchTerm(value);
   }
 
-  @eventOptions({ capture: false, passive: true })
+  @eventOptions({ passive: true })
   protected handleResetClick() {
     this.#updateSearchTerm('');
   }

@@ -1,0 +1,115 @@
+@use '@/styles/utils' as utils;
+
+// prettier-ignore
+:host {
+  ---wcp-preview-editor-link-hint-button-passive-background: var(--wcp-preview-editor-link-hint-button-passive-background, #d22f2f);
+  ---wcp-preview-editor-link-hint-button-active-background: var(--wcp-preview-editor-link-hint-button-active-background, #dd4f4f);
+  ---wcp-preview-editor-link-hint-button-passive-size: var(--wcp-preview-editor-link-hint-button-passive-size, 10px);
+  ---wcp-preview-editor-link-hint-button-active-size: var(--wcp-preview-editor-link-hint-button-active-size, 20px);
+
+  ---wcp-preview-editor-link-hint-debug-border-width: var(--wcp-preview-editor-link-hint-debug-border-width, 1px);
+  ---wcp-preview-editor-link-hint-debug-background-opacity: var(--wcp-preview-editor-link-hint-debug-background-opacity, 0.7);
+  
+  ---wcp-preview-editor-link-hint-debug-stripe-distance: var(--wcp-preview-editor-link-hint-debug-stripe-distance, 10px);
+  ---wcp-preview-editor-link-hint-debug-stripe-tilt: var(--wcp-preview-editor-link-hint-debug-stripe-tilt, 45deg);
+  ---wcp-preview-editor-link-hint-debug-stripe-width: var(--wcp-preview-editor-link-hint-debug-stripe-width, 1px);
+  ---wcp-preview-editor-link-hint-debug-stripe-dash-size: var(--wcp-preview-editor-link-hint-debug-stripe-dash-size, 5px);
+  ---wcp-preview-editor-link-hint-debug-stripe-dash-gap: var(--wcp-preview-editor-link-hint-debug-stripe-dash-gap, 3px);
+
+  ---wcp-preview-editor-link-hint-debug-dark-background: var(--wcp-preview-editor-link-hint-debug-dark-background, #8575ee);
+  ---wcp-preview-editor-link-hint-debug-dark-stroke: var(--wcp-preview-editor-link-hint-debug-dark-stroke, #5e23aa);
+  
+  ---wcp-preview-editor-link-hint-debug-light-background: var(--wcp-preview-editor-link-hint-debug-light-background, #8575ee);
+  ---wcp-preview-editor-link-hint-debug-light-stroke: var(--wcp-preview-editor-link-hint-debug-light-stroke, #5e23aa);
+}
+
+:host {
+  // prettier-ignore
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-preview-editor-link-hint-debug-background: var(---wcp-preview-editor-link-hint-debug-#{$color-scheme}-background);
+    ---wcp-preview-editor-link-hint-debug-stroke: var(---wcp-preview-editor-link-hint-debug-#{$color-scheme}-stroke);
+  }
+
+  ---wcp-preview-editor-link-hint-button-background: var(---wcp-preview-editor-link-hint-button-passive-background);
+  ---wcp-preview-editor-link-hint-button-size: var(---wcp-preview-editor-link-hint-button-passive-size);
+
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+:host(:hover) {
+  ---wcp-preview-editor-link-hint-button-background: var(---wcp-preview-editor-link-hint-button-active-background);
+  ---wcp-preview-editor-link-hint-button-size: var(---wcp-preview-editor-link-hint-button-active-size);
+}
+
+button {
+  all: unset;
+
+  position: absolute;
+  inset: 0 0 auto auto;
+  transform: translate(50%, -50%);
+  z-index: 3;
+
+  display: block;
+  height: var(---wcp-preview-editor-link-hint-button-size);
+  width: var(---wcp-preview-editor-link-hint-button-size);
+
+  background-clip: content-box;
+  background-color: var(---wcp-preview-editor-link-hint-button-background);
+  border: calc(
+      var(---wcp-preview-editor-link-hint-button-active-size) - var(---wcp-preview-editor-link-hint-button-passive-size)
+    )
+    solid transparent;
+  border-radius: 50%;
+
+  transition: var(--wcp-fx-default-duration) ease-out;
+  transition-property: background-color, border-width, height, width;
+  will-change: background-color, border-width, height, width;
+
+  // compensate the border when positioning relative to the parent
+  :host([debug]) & {
+    top: calc(var(---wcp-preview-editor-link-hint-debug-border-width) * -1);
+    right: calc(var(---wcp-preview-editor-link-hint-debug-border-width) * -1);
+  }
+}
+
+:host([debug]) {
+  border: var(---wcp-preview-editor-link-hint-debug-border-width) dashed
+    var(---wcp-preview-editor-link-hint-debug-stroke);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  &::before {
+    z-index: 0;
+    background-color: var(---wcp-preview-editor-link-hint-debug-background);
+    opacity: var(---wcp-preview-editor-link-hint-debug-background-opacity);
+    mix-blend-mode: multiply;
+  }
+
+  &::after {
+    z-index: 1;
+    // prettier-ignore
+    background: repeating-linear-gradient(
+      var(---wcp-preview-editor-link-hint-debug-stripe-tilt),
+      transparent,
+      transparent var(---wcp-preview-editor-link-hint-debug-stripe-distance),
+      var(---wcp-preview-editor-link-hint-debug-stroke) var(---wcp-preview-editor-link-hint-debug-stripe-distance),
+      var(---wcp-preview-editor-link-hint-debug-stroke) calc(var(---wcp-preview-editor-link-hint-debug-stripe-distance) + var(---wcp-preview-editor-link-hint-debug-stripe-width))
+    );
+    // prettier-ignore
+    mask-image: repeating-linear-gradient(
+      calc(var(---wcp-preview-editor-link-hint-debug-stripe-tilt) + 90deg),
+      transparent,
+      transparent var(---wcp-preview-editor-link-hint-debug-stripe-dash-gap),
+      black var(---wcp-preview-editor-link-hint-debug-stripe-dash-gap),
+      black calc(var(---wcp-preview-editor-link-hint-debug-stripe-dash-gap) + var(---wcp-preview-editor-link-hint-debug-stripe-dash-size))
+    );
+  }
+}

@@ -105,16 +105,10 @@ export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) i
   protected override firstUpdated(props: PropertyValues<this>): void {
     super.firstUpdated(props);
     this.#initialValue = this.value;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.value ? `${this.value}` : null);
   }
 
   formResetCallback() {
     this.value = this.#initialValue;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.value ? `${this.value}` : null);
   }
 
   checkValidity(): boolean {
@@ -125,6 +119,14 @@ export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) i
     }
 
     return this.internals.validity.valid;
+  }
+
+  override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    super.attributeChangedCallback(name, oldValue, newValue);
+
+    if (name !== 'value') return;
+    this.checkValidity();
+    this.internals.setFormValue(this.value ?? null);
   }
 
   @eventOptions({ passive: true })
@@ -153,9 +155,6 @@ export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) i
   handleInput(event: Event) {
     const input = event.target as HTMLInputElement | HTMLTextAreaElement;
     this.value = input.value ?? undefined;
-
-    this.checkValidity();
-    this.internals.setFormValue(this.value ? `${this.value}` : null);
   }
 
   override renderInput(id: string) {

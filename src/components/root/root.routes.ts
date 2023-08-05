@@ -4,37 +4,36 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 import { until } from 'lit/directives/until.js';
 
-import type { Config } from '@/utils/config.utils.js';
+import { getManifest } from '@/utils/manifest.utils.js';
 import { prefixRelativeUrls } from '@/utils/markdown.utils.js';
-import type { Manifest } from '@/utils/parser.types.js';
-import { areParamsEqual, mergeParams, type Route, type Router } from '@/utils/router.utils.js';
+import { areParamsEqual, mergeParams, type Route, Router } from '@/utils/router.utils.js';
 
-export const prepareRoutes = (router: Router, config: Config, manifest: Manifest): Route[] => [
+export const prepareRoutes = (): Route[] => [
   {
     path: '/',
     enter: () => {
       // redirect to initial element if defined
-      if (config.initialActiveElement !== undefined) {
-        router.redirect(`/element/${config.initialActiveElement}`);
+      if (window.wcp.config.initialActiveElement !== undefined) {
+        Router.navigate(`/element/${window.wcp.config.initialActiveElement}`);
         return false;
       }
 
       // redirect to first readme if available
-      const firstReadme = config.additionalReadmes[0]?.url;
+      const firstReadme = window.wcp.config.additionalReadmes[0]?.url;
       if (firstReadme !== undefined) {
-        router.redirect(`/readme/${encodeURIComponent(firstReadme)}`);
+        Router.navigate(`/readme/${encodeURIComponent(firstReadme)}`);
         return false;
       }
 
       // redirect to first element
-      const firstElement = manifest.elements.values().next().value.getNiceUrl();
-      router.redirect(`/element/${firstElement}`);
+      const firstElement = getManifest().elements.values().next().value.getNiceUrl();
+      Router.navigate(`/element/${firstElement}`);
       return false;
     },
   },
   {
     path: '/readme/:url/:hash?',
-    enter: () => (config.additionalReadmes.length ?? 0) > 0,
+    enter: () => (window.wcp.config.additionalReadmes.length ?? 0) > 0,
     render: ({ url = '', hash }) => {
       // the url is encoded to be able to use it as a param
       const encoded = decodeURIComponent(url);
@@ -50,39 +49,46 @@ export const prepareRoutes = (router: Router, config: Config, manifest: Manifest
     },
   },
   {
-    path: '/element/:tagName/:plugin?',
+    path: '/element/:tagName/:pluginName?/:pluginData?',
     // fill in existing params if not provided for next route
     enter: (params, router, outgoingParams) => {
-      // check if the params can be taken over (current route is
-      // the same path with different params)
+      // check if the params can be taken over (current route is the same
+      // path with different params), but exclude pluginData, as they're
+      // specific to the current element and should not be taken over
       const hasOutgoingParams = outgoingParams !== undefined;
       const isSamePath = router.currentPath?.startsWith('/element/');
-      const alignedParams = mergeParams(outgoingParams ?? {}, params);
-      const haveParamsChanged = !areParamsEqual(params, alignedParams);
+      const alignedParams = mergeParams(outgoingParams ?? {}, params, ['pluginData']);
+      const haveParamsChanged = !areParamsEqual(params, alignedParams, ['pluginData']);
 
       // digest these insights; redirect and block current route
       if (hasOutgoingParams && haveParamsChanged && isSamePath) {
-        router.redirect(`/element/${alignedParams.tagName}/${alignedParams.plugin}`);
+        const { tagName, pluginName, pluginData } = alignedParams;
+        Router.navigate('/element', tagName, pluginName, pluginData);
         return false;
       }
 
       // everything okay here, just go on
       return true;
     },
-    render: ({ tagName = '', plugin = config.initialPreviewTab }) => {
+    render: ({ tagName = '', pluginName = window.wcp.config.initialPreviewTab, pluginData }) => {
       return html`
-        <wcp-preview-frame
-          active-plugin="${ifDefined(plugin)}"
-          @wcp-preview-frame:active-plugin-change="${({ detail: plugin }: CustomEvent<string>) =>
-            router.redirect(`/element/${tagName}/${plugin}`)}"
+        <wcp-stage
+          active-plugin="${ifDefined(pluginName)}"
+          @wcp-stage:active-plugin-change="${({ detail: pluginName }: CustomEvent<string>) =>
+            Router.navigate('/element', tagName, pluginName)}"
         >
           ${map(
-            config.previewFramePlugins ?? [],
-            (plugin) => withStatic(html)`
-            <${unsafeStatic(plugin)} .element="${manifest.elements.get(tagName)}"></${unsafeStatic(plugin)}>
+            window.wcp.config.previewFramePlugins ?? [],
+            (previewFramePlugin) => withStatic(html)`
+            <${unsafeStatic(previewFramePlugin)}
+              preview-tag-name="${tagName}"
+              .data="${ifDefined(pluginData)}"
+              @wcp-stage-plugin:data-change="${({ detail: pluginData }: CustomEvent<string>) =>
+                Router.navigate('/element', tagName, pluginName, pluginData)}"
+            ></${unsafeStatic(previewFramePlugin)}>
           `
           )}
-        </wcp-preview-frame>
+        </wcp-stage>
       `;
     },
   },

@@ -1,5 +1,4 @@
 import type { LitElement, TemplateResult } from 'lit';
-import { guard } from 'lit/directives/guard.js';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Property 'UrlPattern' does not exist
@@ -32,16 +31,19 @@ export type ParsedUrl = {
 /**
  * Helps comparing param objects for equality
  */
-export function areParamsEqual(a: Params, b: Params): boolean {
-  return Object.entries(a).every(([key, value]) => b[key] === value);
+export function areParamsEqual(a: Params, b: Params, exclude: string[] = []): boolean {
+  return Object.entries(a)
+    .filter(([key]) => !exclude.includes(key))
+    .every(([key, value]) => b[key] === value);
 }
 
 /**
  * Merges two given sets of params.
  */
-export function mergeParams(oldParams: Params, newParams: Params): Params {
+export function mergeParams(oldParams: Params, newParams: Params, exclude: string[] = []): Params {
   return Object.entries(newParams).reduce(
     (params, [key, value]) => {
+      if (exclude.includes(key)) delete params[key];
       if (value !== undefined) params[key] = value;
       return params;
     },
@@ -61,6 +63,15 @@ export class Router {
     const isSamePath = currentPath === path;
     const isNestedPath = currentPath?.startsWith(`${path}/`) ?? false;
     return isSamePath || (!exact && isNestedPath);
+  }
+
+  /**
+   * Redirect to a given path. This will trigger a hash change event.
+   */
+  static navigate(...slugs: (string | undefined)[]) {
+    const path = slugs.filter(Boolean).join('/');
+    console.log(`Navigate to ${path}`);
+    location.hash = path;
   }
 
   get currentPath(): string | undefined {
@@ -83,10 +94,11 @@ export class Router {
 
   /**
    * Redirect to a given path. This will trigger a hash change event.
+   * @alias Router.navigate
+   * @todo check whether this should be removed in favor of the static method
    */
-  redirect(path: string) {
-    console.log(`Redirecting to ${path}`);
-    location.hash = path;
+  redirect(...slugs: (string | undefined)[]) {
+    Router.navigate(...slugs);
   }
 
   /**
@@ -175,8 +187,6 @@ export class Router {
   }
 
   outlet(): TemplateResult {
-    return guard([this.#currentPath, this.#currentRoute, this.#currentParams], () =>
-      this.#currentRoute?.render?.(this.#currentParams, this)
-    ) as TemplateResult;
+    return this.#currentRoute?.render?.(this.#currentParams, this) as TemplateResult;
   }
 }
