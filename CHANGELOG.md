@@ -1,5 +1,56 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+# [0.3.0](https://github.com/webcomponents-preview/client/compare/0.2.0...0.3.0) (2023-08-05)
+
+
+### Bug Fixes
+
+* align buggy form data ([5addf24](https://github.com/webcomponents-preview/client/commit/5addf24984ff8e4157c0bc0accb6c83334e14763))
+* align form input value handling ([cda5dff](https://github.com/webcomponents-preview/client/commit/cda5dffd01faafe4ad544437493baccd1063b673))
+* align routing to recognize plugin data properly ([a126ab9](https://github.com/webcomponents-preview/client/commit/a126ab9c980288b103223c181daf519573f8fec1))
+* navigation headline border ([422e14f](https://github.com/webcomponents-preview/client/commit/422e14f612a3b40863c967b01790390615eeaffd))
+* **PreviewPlugin:** align type to be readonly ([61731dc](https://github.com/webcomponents-preview/client/commit/61731dc50a4bfbb8ec1810f328189913ef4eeee9))
+* **wcp-button:** proper aspect ration notation ([9629780](https://github.com/webcomponents-preview/client/commit/962978028a1dcfee18852d61e0e10e155d265336))
+* **wcp-input-code:** handle value changes ([7fb1f95](https://github.com/webcomponents-preview/client/commit/7fb1f955c66e98ad66569508a773145747e2798b))
+* **wcp-preview-frame-viewer-controls:** access state properly ([ceca006](https://github.com/webcomponents-preview/client/commit/ceca006379ff02d148dd97b3ffcdedb88009a5e1))
+* **wcp-preview-hint:** set size for Safari ([466a58c](https://github.com/webcomponents-preview/client/commit/466a58cb17407baa0a53f49dac0c1cffb3217c76))
+* **wcp-preview-viewer-link-hint:** check for stage changes ([7dd84ed](https://github.com/webcomponents-preview/client/commit/7dd84ed077e00ea476606ab2310d11844561cb90))
+* **wcp-preview-viewer-link-hint:** switched axis ([500e17b](https://github.com/webcomponents-preview/client/commit/500e17b0adcd4980e56f9a22df082e3363c486a7))
+* **wcp-preview-viewer-link:** detach hints as well ([fbf5f99](https://github.com/webcomponents-preview/client/commit/fbf5f99d3ab44961a8aac1cb42e73749ceaaae04))
+* **wcp-preview-viewer-link:** isolate hints stacking context ([b7da3c0](https://github.com/webcomponents-preview/client/commit/b7da3c0b55f7d927ac3f187ed54ed6dc35df3efa))
+* **wcp-preview:** orchestrate viewport preview ([2c07954](https://github.com/webcomponents-preview/client/commit/2c079541c24a2d2de5bd9e144feee580544016c3))
+* **wcp-stage-editor:** properly handle state ([9eb8579](https://github.com/webcomponents-preview/client/commit/9eb85798b96a827368a017d14dd96055009168d6))
+
+
+### Features
+
+* add utils for (de)compressing strings ([40d57d4](https://github.com/webcomponents-preview/client/commit/40d57d4a4440b2dd96925dd0b56869137c32004b))
+* improve router ([ff8f264](https://github.com/webcomponents-preview/client/commit/ff8f26459d1a6f0217e4f7bac97cd5b7716f91da))
+* prepare plugin routes for additional string data param ([0e128c3](https://github.com/webcomponents-preview/client/commit/0e128c3bb498d20fbd9240327e3a8698ab915ca5))
+* **wcp-input-code:** prevent scroll handling if auto sized ([2c9a3a9](https://github.com/webcomponents-preview/client/commit/2c9a3a94f3bc8e443e7c350f7bbbaebaebf47912))
+* **wcp-preview-frame-viewer-controls:** use auto sizing slot editors ([6db75c1](https://github.com/webcomponents-preview/client/commit/6db75c1c1e69e7353df90e165dd78fdba224c37d))
+* **wcp-preview-frame-viewer:** persist state in url ([f0d8657](https://github.com/webcomponents-preview/client/commit/f0d8657d1a61c1fd1e781ef489a7fe49260ed940))
+* **wcp-preview-hint:** introduce hint marker ([6e1ea4d](https://github.com/webcomponents-preview/client/commit/6e1ea4de0913063235a52c124c46d9e6d7251cc1))
+* **wcp-preview-hint:** position marker relative to offset parent ([5293145](https://github.com/webcomponents-preview/client/commit/52931459871189c6d1ba3fc513ae69c6dd1962f2))
+* **wcp-preview-hint:** react to element size changes ([99ba27d](https://github.com/webcomponents-preview/client/commit/99ba27d742ee6f9d96e89fe37220d17fd27723d7))
+* **wcp-preview-viewer-link-hint:** always show debug overlay ([995f999](https://github.com/webcomponents-preview/client/commit/995f999b2d230ae760152c53534757b24caffafa))
+* **wcp-preview-viewer-link:** handle slots as well ([6c7196f](https://github.com/webcomponents-preview/client/commit/6c7196fcee58145a3c7ca4ed3a4ea382d69bc331))
+* **wcp-preview-viewer-link:** toggle plugin availability ([1682662](https://github.com/webcomponents-preview/client/commit/16826620047ecae44d3b249910ff374ec1fe54c7))
+* **wcp-preview-viewer-link:** use toggle icon button ([fab87ef](https://github.com/webcomponents-preview/client/commit/fab87ef8454ffbf6840a021264292cccc6e25ea1))
+* **wcp-preview:** hand in tag name of previewed element ([62740e2](https://github.com/webcomponents-preview/client/commit/62740e239ae243a46a73f3ab8c01a5bdddf9bb02))
+* **wcp-preview:** hide unavailable plugins ([ad1d495](https://github.com/webcomponents-preview/client/commit/ad1d49580bbb709828715e1b50856e49ff0738df))
+* **wcp-preview:** show in viewer as well ([f5ffd9d](https://github.com/webcomponents-preview/client/commit/f5ffd9d4772fd66e0cfb6c82e0735123b076ac4c))
+
+
+### Performance Improvements
+
+* use only relevant workers ([3606b83](https://github.com/webcomponents-preview/client/commit/3606b837a56a4ba3bd0fc4aa68a72ca50a5c8a08))
+
+
+### Reverts
+
+* do not optimize at the wrong place ([ada981b](https://github.com/webcomponents-preview/client/commit/ada981b3d8b9be2e737a868c68a7838fa56214ab))
+
 # [0.2.0](https://github.com/webcomponents-preview/client/compare/0.1.0...0.2.0) (2023-06-22)
 
 
