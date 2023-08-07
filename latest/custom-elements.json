@@ -1401,6 +1401,14 @@
               "name": "--wcp-input-code-spacing"
             },
             {
+              "description": "The border radius of the input element.",
+              "name": "--wcp-input-code-border-radius"
+            },
+            {
+              "description": "The border size of the input element.",
+              "name": "--wcp-input-code-border-size"
+            },
+            {
               "description": "The background color of the element in dark mode.",
               "name": "--wcp-input-code-dark-background"
             },
@@ -1413,6 +1421,10 @@
               "name": "--wcp-input-code-dark-color"
             },
             {
+              "description": "The background color of the line numbers in dark mode.",
+              "name": "--wcp-input-code-dark-background-lines"
+            },
+            {
               "description": "The background color of the element in light mode.",
               "name": "--wcp-input-code-light-background"
             },
@@ -1423,6 +1435,10 @@
             {
               "description": "The font color of the input element in light mode.",
               "name": "--wcp-input-code-light-color"
+            },
+            {
+              "description": "The background color of the line numbers in light mode.",
+              "name": "--wcp-input-code-light-background-lines"
             }
           ],
           "slots": [
@@ -1444,30 +1460,6 @@
             },
             {
               "kind": "field",
-              "name": "#editor",
-              "privacy": "private",
-              "type": {
-                "text": "monaco.editor.IStandaloneCodeEditor | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "#editorAutoSizeListener",
-              "privacy": "private",
-              "type": {
-                "text": "monaco.IDisposable | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "#editorModelContentChangeListener",
-              "privacy": "private",
-              "type": {
-                "text": "monaco.IDisposable | undefined"
-              }
-            },
-            {
-              "kind": "field",
               "name": "#initialValue",
               "privacy": "private",
               "type": {
@@ -1476,23 +1468,9 @@
             },
             {
               "kind": "field",
-              "name": "#handleColorSchemeToggle",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "editor",
+              "name": "_code",
               "type": {
-                "text": "HTMLDivElement"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "input",
-              "type": {
-                "text": "HTMLTextAreaElement"
+                "text": "LitCode | undefined"
               },
               "privacy": "private",
               "readonly": true
@@ -1519,16 +1497,6 @@
             },
             {
               "kind": "field",
-              "name": "readonly",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "readonly",
-              "reflects": true
-            },
-            {
-              "kind": "field",
               "name": "required",
               "type": {
                 "text": "boolean"
@@ -1550,10 +1518,10 @@
             {
               "kind": "field",
               "name": "language",
-              "type": {
-                "text": "'json' | 'html' | 'handlebars' | 'razor' | 'css' | 'sass' | 'less' | 'javascript' | 'typescript'"
-              },
               "default": "'html'",
+              "type": {
+                "text": "'html'"
+              },
               "attribute": "language",
               "reflects": true
             },
@@ -1565,26 +1533,6 @@
               },
               "attribute": "value",
               "reflects": true
-            },
-            {
-              "kind": "method",
-              "name": "initializeEditor",
-              "privacy": "protected"
-            },
-            {
-              "kind": "method",
-              "name": "updateEditorTheme",
-              "privacy": "protected"
-            },
-            {
-              "kind": "method",
-              "name": "updateEditorAutoSize",
-              "privacy": "protected"
-            },
-            {
-              "kind": "method",
-              "name": "updateEditorDisabled",
-              "privacy": "protected"
             },
             {
               "kind": "method",
@@ -1601,16 +1549,12 @@
             },
             {
               "kind": "method",
-              "name": "handleColorSchemeToggle"
-            },
-            {
-              "kind": "method",
-              "name": "handleInput",
+              "name": "handleUpdate",
               "parameters": [
                 {
-                  "name": "event",
+                  "name": "{ detail }",
                   "type": {
-                    "text": "Event"
+                    "text": "CustomEvent<string>"
                   }
                 }
               ]
@@ -1636,6 +1580,14 @@
               "kind": "field"
             }
           ],
+          "events": [
+            {
+              "name": "input",
+              "type": {
+                "text": "InputEvent"
+              }
+            }
+          ],
           "attributes": [
             {
               "name": "autosize",
@@ -1652,14 +1604,6 @@
               },
               "default": "false",
               "fieldName": "disabled"
-            },
-            {
-              "name": "readonly",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "readonly"
             },
             {
               "name": "required",
@@ -1679,10 +1623,10 @@
             },
             {
               "name": "language",
-              "type": {
-                "text": "'json' | 'html' | 'handlebars' | 'razor' | 'css' | 'sass' | 'less' | 'javascript' | 'typescript'"
-              },
               "default": "'html'",
+              "type": {
+                "text": "'html'"
+              },
               "fieldName": "language"
             },
             {
@@ -1710,7 +1654,7 @@
             "## With autosize\n```html\n<wcp-input-code\n  autosize\n  label=\"With optional initial value\"\n  value=\"<strong>Test</strong>\"\n  language=\"html\"\n></wcp-input-code>\n```",
             "## Used within a form\n```html\n<form>\n  <wcp-input-code\n    label=\"Fully form enabled component\"\n    value=\"<strong>Test</strong>\"\n    language=\"html\"\n  ></wcp-input-code>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```"
           ],
-          "readme": "# wcp-input-code\n\nA text input element using the wcp style. Fully form aware.\nCan display multiline text (textarea) if configured to do so.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-code label=\"With optional label\"></wcp-input-code>\n```\n\n## With optional initial value\n\n```html\n<wcp-input-code\n  label=\"With optional initial value\"\n  value=\"<strong>Test</strong>\"\n  language=\"html\"\n></wcp-input-code>\n```\n\n## With autosize\n\n```html\n<wcp-input-code\n  autosize\n  label=\"With optional initial value\"\n  value=\"<strong>Test</strong>\"\n  language=\"html\"\n></wcp-input-code>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-code\n    label=\"Fully form enabled component\"\n    value=\"<strong>Test</strong>\"\n    language=\"html\"\n  ></wcp-input-code>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property   | Attribute  | Type                                             | Default | Description                     |\n|------------|------------|--------------------------------------------------|---------|---------------------------------|\n| `autosize` | `autosize` | `boolean`                                        | false   |                                 |\n| `disabled` | `disabled` | `boolean`                                        | false   |                                 |\n| `label`    |            | `string`                                         |         | The label of the input element. |\n| `language` | `language` | `\"json\" \\| \"html\" \\| \"handlebars\" \\| \"razor\" \\| \"css\" \\| \"sass\" \\| \"less\" \\| \"javascript\" \\| \"typescript\"` | \"html\"  |                                 |\n| `name`     | `name`     | `string`                                         | \"text\"  |                                 |\n| `readonly` | `readonly` | `boolean`                                        | false   |                                 |\n| `required` | `required` | `boolean`                                        | false   |                                 |\n| `value`    | `value`    | `string \\| undefined`                            |         |                                 |\n\n## Methods\n\n| Method                    | Type                 |\n|---------------------------|----------------------|\n| `checkValidity`           | `(): boolean`        |\n| `formResetCallback`       | `(): void`           |\n| `handleColorSchemeToggle` | `(): void`           |\n| `handleInput`             | `(event: any): void` |\n| `renderInput`             | `(id: string): any`  |\n\n## Events\n\n| Event   |\n|---------|\n| `input` |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                            | Description                                      |\n|-------------------------------------|--------------------------------------------------|\n| `--wcp-input-code-dark-background`  | The background color of the element in dark mode. |\n| `--wcp-input-code-dark-border`      | The border color of the element in dark mode.    |\n| `--wcp-input-code-dark-color`       | The font color of the input element in dark mode. |\n| `--wcp-input-code-hint-size`        | The font size of the hint.                       |\n| `--wcp-input-code-label-size`       | The font size of the label.                      |\n| `--wcp-input-code-light-background` | The background color of the element in light mode. |\n| `--wcp-input-code-light-border`     | The border color of the element in light mode.   |\n| `--wcp-input-code-light-color`      | The font color of the input element in light mode. |\n| `--wcp-input-code-spacing`          | The inner spacing of the input element.          |\n",
+          "readme": "# wcp-input-code\n\nA text input element using the wcp style. Fully form aware.\nCan display multiline text (textarea) if configured to do so.\n\n## Examples\n\n## With optional label\n\n```html\n<wcp-input-code label=\"With optional label\"></wcp-input-code>\n```\n\n## With optional initial value\n\n```html\n<wcp-input-code\n  label=\"With optional initial value\"\n  value=\"<strong>Test</strong>\"\n  language=\"html\"\n></wcp-input-code>\n```\n\n## With autosize\n\n```html\n<wcp-input-code\n  autosize\n  label=\"With optional initial value\"\n  value=\"<strong>Test</strong>\"\n  language=\"html\"\n></wcp-input-code>\n```\n\n## Used within a form\n\n```html\n<form>\n  <wcp-input-code\n    label=\"Fully form enabled component\"\n    value=\"<strong>Test</strong>\"\n    language=\"html\"\n  ></wcp-input-code>\n  <button type=\"submit\">Submit</button>\n  <button type=\"reset\">Reset</button>\n</form>\n```\n\n## Properties\n\n| Property   | Attribute  | Type                  | Default | Description                     |\n|------------|------------|-----------------------|---------|---------------------------------|\n| `autosize` | `autosize` | `boolean`             | false   |                                 |\n| `disabled` | `disabled` | `boolean`             | false   |                                 |\n| `label`    |            | `string`              |         | The label of the input element. |\n| `language` | `language` | `\"html\"`              | \"html\"  |                                 |\n| `name`     | `name`     | `string`              | \"text\"  |                                 |\n| `required` | `required` | `boolean`             | false   |                                 |\n| `value`    | `value`    | `string \\| undefined` |         |                                 |\n\n## Methods\n\n| Method              | Type                      |\n|---------------------|---------------------------|\n| `checkValidity`     | `(): boolean`             |\n| `formResetCallback` | `(): void`                |\n| `handleUpdate`      | `({ detail }: any): void` |\n| `renderInput`       | `(id: string): any`       |\n\n## Events\n\n| Event   |\n|---------|\n| `input` |\n\n## Slots\n\n| Name   | Description                                     |\n|--------|-------------------------------------------------|\n| `hint` | Receives optional descriptions below the input. |\n\n## CSS Custom Properties\n\n| Property                                  | Description                                      |\n|-------------------------------------------|--------------------------------------------------|\n| `--wcp-input-code-border-radius`          | The border radius of the input element.          |\n| `--wcp-input-code-border-size`            | The border size of the input element.            |\n| `--wcp-input-code-dark-background`        | The background color of the element in dark mode. |\n| `--wcp-input-code-dark-background-lines`  | The background color of the line numbers in dark mode. |\n| `--wcp-input-code-dark-border`            | The border color of the element in dark mode.    |\n| `--wcp-input-code-dark-color`             | The font color of the input element in dark mode. |\n| `--wcp-input-code-hint-size`              | The font size of the hint.                       |\n| `--wcp-input-code-label-size`             | The font size of the label.                      |\n| `--wcp-input-code-light-background`       | The background color of the element in light mode. |\n| `--wcp-input-code-light-background-lines` | The background color of the line numbers in light mode. |\n| `--wcp-input-code-light-border`           | The border color of the element in light mode.   |\n| `--wcp-input-code-light-color`            | The font color of the input element in light mode. |\n| `--wcp-input-code-spacing`                | The inner spacing of the input element.          |\n",
           "groups": [
             "forms"
           ],
@@ -3748,6 +3692,12 @@
             {
               "kind": "field",
               "name": "#manifest",
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "#updateFormData",
               "privacy": "private",
               "readonly": true
             },

@@ -326,6 +326,7 @@ declare module "src/components/features/preview/preview.component" {
 }
 declare module "src/utils/markdown.utils" {
     import { marked } from 'marked';
+    import 'prismjs/components/prism-cshtml.js';
     export function getCodeExample(slot: HTMLSlotElement): string;
     export class Renderer extends marked.Renderer {
         private readonly addCodePreview;
@@ -676,6 +677,8 @@ declare module "src/components/forms/input-checkbox/input-checkbox.component" {
     }
 }
 declare module "src/components/forms/input-code/input-code.component" {
+    import 'prismjs';
+    import 'lit-code';
     import { LitElement, type PropertyValues } from 'lit';
     import type { FormAssociated } from "src/utils/form.utils";
     const InputCode_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
@@ -692,14 +695,18 @@ declare module "src/components/forms/input-code/input-code.component" {
      * @cssprop --wcp-input-code-hint-size - The font size of the hint.
      * @cssprop --wcp-input-code-label-size - The font size of the label.
      * @cssprop --wcp-input-code-spacing - The inner spacing of the input element.
+     * @cssprop --wcp-input-code-border-radius - The border radius of the input element.
+     * @cssprop --wcp-input-code-border-size - The border size of the input element.
      *
      * @cssprop --wcp-input-code-dark-background - The background color of the element in dark mode.
      * @cssprop --wcp-input-code-dark-border - The border color of the element in dark mode.
      * @cssprop --wcp-input-code-dark-color - The font color of the input element in dark mode.
+     * @cssprop --wcp-input-code-dark-background-lines - The background color of the line numbers in dark mode.
      *
      * @cssprop --wcp-input-code-light-background - The background color of the element in light mode.
      * @cssprop --wcp-input-code-light-border - The border color of the element in light mode.
      * @cssprop --wcp-input-code-light-color - The font color of the input element in light mode.
+     * @cssprop --wcp-input-code-light-background-lines - The background color of the line numbers in light mode.
      *
      * @example
      * ## With optional label
@@ -750,28 +757,18 @@ declare module "src/components/forms/input-code/input-code.component" {
             slotAssignment?: SlotAssignmentMode | undefined;
         };
         static readonly styles: import("lit").CSSResultGroup[];
-        private readonly editor;
-        private readonly input;
+        private readonly _code?;
         autosize: boolean;
         disabled: boolean;
-        readonly: boolean;
         required: boolean;
         name: string;
-        language: 'json' | 'html' | 'handlebars' | 'razor' | 'css' | 'sass' | 'less' | 'javascript' | 'typescript';
-        value?: string;
+        language: "html";
+        set value(value: string | undefined);
+        get value(): string | undefined;
         protected firstUpdated(props: PropertyValues<this>): void;
-        protected initializeEditor(): void;
-        protected updateEditorTheme(): void;
-        protected updateEditorAutoSize(): void;
-        protected updateEditorDisabled(): void;
-        connectedCallback(): void;
-        disconnectedCallback(): void;
-        attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void;
         formResetCallback(): void;
         checkValidity(): boolean;
-        protected updated(changedProperties: PropertyValues<this>): void;
-        handleColorSchemeToggle(): void;
-        handleInput(event: Event): void;
+        handleUpdate({ detail }: CustomEvent<string>): void;
         renderInput(id: string): import("lit-html").TemplateResult<1>;
     }
     global {
@@ -1666,6 +1663,9 @@ declare module "src/components/plugins/preview-simulate-viewports/preview-simula
         }
     }
 }
+declare module "src/utils/debounce.utils" {
+    export function debounce<T extends (...args: Parameters<T>) => void>(this: ThisParameterType<T>, fn: T, wait?: number): (...args: Parameters<T>) => void;
+}
 declare module "src/components/plugins/stage-editor/stage-editor.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
     import type { StagePlugin } from "src/utils/plugin.utils";
@@ -2262,6 +2262,7 @@ declare module "src/index" {
     export * from "src/utils/color-scheme.utils";
     export * from "src/utils/compression.utils";
     export * from "src/utils/config.utils";
+    export * from "src/utils/debounce.utils";
     export * from "src/utils/dom.utils";
     export * from "src/utils/form.utils";
     export * from "src/utils/manifest.utils";
