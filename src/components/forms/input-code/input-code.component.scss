@@ -18,25 +18,39 @@
   --wcp-editable-light-background: var(--wcp-input-code-light-background);
   --wcp-editable-light-border: var(--wcp-input-code-light-border);
   --wcp-editable-light-color: var(--wcp-input-code-light-color);
+
+  ---wcp-input-code-dark-background-lines: var(--wcp-input-code-dark-background-lines, hsl(var(--wcp-color-blue-96-raw) / .1));
+  ---wcp-input-code-light-background-lines: var(--wcp-input-code-dark-background-lines, hsl(var(--wcp-color-blue-24-raw) / .15));
 }
 
-.editor {
+:host {
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-input-code-background-lines: var(---wcp-input-code-#{$color-scheme}-background-lines);
+  }
+}
+
+lit-code {
+  --editor-bg-color: var(---wcp-editable-background);
+  --editor-text-color: var(---wcp-editable-color);
+  --lines-bg-color: var(---wcp-input-code-background-lines);
+  --lines-text-color: var(---wcp-editable-color);
+  --scroll-track-color: inherit;
+  --scroll-thumb-color: var(---wcp-editable-color);
+
   grid-area: center;
 
   aspect-ratio: 16 / 9;
   box-sizing: border-box;
+  border-radius: var(---wcp-editable-border-radius);
   max-height: 200px;
+  padding: 0 !important;
   width: 100%;
 
   transition: opacity var(--wcp-fx-default-duration) ease-out;
   will-change: opacity;
 
-  .monaco-editor {
-    --vscode-editor-background: var(---wcp-editable-background);
-    --vscode-editorGutter-background: var(---wcp-editable-background);
-  }
-
   :host([autosize]) & {
+    aspect-ratio: unset;
     height: var(---wcp-input-code-height, auto);
     min-height: 28px;
   }

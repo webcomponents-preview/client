@@ -4,10 +4,10 @@
 wcp-code {
   @include utils.color-scheme(false, parent) using ($color-scheme) {
     @if ($color-scheme == light) {
-      @include meta.load-css('highlight.js/scss/xcode');
+      @include meta.load-css('prismjs/themes/prism');
     }
     @if ($color-scheme == dark) {
-      @include meta.load-css('highlight.js/scss/dark');
+      @include meta.load-css('prismjs/themes/prism-dark');
     }
   }
 }

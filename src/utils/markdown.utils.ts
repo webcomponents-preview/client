@@ -1,5 +1,6 @@
-import hljs from 'highlight.js';
 import { marked } from 'marked';
+import prism from 'prismjs';
+import 'prismjs/components/prism-cshtml.js';
 
 export function getCodeExample(slot: HTMLSlotElement): string {
   return slot.assignedElements().reduce((acc, el) => `${acc}\n${el.outerHTML}`, '');
@@ -65,8 +66,7 @@ export function renderMarkdown(mardown: string, addCodePreview = true, previewTa
   return marked(mardown, {
     highlight(code, lang) {
       if (lang === undefined) return code;
-      const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-      return hljs.highlight(code, { language }).value;
+      return prism.highlight(code, prism.languages[lang], lang);
     },
     renderer: new Renderer(addCodePreview, previewTagName),
   });

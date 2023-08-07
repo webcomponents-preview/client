@@ -9,9 +9,13 @@
 
   /// defines the hsl colors along with a raw notation to be used with runtime opacity calculation, so e.g.:
   /// ```scss
-  /// define-color('red', hsl(0deg 100% 50%), 1); // will define the following custom properties:
+  /// // setting a color with this mixin:
+  /// define-color('red', hsl(0deg 100% 50%), 1);
+  /// // will define the following custom properties:
   /// --wcp-color-red-raw: hsl(0deg 100% 50%);
   /// --wcp-color-red: hsl(var(--wcp-color-red-raw) / 1);
+  /// // to be used as (with 50% opacity):
+  /// hsl(var(--wcp-color-red-raw) / .5);
   /// ```
   @include utils.define-color('grey-100', hsl(0deg 0% 100%), var(--wcp-color-opacity));
   @include utils.define-color('grey-96', hsl(0deg 0% 96%), var(--wcp-color-opacity));
