@@ -1,9 +1,10 @@
 import { LitElement, type TemplateResult, unsafeCSS } from 'lit';
-import { html, unsafeStatic } from 'lit/static-html.js';
+import { html } from 'lit/static-html.js';
 import { customElement, property } from 'lit/decorators.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { renderMarkdown } from '@/utils/markdown.utils.js';
+import { until } from 'lit/directives/until.js';
 
 import styles from './readme.component.scss';
 
@@ -65,9 +66,7 @@ export class Readme extends ColorSchemable(LitElement) {
 
   protected override render(): TemplateResult {
     return html`
-      <div class="markdown-body">
-        ${unsafeStatic(renderMarkdown(this.markdown, this.showCodePreview, this.previewTagName))}
-      </div>
+      <div class="markdown-body" .innerHTML="${until(renderMarkdown(this.markdown, this.showCodePreview, this.previewTagName))}"></div>
     `;
   }
 }
