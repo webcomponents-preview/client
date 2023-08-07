@@ -1,8 +1,9 @@
 import { html, LitElement, type TemplateResult, unsafeCSS, nothing } from 'lit';
-import { unsafeStatic, withStatic } from 'lit/static-html.js';
+import { withStatic } from 'lit/static-html.js';
 import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 
 import { map } from 'lit/directives/map.js';
+import { until } from 'lit/directives/until.js';
 import { when } from 'lit/directives/when.js';
 
 import type * as Parsed from '@/utils/parser.types.js';
@@ -66,7 +67,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
   protected renderHint(content?: string): TemplateResult {
     return when(
       content,
-      () => withStatic(html)`<div slot="hint">${unsafeStatic(renderMarkdown(content as string, false))}</div>`
+      () => withStatic(html)`<div slot="hint" .innerHTML="${until(renderMarkdown(content as string, false))}"></div>`
     );
   }
 
