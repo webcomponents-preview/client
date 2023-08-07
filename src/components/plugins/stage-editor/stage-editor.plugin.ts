@@ -5,6 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { keyed } from 'lit/directives/keyed.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
+import { debounce } from '@/utils/debounce.utils.js';
 import { getManifest } from '@/utils/manifest.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
 import type { StagePlugin } from '@/utils/plugin.utils.js';
@@ -12,6 +13,8 @@ import type { StagePlugin } from '@/utils/plugin.utils.js';
 import { type ElementData, prepareInitialData, compressFormData, decompressElementData } from './stage-editor.utils.js';
 
 import styles from './stage-editor.plugin.scss';
+
+const UPDATE_DEBOUNCE = 300;
 
 /**
  * Allows editing a custom element.
@@ -23,6 +26,13 @@ export class StageEditor extends ColorSchemable(LitElement) implements StagePlug
   static override readonly styles = unsafeCSS(styles);
 
   readonly #manifest = getManifest();
+
+  readonly #updateFormData = debounce(async (formData: FormData, element: Parsed.Element) => {
+    // dispatch the event to update the url param
+    const data = await compressFormData(formData, element);
+    const event = new CustomEvent('wcp-stage-plugin:data-change', { detail: data });
+    this.dispatchEvent(event);
+  }, UPDATE_DEBOUNCE);
 
   @state()
   private _element?: Parsed.Element;
@@ -79,11 +89,7 @@ export class StageEditor extends ColorSchemable(LitElement) implements StagePlug
   @eventOptions({ passive: true })
   protected async handleControlsInput({ detail }: CustomEvent<FormData>) {
     if (this._element === undefined) return;
-
-    // dispatch the event to update the url param
-    const data = await compressFormData(detail, this._element);
-    const event = new CustomEvent('wcp-stage-plugin:data-change', { detail: data });
-    this.dispatchEvent(event);
+    this.#updateFormData(detail, this._element);
   }
 
   protected override firstUpdated() {
