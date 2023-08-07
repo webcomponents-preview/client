@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.3.1](https://github.com/webcomponents-preview/client/compare/0.3.0...0.3.1) (2023-08-07)
+
+
+### Performance Improvements
+
+* debounce control changes ([1462c37](https://github.com/webcomponents-preview/client/commit/1462c37887f67b84a8d817792e95ba905b5b7ade))
+
 # [0.3.0](https://github.com/webcomponents-preview/client/compare/0.2.0...0.3.0) (2023-08-05)
 
 
