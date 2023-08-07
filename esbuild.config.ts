@@ -92,6 +92,10 @@ const options: BuildOptions = {
       src: 'src/assets',
       dest: 'dist/assets',
     }),
+    copyPlugin({
+      src: 'node_modules/prismjs/components',
+      dest: 'dist/grammars',
+    }),
   ],
 };
 
