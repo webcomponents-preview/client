@@ -48,26 +48,24 @@ Can display multiline text (textarea) if configured to do so.
 
 ## Properties
 
-| Property   | Attribute  | Type                                             | Default | Description                     |
-|------------|------------|--------------------------------------------------|---------|---------------------------------|
-| `autosize` | `autosize` | `boolean`                                        | false   |                                 |
-| `disabled` | `disabled` | `boolean`                                        | false   |                                 |
-| `label`    |            | `string`                                         |         | The label of the input element. |
-| `language` | `language` | `"json" \| "html" \| "handlebars" \| "razor" \| "css" \| "sass" \| "less" \| "javascript" \| "typescript"` | "html"  |                                 |
-| `name`     | `name`     | `string`                                         | "text"  |                                 |
-| `readonly` | `readonly` | `boolean`                                        | false   |                                 |
-| `required` | `required` | `boolean`                                        | false   |                                 |
-| `value`    | `value`    | `string \| undefined`                            |         |                                 |
+| Property   | Attribute  | Type                  | Default | Description                     |
+|------------|------------|-----------------------|---------|---------------------------------|
+| `autosize` | `autosize` | `boolean`             | false   |                                 |
+| `disabled` | `disabled` | `boolean`             | false   |                                 |
+| `label`    |            | `string`              |         | The label of the input element. |
+| `language` | `language` | `"html"`              | "html"  |                                 |
+| `name`     | `name`     | `string`              | "text"  |                                 |
+| `required` | `required` | `boolean`             | false   |                                 |
+| `value`    | `value`    | `string \| undefined` |         |                                 |
 
 ## Methods
 
-| Method                    | Type                 |
-|---------------------------|----------------------|
-| `checkValidity`           | `(): boolean`        |
-| `formResetCallback`       | `(): void`           |
-| `handleColorSchemeToggle` | `(): void`           |
-| `handleInput`             | `(event: any): void` |
-| `renderInput`             | `(id: string): any`  |
+| Method              | Type                      |
+|---------------------|---------------------------|
+| `checkValidity`     | `(): boolean`             |
+| `formResetCallback` | `(): void`                |
+| `handleUpdate`      | `({ detail }: any): void` |
+| `renderInput`       | `(id: string): any`       |
 
 ## Events
 
