@@ -25,14 +25,18 @@ import styles from './input-code.component.scss';
  * @cssprop --wcp-input-code-hint-size - The font size of the hint.
  * @cssprop --wcp-input-code-label-size - The font size of the label.
  * @cssprop --wcp-input-code-spacing - The inner spacing of the input element.
+ * @cssprop --wcp-input-code-border-radius - The border radius of the input element.
+ * @cssprop --wcp-input-code-border-size - The border size of the input element.
  *
  * @cssprop --wcp-input-code-dark-background - The background color of the element in dark mode.
  * @cssprop --wcp-input-code-dark-border - The border color of the element in dark mode.
  * @cssprop --wcp-input-code-dark-color - The font color of the input element in dark mode.
+ * @cssprop --wcp-input-code-dark-background-lines - The background color of the line numbers in dark mode.
  *
  * @cssprop --wcp-input-code-light-background - The background color of the element in light mode.
  * @cssprop --wcp-input-code-light-border - The border color of the element in light mode.
  * @cssprop --wcp-input-code-light-color - The font color of the input element in light mode.
+ * @cssprop --wcp-input-code-light-background-lines - The background color of the line numbers in light mode.
  *
  * @example
  * ## With optional label
