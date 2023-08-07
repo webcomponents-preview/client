@@ -47,6 +47,7 @@
     "lit": "2.8.0",
     "lit-code": "0.1.12",
     "marked": "6.0.0",
+    "marked-highlight": "2.0.3",
     "prismjs": "1.29.0",
     "urlpattern-polyfill": "9.0.0"
   },
