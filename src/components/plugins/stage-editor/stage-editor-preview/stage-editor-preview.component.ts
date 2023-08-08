@@ -11,6 +11,7 @@ import { when } from 'lit/directives/when.js';
 import type { ElementData } from '../stage-editor.utils.js';
 
 import styles from './stage-editor-preview.component.scss';
+import { keyed } from 'lit/directives/keyed.js';
 
 /**
  * @element wcp-stage-editor-preview
@@ -55,12 +56,15 @@ export class StageEditorPreview extends LitElement {
     const tag = unsafeStatic(this.previewTagName);
     return html`
       <wcp-preview preview-tag-name="${this.previewTagName}">
-        ${withStatic(html)`
-          <${tag}
-            ${spread(this.data?.attributes ?? {})}
-            ${spread(this.data?.fields ?? {})}
-          >${this.renderSlots()}</${tag}>
-        `}
+        ${keyed(
+          this.data,
+          withStatic(html)`
+            <${tag}
+              ${spread(this.data?.attributes ?? {})}
+              ${spread(this.data?.fields ?? {})}
+            >${this.renderSlots()}</${tag}>
+        `
+        )}
       </wcp-preview>
     `;
   }
