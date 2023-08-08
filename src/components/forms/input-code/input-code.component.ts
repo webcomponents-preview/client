@@ -67,7 +67,7 @@ import styles from './input-code.component.scss';
  * @example
  * ## Used within a form
  * ```html
- * <form>
+ * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
  *   <wcp-input-code
  *     label="Fully form enabled component"
  *     value="<strong>Test</strong>"
