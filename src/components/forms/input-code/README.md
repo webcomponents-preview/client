@@ -35,7 +35,7 @@ Can display multiline text (textarea) if configured to do so.
 ## Used within a form
 
 ```html
-<form>
+<form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
   <wcp-input-code
     label="Fully form enabled component"
     value="<strong>Test</strong>"

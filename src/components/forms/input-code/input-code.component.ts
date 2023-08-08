@@ -144,7 +144,7 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
     this.checkValidity();
 
     // re-dispatch input event, but now the target has a value (namely mine!)
-    this.dispatchEvent(event);
+    this.dispatchEvent(new InputEvent(event.type, event));
   }
 
   override renderInput(id: string) {
