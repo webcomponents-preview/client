@@ -55,7 +55,13 @@ export class StageEditorPreview extends LitElement {
     const tag = unsafeStatic(this.previewTagName);
     return html`
       <wcp-preview preview-tag-name="${this.previewTagName}">
-        ${withStatic(html)`<${tag} ${spread(this.data?.fields ?? {})}>${this.renderSlots()}</${tag}>`}
+        ${withStatic(html)`
+          <${tag}
+            ${spread(this.data?.attributes ?? {})}
+            ${spread(this.data?.fields ?? {})}>
+            ${this.renderSlots()}
+          </${tag}>
+        `}
       </wcp-preview>
     `;
   }
