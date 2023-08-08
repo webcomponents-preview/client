@@ -150,24 +150,32 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
   protected override render(): TemplateResult {
     return html`
       <form @input="${this.handleFormInput}">
-        ${when(
-          this._element?.hasFields,
-          () => html`
-            <fieldset>
-              <legend>Fields</legend>
-              ${map(this._element?.fields.values(), (field) => this.renderFieldControl(field))}
-            </fieldset>
-          `
-        )}
-        ${when(
-          this._element?.hasSlots,
-          () => html`
-            <fieldset>
-              <legend>Slots</legend>
-              ${map(this._element?.slots.values(), (slot) => this.renderSlotControl(slot))}
-            </fieldset>
-          `
-        )}
+        <wcp-tabs
+          .tabs="${{
+            fields: { label: 'Fields', disabled: !this._element?.hasFields },
+            slots: { label: 'Slots', disabled: !this._element?.hasSlots },
+            attributes: { label: 'Attributes' },
+          }}"
+          active-tab="fields"
+        >
+          ${when(
+            this._element?.hasFields,
+            () => html`
+              <fieldset slot="fields">
+                ${map(this._element?.fields.values(), (field) => this.renderFieldControl(field))}
+              </fieldset>
+            `
+          )}
+          ${when(
+            this._element?.hasSlots,
+            () => html`
+              <fieldset slot="slots">
+                ${map(this._element?.slots.values(), (slot) => this.renderSlotControl(slot))}
+              </fieldset>
+            `
+          )}
+          <div slot="second">Second tab content</div>
+        </wcp-tabs>
       </form>
     `;
   }
