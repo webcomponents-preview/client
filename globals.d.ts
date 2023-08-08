@@ -32,22 +32,27 @@ declare module 'lit-code' {
   }
 }
 
-// FIXME: unfortunately, this is not working yet
-declare global {
-  type EachFunc = (this: Context, params: Record<string, any>, done: Done) => void;
-  type EachAsyncFunc = (this: Context, params: Record<string, any>) => PromiseLike<any>;
+declare module 'mocha' {
+  declare global {
+    type EachFunc = (this: Context, params: Record<string, any>, done: Done) => void;
+    type EachAsyncFunc = (this: Context, params: Record<string, any>) => PromiseLike<any>;
 
-  namespace Mocha {
-    interface TestFunction {
-      each(
-        strings: TemplateStringsArray,
-        ...placeholders: any[]
-      ): {
-        (fn: EachFunc): Test;
-        (fn: EachAsyncFunc): Test;
-        (title: string, fn?: EachFunc): Test;
-        (title: string, fn?: EachAsyncFunc): Test;
-      };
+    namespace Mocha {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      interface TestFunction {
+        each(
+          strings: TemplateStringsArray,
+          ...placeholders: any[]
+        ): {
+          (fn: EachFunc): Test;
+          (fn: EachAsyncFunc): Test;
+          (title: string, fn?: EachFunc): Test;
+          (title: string, fn?: EachAsyncFunc): Test;
+        };
+      }
     }
+
+    // eslint-disable-next-line no-var
+    declare var it: Mocha.TestFunction;
   }
 }
