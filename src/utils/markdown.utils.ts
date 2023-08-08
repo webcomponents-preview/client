@@ -1,6 +1,6 @@
 import { marked, Renderer } from 'marked';
 import { markedHighlight } from 'marked-highlight';
-import { highlight, languages } from 'prismjs';
+import * as Prism from 'prismjs';
 
 export function getCodeExample(slot: HTMLSlotElement): string {
   return slot.assignedElements().reduce((acc, el) => `${acc}\n${el.outerHTML}`, '');
@@ -110,7 +110,7 @@ export async function renderMarkdown(
         // no language, no highlight
         if (lang === undefined) return code;
         // load grammar if not already loaded
-        if (!languages[lang]) {
+        if (!Prism.languages[lang]) {
           try {
             await import(`/grammars/${mapLangToGrammar(lang)}.js`);
           } catch (e) {
@@ -118,7 +118,7 @@ export async function renderMarkdown(
           }
         }
         // highlight code and store it for later use in renderer
-        const highlighted = highlight(code, languages[lang], lang);
+        const highlighted = Prism.highlight(code, Prism.languages[lang], lang);
         renderer.storeRawCode(code, highlighted);
         return highlighted;
       },

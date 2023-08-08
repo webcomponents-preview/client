@@ -3,6 +3,6 @@
   "delete": true,
   "flat": true,
   "include": ["components", "utils"],
-  "exclude": [".*\\.spec\\.ts$"],
+  "exclude": [".*\\.test\\.ts$"],
   "singleQuotes": true
 }
