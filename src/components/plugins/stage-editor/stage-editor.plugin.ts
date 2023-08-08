@@ -70,6 +70,7 @@ export class StageEditor extends ColorSchemable(LitElement) implements StagePlug
       // merge given data on top of the initial data
       const elementData = await decompressElementData(compressed);
       this._elementData = {
+        attributes: { ...initialData.attributes, ...elementData.attributes },
         fields: { ...initialData.fields, ...elementData.fields },
         slots: { ...initialData.slots, ...elementData.slots },
       };

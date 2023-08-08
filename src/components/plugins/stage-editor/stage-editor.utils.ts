@@ -9,7 +9,13 @@ const URI_DATA_PARAM_COMPRESSION: CompressionFormat = 'deflate-raw';
  */
 export type ElementData = {
   /**
-   * Field state mapped by property name to property value.
+   * Additional attributes mapped by attribute name to attribute value.
+   * Should not overlap with reflected attributes from fields.
+   */
+  attributes: Record<string, string | undefined>;
+
+  /**
+   * Field state mapped by property name to property value. 
    */
   fields: Record<string, string | number | boolean | undefined>;
 
@@ -23,6 +29,7 @@ export type ElementData = {
  * Empty state object of the element data.
  */
 export const EMPTY_ELEMENT_DATA: ElementData = {
+  attributes: {},
   fields: {},
   slots: {},
 };
@@ -32,6 +39,7 @@ export const EMPTY_ELEMENT_DATA: ElementData = {
  */
 export function prepareInitialData(element: Parsed.Element): ElementData {
   return {
+    attributes: {},
     fields:
       Array.from(element.fields.values()).reduce((acc, field) => {
         if (field.isControllable) {

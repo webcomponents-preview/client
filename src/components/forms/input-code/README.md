@@ -60,18 +60,12 @@ Can display multiline text (textarea) if configured to do so.
 
 ## Methods
 
-| Method              | Type                      |
-|---------------------|---------------------------|
-| `checkValidity`     | `(): boolean`             |
-| `formResetCallback` | `(): void`                |
-| `handleUpdate`      | `({ detail }: any): void` |
-| `renderInput`       | `(id: string): any`       |
-
-## Events
-
-| Event   |
-|---------|
-| `input` |
+| Method              | Type                 |
+|---------------------|----------------------|
+| `checkValidity`     | `(): boolean`        |
+| `formResetCallback` | `(): void`           |
+| `handleInput`       | `(event: any): void` |
+| `renderInput`       | `(id: string): any`  |
 
 ## Slots
 

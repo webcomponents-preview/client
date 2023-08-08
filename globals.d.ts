@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 // Tell Typescript that SASS imports are okay as they're handled by bundler
 declare module '*.scss' {
   export const styles: string;
@@ -16,10 +17,14 @@ declare module '*.svg' {
 }
 
 declare module 'lit-code' {
+  import type { LitElement } from 'lit';
+
   export declare global {
     HTMLElementTagNameMap['lit-code'] = LitCode;
   }
-  export class LitCode extends HTMLElement {
+  export class LitCode extends LitElement {
+    elContainer: HTMLElement;
+    elTextarea: HTMLTextAreaElement;
     linenumbers: boolean;
     noshadow: boolean;
     mycolors: boolean;
@@ -27,6 +32,7 @@ declare module 'lit-code' {
     language: string;
     grammar: string;
 
+    _getElement<T extends HTMLElement = HTMLElement>(id: string): T;
     getCode(): string;
     setCode(code: string): void;
   }
