@@ -58,9 +58,8 @@ export class StageEditorPreview extends LitElement {
         ${withStatic(html)`
           <${tag}
             ${spread(this.data?.attributes ?? {})}
-            ${spread(this.data?.fields ?? {})}>
-            ${this.renderSlots()}
-          </${tag}>
+            ${spread(this.data?.fields ?? {})}
+          >${this.renderSlots()}</${tag}>
         `}
       </wcp-preview>
     `;
