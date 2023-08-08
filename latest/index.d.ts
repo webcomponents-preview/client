@@ -779,7 +779,7 @@ declare module "components/forms/input-code/input-code.component" {
         protected firstUpdated(props: PropertyValues<this>): void;
         formResetCallback(): void;
         checkValidity(): boolean;
-        handleUpdate({ detail }: CustomEvent<string>): void;
+        handleInput(event: InputEvent): void;
         renderInput(id: string): import("lit-html").TemplateResult<1>;
     }
     global {
@@ -1502,6 +1502,11 @@ declare module "components/plugins/stage-editor/stage-editor.utils" {
      */
     export type ElementData = {
         /**
+         * Additional attributes mapped by attribute name to attribute value.
+         * Should not overlap with reflected attributes from fields.
+         */
+        attributes: Record<string, string | undefined>;
+        /**
          * Field state mapped by property name to property value.
          */
         fields: Record<string, string | number | boolean | undefined>;
@@ -1543,7 +1548,13 @@ declare module "components/plugins/stage-editor/stage-editor.utils" {
 declare module "components/plugins/preview-editor-link/preview-editor-link.utils" {
     import type { ElementData } from "components/plugins/stage-editor/stage-editor.utils";
     /**
-     * Prepares an initial state object for the given element definition.
+     * Prepares an initial state object for the given element definition by:
+     * 1. Read all controllable fields from the element definition (from properties)
+     * 2. Read all (remaining) attributes from the element reference (not reflected from already collected properties)
+     * 3. Read all slots from the element definition with their stringified contents
+     *
+     * @todo: separate steps into functions
+     * @todo: test this sh!t
      */
     export function readCurrentElementData(ref: HTMLElement): ElementData;
 }
