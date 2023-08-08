@@ -1,5 +1,14 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.3.4](https://github.com/webcomponents-preview/client/compare/0.3.3...0.3.4) (2023-08-08)
+
+
+### Bug Fixes
+
+* **wcp-input-code:** align event handling ([b71d3a2](https://github.com/webcomponents-preview/client/commit/b71d3a24c2ca8c92cba2a9de4a70c5f4748204e8))
+* **wcp-stage-editor-preview:** align whitespace ([b4f6df1](https://github.com/webcomponents-preview/client/commit/b4f6df1ba7b89261de2223c42f6f736a3e52f4d5))
+* **wcp-stage-editor-preview:** set attributes state in preview ([f0078f6](https://github.com/webcomponents-preview/client/commit/f0078f6e8d86b481db3debf47e0a207e8a0afbcd))
+
 ## [0.3.3](https://github.com/webcomponents-preview/client/compare/0.3.2...0.3.3) (2023-08-08)
 
 ## [0.3.2](https://github.com/webcomponents-preview/client/compare/0.3.1...0.3.2) (2023-08-08)
