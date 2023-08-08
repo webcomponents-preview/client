@@ -27,6 +27,7 @@
     "generate": "run-p -lns generate:*",
     "docs": "cross-env NODE_OPTIONS='--loader ts-node/esm' NODE_NO_WARNINGS=1 cem analyze --config custom-elements-manifest.config.ts",
     "test": "wtr",
+    "test:ci": "wtr",
     "test:watch": "wtr --watch",
     "prebuild": "run-s -lns clean generate",
     "build:components": "ts-node esbuild.config.ts --ci",
