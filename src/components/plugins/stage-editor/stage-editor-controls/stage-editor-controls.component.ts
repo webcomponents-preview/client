@@ -81,7 +81,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
         () =>
           html`
             <wcp-input-checkbox
-              name="fields.${field.name}"
+              name="field.${field.name}"
               label="${field.name}"
               ?checked="${Boolean(this.data?.fields[key])}"
             >
@@ -93,7 +93,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
         !field.isEnum && field.isString,
         () => html`
           <wcp-input-text
-            name="fields.${field.name}"
+            name="field.${field.name}"
             label="${field.attribute ?? field.name}"
             .value="${this.data?.fields[key] as string | undefined}"
           >
@@ -105,7 +105,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
         !field.isEnum && field.isNumber,
         () => html`
           <wcp-input-number
-            name="fields.${field.name}"
+            name="field.${field.name}"
             label="${field.attribute ?? field.name}"
             .value="${this.data?.fields[key] as number | undefined}"
           >
@@ -117,7 +117,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
         field.isEnum,
         () => html`
           <wcp-input-select
-            name="fields.${field.name}"
+            name="field.${field.name}"
             label="${field.attribute ?? field.name}"
             .value="${this.data?.fields[key] as string | undefined}"
           >
@@ -138,7 +138,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
     return html`
       <wcp-input-code
         autosize
-        name="slots.${slot.name}"
+        name="slot.${slot.name}"
         label="${slot.name.trim() ? slot.name : 'Default'}"
         .value="${this.data?.slots[slot.name]}"
       >
@@ -174,7 +174,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
               </fieldset>
             `
           )}
-          <div slot="second">Second tab content</div>
+          <pre slot="attributes">${JSON.stringify(this.data?.attributes, null, 2)}</pre>
         </wcp-tabs>
       </form>
     `;

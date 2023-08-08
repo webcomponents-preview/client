@@ -89,7 +89,7 @@ export function alignFormDataWebkit(
   Array.from(element.fields.entries())
     .filter(([, field]) => field.isControllable && field.isBoolean)
     .forEach(([, field]) => {
-      const name = `fields.${field.name}`;
+      const name = `field.${field.name}`;
       const checkbox = elements.namedItem(name) as HTMLInputElement;
       if (!checkbox.checked) formData.delete(name);
     });
@@ -107,11 +107,11 @@ export function mapFormData(data: FormData, element: Parsed.Element): ElementDat
     const [group, name] = key.split('.');
 
     // map slots
-    if (group === 'slots') {
+    if (group === 'slot') {
       return { ...acc, slots: { ...acc.slots, [name]: `${value}` } };
     }
 
-    if (group === 'fields') {
+    if (group === 'field') {
       // map the field data
       const field = element.fields.get(name);
       if (field === undefined) return acc;
@@ -129,6 +129,7 @@ export function mapFormData(data: FormData, element: Parsed.Element): ElementDat
  */
 export async function compressFormData(formData: FormData, element: Parsed.Element): Promise<string> {
   const data = mapFormData(formData, element);
+  console.log(data);
   return encodeURIComponent(await compress(JSON.stringify(data), URI_DATA_PARAM_COMPRESSION));
 }
 
