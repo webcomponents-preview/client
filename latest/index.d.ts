@@ -1,8 +1,8 @@
-declare module "src/utils/mixin.types" {
+declare module "utils/mixin.types" {
     export type Constructor<T> = new (...args: any[]) => T;
 }
-declare module "src/utils/color-scheme.utils" {
-    import type { ColorSchemableInterface } from "src/mixins/color-schemable.mixin";
+declare module "utils/color-scheme.utils" {
+    import type { ColorSchemableInterface } from "mixins/color-schemable.mixin";
     global {
         interface WindowEventMap {
             'wcp-color-scheme:toggle': CustomEvent<ColorScheme | null>;
@@ -13,16 +13,16 @@ declare module "src/utils/color-scheme.utils" {
     export const addColorSchemable: (element: ColorSchemableInterface) => Set<ColorSchemableInterface>;
     export const removeColorSchemable: (element: ColorSchemableInterface) => boolean;
 }
-declare module "src/mixins/color-schemable.mixin" {
+declare module "mixins/color-schemable.mixin" {
     import { LitElement } from 'lit';
-    import type { Constructor } from "src/utils/mixin.types";
-    import { type ColorScheme } from "src/utils/color-scheme.utils";
+    import type { Constructor } from "utils/mixin.types";
+    import { type ColorScheme } from "utils/color-scheme.utils";
     export class ColorSchemableInterface {
         colorScheme?: ColorScheme;
     }
     export const ColorSchemable: <T extends Constructor<LitElement>>(superClass: T) => Constructor<ColorSchemableInterface> & T;
 }
-declare module "src/utils/config.utils" {
+declare module "utils/config.utils" {
     export type Config = {
         excludeElements: string[];
         /**
@@ -106,9 +106,9 @@ declare module "src/utils/config.utils" {
     export function loadConfig(url?: string): Promise<Config>;
     export function getConfig(): Config;
 }
-declare module "src/components/features/markdown-example/markdown-example.component" {
+declare module "components/features/markdown-example/markdown-example.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const MarkdownExample_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const MarkdownExample_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows an inline code example and a preview of the element in the readme.
      * This is used in the markdown formatter to render `html` examples.
@@ -154,9 +154,9 @@ declare module "src/components/features/markdown-example/markdown-example.compon
         }
     }
 }
-declare module "src/components/features/navigation/navigation.component" {
+declare module "components/features/navigation/navigation.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Navigation_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const Navigation_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @element wcp-navigation
      *
@@ -194,9 +194,9 @@ declare module "src/components/features/navigation/navigation.component" {
         }
     }
 }
-declare module "src/components/features/navigation/navigation-item/navigation-item.component" {
+declare module "components/features/navigation/navigation-item/navigation-item.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const NavigationItem_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const NavigationItem_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @element wcp-navigation-item
      *
@@ -252,9 +252,9 @@ declare module "src/components/features/navigation/navigation-item/navigation-it
         }
     }
 }
-declare module "src/components/features/navigation/navigation-search/navigation-search.component" {
+declare module "components/features/navigation/navigation-search/navigation-search.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const NavigationSearch_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const NavigationSearch_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @element wcp-navigation-search
      *
@@ -288,9 +288,9 @@ declare module "src/components/features/navigation/navigation-search/navigation-
         }
     }
 }
-declare module "src/components/features/preview/preview.component" {
+declare module "components/features/preview/preview.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Preview_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const Preview_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Previews given content.
      *
@@ -324,14 +324,18 @@ declare module "src/components/features/preview/preview.component" {
         }
     }
 }
-declare module "src/utils/markdown.utils" {
-    import { marked } from 'marked';
-    import 'prismjs/components/prism-cshtml.js';
+declare module "utils/markdown.utils" {
+    import { Renderer } from 'marked';
     export function getCodeExample(slot: HTMLSlotElement): string;
-    export class Renderer extends marked.Renderer {
+    /**
+     * Custom marked renderer to wrap code in a custom element.
+     */
+    export class CustomRenderer extends Renderer {
+        #private;
         private readonly addCodePreview;
         private readonly previewTagName?;
         constructor(addCodePreview?: boolean, previewTagName?: string | undefined);
+        storeRawCode(raw: string, highlighted: string): void;
         code(code: string, language?: string, escaped?: boolean): string;
     }
     export function resolveRelativePath(path: string): string;
@@ -339,11 +343,18 @@ declare module "src/utils/markdown.utils" {
      * Only relative links will be handled. If a markdown file (*.md, *.mdx) is linked, it will be prefixed with the route additionally.
      */
     export function prefixRelativeUrls(markdown: string, currentPath: string, basePath?: string): string;
-    export function renderMarkdown(mardown: string, addCodePreview?: boolean, previewTagName?: string): string;
+    /**
+     * Maps a given markdown code block language to a prism grammar.
+     */
+    export function mapLangToGrammar(lang: string): string;
+    /**
+     * Convenience function to render a given markdown string to html.
+     */
+    export function renderMarkdown(markdown: string, addCodePreview?: boolean, previewTagName?: string): Promise<string>;
 }
-declare module "src/components/features/readme/readme.component" {
+declare module "components/features/readme/readme.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Readme_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const Readme_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Displays a Readme file by its URL.
      *
@@ -382,7 +393,7 @@ declare module "src/components/features/readme/readme.component" {
         }
     }
 }
-declare module "src/components/features/readme-frame/readme-frame.component" {
+declare module "components/features/readme-frame/readme-frame.component" {
     import { LitElement, type TemplateResult } from 'lit';
     /**
      * @example
@@ -404,7 +415,7 @@ declare module "src/components/features/readme-frame/readme-frame.component" {
         }
     }
 }
-declare module "src/utils/plugin.utils" {
+declare module "utils/plugin.utils" {
     global {
         interface HTMLElementEventMap {
             'wcp-stage-plugin:data-change': CustomEvent<string>;
@@ -439,9 +450,9 @@ declare module "src/utils/plugin.utils" {
     export function isPlugin(element: Element): element is Plugin;
     export function findAllPlugins(slot: HTMLSlotElement): Plugin[];
 }
-declare module "src/components/features/stage/stage.component" {
+declare module "components/features/stage/stage.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Stage_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const Stage_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @example
      * ```html
@@ -485,9 +496,9 @@ declare module "src/components/features/stage/stage.component" {
         }
     }
 }
-declare module "src/components/features/toggle-color-scheme/toggle-color-scheme.component" {
+declare module "components/features/toggle-color-scheme/toggle-color-scheme.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const ToggleColorScheme_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const ToggleColorScheme_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows a button to toggle the desired color-scheme.
      *
@@ -507,7 +518,7 @@ declare module "src/components/features/toggle-color-scheme/toggle-color-scheme.
         }
     }
 }
-declare module "src/components/features/toggle-sidebar/toggle-sidebar.component" {
+declare module "components/features/toggle-sidebar/toggle-sidebar.component" {
     import { LitElement, type TemplateResult } from 'lit';
     /**
      * Shows a button to toggle sidebar.
@@ -528,9 +539,9 @@ declare module "src/components/features/toggle-sidebar/toggle-sidebar.component"
         }
     }
 }
-declare module "src/components/features/topbar/topbar.component" {
+declare module "components/features/topbar/topbar.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Topbar_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const Topbar_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * A wrapper above the preview frame content to contain various controls.
      *
@@ -564,7 +575,7 @@ declare module "src/components/features/topbar/topbar.component" {
         }
     }
 }
-declare module "src/utils/form.utils" {
+declare module "utils/form.utils" {
     /**
      * Convenient interface to implement form-associated custom elements.
      */
@@ -581,10 +592,10 @@ declare module "src/utils/form.utils" {
         formStateRestoreCallback?: (state: string | File | FormData | null, mode: 'autocomplete' | 'restore') => void;
     };
 }
-declare module "src/mixins/editable.mixin" {
+declare module "mixins/editable.mixin" {
     import { type LitElement, type TemplateResult, type CSSResultGroup } from 'lit';
-    import type { Constructor } from "src/utils/mixin.types";
-    import { type ColorSchemableInterface } from "src/mixins/color-schemable.mixin";
+    import type { Constructor } from "utils/mixin.types";
+    import { type ColorSchemableInterface } from "mixins/color-schemable.mixin";
     import 'element-internals-polyfill';
     export class EditableInterface {
         readonly internals: ElementInternals;
@@ -604,10 +615,10 @@ declare module "src/mixins/editable.mixin" {
     };
     export const Editable: ({ hasHintSlot, hasBeforeSlot, hasAfterSlot, hasBorder, }?: Partial<EditableOptions>) => <T extends Constructor<LitElement>>(superClass: T) => Constructor<EditableInterface & ColorSchemableInterface> & EditablePrototype & T;
 }
-declare module "src/components/forms/input-checkbox/input-checkbox.component" {
+declare module "components/forms/input-checkbox/input-checkbox.component" {
     import { LitElement, PropertyValues } from 'lit';
-    import type { FormAssociated } from "src/utils/form.utils";
-    const InputCheckbox_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    import type { FormAssociated } from "utils/form.utils";
+    const InputCheckbox_base: import("index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A checkbox input element using the wcp style. Fully form aware.
      *
@@ -676,12 +687,12 @@ declare module "src/components/forms/input-checkbox/input-checkbox.component" {
         }
     }
 }
-declare module "src/components/forms/input-code/input-code.component" {
+declare module "components/forms/input-code/input-code.component" {
     import 'prismjs';
     import 'lit-code';
     import { LitElement, type PropertyValues } from 'lit';
-    import type { FormAssociated } from "src/utils/form.utils";
-    const InputCode_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    import type { FormAssociated } from "utils/form.utils";
+    const InputCode_base: import("index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A text input element using the wcp style. Fully form aware.
      * Can display multiline text (textarea) if configured to do so.
@@ -777,10 +788,10 @@ declare module "src/components/forms/input-code/input-code.component" {
         }
     }
 }
-declare module "src/components/forms/input-number/input-number.component" {
+declare module "components/forms/input-number/input-number.component" {
     import { LitElement, PropertyValues } from 'lit';
-    import type { FormAssociated } from "src/utils/form.utils";
-    const InputNumber_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    import type { FormAssociated } from "utils/form.utils";
+    const InputNumber_base: import("index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A numeric input element using the wcp style. Fully form aware.
      *
@@ -847,10 +858,10 @@ declare module "src/components/forms/input-number/input-number.component" {
         }
     }
 }
-declare module "src/components/forms/input-radio/input-radio.component" {
+declare module "components/forms/input-radio/input-radio.component" {
     import { LitElement, PropertyValues } from 'lit';
-    import type { FormAssociated } from "src/utils/form.utils";
-    const InputRadio_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    import type { FormAssociated } from "utils/form.utils";
+    const InputRadio_base: import("index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A radio input element using the wcp style. Fully form aware.
      *
@@ -919,7 +930,7 @@ declare module "src/components/forms/input-radio/input-radio.component" {
         }
     }
 }
-declare module "src/components/forms/input-select/input-select-option.component" {
+declare module "components/forms/input-select/input-select-option.component" {
     import { LitElement } from 'lit';
     /**
      * A helper element to declare options for a `wcp-input-select` element.
@@ -938,10 +949,10 @@ declare module "src/components/forms/input-select/input-select-option.component"
         }
     }
 }
-declare module "src/components/forms/input-select/input-select.component" {
+declare module "components/forms/input-select/input-select.component" {
     import { LitElement, PropertyValues } from 'lit';
-    import type { FormAssociated } from "src/utils/form.utils";
-    const InputSelect_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    import type { FormAssociated } from "utils/form.utils";
+    const InputSelect_base: import("index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A numeric input element using the wcp style. Fully form aware.
      *
@@ -1033,10 +1044,10 @@ declare module "src/components/forms/input-select/input-select.component" {
         }
     }
 }
-declare module "src/components/forms/input-text/input-text.component" {
+declare module "components/forms/input-text/input-text.component" {
     import { LitElement, PropertyValues } from 'lit';
-    import type { FormAssociated } from "src/utils/form.utils";
-    const InputText_base: import("@/index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    import type { FormAssociated } from "utils/form.utils";
+    const InputText_base: import("index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
     /**
      * A text input element using the wcp style. Fully form aware.
      * Can display multiline text (textarea) if configured to do so.
@@ -1116,9 +1127,9 @@ declare module "src/components/forms/input-text/input-text.component" {
         }
     }
 }
-declare module "src/components/layout/aside/aside.component" {
+declare module "components/layout/aside/aside.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Aside_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const Aside_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * To toggle the side bar remotely, you can dispatch a custom event on the global window object:
      * ```js
@@ -1174,7 +1185,7 @@ declare module "src/components/layout/aside/aside.component" {
         }
     }
 }
-declare module "src/components/layout/layout/layout.component" {
+declare module "components/layout/layout/layout.component" {
     import { LitElement, type TemplateResult } from 'lit';
     /**
      * @example
@@ -1199,7 +1210,7 @@ declare module "src/components/layout/layout/layout.component" {
         }
     }
 }
-declare module "src/components/layout/main/main.component" {
+declare module "components/layout/main/main.component" {
     import { LitElement, type TemplateResult } from 'lit';
     /**
      * @slot - Projects elements to the main content
@@ -1219,7 +1230,7 @@ declare module "src/components/layout/main/main.component" {
         }
     }
 }
-declare module "src/utils/compression.utils" {
+declare module "utils/compression.utils" {
     /**
      *	Compress a string with browser native APIs into a string representation
      *
@@ -1237,7 +1248,7 @@ declare module "src/utils/compression.utils" {
      */
     export function decompress(data: string, encoding: CompressionFormat): Promise<string>;
 }
-declare module "src/utils/dom.utils" {
+declare module "utils/dom.utils" {
     export function isElementWithin(element: Element, container?: Element): boolean;
     /**
      * Delivers the relative boundary of an element to an optional parent.
@@ -1253,7 +1264,7 @@ declare module "src/utils/dom.utils" {
      */
     export function isDescendantOf(element: Element, ancestor: string): boolean;
 }
-declare module "src/utils/parser.types" {
+declare module "utils/parser.types" {
     /**
      * Wraps custom element field declarations to provide additional meta data.
      */
@@ -1361,7 +1372,7 @@ declare module "src/utils/parser.types" {
         new (data: object, exclude?: string[]): Manifest;
     };
 }
-declare module "src/parsers/cem/utils" {
+declare module "parsers/cem/utils" {
     import type * as CEM from 'custom-elements-manifest';
     export type CustomElementDeclarationWithExamples = CEM.CustomElementDeclaration & {
         examples: string[];
@@ -1381,32 +1392,32 @@ declare module "src/parsers/cem/utils" {
     export function unwrapString(value: string): string;
     export function getEnumValues(field: CEM.CustomElementField): string[];
 }
-declare module "src/parsers/cem/1.0.0/cem-field" {
-    import type { Field } from "src/utils/parser.types";
+declare module "parsers/cem/1.0.0/cem-field" {
+    import type { Field } from "utils/parser.types";
     export const CemField: Field;
 }
-declare module "src/parsers/cem/1.0.0/cem-slot" {
-    import type { Slot } from "src/utils/parser.types";
+declare module "parsers/cem/1.0.0/cem-slot" {
+    import type { Slot } from "utils/parser.types";
     export const CemSlot: Slot;
 }
-declare module "src/parsers/cem/1.0.0/cem-element" {
-    import type { Element } from "src/utils/parser.types";
+declare module "parsers/cem/1.0.0/cem-element" {
+    import type { Element } from "utils/parser.types";
     export const CemElement: Element;
 }
-declare module "src/parsers/cem/1.0.0/cem-parser" {
-    import type { Parser } from "src/utils/parser.types";
+declare module "parsers/cem/1.0.0/cem-parser" {
+    import type { Parser } from "utils/parser.types";
     export const CemParser: Parser;
 }
-declare module "src/parsers/cem/parse" {
-    import type { Manifest } from "src/utils/parser.types";
+declare module "parsers/cem/parse" {
+    import type { Manifest } from "utils/parser.types";
     /**
      * Parses given manifest data with the appropriate CEM parser.
      * Will throw an error if no parser for the given schema version is found, or if the given data is invalid.
      */
     export const parseCEM: (data: object, exclude?: string[]) => Manifest;
 }
-declare module "src/utils/manifest.utils" {
-    import type { Manifest } from "src/utils/parser.types";
+declare module "utils/manifest.utils" {
+    import type { Manifest } from "utils/parser.types";
     global {
         interface WCP {
             manifest: Manifest;
@@ -1418,7 +1429,7 @@ declare module "src/utils/manifest.utils" {
     export function loadManifest(manifestUrl: string, excludeElements: string[]): Promise<Manifest>;
     export function getManifest(): Manifest;
 }
-declare module "src/utils/router.utils" {
+declare module "utils/router.utils" {
     import type { LitElement, TemplateResult } from 'lit';
     export type Params = Record<string, string | undefined>;
     export type Route = {
@@ -1477,15 +1488,15 @@ declare module "src/utils/router.utils" {
         outlet(): TemplateResult;
     }
 }
-declare module "src/utils/parser.utils" {
-    import type * as Parsed from "src/utils/parser.types";
+declare module "utils/parser.utils" {
+    import type * as Parsed from "utils/parser.types";
     /**
      * Prepares a lit compatible template key for a given field
      */
     export function litKey(field: Parsed.Field): string;
 }
-declare module "src/components/plugins/stage-editor/stage-editor.utils" {
-    import type * as Parsed from "src/utils/parser.types";
+declare module "components/plugins/stage-editor/stage-editor.utils" {
+    import type * as Parsed from "utils/parser.types";
     /**
      * State of the custom element.
      */
@@ -1529,16 +1540,16 @@ declare module "src/components/plugins/stage-editor/stage-editor.utils" {
      */
     export function decompressElementData(compressed: string): Promise<ElementData>;
 }
-declare module "src/components/plugins/preview-editor-link/preview-editor-link.utils" {
-    import type { ElementData } from "src/components/plugins/stage-editor/stage-editor.utils";
+declare module "components/plugins/preview-editor-link/preview-editor-link.utils" {
+    import type { ElementData } from "components/plugins/stage-editor/stage-editor.utils";
     /**
      * Prepares an initial state object for the given element definition.
      */
     export function readCurrentElementData(ref: HTMLElement): ElementData;
 }
-declare module "src/components/plugins/preview-editor-link/preview-editor-link.plugin" {
+declare module "components/plugins/preview-editor-link/preview-editor-link.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
-    import type { PreviewPlugin } from "src/utils/plugin.utils";
+    import type { PreviewPlugin } from "utils/plugin.utils";
     /**
      * Links all found custom elements in a preview with their current state to the editor to be further played around with.
      *
@@ -1565,9 +1576,9 @@ declare module "src/components/plugins/preview-editor-link/preview-editor-link.p
         }
     }
 }
-declare module "src/components/plugins/preview-editor-link/preview-editor-link-hint/preview-editor-link-hint.component" {
+declare module "components/plugins/preview-editor-link/preview-editor-link-hint/preview-editor-link-hint.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const PreviewEditorLinkHint_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const PreviewEditorLinkHint_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows a hint to a given preview element.
      *
@@ -1613,11 +1624,11 @@ declare module "src/components/plugins/preview-editor-link/preview-editor-link-h
         }
     }
 }
-declare module "src/components/plugins/preview-simulate-viewports/preview-simulate-viewports.plugin" {
+declare module "components/plugins/preview-simulate-viewports/preview-simulate-viewports.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
-    import type { PreviewPlugin } from "src/utils/plugin.utils";
+    import type { PreviewPlugin } from "utils/plugin.utils";
     type Viewport = 'mobile' | 'tablet' | 'desktop' | 'wide';
-    const PreviewSimulateViewports_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const PreviewSimulateViewports_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Simulates various viewports for a custom element preview.
      *
@@ -1663,13 +1674,13 @@ declare module "src/components/plugins/preview-simulate-viewports/preview-simula
         }
     }
 }
-declare module "src/utils/debounce.utils" {
+declare module "utils/debounce.utils" {
     export function debounce<T extends (...args: Parameters<T>) => void>(this: ThisParameterType<T>, fn: T, wait?: number): (...args: Parameters<T>) => void;
 }
-declare module "src/components/plugins/stage-editor/stage-editor.plugin" {
+declare module "components/plugins/stage-editor/stage-editor.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
-    import type { StagePlugin } from "src/utils/plugin.utils";
-    const StageEditor_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    import type { StagePlugin } from "utils/plugin.utils";
+    const StageEditor_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Allows editing a custom element.
      *
@@ -1696,11 +1707,11 @@ declare module "src/components/plugins/stage-editor/stage-editor.plugin" {
         }
     }
 }
-declare module "src/components/plugins/stage-editor/stage-editor-controls/stage-editor-controls.component" {
+declare module "components/plugins/stage-editor/stage-editor-controls/stage-editor-controls.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    import type * as Parsed from "src/utils/parser.types";
-    import { type ElementData } from "src/components/plugins/stage-editor/stage-editor.utils";
-    const StageEditorControls_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    import type * as Parsed from "utils/parser.types";
+    import { type ElementData } from "components/plugins/stage-editor/stage-editor.utils";
+    const StageEditorControls_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @element wcp-stage-editor-controls
      *
@@ -1734,9 +1745,9 @@ declare module "src/components/plugins/stage-editor/stage-editor-controls/stage-
         }
     }
 }
-declare module "src/components/plugins/stage-editor/stage-editor-preview/stage-editor-preview.component" {
+declare module "components/plugins/stage-editor/stage-editor-preview/stage-editor-preview.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    import type { ElementData } from "src/components/plugins/stage-editor/stage-editor.utils";
+    import type { ElementData } from "components/plugins/stage-editor/stage-editor.utils";
     /**
      * @element wcp-stage-editor-preview
      *
@@ -1760,10 +1771,10 @@ declare module "src/components/plugins/stage-editor/stage-editor-preview/stage-e
         }
     }
 }
-declare module "src/components/plugins/stage-examples/stage-examples.plugin" {
+declare module "components/plugins/stage-examples/stage-examples.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
-    import type { StagePlugin } from "src/utils/plugin.utils";
-    const StageExamples_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    import type { StagePlugin } from "utils/plugin.utils";
+    const StageExamples_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows the examples of a custom element manifest.
      *
@@ -1790,10 +1801,10 @@ declare module "src/components/plugins/stage-examples/stage-examples.plugin" {
         }
     }
 }
-declare module "src/components/plugins/stage-readme/stage-readme.plugin" {
+declare module "components/plugins/stage-readme/stage-readme.plugin" {
     import { LitElement, type TemplateResult } from 'lit';
-    import type { StagePlugin } from "src/utils/plugin.utils";
-    const StageReadme_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    import type { StagePlugin } from "utils/plugin.utils";
+    const StageReadme_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows the readme of a custom element.
      *
@@ -1818,9 +1829,9 @@ declare module "src/components/plugins/stage-readme/stage-readme.plugin" {
         }
     }
 }
-declare module "src/utils/navigation.utils" {
-    import type { Config } from "src/utils/config.utils";
-    import type { Element, Manifest } from "src/utils/parser.types";
+declare module "utils/navigation.utils" {
+    import type { Config } from "utils/config.utils";
+    import type { Element, Manifest } from "utils/parser.types";
     /**
      * Defines the structure of the navigation items.
      */
@@ -1844,18 +1855,18 @@ declare module "src/utils/navigation.utils" {
     export function matchesSearch(content: string, terms: string[], minSearchLength?: number): boolean;
     export function filterItems(items: GroupedNavigationItems, terms: string[], minSearchLength?: number): GroupedNavigationItems;
 }
-declare module "src/mixins/routable.mixin" {
+declare module "mixins/routable.mixin" {
     import type { LitElement } from 'lit';
-    import type { Constructor } from "src/utils/mixin.types";
-    import { type RegisterRoutes, Router } from "src/utils/router.utils";
+    import type { Constructor } from "utils/mixin.types";
+    import { type RegisterRoutes, Router } from "utils/router.utils";
     class RoutableInterface {
         router: Router;
     }
     export const Routable: (registerRoutes?: RegisterRoutes) => <T extends Constructor<LitElement>>(superClass: T) => Constructor<RoutableInterface> & T;
 }
-declare module "src/components/root/root-navigation/root-navigation.component" {
+declare module "components/root/root-navigation/root-navigation.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    import { type GroupedNavigationItems } from "src/utils/navigation.utils";
+    import { type GroupedNavigationItems } from "utils/navigation.utils";
     /**
      * Manages the main root-navigation in the application root.
      *
@@ -1881,18 +1892,18 @@ declare module "src/components/root/root-navigation/root-navigation.component" {
         }
     }
 }
-declare module "src/components/root/root.routes" {
-    import { type Route } from "src/utils/router.utils";
+declare module "components/root/root.routes" {
+    import { type Route } from "utils/router.utils";
     export const prepareRoutes: () => Route[];
 }
-declare module "src/components/root/root.component" {
+declare module "components/root/root.component" {
     import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
     import { LitElement, type TemplateResult } from 'lit';
-    import { type GroupedNavigationItems } from "src/utils/navigation.utils";
-    import type { RootNavigation } from "src/components/root/root-navigation/root-navigation.component";
-    const Root_base: import("@/index.js").Constructor<{
-        router: import("@/index.js").Router;
-    }> & import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    import { type GroupedNavigationItems } from "utils/navigation.utils";
+    import type { RootNavigation } from "components/root/root-navigation/root-navigation.component";
+    const Root_base: import("index.js").Constructor<{
+        router: import("index.js").Router;
+    }> & import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @slot logo - Allows setting a custom logo to be displayed in the title.
      * @slot preview-controls - Can be used to inject additional preview controls.
@@ -1938,10 +1949,10 @@ declare module "src/components/root/root.component" {
         }
     }
 }
-declare module "src/components/ui/button/button.component" {
+declare module "components/ui/button/button.component" {
     import { LitElement, type TemplateResult } from 'lit';
     import 'element-internals-polyfill';
-    const Button_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const Button_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows a button element.
      *
@@ -2064,9 +2075,9 @@ declare module "src/components/ui/button/button.component" {
         }
     }
 }
-declare module "src/components/ui/code/code.component" {
+declare module "components/ui/code/code.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Code_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const Code_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * Shows a formatted code snippet.
      *
@@ -2088,7 +2099,7 @@ declare module "src/components/ui/code/code.component" {
         }
     }
 }
-declare module "src/components/ui/icon/icon.component" {
+declare module "components/ui/icon/icon.component" {
     import { LitElement, type TemplateResult } from 'lit';
     /**
      * Shows an icon from the css.gg icon set.
@@ -2121,9 +2132,9 @@ declare module "src/components/ui/icon/icon.component" {
         }
     }
 }
-declare module "src/components/ui/tabs/tabs.component" {
+declare module "components/ui/tabs/tabs.component" {
     import { LitElement, type TemplateResult } from 'lit';
-    const Tabs_base: import("@/index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    const Tabs_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @example
      * ```html
@@ -2181,7 +2192,7 @@ declare module "src/components/ui/tabs/tabs.component" {
         }
     }
 }
-declare module "src/components/ui/title/title.component" {
+declare module "components/ui/title/title.component" {
     import { LitElement, type TemplateResult } from 'lit';
     /**
      * Shows the application title and a logo.
@@ -2215,72 +2226,63 @@ declare module "src/components/ui/title/title.component" {
         }
     }
 }
-declare module "src/index" {
+declare module "index" {
     /**
      * @file Automatically generated by barrelsby.
      */
-    export * from "src/components/features/markdown-example/markdown-example.component";
-    export * from "src/components/features/navigation/navigation.component";
-    export * from "src/components/features/navigation/navigation-item/navigation-item.component";
-    export * from "src/components/features/navigation/navigation-search/navigation-search.component";
-    export * from "src/components/features/preview/preview.component";
-    export * from "src/components/features/readme/readme.component";
-    export * from "src/components/features/readme-frame/readme-frame.component";
-    export * from "src/components/features/stage/stage.component";
-    export * from "src/components/features/toggle-color-scheme/toggle-color-scheme.component";
-    export * from "src/components/features/toggle-sidebar/toggle-sidebar.component";
-    export * from "src/components/features/topbar/topbar.component";
-    export * from "src/components/forms/input-checkbox/input-checkbox.component";
-    export * from "src/components/forms/input-code/input-code.component";
-    export * from "src/components/forms/input-number/input-number.component";
-    export * from "src/components/forms/input-radio/input-radio.component";
-    export * from "src/components/forms/input-select/input-select-option.component";
-    export * from "src/components/forms/input-select/input-select.component";
-    export * from "src/components/forms/input-text/input-text.component";
-    export * from "src/components/layout/aside/aside.component";
-    export * from "src/components/layout/layout/layout.component";
-    export * from "src/components/layout/main/main.component";
-    export * from "src/components/plugins/preview-editor-link/preview-editor-link.plugin";
-    export * from "src/components/plugins/preview-editor-link/preview-editor-link.utils";
-    export * from "src/components/plugins/preview-editor-link/preview-editor-link-hint/preview-editor-link-hint.component";
-    export * from "src/components/plugins/preview-simulate-viewports/preview-simulate-viewports.plugin";
-    export * from "src/components/plugins/stage-editor/stage-editor.plugin";
-    export * from "src/components/plugins/stage-editor/stage-editor.utils";
-    export * from "src/components/plugins/stage-editor/stage-editor-controls/stage-editor-controls.component";
-    export * from "src/components/plugins/stage-editor/stage-editor-preview/stage-editor-preview.component";
-    export * from "src/components/plugins/stage-examples/stage-examples.plugin";
-    export * from "src/components/plugins/stage-readme/stage-readme.plugin";
-    export * from "src/components/root/root.component";
-    export * from "src/components/root/root.routes";
-    export * from "src/components/root/root-navigation/root-navigation.component";
-    export * from "src/components/ui/button/button.component";
-    export * from "src/components/ui/code/code.component";
-    export * from "src/components/ui/icon/icon.component";
-    export * from "src/components/ui/tabs/tabs.component";
-    export * from "src/components/ui/title/title.component";
-    export * from "src/parsers/cem/utils";
-    export * from "src/utils/color-scheme.utils";
-    export * from "src/utils/compression.utils";
-    export * from "src/utils/config.utils";
-    export * from "src/utils/debounce.utils";
-    export * from "src/utils/dom.utils";
-    export * from "src/utils/form.utils";
-    export * from "src/utils/manifest.utils";
-    export * from "src/utils/markdown.utils";
-    export * from "src/utils/mixin.types";
-    export * from "src/utils/navigation.utils";
-    export * from "src/utils/parser.types";
-    export * from "src/utils/parser.utils";
-    export * from "src/utils/plugin.utils";
-    export * from "src/utils/router.utils";
+    export * from "components/features/markdown-example/markdown-example.component";
+    export * from "components/features/navigation/navigation.component";
+    export * from "components/features/navigation/navigation-item/navigation-item.component";
+    export * from "components/features/navigation/navigation-search/navigation-search.component";
+    export * from "components/features/preview/preview.component";
+    export * from "components/features/readme/readme.component";
+    export * from "components/features/readme-frame/readme-frame.component";
+    export * from "components/features/stage/stage.component";
+    export * from "components/features/toggle-color-scheme/toggle-color-scheme.component";
+    export * from "components/features/toggle-sidebar/toggle-sidebar.component";
+    export * from "components/features/topbar/topbar.component";
+    export * from "components/forms/input-checkbox/input-checkbox.component";
+    export * from "components/forms/input-code/input-code.component";
+    export * from "components/forms/input-number/input-number.component";
+    export * from "components/forms/input-radio/input-radio.component";
+    export * from "components/forms/input-select/input-select-option.component";
+    export * from "components/forms/input-select/input-select.component";
+    export * from "components/forms/input-text/input-text.component";
+    export * from "components/layout/aside/aside.component";
+    export * from "components/layout/layout/layout.component";
+    export * from "components/layout/main/main.component";
+    export * from "components/plugins/preview-editor-link/preview-editor-link.plugin";
+    export * from "components/plugins/preview-editor-link/preview-editor-link.utils";
+    export * from "components/plugins/preview-editor-link/preview-editor-link-hint/preview-editor-link-hint.component";
+    export * from "components/plugins/preview-simulate-viewports/preview-simulate-viewports.plugin";
+    export * from "components/plugins/stage-editor/stage-editor.plugin";
+    export * from "components/plugins/stage-editor/stage-editor.utils";
+    export * from "components/plugins/stage-editor/stage-editor-controls/stage-editor-controls.component";
+    export * from "components/plugins/stage-editor/stage-editor-preview/stage-editor-preview.component";
+    export * from "components/plugins/stage-examples/stage-examples.plugin";
+    export * from "components/plugins/stage-readme/stage-readme.plugin";
+    export * from "components/root/root.component";
+    export * from "components/root/root.routes";
+    export * from "components/root/root-navigation/root-navigation.component";
+    export * from "components/ui/button/button.component";
+    export * from "components/ui/code/code.component";
+    export * from "components/ui/icon/icon.component";
+    export * from "components/ui/tabs/tabs.component";
+    export * from "components/ui/title/title.component";
+    export * from "parsers/cem/utils";
+    export * from "utils/color-scheme.utils";
+    export * from "utils/compression.utils";
+    export * from "utils/config.utils";
+    export * from "utils/debounce.utils";
+    export * from "utils/dom.utils";
+    export * from "utils/form.utils";
+    export * from "utils/manifest.utils";
+    export * from "utils/markdown.utils";
+    export * from "utils/mixin.types";
+    export * from "utils/navigation.utils";
+    export * from "utils/parser.types";
+    export * from "utils/parser.utils";
+    export * from "utils/plugin.utils";
+    export * from "utils/router.utils";
 }
-declare module "jest-root-path-helper" {
-    const _exports: string;
-    export = _exports;
-}
-declare module "src/parsers/cem/parse.spec" { }
-declare module "src/parsers/cem/utils.spec" { }
-declare module "src/parsers/cem/1.0.0/cem-field.spec" { }
-declare module "src/utils/markdown.utils.spec" { }
-declare module "src/utils/parser.utils.spec" { }
 //# sourceMappingURL=index.d.ts.map
