@@ -1,7 +1,7 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { until } from 'lit/directives/until.js';
 
 import type * as Parsed from '@/utils/parser.types.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
@@ -13,7 +13,7 @@ import styles from './stage-examples.plugin.scss';
 
 /**
  * Shows the examples of a custom element manifest.
- * 
+ *
  * @element wcp-stage-examples
  *
  * @cssprop --wcp-stage-examples-spacing - Spacing between examples.
@@ -59,9 +59,7 @@ export class StageExamples extends ColorSchemable(LitElement) implements StagePl
     return html`
       ${map(
         this._element?.examples ?? [],
-        (example: string) => html`
-          <section>${unsafeHTML(renderMarkdown(example, true, this._element?.tagName))}</section>
-        `
+        (example: string) => html`<section .innerHTML="${until(renderMarkdown(example, true, this._element?.tagName))}"></section>`
       )}
     `;
   }

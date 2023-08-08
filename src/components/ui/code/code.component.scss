@@ -10,4 +10,8 @@ wcp-code {
       @include meta.load-css('prismjs/themes/prism-dark');
     }
   }
+
+  pre {
+    margin: 0;
+  }
 }

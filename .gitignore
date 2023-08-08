@@ -1,5 +1,19 @@
-/dist
+# dependencies
 /node_modules
+
+# test results
 /reports
+
+# generated
+/dist
 /src/config.schema.json
+
+# IDEs
+.idea/
+.vscode/
+
+# os
+.DS_Store
+
+# compressed dist files
 /*.tgz
