@@ -4,7 +4,6 @@ import type { LitCode } from 'lit-code';
 
 import { html, LitElement, type PropertyValues, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, query } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 import type { FormAssociated } from '@/utils/form.utils.js';
 import { Editable } from '@/mixins/editable.mixin.js';
@@ -106,11 +105,12 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
 
   @property({ type: String, reflect: true, noAccessor: true })
   set value(value: string | undefined) {
-    // pass to inner editor
-    this._code?.setCode(value ?? '');
+    value = value ?? '';
+    // pass to inner editor but prevent event dispatching
+    this._code?.setCode(value);
 
     // update the form state
-    this.internals.setFormValue(value ?? '');
+    this.internals.setFormValue(value);
     this.checkValidity();
   }
   get value(): string | undefined {
@@ -137,26 +137,19 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
   }
 
   @eventOptions({ passive: true })
-  handleUpdate({ detail }: CustomEvent<string>) {
+  handleInput(event: InputEvent) {
     // update the form state
-    this.internals.setFormValue(detail);
+    const { code } = event.target as LitCode;
+    this.internals.setFormValue(code);
     this.checkValidity();
 
-    // notify the form that the value has changed
-    this.dispatchEvent(
-      new InputEvent('input', { bubbles: true, composed: true, inputType: 'insertText', data: detail })
-    );
+    // re-dispatch input event, but now the target has a value (namely mine!)
+    this.dispatchEvent(event);
   }
 
   override renderInput(id: string) {
     return html`
-      <lit-code
-        id="${id}"
-        linenumbers
-        language="${this.language}"
-        code="${ifDefined(this.value)}"
-        @update="${this.handleUpdate}"
-      ></lit-code>
+      <lit-code id="${id}" linenumbers language="${this.language}" @input="${this.handleInput}"></lit-code>
     `;
   }
 }
