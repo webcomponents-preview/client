@@ -1,5 +1,17 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.3.2](https://github.com/webcomponents-preview/client/compare/0.3.1...0.3.2) (2023-08-08)
+
+
+### Bug Fixes
+
+* add missing export ([b7ff367](https://github.com/webcomponents-preview/client/commit/b7ff367cb4dfa185d92b843873352cbba4e799ee))
+* align it.each types ([c6fce6e](https://github.com/webcomponents-preview/client/commit/c6fce6e3f2e1ebb3a45a636606f203b83ec33b7c))
+* load missing grammars ([66c4967](https://github.com/webcomponents-preview/client/commit/66c496798fd47c4d71e75228254e3ac9dee3881e))
+* **wcp-readme:** render async markdown ([6eff363](https://github.com/webcomponents-preview/client/commit/6eff363f1f4e9389e95d3ee4a465faca0138bd1e))
+* **wcp-stage-editor:** render async markdown ([47ea75b](https://github.com/webcomponents-preview/client/commit/47ea75b7241fed3dd4a9bc522dae095d13ac91da))
+* **wcp-stage-examples:** render async markdown ([de0ad86](https://github.com/webcomponents-preview/client/commit/de0ad86f20a3c13e4963b2233d73526bb4a544f5))
+
 ## [0.3.1](https://github.com/webcomponents-preview/client/compare/0.3.0...0.3.1) (2023-08-07)
 
 
