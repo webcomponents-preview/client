@@ -2842,9 +2842,8 @@ legend {
         ${wl(F)`
           <${l}
             ${Mt(this.data?.attributes??{})}
-            ${Mt(this.data?.fields??{})}>
-            ${this.renderSlots()}
-          </${l}>
+            ${Mt(this.data?.fields??{})}
+          >${this.renderSlots()}</${l}>
         `}
       </wcp-preview>
     `}};ed.styles=B(_R),b([J({type:String,reflect:!0,attribute:"preview-tag-name"})],ed.prototype,"previewTagName",2),b([J({type:Object})],ed.prototype,"data",2),ed=b([S("wcp-stage-editor-preview")],ed);var lc=`
