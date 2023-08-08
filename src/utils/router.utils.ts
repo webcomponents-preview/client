@@ -70,7 +70,8 @@ export class Router {
    */
   static navigate(...slugs: (string | undefined)[]) {
     const path = slugs.filter(Boolean).join('/');
-    console.log(`Navigate to ${path}`);
+    // TODO: add some kind of logging
+    // console.log(`Navigate to ${path}`);
     location.hash = path;
   }
 
