@@ -658,7 +658,7 @@ declare module "components/forms/input-checkbox/input-checkbox.component" {
      * @example
      * ## Used within a form
      * ```html
-     * <form>
+     * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
      *   <wcp-input-checkbox label="Fully form enabled component"></wcp-input-checkbox>
      *   <button type="submit">Submit</button>
      *   <button type="reset">Reset</button>
@@ -749,7 +749,7 @@ declare module "components/forms/input-code/input-code.component" {
      * @example
      * ## Used within a form
      * ```html
-     * <form>
+     * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
      *   <wcp-input-code
      *     label="Fully form enabled component"
      *     value="<strong>Test</strong>"
@@ -768,7 +768,7 @@ declare module "components/forms/input-code/input-code.component" {
             slotAssignment?: SlotAssignmentMode | undefined;
         };
         static readonly styles: import("lit").CSSResultGroup[];
-        private readonly _code?;
+        private readonly editor?;
         autosize: boolean;
         disabled: boolean;
         required: boolean;
@@ -785,6 +785,115 @@ declare module "components/forms/input-code/input-code.component" {
     global {
         interface HTMLElementTagNameMap {
             'wcp-input-code': InputCode;
+        }
+    }
+}
+declare module "components/forms/input-key-value/input-key-value.component" {
+    import { LitElement, PropertyValues } from 'lit';
+    import type { FormAssociated } from "utils/form.utils";
+    const InputKeyValue_base: import("index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    /**
+     * A key-value input element using the wcp style. Fully form aware.
+     *
+     * @element wcp-input-key-value
+     *
+     * @property {string} label - The label of the input element.
+     * @cssprop --wcp-input-key-value-gutter - The gutter between the key-value pair inputs.
+     * @slot hint - Receives optional descriptions below the input.
+     *
+     * @example
+     * ## With optional label
+     * ```html
+     * <wcp-input-key-value label="With optional label"></wcp-input-key-value>
+     * ```
+     *
+     * @example
+     * ## Used within a form
+     * ```html
+     * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
+     *   <input type="hidden" name="hidden" value="hidden" />
+     *   <wcp-input-key-value name="embedded" label="Fully form enabled component"></wcp-input-key-value>
+     *   <button type="submit">Submit</button>
+     *   <button type="reset">Reset</button>
+     * </form>
+     * ```
+     */
+    export class InputKeyValue extends InputKeyValue_base implements FormAssociated<string> {
+        #private;
+        static readonly styles: import("lit").CSSResultGroup[];
+        autocomplete: boolean;
+        disabled: boolean;
+        required: boolean;
+        name?: string;
+        set value(value: string | undefined);
+        get value(): string | undefined;
+        protected firstUpdated(props: PropertyValues<this>): void;
+        formResetCallback(): void;
+        checkValidity(): boolean;
+        handleKeyInput(event: InputEvent): void;
+        handleValueInput(event: InputEvent): void;
+        renderInput(id: string): import("lit-html").TemplateResult<1>;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-input-key-value': InputKeyValue;
+        }
+    }
+}
+declare module "components/forms/input-key-value-pairs/input-key-value-pairs.component" {
+    import { LitElement, PropertyValues } from 'lit';
+    import type { FormAssociated } from "utils/form.utils";
+    const InputKeyValuePairs_base: import("index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+    /**
+     * A key-value pairs editor. Integrates into forms and allows editing string based form data.
+     *
+     * @element wcp-input-key-value-pairs
+     *
+     * @property {string} label - The label of the input element.
+     * @cssprop --wcp-input-key-value-pairs-gutter - The gutter between the key-value pair inputs.
+     * @slot hint - Receives optional descriptions below the input.
+     *
+     * @example
+     * ## With optional label
+     * ```html
+     * <wcp-input-key-value-pairs label="With optional label"></wcp-input-key-value-pairs>
+     * ```
+     *
+     * @example
+     * ## Used within a form
+     * ```html
+     * <form oninput="console.log(Array.from(new FormData(this).entries()))" onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
+     *   <wcp-input-key-value-pairs name="embedded." label="Fully form enabled component"></wcp-input-key-value-pairs>
+     *   <button type="submit">Submit</button>
+     *   <button type="reset">Reset</button>
+     * </form>
+     * ```
+     */
+    export class InputKeyValuePairs extends InputKeyValuePairs_base implements FormAssociated<FormData> {
+        #private;
+        static readonly styles: import("lit").CSSResultGroup[];
+        readonly form: HTMLFormElement;
+        /**
+         * The name acts as a prefix to the form data keys.
+         */
+        name: string;
+        autocomplete: boolean;
+        disabled: boolean;
+        required: boolean;
+        set value(value: FormData | undefined);
+        get value(): FormData | undefined;
+        set pairs(pairs: [string, string | undefined][]);
+        get pairs(): [string, string | undefined][];
+        protected firstUpdated(props: PropertyValues<this>): void;
+        formResetCallback(): void;
+        checkValidity(): boolean;
+        handleInput(): void;
+        handleRemoveClick(event: MouseEvent): void;
+        renderInput(): import("lit-html").TemplateResult<1>;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-input-key-value-pairs': InputKeyValuePairs;
         }
     }
 }
@@ -828,7 +937,7 @@ declare module "components/forms/input-number/input-number.component" {
      * @example
      * ## Used within a form
      * ```html
-     * <form>
+     * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
      *   <wcp-input-number label="Fully form enabled component"></wcp-input-number>
      *   <button type="submit">Submit</button>
      *   <button type="reset">Reset</button>
@@ -901,7 +1010,7 @@ declare module "components/forms/input-radio/input-radio.component" {
      * @example
      * ## Used within a form
      * ```html
-     * <form>
+     * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
      *   <wcp-input-radio label="Fully form enabled component"></wcp-input-radio>
      *   <button type="submit">Submit</button>
      *   <button type="reset">Reset</button>
@@ -1009,7 +1118,7 @@ declare module "components/forms/input-select/input-select.component" {
      * @example
      * ## Used within a form
      * ```html
-     * <form>
+     * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
      *   <wcp-input-select label="Fully form enabled component">
      *     <wcp-input-select-option value="foo" label="Foo"></wcp-input-select-option>
      *     <wcp-input-select-option value="bar" label="Bar"></wcp-input-select-option>
@@ -1091,7 +1200,7 @@ declare module "components/forms/input-text/input-text.component" {
      * @example
      * ## Used within a form
      * ```html
-     * <form>
+     * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
      *   <wcp-input-text label="Fully form enabled component"></wcp-input-text>
      *   <button type="submit">Submit</button>
      *   <button type="reset">Reset</button>
@@ -1745,6 +1854,7 @@ declare module "components/plugins/stage-editor/stage-editor-controls/stage-edit
         protected renderHint(content?: string): TemplateResult;
         protected renderFieldControl(field: Parsed.Field): TemplateResult;
         protected renderSlotControl(slot: Parsed.Slot): TemplateResult;
+        protected renderAttributeControls(): TemplateResult;
         protected render(): TemplateResult;
     }
     global {
@@ -1770,6 +1880,7 @@ declare module "components/plugins/stage-editor/stage-editor-preview/stage-edito
      * ```
      */
     export class StageEditorPreview extends LitElement {
+        #private;
         static readonly styles: import("lit").CSSResult;
         previewTagName?: string;
         data?: ElementData;
@@ -2149,7 +2260,7 @@ declare module "components/ui/tabs/tabs.component" {
     /**
      * @example
      * ```html
-     * <wcp-tabs tabs='{"first": "First tab", "second": "Second tab"}'>
+     * <wcp-tabs tabs='{"first": {"label": "First tab"}, "second": {"label": "Second tab"}}'>
      *  <div slot="first">First tab content</div>
      *  <div slot="second">Second tab content</div>
      * </wcp-tabs>
@@ -2159,7 +2270,17 @@ declare module "components/ui/tabs/tabs.component" {
      * ### Active tab preselected
      *
      * ```html
-     * <wcp-tabs tabs='{"first": "First tab", "second": "Second tab"}' active-tab="second">
+     * <wcp-tabs tabs='{"first": {"label": "First tab"}, "second": {"label": "Second tab"}}' active-tab="second">
+     *  <div slot="first">First tab content</div>
+     *  <div slot="second">Second tab content</div>
+     * </wcp-tabs>
+     * ```
+     *
+     * @example
+     * ### Disabled tabs
+     *
+     * ```html
+     * <wcp-tabs tabs='{"first": {"label": "First tab"}, "second": {"label": "Second tab", "disabled": true}}' active-tab="second">
      *  <div slot="first">First tab content</div>
      *  <div slot="second">Second tab content</div>
      * </wcp-tabs>
@@ -2254,6 +2375,8 @@ declare module "index" {
     export * from "components/features/topbar/topbar.component";
     export * from "components/forms/input-checkbox/input-checkbox.component";
     export * from "components/forms/input-code/input-code.component";
+    export * from "components/forms/input-key-value/input-key-value.component";
+    export * from "components/forms/input-key-value-pairs/input-key-value-pairs.component";
     export * from "components/forms/input-number/input-number.component";
     export * from "components/forms/input-radio/input-radio.component";
     export * from "components/forms/input-select/input-select-option.component";
