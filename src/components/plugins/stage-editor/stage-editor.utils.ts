@@ -15,7 +15,7 @@ export type ElementData = {
   attributes: Record<string, string | undefined>;
 
   /**
-   * Field state mapped by property name to property value. 
+   * Field state mapped by property name to property value.
    */
   fields: Record<string, string | number | boolean | undefined>;
 
@@ -111,13 +111,19 @@ export function mapFormData(data: FormData, element: Parsed.Element): ElementDat
       return { ...acc, slots: { ...acc.slots, [name]: `${value}` } };
     }
 
+    // map the field data
     if (group === 'field') {
-      // map the field data
       const field = element.fields.get(name);
       if (field === undefined) return acc;
 
       // pass the key-value pair into the data set
       return { ...acc, fields: { ...acc.fields, [litKey(field)]: parseFieldValue(field, value) } };
+    }
+
+    // map the attribute data
+    if (group === 'attribute') {
+      // pass the key-value pair into the data set
+      return { ...acc, attributes: { ...acc.attributes, [name]: `${value}` } };
     }
 
     return acc;
@@ -129,7 +135,6 @@ export function mapFormData(data: FormData, element: Parsed.Element): ElementDat
  */
 export async function compressFormData(formData: FormData, element: Parsed.Element): Promise<string> {
   const data = mapFormData(formData, element);
-  console.log(data);
   return encodeURIComponent(await compress(JSON.stringify(data), URI_DATA_PARAM_COMPRESSION));
 }
 

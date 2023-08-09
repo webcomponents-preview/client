@@ -147,6 +147,15 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
     `;
   }
 
+  protected renderAttributeControls(): TemplateResult {
+    return html`
+      <wcp-input-key-value-pairs
+        name="attribute."
+        .pairs="${Object.entries(this.data?.attributes ?? {})}"
+      ></wcp-input-key-value-pairs>
+    `;
+  }
+
   protected override render(): TemplateResult {
     return html`
       <form @input="${this.handleFormInput}">
@@ -174,7 +183,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
               </fieldset>
             `
           )}
-          <pre slot="attributes">${JSON.stringify(this.data?.attributes, null, 2)}</pre>
+          <fieldset slot="attributes">${this.renderAttributeControls()}</fieldset>
         </wcp-tabs>
       </form>
     `;
