@@ -4,6 +4,7 @@ import { html, LitElement, type TemplateResult, unsafeCSS, nothing } from 'lit';
 import { unsafeStatic, withStatic } from 'lit/static-html.js';
 import { customElement, property } from 'lit/decorators.js';
 
+import { keyed } from 'lit/directives/keyed.js';
 import { map } from 'lit/directives/map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
@@ -32,6 +33,38 @@ export class StageEditorPreview extends LitElement {
   @property({ type: Object })
   data?: ElementData;
 
+  /**
+   * Takes the given attributes record, eliminates the empty keys and aligns boolean attributes.
+   * @private
+   */
+  #alignAttributes(attributes: ElementData['attributes']): ElementData['attributes'] {
+    return Object.entries(attributes ?? {}).reduce((acc, [key, value]) => {
+      // align the ky by removing forbidden characters
+      key = key.replace(/[^a-zA-Z0-9-]/g, '');
+      // skip empty keys
+      if (key === '') return acc;
+      // missing value means boolean attribute
+      if (['', null, undefined].includes(value)) {
+        return { ...acc, [`?${key}`]: true };
+      }
+      // otherwise, just return the pair
+      return { ...acc, [key]: value };
+    }, {});
+  }
+
+  /**
+   * Prepares a record of lit aware attributes and properties.
+   * @private
+   */
+  #prepareProps(): Record<string, unknown> {
+    return {
+      // set the attributes first, as they may be overwritten by the fields...
+      ...this.#alignAttributes(this.data?.attributes ?? {}),
+      // ... if the same key is used in both
+      ...(this.data?.fields ?? {}),
+    };
+  }
+
   protected renderSlots(): TemplateResult {
     return html`
       ${map(
@@ -55,12 +88,14 @@ export class StageEditorPreview extends LitElement {
     const tag = unsafeStatic(this.previewTagName);
     return html`
       <wcp-preview preview-tag-name="${this.previewTagName}">
-        ${withStatic(html)`
-          <${tag}
-            ${spread(this.data?.attributes ?? {})}
-            ${spread(this.data?.fields ?? {})}
-          >${this.renderSlots()}</${tag}>
-        `}
+        ${keyed(
+          this.data,
+          withStatic(html)`
+            <${tag} ${spread(this.#prepareProps())}>
+              ${this.renderSlots()}
+            </${tag}>
+          `
+        )}
       </wcp-preview>
     `;
   }

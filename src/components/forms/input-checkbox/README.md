@@ -19,7 +19,7 @@ A checkbox input element using the wcp style. Fully form aware.
 ## Used within a form
 
 ```html
-<form>
+<form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
   <wcp-input-checkbox label="Fully form enabled component"></wcp-input-checkbox>
   <button type="submit">Submit</button>
   <button type="reset">Reset</button>

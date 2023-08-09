@@ -26,7 +26,7 @@ Can display multiline text (textarea) if configured to do so.
 ## Used within a form
 
 ```html
-<form>
+<form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
   <wcp-input-text label="Fully form enabled component"></wcp-input-text>
   <button type="submit">Submit</button>
   <button type="reset">Reset</button>

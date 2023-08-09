@@ -15,6 +15,8 @@ export * from './components/features/toggle-sidebar/toggle-sidebar.component.js'
 export * from './components/features/topbar/topbar.component.js';
 export * from './components/forms/input-checkbox/input-checkbox.component.js';
 export * from './components/forms/input-code/input-code.component.js';
+export * from './components/forms/input-key-value/input-key-value.component.js';
+export * from './components/forms/input-key-value-pairs/input-key-value-pairs.component.js';
 export * from './components/forms/input-number/input-number.component.js';
 export * from './components/forms/input-radio/input-radio.component.js';
 export * from './components/forms/input-select/input-select-option.component.js';

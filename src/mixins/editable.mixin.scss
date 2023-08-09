@@ -57,6 +57,7 @@ label {
 }
 
 #input,
+.input,
 slot[name='before'],
 slot[name='after'] {
   align-self: center;
@@ -68,7 +69,8 @@ slot[name='after'] {
   }
 }
 
-#input {
+#input,
+.input {
   grid-area: center;
   padding: var(---wcp-editable-spacing);
 }
@@ -97,7 +99,8 @@ slot[name='after'] {
   grid-area: after;
 }
 
-#border {
+#border,
+.border {
   grid-area: before / before / after / after;
 
   display: block;

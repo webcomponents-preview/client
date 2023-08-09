@@ -67,7 +67,7 @@ import styles from './input-code.component.scss';
  * @example
  * ## Used within a form
  * ```html
- * <form>
+ * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
  *   <wcp-input-code
  *     label="Fully form enabled component"
  *     value="<strong>Test</strong>"
@@ -86,7 +86,7 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
   #initialValue?: string;
 
   @query('lit-code')
-  private readonly _code?: LitCode;
+  private readonly editor?: LitCode;
 
   @property({ type: Boolean, reflect: true })
   autosize = false;
@@ -107,14 +107,14 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
   set value(value: string | undefined) {
     value = value ?? '';
     // pass to inner editor but prevent event dispatching
-    this._code?.setCode(value);
+    this.editor?.setCode(value);
 
     // update the form state
     this.internals.setFormValue(value);
     this.checkValidity();
   }
   get value(): string | undefined {
-    return this._code?.getCode();
+    return this.editor?.getCode();
   }
 
   protected override firstUpdated(props: PropertyValues<this>): void {
@@ -144,7 +144,7 @@ export class InputCode extends Editable()(LitElement) implements FormAssociated<
     this.checkValidity();
 
     // re-dispatch input event, but now the target has a value (namely mine!)
-    this.dispatchEvent(event);
+    this.dispatchEvent(new InputEvent(event.type, event));
   }
 
   override renderInput(id: string) {

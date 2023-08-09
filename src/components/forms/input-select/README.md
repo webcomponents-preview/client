@@ -37,7 +37,7 @@ A numeric input element using the wcp style. Fully form aware.
 ## Used within a form
 
 ```html
-<form>
+<form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
   <wcp-input-select label="Fully form enabled component">
     <wcp-input-select-option value="foo" label="Foo"></wcp-input-select-option>
     <wcp-input-select-option value="bar" label="Bar"></wcp-input-select-option>

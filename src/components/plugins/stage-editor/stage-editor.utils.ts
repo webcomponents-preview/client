@@ -15,7 +15,7 @@ export type ElementData = {
   attributes: Record<string, string | undefined>;
 
   /**
-   * Field state mapped by property name to property value. 
+   * Field state mapped by property name to property value.
    */
   fields: Record<string, string | number | boolean | undefined>;
 
@@ -89,7 +89,7 @@ export function alignFormDataWebkit(
   Array.from(element.fields.entries())
     .filter(([, field]) => field.isControllable && field.isBoolean)
     .forEach(([, field]) => {
-      const name = `fields.${field.name}`;
+      const name = `field.${field.name}`;
       const checkbox = elements.namedItem(name) as HTMLInputElement;
       if (!checkbox.checked) formData.delete(name);
     });
@@ -107,17 +107,23 @@ export function mapFormData(data: FormData, element: Parsed.Element): ElementDat
     const [group, name] = key.split('.');
 
     // map slots
-    if (group === 'slots') {
+    if (group === 'slot') {
       return { ...acc, slots: { ...acc.slots, [name]: `${value}` } };
     }
 
-    if (group === 'fields') {
-      // map the field data
+    // map the field data
+    if (group === 'field') {
       const field = element.fields.get(name);
       if (field === undefined) return acc;
 
       // pass the key-value pair into the data set
       return { ...acc, fields: { ...acc.fields, [litKey(field)]: parseFieldValue(field, value) } };
+    }
+
+    // map the attribute data
+    if (group === 'attribute') {
+      // pass the key-value pair into the data set
+      return { ...acc, attributes: { ...acc.attributes, [name]: `${value}` } };
     }
 
     return acc;

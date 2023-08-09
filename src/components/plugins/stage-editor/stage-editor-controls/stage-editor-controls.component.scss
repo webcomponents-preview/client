@@ -26,6 +26,7 @@ fieldset {
   display: flex;
   flex-direction: column;
   gap: utils.size(1);
+  padding: utils.size(1) 0;
 }
 
 legend {

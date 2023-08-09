@@ -9,7 +9,7 @@ import styles from './tabs.component.scss';
 /**
  * @example
  * ```html
- * <wcp-tabs tabs='{"first": "First tab", "second": "Second tab"}'>
+ * <wcp-tabs tabs='{"first": {"label": "First tab"}, "second": {"label": "Second tab"}}'>
  *  <div slot="first">First tab content</div>
  *  <div slot="second">Second tab content</div>
  * </wcp-tabs>
@@ -19,7 +19,17 @@ import styles from './tabs.component.scss';
  * ### Active tab preselected
  *
  * ```html
- * <wcp-tabs tabs='{"first": "First tab", "second": "Second tab"}' active-tab="second">
+ * <wcp-tabs tabs='{"first": {"label": "First tab"}, "second": {"label": "Second tab"}}' active-tab="second">
+ *  <div slot="first">First tab content</div>
+ *  <div slot="second">Second tab content</div>
+ * </wcp-tabs>
+ * ```
+ *
+ * @example
+ * ### Disabled tabs
+ *
+ * ```html
+ * <wcp-tabs tabs='{"first": {"label": "First tab"}, "second": {"label": "Second tab", "disabled": true}}' active-tab="second">
  *  <div slot="first">First tab content</div>
  *  <div slot="second">Second tab content</div>
  * </wcp-tabs>

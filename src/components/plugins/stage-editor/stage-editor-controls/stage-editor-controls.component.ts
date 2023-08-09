@@ -81,7 +81,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
         () =>
           html`
             <wcp-input-checkbox
-              name="fields.${field.name}"
+              name="field.${field.name}"
               label="${field.name}"
               ?checked="${Boolean(this.data?.fields[key])}"
             >
@@ -93,7 +93,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
         !field.isEnum && field.isString,
         () => html`
           <wcp-input-text
-            name="fields.${field.name}"
+            name="field.${field.name}"
             label="${field.attribute ?? field.name}"
             .value="${this.data?.fields[key] as string | undefined}"
           >
@@ -105,7 +105,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
         !field.isEnum && field.isNumber,
         () => html`
           <wcp-input-number
-            name="fields.${field.name}"
+            name="field.${field.name}"
             label="${field.attribute ?? field.name}"
             .value="${this.data?.fields[key] as number | undefined}"
           >
@@ -114,10 +114,10 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
         `
       )}
       ${when(
-        field.isEnum,
+        field.isEnum && field.isString,
         () => html`
           <wcp-input-select
-            name="fields.${field.name}"
+            name="field.${field.name}"
             label="${field.attribute ?? field.name}"
             .value="${this.data?.fields[key] as string | undefined}"
           >
@@ -138,7 +138,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
     return html`
       <wcp-input-code
         autosize
-        name="slots.${slot.name}"
+        name="slot.${slot.name}"
         label="${slot.name.trim() ? slot.name : 'Default'}"
         .value="${this.data?.slots[slot.name]}"
       >
@@ -147,27 +147,44 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
     `;
   }
 
+  protected renderAttributeControls(): TemplateResult {
+    return html`
+      <wcp-input-key-value-pairs
+        name="attribute."
+        .pairs="${Object.entries(this.data?.attributes ?? {})}"
+      ></wcp-input-key-value-pairs>
+    `;
+  }
+
   protected override render(): TemplateResult {
     return html`
       <form @input="${this.handleFormInput}">
-        ${when(
-          this._element?.hasFields,
-          () => html`
-            <fieldset>
-              <legend>Fields</legend>
-              ${map(this._element?.fields.values(), (field) => this.renderFieldControl(field))}
-            </fieldset>
-          `
-        )}
-        ${when(
-          this._element?.hasSlots,
-          () => html`
-            <fieldset>
-              <legend>Slots</legend>
-              ${map(this._element?.slots.values(), (slot) => this.renderSlotControl(slot))}
-            </fieldset>
-          `
-        )}
+        <wcp-tabs
+          .tabs="${{
+            fields: { label: 'Fields', disabled: !this._element?.hasFields },
+            slots: { label: 'Slots', disabled: !this._element?.hasSlots },
+            attributes: { label: 'Attributes' },
+          }}"
+          active-tab="fields"
+        >
+          ${when(
+            this._element?.hasFields,
+            () => html`
+              <fieldset slot="fields">
+                ${map(this._element?.fields.values(), (field) => this.renderFieldControl(field))}
+              </fieldset>
+            `
+          )}
+          ${when(
+            this._element?.hasSlots,
+            () => html`
+              <fieldset slot="slots">
+                ${map(this._element?.slots.values(), (slot) => this.renderSlotControl(slot))}
+              </fieldset>
+            `
+          )}
+          <fieldset slot="attributes">${this.renderAttributeControls()}</fieldset>
+        </wcp-tabs>
       </form>
     `;
   }
