@@ -1,5 +1,22 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+# [0.4.0](https://github.com/webcomponents-preview/client/compare/0.3.4...0.4.0) (2023-08-09)
+
+
+### Bug Fixes
+
+* **wcp-input-code:** redispatch event with ([bbd9082](https://github.com/webcomponents-preview/client/commit/bbd9082948d8874726ad8ed9e0c71380a2b05992))
+* **wcp-stage-editor-controls:** allow string based dropdowns only ([a4232fa](https://github.com/webcomponents-preview/client/commit/a4232fa2aa5ebc2a9f3a3862e4f898e47fde3aea))
+* **wcp-stage-editor-preview:** always re-render on element data changes ([4862bcd](https://github.com/webcomponents-preview/client/commit/4862bcdeae080e66fc572a51879a03ec10ef657c))
+
+
+### Features
+
+* **wcp-input-key-value-pairs:** introduce new component ([b4f2c77](https://github.com/webcomponents-preview/client/commit/b4f2c772396d355cb1235b83ff24ab53f2ab6d36))
+* **wcp-input-key-value:** introduce new component ([6d4f867](https://github.com/webcomponents-preview/client/commit/6d4f867b56a05cc8bce760edf5924d871a11e464))
+* **wcp-stage-editor-controls:** organize controls in tabs ([f24b21d](https://github.com/webcomponents-preview/client/commit/f24b21ddc62491fc45d449b1486188c17c84e834))
+* **wcp-stage-editor:** allow editing generic attributes ([27ffdd9](https://github.com/webcomponents-preview/client/commit/27ffdd94180d13fe1b8b4bb26d076a2dfc0909d8))
+
 ## [0.3.4](https://github.com/webcomponents-preview/client/compare/0.3.3...0.3.4) (2023-08-08)
 
 
