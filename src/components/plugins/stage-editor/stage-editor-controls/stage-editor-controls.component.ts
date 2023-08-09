@@ -114,7 +114,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
         `
       )}
       ${when(
-        field.isEnum,
+        field.isEnum && field.isString,
         () => html`
           <wcp-input-select
             name="field.${field.name}"
