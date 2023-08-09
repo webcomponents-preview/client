@@ -1,0 +1,12 @@
+@use '@/styles/utils' as utils;
+
+:host {
+  ---wcp-input-key-value-pairs-gutter: var(--wcp-input-key-value-pairs-gutter, #{utils.size(1)});
+}
+
+form {
+  grid-area: center;
+
+  display: grid;
+  gap: var(---wcp-input-key-value-pairs-gutter);
+}
