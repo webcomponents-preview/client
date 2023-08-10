@@ -82,7 +82,7 @@ export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) i
   #initialValue?: string;
 
   @query('select')
-  private readonly input!: HTMLSelectElement;
+  private readonly input?: HTMLSelectElement;
 
   @property({ type: Boolean, reflect: true })
   autocomplete = false;
@@ -112,7 +112,7 @@ export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) i
   }
 
   checkValidity(): boolean {
-    if (!this.input.checkValidity()) {
+    if (!this.input?.checkValidity()) {
       this.internals.setValidity({ customError: true }, 'Invalid input');
     } else {
       this.internals.setValidity({});
@@ -138,8 +138,8 @@ export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) i
       .filter((element) => element instanceof InputSelectOption) as InputSelectOption[];
 
     // clear the input and append the options as copies
-    this.input.innerHTML = '';
-    this.input.append(
+    this.input!.innerHTML = '';
+    this.input!.append(
       ...options.map((option) => {
         const copy = document.createElement('option');
         copy.value = option.value ?? '';
