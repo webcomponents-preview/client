@@ -2881,7 +2881,7 @@
               "kind": "field",
               "name": "input",
               "type": {
-                "text": "HTMLSelectElement"
+                "text": "HTMLSelectElement | undefined"
               },
               "privacy": "private",
               "readonly": true

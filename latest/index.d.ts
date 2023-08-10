@@ -1132,7 +1132,7 @@ declare module "components/forms/input-select/input-select.component" {
     export class InputSelect extends InputSelect_base implements FormAssociated<string> {
         #private;
         static readonly styles: import("lit").CSSResultGroup[];
-        private readonly input;
+        private readonly input?;
         autocomplete: boolean;
         disabled: boolean;
         readonly: boolean;
