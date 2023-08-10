@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.4.1](https://github.com/webcomponents-preview/client/compare/0.4.0...0.4.1) (2023-08-10)
+
+
+### Bug Fixes
+
+* **wcp-input-select:** align input query type ([4632896](https://github.com/webcomponents-preview/client/commit/463289617e08e83364c709587a2d40121f12a382))
+
 # [0.4.0](https://github.com/webcomponents-preview/client/compare/0.3.4...0.4.0) (2023-08-09)
 
 
