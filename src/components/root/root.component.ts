@@ -114,10 +114,10 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
             <wcp-topbar>
               <wcp-toggle-sidebar></wcp-toggle-sidebar>
               <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
-              <slot name="preview-controls"></slot>
+              <slot name="topbar-plugins"></slot>
             </wcp-topbar>
 
-            <slot name="preview-frame">${this.router.outlet()}</slot>
+            <slot name="stage">${this.router.outlet()}</slot>
           </wcp-layout>
         `
       )}
