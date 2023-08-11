@@ -36,6 +36,11 @@ export type PreviewPlugin = Plugin & {
 };
 
 /**
+ * Type to be used with topbar plugins.
+ */
+export type TopbarPlugin = Plugin;
+
+/**
  * Type guard for generic plugins.
  */
 export function isPlugin(element: Element): element is Plugin {
