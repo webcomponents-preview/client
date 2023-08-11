@@ -24,7 +24,7 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   readonly #manifest = getManifest();
 
   readonly #overlay = document.createElement('div');
-  
+
   readonly name = 'editor-link';
   readonly label = 'Show in editor';
 
@@ -50,6 +50,14 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
       composed: true,
     });
     this.dispatchEvent(event);
+  }
+
+  #observeGlobalToggle() {
+    window.addEventListener('wcp-preview-editor-link-hint:toggle', this.#handleGlobalToggle, false);
+  }
+
+  #unobserveGlobalToggle() {
+    window.removeEventListener('wcp-preview-editor-link-hint:toggle', this.#handleGlobalToggle, false);
   }
 
   #attachOverlay() {
@@ -88,6 +96,11 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   #handleContainerScroll() {
     this.#overlay.style.transform = `translateY(-${this.container.scrollTop ?? 0}px)`;
   }
+
+  #handleGlobalToggle = (({ detail: enabled }: CustomEvent<boolean>) => {
+    this.enabled = enabled;
+    this.#setupHints();
+  }).bind(this);
 
   #handleContainerSlotChange() {
     this.#attachHints();
@@ -155,6 +168,7 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
 
     this.#setupHints();
     this.#checkAvailability();
+    this.#observeGlobalToggle();
   }
 
   adoptedCallback() {
@@ -162,6 +176,7 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   }
 
   override disconnectedCallback() {
+    this.#unobserveGlobalToggle();
     this.#teardownHints();
 
     super.disconnectedCallback();
