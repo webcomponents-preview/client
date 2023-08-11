@@ -4,13 +4,12 @@
 
 ## Properties
 
-| Property          | Attribute      | Modifiers | Type                  | Default     | Description                                      |
-|-------------------|----------------|-----------|-----------------------|-------------|--------------------------------------------------|
-| `configUrl`       | `config-url`   |           | `string \| undefined` |             | Allows to set a url to load a config file from.  |
-| `inline`          | `inline`       |           | `boolean`             | false       | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |
-| `manifestUrl`     | `manifest-url` |           | `string`              |             | Defines the location of the custom element manifest file. |
-| `navigationItems` |                |           |                       | "new Map()" |                                                  |
-| `navigationRef`   |                | readonly  |                       |             |                                                  |
+| Property        | Attribute      | Modifiers | Type                  | Default | Description                                      |
+|-----------------|----------------|-----------|-----------------------|---------|--------------------------------------------------|
+| `configUrl`     | `config-url`   |           | `string \| undefined` |         | Allows to set a url to load a config file from.  |
+| `inline`        | `inline`       |           | `boolean`             | false   | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |
+| `manifestUrl`   | `manifest-url` |           | `string`              |         | Defines the location of the custom element manifest file. |
+| `navigationRef` |                | readonly  |                       |         |                                                  |
 
 ## Methods
 

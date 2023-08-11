@@ -32,6 +32,12 @@ export type Config = {
   previewFramePlugins: string[];
 
   /**
+   * The plugins to be used for the topbar.
+   * Defaults to the preview editor link hint toggle.
+   */
+  topbarPlugins: string[];
+
+  /**
    * Defines readmes to be loaded from external sources to be displayed in the navigation.
    */
   additionalReadmes: {
@@ -81,6 +87,7 @@ export const defaultConfig = {
   initialPreviewTab: 'viewer',
   previewPlugins: ['wcp-preview-simulate-viewports', 'wcp-preview-editor-link'],
   previewFramePlugins: ['wcp-stage-examples', 'wcp-stage-readme', 'wcp-stage-editor'],
+  topbarPlugins: ['wcp-toggle-sidebar', 'wcp-toggle-color-scheme', 'wcp-topbar-preview-editor-link-toggle'],
   additionalReadmes: [],
   labels: {
     title: 'Web Component Preview',
@@ -106,7 +113,7 @@ export function mergeConfigWithDefaults(config: Partial<Config>): Config {
 export async function loadConfig(url = 'config.json'): Promise<Config> {
   const response = await fetch(url);
   const config = mergeConfigWithDefaults(await response.json());
-  
+
   if (window.wcp === undefined) {
     window.wcp = {} as Window['wcp'];
   }

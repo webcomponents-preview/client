@@ -1,8 +1,11 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
 
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { unsafeStatic, html as staticHtml } from 'lit/static-html.js';
 import { customElement, eventOptions, property, query, state } from 'lit/decorators.js';
+
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
@@ -39,7 +42,10 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
   private ready = false;
 
   @state()
-  navigationItems: GroupedNavigationItems = new Map();
+  private topbarPlugins: string[] = [];
+
+  @state()
+  private navigationItems: GroupedNavigationItems = new Map();
 
   @query('wcp-root-navigation')
   readonly navigationRef!: RootNavigation;
@@ -76,6 +82,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
     // set the document title and prepare the navigation
     document.title = config.labels.title;
     this.navigationItems = prepareNavigation(manifest, config);
+    this.topbarPlugins = config.topbarPlugins ?? [];
 
     // prepare and set routes
     const routes = prepareRoutes();
@@ -112,8 +119,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
             ></wcp-root-navigation>
 
             <wcp-topbar>
-              <wcp-toggle-sidebar></wcp-toggle-sidebar>
-              <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
+              ${map(this.topbarPlugins, (plugin) => staticHtml`<${unsafeStatic(plugin)}></${unsafeStatic(plugin)}>`)}
               <slot name="topbar-plugins"></slot>
             </wcp-topbar>
 
