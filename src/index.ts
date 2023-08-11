@@ -52,6 +52,7 @@ export * from './plugins/stage/stage-editor/stage-editor-controls/stage-editor-c
 export * from './plugins/stage/stage-editor/stage-editor-preview/stage-editor-preview.component.js';
 export * from './plugins/stage/stage-examples/stage-examples.plugin.js';
 export * from './plugins/stage/stage-readme/stage-readme.plugin.js';
+export * from './plugins/topbar/topbar-preview-editor-link-toggle/topbar-preview-editor-link-toggle.plugin.js';
 export * from './utils/color-scheme.utils.js';
 export * from './utils/compression.utils.js';
 export * from './utils/config.utils.js';
