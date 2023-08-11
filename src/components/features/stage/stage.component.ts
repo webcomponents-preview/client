@@ -5,7 +5,7 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
-import { type StagePlugin, findAllPlugins } from '@/utils/plugin.utils.js';
+import { isStagePlugin, type StagePlugin } from '@/utils/plugin.utils.js';
 
 import styles from './stage.component.scss';
 
@@ -56,7 +56,7 @@ export class Stage extends ColorSchemable(LitElement) {
   @eventOptions({ passive: true })
   protected handleSlotChange(event: Event) {
     const slot = event.target as HTMLSlotElement;
-    const plugins = findAllPlugins(slot);
+    const plugins = slot.assignedElements().filter(isStagePlugin);
 
     // once the plugins are slotted into their respective targets, the slot
     // change listener may be called again with an empty result set

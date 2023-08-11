@@ -17,7 +17,6 @@ export type Plugin = Element & {
   readonly name: string;
   readonly label: string;
   readonly available: boolean;
-  readonly previewTagName: string;
 };
 
 /**
@@ -25,6 +24,7 @@ export type Plugin = Element & {
  */
 export type StagePlugin = Plugin & {
   readonly data?: string;
+  readonly previewTagName: string;
 };
 
 /**
@@ -32,12 +32,27 @@ export type StagePlugin = Plugin & {
  */
 export type PreviewPlugin = Plugin & {
   readonly container: HTMLElement;
+  readonly previewTagName: string;
 };
 
+/**
+ * Type guard for generic plugins.
+ */
 export function isPlugin(element: Element): element is Plugin {
   return 'name' in element && 'label' in element && 'available' in element;
 }
 
-export function findAllPlugins(slot: HTMLSlotElement): Plugin[] {
-  return slot.assignedElements().filter(isPlugin);
+/**
+ * Type guard for stage plugins.
+ */
+export function isStagePlugin(element: Element): element is StagePlugin {
+  return isPlugin(element) && 'previewTagName' in element;
+}
+
+/**
+ * Type guard for preview plugins.
+ * TODO: add container type guard
+ */
+export function isPreviewPlugin(element: Element): element is PreviewPlugin {
+  return isPlugin(element) && 'previewTagName' in element && 'container' in element;
 }
