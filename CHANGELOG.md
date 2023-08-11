@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.4.2](https://github.com/webcomponents-preview/client/compare/0.4.1...0.4.2) (2023-08-11)
+
+
+### Bug Fixes
+
+* **wcp-preview-editor-link:** ignore slot attribute ([358a78e](https://github.com/webcomponents-preview/client/commit/358a78e5d95abd1f81caa2f2a67c181e9bb1ce76))
+
 ## [0.4.1](https://github.com/webcomponents-preview/client/compare/0.4.0...0.4.1) (2023-08-10)
 
 
