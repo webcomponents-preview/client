@@ -20,6 +20,9 @@ export class StageReadme extends ColorSchemable(LitElement) implements StagePlug
 
   readonly #manifest = getManifest();
 
+  readonly name = 'readme';
+  readonly label = 'Readme';
+
   @state()
   private _element?: Parsed.Element;
 
@@ -44,12 +47,6 @@ export class StageReadme extends ColorSchemable(LitElement) implements StagePlug
       this.dispatchEvent(event);
     }
   }
-
-  @property({ type: String, reflect: true })
-  readonly name = 'readme';
-
-  @property({ type: String, reflect: true })
-  readonly label = 'Readme';
 
   // without ShadowDOM, we need to manually inject the styles
   protected override render(): TemplateResult {

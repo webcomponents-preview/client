@@ -34,6 +34,9 @@ export class StageEditor extends ColorSchemable(LitElement) implements StagePlug
     this.dispatchEvent(event);
   }, UPDATE_DEBOUNCE);
 
+  readonly name = 'editor';
+  readonly label = 'Editor';
+
   @state()
   private _element?: Parsed.Element;
 
@@ -52,12 +55,6 @@ export class StageEditor extends ColorSchemable(LitElement) implements StagePlug
 
   @property({ type: Boolean, reflect: true })
   readonly available = true;
-
-  @property({ type: String, reflect: true })
-  readonly name = 'editor';
-
-  @property({ type: String, reflect: true })
-  readonly label = 'Editor';
 
   async #prepareElementData(compressed?: string) {
     if (this._element === undefined) return;

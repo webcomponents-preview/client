@@ -47,6 +47,9 @@ const SCALE_FACTOR = 1;
 export class PreviewSimulateViewports extends ColorSchemable(LitElement) implements PreviewPlugin {
   static override readonly styles = unsafeCSS(styles);
 
+  readonly name = 'viewport';
+  readonly label = 'Viewport';
+
   readonly container!: HTMLElement;
 
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
@@ -54,12 +57,6 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
 
   @property({ type: Boolean, reflect: true })
   readonly available = true;
-
-  @property({ type: String, reflect: true })
-  readonly name = 'viewport';
-
-  @property({ type: String, reflect: true })
-  readonly label = 'Viewport';
 
   @property({ type: String, reflect: true, attribute: 'simulate-viewport' })
   private simulateViewport?: Viewport;

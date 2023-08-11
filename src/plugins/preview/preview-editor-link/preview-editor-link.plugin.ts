@@ -24,6 +24,9 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   readonly #manifest = getManifest();
 
   readonly #overlay = document.createElement('div');
+  
+  readonly name = 'editor-link';
+  readonly label = 'Show in editor';
 
   readonly container!: HTMLElement;
 
@@ -32,12 +35,6 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
 
   @property({ type: Boolean, reflect: true })
   available = true;
-
-  @property({ type: String, reflect: true })
-  readonly name = 'viewer-link';
-
-  @property({ type: String, reflect: true })
-  readonly label = 'Show in viewer';
 
   @property({ type: Boolean, reflect: true })
   enabled = false;
