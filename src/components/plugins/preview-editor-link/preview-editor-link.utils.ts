@@ -2,6 +2,8 @@ import { getManifest } from '@/utils/manifest.utils.js';
 import { litKey } from '@/utils/parser.utils.js';
 import type { ElementData } from '../stage-editor/stage-editor.utils.js';
 
+const IGNORED_ATTRIBUTES = ['slot'];
+
 /**
  * Prepares an initial state object for the given element definition by:
  * 1. Read all controllable fields from the element definition (from properties)
@@ -15,7 +17,7 @@ export function readCurrentElementData(ref: HTMLElement): ElementData {
   const elementData = getManifest().elements.get(ref.tagName.toLowerCase());
 
   // store all attributes already collected by the element definition
-  const skipAttributes: string[] = [];
+  const skipAttributes: string[] = [...IGNORED_ATTRIBUTES];
 
   // 1. get all controllable fields with their current values
   const fields =
