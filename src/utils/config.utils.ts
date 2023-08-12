@@ -46,6 +46,14 @@ export type Config = {
   }[];
 
   /**
+   * Sets the persistence of the global state. Defaults to 'session'.
+   * If set to 'none', the state will not be persisted at all and only kept in memory.
+   * If set to 'session', the state will be persisted in the session storage and restored.
+   * If set to 'local', the state will be persisted in the local storage and restored.
+   */
+  statePersistence: 'none' | 'session' | 'local';
+
+  /**
    * Labels to be translated or customized
    */
   labels: {
@@ -89,6 +97,7 @@ export const defaultConfig = {
   previewFramePlugins: ['wcp-stage-examples', 'wcp-stage-readme', 'wcp-stage-editor'],
   topbarPlugins: ['wcp-toggle-sidebar', 'wcp-toggle-color-scheme', 'wcp-topbar-preview-editor-link-toggle'],
   additionalReadmes: [],
+  statePersistence: 'session',
   labels: {
     title: 'Web Component Preview',
     additionalReadmeGroupName: 'Readmes',
