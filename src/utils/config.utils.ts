@@ -130,10 +130,12 @@ export async function loadConfig(url = 'config.json'): Promise<Config> {
     window.wcp.config = config;
   }
 
-  return getConfig();
+  return getConfig()!;
 }
 
-// convenience function to retrieve the config
-export function getConfig(): Config {
-  return window.wcp.config;
+/**
+ * Convenience function to retrieve the config
+ */
+export function getConfig(): Config | undefined {
+  return window.wcp?.config;
 }
