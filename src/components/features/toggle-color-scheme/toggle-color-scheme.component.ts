@@ -2,6 +2,7 @@ import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions } from 'lit/decorators.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
+import { persist } from '@/utils/state.utils.js';
 
 import styles from './toggle-color-scheme.component.scss';
 
@@ -19,9 +20,8 @@ export class ToggleColorScheme extends ColorSchemable(LitElement) {
 
   @eventOptions({ passive: true })
   handleButtonClick() {
-    const detail = this.colorScheme === 'dark' ? 'light' : 'dark';
-    const event = new CustomEvent('wcp-color-scheme:toggle', { detail });
-    window.dispatchEvent(event);
+    const colorScheme = this.colorScheme === 'dark' ? 'light' : 'dark';
+    persist('color-scheme', colorScheme);
   }
 
   protected override render(): TemplateResult {

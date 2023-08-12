@@ -1,7 +1,5 @@
 # wcp-root
 
-**Mixins:** ColorSchemable
-
 ## Properties
 
 | Property        | Attribute      | Modifiers | Type                  | Default | Description                                      |

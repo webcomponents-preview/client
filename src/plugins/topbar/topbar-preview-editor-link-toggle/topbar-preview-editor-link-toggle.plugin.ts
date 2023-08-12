@@ -3,6 +3,7 @@ import { customElement, eventOptions, property, state } from 'lit/decorators.js'
 import { classMap } from 'lit/directives/class-map.js';
 
 import type { TopbarPlugin } from '@/utils/plugin.utils.js';
+import { persist, read } from '@/utils/state.utils.js';
 
 import styles from './topbar-preview-editor-link-toggle.plugin.scss';
 
@@ -19,7 +20,7 @@ export class TopbarPreviewEditorLinkToggle extends LitElement implements TopbarP
   readonly label = 'Toggle all editor link hints globally';
 
   @state()
-  private enabled = false;
+  private enabled = read('editor-link-hint-visible') ?? false;
 
   @property({ type: Boolean, reflect: true })
   available = true;
@@ -27,9 +28,7 @@ export class TopbarPreviewEditorLinkToggle extends LitElement implements TopbarP
   @eventOptions({ passive: true })
   protected handleToggleClick() {
     this.enabled = !this.enabled;
-
-    const event = new CustomEvent('wcp-preview-editor-link-hint:toggle', { detail: this.enabled, composed: true });
-    window.dispatchEvent(event);
+    persist('editor-link-hint-visible', this.enabled);
   }
 
   protected override render(): TemplateResult {
@@ -47,9 +46,6 @@ export class TopbarPreviewEditorLinkToggle extends LitElement implements TopbarP
 }
 
 declare global {
-  interface WindowEventMap {
-    'wcp-preview-editor-link-hint:toggle': CustomEvent<boolean>;
-  }
 
   interface HTMLElementTagNameMap {
     'wcp-topbar-preview-editor-link-toggle': TopbarPreviewEditorLinkToggle;

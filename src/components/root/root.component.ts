@@ -8,7 +8,6 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { getConfig, loadConfig } from '@/utils/config.utils.js';
 import { type GroupedNavigationItems, prepareNavigation } from '@/utils/navigation.utils.js';
 import { Routable } from '@/mixins/routable.mixin.js';
@@ -35,7 +34,7 @@ import { loadManifest } from '../../utils/manifest.utils.js';
  * @emits wcp-root:active-element-changed - Fired when the active element changes. Carries the declaration of the new active element with it.
  */
 @customElement('wcp-root')
-export class Root extends Routable()(ColorSchemable(LitElement)) {
+export class Root extends Routable()(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
   @state()
@@ -99,7 +98,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
         this.ready,
         () => html`
           <wcp-layout>
-            <wcp-title slot="header" title="${ifDefined(getConfig().labels.title)}">
+            <wcp-title slot="header" title="${ifDefined(getConfig()?.labels.title)}">
               <slot name="logo" slot="logo">
                 <img src="${logo}" height="20px" />
               </slot>
@@ -114,7 +113,7 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
               slot="aside"
               min-search-length="2"
               current-path="${ifDefined(this.router.currentPath)}"
-              empty-message="${ifDefined(getConfig().labels.emptyNavigation)}"
+              empty-message="${ifDefined(getConfig()?.labels.emptyNavigation)}"
               .items="${this.navigationItems}"
             ></wcp-root-navigation>
 

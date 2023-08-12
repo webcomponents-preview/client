@@ -15,9 +15,3 @@ Shows a button to toggle the desired color-scheme.
 | Method              | Type       |
 |---------------------|------------|
 | `handleButtonClick` | `(): void` |
-
-## Events
-
-| Event                     |
-|---------------------------|
-| `wcp-color-scheme:toggle` |

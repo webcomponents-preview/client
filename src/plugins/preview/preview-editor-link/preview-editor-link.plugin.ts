@@ -7,6 +7,7 @@ import { isDescendantOf } from '@/utils/dom.utils.js';
 import { getManifest } from '@/utils/manifest.utils.js';
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
 import { Router } from '@/utils/router.utils.js';
+import { read } from '@/utils/state.utils.js';
 
 import { readCurrentElementData } from './preview-editor-link.utils.js';
 
@@ -37,7 +38,7 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   available = true;
 
   @property({ type: Boolean, reflect: true })
-  enabled = false;
+  enabled = read('editor-link-hint-visible') ?? false;
 
   #checkAvailability() {
     // check if the previewed element is in a viewer
@@ -53,11 +54,11 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   }
 
   #observeGlobalToggle() {
-    window.addEventListener('wcp-preview-editor-link-hint:toggle', this.#handleGlobalToggle, false);
+    window.addEventListener('wcp-state-changed:editor-link-hint-visible', this.#handleGlobalToggle, false);
   }
 
   #unobserveGlobalToggle() {
-    window.removeEventListener('wcp-preview-editor-link-hint:toggle', this.#handleGlobalToggle, false);
+    window.removeEventListener('wcp-state-changed:editor-link-hint-visible', this.#handleGlobalToggle, false);
   }
 
   #attachOverlay() {
@@ -93,18 +94,17 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
     this.container.removeEventListener('scroll', this.#handleContainerScroll, false);
   }
 
-  #handleContainerScroll() {
+  #handleContainerScroll = () => {
     this.#overlay.style.transform = `translateY(-${this.container.scrollTop ?? 0}px)`;
-  }
+  };
 
-  #handleGlobalToggle = (({ detail: enabled }: CustomEvent<boolean>) => {
+  #handleGlobalToggle = ({ detail: enabled }: CustomEvent<boolean>) => {
+    if (!this.available) return;
     this.enabled = enabled;
     this.#setupHints();
-  }).bind(this);
+  };
 
-  #handleContainerSlotChange() {
-    this.#attachHints();
-  }
+  #handleContainerSlotChange = () => this.#attachHints();
 
   #attachHints() {
     // gather all slotted elements
@@ -134,6 +134,7 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
 
   #setupHints() {
     if (this.enabled) {
+      this.#detachHints();
       this.#attachOverlay();
       this.#attachHints();
 
@@ -204,6 +205,10 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
 }
 
 declare global {
+  interface State {
+    'editor-link-hint-visible': boolean;
+  }
+
   interface HTMLElementTagNameMap {
     'wcp-preview-editor-link': PreviewEditorLink;
   }

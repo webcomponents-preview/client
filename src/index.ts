@@ -67,3 +67,4 @@ export * from './utils/parser.types.js';
 export * from './utils/parser.utils.js';
 export * from './utils/plugin.utils.js';
 export * from './utils/router.utils.js';
+export * from './utils/state.utils.js';
