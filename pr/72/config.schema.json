@@ -1,0 +1,96 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+        "additionalReadmes": {
+            "description": "Defines readmes to be loaded from external sources to be displayed in the navigation.",
+            "items": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "excludeElements": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "initialActiveElement": {
+            "description": "Allows setting an initial element to be displayed if no other element is selected.\nIf omitted, the first element will be used.",
+            "type": "string"
+        },
+        "initialCodePreviewTab": {
+            "description": "The code previews always consist of two tabs, one for the code and one for the preview.\nThis property defines the initial tab to be selected.",
+            "enum": [
+                "code",
+                "preview"
+            ],
+            "type": "string"
+        },
+        "initialPreviewTab": {
+            "description": "The initial tab to be selected in the preview. Will match the name of the plugin.",
+            "type": "string"
+        },
+        "labels": {
+            "description": "Labels to be translated or customized",
+            "properties": {
+                "additionalReadmeGroupName": {
+                    "description": "The name of the group to be used for eventually configured additional readmes.",
+                    "type": "string"
+                },
+                "emptyNavigation": {
+                    "description": "If the navigation is empty, either because no readmes nor elements are found or\nbecause the search query does not match any elements, use this label as fallback.",
+                    "type": "string"
+                },
+                "fallbackGroupName": {
+                    "description": "If no groups for elements are defined, use this label as fallback for all elements",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "The title of the application, displayed in sidebar header and browser tab",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "previewFramePlugins": {
+            "description": "The plugins to be used for the preview frame.\nDefaults to examples, readme and viewer.",
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "previewPlugins": {
+            "description": "The plugins to be used for the preview.\nSet to the viewport plugin by default.",
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "statePersistence": {
+            "description": "Sets the persistence of the global state. Defaults to 'session'.\nIf set to 'none', the state will not be persisted at all and only kept in memory.\nIf set to 'session', the state will be persisted in the session storage and restored.\nIf set to 'local', the state will be persisted in the local storage and restored.",
+            "enum": [
+                "local",
+                "none",
+                "session"
+            ],
+            "type": "string"
+        },
+        "topbarPlugins": {
+            "description": "The plugins to be used for the topbar.\nDefaults to the preview editor link hint toggle.",
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        }
+    },
+    "type": "object"
+}
+
