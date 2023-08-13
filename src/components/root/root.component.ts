@@ -110,6 +110,10 @@ export class Root extends LitElement {
 
   protected override render(): TemplateResult {
     return html`
+      <wcp-root-splash ?hidden="${this.ready}" @transitionend="${this.handleSplashTransitionEnd}">
+        Loading...
+      </wcp-root-splash>
+
       ${when(
         this.ready,
         () => html`

@@ -28,6 +28,7 @@ export * from './components/layout/main/main.component.js';
 export * from './components/root/root.component.js';
 export * from './components/root/root.routes.js';
 export * from './components/root/root-navigation/root-navigation.component.js';
+export * from './components/root/root-splash/root-splash.component.js';
 export * from './components/ui/button/button.component.js';
 export * from './components/ui/code/code.component.js';
 export * from './components/ui/icon/icon.component.js';
