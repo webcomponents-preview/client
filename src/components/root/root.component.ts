@@ -9,15 +9,15 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
 import { getConfig, loadConfig } from '@/utils/config.utils.js';
+import { loadManifest } from '@/utils/manifest.utils.js';
 import { type GroupedNavigationItems, prepareNavigation } from '@/utils/navigation.utils.js';
-import { Routable } from '@/mixins/routable.mixin.js';
+import { Router } from '@/utils/router.utils.js';
 
 import type { RootNavigation } from './root-navigation/root-navigation.component.js';
 import { prepareRoutes } from './root.routes.js';
 
 import logo from '@/assets/icons/logo.svg';
 import styles from './root.component.scss';
-import { loadManifest } from '../../utils/manifest.utils.js';
 
 /**
  * @slot logo - Allows setting a custom logo to be displayed in the title.
@@ -34,8 +34,10 @@ import { loadManifest } from '../../utils/manifest.utils.js';
  * @emits wcp-root:active-element-changed - Fired when the active element changes. Carries the declaration of the new active element with it.
  */
 @customElement('wcp-root')
-export class Root extends Routable()(LitElement) {
+export class Root extends LitElement {
   static override readonly styles = unsafeCSS(styles);
+
+  readonly #router = new Router(this);
 
   @state()
   private ready = false;
@@ -73,7 +75,16 @@ export class Root extends Routable()(LitElement) {
     this.navigationRef.searchTerms = detail.toLowerCase().split(' ');
   }
 
+  @eventOptions({ passive: true })
+  handleSplashTransitionEnd(event: Event) {
+    const splash = event.target as HTMLElement;
+    splash.remove();
+  }
+
   override async connectedCallback() {
+    // do not block the render loop to show some loading indicator
+    super.connectedCallback();
+
     // once connected, load the config and the manifest
     const config = await loadConfig(this.configUrl);
     const manifest = await loadManifest(this.manifestUrl, config.excludeElements);
@@ -85,11 +96,16 @@ export class Root extends Routable()(LitElement) {
 
     // prepare and set routes
     const routes = prepareRoutes();
-    this.router.registerRoutes(routes);
+    this.#router.registerRoutes(routes);
+    this.#router.connect();
 
     // we're finished loading
     this.ready = true;
-    super.connectedCallback();
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.#router.disconnect();
   }
 
   protected override render(): TemplateResult {
@@ -112,7 +128,7 @@ export class Root extends Routable()(LitElement) {
             <wcp-root-navigation
               slot="aside"
               min-search-length="2"
-              current-path="${ifDefined(this.router.currentPath)}"
+              current-path="${ifDefined(this.#router.currentPath)}"
               empty-message="${ifDefined(getConfig()?.labels.emptyNavigation)}"
               .items="${this.navigationItems}"
             ></wcp-root-navigation>
@@ -122,7 +138,7 @@ export class Root extends Routable()(LitElement) {
               <slot name="topbar-plugins"></slot>
             </wcp-topbar>
 
-            <slot name="stage">${this.router.outlet()}</slot>
+            <slot name="stage">${this.#router.outlet()}</slot>
           </wcp-layout>
         `
       )}

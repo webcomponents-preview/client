@@ -35,7 +35,6 @@ export * from './components/ui/tabs/tabs.component.js';
 export * from './components/ui/title/title.component.js';
 export * from './mixins/color-schemable.mixin.js';
 export * from './mixins/editable.mixin.js';
-export * from './mixins/routable.mixin.js';
 export * from './parsers/cem/parse.js';
 export * from './parsers/cem/utils.js';
 export * from './parsers/cem/1.0.0/cem-element.js';

@@ -11,9 +11,10 @@
 
 ## Methods
 
-| Method              | Type                      |
-|---------------------|---------------------------|
-| `handleSearchInput` | `({ detail }: any): void` |
+| Method                      | Type                      |
+|-----------------------------|---------------------------|
+| `handleSearchInput`         | `({ detail }: any): void` |
+| `handleSplashTransitionEnd` | `(event: any): void`      |
 
 ## Events
 
