@@ -49,6 +49,13 @@
           "members": [
             {
               "kind": "field",
+              "name": "#router",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new Router(this)"
+            },
+            {
+              "kind": "field",
               "name": "ready",
               "type": {
                 "text": "boolean"
@@ -124,6 +131,18 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "method",
+              "name": "handleSplashTransitionEnd",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
             }
           ],
           "attributes": [
@@ -153,18 +172,12 @@
               "fieldName": "manifestUrl"
             }
           ],
-          "mixins": [
-            {
-              "name": "Routable()",
-              "module": "src/components/root/root.component.ts"
-            }
-          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
           "examples": [],
-          "readme": "# wcp-root\n\n## Properties\n\n| Property        | Attribute      | Modifiers | Type                  | Default | Description                                      |\n|-----------------|----------------|-----------|-----------------------|---------|--------------------------------------------------|\n| `configUrl`     | `config-url`   |           | `string \\| undefined` |         | Allows to set a url to load a config file from.  |\n| `inline`        | `inline`       |           | `boolean`             | false   | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifestUrl`   | `manifest-url` |           | `string`              |         | Defines the location of the custom element manifest file. |\n| `navigationRef` |                | readonly  |                       |         |                                                  |\n\n## Methods\n\n| Method              | Type                      |\n|---------------------|---------------------------|\n| `handleSearchInput` | `({ detail }: any): void` |\n\n## Events\n\n| Event                             | Description                                      |\n|-----------------------------------|--------------------------------------------------|\n| `wcp-root:active-element-changed` | Fired when the active element changes. Carries the declaration of the new active element with it. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode. |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode. |\n| `--wcp-root-light-background` | The background color of the root element in light mode. |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode. |\n",
+          "readme": "# wcp-root\n\n## Properties\n\n| Property        | Attribute      | Modifiers | Type                  | Default | Description                                      |\n|-----------------|----------------|-----------|-----------------------|---------|--------------------------------------------------|\n| `configUrl`     | `config-url`   |           | `string \\| undefined` |         | Allows to set a url to load a config file from.  |\n| `inline`        | `inline`       |           | `boolean`             | false   | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifestUrl`   | `manifest-url` |           | `string`              |         | Defines the location of the custom element manifest file. |\n| `navigationRef` |                | readonly  |                       |         |                                                  |\n\n## Methods\n\n| Method                      | Type                      |\n|-----------------------------|---------------------------|\n| `handleSearchInput`         | `({ detail }: any): void` |\n| `handleSplashTransitionEnd` | `(event: any): void`      |\n\n## Events\n\n| Event                             | Description                                      |\n|-----------------------------------|--------------------------------------------------|\n| `wcp-root:active-element-changed` | Fired when the active element changes. Carries the declaration of the new active element with it. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode. |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode. |\n| `--wcp-root-light-background` | The background color of the root element in light mode. |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode. |\n",
           "groups": [
             "root"
           ],
@@ -3814,6 +3827,85 @@
           "declaration": {
             "name": "RootNavigation",
             "module": "src/components/root/root-navigation/root-navigation.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/root/root-splash/root-splash.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Shows a splash screen whilst initializing the application.",
+          "name": "RootSplash",
+          "cssProperties": [
+            {
+              "description": "The background color of the splash screen in dark mode.",
+              "name": "--wcp-root-splash-dark-background-color"
+            },
+            {
+              "description": "The text color of the splash screen in dark mode.",
+              "name": "--wcp-root-splash-dark-color"
+            },
+            {
+              "description": "The background color of the splash screen in light mode.",
+              "name": "--wcp-root-splash-light-background-color"
+            },
+            {
+              "description": "The text color of the splash screen in light mode.",
+              "name": "--wcp-root-splash-light-color"
+            }
+          ],
+          "slots": [
+            {
+              "type": {
+                "text": "Loading..."
+              },
+              "description": "The text content to be displayed in the splash screen.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Use the global hidden attribute to fade out the splash screen.",
+              "name": "hidden",
+              "kind": "field"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "# Basic usage\n\n```html\n<wcp-root-splash>Loading...</wcp-root-splash>\n```"
+          ],
+          "readme": "# wcp-root-splash\n\nShows a splash screen whilst initializing the application.\n\n## Example\n\n# Basic usage\n\n```html\n<wcp-root-splash>Loading...</wcp-root-splash>\n```\n\n## Properties\n\n| Property | Type      | Description                                      |\n|----------|-----------|--------------------------------------------------|\n| `hidden` | `boolean` | Use the global hidden attribute to fade out the splash screen. |\n\n## Slots\n\n| Name | Description                                      |\n|------|--------------------------------------------------|\n|      | The text content to be displayed in the splash screen. |\n\n## CSS Custom Properties\n\n| Property                                   | Description                                      |\n|--------------------------------------------|--------------------------------------------------|\n| `--wcp-root-splash-dark-background-color`  | The background color of the splash screen in dark mode. |\n| `--wcp-root-splash-dark-color`             | The text color of the splash screen in dark mode. |\n| `--wcp-root-splash-light-background-color` | The background color of the splash screen in light mode. |\n| `--wcp-root-splash-light-color`            | The text color of the splash screen in light mode. |\n",
+          "groups": [
+            "root"
+          ],
+          "tagName": "wcp-root-splash",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RootSplash",
+          "declaration": {
+            "name": "RootSplash",
+            "module": "src/components/root/root-splash/root-splash.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-root-splash",
+          "declaration": {
+            "name": "RootSplash",
+            "module": "src/components/root/root-splash/root-splash.component.ts"
           }
         }
       ]

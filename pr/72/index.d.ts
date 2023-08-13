@@ -1508,6 +1508,63 @@ declare module "utils/parser.types" {
         new (data: object, exclude?: string[]): Manifest;
     };
 }
+declare module "parsers/cem/utils" {
+    import type * as CEM from 'custom-elements-manifest';
+    export type CustomElementDeclarationWithExamples = CEM.CustomElementDeclaration & {
+        examples: string[];
+    };
+    export type CustomElementDeclarationWithGroups = CEM.CustomElementDeclaration & {
+        groups: string[];
+    };
+    export type CustomElementDeclarationWithReadme = CEM.CustomElementDeclaration & {
+        readme: string;
+    };
+    export type CustomElementDeclarationWithTagName = CEM.CustomElementDeclaration & {
+        tagName: string[];
+    };
+    export function isCustomElementDeclarationWithTagName(declaration?: CEM.Declaration): declaration is CustomElementDeclarationWithTagName;
+    export function isCustomElementField(field?: CEM.ClassMember): field is CEM.CustomElementField;
+    export const WRAPPED_STRING_REGEX: RegExp;
+    export function unwrapString(value: string): string;
+    export function getEnumValues(field: CEM.CustomElementField): string[];
+}
+declare module "parsers/cem/1.0.0/cem-field" {
+    import type { Field } from "utils/parser.types";
+    export const CemField: Field;
+}
+declare module "parsers/cem/1.0.0/cem-slot" {
+    import type { Slot } from "utils/parser.types";
+    export const CemSlot: Slot;
+}
+declare module "parsers/cem/1.0.0/cem-element" {
+    import type { Element } from "utils/parser.types";
+    export const CemElement: Element;
+}
+declare module "parsers/cem/1.0.0/cem-parser" {
+    import type { Parser } from "utils/parser.types";
+    export const CemParser: Parser;
+}
+declare module "parsers/cem/parse" {
+    import type { Manifest } from "utils/parser.types";
+    /**
+     * Parses given manifest data with the appropriate CEM parser.
+     * Will throw an error if no parser for the given schema version is found, or if the given data is invalid.
+     */
+    export const parseCEM: (data: object, exclude?: string[]) => Manifest;
+}
+declare module "utils/manifest.utils" {
+    import type { Manifest } from "utils/parser.types";
+    global {
+        interface WCP {
+            manifest: Manifest;
+        }
+        interface Window {
+            wcp: WCP;
+        }
+    }
+    export function loadManifest(manifestUrl: string, excludeElements: string[]): Promise<Manifest>;
+    export function getManifest(): Manifest;
+}
 declare module "utils/navigation.utils" {
     import type { Config } from "utils/config.utils";
     import type { Element, Manifest } from "utils/parser.types";
@@ -1593,15 +1650,6 @@ declare module "utils/router.utils" {
         outlet(): TemplateResult;
     }
 }
-declare module "mixins/routable.mixin" {
-    import type { LitElement } from 'lit';
-    import type { Constructor } from "utils/mixin.types";
-    import { type RegisterRoutes, Router } from "utils/router.utils";
-    class RoutableInterface {
-        router: Router;
-    }
-    export const Routable: (registerRoutes?: RegisterRoutes) => <T extends Constructor<LitElement>>(superClass: T) => Constructor<RoutableInterface> & T;
-}
 declare module "components/root/root-navigation/root-navigation.component" {
     import { LitElement, type TemplateResult } from 'lit';
     import { type GroupedNavigationItems } from "utils/navigation.utils";
@@ -1630,63 +1678,6 @@ declare module "components/root/root-navigation/root-navigation.component" {
         }
     }
 }
-declare module "parsers/cem/utils" {
-    import type * as CEM from 'custom-elements-manifest';
-    export type CustomElementDeclarationWithExamples = CEM.CustomElementDeclaration & {
-        examples: string[];
-    };
-    export type CustomElementDeclarationWithGroups = CEM.CustomElementDeclaration & {
-        groups: string[];
-    };
-    export type CustomElementDeclarationWithReadme = CEM.CustomElementDeclaration & {
-        readme: string;
-    };
-    export type CustomElementDeclarationWithTagName = CEM.CustomElementDeclaration & {
-        tagName: string[];
-    };
-    export function isCustomElementDeclarationWithTagName(declaration?: CEM.Declaration): declaration is CustomElementDeclarationWithTagName;
-    export function isCustomElementField(field?: CEM.ClassMember): field is CEM.CustomElementField;
-    export const WRAPPED_STRING_REGEX: RegExp;
-    export function unwrapString(value: string): string;
-    export function getEnumValues(field: CEM.CustomElementField): string[];
-}
-declare module "parsers/cem/1.0.0/cem-field" {
-    import type { Field } from "utils/parser.types";
-    export const CemField: Field;
-}
-declare module "parsers/cem/1.0.0/cem-slot" {
-    import type { Slot } from "utils/parser.types";
-    export const CemSlot: Slot;
-}
-declare module "parsers/cem/1.0.0/cem-element" {
-    import type { Element } from "utils/parser.types";
-    export const CemElement: Element;
-}
-declare module "parsers/cem/1.0.0/cem-parser" {
-    import type { Parser } from "utils/parser.types";
-    export const CemParser: Parser;
-}
-declare module "parsers/cem/parse" {
-    import type { Manifest } from "utils/parser.types";
-    /**
-     * Parses given manifest data with the appropriate CEM parser.
-     * Will throw an error if no parser for the given schema version is found, or if the given data is invalid.
-     */
-    export const parseCEM: (data: object, exclude?: string[]) => Manifest;
-}
-declare module "utils/manifest.utils" {
-    import type { Manifest } from "utils/parser.types";
-    global {
-        interface WCP {
-            manifest: Manifest;
-        }
-        interface Window {
-            wcp: WCP;
-        }
-    }
-    export function loadManifest(manifestUrl: string, excludeElements: string[]): Promise<Manifest>;
-    export function getManifest(): Manifest;
-}
 declare module "components/root/root.routes" {
     import { type Route } from "utils/router.utils";
     export const prepareRoutes: () => Route[];
@@ -1695,9 +1686,6 @@ declare module "components/root/root.component" {
     import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
     import { LitElement, type TemplateResult } from 'lit';
     import type { RootNavigation } from "components/root/root-navigation/root-navigation.component";
-    const Root_base: import("index.js").Constructor<{
-        router: import("index.js").Router;
-    }> & typeof LitElement;
     /**
      * @slot logo - Allows setting a custom logo to be displayed in the title.
      * @slot preview-controls - Can be used to inject additional preview controls.
@@ -1712,7 +1700,8 @@ declare module "components/root/root.component" {
      *
      * @emits wcp-root:active-element-changed - Fired when the active element changes. Carries the declaration of the new active element with it.
      */
-    export class Root extends Root_base {
+    export class Root extends LitElement {
+        #private;
         static readonly styles: import("lit").CSSResult;
         private ready;
         private topbarPlugins;
@@ -1732,7 +1721,9 @@ declare module "components/root/root.component" {
          */
         manifestUrl: string;
         handleSearchInput({ detail }: CustomEvent<string>): void;
+        handleSplashTransitionEnd(event: Event): void;
         connectedCallback(): Promise<void>;
+        disconnectedCallback(): void;
         protected render(): TemplateResult;
     }
     global {
@@ -1741,6 +1732,37 @@ declare module "components/root/root.component" {
         }
         interface HTMLElementTagNameMap {
             'wcp-root': Root;
+        }
+    }
+}
+declare module "components/root/root-splash/root-splash.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    /**
+     * Shows a splash screen whilst initializing the application.
+     *
+     * @property {boolean} [hidden] - Use the global hidden attribute to fade out the splash screen.
+     *
+     * @cssprop --wcp-root-splash-dark-background-color - The background color of the splash screen in dark mode.
+     * @cssprop --wcp-root-splash-dark-color - The text color of the splash screen in dark mode.
+     * @cssprop --wcp-root-splash-light-background-color - The background color of the splash screen in light mode.
+     * @cssprop --wcp-root-splash-light-color - The text color of the splash screen in light mode.
+     *
+     * @slot {Loading...} - The text content to be displayed in the splash screen.
+     *
+     * @example
+     * # Basic usage
+     *
+     * ```html
+     * <wcp-root-splash>Loading...</wcp-root-splash>
+     * ```
+     */
+    export class RootSplash extends LitElement {
+        static readonly styles: import("lit").CSSResult;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-root-splash': RootSplash;
         }
     }
 }
@@ -2168,6 +2190,7 @@ declare module "index" {
     export * from "components/root/root.component";
     export * from "components/root/root.routes";
     export * from "components/root/root-navigation/root-navigation.component";
+    export * from "components/root/root-splash/root-splash.component";
     export * from "components/ui/button/button.component";
     export * from "components/ui/code/code.component";
     export * from "components/ui/icon/icon.component";
