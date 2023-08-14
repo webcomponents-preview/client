@@ -34,7 +34,7 @@
             ],
             "type": "string"
         },
-        "initialPreviewTab": {
+        "initialStageTab": {
             "description": "The initial tab to be selected in the preview. Will match the name of the plugin.",
             "type": "string"
         },
@@ -76,15 +76,15 @@
             },
             "type": "object"
         },
-        "previewFramePlugins": {
-            "description": "The plugins to be used for the preview frame.\nDefaults to examples, readme and viewer.",
+        "previewPlugins": {
+            "description": "The plugins to be used for the preview.\nSet to the viewport plugin by default.",
             "items": {
                 "type": "string"
             },
             "type": "array"
         },
-        "previewPlugins": {
-            "description": "The plugins to be used for the preview.\nSet to the viewport plugin by default.",
+        "stagePlugins": {
+            "description": "The plugins to be used for the preview frame.\nDefaults to examples, readme and viewer.",
             "items": {
                 "type": "string"
             },

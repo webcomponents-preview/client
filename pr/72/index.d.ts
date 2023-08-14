@@ -17,7 +17,7 @@ declare module "utils/config.utils" {
         /**
          * The initial tab to be selected in the preview. Will match the name of the plugin.
          */
-        initialPreviewTab: string;
+        initialStageTab: string;
         /**
          * The plugins to be used for the preview.
          * Set to the viewport plugin by default.
@@ -27,7 +27,7 @@ declare module "utils/config.utils" {
          * The plugins to be used for the preview frame.
          * Defaults to examples, readme and viewer.
          */
-        previewFramePlugins: string[];
+        stagePlugins: string[];
         /**
          * The plugins to be used for the topbar.
          * Defaults to the preview editor link hint toggle.
@@ -93,9 +93,9 @@ declare module "utils/config.utils" {
         excludeElements: never[];
         initialActiveElement: undefined;
         initialCodePreviewTab: "preview";
-        initialPreviewTab: string;
+        initialStageTab: string;
         previewPlugins: string[];
-        previewFramePlugins: string[];
+        stagePlugins: string[];
         topbarPlugins: string[];
         additionalReadmes: never[];
         statePersistence: "session";
@@ -1577,6 +1577,9 @@ declare module "utils/manifest.utils" {
         }
     }
     export function loadManifest(manifestUrl: string, excludeElements: string[]): Promise<Manifest>;
+    /**
+     * Convenience function to retrieve the config
+     */
     export function getManifest(): Manifest;
 }
 declare module "utils/navigation.utils" {
