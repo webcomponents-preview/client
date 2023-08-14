@@ -820,6 +820,15 @@
           "members": [
             {
               "kind": "field",
+              "name": "assignedPlugins",
+              "type": {
+                "text": "HTMLElement[]"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "_plugins",
               "type": {
                 "text": "StagePlugin[]"
@@ -863,15 +872,7 @@
             {
               "kind": "method",
               "name": "handleSlotChange",
-              "privacy": "protected",
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
+              "privacy": "protected"
             },
             {
               "kind": "method",

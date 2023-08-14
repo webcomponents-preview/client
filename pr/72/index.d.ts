@@ -477,6 +477,13 @@ declare module "components/features/readme-frame/readme-frame.component" {
         }
     }
 }
+declare module "utils/log.utils" {
+    export const log: {
+        info(...args: unknown[]): void;
+        warn(...args: unknown[]): void;
+        error(...args: unknown[]): void;
+    };
+}
 declare module "utils/plugin.utils" {
     global {
         interface HTMLElementEventMap {
@@ -491,7 +498,7 @@ declare module "utils/plugin.utils" {
      * `wcp-plugin:availability-change` and should carry a
      * boolean flag about its availability in the `detail` property.
      */
-    export type Plugin = Element & {
+    export type Plugin = HTMLElement & {
         readonly name: string;
         readonly label: string;
         readonly available: boolean;
@@ -517,16 +524,16 @@ declare module "utils/plugin.utils" {
     /**
      * Type guard for generic plugins.
      */
-    export function isPlugin(element: Element): element is Plugin;
+    export function isPlugin(element: HTMLElement): element is Plugin;
     /**
      * Type guard for stage plugins.
      */
-    export function isStagePlugin(element: Element): element is StagePlugin;
+    export function isStagePlugin(element: HTMLElement): element is StagePlugin;
     /**
      * Type guard for preview plugins.
      * TODO: add container type guard
      */
-    export function isPreviewPlugin(element: Element): element is PreviewPlugin;
+    export function isPreviewPlugin(element: HTMLElement): element is PreviewPlugin;
 }
 declare module "components/features/stage/stage.component" {
     import { LitElement, type TemplateResult } from 'lit';
@@ -554,11 +561,12 @@ declare module "components/features/stage/stage.component" {
      */
     export class Stage extends Stage_base {
         static readonly styles: import("lit").CSSResult;
+        private readonly assignedPlugins;
         private _plugins;
         private _tabs;
         private readonly activePlugin?;
         emitActivePluginChange(activePlugin?: string): void;
-        protected handleSlotChange(event: Event): void;
+        protected handleSlotChange(): void;
         protected handleAvailabilityChange(): void;
         protected handleActiveTabChange(event: CustomEvent<string>): void;
         protected preparePluginTabs(): void;
@@ -1607,13 +1615,6 @@ declare module "utils/navigation.utils" {
     export function prepareNavigation(manifest: Manifest, config: Config): GroupedNavigationItems;
     export function matchesSearch(content: string, terms: string[], minSearchLength?: number): boolean;
     export function filterItems(items: GroupedNavigationItems, terms: string[], minSearchLength?: number): GroupedNavigationItems;
-}
-declare module "utils/log.utils" {
-    export const log: {
-        info(...args: unknown[]): void;
-        warn(...args: unknown[]): void;
-        error(...args: unknown[]): void;
-    };
 }
 declare module "utils/router.utils" {
     import type { LitElement, TemplateResult } from 'lit';
