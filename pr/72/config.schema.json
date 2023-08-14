@@ -60,6 +60,22 @@
             },
             "type": "object"
         },
+        "logging": {
+            "description": "All settings concerning logging",
+            "properties": {
+                "severity": {
+                    "description": "The severity of the log message; info will include all messages, warn will\ninclude warnings and errors, error will include errors only and none will\ndisable logging completely.",
+                    "enum": [
+                        "error",
+                        "info",
+                        "none",
+                        "warn"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "previewFramePlugins": {
             "description": "The plugins to be used for the preview frame.\nDefaults to examples, readme and viewer.",
             "items": {
