@@ -1605,6 +1605,13 @@ declare module "utils/navigation.utils" {
     export function matchesSearch(content: string, terms: string[], minSearchLength?: number): boolean;
     export function filterItems(items: GroupedNavigationItems, terms: string[], minSearchLength?: number): GroupedNavigationItems;
 }
+declare module "utils/log.utils" {
+    export const log: {
+        info(...args: unknown[]): void;
+        warn(...args: unknown[]): void;
+        error(...args: unknown[]): void;
+    };
+}
 declare module "utils/router.utils" {
     import type { LitElement, TemplateResult } from 'lit';
     export type Params = Record<string, string | undefined>;
@@ -2173,13 +2180,6 @@ declare module "utils/dom.utils" {
      * Determine if an element is a descendant of another element by tag name.
      */
     export function isDescendantOf(element: Element, ancestor: string): boolean;
-}
-declare module "utils/log.utils" {
-    export const log: {
-        info(...args: unknown[]): void;
-        warn(...args: unknown[]): void;
-        error(...args: unknown[]): void;
-    };
 }
 declare module "index" {
     /**
