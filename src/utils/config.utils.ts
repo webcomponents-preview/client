@@ -75,6 +75,18 @@ export type Config = {
      */
     title: string;
   };
+
+  /**
+   * All settings concerning logging
+   */
+  logging: {
+    /**
+     * The severity of the log message; info will include all messages, warn will
+     * include warnings and errors, error will include errors only and none will
+     * disable logging completely.
+     */
+    severity: 'info' | 'warn' | 'error' | 'none';
+  };
 };
 
 declare global {
@@ -103,6 +115,9 @@ export const defaultConfig = {
     additionalReadmeGroupName: 'Readmes',
     fallbackGroupName: 'Components',
     emptyNavigation: 'No readmes nor elements found.',
+  },
+  logging: {
+    severity: 'info',
   },
 } satisfies Config;
 

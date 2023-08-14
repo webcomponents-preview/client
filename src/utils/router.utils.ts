@@ -1,4 +1,5 @@
 import type { LitElement, TemplateResult } from 'lit';
+import { log } from '@/utils/log.utils.js';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Property 'UrlPattern' does not exist
@@ -70,8 +71,7 @@ export class Router {
    */
   static navigate(...slugs: (string | undefined)[]) {
     const path = slugs.filter(Boolean).join('/');
-    // TODO: add some kind of logging
-    // console.log(`Navigate to ${path}`);
+    log.info(`Navigate to ${path}`);
     location.hash = path;
   }
 
@@ -84,6 +84,7 @@ export class Router {
    */
   registerRoutes(routes: Route[]) {
     this.#routes = routes;
+    log.info(`Registered ${routes.length} routes`);
   }
 
   /**
@@ -106,6 +107,7 @@ export class Router {
    * Update the current path without triggering a redirect.
    */
   updateCurrent(path: string) {
+    log.info(`Update to ${path}`);
     const url = new URL(location.href);
     url.hash = path;
     history.replaceState({}, '', url);
@@ -138,8 +140,12 @@ export class Router {
     const { path: nextPath, url: nextUrl } = this.#parseUrl(event.newURL);
     const nextRoute = this.#findRouteForUrl(nextUrl);
 
+    // what's going on?
+    log.info(`Route changed to ${nextPath}`);
+
     // no route found
     if (nextRoute === undefined) {
+      log.error(`No route found for ${nextPath}`);
       throw new Error(`No route found for ${nextPath}`);
     }
 
@@ -180,6 +186,8 @@ export class Router {
     // call the detection initially
     const event = new HashChangeEvent('hashchange', { newURL: location.href });
     this.#findCurrentRoute(event);
+
+    log.info('Connected router');
   }
 
   disconnect() {
