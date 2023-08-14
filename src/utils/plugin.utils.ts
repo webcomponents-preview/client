@@ -13,7 +13,7 @@ declare global {
  * `wcp-plugin:availability-change` and should carry a
  * boolean flag about its availability in the `detail` property.
  */
-export type Plugin = Element & {
+export type Plugin = HTMLElement & {
   readonly name: string;
   readonly label: string;
   readonly available: boolean;
@@ -43,14 +43,14 @@ export type TopbarPlugin = Plugin;
 /**
  * Type guard for generic plugins.
  */
-export function isPlugin(element: Element): element is Plugin {
+export function isPlugin(element: HTMLElement): element is Plugin {
   return 'name' in element && 'label' in element && 'available' in element;
 }
 
 /**
  * Type guard for stage plugins.
  */
-export function isStagePlugin(element: Element): element is StagePlugin {
+export function isStagePlugin(element: HTMLElement): element is StagePlugin {
   return isPlugin(element) && 'previewTagName' in element;
 }
 
@@ -58,6 +58,6 @@ export function isStagePlugin(element: Element): element is StagePlugin {
  * Type guard for preview plugins.
  * TODO: add container type guard
  */
-export function isPreviewPlugin(element: Element): element is PreviewPlugin {
+export function isPreviewPlugin(element: HTMLElement): element is PreviewPlugin {
   return isPlugin(element) && 'previewTagName' in element && 'container' in element;
 }

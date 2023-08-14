@@ -17,7 +17,7 @@ export type Config = {
   /**
    * The initial tab to be selected in the preview. Will match the name of the plugin.
    */
-  initialPreviewTab: string;
+  initialStageTab: string;
 
   /**
    * The plugins to be used for the preview.
@@ -29,7 +29,7 @@ export type Config = {
    * The plugins to be used for the preview frame.
    * Defaults to examples, readme and viewer.
    */
-  previewFramePlugins: string[];
+  stagePlugins: string[];
 
   /**
    * The plugins to be used for the topbar.
@@ -104,9 +104,9 @@ export const defaultConfig = {
   excludeElements: [],
   initialActiveElement: undefined,
   initialCodePreviewTab: 'preview',
-  initialPreviewTab: 'viewer',
+  initialStageTab: 'editor',
   previewPlugins: ['wcp-preview-simulate-viewports', 'wcp-preview-editor-link'],
-  previewFramePlugins: ['wcp-stage-examples', 'wcp-stage-readme', 'wcp-stage-editor'],
+  stagePlugins: ['wcp-stage-examples', 'wcp-stage-readme', 'wcp-stage-editor'],
   topbarPlugins: ['wcp-toggle-sidebar', 'wcp-toggle-color-scheme', 'wcp-topbar-preview-editor-link-toggle'],
   additionalReadmes: [],
   statePersistence: 'session',
