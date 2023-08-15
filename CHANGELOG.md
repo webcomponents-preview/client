@@ -1,5 +1,27 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+# [0.5.0](https://github.com/webcomponents-preview/client/compare/0.4.2...0.5.0) (2023-08-15)
+
+
+### Bug Fixes
+
+* add plugins to barrel ([c899d01](https://github.com/webcomponents-preview/client/commit/c899d0165629e90ca6b8648d4089259611a401ce))
+* **wcp-preview-editor-link:** check availability correctly ([82dcdb1](https://github.com/webcomponents-preview/client/commit/82dcdb189ab37b5640b69476f02199a4893c5fa5))
+
+
+### Features
+
+* add log prefix ([76a8fbc](https://github.com/webcomponents-preview/client/commit/76a8fbca61640e84a0ca1891bf3db269a476c248))
+* add log util ([0623e83](https://github.com/webcomponents-preview/client/commit/0623e83de3a58b7294c7b1fe822bc54a891c3e32))
+* add state persistence to config ([d183440](https://github.com/webcomponents-preview/client/commit/d18344051eafdc13e0df62bcfaa2d79c852d94ee))
+* add topbar plugin type ([002f11c](https://github.com/webcomponents-preview/client/commit/002f11ce4e25b212e850e2b0703ef064d4a1ff4e))
+* add utils to manage global state ([3481e80](https://github.com/webcomponents-preview/client/commit/3481e80b108f60c6af1ff0aff9120d03f420b6a3))
+* use global state for color-scheme, sidebar and editor link hints ([8ec0382](https://github.com/webcomponents-preview/client/commit/8ec0382df1ecfde329b4e2e585a09878b2367dcb))
+* **wcp-preview-editor-link:** toggle from global event ([00f1055](https://github.com/webcomponents-preview/client/commit/00f1055824103b0ac3e97b830049c7835ba7047f))
+* **wcp-root-splash:** introduce component ([5c2d8c7](https://github.com/webcomponents-preview/client/commit/5c2d8c7b0b97b2ac91e47a517d4857a44f540e19))
+* **wcp-root:** use topbar elements from config ([c4f6691](https://github.com/webcomponents-preview/client/commit/c4f66914d3d5803f3cb6bbe26ee0afc82c7ea66d))
+* **wcp-topbar-preview-editor-link-toggle:** introduce plugin component ([5314627](https://github.com/webcomponents-preview/client/commit/5314627abbb8b43cd97e97a2ef8ad0bcb4c2c4a5))
+
 ## [0.4.2](https://github.com/webcomponents-preview/client/compare/0.4.1...0.4.2) (2023-08-11)
 
 
