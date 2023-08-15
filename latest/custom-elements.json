@@ -1065,8 +1065,16 @@
           "name": "Topbar",
           "cssProperties": [
             {
+              "description": "Background color of the controls in dark mode",
+              "name": "--wcp-topbar-dark-background"
+            },
+            {
               "description": "Text color of the controls in dark mode",
               "name": "--wcp-topbar-dark-color"
+            },
+            {
+              "description": "Background color of the controls in light mode",
+              "name": "--wcp-topbar-light-background"
             },
             {
               "description": "Text color of the controls in light mode",
@@ -1102,7 +1110,7 @@
           "examples": [
             "### Usage with controls\n\n```html\n<wcp-topbar>\n  <wcp-toggle-sidebar></wcp-toggle-sidebar>\n  <wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n</wcp-topbar>\n```"
           ],
-          "readme": "# wcp-topbar\n\nA wrapper above the preview frame content to contain various controls.\n\n**Mixins:** ColorSchemable\n\n## Example\n\n### Usage with controls\n\n```html\n<wcp-topbar>\n  <wcp-toggle-sidebar></wcp-toggle-sidebar>\n  <wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n</wcp-topbar>\n```\n\n## Slots\n\n| Name | Description                       |\n|------|-----------------------------------|\n|      | Default slot for navigation items |\n\n## CSS Custom Properties\n\n| Property                   | Description                                    |\n|----------------------------|------------------------------------------------|\n| `--wcp-topbar-dark-color`  | Text color of the controls in dark mode        |\n| `--wcp-topbar-height`      | Overall height of the preview controls nav bar |\n| `--wcp-topbar-light-color` | Text color of the controls in light mode       |\n| `--wcp-topbar-spacing`     | Inner spacing, used as padding of the controls |\n",
+          "readme": "# wcp-topbar\n\nA wrapper above the preview frame content to contain various controls.\n\n**Mixins:** ColorSchemable\n\n## Example\n\n### Usage with controls\n\n```html\n<wcp-topbar>\n  <wcp-toggle-sidebar></wcp-toggle-sidebar>\n  <wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n</wcp-topbar>\n```\n\n## Slots\n\n| Name | Description                       |\n|------|-----------------------------------|\n|      | Default slot for navigation items |\n\n## CSS Custom Properties\n\n| Property                        | Description                                    |\n|---------------------------------|------------------------------------------------|\n| `--wcp-topbar-dark-background`  | Background color of the controls in dark mode  |\n| `--wcp-topbar-dark-color`       | Text color of the controls in dark mode        |\n| `--wcp-topbar-height`           | Overall height of the preview controls nav bar |\n| `--wcp-topbar-light-background` | Background color of the controls in light mode |\n| `--wcp-topbar-light-color`      | Text color of the controls in light mode       |\n| `--wcp-topbar-spacing`          | Inner spacing, used as padding of the controls |\n",
           "groups": [
             "features"
           ],
@@ -3566,6 +3574,24 @@
           "kind": "class",
           "description": "",
           "name": "Layout",
+          "cssProperties": [
+            {
+              "description": "The background color of the whole layout",
+              "name": "--wcp-layout-dark-background"
+            },
+            {
+              "description": "The text color of the whole layout",
+              "name": "--wcp-layout-dark-color"
+            },
+            {
+              "description": "The background color of the whole layout",
+              "name": "--wcp-layout-light-background"
+            },
+            {
+              "description": "The text color of the whole layout",
+              "name": "--wcp-layout-light-color"
+            }
+          ],
           "slots": [
             {
               "description": "Shows contents fixed above the aside",
@@ -3594,7 +3620,7 @@
           "examples": [
             "```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```"
           ],
-          "readme": "# wcp-layout\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```\n\n## Slots\n\n| Name     | Description                              |\n|----------|------------------------------------------|\n|          | Receives the content of the main section |\n| `aside`  | Projects elements aside the main content |\n| `header` | Shows contents fixed above the aside     |\n",
+          "readme": "# wcp-layout\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```\n\n## Slots\n\n| Name     | Description                              |\n|----------|------------------------------------------|\n|          | Receives the content of the main section |\n| `aside`  | Projects elements aside the main content |\n| `header` | Shows contents fixed above the aside     |\n\n## CSS Custom Properties\n\n| Property                        | Description                              |\n|---------------------------------|------------------------------------------|\n| `--wcp-layout-dark-background`  | The background color of the whole layout |\n| `--wcp-layout-dark-color`       | The text color of the whole layout       |\n| `--wcp-layout-light-background` | The background color of the whole layout |\n| `--wcp-layout-light-color`      | The text color of the whole layout       |\n",
           "groups": [
             "layout"
           ],

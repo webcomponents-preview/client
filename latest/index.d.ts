@@ -635,7 +635,9 @@ declare module "components/features/topbar/topbar.component" {
      *
      * @slot - Default slot for navigation items
      *
+     * @cssprop --wcp-topbar-dark-background - Background color of the controls in dark mode
      * @cssprop --wcp-topbar-dark-color - Text color of the controls in dark mode
+     * @cssprop --wcp-topbar-light-background - Background color of the controls in light mode
      * @cssprop --wcp-topbar-light-color - Text color of the controls in light mode
      *
      * @cssprop --wcp-topbar-height - Overall height of the preview controls nav bar
@@ -1387,6 +1389,12 @@ declare module "components/layout/layout/layout.component" {
      *   <article>Me the important content!</article>
      * </wcp-layout>
      * ```
+     *
+     * @cssprop --wcp-layout-dark-background - The background color of the whole layout
+     * @cssprop --wcp-layout-dark-color - The text color of the whole layout
+     *
+     * @cssprop --wcp-layout-light-background - The background color of the whole layout
+     * @cssprop --wcp-layout-light-color - The text color of the whole layout
      *
      * @slot header - Shows contents fixed above the aside
      * @slot aside - Projects elements aside the main content
