@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.5.2](https://github.com/webcomponents-preview/client/compare/0.5.1...0.5.2) (2023-08-15)
+
+
+### Bug Fixes
+
+* **wcp-navigation:** sort navigation items and groups ([b97162e](https://github.com/webcomponents-preview/client/commit/b97162ef31c0266a992875aefa319a4c673398af))
+
 ## [0.5.1](https://github.com/webcomponents-preview/client/compare/0.5.0...0.5.1) (2023-08-15)
 
 # [0.5.0](https://github.com/webcomponents-preview/client/compare/0.4.2...0.5.0) (2023-08-15)
