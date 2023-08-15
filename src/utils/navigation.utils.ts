@@ -7,7 +7,7 @@ const ROUTE_READMES = '/readme';
 /**
  * Defines the structure of the navigation items.
  */
-export type GroupedNavigationItems = Map<string, Set<GroupedNavigationItem>>;
+export type GroupedNavigationItems = Map<string, GroupedNavigationItem[]>;
 export type GroupedNavigationItem = { name: string; link: string };
 
 /**
@@ -36,25 +36,35 @@ export function prepareNavigation(manifest: Manifest, config: Config): GroupedNa
   // prepare readme navigation
   if (config.additionalReadmes?.length) {
     const readmes = config.additionalReadmes.reduce(
-      (readmes, { name, url }) => readmes.add(prepareReadmeNavigationItem(name, url)),
-      new Set<GroupedNavigationItem>()
+      (readmes, { name, url }) => [...readmes, prepareReadmeNavigationItem(name, url)],
+      [] as GroupedNavigationItem[]
     );
     items.set(config.labels.additionalReadmeGroupName, readmes);
   }
 
   // prepare element navigation
-  const elements = Array.from(manifest.getGroupedElements(config.labels.fallbackGroupName));
-
-  return elements.reduce(
-    (items, [group, elements]) =>
-      items.set(
-        group,
-        elements.reduce(
-          (items, element) => items.add(prepareElementNavigationItem(element)),
-          new Set<GroupedNavigationItem>()
-        )
-      ),
-    items
+  return (
+    Array
+      // prepare an array
+      .from(manifest.getGroupedElements(config.labels.fallbackGroupName))
+      // sort groups
+      .sort(([a], [b]) => a.localeCompare(b))
+      // fill into structure
+      .reduce(
+        (items, [group, elements]) =>
+          items.set(
+            group,
+            elements
+              // collect the items
+              .reduce(
+                (items, element) => [...items, prepareElementNavigationItem(element)],
+                [] as GroupedNavigationItem[]
+              )
+              // and sort them
+              .sort((a, b) => a.name.localeCompare(b.name))
+          ),
+        items
+      )
   );
 }
 
@@ -75,6 +85,6 @@ export function filterItems(
   return Array.from(items.entries()).reduce((all, [group, items]) => {
     const filteredItems = [...items].filter(({ name }) => matchesSearch(`${group} ${name}`, terms, minSearchLength));
     if (filteredItems.length < 1) return all;
-    return all.set(group, new Set(filteredItems));
+    return all.set(group, filteredItems);
   }, new Map() as GroupedNavigationItems);
 }
