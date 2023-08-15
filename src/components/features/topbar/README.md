@@ -23,9 +23,11 @@ A wrapper above the preview frame content to contain various controls.
 
 ## CSS Custom Properties
 
-| Property                   | Description                                    |
-|----------------------------|------------------------------------------------|
-| `--wcp-topbar-dark-color`  | Text color of the controls in dark mode        |
-| `--wcp-topbar-height`      | Overall height of the preview controls nav bar |
-| `--wcp-topbar-light-color` | Text color of the controls in light mode       |
-| `--wcp-topbar-spacing`     | Inner spacing, used as padding of the controls |
+| Property                        | Description                                    |
+|---------------------------------|------------------------------------------------|
+| `--wcp-topbar-dark-background`  | Background color of the controls in dark mode  |
+| `--wcp-topbar-dark-color`       | Text color of the controls in dark mode        |
+| `--wcp-topbar-height`           | Overall height of the preview controls nav bar |
+| `--wcp-topbar-light-background` | Background color of the controls in light mode |
+| `--wcp-topbar-light-color`      | Text color of the controls in light mode       |
+| `--wcp-topbar-spacing`          | Inner spacing, used as padding of the controls |

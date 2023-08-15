@@ -12,7 +12,9 @@ import styles from './topbar.component.scss';
  * 
  * @slot - Default slot for navigation items
  * 
+ * @cssprop --wcp-topbar-dark-background - Background color of the controls in dark mode
  * @cssprop --wcp-topbar-dark-color - Text color of the controls in dark mode
+ * @cssprop --wcp-topbar-light-background - Background color of the controls in light mode
  * @cssprop --wcp-topbar-light-color - Text color of the controls in light mode
  * 
  * @cssprop --wcp-topbar-height - Overall height of the preview controls nav bar

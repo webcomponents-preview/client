@@ -14,6 +14,12 @@ import styles from './layout.component.scss';
  * </wcp-layout>
  * ```
  *
+ * @cssprop --wcp-layout-dark-background - The background color of the whole layout
+ * @cssprop --wcp-layout-dark-color - The text color of the whole layout
+ *
+ * @cssprop --wcp-layout-light-background - The background color of the whole layout
+ * @cssprop --wcp-layout-light-color - The text color of the whole layout
+ *
  * @slot header - Shows contents fixed above the aside
  * @slot aside - Projects elements aside the main content
  * @slot - Receives the content of the main section
