@@ -5,6 +5,7 @@ import { when } from 'lit/directives/when.js';
 
 import { filterItems, type GroupedNavigationItems } from '@/utils/navigation.utils.js';
 import { Router } from '@/utils/router.utils.js';
+import { persist } from '@/utils/state.utils.js';
 
 import styles from './root-navigation.component.scss';
 
@@ -45,6 +46,23 @@ export class RootNavigation extends LitElement {
   set items(items: GroupedNavigationItems) {
     this.#items = items;
     this.filteredItems = filterItems(this.#items, this.#searchTerms, this.minSearchLength);
+  }
+
+  #handleRouteChange = (() => {
+    // close sidebar on mobile
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      persist('aside-visible', false);
+    }
+  }).bind(this);
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener('hashchange', this.#handleRouteChange, false);
+  }
+
+  override disconnectedCallback(): void {
+    window.removeEventListener('hashchange', this.#handleRouteChange, false);
+    super.disconnectedCallback();
   }
 
   protected override render(): TemplateResult {
