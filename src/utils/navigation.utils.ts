@@ -43,18 +43,28 @@ export function prepareNavigation(manifest: Manifest, config: Config): GroupedNa
   }
 
   // prepare element navigation
-  const elements = Array.from(manifest.getGroupedElements(config.labels.fallbackGroupName));
-
-  return elements.reduce(
-    (items, [group, elements]) =>
-      items.set(
-        group,
-        elements.reduce(
-          (items, element) => items.add(prepareElementNavigationItem(element)),
-          new Set<GroupedNavigationItem>()
-        )
-      ),
-    items
+  return (
+    Array
+      // prepare an array
+      .from(manifest.getGroupedElements(config.labels.fallbackGroupName))
+      // sort groups
+      .sort(([a], [b]) => a.localeCompare(b))
+      // fill into structure
+      .reduce(
+        (items, [group, elements]) =>
+          items.set(
+            group,
+            elements
+              // collect the items
+              .reduce(
+                (items, element) => [...items, prepareElementNavigationItem(element)],
+                [] as GroupedNavigationItem[]
+              )
+              // and sort them
+              .sort((a, b) => a.name.localeCompare(b.name))
+          ),
+        items
+      )
   );
 }
 
