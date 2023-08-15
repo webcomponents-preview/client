@@ -70,7 +70,7 @@ export const prepareRoutes = (): Route[] => [
       // everything okay here, just go on
       return true;
     },
-    render: ({ tagName = '', pluginName = window.wcp.config.initialPreviewTab, pluginData }) => {
+    render: ({ tagName = '', pluginName = window.wcp.config.initialStageTab, pluginData }) => {
       return html`
         <wcp-stage
           active-plugin="${ifDefined(pluginName)}"
@@ -78,14 +78,14 @@ export const prepareRoutes = (): Route[] => [
             Router.navigate('/element', tagName, pluginName)}"
         >
           ${map(
-            window.wcp.config.previewFramePlugins ?? [],
-            (previewFramePlugin) => withStatic(html)`
-            <${unsafeStatic(previewFramePlugin)}
+            window.wcp.config.stagePlugins ?? [],
+            (stagePlugin) => withStatic(html)`
+            <${unsafeStatic(stagePlugin)}
               preview-tag-name="${tagName}"
               .data="${ifDefined(pluginData)}"
               @wcp-stage-plugin:data-change="${({ detail: pluginData }: CustomEvent<string>) =>
                 Router.navigate('/element', tagName, pluginName, pluginData)}"
-            ></${unsafeStatic(previewFramePlugin)}>
+            ></${unsafeStatic(stagePlugin)}>
           `
           )}
         </wcp-stage>

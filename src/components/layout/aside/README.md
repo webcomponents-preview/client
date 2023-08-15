@@ -15,15 +15,14 @@ window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));
 
 | Property            | Attribute | Type      | Default                                          | Description                                      |
 |---------------------|-----------|-----------|--------------------------------------------------|--------------------------------------------------|
-| `hidden`            | `hidden`  | `boolean` | false                                            | Used to toggle the width of the aside bar        |
-| `listenAsideToggle` |           |           | "(({ detail }: CustomEvent<boolean \| null>) => {\n    this.hidden = detail ?? !this.hidden;\n    this.emitToggled();\n  }).bind(this)" |                                                  |
+| `hidden`            | `hidden`  | `boolean` | true                                             | Used to toggle the width of the aside bar        |
+| `listenAsideToggle` |           |           | "(({ detail }: CustomEvent<boolean>) => {\n    this.hidden = !detail;\n  }).bind(this)" |                                                  |
 | `role`              | `role`    | `string`  | "complementary"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |
 
 ## Methods
 
 | Method              | Type       |
 |---------------------|------------|
-| `emitToggled`       | `(): void` |
 | `handleButtonClick` | `(): void` |
 
 ## Events

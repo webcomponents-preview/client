@@ -25,6 +25,9 @@ export async function loadManifest(manifestUrl: string, excludeElements: string[
   return getManifest();
 }
 
+/**
+ * Convenience function to retrieve the config
+ */
 export function getManifest(): Manifest {
   return window.wcp.manifest;
 }

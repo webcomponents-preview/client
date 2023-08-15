@@ -24,6 +24,9 @@ export class StageExamples extends ColorSchemable(LitElement) implements StagePl
 
   readonly #manifest = getManifest();
 
+  readonly name = 'examples';
+  readonly label = 'Examples';
+
   @state()
   private _element?: Parsed.Element;
 
@@ -48,12 +51,6 @@ export class StageExamples extends ColorSchemable(LitElement) implements StagePl
       this.dispatchEvent(event);
     }
   }
-
-  @property({ type: String, reflect: true })
-  readonly name = 'examples';
-
-  @property({ type: String, reflect: true })
-  readonly label = 'Examples';
 
   protected override render(): TemplateResult {
     return html`

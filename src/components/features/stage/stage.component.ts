@@ -1,11 +1,12 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, eventOptions, property, state } from 'lit/decorators.js';
+import { customElement, eventOptions, property, queryAssignedElements, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
-import { type StagePlugin, findAllPlugins } from '@/utils/plugin.utils.js';
+import { log } from '@/utils/log.utils.js';
+import { isStagePlugin, type StagePlugin } from '@/utils/plugin.utils.js';
 
 import styles from './stage.component.scss';
 
@@ -34,6 +35,9 @@ import styles from './stage.component.scss';
 export class Stage extends ColorSchemable(LitElement) {
   static override readonly styles = unsafeCSS(styles);
 
+  @queryAssignedElements()
+  private readonly assignedPlugins!: HTMLElement[];
+
   @state()
   private _plugins: StagePlugin[] = [];
 
@@ -54,9 +58,9 @@ export class Stage extends ColorSchemable(LitElement) {
   }
 
   @eventOptions({ passive: true })
-  protected handleSlotChange(event: Event) {
-    const slot = event.target as HTMLSlotElement;
-    const plugins = findAllPlugins(slot);
+  protected handleSlotChange() {
+    const plugins = this.assignedPlugins.filter(isStagePlugin);
+    log.info(`Found ${plugins.length} stage plugins.`)
 
     // once the plugins are slotted into their respective targets, the slot
     // change listener may be called again with an empty result set

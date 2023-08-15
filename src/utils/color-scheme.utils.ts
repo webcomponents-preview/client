@@ -1,8 +1,9 @@
 import type { ColorSchemableInterface } from '@/mixins/color-schemable.mixin.js';
+import { read } from '@/utils/state.utils.js';
 
 declare global {
-  interface WindowEventMap {
-    'wcp-color-scheme:toggle': CustomEvent<ColorScheme | null>;
+  interface State {
+    ['color-scheme']: ColorScheme;
   }
 }
 
@@ -10,21 +11,19 @@ export type ColorScheme = 'light' | 'dark';
 
 // module stores global state
 const colorSchemables = new Set<ColorSchemableInterface>();
-let colorSchemeState: ColorScheme | undefined = matchMedia('(prefers-color-scheme: dark)').matches
-  ? ('dark' as const)
-  : ('light' as const);
 
 // and makes them accessible
-export const getColorSchemeState = () => colorSchemeState;
+export const getColorSchemeState = () =>
+  read('color-scheme') ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 export const addColorSchemable = (element: ColorSchemableInterface) => colorSchemables.add(element);
 export const removeColorSchemable = (element: ColorSchemableInterface) => colorSchemables.delete(element);
 
 // track changes to color scheme
-function handleColorSchemeChange({ detail }: CustomEvent<ColorScheme | null>) {
+function handleColorSchemeChange({ detail }: CustomEvent<ColorScheme>) {
   // update state in module
-  colorSchemeState = detail ?? undefined;
-  colorSchemables.forEach((colorSchemable) => (colorSchemable.colorScheme = colorSchemeState));
+  const colorScheme = detail ?? undefined;
+  colorSchemables.forEach((colorSchemable) => (colorSchemable.colorScheme = colorScheme));
 }
 
 // bind a single listener to keep track of changes
-window.addEventListener('wcp-color-scheme:toggle', handleColorSchemeChange, false);
+window.addEventListener('wcp-state-changed:color-scheme', handleColorSchemeChange, false);

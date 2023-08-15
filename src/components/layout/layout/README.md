@@ -1,5 +1,7 @@
 # wcp-layout
 
+**Mixins:** ColorSchemable
+
 ## Example
 
 ```html

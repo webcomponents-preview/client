@@ -1,0 +1,41 @@
+@use '@/styles/utils' as utils;
+
+:host {
+  ---wcp-root-splash-dark-background-color: var(--wcp-root-splash-dark-background-color, var(--wcp-color-blue-17));
+  ---wcp-root-splash-dark-color: var(--wcp-root-splash-dark-color, var(--wcp-color-grey-96));
+  ---wcp-root-splash-light-background-color: var(--wcp-root-splash-light-background-color, var(--wcp-color-grey-96));
+  ---wcp-root-splash-light-color: var(--wcp-root-splash-light-color, var(--wcp-color-blue-80));
+
+  @media (prefers-color-scheme: dark) {
+    ---wcp-root-splash-background-color: var(---wcp-root-splash-dark-background-color);
+    ---wcp-root-splash-color: var(---wcp-root-splash-dark-color);
+  }
+
+  @media (prefers-color-scheme: light) {
+    ---wcp-root-splash-background-color: var(---wcp-root-splash-light-background-color);
+    ---wcp-root-splash-color: var(---wcp-root-splash-light-color);
+  }
+}
+
+:host {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(---wcp-root-splash-background-color);
+  color: var(---wcp-root-splash-color);
+  font: var(--wcp-font-family);
+
+  transition: opacity 1s ease-in-out;
+
+  // prevent user interaction with splash screen
+  pointer-events: none;
+}
+
+:host([hidden]) {
+  opacity: 0;
+}

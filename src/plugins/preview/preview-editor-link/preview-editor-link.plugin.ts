@@ -7,6 +7,7 @@ import { isDescendantOf } from '@/utils/dom.utils.js';
 import { getManifest } from '@/utils/manifest.utils.js';
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
 import { Router } from '@/utils/router.utils.js';
+import { read } from '@/utils/state.utils.js';
 
 import { readCurrentElementData } from './preview-editor-link.utils.js';
 
@@ -25,6 +26,9 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
 
   readonly #overlay = document.createElement('div');
 
+  readonly name = 'editor-link';
+  readonly label = 'Show in editor';
+
   readonly container!: HTMLElement;
 
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
@@ -33,26 +37,32 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   @property({ type: Boolean, reflect: true })
   available = true;
 
-  @property({ type: String, reflect: true })
-  readonly name = 'viewer-link';
-
-  @property({ type: String, reflect: true })
-  readonly label = 'Show in viewer';
-
   @property({ type: Boolean, reflect: true })
-  enabled = false;
+  enabled = read('editor-link-hint-visible') ?? false;
 
   #checkAvailability() {
     // check if the previewed element is in a viewer
-    this.available = !isDescendantOf(this, 'wcp-stage-editor');
+    const available = !isDescendantOf(this, 'wcp-stage-editor');
+
+    // do not go on if the availability did not change
+    if (available === this.available) return;
+    this.available = available;
 
     // notify about availability change
     const event = new CustomEvent('wcp-preview-plugin:availability-change', {
-      detail: this.available,
+      detail: available,
       bubbles: true,
       composed: true,
     });
     this.dispatchEvent(event);
+  }
+
+  #observeGlobalToggle() {
+    window.addEventListener('wcp-state-changed:editor-link-hint-visible', this.#handleGlobalToggle, false);
+  }
+
+  #unobserveGlobalToggle() {
+    window.removeEventListener('wcp-state-changed:editor-link-hint-visible', this.#handleGlobalToggle, false);
   }
 
   #attachOverlay() {
@@ -88,15 +98,27 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
     this.container.removeEventListener('scroll', this.#handleContainerScroll, false);
   }
 
-  #handleContainerScroll() {
+  #handleContainerScroll = () => {
     this.#overlay.style.transform = `translateY(-${this.container.scrollTop ?? 0}px)`;
-  }
+  };
 
-  #handleContainerSlotChange() {
-    this.#attachHints();
-  }
+  #handleGlobalToggle = ({ detail: enabled }: CustomEvent<boolean>) => {
+    // plugin must be available
+    this.#checkAvailability();
+    if (!this.available) return;
+
+    // update state and setup hints
+    this.enabled = enabled;
+    this.#setupHints();
+  };
+
+  #handleContainerSlotChange = () => this.#attachHints();
 
   #attachHints() {
+    // plugin must be available
+    this.#checkAvailability();
+    if (!this.available) return;
+
     // gather all slotted elements
     const host = this.container.getRootNode() as HTMLElement;
     const slot = host.querySelector('slot');
@@ -123,7 +145,9 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   }
 
   #setupHints() {
-    if (this.enabled) {
+    this.#checkAvailability();
+    if (this.enabled && this.available) {
+      this.#detachHints();
       this.#attachOverlay();
       this.#attachHints();
 
@@ -158,6 +182,7 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
 
     this.#setupHints();
     this.#checkAvailability();
+    this.#observeGlobalToggle();
   }
 
   adoptedCallback() {
@@ -165,6 +190,7 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   }
 
   override disconnectedCallback() {
+    this.#unobserveGlobalToggle();
     this.#teardownHints();
 
     super.disconnectedCallback();
@@ -192,6 +218,10 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
 }
 
 declare global {
+  interface State {
+    'editor-link-hint-visible': boolean;
+  }
+
   interface HTMLElementTagNameMap {
     'wcp-preview-editor-link': PreviewEditorLink;
   }

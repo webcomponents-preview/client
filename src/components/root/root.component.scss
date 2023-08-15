@@ -1,31 +1,13 @@
 @use '@/styles/utils' as utils;
 @use '@/styles/defaults';
 
-// host (wcp-root) specific custom properties
-// prettier-ignore
-:host {
-  ---wcp-root-dark-background: var(--wcp-root-dark-background, var(--wcp-color-blue-17));
-  ---wcp-root-dark-color: var(--wcp-root-dark-color, var(--wcp-color-grey-96));
-
-  ---wcp-root-light-background: var(--wcp-root-light-background, var(--wcp-color-blue-80));
-  ---wcp-root-light-color: var(--wcp-root-light-color, var(--wcp-color-grey-96));
-}
-
 :host {
   display: block;
-
-  background-color: var(---wcp-root-background);
-  color: var(---wcp-root-color);
 
   font-family: var(--wcp-font-family);
   font-feature-settings: normal;
   font-size: 15px;
   line-height: 1.3;
-
-  @include utils.color-scheme() using ($color-scheme) {
-    ---wcp-root-background: var(---wcp-root-#{$color-scheme}-background);
-    ---wcp-root-color: var(---wcp-root-#{$color-scheme}-color);
-  }
 
   @include utils.breakpoint(sm) {
     font-size: 13px;
@@ -55,8 +37,8 @@
 wcp-topbar {
   position: sticky;
   inset: 0 0 auto;
+}
 
-  @include utils.color-scheme() using ($color-scheme) {
-    background: var(---wcp-root-#{$color-scheme}-background);
-  }
+wcp-root-splash {
+  z-index: 10;
 }

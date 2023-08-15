@@ -2,7 +2,7 @@
   "directory": "src",
   "delete": true,
   "flat": true,
-  "include": ["components", "utils"],
+  "include": ["components", "plugins", "utils"],
   "exclude": [".*\\.test\\.ts$"],
   "singleQuotes": true
 }

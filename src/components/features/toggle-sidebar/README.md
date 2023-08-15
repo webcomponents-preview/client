@@ -13,9 +13,3 @@ Shows a button to toggle sidebar.
 | Method              | Type       |
 |---------------------|------------|
 | `handleButtonClick` | `(): void` |
-
-## Events
-
-| Event              |
-|--------------------|
-| `wcp-aside:toggle` |

@@ -1,21 +1,23 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
 
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { unsafeStatic, html as staticHtml } from 'lit/static-html.js';
 import { customElement, eventOptions, property, query, state } from 'lit/decorators.js';
+
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { getConfig, loadConfig } from '@/utils/config.utils.js';
+import { loadManifest } from '@/utils/manifest.utils.js';
 import { type GroupedNavigationItems, prepareNavigation } from '@/utils/navigation.utils.js';
-import { Routable } from '@/mixins/routable.mixin.js';
+import { Router } from '@/utils/router.utils.js';
 
 import type { RootNavigation } from './root-navigation/root-navigation.component.js';
 import { prepareRoutes } from './root.routes.js';
 
 import logo from '@/assets/icons/logo.svg';
 import styles from './root.component.scss';
-import { loadManifest } from '../../utils/manifest.utils.js';
 
 /**
  * @slot logo - Allows setting a custom logo to be displayed in the title.
@@ -32,14 +34,19 @@ import { loadManifest } from '../../utils/manifest.utils.js';
  * @emits wcp-root:active-element-changed - Fired when the active element changes. Carries the declaration of the new active element with it.
  */
 @customElement('wcp-root')
-export class Root extends Routable()(ColorSchemable(LitElement)) {
+export class Root extends LitElement {
   static override readonly styles = unsafeCSS(styles);
+
+  readonly #router = new Router(this);
 
   @state()
   private ready = false;
 
   @state()
-  navigationItems: GroupedNavigationItems = new Map();
+  private topbarPlugins: string[] = [];
+
+  @state()
+  private navigationItems: GroupedNavigationItems = new Map();
 
   @query('wcp-root-navigation')
   readonly navigationRef!: RootNavigation;
@@ -68,7 +75,16 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
     this.navigationRef.searchTerms = detail.toLowerCase().split(' ');
   }
 
+  @eventOptions({ passive: true })
+  handleSplashTransitionEnd(event: Event) {
+    const splash = event.target as HTMLElement;
+    splash.remove();
+  }
+
   override async connectedCallback() {
+    // do not block the render loop to show some loading indicator
+    super.connectedCallback();
+
     // once connected, load the config and the manifest
     const config = await loadConfig(this.configUrl);
     const manifest = await loadManifest(this.manifestUrl, config.excludeElements);
@@ -76,23 +92,33 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
     // set the document title and prepare the navigation
     document.title = config.labels.title;
     this.navigationItems = prepareNavigation(manifest, config);
+    this.topbarPlugins = config.topbarPlugins ?? [];
 
     // prepare and set routes
     const routes = prepareRoutes();
-    this.router.registerRoutes(routes);
+    this.#router.registerRoutes(routes);
+    this.#router.connect();
 
     // we're finished loading
     this.ready = true;
-    super.connectedCallback();
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.#router.disconnect();
   }
 
   protected override render(): TemplateResult {
     return html`
+      <wcp-root-splash ?hidden="${this.ready}" @transitionend="${this.handleSplashTransitionEnd}">
+        Loading...
+      </wcp-root-splash>
+
       ${when(
         this.ready,
         () => html`
           <wcp-layout>
-            <wcp-title slot="header" title="${ifDefined(getConfig().labels.title)}">
+            <wcp-title slot="header" title="${ifDefined(getConfig()?.labels.title)}">
               <slot name="logo" slot="logo">
                 <img src="${logo}" height="20px" />
               </slot>
@@ -106,18 +132,17 @@ export class Root extends Routable()(ColorSchemable(LitElement)) {
             <wcp-root-navigation
               slot="aside"
               min-search-length="2"
-              current-path="${ifDefined(this.router.currentPath)}"
-              empty-message="${ifDefined(getConfig().labels.emptyNavigation)}"
+              current-path="${ifDefined(this.#router.currentPath)}"
+              empty-message="${ifDefined(getConfig()?.labels.emptyNavigation)}"
               .items="${this.navigationItems}"
             ></wcp-root-navigation>
 
             <wcp-topbar>
-              <wcp-toggle-sidebar></wcp-toggle-sidebar>
-              <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
-              <slot name="preview-controls"></slot>
+              ${map(this.topbarPlugins, (plugin) => staticHtml`<${unsafeStatic(plugin)}></${unsafeStatic(plugin)}>`)}
+              <slot name="topbar-plugins"></slot>
             </wcp-topbar>
 
-            <slot name="preview-frame">${this.router.outlet()}</slot>
+            <slot name="stage">${this.#router.outlet()}</slot>
           </wcp-layout>
         `
       )}

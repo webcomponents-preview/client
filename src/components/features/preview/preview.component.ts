@@ -72,7 +72,7 @@ export class Preview extends ColorSchemable(LitElement) {
         () => html`
           <nav>
             ${map(
-              this.#config.previewPlugins ?? [],
+              this.#config?.previewPlugins ?? [],
               (plugin, index) => html`
                 ${when(index > 0, () => html`<hr />`)} ${staticHtml`
                   <${unsafeStatic(plugin)}

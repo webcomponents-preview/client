@@ -17,7 +17,7 @@ export type Config = {
   /**
    * The initial tab to be selected in the preview. Will match the name of the plugin.
    */
-  initialPreviewTab: string;
+  initialStageTab: string;
 
   /**
    * The plugins to be used for the preview.
@@ -29,7 +29,13 @@ export type Config = {
    * The plugins to be used for the preview frame.
    * Defaults to examples, readme and viewer.
    */
-  previewFramePlugins: string[];
+  stagePlugins: string[];
+
+  /**
+   * The plugins to be used for the topbar.
+   * Defaults to the preview editor link hint toggle.
+   */
+  topbarPlugins: string[];
 
   /**
    * Defines readmes to be loaded from external sources to be displayed in the navigation.
@@ -38,6 +44,14 @@ export type Config = {
     name: string;
     url: string;
   }[];
+
+  /**
+   * Sets the persistence of the global state. Defaults to 'session'.
+   * If set to 'none', the state will not be persisted at all and only kept in memory.
+   * If set to 'session', the state will be persisted in the session storage and restored.
+   * If set to 'local', the state will be persisted in the local storage and restored.
+   */
+  statePersistence: 'none' | 'session' | 'local';
 
   /**
    * Labels to be translated or customized
@@ -61,6 +75,18 @@ export type Config = {
      */
     title: string;
   };
+
+  /**
+   * All settings concerning logging
+   */
+  logging: {
+    /**
+     * The severity of the log message; info will include all messages, warn will
+     * include warnings and errors, error will include errors only and none will
+     * disable logging completely.
+     */
+    severity: 'info' | 'warn' | 'error' | 'none';
+  };
 };
 
 declare global {
@@ -78,15 +104,20 @@ export const defaultConfig = {
   excludeElements: [],
   initialActiveElement: undefined,
   initialCodePreviewTab: 'preview',
-  initialPreviewTab: 'viewer',
+  initialStageTab: 'editor',
   previewPlugins: ['wcp-preview-simulate-viewports', 'wcp-preview-editor-link'],
-  previewFramePlugins: ['wcp-stage-examples', 'wcp-stage-readme', 'wcp-stage-editor'],
+  stagePlugins: ['wcp-stage-examples', 'wcp-stage-readme', 'wcp-stage-editor'],
+  topbarPlugins: ['wcp-toggle-sidebar', 'wcp-toggle-color-scheme', 'wcp-topbar-preview-editor-link-toggle'],
   additionalReadmes: [],
+  statePersistence: 'session',
   labels: {
     title: 'Web Component Preview',
     additionalReadmeGroupName: 'Readmes',
     fallbackGroupName: 'Components',
     emptyNavigation: 'No readmes nor elements found.',
+  },
+  logging: {
+    severity: 'info',
   },
 } satisfies Config;
 
@@ -106,7 +137,7 @@ export function mergeConfigWithDefaults(config: Partial<Config>): Config {
 export async function loadConfig(url = 'config.json'): Promise<Config> {
   const response = await fetch(url);
   const config = mergeConfigWithDefaults(await response.json());
-  
+
   if (window.wcp === undefined) {
     window.wcp = {} as Window['wcp'];
   }
@@ -114,10 +145,12 @@ export async function loadConfig(url = 'config.json'): Promise<Config> {
     window.wcp.config = config;
   }
 
-  return getConfig();
+  return getConfig()!;
 }
 
-// convenience function to retrieve the config
-export function getConfig(): Config {
-  return window.wcp.config;
+/**
+ * Convenience function to retrieve the config
+ */
+export function getConfig(): Config | undefined {
+  return window.wcp?.config;
 }

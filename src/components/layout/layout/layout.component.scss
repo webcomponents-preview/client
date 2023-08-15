@@ -1,9 +1,28 @@
 @use '@/styles/utils' as utils;
 
+// prettier-ignore
+:host {
+  ---wcp-layout-dark-background: var(--wcp-layout-dark-background, var(--wcp-color-blue-17));
+  ---wcp-layout-dark-color: var(--wcp-layout-dark-color, var(--wcp-color-grey-96));
+
+  ---wcp-layout-light-background: var(--wcp-layout-light-background, var(--wcp-color-blue-80));
+  ---wcp-layout-light-color: var(--wcp-layout-light-color, var(--wcp-color-grey-96));
+}
+
+:host {
+  @include utils.color-scheme() using ($color-scheme) {
+    ---wcp-layout-background: var(---wcp-layout-#{$color-scheme}-background);
+    ---wcp-layout-color: var(---wcp-layout-#{$color-scheme}-color);
+  }
+}
+
 :host {
   display: flex;
   flex-direction: row;
 
   height: 100%;
   overflow: hidden;
+
+  background-color: var(---wcp-layout-background);
+  color: var(---wcp-layout-color);
 }

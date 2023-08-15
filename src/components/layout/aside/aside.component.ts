@@ -2,6 +2,7 @@ import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
+import { persist, read } from '@/utils/state.utils.js';
 
 import styles from './aside.component.scss';
 
@@ -38,7 +39,7 @@ export class Aside extends ColorSchemable(LitElement) {
    * Used to toggle the width of the aside bar
    */
   @property({ type: Boolean, reflect: true })
-  override hidden = false;
+  override hidden = !read('aside-visible');
 
   /**
    * Presets the aria role to `complementary` as we do not use te aside element directly
@@ -47,35 +48,23 @@ export class Aside extends ColorSchemable(LitElement) {
   @property({ type: String, reflect: true })
   override role = 'complementary';
 
-  emitToggled() {
-    const event = new CustomEvent('wcp-aside:toggled', {
-      bubbles: true,
-      cancelable: true,
-      composed: true,
-      detail: this.hidden,
-    });
-    this.dispatchEvent(event);
-  }
-
   @eventOptions({ passive: true })
   handleButtonClick() {
-    this.hidden = true;
-    this.emitToggled();
+    persist('aside-visible', false);
   }
 
-  listenAsideToggle = (({ detail }: CustomEvent<boolean | null>) => {
-    this.hidden = detail ?? !this.hidden;
-    this.emitToggled();
+  listenAsideToggle = (({ detail }: CustomEvent<boolean>) => {
+    this.hidden = !detail;
   }).bind(this);
 
   override connectedCallback() {
     super.connectedCallback();
-    window.addEventListener('wcp-aside:toggle', this.listenAsideToggle, false);
+    window.addEventListener('wcp-state-changed:aside-visible', this.listenAsideToggle, false);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    window.removeEventListener('wcp-aside:toggle', this.listenAsideToggle, false);
+    window.removeEventListener('wcp-state-changed:aside-visible', this.listenAsideToggle, false);
   }
 
   protected override render(): TemplateResult {
@@ -94,11 +83,8 @@ export class Aside extends ColorSchemable(LitElement) {
 }
 
 declare global {
-  interface WindowEventMap {
-    'wcp-aside:toggle': CustomEvent<boolean | null>;
-  }
-  interface HTMLElementEventMap {
-    'wcp-aside:toggled': CustomEvent<boolean>;
+  interface State {
+    ['aside-visible']: boolean;
   }
   interface HTMLElementTagNameMap {
     'wcp-aside': Aside;

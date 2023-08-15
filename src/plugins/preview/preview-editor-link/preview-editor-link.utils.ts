@@ -1,6 +1,6 @@
 import { getManifest } from '@/utils/manifest.utils.js';
 import { litKey } from '@/utils/parser.utils.js';
-import type { ElementData } from '../stage-editor/stage-editor.utils.js';
+import type { ElementData } from '../../stage/stage-editor/stage-editor.utils.js';
 
 const IGNORED_ATTRIBUTES = ['slot'];
 

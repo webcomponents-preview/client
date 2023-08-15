@@ -1,6 +1,8 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions } from 'lit/decorators.js';
 
+import { persist, read } from '@/utils/state.utils.js';
+
 import styles from './toggle-sidebar.component.scss';
 
 /**
@@ -17,7 +19,7 @@ export class ToggleSidebar extends LitElement {
 
   @eventOptions({ passive: true })
   handleButtonClick() {
-    window.dispatchEvent(new CustomEvent('wcp-aside:toggle'));
+    persist('aside-visible', !read('aside-visible'));
   }
 
   protected override render(): TemplateResult {
