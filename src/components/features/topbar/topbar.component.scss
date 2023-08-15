@@ -2,7 +2,9 @@
 
 // prettier-ignore
 :host {
+  ---wcp-topbar-dark-background: var(--wcp-topbar-dark-background, var(--wcp-color-blue-17));
   ---wcp-topbar-dark-color: var(--wcp-topbar-dark-color, var(--wcp-color-grey-96));
+  ---wcp-topbar-light-background: var(--wcp-topbar-light-background, var(--wcp-color-blue-80));
   ---wcp-topbar-light-color: var(--wcp-topbar-light-color, var(--wcp-color-grey-17));
 
   ---wcp-topbar-height: var(--wcp-topbar-height, #{utils.size(5)});
@@ -19,6 +21,7 @@
   padding: var(---wcp-topbar-spacing);
 
   @include utils.color-scheme() using ($color-scheme) {
+    background-color: var(---wcp-topbar-#{$color-scheme}-background);
     color: var(---wcp-topbar-#{$color-scheme}-color);
   }
 }
