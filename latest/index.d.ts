@@ -1604,7 +1604,7 @@ declare module "utils/navigation.utils" {
     /**
      * Defines the structure of the navigation items.
      */
-    export type GroupedNavigationItems = Map<string, Set<GroupedNavigationItem>>;
+    export type GroupedNavigationItems = Map<string, GroupedNavigationItem[]>;
     export type GroupedNavigationItem = {
         name: string;
         link: string;
