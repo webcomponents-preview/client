@@ -42,11 +42,15 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
 
   #checkAvailability() {
     // check if the previewed element is in a viewer
-    this.available = !isDescendantOf(this, 'wcp-stage-editor');
+    const available = !isDescendantOf(this, 'wcp-stage-editor');
+
+    // do not go on if the availability did not change
+    if (available === this.available) return;
+    this.available = available;
 
     // notify about availability change
     const event = new CustomEvent('wcp-preview-plugin:availability-change', {
-      detail: this.available,
+      detail: available,
       bubbles: true,
       composed: true,
     });
@@ -100,6 +104,7 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
 
   #handleGlobalToggle = ({ detail: enabled }: CustomEvent<boolean>) => {
     // plugin must be available
+    this.#checkAvailability();
     if (!this.available) return;
 
     // update state and setup hints
@@ -111,6 +116,7 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
 
   #attachHints() {
     // plugin must be available
+    this.#checkAvailability();
     if (!this.available) return;
 
     // gather all slotted elements
@@ -139,7 +145,8 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   }
 
   #setupHints() {
-    if (this.enabled) {
+    this.#checkAvailability();
+    if (this.enabled && this.available) {
       this.#detachHints();
       this.#attachOverlay();
       this.#attachHints();
