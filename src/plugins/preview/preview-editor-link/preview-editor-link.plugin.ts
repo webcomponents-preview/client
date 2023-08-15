@@ -99,7 +99,10 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   };
 
   #handleGlobalToggle = ({ detail: enabled }: CustomEvent<boolean>) => {
+    // plugin must be available
     if (!this.available) return;
+
+    // update state and setup hints
     this.enabled = enabled;
     this.#setupHints();
   };
@@ -107,6 +110,9 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   #handleContainerSlotChange = () => this.#attachHints();
 
   #attachHints() {
+    // plugin must be available
+    if (!this.available) return;
+
     // gather all slotted elements
     const host = this.container.getRootNode() as HTMLElement;
     const slot = host.querySelector('slot');
