@@ -1,27 +1,6 @@
 declare module "utils/mixin.types" {
     export type Constructor<T> = new (...args: any[]) => T;
 }
-declare module "utils/color-scheme.utils" {
-    import type { ColorSchemableInterface } from "mixins/color-schemable.mixin";
-    global {
-        interface WindowEventMap {
-            'wcp-color-scheme:toggle': CustomEvent<ColorScheme | null>;
-        }
-    }
-    export type ColorScheme = 'light' | 'dark';
-    export const getColorSchemeState: () => ColorScheme | undefined;
-    export const addColorSchemable: (element: ColorSchemableInterface) => Set<ColorSchemableInterface>;
-    export const removeColorSchemable: (element: ColorSchemableInterface) => boolean;
-}
-declare module "mixins/color-schemable.mixin" {
-    import { LitElement } from 'lit';
-    import type { Constructor } from "utils/mixin.types";
-    import { type ColorScheme } from "utils/color-scheme.utils";
-    export class ColorSchemableInterface {
-        colorScheme?: ColorScheme;
-    }
-    export const ColorSchemable: <T extends Constructor<LitElement>>(superClass: T) => Constructor<ColorSchemableInterface> & T;
-}
 declare module "utils/config.utils" {
     export type Config = {
         excludeElements: string[];
@@ -38,7 +17,7 @@ declare module "utils/config.utils" {
         /**
          * The initial tab to be selected in the preview. Will match the name of the plugin.
          */
-        initialPreviewTab: string;
+        initialStageTab: string;
         /**
          * The plugins to be used for the preview.
          * Set to the viewport plugin by default.
@@ -48,7 +27,12 @@ declare module "utils/config.utils" {
          * The plugins to be used for the preview frame.
          * Defaults to examples, readme and viewer.
          */
-        previewFramePlugins: string[];
+        stagePlugins: string[];
+        /**
+         * The plugins to be used for the topbar.
+         * Defaults to the preview editor link hint toggle.
+         */
+        topbarPlugins: string[];
         /**
          * Defines readmes to be loaded from external sources to be displayed in the navigation.
          */
@@ -56,6 +40,13 @@ declare module "utils/config.utils" {
             name: string;
             url: string;
         }[];
+        /**
+         * Sets the persistence of the global state. Defaults to 'session'.
+         * If set to 'none', the state will not be persisted at all and only kept in memory.
+         * If set to 'session', the state will be persisted in the session storage and restored.
+         * If set to 'local', the state will be persisted in the local storage and restored.
+         */
+        statePersistence: 'none' | 'session' | 'local';
         /**
          * Labels to be translated or customized
          */
@@ -78,6 +69,17 @@ declare module "utils/config.utils" {
              */
             title: string;
         };
+        /**
+         * All settings concerning logging
+         */
+        logging: {
+            /**
+             * The severity of the log message; info will include all messages, warn will
+             * include warnings and errors, error will include errors only and none will
+             * disable logging completely.
+             */
+            severity: 'info' | 'warn' | 'error' | 'none';
+        };
     };
     global {
         interface WCP {
@@ -91,20 +93,80 @@ declare module "utils/config.utils" {
         excludeElements: never[];
         initialActiveElement: undefined;
         initialCodePreviewTab: "preview";
-        initialPreviewTab: string;
+        initialStageTab: string;
         previewPlugins: string[];
-        previewFramePlugins: string[];
+        stagePlugins: string[];
+        topbarPlugins: string[];
         additionalReadmes: never[];
+        statePersistence: "session";
         labels: {
             title: string;
             additionalReadmeGroupName: string;
             fallbackGroupName: string;
             emptyNavigation: string;
         };
+        logging: {
+            severity: "info";
+        };
     };
     export function mergeConfigWithDefaults(config: Partial<Config>): Config;
     export function loadConfig(url?: string): Promise<Config>;
-    export function getConfig(): Config;
+    /**
+     * Convenience function to retrieve the config
+     */
+    export function getConfig(): Config | undefined;
+}
+declare module "utils/state.utils" {
+    const STATE_EVENT_NAME: "wcp-state-changed";
+    global {
+        /**
+         * Add fields to the state type by declaring them at the feature.
+         * The declared type will be merged with this global state type.
+         */
+        interface State {
+            _: unknown;
+        }
+        interface WCP {
+            __state: Record<string, string>;
+        }
+        interface Window {
+            wcp: WCP;
+        }
+        type StateEventMap = {
+            [N in `${typeof STATE_EVENT_NAME}:${keyof State}`]: CustomEvent<State[N extends `${typeof STATE_EVENT_NAME}:${infer K}` ? K : never]>;
+        };
+        interface WindowEventMap extends StateEventMap {
+        }
+    }
+    /**
+     * Helper function to persist a given key with the given stateful value.
+     */
+    export function persist<K extends keyof State>(key: K, value: State[K]): undefined;
+    /**
+     * Read stateful values from the persistence layer.
+     */
+    export function read<K extends keyof State>(key: K): State[K] | undefined;
+}
+declare module "utils/color-scheme.utils" {
+    import type { ColorSchemableInterface } from "mixins/color-schemable.mixin";
+    global {
+        interface State {
+            ['color-scheme']: ColorScheme;
+        }
+    }
+    export type ColorScheme = 'light' | 'dark';
+    export const getColorSchemeState: () => ColorScheme;
+    export const addColorSchemable: (element: ColorSchemableInterface) => Set<ColorSchemableInterface>;
+    export const removeColorSchemable: (element: ColorSchemableInterface) => boolean;
+}
+declare module "mixins/color-schemable.mixin" {
+    import { LitElement } from 'lit';
+    import type { Constructor } from "utils/mixin.types";
+    import { type ColorScheme } from "utils/color-scheme.utils";
+    export class ColorSchemableInterface {
+        colorScheme?: ColorScheme;
+    }
+    export const ColorSchemable: <T extends Constructor<LitElement>>(superClass: T) => Constructor<ColorSchemableInterface> & T;
 }
 declare module "components/features/markdown-example/markdown-example.component" {
     import { LitElement, type TemplateResult } from 'lit';
@@ -415,6 +477,13 @@ declare module "components/features/readme-frame/readme-frame.component" {
         }
     }
 }
+declare module "utils/log.utils" {
+    export const log: {
+        info(...args: unknown[]): void;
+        warn(...args: unknown[]): void;
+        error(...args: unknown[]): void;
+    };
+}
 declare module "utils/plugin.utils" {
     global {
         interface HTMLElementEventMap {
@@ -429,26 +498,42 @@ declare module "utils/plugin.utils" {
      * `wcp-plugin:availability-change` and should carry a
      * boolean flag about its availability in the `detail` property.
      */
-    export type Plugin = Element & {
+    export type Plugin = HTMLElement & {
         readonly name: string;
         readonly label: string;
         readonly available: boolean;
-        readonly previewTagName: string;
     };
     /**
      * Type to be used with stage plugins.
      */
     export type StagePlugin = Plugin & {
         readonly data?: string;
+        readonly previewTagName: string;
     };
     /**
      * Type to be used with preview plugins.
      */
     export type PreviewPlugin = Plugin & {
         readonly container: HTMLElement;
+        readonly previewTagName: string;
     };
-    export function isPlugin(element: Element): element is Plugin;
-    export function findAllPlugins(slot: HTMLSlotElement): Plugin[];
+    /**
+     * Type to be used with topbar plugins.
+     */
+    export type TopbarPlugin = Plugin;
+    /**
+     * Type guard for generic plugins.
+     */
+    export function isPlugin(element: HTMLElement): element is Plugin;
+    /**
+     * Type guard for stage plugins.
+     */
+    export function isStagePlugin(element: HTMLElement): element is StagePlugin;
+    /**
+     * Type guard for preview plugins.
+     * TODO: add container type guard
+     */
+    export function isPreviewPlugin(element: HTMLElement): element is PreviewPlugin;
 }
 declare module "components/features/stage/stage.component" {
     import { LitElement, type TemplateResult } from 'lit';
@@ -476,11 +561,12 @@ declare module "components/features/stage/stage.component" {
      */
     export class Stage extends Stage_base {
         static readonly styles: import("lit").CSSResult;
+        private readonly assignedPlugins;
         private _plugins;
         private _tabs;
         private readonly activePlugin?;
         emitActivePluginChange(activePlugin?: string): void;
-        protected handleSlotChange(event: Event): void;
+        protected handleSlotChange(): void;
         protected handleAvailabilityChange(): void;
         protected handleActiveTabChange(event: CustomEvent<string>): void;
         protected preparePluginTabs(): void;
@@ -1275,19 +1361,15 @@ declare module "components/layout/aside/aside.component" {
          * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/complementary_role
          */
         role: string;
-        emitToggled(): void;
         handleButtonClick(): void;
-        listenAsideToggle: ({ detail }: CustomEvent<boolean | null>) => void;
+        listenAsideToggle: ({ detail }: CustomEvent<boolean>) => void;
         connectedCallback(): void;
         disconnectedCallback(): void;
         protected render(): TemplateResult;
     }
     global {
-        interface WindowEventMap {
-            'wcp-aside:toggle': CustomEvent<boolean | null>;
-        }
-        interface HTMLElementEventMap {
-            'wcp-aside:toggled': CustomEvent<boolean>;
+        interface State {
+            ['aside-visible']: boolean;
         }
         interface HTMLElementTagNameMap {
             'wcp-aside': Aside;
@@ -1296,6 +1378,7 @@ declare module "components/layout/aside/aside.component" {
 }
 declare module "components/layout/layout/layout.component" {
     import { LitElement, type TemplateResult } from 'lit';
+    const Layout_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @example
      * ```html
@@ -1309,7 +1392,7 @@ declare module "components/layout/layout/layout.component" {
      * @slot aside - Projects elements aside the main content
      * @slot - Receives the content of the main section
      */
-    export class Layout extends LitElement {
+    export class Layout extends Layout_base {
         static readonly styles: import("lit").CSSResult;
         protected render(): TemplateResult;
     }
@@ -1338,40 +1421,6 @@ declare module "components/layout/main/main.component" {
             'wcp-main': Main;
         }
     }
-}
-declare module "utils/compression.utils" {
-    /**
-     *	Compress a string with browser native APIs into a string representation
-     *
-     * @param data - Input string that should be compressed
-     * @param encoding - Compression algorithm to use
-     * @returns The compressed string
-     */
-    export function compress(data: string, encoding: CompressionFormat): Promise<string>;
-    /**
-     * Decompress a string representation with browser native APIs in to a normal js string
-     *
-     * @param data - String that should be decompressed
-     * @param encoding - Decompression algorithm to use
-     * @returns The decompressed string
-     */
-    export function decompress(data: string, encoding: CompressionFormat): Promise<string>;
-}
-declare module "utils/dom.utils" {
-    export function isElementWithin(element: Element, container?: Element): boolean;
-    /**
-     * Delivers the relative boundary of an element to an optional parent.
-     * If the parent element is omitted, the offset parent of the element is used.
-     */
-    export function getRelativeBoundary(element: HTMLElement, parent?: Element | null): Pick<DOMRect, 'x' | 'y' | 'height' | 'width'>;
-    /**
-     * Returns the list of ancestor elements by reference to a given element.
-     */
-    export function getAncestorPath(element: Element, check?: (element: Element) => boolean): (Element | Document)[];
-    /**
-     * Determine if an element is a descendant of another element by tag name.
-     */
-    export function isDescendantOf(element: Element, ancestor: string): boolean;
 }
 declare module "utils/parser.types" {
     /**
@@ -1536,7 +1585,36 @@ declare module "utils/manifest.utils" {
         }
     }
     export function loadManifest(manifestUrl: string, excludeElements: string[]): Promise<Manifest>;
+    /**
+     * Convenience function to retrieve the config
+     */
     export function getManifest(): Manifest;
+}
+declare module "utils/navigation.utils" {
+    import type { Config } from "utils/config.utils";
+    import type { Element, Manifest } from "utils/parser.types";
+    /**
+     * Defines the structure of the navigation items.
+     */
+    export type GroupedNavigationItems = Map<string, Set<GroupedNavigationItem>>;
+    export type GroupedNavigationItem = {
+        name: string;
+        link: string;
+    };
+    /**
+     * Creates a navigation item for a given readme.
+     */
+    export function prepareReadmeNavigationItem(name: string, url: string): GroupedNavigationItem;
+    /**
+     * Creates a navigation item for a given element.
+     */
+    export function prepareElementNavigationItem(element: Element): GroupedNavigationItem;
+    /**
+     * Prepares a grouped navigation structure of readmes and elements.
+     */
+    export function prepareNavigation(manifest: Manifest, config: Config): GroupedNavigationItems;
+    export function matchesSearch(content: string, terms: string[], minSearchLength?: number): boolean;
+    export function filterItems(items: GroupedNavigationItems, terms: string[], minSearchLength?: number): GroupedNavigationItems;
 }
 declare module "utils/router.utils" {
     import type { LitElement, TemplateResult } from 'lit';
@@ -1597,395 +1675,6 @@ declare module "utils/router.utils" {
         outlet(): TemplateResult;
     }
 }
-declare module "utils/parser.utils" {
-    import type * as Parsed from "utils/parser.types";
-    /**
-     * Prepares a lit compatible template key for a given field
-     */
-    export function litKey(field: Parsed.Field): string;
-}
-declare module "components/plugins/stage-editor/stage-editor.utils" {
-    import type * as Parsed from "utils/parser.types";
-    /**
-     * State of the custom element.
-     */
-    export type ElementData = {
-        /**
-         * Additional attributes mapped by attribute name to attribute value.
-         * Should not overlap with reflected attributes from fields.
-         */
-        attributes: Record<string, string | undefined>;
-        /**
-         * Field state mapped by property name to property value.
-         */
-        fields: Record<string, string | number | boolean | undefined>;
-        /**
-         * Slot state mapped by slot name to slot (html) content.
-         */
-        slots: Record<string, string>;
-    };
-    /**
-     * Empty state object of the element data.
-     */
-    export const EMPTY_ELEMENT_DATA: ElementData;
-    /**
-     * Prepares an initial state object for the given element definition.
-     */
-    export function prepareInitialData(element: Parsed.Element): ElementData;
-    /**
-     * Retrieve the current value of a given field parsed to the correct type
-     */
-    export function parseFieldValue(field: Parsed.Field, value: unknown): ElementData['fields'][keyof ElementData['fields']];
-    /**
-     * There seems to be a bug in Safari with the native FormAssociated implementation regarding
-     * checkboxes: https://bugs.webkit.org/show_bug.cgi?id=259781
-     */
-    export function alignFormDataWebkit(formData: FormData, elements: HTMLFormControlsCollection, element: Parsed.Element): FormData;
-    /**
-     * Maps the given form data by the given element definition to a stateful data object
-     */
-    export function mapFormData(data: FormData, element: Parsed.Element): ElementData;
-    /**
-     * Prepares the data to be set as compressed url param
-     */
-    export function compressFormData(formData: FormData, element: Parsed.Element): Promise<string>;
-    /**
-     * Decompresses and parses the given element data
-     */
-    export function decompressElementData(compressed: string): Promise<ElementData>;
-}
-declare module "components/plugins/preview-editor-link/preview-editor-link.utils" {
-    import type { ElementData } from "components/plugins/stage-editor/stage-editor.utils";
-    /**
-     * Prepares an initial state object for the given element definition by:
-     * 1. Read all controllable fields from the element definition (from properties)
-     * 2. Read all (remaining) attributes from the element reference (not reflected from already collected properties)
-     * 3. Read all slots from the element definition with their stringified contents
-     *
-     * @todo: separate steps into functions
-     * @todo: test this sh!t
-     */
-    export function readCurrentElementData(ref: HTMLElement): ElementData;
-}
-declare module "components/plugins/preview-editor-link/preview-editor-link.plugin" {
-    import { LitElement, type TemplateResult } from 'lit';
-    import type { PreviewPlugin } from "utils/plugin.utils";
-    /**
-     * Links all found custom elements in a preview with their current state to the editor to be further played around with.
-     *
-     * @element wcp-preview-editor-link
-     */
-    export class PreviewEditorLink extends LitElement implements PreviewPlugin {
-        #private;
-        static readonly styles: import("lit").CSSResult;
-        readonly container: HTMLElement;
-        readonly previewTagName: string;
-        available: boolean;
-        readonly name = "viewer-link";
-        readonly label = "Show in viewer";
-        enabled: boolean;
-        connectedCallback(): void;
-        adoptedCallback(): void;
-        disconnectedCallback(): void;
-        private handleToggleClick;
-        protected render(): TemplateResult;
-    }
-    global {
-        interface HTMLElementTagNameMap {
-            'wcp-preview-editor-link': PreviewEditorLink;
-        }
-    }
-}
-declare module "components/plugins/preview-editor-link/preview-editor-link-hint/preview-editor-link-hint.component" {
-    import { LitElement, type TemplateResult } from 'lit';
-    const PreviewEditorLinkHint_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
-    /**
-     * Shows a hint to a given preview element.
-     *
-     * @element wcp-preview-editor-link-hint
-     *
-     * @cssprop --wcp-preview-editor-link-hint-button-passive-background - The background color of the hint button in passive state.
-     * @cssprop --wcp-preview-editor-link-hint-button-active-background - The background color of the hint button in active state.
-     * @cssprop --wcp-preview-editor-link-hint-button-passive-size - Size of the hint button in passive state.
-     * @cssprop --wcp-preview-editor-link-hint-button-active-size - Size of the hint button in active state.
-     *
-     * @cssprop --wcp-preview-editor-link-hint-debug-border-width - Border width of the debugging fields.
-     * @cssprop --wcp-preview-editor-link-hint-debug-background-opacity - Opacity of the debugging fields background.
-     *
-     * @cssprop --wcp-preview-editor-link-hint-debug-stripe-distance - Distance of the stripes of the debugging field background.
-     * @cssprop --wcp-preview-editor-link-hint-debug-stripe-tilt - Tilt of the stripes of the debugging field background in degrees.
-     * @cssprop --wcp-preview-editor-link-hint-debug-stripe-width - Width of the stripes of the debugging field background.
-     * @cssprop --wcp-preview-editor-link-hint-debug-stripe-dash-size - Length of the dashes of the debugging field background.
-     * @cssprop --wcp-preview-editor-link-hint-debug-stripe-dash-gap - Gap between the dashes of the debugging field background.
-     *
-     * @cssprop --wcp-preview-editor-link-hint-debug-dark-background - Debugging field background color in dark mode.
-     * @cssprop --wcp-preview-editor-link-hint-debug-dark-stroke - Debugging field dash and border color in dark mode.
-     *
-     * @cssprop --wcp-preview-editor-link-hint-debug-light-background - Debugging field background color in light mode.
-     * @cssprop --wcp-preview-editor-link-hint-debug-light-stroke - Debugging field dash and border color in light mode.
-     */
-    export class PreviewEditorLinkHint extends PreviewEditorLinkHint_base {
-        #private;
-        static readonly styles: import("lit").CSSResult;
-        debug: boolean;
-        set element(element: HTMLElement | undefined);
-        set scrollParent(element: HTMLElement | undefined);
-        /**
-         * Allows to update the position of the hint.
-         */
-        updatePosition(): void;
-        connectedCallback(): void;
-        disconnectedCallback(): void;
-        protected render(): TemplateResult;
-    }
-    global {
-        interface HTMLElementTagNameMap {
-            'wcp-preview-editor-link-hint': PreviewEditorLinkHint;
-        }
-    }
-}
-declare module "components/plugins/preview-simulate-viewports/preview-simulate-viewports.plugin" {
-    import { LitElement, type TemplateResult } from 'lit';
-    import type { PreviewPlugin } from "utils/plugin.utils";
-    type Viewport = 'mobile' | 'tablet' | 'desktop' | 'wide';
-    const PreviewSimulateViewports_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
-    /**
-     * Simulates various viewports for a custom element preview.
-     *
-     * @element wcp-preview-simulate-viewports
-     */
-    export class PreviewSimulateViewports extends PreviewSimulateViewports_base implements PreviewPlugin {
-        static readonly styles: import("lit").CSSResult;
-        readonly container: HTMLElement;
-        readonly previewTagName: string;
-        readonly available = true;
-        readonly name = "viewport";
-        readonly label = "Viewport";
-        private simulateViewport?;
-        private invertSimulatedViewport;
-        protected get defaultStyle(): string;
-        protected removeStyle(): void;
-        protected resetStyle(): void;
-        protected prepareStyle(): HTMLStyleElement;
-        /**
-         * Sets the size of the viewport to simulate its dimensions.
-         */
-        protected applyPreviewSize(): void;
-        /**
-         * Scales the sized viewport to fit into the preview container.
-         */
-        protected applyPreviewScale(): void;
-        protected applyPreviewDimensions(): void;
-        private emitChange;
-        private handleSimulateViewport;
-        handleInvertSimulatedViewport(): void;
-        disconnectedCallback(): void;
-        protected render(): TemplateResult;
-    }
-    global {
-        interface HTMLElementEventMap {
-            'wcp-preview-simulate-viewports:changed': CustomEvent<{
-                viewport: Viewport;
-                inverted: boolean;
-            }>;
-        }
-        interface HTMLElementTagNameMap {
-            'wcp-preview-simulate-viewports': PreviewSimulateViewports;
-        }
-    }
-}
-declare module "utils/debounce.utils" {
-    export function debounce<T extends (...args: Parameters<T>) => void>(this: ThisParameterType<T>, fn: T, wait?: number): (...args: Parameters<T>) => void;
-}
-declare module "components/plugins/stage-editor/stage-editor.plugin" {
-    import { LitElement, type TemplateResult } from 'lit';
-    import type { StagePlugin } from "utils/plugin.utils";
-    const StageEditor_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
-    /**
-     * Allows editing a custom element.
-     *
-     * @element wcp-stage-editor
-     */
-    export class StageEditor extends StageEditor_base implements StagePlugin {
-        #private;
-        static readonly styles: import("lit").CSSResult;
-        private _element?;
-        private _elementData?;
-        set previewTagName(previewTagName: string);
-        set data(data: string | undefined);
-        readonly available = true;
-        readonly name = "editor";
-        readonly label = "Editor";
-        protected getElementReference(): Element | undefined;
-        protected handleControlsInput({ detail }: CustomEvent<FormData>): Promise<void>;
-        protected firstUpdated(): void;
-        protected render(): TemplateResult;
-    }
-    global {
-        interface HTMLElementTagNameMap {
-            'wcp-stage-editor': StageEditor;
-        }
-    }
-}
-declare module "components/plugins/stage-editor/stage-editor-controls/stage-editor-controls.component" {
-    import { LitElement, type TemplateResult } from 'lit';
-    import type * as Parsed from "utils/parser.types";
-    import { type ElementData } from "components/plugins/stage-editor/stage-editor.utils";
-    const StageEditorControls_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
-    /**
-     * @element wcp-stage-editor-controls
-     *
-     * @cssprop --wcp-stage-editor-controls-headline-size - The font size of the headline.
-     * @cssprop --wcp-stage-editor-controls-headline-weight - The font weight of the headline.
-     * @cssprop --wcp-stage-editor-controls-headline-spacing - The inner spacing of the headline.
-     *
-     * @cssprop --wcp-stage-editor-controls-dark-border-color - The border color of the element in dark mode.
-     * @cssprop --wcp-stage-editor-controls-light-border-color - The border color of the element in light mode.
-     *
-     * @emits {CustomEvent<FormData>} wcp-stage-editor-controls:input - Fires when the user changes a control value.
-     */
-    export class StageEditorControls extends StageEditorControls_base {
-        #private;
-        static readonly styles: import("lit").CSSResult;
-        private _element?;
-        set previewTagName(previewTagName: string);
-        readonly data?: ElementData;
-        protected handleFormInput(event: InputEvent): void;
-        protected renderHint(content?: string): TemplateResult;
-        protected renderFieldControl(field: Parsed.Field): TemplateResult;
-        protected renderSlotControl(slot: Parsed.Slot): TemplateResult;
-        protected renderAttributeControls(): TemplateResult;
-        protected render(): TemplateResult;
-    }
-    global {
-        interface HTMLElementEventMap {
-            'wcp-stage-editor-controls:input': CustomEvent<FormData>;
-        }
-        interface HTMLElementTagNameMap {
-            'wcp-stage-editor-controls': StageEditorControls;
-        }
-    }
-}
-declare module "components/plugins/stage-editor/stage-editor-preview/stage-editor-preview.component" {
-    import { LitElement, type TemplateResult } from 'lit';
-    import type { ElementData } from "components/plugins/stage-editor/stage-editor.utils";
-    /**
-     * @element wcp-stage-editor-preview
-     *
-     * @example
-     * ```html
-     * <wcp-stage-editor-preview>
-     *   <wcp-button>Example button</wcp-button>
-     * </wcp-stage-editor-preview>
-     * ```
-     */
-    export class StageEditorPreview extends LitElement {
-        #private;
-        static readonly styles: import("lit").CSSResult;
-        previewTagName?: string;
-        data?: ElementData;
-        protected renderSlots(): TemplateResult;
-        protected render(): TemplateResult;
-    }
-    global {
-        interface HTMLElementTagNameMap {
-            'wcp-stage-editor-preview': StageEditorPreview;
-        }
-    }
-}
-declare module "components/plugins/stage-examples/stage-examples.plugin" {
-    import { LitElement, type TemplateResult } from 'lit';
-    import type { StagePlugin } from "utils/plugin.utils";
-    const StageExamples_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
-    /**
-     * Shows the examples of a custom element manifest.
-     *
-     * @element wcp-stage-examples
-     *
-     * @cssprop --wcp-stage-examples-spacing - Spacing between examples.
-     */
-    export class StageExamples extends StageExamples_base implements StagePlugin {
-        #private;
-        static readonly styles: import("lit").CSSResult;
-        private _element?;
-        available: boolean;
-        set previewTagName(previewTagName: string);
-        readonly name = "examples";
-        readonly label = "Examples";
-        protected render(): TemplateResult;
-    }
-    global {
-        interface HTMLElementEventMap {
-            'wcp-stage-plugin:availability-change': CustomEvent<boolean>;
-        }
-        interface HTMLElementTagNameMap {
-            'wcp-stage-examples': StageExamples;
-        }
-    }
-}
-declare module "components/plugins/stage-readme/stage-readme.plugin" {
-    import { LitElement, type TemplateResult } from 'lit';
-    import type { StagePlugin } from "utils/plugin.utils";
-    const StageReadme_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
-    /**
-     * Shows the readme of a custom element.
-     *
-     * @element wcp-stage-readme
-     */
-    export class StageReadme extends StageReadme_base implements StagePlugin {
-        #private;
-        static readonly styles: import("lit").CSSResult;
-        private _element?;
-        available: boolean;
-        set previewTagName(previewTagName: string);
-        readonly name = "readme";
-        readonly label = "Readme";
-        protected render(): TemplateResult;
-    }
-    global {
-        interface HTMLElementEventMap {
-            'wcp-stage-plugin:availability-change': CustomEvent<boolean>;
-        }
-        interface HTMLElementTagNameMap {
-            'wcp-stage-readme': StageReadme;
-        }
-    }
-}
-declare module "utils/navigation.utils" {
-    import type { Config } from "utils/config.utils";
-    import type { Element, Manifest } from "utils/parser.types";
-    /**
-     * Defines the structure of the navigation items.
-     */
-    export type GroupedNavigationItems = Map<string, Set<GroupedNavigationItem>>;
-    export type GroupedNavigationItem = {
-        name: string;
-        link: string;
-    };
-    /**
-     * Creates a navigation item for a given readme.
-     */
-    export function prepareReadmeNavigationItem(name: string, url: string): GroupedNavigationItem;
-    /**
-     * Creates a navigation item for a given element.
-     */
-    export function prepareElementNavigationItem(element: Element): GroupedNavigationItem;
-    /**
-     * Prepares a grouped navigation structure of readmes and elements.
-     */
-    export function prepareNavigation(manifest: Manifest, config: Config): GroupedNavigationItems;
-    export function matchesSearch(content: string, terms: string[], minSearchLength?: number): boolean;
-    export function filterItems(items: GroupedNavigationItems, terms: string[], minSearchLength?: number): GroupedNavigationItems;
-}
-declare module "mixins/routable.mixin" {
-    import type { LitElement } from 'lit';
-    import type { Constructor } from "utils/mixin.types";
-    import { type RegisterRoutes, Router } from "utils/router.utils";
-    class RoutableInterface {
-        router: Router;
-    }
-    export const Routable: (registerRoutes?: RegisterRoutes) => <T extends Constructor<LitElement>>(superClass: T) => Constructor<RoutableInterface> & T;
-}
 declare module "components/root/root-navigation/root-navigation.component" {
     import { LitElement, type TemplateResult } from 'lit';
     import { type GroupedNavigationItems } from "utils/navigation.utils";
@@ -2021,11 +1710,7 @@ declare module "components/root/root.routes" {
 declare module "components/root/root.component" {
     import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
     import { LitElement, type TemplateResult } from 'lit';
-    import { type GroupedNavigationItems } from "utils/navigation.utils";
     import type { RootNavigation } from "components/root/root-navigation/root-navigation.component";
-    const Root_base: import("index.js").Constructor<{
-        router: import("index.js").Router;
-    }> & import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * @slot logo - Allows setting a custom logo to be displayed in the title.
      * @slot preview-controls - Can be used to inject additional preview controls.
@@ -2040,10 +1725,12 @@ declare module "components/root/root.component" {
      *
      * @emits wcp-root:active-element-changed - Fired when the active element changes. Carries the declaration of the new active element with it.
      */
-    export class Root extends Root_base {
+    export class Root extends LitElement {
+        #private;
         static readonly styles: import("lit").CSSResult;
         private ready;
-        navigationItems: GroupedNavigationItems;
+        private topbarPlugins;
+        private navigationItems;
         readonly navigationRef: RootNavigation;
         /**
          * Flags the component to be displayed inline and not standalone. Requires the surrounding
@@ -2059,7 +1746,9 @@ declare module "components/root/root.component" {
          */
         manifestUrl: string;
         handleSearchInput({ detail }: CustomEvent<string>): void;
+        handleSplashTransitionEnd(event: Event): void;
         connectedCallback(): Promise<void>;
+        disconnectedCallback(): void;
         protected render(): TemplateResult;
     }
     global {
@@ -2068,6 +1757,37 @@ declare module "components/root/root.component" {
         }
         interface HTMLElementTagNameMap {
             'wcp-root': Root;
+        }
+    }
+}
+declare module "components/root/root-splash/root-splash.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    /**
+     * Shows a splash screen whilst initializing the application.
+     *
+     * @property {boolean} [hidden] - Use the global hidden attribute to fade out the splash screen.
+     *
+     * @cssprop --wcp-root-splash-dark-background-color - The background color of the splash screen in dark mode.
+     * @cssprop --wcp-root-splash-dark-color - The text color of the splash screen in dark mode.
+     * @cssprop --wcp-root-splash-light-background-color - The background color of the splash screen in light mode.
+     * @cssprop --wcp-root-splash-light-color - The text color of the splash screen in light mode.
+     *
+     * @slot {Loading...} - The text content to be displayed in the splash screen.
+     *
+     * @example
+     * # Basic usage
+     *
+     * ```html
+     * <wcp-root-splash>Loading...</wcp-root-splash>
+     * ```
+     */
+    export class RootSplash extends LitElement {
+        static readonly styles: import("lit").CSSResult;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-root-splash': RootSplash;
         }
     }
 }
@@ -2358,6 +2078,420 @@ declare module "components/ui/title/title.component" {
         }
     }
 }
+declare module "utils/compression.utils" {
+    /**
+     *	Compress a string with browser native APIs into a string representation
+     *
+     * @param data - Input string that should be compressed
+     * @param encoding - Compression algorithm to use
+     * @returns The compressed string
+     */
+    export function compress(data: string, encoding: CompressionFormat): Promise<string>;
+    /**
+     * Decompress a string representation with browser native APIs in to a normal js string
+     *
+     * @param data - String that should be decompressed
+     * @param encoding - Decompression algorithm to use
+     * @returns The decompressed string
+     */
+    export function decompress(data: string, encoding: CompressionFormat): Promise<string>;
+}
+declare module "utils/dom.utils" {
+    export function isElementWithin(element: Element, container?: Element): boolean;
+    /**
+     * Delivers the relative boundary of an element to an optional parent.
+     * If the parent element is omitted, the offset parent of the element is used.
+     */
+    export function getRelativeBoundary(element: HTMLElement, parent?: Element | null): Pick<DOMRect, 'x' | 'y' | 'height' | 'width'>;
+    /**
+     * Returns the list of ancestor elements by reference to a given element.
+     */
+    export function getAncestorPath(element: Element, check?: (element: Element) => boolean): (Element | Document)[];
+    /**
+     * Determine if an element is a descendant of another element by tag name.
+     */
+    export function isDescendantOf(element: Element, ancestor: string): boolean;
+}
+declare module "utils/parser.utils" {
+    import type * as Parsed from "utils/parser.types";
+    /**
+     * Prepares a lit compatible template key for a given field
+     */
+    export function litKey(field: Parsed.Field): string;
+}
+declare module "plugins/stage/stage-editor/stage-editor.utils" {
+    import type * as Parsed from "utils/parser.types";
+    /**
+     * State of the custom element.
+     */
+    export type ElementData = {
+        /**
+         * Additional attributes mapped by attribute name to attribute value.
+         * Should not overlap with reflected attributes from fields.
+         */
+        attributes: Record<string, string | undefined>;
+        /**
+         * Field state mapped by property name to property value.
+         */
+        fields: Record<string, string | number | boolean | undefined>;
+        /**
+         * Slot state mapped by slot name to slot (html) content.
+         */
+        slots: Record<string, string>;
+    };
+    /**
+     * Empty state object of the element data.
+     */
+    export const EMPTY_ELEMENT_DATA: ElementData;
+    /**
+     * Prepares an initial state object for the given element definition.
+     */
+    export function prepareInitialData(element: Parsed.Element): ElementData;
+    /**
+     * Retrieve the current value of a given field parsed to the correct type
+     */
+    export function parseFieldValue(field: Parsed.Field, value: unknown): ElementData['fields'][keyof ElementData['fields']];
+    /**
+     * There seems to be a bug in Safari with the native FormAssociated implementation regarding
+     * checkboxes: https://bugs.webkit.org/show_bug.cgi?id=259781
+     */
+    export function alignFormDataWebkit(formData: FormData, elements: HTMLFormControlsCollection, element: Parsed.Element): FormData;
+    /**
+     * Maps the given form data by the given element definition to a stateful data object
+     */
+    export function mapFormData(data: FormData, element: Parsed.Element): ElementData;
+    /**
+     * Prepares the data to be set as compressed url param
+     */
+    export function compressFormData(formData: FormData, element: Parsed.Element): Promise<string>;
+    /**
+     * Decompresses and parses the given element data
+     */
+    export function decompressElementData(compressed: string): Promise<ElementData>;
+}
+declare module "plugins/preview/preview-editor-link/preview-editor-link.utils" {
+    import type { ElementData } from "plugins/stage/stage-editor/stage-editor.utils";
+    /**
+     * Prepares an initial state object for the given element definition by:
+     * 1. Read all controllable fields from the element definition (from properties)
+     * 2. Read all (remaining) attributes from the element reference (not reflected from already collected properties)
+     * 3. Read all slots from the element definition with their stringified contents
+     *
+     * @todo: separate steps into functions
+     * @todo: test this sh!t
+     */
+    export function readCurrentElementData(ref: HTMLElement): ElementData;
+}
+declare module "plugins/preview/preview-editor-link/preview-editor-link.plugin" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import type { PreviewPlugin } from "utils/plugin.utils";
+    /**
+     * Links all found custom elements in a preview with their current state to the editor to be further played around with.
+     *
+     * @element wcp-preview-editor-link
+     */
+    export class PreviewEditorLink extends LitElement implements PreviewPlugin {
+        #private;
+        static readonly styles: import("lit").CSSResult;
+        readonly name = "editor-link";
+        readonly label = "Show in editor";
+        readonly container: HTMLElement;
+        readonly previewTagName: string;
+        available: boolean;
+        enabled: boolean;
+        connectedCallback(): void;
+        adoptedCallback(): void;
+        disconnectedCallback(): void;
+        private handleToggleClick;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface State {
+            'editor-link-hint-visible': boolean;
+        }
+        interface HTMLElementTagNameMap {
+            'wcp-preview-editor-link': PreviewEditorLink;
+        }
+    }
+}
+declare module "plugins/preview/preview-editor-link/preview-editor-link-hint/preview-editor-link-hint.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    const PreviewEditorLinkHint_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    /**
+     * Shows a hint to a given preview element.
+     *
+     * @element wcp-preview-editor-link-hint
+     *
+     * @cssprop --wcp-preview-editor-link-hint-button-passive-background - The background color of the hint button in passive state.
+     * @cssprop --wcp-preview-editor-link-hint-button-active-background - The background color of the hint button in active state.
+     * @cssprop --wcp-preview-editor-link-hint-button-passive-size - Size of the hint button in passive state.
+     * @cssprop --wcp-preview-editor-link-hint-button-active-size - Size of the hint button in active state.
+     *
+     * @cssprop --wcp-preview-editor-link-hint-debug-border-width - Border width of the debugging fields.
+     * @cssprop --wcp-preview-editor-link-hint-debug-background-opacity - Opacity of the debugging fields background.
+     *
+     * @cssprop --wcp-preview-editor-link-hint-debug-stripe-distance - Distance of the stripes of the debugging field background.
+     * @cssprop --wcp-preview-editor-link-hint-debug-stripe-tilt - Tilt of the stripes of the debugging field background in degrees.
+     * @cssprop --wcp-preview-editor-link-hint-debug-stripe-width - Width of the stripes of the debugging field background.
+     * @cssprop --wcp-preview-editor-link-hint-debug-stripe-dash-size - Length of the dashes of the debugging field background.
+     * @cssprop --wcp-preview-editor-link-hint-debug-stripe-dash-gap - Gap between the dashes of the debugging field background.
+     *
+     * @cssprop --wcp-preview-editor-link-hint-debug-dark-background - Debugging field background color in dark mode.
+     * @cssprop --wcp-preview-editor-link-hint-debug-dark-stroke - Debugging field dash and border color in dark mode.
+     *
+     * @cssprop --wcp-preview-editor-link-hint-debug-light-background - Debugging field background color in light mode.
+     * @cssprop --wcp-preview-editor-link-hint-debug-light-stroke - Debugging field dash and border color in light mode.
+     */
+    export class PreviewEditorLinkHint extends PreviewEditorLinkHint_base {
+        #private;
+        static readonly styles: import("lit").CSSResult;
+        debug: boolean;
+        set element(element: HTMLElement | undefined);
+        set scrollParent(element: HTMLElement | undefined);
+        /**
+         * Allows to update the position of the hint.
+         */
+        updatePosition(): void;
+        connectedCallback(): void;
+        disconnectedCallback(): void;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-preview-editor-link-hint': PreviewEditorLinkHint;
+        }
+    }
+}
+declare module "plugins/preview/preview-simulate-viewports/preview-simulate-viewports.plugin" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import type { PreviewPlugin } from "utils/plugin.utils";
+    type Viewport = 'mobile' | 'tablet' | 'desktop' | 'wide';
+    const PreviewSimulateViewports_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    /**
+     * Simulates various viewports for a custom element preview.
+     *
+     * @element wcp-preview-simulate-viewports
+     */
+    export class PreviewSimulateViewports extends PreviewSimulateViewports_base implements PreviewPlugin {
+        static readonly styles: import("lit").CSSResult;
+        readonly name = "viewport";
+        readonly label = "Viewport";
+        readonly container: HTMLElement;
+        readonly previewTagName: string;
+        readonly available = true;
+        private simulateViewport?;
+        private invertSimulatedViewport;
+        protected get defaultStyle(): string;
+        protected removeStyle(): void;
+        protected resetStyle(): void;
+        protected prepareStyle(): HTMLStyleElement;
+        /**
+         * Sets the size of the viewport to simulate its dimensions.
+         */
+        protected applyPreviewSize(): void;
+        /**
+         * Scales the sized viewport to fit into the preview container.
+         */
+        protected applyPreviewScale(): void;
+        protected applyPreviewDimensions(): void;
+        private emitChange;
+        private handleSimulateViewport;
+        handleInvertSimulatedViewport(): void;
+        disconnectedCallback(): void;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementEventMap {
+            'wcp-preview-simulate-viewports:changed': CustomEvent<{
+                viewport: Viewport;
+                inverted: boolean;
+            }>;
+        }
+        interface HTMLElementTagNameMap {
+            'wcp-preview-simulate-viewports': PreviewSimulateViewports;
+        }
+    }
+}
+declare module "utils/debounce.utils" {
+    export function debounce<T extends (...args: Parameters<T>) => void>(this: ThisParameterType<T>, fn: T, wait?: number): (...args: Parameters<T>) => void;
+}
+declare module "plugins/stage/stage-editor/stage-editor.plugin" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import type { StagePlugin } from "utils/plugin.utils";
+    const StageEditor_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    /**
+     * Allows editing a custom element.
+     *
+     * @element wcp-stage-editor
+     */
+    export class StageEditor extends StageEditor_base implements StagePlugin {
+        #private;
+        static readonly styles: import("lit").CSSResult;
+        readonly name = "editor";
+        readonly label = "Editor";
+        private _element?;
+        private _elementData?;
+        set previewTagName(previewTagName: string);
+        set data(data: string | undefined);
+        readonly available = true;
+        protected getElementReference(): Element | undefined;
+        protected handleControlsInput({ detail }: CustomEvent<FormData>): Promise<void>;
+        protected firstUpdated(): void;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-stage-editor': StageEditor;
+        }
+    }
+}
+declare module "plugins/stage/stage-editor/stage-editor-controls/stage-editor-controls.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import type * as Parsed from "utils/parser.types";
+    import { type ElementData } from "plugins/stage/stage-editor/stage-editor.utils";
+    const StageEditorControls_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    /**
+     * @element wcp-stage-editor-controls
+     *
+     * @cssprop --wcp-stage-editor-controls-headline-size - The font size of the headline.
+     * @cssprop --wcp-stage-editor-controls-headline-weight - The font weight of the headline.
+     * @cssprop --wcp-stage-editor-controls-headline-spacing - The inner spacing of the headline.
+     *
+     * @cssprop --wcp-stage-editor-controls-dark-border-color - The border color of the element in dark mode.
+     * @cssprop --wcp-stage-editor-controls-light-border-color - The border color of the element in light mode.
+     *
+     * @emits {CustomEvent<FormData>} wcp-stage-editor-controls:input - Fires when the user changes a control value.
+     */
+    export class StageEditorControls extends StageEditorControls_base {
+        #private;
+        static readonly styles: import("lit").CSSResult;
+        private _element?;
+        set previewTagName(previewTagName: string);
+        readonly data?: ElementData;
+        protected handleFormInput(event: InputEvent): void;
+        protected renderHint(content?: string): TemplateResult;
+        protected renderFieldControl(field: Parsed.Field): TemplateResult;
+        protected renderSlotControl(slot: Parsed.Slot): TemplateResult;
+        protected renderAttributeControls(): TemplateResult;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementEventMap {
+            'wcp-stage-editor-controls:input': CustomEvent<FormData>;
+        }
+        interface HTMLElementTagNameMap {
+            'wcp-stage-editor-controls': StageEditorControls;
+        }
+    }
+}
+declare module "plugins/stage/stage-editor/stage-editor-preview/stage-editor-preview.component" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import type { ElementData } from "plugins/stage/stage-editor/stage-editor.utils";
+    /**
+     * @element wcp-stage-editor-preview
+     *
+     * @example
+     * ```html
+     * <wcp-stage-editor-preview>
+     *   <wcp-button>Example button</wcp-button>
+     * </wcp-stage-editor-preview>
+     * ```
+     */
+    export class StageEditorPreview extends LitElement {
+        #private;
+        static readonly styles: import("lit").CSSResult;
+        previewTagName?: string;
+        data?: ElementData;
+        protected renderSlots(): TemplateResult;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-stage-editor-preview': StageEditorPreview;
+        }
+    }
+}
+declare module "plugins/stage/stage-examples/stage-examples.plugin" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import type { StagePlugin } from "utils/plugin.utils";
+    const StageExamples_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    /**
+     * Shows the examples of a custom element manifest.
+     *
+     * @element wcp-stage-examples
+     *
+     * @cssprop --wcp-stage-examples-spacing - Spacing between examples.
+     */
+    export class StageExamples extends StageExamples_base implements StagePlugin {
+        #private;
+        static readonly styles: import("lit").CSSResult;
+        readonly name = "examples";
+        readonly label = "Examples";
+        private _element?;
+        available: boolean;
+        set previewTagName(previewTagName: string);
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementEventMap {
+            'wcp-stage-plugin:availability-change': CustomEvent<boolean>;
+        }
+        interface HTMLElementTagNameMap {
+            'wcp-stage-examples': StageExamples;
+        }
+    }
+}
+declare module "plugins/stage/stage-readme/stage-readme.plugin" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import type { StagePlugin } from "utils/plugin.utils";
+    const StageReadme_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+    /**
+     * Shows the readme of a custom element.
+     *
+     * @element wcp-stage-readme
+     */
+    export class StageReadme extends StageReadme_base implements StagePlugin {
+        #private;
+        static readonly styles: import("lit").CSSResult;
+        readonly name = "readme";
+        readonly label = "Readme";
+        private _element?;
+        available: boolean;
+        set previewTagName(previewTagName: string);
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementEventMap {
+            'wcp-stage-plugin:availability-change': CustomEvent<boolean>;
+        }
+        interface HTMLElementTagNameMap {
+            'wcp-stage-readme': StageReadme;
+        }
+    }
+}
+declare module "plugins/topbar/topbar-preview-editor-link-toggle/topbar-preview-editor-link-toggle.plugin" {
+    import { LitElement, type TemplateResult } from 'lit';
+    import type { TopbarPlugin } from "utils/plugin.utils";
+    /**
+     * Toggles all preview editor link plugins to show or hide the debug hints.
+     *
+     * @element wcp-topbar-preview-editor-link-toggle
+     */
+    export class TopbarPreviewEditorLinkToggle extends LitElement implements TopbarPlugin {
+        static readonly styles: import("lit").CSSResult;
+        readonly name = "editor-link-toggle";
+        readonly label = "Toggle all editor link hints globally";
+        private enabled;
+        available: boolean;
+        protected handleToggleClick(): void;
+        protected render(): TemplateResult;
+    }
+    global {
+        interface HTMLElementTagNameMap {
+            'wcp-topbar-preview-editor-link-toggle': TopbarPreviewEditorLinkToggle;
+        }
+    }
+}
 declare module "index" {
     /**
      * @file Automatically generated by barrelsby.
@@ -2385,31 +2519,34 @@ declare module "index" {
     export * from "components/layout/aside/aside.component";
     export * from "components/layout/layout/layout.component";
     export * from "components/layout/main/main.component";
-    export * from "components/plugins/preview-editor-link/preview-editor-link.plugin";
-    export * from "components/plugins/preview-editor-link/preview-editor-link.utils";
-    export * from "components/plugins/preview-editor-link/preview-editor-link-hint/preview-editor-link-hint.component";
-    export * from "components/plugins/preview-simulate-viewports/preview-simulate-viewports.plugin";
-    export * from "components/plugins/stage-editor/stage-editor.plugin";
-    export * from "components/plugins/stage-editor/stage-editor.utils";
-    export * from "components/plugins/stage-editor/stage-editor-controls/stage-editor-controls.component";
-    export * from "components/plugins/stage-editor/stage-editor-preview/stage-editor-preview.component";
-    export * from "components/plugins/stage-examples/stage-examples.plugin";
-    export * from "components/plugins/stage-readme/stage-readme.plugin";
     export * from "components/root/root.component";
     export * from "components/root/root.routes";
     export * from "components/root/root-navigation/root-navigation.component";
+    export * from "components/root/root-splash/root-splash.component";
     export * from "components/ui/button/button.component";
     export * from "components/ui/code/code.component";
     export * from "components/ui/icon/icon.component";
     export * from "components/ui/tabs/tabs.component";
     export * from "components/ui/title/title.component";
     export * from "parsers/cem/utils";
+    export * from "plugins/preview/preview-editor-link/preview-editor-link.plugin";
+    export * from "plugins/preview/preview-editor-link/preview-editor-link.utils";
+    export * from "plugins/preview/preview-editor-link/preview-editor-link-hint/preview-editor-link-hint.component";
+    export * from "plugins/preview/preview-simulate-viewports/preview-simulate-viewports.plugin";
+    export * from "plugins/stage/stage-editor/stage-editor.plugin";
+    export * from "plugins/stage/stage-editor/stage-editor.utils";
+    export * from "plugins/stage/stage-editor/stage-editor-controls/stage-editor-controls.component";
+    export * from "plugins/stage/stage-editor/stage-editor-preview/stage-editor-preview.component";
+    export * from "plugins/stage/stage-examples/stage-examples.plugin";
+    export * from "plugins/stage/stage-readme/stage-readme.plugin";
+    export * from "plugins/topbar/topbar-preview-editor-link-toggle/topbar-preview-editor-link-toggle.plugin";
     export * from "utils/color-scheme.utils";
     export * from "utils/compression.utils";
     export * from "utils/config.utils";
     export * from "utils/debounce.utils";
     export * from "utils/dom.utils";
     export * from "utils/form.utils";
+    export * from "utils/log.utils";
     export * from "utils/manifest.utils";
     export * from "utils/markdown.utils";
     export * from "utils/mixin.types";
@@ -2418,5 +2555,6 @@ declare module "index" {
     export * from "utils/parser.utils";
     export * from "utils/plugin.utils";
     export * from "utils/router.utils";
+    export * from "utils/state.utils";
 }
 //# sourceMappingURL=index.d.ts.map

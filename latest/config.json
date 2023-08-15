@@ -2,6 +2,7 @@
   "$schema": "./config.schema.json",
   "excludeElements": ["wcp-root"],
   "initialActiveElement": "wcp-button",
+  "statePersistence": "local",
   "additionalReadmes": [
     {
       "name": "Web Component Preview",

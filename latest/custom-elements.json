@@ -49,6 +49,13 @@
           "members": [
             {
               "kind": "field",
+              "name": "#router",
+              "privacy": "private",
+              "readonly": true,
+              "default": "new Router(this)"
+            },
+            {
+              "kind": "field",
               "name": "ready",
               "type": {
                 "text": "boolean"
@@ -58,10 +65,20 @@
             },
             {
               "kind": "field",
+              "name": "topbarPlugins",
+              "type": {
+                "text": "string[]"
+              },
+              "privacy": "private",
+              "default": "[]"
+            },
+            {
+              "kind": "field",
               "name": "navigationItems",
               "type": {
                 "text": "GroupedNavigationItems"
               },
+              "privacy": "private",
               "default": "new Map()"
             },
             {
@@ -114,6 +131,18 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "method",
+              "name": "handleSplashTransitionEnd",
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
             }
           ],
           "attributes": [
@@ -143,22 +172,12 @@
               "fieldName": "manifestUrl"
             }
           ],
-          "mixins": [
-            {
-              "name": "Routable()",
-              "module": "src/components/root/root.component.ts"
-            },
-            {
-              "name": "ColorSchemable",
-              "package": "@/mixins/color-schemable.mixin.js"
-            }
-          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
           "examples": [],
-          "readme": "# wcp-root\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property          | Attribute      | Modifiers | Type                  | Default     | Description                                      |\n|-------------------|----------------|-----------|-----------------------|-------------|--------------------------------------------------|\n| `configUrl`       | `config-url`   |           | `string \\| undefined` |             | Allows to set a url to load a config file from.  |\n| `inline`          | `inline`       |           | `boolean`             | false       | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifestUrl`     | `manifest-url` |           | `string`              |             | Defines the location of the custom element manifest file. |\n| `navigationItems` |                |           |                       | \"new Map()\" |                                                  |\n| `navigationRef`   |                | readonly  |                       |             |                                                  |\n\n## Methods\n\n| Method              | Type                      |\n|---------------------|---------------------------|\n| `handleSearchInput` | `({ detail }: any): void` |\n\n## Events\n\n| Event                             | Description                                      |\n|-----------------------------------|--------------------------------------------------|\n| `wcp-root:active-element-changed` | Fired when the active element changes. Carries the declaration of the new active element with it. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode. |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode. |\n| `--wcp-root-light-background` | The background color of the root element in light mode. |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode. |\n",
+          "readme": "# wcp-root\n\n## Properties\n\n| Property        | Attribute      | Modifiers | Type                  | Default | Description                                      |\n|-----------------|----------------|-----------|-----------------------|---------|--------------------------------------------------|\n| `configUrl`     | `config-url`   |           | `string \\| undefined` |         | Allows to set a url to load a config file from.  |\n| `inline`        | `inline`       |           | `boolean`             | false   | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifestUrl`   | `manifest-url` |           | `string`              |         | Defines the location of the custom element manifest file. |\n| `navigationRef` |                | readonly  |                       |         |                                                  |\n\n## Methods\n\n| Method                      | Type                      |\n|-----------------------------|---------------------------|\n| `handleSearchInput`         | `({ detail }: any): void` |\n| `handleSplashTransitionEnd` | `(event: any): void`      |\n\n## Events\n\n| Event                             | Description                                      |\n|-----------------------------------|--------------------------------------------------|\n| `wcp-root:active-element-changed` | Fired when the active element changes. Carries the declaration of the new active element with it. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode. |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode. |\n| `--wcp-root-light-background` | The background color of the root element in light mode. |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode. |\n",
           "groups": [
             "root"
           ],
@@ -801,6 +820,15 @@
           "members": [
             {
               "kind": "field",
+              "name": "assignedPlugins",
+              "type": {
+                "text": "HTMLElement[]"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "_plugins",
               "type": {
                 "text": "StagePlugin[]"
@@ -844,15 +872,7 @@
             {
               "kind": "method",
               "name": "handleSlotChange",
-              "privacy": "protected",
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
+              "privacy": "protected"
             },
             {
               "kind": "method",
@@ -960,7 +980,7 @@
           "examples": [
             "```html\n<wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n```"
           ],
-          "readme": "# wcp-toggle-color-scheme\n\nShows a button to toggle the desired color-scheme.\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n```\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event                     |\n|---------------------------|\n| `wcp-color-scheme:toggle` |\n",
+          "readme": "# wcp-toggle-color-scheme\n\nShows a button to toggle the desired color-scheme.\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n```\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n",
           "groups": [
             "features"
           ],
@@ -1008,7 +1028,7 @@
           "examples": [
             "```html\n<wcp-toggle-sidebar></wcp-toggle-sidebar>\n```"
           ],
-          "readme": "# wcp-toggle-sidebar\n\nShows a button to toggle sidebar.\n\n## Example\n\n```html\n<wcp-toggle-sidebar></wcp-toggle-sidebar>\n```\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event              |\n|--------------------|\n| `wcp-aside:toggle` |\n",
+          "readme": "# wcp-toggle-sidebar\n\nShows a button to toggle sidebar.\n\n## Example\n\n```html\n<wcp-toggle-sidebar></wcp-toggle-sidebar>\n```\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n",
           "groups": [
             "features"
           ],
@@ -3455,7 +3475,7 @@
               "type": {
                 "text": "boolean"
               },
-              "default": "false",
+              "default": "!read('aside-visible')",
               "description": "Used to toggle the width of the aside bar",
               "attribute": "hidden",
               "reflects": true
@@ -3473,10 +3493,6 @@
             },
             {
               "kind": "method",
-              "name": "emitToggled"
-            },
-            {
-              "kind": "method",
               "name": "handleButtonClick"
             },
             {
@@ -3490,7 +3506,7 @@
               "type": {
                 "text": "boolean"
               },
-              "default": "false",
+              "default": "!read('aside-visible')",
               "description": "Used to toggle the width of the aside bar",
               "fieldName": "hidden"
             },
@@ -3515,7 +3531,7 @@
             "package": "lit"
           },
           "examples": [],
-          "readme": "# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property            | Attribute | Type      | Default                                          | Description                                      |\n|---------------------|-----------|-----------|--------------------------------------------------|--------------------------------------------------|\n| `hidden`            | `hidden`  | `boolean` | false                                            | Used to toggle the width of the aside bar        |\n| `listenAsideToggle` |           |           | \"(({ detail }: CustomEvent<boolean \\| null>) => {\\n    this.hidden = detail ?? !this.hidden;\\n    this.emitToggled();\\n  }).bind(this)\" |                                                  |\n| `role`              | `role`    | `string`  | \"complementary\"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `emitToggled`       | `(): void` |\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event               | Description                                      |\n|---------------------|--------------------------------------------------|\n| `wcp-aside:toggled` | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n\n## Slots\n\n| Name     | Description                                  |\n|----------|----------------------------------------------|\n|          | Projects elements aside the main content     |\n| `header` | Elements in the fixed header of the side bar |\n\n## CSS Custom Properties\n\n| Property                       | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |\n| `--wcp-aside-light-background` | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      | The color of the side bar in light mode          |\n| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |\n| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-size`      | The size of the toggle button                    |\n",
+          "readme": "# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property            | Attribute | Type      | Default                                          | Description                                      |\n|---------------------|-----------|-----------|--------------------------------------------------|--------------------------------------------------|\n| `hidden`            | `hidden`  | `boolean` | true                                             | Used to toggle the width of the aside bar        |\n| `listenAsideToggle` |           |           | \"(({ detail }: CustomEvent<boolean>) => {\\n    this.hidden = !detail;\\n  }).bind(this)\" |                                                  |\n| `role`              | `role`    | `string`  | \"complementary\"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event               | Description                                      |\n|---------------------|--------------------------------------------------|\n| `wcp-aside:toggled` | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n\n## Slots\n\n| Name     | Description                                  |\n|----------|----------------------------------------------|\n|          | Projects elements aside the main content     |\n| `header` | Elements in the fixed header of the side bar |\n\n## CSS Custom Properties\n\n| Property                       | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |\n| `--wcp-aside-light-background` | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      | The color of the side bar in light mode          |\n| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |\n| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-size`      | The size of the toggle button                    |\n",
           "groups": [
             "layout"
           ],
@@ -3565,6 +3581,12 @@
             }
           ],
           "members": [],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/mixins/color-schemable.mixin.js"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -3572,7 +3594,7 @@
           "examples": [
             "```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```"
           ],
-          "readme": "# wcp-layout\n\n## Example\n\n```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```\n\n## Slots\n\n| Name     | Description                              |\n|----------|------------------------------------------|\n|          | Receives the content of the main section |\n| `aside`  | Projects elements aside the main content |\n| `header` | Shows contents fixed above the aside     |\n",
+          "readme": "# wcp-layout\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```\n\n## Slots\n\n| Name     | Description                              |\n|----------|------------------------------------------|\n|          | Receives the content of the main section |\n| `aside`  | Projects elements aside the main content |\n| `header` | Shows contents fixed above the aside     |\n",
           "groups": [
             "layout"
           ],
@@ -3665,957 +3687,6 @@
           "declaration": {
             "name": "Main",
             "module": "src/components/layout/main/main.component.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/plugins/preview-editor-link/preview-editor-link.plugin.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Links all found custom elements in a preview with their current state to the editor to be further played around with.",
-          "name": "PreviewEditorLink",
-          "members": [
-            {
-              "kind": "field",
-              "name": "#manifest",
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "#overlay",
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "container",
-              "type": {
-                "text": "HTMLElement"
-              },
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "previewTagName",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "attribute": "preview-tag-name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "attribute": "available",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'viewer-link'",
-              "attribute": "name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'Show in viewer'",
-              "attribute": "label",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "enabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "enabled",
-              "reflects": true
-            },
-            {
-              "kind": "method",
-              "name": "#checkAvailability"
-            },
-            {
-              "kind": "method",
-              "name": "#attachOverlay"
-            },
-            {
-              "kind": "method",
-              "name": "#detachOverlay"
-            },
-            {
-              "kind": "method",
-              "name": "#findContainerSlot",
-              "return": {
-                "type": {
-                  "text": "HTMLSlotElement | undefined"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "#observeContainerSlot"
-            },
-            {
-              "kind": "method",
-              "name": "#unobserveContainerSlot"
-            },
-            {
-              "kind": "method",
-              "name": "#observeContainerScroll"
-            },
-            {
-              "kind": "method",
-              "name": "#unobserveContainerScroll"
-            },
-            {
-              "kind": "method",
-              "name": "#handleContainerScroll"
-            },
-            {
-              "kind": "method",
-              "name": "#handleContainerSlotChange"
-            },
-            {
-              "kind": "method",
-              "name": "#attachHints"
-            },
-            {
-              "kind": "method",
-              "name": "#attachHint",
-              "parameters": [
-                {
-                  "name": "element",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "#detachHints"
-            },
-            {
-              "kind": "method",
-              "name": "#setupHints"
-            },
-            {
-              "kind": "method",
-              "name": "#teardownHints"
-            },
-            {
-              "kind": "method",
-              "name": "#openViewer",
-              "parameters": [
-                {
-                  "name": "element",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleToggleClick",
-              "privacy": "private"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "preview-tag-name",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "fieldName": "previewTagName"
-            },
-            {
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "fieldName": "available"
-            },
-            {
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'viewer-link'",
-              "fieldName": "name"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'Show in viewer'",
-              "fieldName": "label"
-            },
-            {
-              "name": "enabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "enabled"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "wcp-preview-editor-link",
-          "examples": [],
-          "readme": "# wcp-preview-editor-link\n\nLinks all found custom elements in a preview with their current state to the editor to be further played around with.\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type               | Default          |\n|------------------|--------------------|-----------|--------------------|------------------|\n| `available`      | `available`        |           | `boolean`          | true             |\n| `container`      |                    | readonly  |                    |                  |\n| `enabled`        | `enabled`          |           | `boolean`          | false            |\n| `label`          | `label`            | readonly  | `\"Show in viewer\"` | \"Show in viewer\" |\n| `name`           | `name`             | readonly  | `\"viewer-link\"`    | \"viewer-link\"    |\n| `previewTagName` | `preview-tag-name` | readonly  | `string`           |                  |\n\n## Methods\n\n| Method                       | Type                   |\n|------------------------------|------------------------|\n| `#attachHint`                | `(element: any): void` |\n| `#attachHints`               | `(): void`             |\n| `#attachOverlay`             | `(): void`             |\n| `#checkAvailability`         | `(): void`             |\n| `#detachHints`               | `(): void`             |\n| `#detachOverlay`             | `(): void`             |\n| `#findContainerSlot`         | `(): any`              |\n| `#handleContainerScroll`     | `(): void`             |\n| `#handleContainerSlotChange` | `(): void`             |\n| `#observeContainerScroll`    | `(): void`             |\n| `#observeContainerSlot`      | `(): void`             |\n| `#openViewer`                | `(element: any): any`  |\n| `#setupHints`                | `(): void`             |\n| `#teardownHints`             | `(): void`             |\n| `#unobserveContainerScroll`  | `(): void`             |\n| `#unobserveContainerSlot`    | `(): void`             |\n| `adoptedCallback`            | `(): void`             |\n\n## Events\n\n| Event                                    |\n|------------------------------------------|\n| `wcp-preview-plugin:availability-change` |\n",
-          "groups": [
-            "plugins"
-          ],
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "PreviewEditorLink",
-          "declaration": {
-            "name": "PreviewEditorLink",
-            "module": "src/components/plugins/preview-editor-link/preview-editor-link.plugin.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-preview-editor-link",
-          "declaration": {
-            "name": "PreviewEditorLink",
-            "module": "src/components/plugins/preview-editor-link/preview-editor-link.plugin.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/plugins/preview-simulate-viewports/preview-simulate-viewports.plugin.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Simulates various viewports for a custom element preview.",
-          "name": "PreviewSimulateViewports",
-          "members": [
-            {
-              "kind": "field",
-              "name": "container",
-              "type": {
-                "text": "HTMLElement"
-              },
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "previewTagName",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "attribute": "preview-tag-name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "readonly": true,
-              "default": "true",
-              "attribute": "available",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'viewport'",
-              "attribute": "name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'Viewport'",
-              "attribute": "label",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "simulateViewport",
-              "type": {
-                "text": "Viewport | undefined"
-              },
-              "privacy": "private",
-              "attribute": "simulate-viewport",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "invertSimulatedViewport",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "attribute": "invert-simulated-viewport",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "defaultStyle",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "protected",
-              "readonly": true
-            },
-            {
-              "kind": "method",
-              "name": "removeStyle",
-              "privacy": "protected"
-            },
-            {
-              "kind": "method",
-              "name": "resetStyle",
-              "privacy": "protected"
-            },
-            {
-              "kind": "method",
-              "name": "prepareStyle",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "HTMLStyleElement"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "applyPreviewSize",
-              "privacy": "protected",
-              "description": "Sets the size of the viewport to simulate its dimensions."
-            },
-            {
-              "kind": "method",
-              "name": "applyPreviewScale",
-              "privacy": "protected",
-              "description": "Scales the sized viewport to fit into the preview container."
-            },
-            {
-              "kind": "method",
-              "name": "applyPreviewDimensions",
-              "privacy": "protected"
-            },
-            {
-              "kind": "method",
-              "name": "emitChange",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "handleSimulateViewport",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleInvertSimulatedViewport"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "preview-tag-name",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "fieldName": "previewTagName"
-            },
-            {
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "readonly": true,
-              "default": "true",
-              "fieldName": "available"
-            },
-            {
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'viewport'",
-              "fieldName": "name"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'Viewport'",
-              "fieldName": "label"
-            },
-            {
-              "name": "simulate-viewport",
-              "type": {
-                "text": "Viewport | undefined"
-              },
-              "fieldName": "simulateViewport"
-            },
-            {
-              "name": "invert-simulated-viewport",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "invertSimulatedViewport"
-            }
-          ],
-          "mixins": [
-            {
-              "name": "ColorSchemable",
-              "package": "@/mixins/color-schemable.mixin.js"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "wcp-preview-simulate-viewports",
-          "examples": [],
-          "readme": "# wcp-preview-simulate-viewports\n\nSimulates various viewports for a custom element preview.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type         | Default    |\n|------------------|--------------------|-----------|--------------|------------|\n| `available`      | `available`        | readonly  | `true`       | true       |\n| `container`      |                    | readonly  |              |            |\n| `label`          | `label`            | readonly  | `\"Viewport\"` | \"Viewport\" |\n| `name`           | `name`             | readonly  | `\"viewport\"` | \"viewport\" |\n| `previewTagName` | `preview-tag-name` | readonly  | `string`     |            |\n\n## Methods\n\n| Method                          | Type       |\n|---------------------------------|------------|\n| `handleInvertSimulatedViewport` | `(): void` |\n\n## Events\n\n| Event                                    |\n|------------------------------------------|\n| `wcp-preview-simulate-viewports:changed` |\n",
-          "groups": [
-            "plugins"
-          ],
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "PreviewSimulateViewports",
-          "declaration": {
-            "name": "PreviewSimulateViewports",
-            "module": "src/components/plugins/preview-simulate-viewports/preview-simulate-viewports.plugin.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-preview-simulate-viewports",
-          "declaration": {
-            "name": "PreviewSimulateViewports",
-            "module": "src/components/plugins/preview-simulate-viewports/preview-simulate-viewports.plugin.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/plugins/stage-editor/stage-editor.plugin.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Allows editing a custom element.",
-          "name": "StageEditor",
-          "members": [
-            {
-              "kind": "field",
-              "name": "#manifest",
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "#updateFormData",
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_element",
-              "type": {
-                "text": "Parsed.Element | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_elementData",
-              "type": {
-                "text": "ElementData | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "previewTagName",
-              "attribute": "preview-tag-name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "data",
-              "attribute": "data"
-            },
-            {
-              "kind": "field",
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "readonly": true,
-              "default": "true",
-              "attribute": "available",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'editor'",
-              "attribute": "name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'Editor'",
-              "attribute": "label",
-              "reflects": true
-            },
-            {
-              "kind": "method",
-              "name": "#prepareElementData",
-              "parameters": [
-                {
-                  "name": "compressed",
-                  "optional": true,
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "getElementReference",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "Element | undefined"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleControlsInput",
-              "privacy": "protected",
-              "parameters": [
-                {
-                  "name": "{ detail }",
-                  "type": {
-                    "text": "CustomEvent<FormData>"
-                  }
-                }
-              ]
-            }
-          ],
-          "attributes": [
-            {
-              "name": "preview-tag-name",
-              "fieldName": "previewTagName"
-            },
-            {
-              "name": "data",
-              "fieldName": "data"
-            },
-            {
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "readonly": true,
-              "default": "true",
-              "fieldName": "available"
-            },
-            {
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'editor'",
-              "fieldName": "name"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'Editor'",
-              "fieldName": "label"
-            }
-          ],
-          "mixins": [
-            {
-              "name": "ColorSchemable",
-              "package": "@/mixins/color-schemable.mixin.js"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "wcp-stage-editor",
-          "examples": [],
-          "readme": "# wcp-stage-editor\n\nAllows editing a custom element.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type                  | Default  |\n|------------------|--------------------|-----------|-----------------------|----------|\n| `available`      | `available`        | readonly  | `true`                | true     |\n| `data`           | `data`             |           | `string \\| undefined` |          |\n| `label`          | `label`            | readonly  | `\"Editor\"`            | \"Editor\" |\n| `name`           | `name`             | readonly  | `\"editor\"`            | \"editor\" |\n| `previewTagName` | `preview-tag-name` |           | `string`              |          |\n\n## Methods\n\n| Method                | Type                                      |\n|-----------------------|-------------------------------------------|\n| `#prepareElementData` | `(compressed?: string \\| undefined): any` |\n\n## Events\n\n| Event                          |\n|--------------------------------|\n| `wcp-stage-plugin:data-change` |\n",
-          "groups": [
-            "plugins"
-          ],
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "StageEditor",
-          "declaration": {
-            "name": "StageEditor",
-            "module": "src/components/plugins/stage-editor/stage-editor.plugin.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-stage-editor",
-          "declaration": {
-            "name": "StageEditor",
-            "module": "src/components/plugins/stage-editor/stage-editor.plugin.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/plugins/stage-examples/stage-examples.plugin.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Shows the examples of a custom element manifest.",
-          "name": "StageExamples",
-          "cssProperties": [
-            {
-              "description": "Spacing between examples.",
-              "name": "--wcp-stage-examples-spacing"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "#manifest",
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_element",
-              "type": {
-                "text": "Parsed.Element | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "available",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "previewTagName",
-              "attribute": "preview-tag-name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'examples'",
-              "attribute": "name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'Examples'",
-              "attribute": "label",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "available"
-            },
-            {
-              "name": "preview-tag-name",
-              "fieldName": "previewTagName"
-            },
-            {
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'examples'",
-              "fieldName": "name"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'Examples'",
-              "fieldName": "label"
-            }
-          ],
-          "mixins": [
-            {
-              "name": "ColorSchemable",
-              "package": "@/mixins/color-schemable.mixin.js"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "wcp-stage-examples",
-          "examples": [],
-          "readme": "# wcp-stage-examples\n\nShows the examples of a custom element manifest.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type         | Default    |\n|------------------|--------------------|-----------|--------------|------------|\n| `available`      | `available`        |           | `boolean`    | false      |\n| `label`          | `label`            | readonly  | `\"Examples\"` | \"Examples\" |\n| `name`           | `name`             | readonly  | `\"examples\"` | \"examples\" |\n| `previewTagName` | `preview-tag-name` |           | `string`     |            |\n\n## Events\n\n| Event                                  |\n|----------------------------------------|\n| `wcp-stage-plugin:availability-change` |\n\n## CSS Custom Properties\n\n| Property                       | Description               |\n|--------------------------------|---------------------------|\n| `--wcp-stage-examples-spacing` | Spacing between examples. |\n",
-          "groups": [
-            "plugins"
-          ],
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "StageExamples",
-          "declaration": {
-            "name": "StageExamples",
-            "module": "src/components/plugins/stage-examples/stage-examples.plugin.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-stage-examples",
-          "declaration": {
-            "name": "StageExamples",
-            "module": "src/components/plugins/stage-examples/stage-examples.plugin.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/plugins/stage-readme/stage-readme.plugin.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Shows the readme of a custom element.",
-          "name": "StageReadme",
-          "members": [
-            {
-              "kind": "field",
-              "name": "#manifest",
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_element",
-              "type": {
-                "text": "Parsed.Element | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "available",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "previewTagName",
-              "attribute": "preview-tag-name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'readme'",
-              "attribute": "name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'Readme'",
-              "attribute": "label",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "available",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "available"
-            },
-            {
-              "name": "preview-tag-name",
-              "fieldName": "previewTagName"
-            },
-            {
-              "name": "name",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'readme'",
-              "fieldName": "name"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true,
-              "default": "'Readme'",
-              "fieldName": "label"
-            }
-          ],
-          "mixins": [
-            {
-              "name": "ColorSchemable",
-              "package": "@/mixins/color-schemable.mixin.js"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "wcp-stage-readme",
-          "examples": [],
-          "readme": "# wcp-stage-readme\n\nShows the readme of a custom element.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type       | Default  |\n|------------------|--------------------|-----------|------------|----------|\n| `available`      | `available`        |           | `boolean`  | false    |\n| `label`          | `label`            | readonly  | `\"Readme\"` | \"Readme\" |\n| `name`           | `name`             | readonly  | `\"readme\"` | \"readme\" |\n| `previewTagName` | `preview-tag-name` |           | `string`   |          |\n\n## Events\n\n| Event                                  |\n|----------------------------------------|\n| `wcp-stage-plugin:availability-change` |\n",
-          "groups": [
-            "plugins"
-          ],
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "StageReadme",
-          "declaration": {
-            "name": "StageReadme",
-            "module": "src/components/plugins/stage-readme/stage-readme.plugin.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-stage-readme",
-          "declaration": {
-            "name": "StageReadme",
-            "module": "src/components/plugins/stage-readme/stage-readme.plugin.ts"
           }
         }
       ]
@@ -4757,6 +3828,85 @@
           "declaration": {
             "name": "RootNavigation",
             "module": "src/components/root/root-navigation/root-navigation.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/root/root-splash/root-splash.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Shows a splash screen whilst initializing the application.",
+          "name": "RootSplash",
+          "cssProperties": [
+            {
+              "description": "The background color of the splash screen in dark mode.",
+              "name": "--wcp-root-splash-dark-background-color"
+            },
+            {
+              "description": "The text color of the splash screen in dark mode.",
+              "name": "--wcp-root-splash-dark-color"
+            },
+            {
+              "description": "The background color of the splash screen in light mode.",
+              "name": "--wcp-root-splash-light-background-color"
+            },
+            {
+              "description": "The text color of the splash screen in light mode.",
+              "name": "--wcp-root-splash-light-color"
+            }
+          ],
+          "slots": [
+            {
+              "type": {
+                "text": "Loading..."
+              },
+              "description": "The text content to be displayed in the splash screen.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Use the global hidden attribute to fade out the splash screen.",
+              "name": "hidden",
+              "kind": "field"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "# Basic usage\n\n```html\n<wcp-root-splash>Loading...</wcp-root-splash>\n```"
+          ],
+          "readme": "# wcp-root-splash\n\nShows a splash screen whilst initializing the application.\n\n## Example\n\n# Basic usage\n\n```html\n<wcp-root-splash>Loading...</wcp-root-splash>\n```\n\n## Properties\n\n| Property | Type      | Description                                      |\n|----------|-----------|--------------------------------------------------|\n| `hidden` | `boolean` | Use the global hidden attribute to fade out the splash screen. |\n\n## Slots\n\n| Name | Description                                      |\n|------|--------------------------------------------------|\n|      | The text content to be displayed in the splash screen. |\n\n## CSS Custom Properties\n\n| Property                                   | Description                                      |\n|--------------------------------------------|--------------------------------------------------|\n| `--wcp-root-splash-dark-background-color`  | The background color of the splash screen in dark mode. |\n| `--wcp-root-splash-dark-color`             | The text color of the splash screen in dark mode. |\n| `--wcp-root-splash-light-background-color` | The background color of the splash screen in light mode. |\n| `--wcp-root-splash-light-color`            | The text color of the splash screen in light mode. |\n",
+          "groups": [
+            "root"
+          ],
+          "tagName": "wcp-root-splash",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RootSplash",
+          "declaration": {
+            "name": "RootSplash",
+            "module": "src/components/root/root-splash/root-splash.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-root-splash",
+          "declaration": {
+            "name": "RootSplash",
+            "module": "src/components/root/root-splash/root-splash.component.ts"
           }
         }
       ]
@@ -5729,509 +4879,6 @@
           "declaration": {
             "name": "NavigationSearch",
             "module": "src/components/features/navigation/navigation-search/navigation-search.component.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/plugins/preview-editor-link/preview-editor-link-hint/preview-editor-link-hint.component.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "Shows a hint to a given preview element.",
-          "name": "PreviewEditorLinkHint",
-          "cssProperties": [
-            {
-              "description": "The background color of the hint button in passive state.",
-              "name": "--wcp-preview-editor-link-hint-button-passive-background"
-            },
-            {
-              "description": "The background color of the hint button in active state.",
-              "name": "--wcp-preview-editor-link-hint-button-active-background"
-            },
-            {
-              "description": "Size of the hint button in passive state.",
-              "name": "--wcp-preview-editor-link-hint-button-passive-size"
-            },
-            {
-              "description": "Size of the hint button in active state.",
-              "name": "--wcp-preview-editor-link-hint-button-active-size"
-            },
-            {
-              "description": "Border width of the debugging fields.",
-              "name": "--wcp-preview-editor-link-hint-debug-border-width"
-            },
-            {
-              "description": "Opacity of the debugging fields background.",
-              "name": "--wcp-preview-editor-link-hint-debug-background-opacity"
-            },
-            {
-              "description": "Distance of the stripes of the debugging field background.",
-              "name": "--wcp-preview-editor-link-hint-debug-stripe-distance"
-            },
-            {
-              "description": "Tilt of the stripes of the debugging field background in degrees.",
-              "name": "--wcp-preview-editor-link-hint-debug-stripe-tilt"
-            },
-            {
-              "description": "Width of the stripes of the debugging field background.",
-              "name": "--wcp-preview-editor-link-hint-debug-stripe-width"
-            },
-            {
-              "description": "Length of the dashes of the debugging field background.",
-              "name": "--wcp-preview-editor-link-hint-debug-stripe-dash-size"
-            },
-            {
-              "description": "Gap between the dashes of the debugging field background.",
-              "name": "--wcp-preview-editor-link-hint-debug-stripe-dash-gap"
-            },
-            {
-              "description": "Debugging field background color in dark mode.",
-              "name": "--wcp-preview-editor-link-hint-debug-dark-background"
-            },
-            {
-              "description": "Debugging field dash and border color in dark mode.",
-              "name": "--wcp-preview-editor-link-hint-debug-dark-stroke"
-            },
-            {
-              "description": "Debugging field background color in light mode.",
-              "name": "--wcp-preview-editor-link-hint-debug-light-background"
-            },
-            {
-              "description": "Debugging field dash and border color in light mode.",
-              "name": "--wcp-preview-editor-link-hint-debug-light-stroke"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "#observer",
-              "privacy": "private",
-              "default": "new ResizeObserver(() => this.updatePosition())"
-            },
-            {
-              "kind": "field",
-              "name": "#element",
-              "privacy": "private",
-              "type": {
-                "text": "HTMLElement | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "#scrollParent",
-              "privacy": "private",
-              "type": {
-                "text": "HTMLElement | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "debug",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "debug",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "element"
-            },
-            {
-              "kind": "field",
-              "name": "scrollParent"
-            },
-            {
-              "kind": "method",
-              "name": "updatePosition",
-              "description": "Allows to update the position of the hint."
-            },
-            {
-              "kind": "method",
-              "name": "#observeElement"
-            },
-            {
-              "kind": "method",
-              "name": "#observeStage"
-            },
-            {
-              "kind": "method",
-              "name": "#unobserveStage"
-            },
-            {
-              "kind": "field",
-              "name": "#handleStageChange",
-              "privacy": "private"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "debug",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "debug"
-            }
-          ],
-          "mixins": [
-            {
-              "name": "ColorSchemable",
-              "package": "@/mixins/color-schemable.mixin.js"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "wcp-preview-editor-link-hint",
-          "examples": [],
-          "readme": "# wcp-preview-editor-link-hint\n\nShows a hint to a given preview element.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property       | Attribute | Type      | Default |\n|----------------|-----------|-----------|---------|\n| `debug`        | `debug`   | `boolean` | false   |\n| `element`      |           |           |         |\n| `scrollParent` |           |           |         |\n\n## Methods\n\n| Method            | Type       | Description                                |\n|-------------------|------------|--------------------------------------------|\n| `#observeElement` | `(): void` |                                            |\n| `#observeStage`   | `(): void` |                                            |\n| `#unobserveStage` | `(): void` |                                            |\n| `updatePosition`  | `(): void` | Allows to update the position of the hint. |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                      |\n|--------------------------------------------------|--------------------------------------------------|\n| `--wcp-preview-editor-link-hint-button-active-background` | The background color of the hint button in active state. |\n| `--wcp-preview-editor-link-hint-button-active-size` | Size of the hint button in active state.         |\n| `--wcp-preview-editor-link-hint-button-passive-background` | The background color of the hint button in passive state. |\n| `--wcp-preview-editor-link-hint-button-passive-size` | Size of the hint button in passive state.        |\n| `--wcp-preview-editor-link-hint-debug-background-opacity` | Opacity of the debugging fields background.      |\n| `--wcp-preview-editor-link-hint-debug-border-width` | Border width of the debugging fields.            |\n| `--wcp-preview-editor-link-hint-debug-dark-background` | Debugging field background color in dark mode.   |\n| `--wcp-preview-editor-link-hint-debug-dark-stroke` | Debugging field dash and border color in dark mode. |\n| `--wcp-preview-editor-link-hint-debug-light-background` | Debugging field background color in light mode.  |\n| `--wcp-preview-editor-link-hint-debug-light-stroke` | Debugging field dash and border color in light mode. |\n| `--wcp-preview-editor-link-hint-debug-stripe-dash-gap` | Gap between the dashes of the debugging field background. |\n| `--wcp-preview-editor-link-hint-debug-stripe-dash-size` | Length of the dashes of the debugging field background. |\n| `--wcp-preview-editor-link-hint-debug-stripe-distance` | Distance of the stripes of the debugging field background. |\n| `--wcp-preview-editor-link-hint-debug-stripe-tilt` | Tilt of the stripes of the debugging field background in degrees. |\n| `--wcp-preview-editor-link-hint-debug-stripe-width` | Width of the stripes of the debugging field background. |\n",
-          "groups": [
-            "plugins"
-          ],
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "PreviewEditorLinkHint",
-          "declaration": {
-            "name": "PreviewEditorLinkHint",
-            "module": "src/components/plugins/preview-editor-link/preview-editor-link-hint/preview-editor-link-hint.component.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-preview-editor-link-hint",
-          "declaration": {
-            "name": "PreviewEditorLinkHint",
-            "module": "src/components/plugins/preview-editor-link/preview-editor-link-hint/preview-editor-link-hint.component.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/plugins/stage-editor/stage-editor-controls/stage-editor-controls.component.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "StageEditorControls",
-          "cssProperties": [
-            {
-              "description": "The font size of the headline.",
-              "name": "--wcp-stage-editor-controls-headline-size"
-            },
-            {
-              "description": "The font weight of the headline.",
-              "name": "--wcp-stage-editor-controls-headline-weight"
-            },
-            {
-              "description": "The inner spacing of the headline.",
-              "name": "--wcp-stage-editor-controls-headline-spacing"
-            },
-            {
-              "description": "The border color of the element in dark mode.",
-              "name": "--wcp-stage-editor-controls-dark-border-color"
-            },
-            {
-              "description": "The border color of the element in light mode.",
-              "name": "--wcp-stage-editor-controls-light-border-color"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "#manifest",
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_element",
-              "type": {
-                "text": "Parsed.Element | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "previewTagName",
-              "attribute": "preview-tag-name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "data",
-              "type": {
-                "text": "ElementData | undefined"
-              },
-              "readonly": true,
-              "attribute": "data"
-            },
-            {
-              "kind": "method",
-              "name": "handleFormInput",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "InputEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "renderHint",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "content",
-                  "optional": true,
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "renderFieldControl",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "field",
-                  "type": {
-                    "text": "Parsed.Field"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "renderSlotControl",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "slot",
-                  "type": {
-                    "text": "Parsed.Slot"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "renderAttributeControls",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "wcp-stage-editor-controls:input",
-              "type": {
-                "text": "CustomEvent"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "preview-tag-name",
-              "fieldName": "previewTagName"
-            },
-            {
-              "name": "data",
-              "type": {
-                "text": "ElementData | undefined"
-              },
-              "readonly": true,
-              "fieldName": "data"
-            }
-          ],
-          "mixins": [
-            {
-              "name": "ColorSchemable",
-              "package": "@/mixins/color-schemable.mixin.js"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "wcp-stage-editor-controls",
-          "examples": [],
-          "readme": "# wcp-stage-editor-controls\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property         | Attribute          | Modifiers | Type     |\n|------------------|--------------------|-----------|----------|\n| `data`           | `data`             | readonly  |          |\n| `previewTagName` | `preview-tag-name` |           | `string` |\n\n## Events\n\n| Event                             | Type                    | Description                                  |\n|-----------------------------------|-------------------------|----------------------------------------------|\n| `wcp-stage-editor-controls:input` | `CustomEvent<FormData>` | Fires when the user changes a control value. |\n\n## CSS Custom Properties\n\n| Property                                         | Description                                    |\n|--------------------------------------------------|------------------------------------------------|\n| `--wcp-stage-editor-controls-dark-border-color`  | The border color of the element in dark mode.  |\n| `--wcp-stage-editor-controls-headline-size`      | The font size of the headline.                 |\n| `--wcp-stage-editor-controls-headline-spacing`   | The inner spacing of the headline.             |\n| `--wcp-stage-editor-controls-headline-weight`    | The font weight of the headline.               |\n| `--wcp-stage-editor-controls-light-border-color` | The border color of the element in light mode. |\n",
-          "groups": [
-            "plugins"
-          ],
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "StageEditorControls",
-          "declaration": {
-            "name": "StageEditorControls",
-            "module": "src/components/plugins/stage-editor/stage-editor-controls/stage-editor-controls.component.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-stage-editor-controls",
-          "declaration": {
-            "name": "StageEditorControls",
-            "module": "src/components/plugins/stage-editor/stage-editor-controls/stage-editor-controls.component.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/plugins/stage-editor/stage-editor-preview/stage-editor-preview.component.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "StageEditorPreview",
-          "members": [
-            {
-              "kind": "field",
-              "name": "previewTagName",
-              "type": {
-                "text": "string | undefined"
-              },
-              "attribute": "preview-tag-name",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "data",
-              "type": {
-                "text": "ElementData | undefined"
-              },
-              "attribute": "data"
-            },
-            {
-              "kind": "method",
-              "name": "#alignAttributes",
-              "return": {
-                "type": {
-                  "text": "ElementData['attributes']"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "attributes",
-                  "type": {
-                    "text": "ElementData['attributes']"
-                  }
-                }
-              ],
-              "description": "Takes the given attributes record, eliminates the empty keys and aligns boolean attributes.",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "#prepareProps",
-              "return": {
-                "type": {
-                  "text": "Record<string, unknown>"
-                }
-              },
-              "description": "Prepares a record of lit aware attributes and properties.",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "renderSlots",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "preview-tag-name",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "previewTagName"
-            },
-            {
-              "name": "data",
-              "type": {
-                "text": "ElementData | undefined"
-              },
-              "fieldName": "data"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "wcp-stage-editor-preview",
-          "examples": [
-            "```html\n<wcp-stage-editor-preview>\n  <wcp-button>Example button</wcp-button>\n</wcp-stage-editor-preview>\n```"
-          ],
-          "readme": "# wcp-stage-editor-preview\n\n## Example\n\n```html\n<wcp-stage-editor-preview>\n  <wcp-button>Example button</wcp-button>\n</wcp-stage-editor-preview>\n```\n\n## Properties\n\n| Property         | Attribute          | Type                  |\n|------------------|--------------------|-----------------------|\n| `data`           | `data`             |                       |\n| `previewTagName` | `preview-tag-name` | `string \\| undefined` |\n",
-          "groups": [
-            "plugins"
-          ],
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "StageEditorPreview",
-          "declaration": {
-            "name": "StageEditorPreview",
-            "module": "src/components/plugins/stage-editor/stage-editor-preview/stage-editor-preview.component.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-stage-editor-preview",
-          "declaration": {
-            "name": "StageEditorPreview",
-            "module": "src/components/plugins/stage-editor/stage-editor-preview/stage-editor-preview.component.ts"
           }
         }
       ]
