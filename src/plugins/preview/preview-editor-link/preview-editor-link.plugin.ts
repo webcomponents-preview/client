@@ -3,6 +3,7 @@ import { customElement, eventOptions, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { compress } from '@/utils/compression.utils.js';
+import { listen } from '@/utils/decorator.utils.js';
 import { isDescendantOf } from '@/utils/dom.utils.js';
 import { getManifest } from '@/utils/manifest.utils.js';
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
@@ -57,14 +58,6 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
     this.dispatchEvent(event);
   }
 
-  #observeGlobalToggle() {
-    window.addEventListener('wcp-state-changed:editor-link-hint-visible', this.#handleGlobalToggle, false);
-  }
-
-  #unobserveGlobalToggle() {
-    window.removeEventListener('wcp-state-changed:editor-link-hint-visible', this.#handleGlobalToggle, false);
-  }
-
   #attachOverlay() {
     this.#overlay.id = 'overlay';
     this.#overlay.style.position = 'absolute';
@@ -100,16 +93,6 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
 
   #handleContainerScroll = () => {
     this.#overlay.style.transform = `translateY(-${this.container.scrollTop ?? 0}px)`;
-  };
-
-  #handleGlobalToggle = ({ detail: enabled }: CustomEvent<boolean>) => {
-    // plugin must be available
-    this.#checkAvailability();
-    if (!this.available) return;
-
-    // update state and setup hints
-    this.enabled = enabled;
-    this.#setupHints();
   };
 
   #handleContainerSlotChange = () => this.#attachHints();
@@ -182,7 +165,6 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
 
     this.#setupHints();
     this.#checkAvailability();
-    this.#observeGlobalToggle();
   }
 
   adoptedCallback() {
@@ -190,10 +172,21 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   }
 
   override disconnectedCallback() {
-    this.#unobserveGlobalToggle();
     this.#teardownHints();
 
     super.disconnectedCallback();
+  }
+
+  @eventOptions({ passive: true })
+  @listen('wcp-state-changed:editor-link-hint-visible', 'window')
+  protected handleGlobalToggle({ detail: enabled }: CustomEvent<boolean>) {
+    // plugin must be available
+    this.#checkAvailability();
+    if (!this.available) return;
+
+    // update state and setup hints
+    this.enabled = enabled;
+    this.#setupHints();
   }
 
   @eventOptions({ passive: true })

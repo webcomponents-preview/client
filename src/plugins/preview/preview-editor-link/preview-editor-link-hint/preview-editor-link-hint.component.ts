@@ -1,7 +1,8 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, eventOptions, property } from 'lit/decorators.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
+import { listen } from '@/utils/decorator.utils.js';
 import { getRelativeBoundary } from '@/utils/dom.utils.js';
 
 import styles from './preview-editor-link-hint.component.scss';
@@ -78,25 +79,13 @@ export class PreviewEditorLinkHint extends ColorSchemable(LitElement) {
     this.#observer.observe(this.#element);
   }
 
-  #observeStage() {
-    window.addEventListener('wcp-preview-simulate-viewports:changed', this.#handleStageChange, false);
-  }
-
-  #unobserveStage() {
-    window.removeEventListener('wcp-preview-simulate-viewports:changed', this.#handleStageChange, false);
-  }
-
-  #handleStageChange = () => {
+  @eventOptions({ passive: true })
+  @listen('wcp-preview-simulate-viewports:changed', 'window')
+  protected handleStageChange() {
     this.updatePosition();
-  };
-
-  override connectedCallback() {
-    super.connectedCallback();
-    this.#observeStage();
   }
 
   override disconnectedCallback() {
-    this.#unobserveStage();
     this.#observer.disconnect();
     super.disconnectedCallback();
   }

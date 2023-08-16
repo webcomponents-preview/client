@@ -1,6 +1,7 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 
+import { listen } from '@/utils/decorator.utils.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { persist, read } from '@/utils/state.utils.js';
 
@@ -53,18 +54,10 @@ export class Aside extends ColorSchemable(LitElement) {
     persist('aside-visible', false);
   }
 
-  listenAsideToggle = (({ detail }: CustomEvent<boolean>) => {
+  @eventOptions({ passive: true })
+  @listen('wcp-state-changed:aside-visible', 'window')
+  protected listenAsideToggle({ detail }: CustomEvent<boolean>) {
     this.hidden = !detail;
-  }).bind(this);
-
-  override connectedCallback() {
-    super.connectedCallback();
-    window.addEventListener('wcp-state-changed:aside-visible', this.listenAsideToggle, false);
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    window.removeEventListener('wcp-state-changed:aside-visible', this.listenAsideToggle, false);
   }
 
   protected override render(): TemplateResult {

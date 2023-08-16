@@ -1,8 +1,9 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
+import { listen } from '@/utils/decorator.utils.js';
 import { filterItems, type GroupedNavigationItems } from '@/utils/navigation.utils.js';
 import { Router } from '@/utils/router.utils.js';
 import { persist } from '@/utils/state.utils.js';
@@ -48,21 +49,13 @@ export class RootNavigation extends LitElement {
     this.filteredItems = filterItems(this.#items, this.#searchTerms, this.minSearchLength);
   }
 
-  #handleRouteChange = (() => {
+  @eventOptions({ passive: true })
+  @listen('hashchange', 'window')
+  protected handleRouteChange() {
     // close sidebar on mobile
     if (window.matchMedia('(pointer: coarse)').matches) {
       persist('aside-visible', false);
     }
-  }).bind(this);
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-    window.addEventListener('hashchange', this.#handleRouteChange, false);
-  }
-
-  override disconnectedCallback(): void {
-    window.removeEventListener('hashchange', this.#handleRouteChange, false);
-    super.disconnectedCallback();
   }
 
   protected override render(): TemplateResult {

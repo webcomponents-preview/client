@@ -1,12 +1,13 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { unsafeStatic, html as staticHtml } from 'lit/static-html.js';
-import { customElement, state, property } from 'lit/decorators.js';
+import { customElement, state, property, eventOptions } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { getConfig } from '@/utils/config.utils.js';
+import { listen } from '@/utils/decorator.utils.js';
 
 import styles from './preview.component.scss';
 
@@ -39,18 +40,10 @@ export class Preview extends ColorSchemable(LitElement) {
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
   previewTagName?: string;
 
-  #handleRouteChange = () => this.requestUpdate();
-
-  override async connectedCallback() {
-    super.connectedCallback();
-
-    window.addEventListener('hashchange', this.#handleRouteChange, false);
-  }
-
-  override disconnectedCallback() {
-    window.removeEventListener('hashchange', this.#handleRouteChange, false);
-
-    super.disconnectedCallback();
+  @eventOptions({ passive: true })
+  @listen('hashchange', 'window')
+  protected handleRouteChange() {
+    this.requestUpdate();
   }
 
   private handleContainerRef(container?: Element) {
