@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.5.5](https://github.com/webcomponents-preview/client/compare/0.5.4...0.5.5) (2023-08-16)
+
+
+### Bug Fixes
+
+* **wcp-stage-editor-preview:** do not render empty slot contents ([aa96310](https://github.com/webcomponents-preview/client/commit/aa96310bafb76f705752b9dccf7c0efab65e8849))
+
 ## [0.5.4](https://github.com/webcomponents-preview/client/compare/0.5.3...0.5.4) (2023-08-16)
 
 
