@@ -4,8 +4,8 @@
   
   // set WCP version globally
   if (window.wcp.def.version) {
-    console.warn('[wcp] 0.5.4: Another version (' + window.wcp.def.version + ') has already been loaded.');
-  } else window.wcp.def.version = '0.5.4';
+    console.warn('[wcp] 0.5.5: Another version (' + window.wcp.def.version + ') has already been loaded.');
+  } else window.wcp.def.version = '0.5.5';
 
   // set breakpoints globally
   window.wcp.def.breakpoints = {
@@ -4661,7 +4661,7 @@ legend {
       </form>
     `}};QZ=new WeakMap,Vd.styles=B(kc),b([ll()],Vd.prototype,"_element",2),b([J({type:String,reflect:!0,attribute:"preview-tag-name"})],Vd.prototype,"previewTagName",1),b([J({type:Object})],Vd.prototype,"data",2),b([H({passive:!0})],Vd.prototype,"handleFormInput",1),Vd=b([S("wcp-stage-editor-controls")],Vd);var sZ=class extends ad{constructor(){super(...arguments),this.prevData={}}render(d){return r}update(d,[l]){var Z;this.element!==d.element&&(this.element=d.element),this.host=((Z=d.options)===null||Z===void 0?void 0:Z.host)||this.element,this.apply(l),this.groom(l),this.prevData={...l}}apply(d){if(!d)return;let{prevData:l,element:Z}=this;for(let t in d){let V=d[t];V!==l[t]&&(Z[t]=V)}}groom(d){let{prevData:l,element:Z}=this;if(l)for(let t in l)(!d||!(t in d)&&Z[t]===l[t])&&(Z[t]=void 0)}},qN=Fl(sZ),xZ=class extends sZ{constructor(){super(...arguments),this.eventData={}}apply(d){if(d)for(let l in d){let Z=d[l];Z!==this.eventData[l]&&this.applyEvent(l,Z)}}applyEvent(d,l){let{prevData:Z,element:t}=this;this.eventData[d]=l,Z[d]&&t.removeEventListener(d,this,l),t.addEventListener(d,this,l)}groom(d){let{prevData:l,element:Z}=this;if(l)for(let t in l)(!d||!(t in d)&&Z[t]===l[t])&&this.groomEvent(t,l[t])}groomEvent(d,l){let{element:Z}=this;delete this.eventData[d],Z.removeEventListener(d,this,l)}handleEvent(d){let l=this.eventData[d.type];typeof l=="function"?l.call(this.host,d):l.handleEvent(d)}disconnected(){let{eventData:d,element:l}=this;for(let Z in d){let t=Z.slice(1),V=d[Z];l.removeEventListener(t,this,V)}}reconnected(){let{eventData:d,element:l}=this;for(let Z in d){let t=Z.slice(1),V=d[Z];l.addEventListener(t,this,V)}}},$N=Fl(xZ),xt=class extends xZ{apply(d){if(!d)return;let{prevData:l,element:Z}=this;for(let t in d){let V=d[t];if(V===l[t])continue;let R=t.slice(1);switch(t[0]){case"@":this.eventData[R]=V,this.applyEvent(R,V);break;case".":Z[R]=V;break;case"?":V?Z.setAttribute(R,""):Z.removeAttribute(R);break;default:V!=null?Z.setAttribute(t,String(V)):Z.removeAttribute(t);break}}}groom(d){let{prevData:l,element:Z}=this;if(l)for(let t in l){let V=t.slice(1);if(!d||!(t in d)&&Z[V]===l[t])switch(t[0]){case"@":this.groomEvent(V,l[t]);break;case".":Z[V]=void 0;break;case"?":Z.removeAttribute(V);break;default:Z.removeAttribute(t);break}}}},Ic=Fl(xt);var LW=class extends yl{constructor(d){if(super(d),this.et=r,d.type!==od.CHILD)throw Error(this.constructor.directiveName+"() can only be used in child bindings")}render(d){if(d===r||d==null)return this.ft=void 0,this.et=d;if(d===hl)return d;if(typeof d!="string")throw Error(this.constructor.directiveName+"() called with a non-string value");if(d===this.et)return this.ft;this.et=d;let l=[d];return l.raw=l,this.ft={_$litType$:this.constructor.resultType,strings:l,values:[]}}};LW.directiveName="unsafeHTML",LW.resultType=1;var wt=Fl(LW);var Bc=`
 `;var wZ,Sc,yZ,oc,yd=class extends T{constructor(){super(...arguments);Q(this,wZ);Q(this,yZ)}renderSlots(){return G`
-      ${P(Object.entries(this.data?.slots??{}),([l,Z])=>rl(G)`
+      ${P(Object.entries(this.data?.slots??{}).filter(([,l])=>l.trim()!==""),([l,Z])=>rl(G)`
           ${O(l==="",()=>wt(Z),()=>rl(G)`<div slot="${l}">${wt(Z)}</div>`)}
         `)}
     `}render(){if(this.previewTagName===void 0||!this.previewTagName.length)return G`${r}`;let l=wl(this.previewTagName);return G`
