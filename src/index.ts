@@ -57,6 +57,7 @@ export * from './utils/color-scheme.utils.js';
 export * from './utils/compression.utils.js';
 export * from './utils/config.utils.js';
 export * from './utils/debounce.utils.js';
+export * from './utils/decorator.utils.js';
 export * from './utils/dom.utils.js';
 export * from './utils/form.utils.js';
 export * from './utils/log.utils.js';

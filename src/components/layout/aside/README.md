@@ -13,11 +13,10 @@ window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));
 
 ## Properties
 
-| Property            | Attribute | Type      | Default                                          | Description                                      |
-|---------------------|-----------|-----------|--------------------------------------------------|--------------------------------------------------|
-| `hidden`            | `hidden`  | `boolean` | true                                             | Used to toggle the width of the aside bar        |
-| `listenAsideToggle` |           |           | "(({ detail }: CustomEvent<boolean>) => {\n    this.hidden = !detail;\n  }).bind(this)" |                                                  |
-| `role`              | `role`    | `string`  | "complementary"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |
+| Property | Attribute | Type      | Default         | Description                                      |
+|----------|-----------|-----------|-----------------|--------------------------------------------------|
+| `hidden` | `hidden`  | `boolean` | true            | Used to toggle the width of the aside bar        |
+| `role`   | `role`    | `string`  | "complementary" | Presets the aria role to `complementary` as we do not use te aside element directly |
 
 ## Methods
 

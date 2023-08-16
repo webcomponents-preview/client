@@ -1,10 +1,12 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
+import { listen } from '@/utils/decorator.utils.js';
 import { filterItems, type GroupedNavigationItems } from '@/utils/navigation.utils.js';
 import { Router } from '@/utils/router.utils.js';
+import { persist } from '@/utils/state.utils.js';
 
 import styles from './root-navigation.component.scss';
 
@@ -45,6 +47,15 @@ export class RootNavigation extends LitElement {
   set items(items: GroupedNavigationItems) {
     this.#items = items;
     this.filteredItems = filterItems(this.#items, this.#searchTerms, this.minSearchLength);
+  }
+
+  @eventOptions({ passive: true })
+  @listen('hashchange', 'window')
+  protected handleRouteChange() {
+    // close sidebar on mobile
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      persist('aside-visible', false);
+    }
   }
 
   protected override render(): TemplateResult {
