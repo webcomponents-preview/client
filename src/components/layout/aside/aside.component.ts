@@ -7,6 +7,18 @@ import { persist, read } from '@/utils/state.utils.js';
 
 import styles from './aside.component.scss';
 
+declare global {
+  interface WCP {
+    def: {
+      breakpoints: Record<string, number>;
+    };
+  }
+
+  interface Window {
+    wcp: WCP;
+  }
+}
+
 /**
  * To toggle the side bar remotely, you can dispatch a custom event on the global window object:
  * ```js
@@ -58,6 +70,16 @@ export class Aside extends ColorSchemable(LitElement) {
   @listen('wcp-state-changed:aside-visible', 'window')
   protected listenAsideToggle({ detail }: CustomEvent<boolean>) {
     this.hidden = !detail;
+  }
+
+  @eventOptions({ passive: true })
+  @listen('hashchange', 'window')
+  protected handleRouteChange() {
+    // close sidebar on mobile
+    const small = window.wcp?.def?.breakpoints?.sm ?? 0;
+    if (!window.matchMedia(`(min-width: ${small}px)`).matches) {
+      persist('aside-visible', false);
+    }
   }
 
   protected override render(): TemplateResult {
