@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.5.3](https://github.com/webcomponents-preview/client/compare/0.5.2...0.5.3) (2023-08-16)
+
+
+### Bug Fixes
+
+* **wcp-root-navigation:** close navigation after redirect ([8d90690](https://github.com/webcomponents-preview/client/commit/8d906904c8b2028c96b371d0ddb0d2977d21ac7c))
+
 ## [0.5.2](https://github.com/webcomponents-preview/client/compare/0.5.1...0.5.2) (2023-08-15)
 
 
