@@ -457,9 +457,9 @@
               "reflects": true
             },
             {
-              "kind": "field",
-              "name": "#handleRouteChange",
-              "privacy": "private"
+              "kind": "method",
+              "name": "handleRouteChange",
+              "privacy": "protected"
             },
             {
               "kind": "method",
@@ -3504,8 +3504,17 @@
               "name": "handleButtonClick"
             },
             {
-              "kind": "field",
-              "name": "listenAsideToggle"
+              "kind": "method",
+              "name": "listenAsideToggle",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "{ detail }",
+                  "type": {
+                    "text": "CustomEvent<boolean>"
+                  }
+                }
+              ]
             }
           ],
           "attributes": [
@@ -3539,7 +3548,7 @@
             "package": "lit"
           },
           "examples": [],
-          "readme": "# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property            | Attribute | Type      | Default                                          | Description                                      |\n|---------------------|-----------|-----------|--------------------------------------------------|--------------------------------------------------|\n| `hidden`            | `hidden`  | `boolean` | true                                             | Used to toggle the width of the aside bar        |\n| `listenAsideToggle` |           |           | \"(({ detail }: CustomEvent<boolean>) => {\\n    this.hidden = !detail;\\n  }).bind(this)\" |                                                  |\n| `role`              | `role`    | `string`  | \"complementary\"                                  | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event               | Description                                      |\n|---------------------|--------------------------------------------------|\n| `wcp-aside:toggled` | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n\n## Slots\n\n| Name     | Description                                  |\n|----------|----------------------------------------------|\n|          | Projects elements aside the main content     |\n| `header` | Elements in the fixed header of the side bar |\n\n## CSS Custom Properties\n\n| Property                       | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |\n| `--wcp-aside-light-background` | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      | The color of the side bar in light mode          |\n| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |\n| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-size`      | The size of the toggle button                    |\n",
+          "readme": "# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property | Attribute | Type      | Default         | Description                                      |\n|----------|-----------|-----------|-----------------|--------------------------------------------------|\n| `hidden` | `hidden`  | `boolean` | true            | Used to toggle the width of the aside bar        |\n| `role`   | `role`    | `string`  | \"complementary\" | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event               | Description                                      |\n|---------------------|--------------------------------------------------|\n| `wcp-aside:toggled` | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n\n## Slots\n\n| Name     | Description                                  |\n|----------|----------------------------------------------|\n|          | Projects elements aside the main content     |\n| `header` | Elements in the fixed header of the side bar |\n\n## CSS Custom Properties\n\n| Property                       | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |\n| `--wcp-aside-light-background` | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      | The color of the side bar in light mode          |\n| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |\n| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-size`      | The size of the toggle button                    |\n",
           "groups": [
             "layout"
           ],
@@ -3799,6 +3808,11 @@
             {
               "kind": "field",
               "name": "items"
+            },
+            {
+              "kind": "method",
+              "name": "handleRouteChange",
+              "privacy": "protected"
             }
           ],
           "attributes": [

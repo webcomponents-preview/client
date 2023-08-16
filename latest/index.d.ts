@@ -350,6 +350,23 @@ declare module "components/features/navigation/navigation-search/navigation-sear
         }
     }
 }
+declare module "utils/decorator.utils" {
+    import type { ReactiveElement } from 'lit';
+    export type ListenerFn<E> = (e: E) => void;
+    export type TargetMap = {
+        host: typeof ReactiveElement;
+        body: typeof document.body;
+        document: typeof document;
+        window: typeof window;
+    };
+    export type TargetEventMap = {
+        host: HTMLElementEventMap;
+        body: HTMLBodyElementEventMap & HTMLElementEventMap;
+        document: DocumentEventMap & HTMLElementEventMap;
+        window: WindowEventMap & HTMLElementEventMap;
+    };
+    export function listen<B extends keyof TargetMap, T extends keyof TargetEventMap[B]>(type: T, bindTo?: B): (protoOrDescriptor: import("@lit/reactive-element/decorators/base.js").ClassElement | import("@lit/reactive-element/decorators/base.js").Interface<ReactiveElement>, name?: PropertyKey | undefined) => any;
+}
 declare module "components/features/preview/preview.component" {
     import { LitElement, type TemplateResult } from 'lit';
     const Preview_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
@@ -375,8 +392,7 @@ declare module "components/features/preview/preview.component" {
         static readonly styles: import("lit").CSSResult;
         private container?;
         previewTagName?: string;
-        connectedCallback(): Promise<void>;
-        disconnectedCallback(): void;
+        protected handleRouteChange(): void;
         private handleContainerRef;
         protected render(): TemplateResult;
     }
@@ -1364,9 +1380,7 @@ declare module "components/layout/aside/aside.component" {
          */
         role: string;
         handleButtonClick(): void;
-        listenAsideToggle: ({ detail }: CustomEvent<boolean>) => void;
-        connectedCallback(): void;
-        disconnectedCallback(): void;
+        protected listenAsideToggle({ detail }: CustomEvent<boolean>): void;
         protected render(): TemplateResult;
     }
     global {
@@ -1703,6 +1717,7 @@ declare module "components/root/root-navigation/root-navigation.component" {
         minSearchLength: number;
         set searchTerms(terms: string[]);
         set items(items: GroupedNavigationItems);
+        protected handleRouteChange(): void;
         protected render(): TemplateResult;
     }
     global {
@@ -2210,6 +2225,7 @@ declare module "plugins/preview/preview-editor-link/preview-editor-link.plugin" 
         connectedCallback(): void;
         adoptedCallback(): void;
         disconnectedCallback(): void;
+        protected handleGlobalToggle({ detail: enabled }: CustomEvent<boolean>): void;
         private handleToggleClick;
         protected render(): TemplateResult;
     }
@@ -2260,7 +2276,7 @@ declare module "plugins/preview/preview-editor-link/preview-editor-link-hint/pre
          * Allows to update the position of the hint.
          */
         updatePosition(): void;
-        connectedCallback(): void;
+        protected handleStageChange(): void;
         disconnectedCallback(): void;
         protected render(): TemplateResult;
     }
@@ -2552,6 +2568,7 @@ declare module "index" {
     export * from "utils/compression.utils";
     export * from "utils/config.utils";
     export * from "utils/debounce.utils";
+    export * from "utils/decorator.utils";
     export * from "utils/dom.utils";
     export * from "utils/form.utils";
     export * from "utils/log.utils";
