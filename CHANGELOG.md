@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.5.4](https://github.com/webcomponents-preview/client/compare/0.5.3...0.5.4) (2023-08-16)
+
+
+### Bug Fixes
+
+* **wcp-aside:** close navigation dependent on layout ([f08d8c0](https://github.com/webcomponents-preview/client/commit/f08d8c01d59dd861e6e471d2666d1efcfb7c28ff))
+
 ## [0.5.3](https://github.com/webcomponents-preview/client/compare/0.5.2...0.5.3) (2023-08-16)
 
 
