@@ -68,7 +68,9 @@ export class StageEditorPreview extends LitElement {
   protected renderSlots(): TemplateResult {
     return html`
       ${map(
-        Object.entries(this.data?.slots ?? {}),
+        Object.entries(this.data?.slots ?? {})
+          // do not render empty slots
+          .filter(([, content]) => content.trim() !== ''),
         ([name, content]) => withStatic(html)`
           ${when(
             name === '',
