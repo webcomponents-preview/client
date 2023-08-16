@@ -1342,6 +1342,16 @@ declare module "components/forms/input-text/input-text.component" {
 }
 declare module "components/layout/aside/aside.component" {
     import { LitElement, type TemplateResult } from 'lit';
+    global {
+        interface WCP {
+            def: {
+                breakpoints: Record<string, number>;
+            };
+        }
+        interface Window {
+            wcp: WCP;
+        }
+    }
     const Aside_base: import("index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
     /**
      * To toggle the side bar remotely, you can dispatch a custom event on the global window object:
@@ -1381,6 +1391,7 @@ declare module "components/layout/aside/aside.component" {
         role: string;
         handleButtonClick(): void;
         protected listenAsideToggle({ detail }: CustomEvent<boolean>): void;
+        protected handleRouteChange(): void;
         protected render(): TemplateResult;
     }
     global {
@@ -1717,7 +1728,6 @@ declare module "components/root/root-navigation/root-navigation.component" {
         minSearchLength: number;
         set searchTerms(terms: string[]);
         set items(items: GroupedNavigationItems);
-        protected handleRouteChange(): void;
         protected render(): TemplateResult;
     }
     global {

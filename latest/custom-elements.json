@@ -3515,6 +3515,11 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "method",
+              "name": "handleRouteChange",
+              "privacy": "protected"
             }
           ],
           "attributes": [
@@ -3808,11 +3813,6 @@
             {
               "kind": "field",
               "name": "items"
-            },
-            {
-              "kind": "method",
-              "name": "handleRouteChange",
-              "privacy": "protected"
             }
           ],
           "attributes": [
