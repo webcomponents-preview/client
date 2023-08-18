@@ -1392,6 +1392,7 @@ declare module "components/layout/aside/aside.component" {
         handleButtonClick(): void;
         protected listenAsideToggle({ detail }: CustomEvent<boolean>): void;
         protected handleRouteChange(): void;
+        connectedCallback(): void;
         protected render(): TemplateResult;
     }
     global {
