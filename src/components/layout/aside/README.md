@@ -15,7 +15,7 @@ window.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));
 
 | Property | Attribute | Type      | Default         | Description                                      |
 |----------|-----------|-----------|-----------------|--------------------------------------------------|
-| `hidden` | `hidden`  | `boolean` | true            | Used to toggle the width of the aside bar        |
+| `hidden` | `hidden`  | `boolean` | false           | Used to toggle the width of the aside bar        |
 | `role`   | `role`    | `string`  | "complementary" | Presets the aria role to `complementary` as we do not use te aside element directly |
 
 ## Methods

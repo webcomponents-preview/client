@@ -52,7 +52,7 @@ export class Aside extends ColorSchemable(LitElement) {
    * Used to toggle the width of the aside bar
    */
   @property({ type: Boolean, reflect: true })
-  override hidden = !read('aside-visible');
+  override hidden = false;
 
   /**
    * Presets the aria role to `complementary` as we do not use te aside element directly
@@ -79,6 +79,21 @@ export class Aside extends ColorSchemable(LitElement) {
     const small = window.wcp?.def?.breakpoints?.sm ?? 0;
     if (!window.matchMedia(`(min-width: ${small}px)`).matches) {
       persist('aside-visible', false);
+    }
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    
+    // check if the state is recoverable
+    const visible = read('aside-visible');
+    if (visible !== undefined) {
+      this.hidden = !visible;
+    } else {
+      // on desktop, the sidebar is visible by default,
+      // on mobile, the sidebar is hidden by default
+      const small = window.wcp?.def?.breakpoints?.sm ?? 0;
+      this.hidden = !window.matchMedia(`(min-width: ${small}px)`).matches;
     }
   }
 
