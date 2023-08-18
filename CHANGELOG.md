@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.5.6](https://github.com/webcomponents-preview/client/compare/0.5.5...0.5.6) (2023-08-18)
+
+
+### Bug Fixes
+
+* **wcp-aside:** restore visibility properly ([2cbd12f](https://github.com/webcomponents-preview/client/commit/2cbd12f9ad15fbca71c49089c474ee086f39f287))
+
 ## [0.5.5](https://github.com/webcomponents-preview/client/compare/0.5.4...0.5.5) (2023-08-16)
 
 
