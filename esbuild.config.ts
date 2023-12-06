@@ -19,22 +19,27 @@ export const __dirname = fileURLToPath(new URL('.', import.meta.url));
 // inject some global sass variables
 const precompile = (source: string, path: string): string => {
   if (path.endsWith('breakpoint.mixin.scss')) {
-    const breakpoints = Object.entries(BREAKPOINTS).reduce((acc, [key, value]) => `${acc}  ${key}: ${value}px,\n`, '\n');
+    const breakpoints = Object.entries(BREAKPOINTS).reduce(
+      (acc, [key, value]) => `${acc}  ${key}: ${value}px,\n`,
+      '\n'
+    );
     return source.replace(/(\$breakpoints: \()(\);)/, `$1${breakpoints}$2`);
   }
   return source;
 };
 
-// apply postcss with autoprefixer in sass
+// add postcss to sass transformer
 const transform = async (source: string): Promise<string> => {
-  const { css } = await postcss([autoprefixer, postcssPresetEnv({ stage: 0 })]).process(source, { from: source });
+  const { css } = await postcss([autoprefixer, postcssPresetEnv({ stage: 0 })]).process(source, {
+    from: source,
+  });
   return css;
 };
 
 // resolve @ imports in sass
 const importMapper = (path: string): string => {
   if (path.includes('node_modules')) return path;
-  if (path.startsWith('@')) return resolve(path.replace(/^.*@\/?/, './src/'));
+  if (path.includes('@')) return resolve(path.replace(/^.*@\/?/, './src/'));
   return path;
 };
 
