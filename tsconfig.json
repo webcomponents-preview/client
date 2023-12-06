@@ -7,7 +7,7 @@
     "forceConsistentCasingInFileNames": true,
     "lib": ["es2020", "dom", "dom.iterable"],
     "module": "esnext",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
@@ -19,7 +19,8 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "verbatimModuleSyntax": true
   },
   "exclude": ["node_modules", "dist"],
   "ts-node": {
