@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-button
 
 Shows a button element.

@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-toggle-color-scheme
 
 Shows a button to toggle the desired color-scheme.

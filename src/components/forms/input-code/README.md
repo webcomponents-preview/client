@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-input-code
 
 A text input element using the wcp style. Fully form aware.
@@ -60,12 +62,12 @@ Can display multiline text (textarea) if configured to do so.
 
 ## Methods
 
-| Method              | Type                 |
-|---------------------|----------------------|
-| `checkValidity`     | `(): boolean`        |
-| `formResetCallback` | `(): void`           |
-| `handleInput`       | `(event: any): void` |
-| `renderInput`       | `(id: string): any`  |
+| Method              | Type                        |
+|---------------------|-----------------------------|
+| `checkValidity`     | `(): boolean`               |
+| `formResetCallback` | `(): void`                  |
+| `handleInput`       | `(event: InputEvent): void` |
+| `renderInput`       | `(id: string): any`         |
 
 ## Slots
 

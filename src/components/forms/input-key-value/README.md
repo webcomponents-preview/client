@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-input-key-value
 
 A key-value input element using the wcp style. Fully form aware.
@@ -34,13 +36,13 @@ A key-value input element using the wcp style. Fully form aware.
 
 ## Methods
 
-| Method              | Type                 |
-|---------------------|----------------------|
-| `checkValidity`     | `(): boolean`        |
-| `formResetCallback` | `(): void`           |
-| `handleKeyInput`    | `(event: any): void` |
-| `handleValueInput`  | `(event: any): void` |
-| `renderInput`       | `(id: string): any`  |
+| Method              | Type                        |
+|---------------------|-----------------------------|
+| `checkValidity`     | `(): boolean`               |
+| `formResetCallback` | `(): void`                  |
+| `handleKeyInput`    | `(event: InputEvent): void` |
+| `handleValueInput`  | `(event: InputEvent): void` |
+| `renderInput`       | `(id: string): any`         |
 
 ## Slots
 

@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-tabs
 
 **Mixins:** ColorSchemable
@@ -31,19 +33,19 @@
 
 ## Properties
 
-| Property    | Attribute    | Type                  | Default |
-|-------------|--------------|-----------------------|---------|
-| `activeTab` | `active-tab` | `string \| undefined` |         |
-| `tabFocus`  |              | `number`              | 0       |
-| `tabs`      | `tabs`       |                       | {}      |
+| Property    | Attribute    | Type                                             | Default |
+|-------------|--------------|--------------------------------------------------|---------|
+| `activeTab` | `active-tab` | `string \| undefined`                            |         |
+| `tabFocus`  |              | `number`                                         | 0       |
+| `tabs`      | `tabs`       | `Record<string, { label: string; disabled?: boolean \| undefined; }>` | {}      |
 
 ## Methods
 
-| Method                | Type                 |
-|-----------------------|----------------------|
-| `emitActiveTabChange` | `(): void`           |
-| `handleKeydown`       | `(event: any): void` |
-| `handleTabClick`      | `(event: any): void` |
+| Method                | Type                           |
+|-----------------------|--------------------------------|
+| `emitActiveTabChange` | `(): void`                     |
+| `handleKeydown`       | `(event: KeyboardEvent): void` |
+| `handleTabClick`      | `(event: Event): void`         |
 
 ## Events
 

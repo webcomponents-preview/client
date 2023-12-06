@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-title
 
 Shows the application title and a logo.

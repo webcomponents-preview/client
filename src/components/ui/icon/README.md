@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-icon
 
 Shows an icon from the css.gg icon set.

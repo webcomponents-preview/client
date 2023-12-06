@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-root-splash
 
 Shows a splash screen whilst initializing the application.

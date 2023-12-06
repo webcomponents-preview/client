@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-code
 
 Shows a formatted code snippet.

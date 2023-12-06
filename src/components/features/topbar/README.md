@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-topbar
 
 A wrapper above the preview frame content to contain various controls.

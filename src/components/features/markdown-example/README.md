@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-markdown-example
 
 Shows an inline code example and a preview of the element in the readme.

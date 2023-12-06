@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-navigation-item
 
 **Mixins:** ColorSchemable

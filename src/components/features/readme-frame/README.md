@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-readme-frame
 
 ## Example

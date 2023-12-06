@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-readme
 
 Displays a Readme file by its URL.

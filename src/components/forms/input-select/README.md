@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-input-select
 
 A numeric input element using the wcp style. Fully form aware.
@@ -62,13 +64,13 @@ A numeric input element using the wcp style. Fully form aware.
 
 ## Methods
 
-| Method              | Type                 |
-|---------------------|----------------------|
-| `checkValidity`     | `(): boolean`        |
-| `formResetCallback` | `(): void`           |
-| `handleInput`       | `(event: any): void` |
-| `handleSlotChange`  | `(event: any): void` |
-| `renderInput`       | `(id: string): any`  |
+| Method              | Type                   |
+|---------------------|------------------------|
+| `checkValidity`     | `(): boolean`          |
+| `formResetCallback` | `(): void`             |
+| `handleInput`       | `(event: Event): void` |
+| `handleSlotChange`  | `(event: Event): void` |
+| `renderInput`       | `(id: string): any`    |
 
 ## Slots
 

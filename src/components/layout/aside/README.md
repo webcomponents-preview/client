@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-aside
 
 To toggle the side bar remotely, you can dispatch a custom event on the global window object:

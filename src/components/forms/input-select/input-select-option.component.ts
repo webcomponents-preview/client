@@ -18,7 +18,7 @@ export class InputSelectOption extends LitElement {
   label?: string;
 
   // as this is just a declarative structural helper, we do not need any shadow DOM here
-  protected override createRenderRoot(): Element | ShadowRoot {
+  protected override createRenderRoot(): HTMLElement | DocumentFragment {
     return this;
   }
 }

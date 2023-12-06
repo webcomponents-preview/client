@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-input-checkbox
 
 A checkbox input element using the wcp style. Fully form aware.
@@ -40,12 +42,12 @@ A checkbox input element using the wcp style. Fully form aware.
 
 ## Methods
 
-| Method              | Type                 |
-|---------------------|----------------------|
-| `checkValidity`     | `(): boolean`        |
-| `formResetCallback` | `(): void`           |
-| `handleInput`       | `(event: any): void` |
-| `renderInput`       | `(id: string): any`  |
+| Method              | Type                   |
+|---------------------|------------------------|
+| `checkValidity`     | `(): boolean`          |
+| `formResetCallback` | `(): void`             |
+| `handleInput`       | `(event: Event): void` |
+| `renderInput`       | `(id: string): any`    |
 
 ## Slots
 
