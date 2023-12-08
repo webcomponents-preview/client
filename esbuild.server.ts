@@ -1,6 +1,19 @@
 import http, { type ServerResponse, type Server } from 'node:http';
 
-type DevServer = Server & { respond(data: unknown): void };
+type DevServer = Server & {
+  /**
+   * To be used as banner for the client script.
+   * Reloads the page if the dev server sends a message.
+   * @param reloadQueryParam - query parameter to be added to the URL
+   */
+  reloadBanner(reloadQueryParam?: string): string;
+
+  /**
+   * Sends a message to the client using Server-Sent Events.
+   * @param data - arbitrary data to be send to the client that can be stringified to JSON
+   */
+  respond(data: unknown): void;
+};
 
 export function createServer(port: number): DevServer {
   let stream: ServerResponse;
@@ -39,6 +52,21 @@ export function createServer(port: number): DevServer {
       stream.write(`data: ${JSON.stringify(data)}\n\n`);
     }
   };
+
+  server.reloadBanner = (reloadQueryParam) => `
+// reload page on file change
+if (typeof EventSource !== 'undefined') {
+  new EventSource('/wcp').addEventListener('message', () => {
+    ${
+      !reloadQueryParam
+        ? `window.location.reload();`
+        : `const redirect = new URL(window.location.href);
+    redirect.searchParams.set('${reloadQueryParam}', '');
+    window.location.href = redirect.toString();`
+    }
+  });
+}
+    `;
 
   return server;
 }

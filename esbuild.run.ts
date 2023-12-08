@@ -143,26 +143,16 @@ ${Object.entries(BREAKPOINTS).reduce((acc, [key, value]) => `${acc}  ${key}: ${v
 };
 
 if (watch) {
-  const reloadBanner = `
-// reload page on file change
-if (typeof EventSource !== 'undefined') {
-  new EventSource('/wcp').addEventListener('message', ({ data }) => {
-    // console.log('[wcp] manifest updated', JSON.parse(data));
-    // window.location.reload(true);
-    const url = new URL(window.location.href);
-    url.searchParams.set('reload', '');
-    window.location.href = url.toString();
-  });
-}
-  `;
-
   // start dev server in watch mode
   const internalPort = 28487;
   const server = createServer(internalPort);
   const manifestPath = resolve(options.outdir!, 'custom-elements.json');
 
   // prepare context and start watching
-  const ctx = await context({ ...options, banner: { js: `${reloadBanner}\n${options.banner?.js ?? ''}` } });
+  const ctx = await context({
+    ...options,
+    banner: { js: `${server.reloadBanner('wcp-hot-reload')}\n${options.banner?.js ?? ''}` },
+  });
   await ctx.watch();
   await ctx.serve({ servedir: options.outdir, port: internalPort });
 

@@ -65,6 +65,13 @@ export class Root extends LitElement {
   hideSplash = false;
 
   /**
+   * An optional reload query param to be removed after initial load.
+   * Will prevent the splash screen to be shown on reload.
+   */
+  @property({ type: String, reflect: true, attribute: 'reload-query-param' })
+  reloadQueryParam?: string;
+
+  /**
    * Allows to set a url to load a config file from.
    */
   @property({ type: String, reflect: true, attribute: 'config-url' })
@@ -92,8 +99,10 @@ export class Root extends LitElement {
     super.connectedCallback();
 
     // check for the reload query param
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('reload')) this.hideSplash = true;
+    if (this.reloadQueryParam) {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has(this.reloadQueryParam)) this.hideSplash = true;
+    }
 
     // once connected, load the config and the manifest
     const config = await loadConfig(this.configUrl);
@@ -113,9 +122,11 @@ export class Root extends LitElement {
     this.ready = true;
 
     // remove reload query param
-    const url = new URL(window.location.href);
-    url.searchParams.delete('reload');
-    window.history.replaceState({}, '', url.toString());
+    if (this.reloadQueryParam) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete(this.reloadQueryParam);
+      window.history.replaceState({}, '', url.toString());
+    }
   }
 
   override disconnectedCallback() {
