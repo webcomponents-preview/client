@@ -59,6 +59,12 @@ export class Root extends LitElement {
   inline = false;
 
   /**
+   * Allows hiding the splash screen.
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'hide-splash' })
+  hideSplash = false;
+
+  /**
    * Allows to set a url to load a config file from.
    */
   @property({ type: String, reflect: true, attribute: 'config-url' })
@@ -85,6 +91,10 @@ export class Root extends LitElement {
     // do not block the render loop to show some loading indicator
     super.connectedCallback();
 
+    // check for the reload query param
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('reload')) this.hideSplash = true;
+
     // once connected, load the config and the manifest
     const config = await loadConfig(this.configUrl);
     const manifest = await loadManifest(this.manifestUrl, config.excludeElements);
@@ -101,6 +111,11 @@ export class Root extends LitElement {
 
     // we're finished loading
     this.ready = true;
+
+    // remove reload query param
+    const url = new URL(window.location.href);
+    url.searchParams.delete('reload');
+    window.history.replaceState({}, '', url.toString());
   }
 
   override disconnectedCallback() {
@@ -110,10 +125,14 @@ export class Root extends LitElement {
 
   protected override render(): TemplateResult {
     return html`
-      <wcp-root-splash ?hidden="${this.ready}" @transitionend="${this.handleSplashTransitionEnd}">
-        Loading...
-      </wcp-root-splash>
-
+      ${when(
+        !this.hideSplash,
+        () => html`
+          <wcp-root-splash ?hidden="${this.ready}" @transitionend="${this.handleSplashTransitionEnd}">
+            Loading...
+          </wcp-root-splash>
+        `
+      )}
       ${when(
         this.ready,
         () => html`

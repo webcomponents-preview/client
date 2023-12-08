@@ -1,10 +1,13 @@
+import { existsSync, watch as watchFile } from 'node:fs';
 import { resolve } from 'node:path';
+import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 
 import { type BuildOptions, build, context } from 'esbuild';
 import copyPlugin from 'esbuild-copy-static-files';
 import { sassPlugin } from 'esbuild-sass-plugin';
+import { dtsPlugin } from 'esbuild-plugin-d.ts';
 
 import autoprefixer from 'autoprefixer';
 import postcss from 'postcss';
@@ -12,6 +15,7 @@ import postcssPresetEnv from 'postcss-preset-env';
 
 import BREAKPOINTS from './breakpoints.json' assert { type: 'json' };
 import pkg from './package.json' assert { type: 'json' };
+import { createServer } from './esbuild.server';
 
 // https://stackoverflow.com/q/46745014
 export const __dirname = fileURLToPath(new URL('.', import.meta.url));
@@ -45,7 +49,7 @@ const importMapper = (path: string): string => {
 
 // parse cli arguments
 const {
-  values: { ci = false, port = '3500', watch },
+  values: { port = '3500', watch },
 } = parseArgs({
   options: {
     ci: { type: 'boolean' },
@@ -81,7 +85,7 @@ const options: BuildOptions = {
   if (!window.wcp.def) window.wcp.def = {};
   
   // set WCP version globally
-  if (window.wcp.def.version) {
+  if (window.wcp.def.version !== undefined && window.wcp.def.version !== '${pkg.version}') {
     console.warn('[wcp] ${pkg.version}: Another version (' + window.wcp.def.version + ') has already been loaded.');
   } else window.wcp.def.version = '${pkg.version}';
 
@@ -92,6 +96,8 @@ ${Object.entries(BREAKPOINTS).reduce((acc, [key, value]) => `${acc}    ${key}: $
 `,
   },
   plugins: [
+    dtsPlugin(),
+
     sassPlugin({
       type: 'css-text',
       filter: /\.css$/,
@@ -112,6 +118,7 @@ ${Object.entries(BREAKPOINTS).reduce((acc, [key, value]) => `${acc}    ${key}: $
       importMapper,
       transform,
     }),
+
     copyPlugin({
       src: 'README.md',
       dest: 'dist/README.md',
@@ -136,23 +143,43 @@ ${Object.entries(BREAKPOINTS).reduce((acc, [key, value]) => `${acc}    ${key}: $
 };
 
 if (watch) {
-  try {
-    const reloadBanner = ` if (typeof EventSource !== 'undefined') { new EventSource('/esbuild').addEventListener('change', () => location.reload()) }`;
-    const green = (message: string) => (ci ? message : `\u001b[32m${message}\u001b[0m`);
-    const cyan = (message: string) => (ci ? message : `\u001b[36m${message}\u001b[0m`);
+  const reloadBanner = `
+// reload page on file change
+if (typeof EventSource !== 'undefined') {
+  new EventSource('/wcp').addEventListener('message', ({ data }) => {
+    // console.log('[wcp] manifest updated', JSON.parse(data));
+    // window.location.reload(true);
+    const url = new URL(window.location.href);
+    url.searchParams.set('reload', '');
+    window.location.href = url.toString();
+  });
+}
+  `;
 
-    // start dev server in watch mode
-    const ctx = await context({ ...options, banner: { js: `${reloadBanner}\n${options.banner?.js ?? ''}` } });
-    await ctx.watch();
-    const { host: hostname } = await ctx.serve({ servedir: 'dist', port: Number(port) });
+  // start dev server in watch mode
+  const internalPort = 28487;
+  const server = createServer(internalPort);
+  const manifestPath = resolve(options.outdir!, 'custom-elements.json');
 
+  // prepare context and start watching
+  const ctx = await context({ ...options, banner: { js: `${reloadBanner}\n${options.banner?.js ?? ''}` } });
+  await ctx.watch();
+  await ctx.serve({ servedir: options.outdir, port: internalPort });
+
+  // prepare dev server
+  server.listen(Number(port), async () => {
     // notify user
-    console.info(`${green('>')} Server started at ${cyan(`http://${hostname}:${port}`)}`);
-  } catch (error) {
-    console.error(error);
-    process.exit(1);
-  }
+    const url = `http://127.0.0.1:${port}/`;
+    // eslint-disable-next-line no-console
+    console.info(` > Preview: \x1b[4m${url}\x1b[0m\n\n`);
+
+    // as the docs are maybe not ready yet, touch the target already
+    if (!existsSync(manifestPath)) await writeFile(manifestPath, '{}', 'utf-8');
+    watchFile(manifestPath, async () => {
+      const manifest = await readFile(manifestPath, 'utf-8');
+      server.respond(manifest);
+    });
+  });
 } else {
   await build(options);
-  process.exit(0);
 }
