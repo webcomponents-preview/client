@@ -1,5 +1,12 @@
 import { fileURLToPath } from 'node:url';
+import { parseArgs } from 'node:util';
+
 import { esbuildPlugin } from '@web/dev-server-esbuild';
+import { defaultReporter, summaryReporter } from '@web/test-runner';
+import { junitReporter } from '@web/test-runner-junit-reporter';
+
+const { values } = parseArgs({ options: { ci: { type: 'boolean', default: false } } });
+const { ci: isCi } = values;
 
 export default {
   files: 'src/**/*.test.ts',
@@ -16,4 +23,13 @@ export default {
     <script type="module" src="${testFramework}"></script>
     <script type="module" src="/web-test-runner.setup.js"></script>
   `,
+  reporters: isCi
+    ? [
+        junitReporter({
+          outputPath: './reports/test-results.xml',
+          reportLogs: true,
+        }),
+        summaryReporter({ flatten: false }),
+      ]
+    : [defaultReporter({ reportTestResults: true, reportTestProgress: true })],
 };

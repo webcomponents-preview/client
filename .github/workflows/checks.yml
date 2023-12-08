@@ -23,7 +23,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Lint
-        run: npm run lint
+        run: npm run lint:ci
+      - uses: actions/upload-artifact@v3
+        if: success() || failure()
+        with:
+          name: Lint Results
+          path: reports/lint-results.xml
 
   test:
     name: Test
@@ -39,6 +44,11 @@ jobs:
         run: npm ci && node ./node_modules/puppeteer/install.js
       - name: Test
         run: npm run test:ci
+      - uses: actions/upload-artifact@v3
+        if: success() || failure()
+        with:
+          name: Test Results
+          path: reports/test-results.xml
 
   build:
     name: Build
