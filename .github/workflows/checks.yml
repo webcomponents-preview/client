@@ -30,7 +30,7 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint:ci
-      - uses: dorny/test-reporter@v1.7.0
+      - uses: phoenix-actions/test-reporting@v8
         if: always()
         with:
           name: Lint Results
@@ -51,7 +51,7 @@ jobs:
         run: npm ci && node ./node_modules/puppeteer/install.js
       - name: Test
         run: npm run test:ci
-      - uses: dorny/test-reporter@v1.7.0
+      - uses: phoenix-actions/test-reporting@v8
         if: always()
         with:
           name: Test Results
