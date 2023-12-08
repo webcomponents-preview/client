@@ -84,6 +84,7 @@
     "postcss-preset-env": "9.3.0",
     "shx": "0.3.4",
     "ts-node": "10.9.1",
+    "tsc-alias": "1.8.8",
     "typedoc": "0.25.4",
     "typescript": "5.3.3",
     "typescript-json-schema": "0.62.0"

@@ -1,7 +1,6 @@
 import { existsSync, watch as watchFile } from 'node:fs';
 import { resolve } from 'node:path';
 import { readFile, writeFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 
 import { type BuildOptions, build, context } from 'esbuild';
@@ -13,12 +12,12 @@ import autoprefixer from 'autoprefixer';
 import postcss from 'postcss';
 import postcssPresetEnv from 'postcss-preset-env';
 
-import BREAKPOINTS from './breakpoints.json' assert { type: 'json' };
-import pkg from './package.json' assert { type: 'json' };
+import { barrelsbyPlugin } from './esbuild-barrelsby.plugin';
+import { dtsAliasesPlugin } from './esbuild-declaration-aliases.plugin';
 import { createServer } from './esbuild.server';
 
-// https://stackoverflow.com/q/46745014
-export const __dirname = fileURLToPath(new URL('.', import.meta.url));
+import BREAKPOINTS from './breakpoints.json' assert { type: 'json' };
+import pkg from './package.json' assert { type: 'json' };
 
 // inject some global sass variables
 const precompile = (source: string, path: string): string => {
@@ -95,7 +94,9 @@ ${Object.entries(BREAKPOINTS).reduce((acc, [key, value]) => `${acc}  ${key}: ${v
 `,
   },
   plugins: [
+    barrelsbyPlugin({ configPath: '.barrelsby.json', addMissingJsExtensions: true }),
     dtsPlugin(),
+    dtsAliasesPlugin({ tsConfigPath: 'tsconfig.types.json' }),
 
     sassPlugin({
       type: 'css-text',
