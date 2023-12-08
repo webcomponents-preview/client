@@ -31,6 +31,8 @@ jobs:
       - uses: enricomi/publish-unit-test-result-action@v2
         if: always()
         with:
+          check_name: Lint results
+          fail_on: errors
           files: reports/lint-results.xml
 
   test:
@@ -50,6 +52,8 @@ jobs:
       - uses: enricomi/publish-unit-test-result-action@v2
         if: always()
         with:
+          check_name: Test results
+          fail_on: errors
           files: reports/test-results.xml
 
   build:
