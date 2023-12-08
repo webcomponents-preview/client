@@ -8,6 +8,12 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  pull-requests: write
+
 jobs:
   lint:
     if: |
@@ -24,11 +30,12 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint:ci
-      - uses: actions/upload-artifact@v3
-        if: success() || failure()
+      - uses: dorny/test-reporter@v1
+        if: always()
         with:
           name: Lint Results
           path: reports/lint-results.xml
+          reporter: jest-junit
 
   test:
     name: Test
@@ -44,11 +51,12 @@ jobs:
         run: npm ci && node ./node_modules/puppeteer/install.js
       - name: Test
         run: npm run test:ci
-      - uses: actions/upload-artifact@v3
-        if: success() || failure()
+      - uses: dorny/test-reporter@v1
+        if: always()
         with:
           name: Test Results
           path: reports/test-results.xml
+          reporter: jest-junit
 
   build:
     name: Build
