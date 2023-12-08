@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+# [0.6.0](https://github.com/webcomponents-preview/client/compare/0.5.11...0.6.0) (2023-12-08)
+
+
+### Features
+
+* custom hot reload query param ([fb2c588](https://github.com/webcomponents-preview/client/commit/fb2c58855667bda3358717be8e35c44b7a12acd9))
+
 ## [0.5.11](https://github.com/webcomponents-preview/client/compare/0.5.10...0.5.11) (2023-12-08)
 
 ## [0.5.10](https://github.com/webcomponents-preview/client/compare/0.5.9...0.5.10) (2023-12-08)
