@@ -226,309 +226,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/components/layout/aside/aside.component.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "To toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```",
-          "name": "Aside",
-          "cssProperties": [
-            {
-              "description": "The maximum width of the aside bar when visible",
-              "name": "--wcp-aside-max-width"
-            },
-            {
-              "description": "Inner padding of the aside bar",
-              "name": "--wcp-aside-spacing"
-            },
-            {
-              "description": "The size of the toggle button",
-              "name": "--wcp-aside-toggle-size"
-            },
-            {
-              "description": "The background color of the side bar in dark mode",
-              "name": "--wcp-aside-dark-background"
-            },
-            {
-              "description": "The color of the side bar in dark mode",
-              "name": "--wcp-aside-dark-color"
-            },
-            {
-              "description": "The background color of the side bar in light mode",
-              "name": "--wcp-aside-light-background"
-            },
-            {
-              "description": "The color of the side bar in light mode",
-              "name": "--wcp-aside-light-color"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Projects elements aside the main content",
-              "name": ""
-            },
-            {
-              "description": "Elements in the fixed header of the side bar",
-              "name": "header"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "hidden",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Used to toggle the width of the aside bar",
-              "attribute": "hidden",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'complementary'",
-              "description": "Presets the aria role to `complementary` as we do not use te aside element directly",
-              "attribute": "role",
-              "reflects": true
-            },
-            {
-              "kind": "method",
-              "name": "handleButtonClick"
-            },
-            {
-              "kind": "method",
-              "name": "listenAsideToggle",
-              "privacy": "protected",
-              "parameters": [
-                {
-                  "name": "{ detail }",
-                  "type": {
-                    "text": "CustomEvent<boolean>"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleRouteChange",
-              "privacy": "protected"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "hidden",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Used to toggle the width of the aside bar",
-              "fieldName": "hidden"
-            },
-            {
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'complementary'",
-              "description": "Presets the aria role to `complementary` as we do not use te aside element directly",
-              "fieldName": "role"
-            }
-          ],
-          "mixins": [
-            {
-              "name": "ColorSchemable",
-              "package": "@/mixins/color-schemable.mixin.js"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "examples": [],
-          "readme": "<!-- Auto Generated Below -->\n\n# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property | Attribute | Type      | Default         | Description                                      |\n|----------|-----------|-----------|-----------------|--------------------------------------------------|\n| `hidden` | `hidden`  | `boolean` | false           | Used to toggle the width of the aside bar        |\n| `role`   | `role`    | `string`  | \"complementary\" | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event               | Description                                      |\n|---------------------|--------------------------------------------------|\n| `wcp-aside:toggled` | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n\n## Slots\n\n| Name     | Description                                  |\n|----------|----------------------------------------------|\n|          | Projects elements aside the main content     |\n| `header` | Elements in the fixed header of the side bar |\n\n## CSS Custom Properties\n\n| Property                       | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |\n| `--wcp-aside-light-background` | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      | The color of the side bar in light mode          |\n| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |\n| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-size`      | The size of the toggle button                    |\n",
-          "groups": [
-            "layout"
-          ],
-          "tagName": "wcp-aside",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Aside",
-          "declaration": {
-            "name": "Aside",
-            "module": "src/components/layout/aside/aside.component.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-aside",
-          "declaration": {
-            "name": "Aside",
-            "module": "src/components/layout/aside/aside.component.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/layout/layout/layout.component.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Layout",
-          "cssProperties": [
-            {
-              "description": "The background color of the whole layout",
-              "name": "--wcp-layout-dark-background"
-            },
-            {
-              "description": "The text color of the whole layout",
-              "name": "--wcp-layout-dark-color"
-            },
-            {
-              "description": "The background color of the whole layout",
-              "name": "--wcp-layout-light-background"
-            },
-            {
-              "description": "The text color of the whole layout",
-              "name": "--wcp-layout-light-color"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Shows contents fixed above the aside",
-              "name": "header"
-            },
-            {
-              "description": "Projects elements aside the main content",
-              "name": "aside"
-            },
-            {
-              "description": "Receives the content of the main section",
-              "name": ""
-            }
-          ],
-          "members": [],
-          "mixins": [
-            {
-              "name": "ColorSchemable",
-              "package": "@/mixins/color-schemable.mixin.js"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "examples": [
-            "```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```"
-          ],
-          "readme": "<!-- Auto Generated Below -->\n\n# wcp-layout\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```\n\n## Slots\n\n| Name     | Description                              |\n|----------|------------------------------------------|\n|          | Receives the content of the main section |\n| `aside`  | Projects elements aside the main content |\n| `header` | Shows contents fixed above the aside     |\n\n## CSS Custom Properties\n\n| Property                        | Description                              |\n|---------------------------------|------------------------------------------|\n| `--wcp-layout-dark-background`  | The background color of the whole layout |\n| `--wcp-layout-dark-color`       | The text color of the whole layout       |\n| `--wcp-layout-light-background` | The background color of the whole layout |\n| `--wcp-layout-light-color`      | The text color of the whole layout       |\n",
-          "groups": [
-            "layout"
-          ],
-          "tagName": "wcp-layout",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Layout",
-          "declaration": {
-            "name": "Layout",
-            "module": "src/components/layout/layout/layout.component.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-layout",
-          "declaration": {
-            "name": "Layout",
-            "module": "src/components/layout/layout/layout.component.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/components/layout/main/main.component.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Main",
-          "slots": [
-            {
-              "description": "Projects elements to the main content",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'main'",
-              "description": "Presets the aria role to `main` as we do not use te main element directly",
-              "attribute": "role",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "role",
-              "type": {
-                "text": "string"
-              },
-              "default": "'main'",
-              "description": "Presets the aria role to `main` as we do not use te main element directly",
-              "fieldName": "role"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "examples": [],
-          "readme": "<!-- Auto Generated Below -->\n\n# wcp-main\n\n## Properties\n\n| Property | Attribute | Type     | Default | Description                                      |\n|----------|-----------|----------|---------|--------------------------------------------------|\n| `role`   | `role`    | `string` | \"main\"  | Presets the aria role to `main` as we do not use te main element directly |\n\n## Slots\n\n| Name | Description                           |\n|------|---------------------------------------|\n|      | Projects elements to the main content |\n",
-          "groups": [
-            "layout"
-          ],
-          "tagName": "wcp-main",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Main",
-          "declaration": {
-            "name": "Main",
-            "module": "src/components/layout/main/main.component.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "wcp-main",
-          "declaration": {
-            "name": "Main",
-            "module": "src/components/layout/main/main.component.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/components/features/markdown-example/markdown-example.component.ts",
       "declarations": [
         {
@@ -3747,6 +3444,309 @@
           "declaration": {
             "name": "InputText",
             "module": "src/components/forms/input-text/input-text.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/layout/aside/aside.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "To toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```",
+          "name": "Aside",
+          "cssProperties": [
+            {
+              "description": "The maximum width of the aside bar when visible",
+              "name": "--wcp-aside-max-width"
+            },
+            {
+              "description": "Inner padding of the aside bar",
+              "name": "--wcp-aside-spacing"
+            },
+            {
+              "description": "The size of the toggle button",
+              "name": "--wcp-aside-toggle-size"
+            },
+            {
+              "description": "The background color of the side bar in dark mode",
+              "name": "--wcp-aside-dark-background"
+            },
+            {
+              "description": "The color of the side bar in dark mode",
+              "name": "--wcp-aside-dark-color"
+            },
+            {
+              "description": "The background color of the side bar in light mode",
+              "name": "--wcp-aside-light-background"
+            },
+            {
+              "description": "The color of the side bar in light mode",
+              "name": "--wcp-aside-light-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Projects elements aside the main content",
+              "name": ""
+            },
+            {
+              "description": "Elements in the fixed header of the side bar",
+              "name": "header"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "hidden",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Used to toggle the width of the aside bar",
+              "attribute": "hidden",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'complementary'",
+              "description": "Presets the aria role to `complementary` as we do not use te aside element directly",
+              "attribute": "role",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "handleButtonClick"
+            },
+            {
+              "kind": "method",
+              "name": "listenAsideToggle",
+              "privacy": "protected",
+              "parameters": [
+                {
+                  "name": "{ detail }",
+                  "type": {
+                    "text": "CustomEvent<boolean>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleRouteChange",
+              "privacy": "protected"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "hidden",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Used to toggle the width of the aside bar",
+              "fieldName": "hidden"
+            },
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'complementary'",
+              "description": "Presets the aria role to `complementary` as we do not use te aside element directly",
+              "fieldName": "role"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/mixins/color-schemable.mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [],
+          "readme": "<!-- Auto Generated Below -->\n\n# wcp-aside\n\nTo toggle the side bar remotely, you can dispatch a custom event on the global window object:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle'));\n```\nYou may pass an optional boolean value to the event to toggle the side bar to a specific state:\n```js\nwindow.dispatchEvent(new CustomEvent('wcp-aside:toggle', { detail: true }));\n```\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property | Attribute | Type      | Default         | Description                                      |\n|----------|-----------|-----------|-----------------|--------------------------------------------------|\n| `hidden` | `hidden`  | `boolean` | false           | Used to toggle the width of the aside bar        |\n| `role`   | `role`    | `string`  | \"complementary\" | Presets the aria role to `complementary` as we do not use te aside element directly |\n\n## Methods\n\n| Method              | Type       |\n|---------------------|------------|\n| `handleButtonClick` | `(): void` |\n\n## Events\n\n| Event               | Description                                      |\n|---------------------|--------------------------------------------------|\n| `wcp-aside:toggled` | Dispatches this event when the side bar has been toggled. Do not get confused with the `wcp-aside:toggle` event. |\n\n## Slots\n\n| Name     | Description                                  |\n|----------|----------------------------------------------|\n|          | Projects elements aside the main content     |\n| `header` | Elements in the fixed header of the side bar |\n\n## CSS Custom Properties\n\n| Property                       | Description                                      |\n|--------------------------------|--------------------------------------------------|\n| `--wcp-aside-dark-background`  | The background color of the side bar in dark mode |\n| `--wcp-aside-dark-color`       | The color of the side bar in dark mode           |\n| `--wcp-aside-light-background` | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      | The color of the side bar in light mode          |\n| `--wcp-aside-max-width`        | The maximum width of the aside bar when visible  |\n| `--wcp-aside-spacing`          | Inner padding of the aside bar                   |\n| `--wcp-aside-toggle-size`      | The size of the toggle button                    |\n",
+          "groups": [
+            "layout"
+          ],
+          "tagName": "wcp-aside",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Aside",
+          "declaration": {
+            "name": "Aside",
+            "module": "src/components/layout/aside/aside.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-aside",
+          "declaration": {
+            "name": "Aside",
+            "module": "src/components/layout/aside/aside.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/layout/layout/layout.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Layout",
+          "cssProperties": [
+            {
+              "description": "The background color of the whole layout",
+              "name": "--wcp-layout-dark-background"
+            },
+            {
+              "description": "The text color of the whole layout",
+              "name": "--wcp-layout-dark-color"
+            },
+            {
+              "description": "The background color of the whole layout",
+              "name": "--wcp-layout-light-background"
+            },
+            {
+              "description": "The text color of the whole layout",
+              "name": "--wcp-layout-light-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Shows contents fixed above the aside",
+              "name": "header"
+            },
+            {
+              "description": "Projects elements aside the main content",
+              "name": "aside"
+            },
+            {
+              "description": "Receives the content of the main section",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/mixins/color-schemable.mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [
+            "```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```"
+          ],
+          "readme": "<!-- Auto Generated Below -->\n\n# wcp-layout\n\n**Mixins:** ColorSchemable\n\n## Example\n\n```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```\n\n## Slots\n\n| Name     | Description                              |\n|----------|------------------------------------------|\n|          | Receives the content of the main section |\n| `aside`  | Projects elements aside the main content |\n| `header` | Shows contents fixed above the aside     |\n\n## CSS Custom Properties\n\n| Property                        | Description                              |\n|---------------------------------|------------------------------------------|\n| `--wcp-layout-dark-background`  | The background color of the whole layout |\n| `--wcp-layout-dark-color`       | The text color of the whole layout       |\n| `--wcp-layout-light-background` | The background color of the whole layout |\n| `--wcp-layout-light-color`      | The text color of the whole layout       |\n",
+          "groups": [
+            "layout"
+          ],
+          "tagName": "wcp-layout",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Layout",
+          "declaration": {
+            "name": "Layout",
+            "module": "src/components/layout/layout/layout.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-layout",
+          "declaration": {
+            "name": "Layout",
+            "module": "src/components/layout/layout/layout.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/layout/main/main.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Main",
+          "slots": [
+            {
+              "description": "Projects elements to the main content",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'main'",
+              "description": "Presets the aria role to `main` as we do not use te main element directly",
+              "attribute": "role",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "role",
+              "type": {
+                "text": "string"
+              },
+              "default": "'main'",
+              "description": "Presets the aria role to `main` as we do not use te main element directly",
+              "fieldName": "role"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [],
+          "readme": "<!-- Auto Generated Below -->\n\n# wcp-main\n\n## Properties\n\n| Property | Attribute | Type     | Default | Description                                      |\n|----------|-----------|----------|---------|--------------------------------------------------|\n| `role`   | `role`    | `string` | \"main\"  | Presets the aria role to `main` as we do not use te main element directly |\n\n## Slots\n\n| Name | Description                           |\n|------|---------------------------------------|\n|      | Projects elements to the main content |\n",
+          "groups": [
+            "layout"
+          ],
+          "tagName": "wcp-main",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Main",
+          "declaration": {
+            "name": "Main",
+            "module": "src/components/layout/main/main.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-main",
+          "declaration": {
+            "name": "Main",
+            "module": "src/components/layout/main/main.component.ts"
           }
         }
       ]
