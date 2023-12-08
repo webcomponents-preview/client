@@ -81,18 +81,17 @@ const options: BuildOptions = {
   logLevel: 'error',
   banner: {
     js: `// prepare global namespace
-  if (!window.wcp) window.wcp = {};
-  if (!window.wcp.def) window.wcp.def = {};
-  
-  // set WCP version globally
-  if (window.wcp.def.version !== undefined && window.wcp.def.version !== '${pkg.version}') {
-    console.warn('[wcp] ${pkg.version}: Another version (' + window.wcp.def.version + ') has already been loaded.');
-  } else window.wcp.def.version = '${pkg.version}';
+if (!window.wcp) window.wcp = {};
+if (!window.wcp.def) window.wcp.def = {};
 
-  // set breakpoints globally
-  window.wcp.def.breakpoints = {
-${Object.entries(BREAKPOINTS).reduce((acc, [key, value]) => `${acc}    ${key}: ${value},\n`, '')}
-  };
+// set WCP version globally
+if (window.wcp.def.version !== undefined && window.wcp.def.version !== '${pkg.version}') {
+  console.warn('[wcp] ${pkg.version}: Another version (' + window.wcp.def.version + ') has already been loaded.');
+} else window.wcp.def.version = '${pkg.version}';
+
+// set breakpoints globally
+window.wcp.def.breakpoints = {
+${Object.entries(BREAKPOINTS).reduce((acc, [key, value]) => `${acc}  ${key}: ${value},\n`, '')}};
 `,
   },
   plugins: [
