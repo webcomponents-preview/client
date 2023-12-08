@@ -20,7 +20,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Docs
-        run: npm run docs
+        run: npm run generate:docs
       - uses: actions/upload-artifact@v3
         if: success()
         with:
