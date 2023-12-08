@@ -1,5 +1,7 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.5.11](https://github.com/webcomponents-preview/client/compare/0.5.10...0.5.11) (2023-12-08)
+
 ## [0.5.10](https://github.com/webcomponents-preview/client/compare/0.5.9...0.5.10) (2023-12-08)
 
 ## [0.5.9](https://github.com/webcomponents-preview/client/compare/0.5.8...0.5.9) (2023-12-08)
