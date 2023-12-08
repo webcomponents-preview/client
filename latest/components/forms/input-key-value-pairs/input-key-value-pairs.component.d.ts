@@ -1,6 +1,6 @@
 import { LitElement, PropertyValues } from 'lit';
-import type { FormAssociated } from '@/utils/form.utils.js';
-declare const InputKeyValuePairs_base: import("../../..").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("../../../mixins/color-schemable.mixin").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+import type { FormAssociated } from '../../../utils/form.utils.js';
+declare const InputKeyValuePairs_base: import("../../../index.js").Constructor<import("../../../mixins/editable.mixin.js").EditableInterface & import("../../../mixins/color-schemable.mixin").ColorSchemableInterface> & import("../../../mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
 /**
  * A key-value pairs editor. Integrates into forms and allows editing string based form data.
  *

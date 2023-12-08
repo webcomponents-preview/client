@@ -1,8 +1,8 @@
 import 'prismjs';
 import 'lit-code';
 import { LitElement, type PropertyValues } from 'lit';
-import type { FormAssociated } from '@/utils/form.utils.js';
-declare const InputCode_base: import("../../..").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("../../../mixins/color-schemable.mixin").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+import type { FormAssociated } from '../../../utils/form.utils.js';
+declare const InputCode_base: import("../../../index.js").Constructor<import("../../../mixins/editable.mixin.js").EditableInterface & import("../../../mixins/color-schemable.mixin").ColorSchemableInterface> & import("../../../mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
 /**
  * A text input element using the wcp style. Fully form aware.
  * Can display multiline text (textarea) if configured to do so.

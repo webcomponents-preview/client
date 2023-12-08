@@ -1,6 +1,6 @@
 import { LitElement } from 'lit';
-import type { Constructor } from '@/utils/mixin.types.js';
-import { type ColorScheme } from '@/utils/color-scheme.utils.js';
+import type { Constructor } from '../utils/mixin.types.js';
+import { type ColorScheme } from '../utils/color-scheme.utils.js';
 export declare class ColorSchemableInterface {
     colorScheme?: ColorScheme;
 }

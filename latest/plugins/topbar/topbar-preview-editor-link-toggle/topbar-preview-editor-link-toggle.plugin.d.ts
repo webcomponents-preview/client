@@ -1,5 +1,5 @@
 import { LitElement, type TemplateResult } from 'lit';
-import type { TopbarPlugin } from '@/utils/plugin.utils.js';
+import type { TopbarPlugin } from '../../../utils/plugin.utils.js';
 /**
  * Toggles all preview editor link plugins to show or hide the debug hints.
  *

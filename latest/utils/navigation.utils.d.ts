@@ -1,5 +1,5 @@
-import type { Config } from '@/utils/config.utils.js';
-import type { Element, Manifest } from '@/utils/parser.types.js';
+import type { Config } from '../utils/config.utils.js';
+import type { Element, Manifest } from '../utils/parser.types.js';
 /**
  * Defines the structure of the navigation items.
  */

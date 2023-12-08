@@ -1,4 +1,4 @@
-import type { ColorSchemableInterface } from '@/mixins/color-schemable.mixin.js';
+import type { ColorSchemableInterface } from '../mixins/color-schemable.mixin.js';
 declare global {
     interface State {
         ['color-scheme']: ColorScheme;

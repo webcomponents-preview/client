@@ -1,5 +1,5 @@
 import { LitElement, type TemplateResult } from 'lit';
-declare const MarkdownExample_base: import("../../..").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+declare const MarkdownExample_base: import("../../../index.js").Constructor<import("../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
  * Shows an inline code example and a preview of the element in the readme.
  * This is used in the markdown formatter to render `html` examples.

@@ -9,7 +9,7 @@ declare global {
         wcp: WCP;
     }
 }
-declare const Aside_base: import("../../..").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+declare const Aside_base: import("../../../index.js").Constructor<import("../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
  * To toggle the side bar remotely, you can dispatch a custom event on the global window object:
  * ```js

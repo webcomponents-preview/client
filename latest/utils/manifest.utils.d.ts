@@ -1,4 +1,4 @@
-import type { Manifest } from '@/utils/parser.types.js';
+import type { Manifest } from '../utils/parser.types.js';
 declare global {
     interface WCP {
         manifest: Manifest;

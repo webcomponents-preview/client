@@ -1,6 +1,6 @@
 import { LitElement, PropertyValues } from 'lit';
-import type { FormAssociated } from '@/utils/form.utils.js';
-declare const InputSelect_base: import("../../../index.js").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+import type { FormAssociated } from '../../../utils/form.utils.js';
+declare const InputSelect_base: import("../../../index.js").Constructor<import("../../../mixins/editable.mixin.js").EditableInterface & import("../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & import("../../../mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
 /**
  * A numeric input element using the wcp style. Fully form aware.
  *

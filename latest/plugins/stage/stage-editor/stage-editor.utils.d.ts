@@ -1,4 +1,4 @@
-import type * as Parsed from '@/utils/parser.types.js';
+import type * as Parsed from '../../../utils/parser.types.js';
 /**
  * State of the custom element.
  */

@@ -1,6 +1,6 @@
 import { LitElement, type TemplateResult } from 'lit';
-import type { StagePlugin } from '@/utils/plugin.utils.js';
-declare const StageExamples_base: import("../../..").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+import type { StagePlugin } from '../../../utils/plugin.utils.js';
+declare const StageExamples_base: import("../../../index.js").Constructor<import("../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
  * Shows the examples of a custom element manifest.
  *

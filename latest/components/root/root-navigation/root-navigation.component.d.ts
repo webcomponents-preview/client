@@ -1,5 +1,5 @@
 import { LitElement, type TemplateResult } from 'lit';
-import { type GroupedNavigationItems } from '@/utils/navigation.utils.js';
+import { type GroupedNavigationItems } from '../../../utils/navigation.utils.js';
 /**
  * Manages the main root-navigation in the application root.
  *

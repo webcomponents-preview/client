@@ -3,9 +3,9 @@ if (!window.wcp) window.wcp = {};
 if (!window.wcp.def) window.wcp.def = {};
 
 // set WCP version globally
-if (window.wcp.def.version !== undefined && window.wcp.def.version !== '0.5.10') {
-  console.warn('[wcp] 0.5.10: Another version (' + window.wcp.def.version + ') has already been loaded.');
-} else window.wcp.def.version = '0.5.10';
+if (window.wcp.def.version !== undefined && window.wcp.def.version !== '0.5.11') {
+  console.warn('[wcp] 0.5.11: Another version (' + window.wcp.def.version + ') has already been loaded.');
+} else window.wcp.def.version = '0.5.11';
 
 // set breakpoints globally
 window.wcp.def.breakpoints = {

@@ -1,6 +1,6 @@
 import { LitElement, type TemplateResult } from 'lit';
-import type { StagePlugin } from '@/utils/plugin.utils.js';
-declare const StageEditor_base: import("../../../index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+import type { StagePlugin } from '../../../utils/plugin.utils.js';
+declare const StageEditor_base: import("../../../index.js").Constructor<import("../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
  * Allows editing a custom element.
  *

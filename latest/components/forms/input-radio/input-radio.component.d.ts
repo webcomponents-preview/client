@@ -1,6 +1,6 @@
 import { LitElement, PropertyValues } from 'lit';
-import type { FormAssociated } from '@/utils/form.utils.js';
-declare const InputRadio_base: import("../../..").Constructor<import("@/mixins/editable.mixin.js").EditableInterface & import("../../../mixins/color-schemable.mixin").ColorSchemableInterface> & import("@/mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
+import type { FormAssociated } from '../../../utils/form.utils.js';
+declare const InputRadio_base: import("../../../index.js").Constructor<import("../../../mixins/editable.mixin.js").EditableInterface & import("../../../mixins/color-schemable.mixin").ColorSchemableInterface> & import("../../../mixins/editable.mixin.js").EditablePrototype & typeof LitElement;
 /**
  * A radio input element using the wcp style. Fully form aware.
  *

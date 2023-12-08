@@ -1,5 +1,5 @@
 import { LitElement, type TemplateResult } from 'lit';
-declare const Topbar_base: import("../../..").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+declare const Topbar_base: import("../../../index.js").Constructor<import("../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
  * A wrapper above the preview frame content to contain various controls.
  *

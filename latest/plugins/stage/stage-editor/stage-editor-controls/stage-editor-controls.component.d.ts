@@ -1,7 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
-import type * as Parsed from '@/utils/parser.types.js';
+import type * as Parsed from '../../../../utils/parser.types.js';
 import { type ElementData } from '../stage-editor.utils.js';
-declare const StageEditorControls_base: import("../../../../index.js").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+declare const StageEditorControls_base: import("../../../../index.js").Constructor<import("../../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
  * @element wcp-stage-editor-controls
  *

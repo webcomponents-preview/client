@@ -1,5 +1,5 @@
 import { LitElement, type TemplateResult } from 'lit';
-declare const Tabs_base: import("../../..").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+declare const Tabs_base: import("../../../index.js").Constructor<import("../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
  * @example
  * ```html

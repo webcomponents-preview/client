@@ -1,7 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
-import type { PreviewPlugin } from '@/utils/plugin.utils.js';
+import type { PreviewPlugin } from '../../../utils/plugin.utils.js';
 type Viewport = 'mobile' | 'tablet' | 'desktop' | 'wide';
-declare const PreviewSimulateViewports_base: import("../../..").Constructor<import("@/mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
+declare const PreviewSimulateViewports_base: import("../../../index.js").Constructor<import("../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
  * Simulates various viewports for a custom element preview.
  *
