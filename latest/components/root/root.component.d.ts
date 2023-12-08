@@ -32,6 +32,11 @@ export declare class Root extends LitElement {
      */
     hideSplash: boolean;
     /**
+     * An optional reload query param to be removed after initial load.
+     * Will prevent the splash screen to be shown on reload.
+     */
+    reloadQueryParam?: string;
+    /**
      * Allows to set a url to load a config file from.
      */
     configUrl?: string;

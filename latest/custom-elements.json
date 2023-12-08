@@ -113,6 +113,16 @@
             },
             {
               "kind": "field",
+              "name": "reloadQueryParam",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "An optional reload query param to be removed after initial load.\nWill prevent the splash screen to be shown on reload.",
+              "attribute": "reload-query-param",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "configUrl",
               "type": {
                 "text": "string | undefined"
@@ -176,6 +186,14 @@
               "fieldName": "hideSplash"
             },
             {
+              "name": "reload-query-param",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "An optional reload query param to be removed after initial load.\nWill prevent the splash screen to be shown on reload.",
+              "fieldName": "reloadQueryParam"
+            },
+            {
               "name": "config-url",
               "type": {
                 "text": "string | undefined"
@@ -197,7 +215,7 @@
             "package": "lit"
           },
           "examples": [],
-          "readme": "<!-- Auto Generated Below -->\n\n# wcp-root\n\n## Properties\n\n| Property        | Attribute      | Modifiers | Type                  | Default | Description                                      |\n|-----------------|----------------|-----------|-----------------------|---------|--------------------------------------------------|\n| `configUrl`     | `config-url`   |           | `string \\| undefined` |         | Allows to set a url to load a config file from.  |\n| `hideSplash`    | `hide-splash`  |           | `boolean`             | false   | Allows hiding the splash screen.                 |\n| `inline`        | `inline`       |           | `boolean`             | false   | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifestUrl`   | `manifest-url` |           | `string`              |         | Defines the location of the custom element manifest file. |\n| `navigationRef` |                | readonly  | `RootNavigation`      |         |                                                  |\n\n## Methods\n\n| Method                      | Type                                      |\n|-----------------------------|-------------------------------------------|\n| `handleSearchInput`         | `({ detail }: CustomEvent<string>): void` |\n| `handleSplashTransitionEnd` | `(event: Event): void`                    |\n\n## Events\n\n| Event                             | Description                                      |\n|-----------------------------------|--------------------------------------------------|\n| `wcp-root:active-element-changed` | Fired when the active element changes. Carries the declaration of the new active element with it. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode. |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode. |\n| `--wcp-root-light-background` | The background color of the root element in light mode. |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode. |\n",
+          "readme": "<!-- Auto Generated Below -->\n\n# wcp-root\n\n## Properties\n\n| Property           | Attribute            | Modifiers | Type                  | Default | Description                                      |\n|--------------------|----------------------|-----------|-----------------------|---------|--------------------------------------------------|\n| `configUrl`        | `config-url`         |           | `string \\| undefined` |         | Allows to set a url to load a config file from.  |\n| `hideSplash`       | `hide-splash`        |           | `boolean`             | false   | Allows hiding the splash screen.                 |\n| `inline`           | `inline`             |           | `boolean`             | false   | Flags the component to be displayed inline and not standalone. Requires the surrounding<br />layout to provide the necessary styles like for any other block element. |\n| `manifestUrl`      | `manifest-url`       |           | `string`              |         | Defines the location of the custom element manifest file. |\n| `navigationRef`    |                      | readonly  | `RootNavigation`      |         |                                                  |\n| `reloadQueryParam` | `reload-query-param` |           | `string \\| undefined` |         | An optional reload query param to be removed after initial load.<br />Will prevent the splash screen to be shown on reload. |\n\n## Methods\n\n| Method                      | Type                                      |\n|-----------------------------|-------------------------------------------|\n| `handleSearchInput`         | `({ detail }: CustomEvent<string>): void` |\n| `handleSplashTransitionEnd` | `(event: Event): void`                    |\n\n## Events\n\n| Event                             | Description                                      |\n|-----------------------------------|--------------------------------------------------|\n| `wcp-root:active-element-changed` | Fired when the active element changes. Carries the declaration of the new active element with it. |\n\n## Slots\n\n| Name               | Description                                      |\n|--------------------|--------------------------------------------------|\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls. |\n| `preview-details`  | Can be used to inject additional preview detail panes. |\n| `preview-frame`    | Used to be override the existing preview pane.   |\n\n## CSS Custom Properties\n\n| Property                      | Description                                      |\n|-------------------------------|--------------------------------------------------|\n| `--wcp-root-dark-background`  | The background color of the root element in dark mode. |\n| `--wcp-root-dark-color`       | The text color of the text in the root element in dark mode. |\n| `--wcp-root-light-background` | The background color of the root element in light mode. |\n| `--wcp-root-light-color`      | The text color of the text in the root element in light mode. |\n",
           "groups": [
             "root"
           ],
