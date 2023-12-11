@@ -1,5 +1,5 @@
-import { LitElement, type TemplateResult } from 'lit';
 import 'element-internals-polyfill';
+import { LitElement, type TemplateResult } from 'lit';
 declare const Button_base: import("../../../index.js").Constructor<import("../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
  * Shows a button element.

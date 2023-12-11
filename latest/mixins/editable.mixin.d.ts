@@ -1,7 +1,7 @@
-import { type LitElement, type TemplateResult, type CSSResultGroup } from 'lit';
-import type { Constructor } from '../utils/mixin.types.js';
-import { type ColorSchemableInterface } from '../mixins/color-schemable.mixin.js';
 import 'element-internals-polyfill';
+import { type CSSResultGroup, type LitElement, type TemplateResult } from 'lit';
+import { type ColorSchemableInterface } from '../mixins/color-schemable.mixin.js';
+import type { Constructor } from '../utils/mixin.types.js';
 export declare class EditableInterface {
     readonly internals: ElementInternals;
     label?: string;

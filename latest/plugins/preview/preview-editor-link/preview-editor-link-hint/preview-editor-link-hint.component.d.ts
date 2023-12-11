@@ -29,6 +29,7 @@ export declare class PreviewEditorLinkHint extends PreviewEditorLinkHint_base {
     #private;
     static readonly styles: import("lit").CSSResult;
     debug: boolean;
+    label: string;
     set element(element: HTMLElement | undefined);
     set scrollParent(element: HTMLElement | undefined);
     /**
