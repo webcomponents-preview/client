@@ -1,2 +1,5 @@
-src/components/layout/legacy/**
-src/index.ts
+/dist
+/fixtures
+/reports
+/src/components/layout/legacy/**
+/src/index.ts
