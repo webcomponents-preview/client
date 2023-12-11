@@ -9,6 +9,8 @@
   font-size: 15px;
   line-height: 1.3;
 
+  container: wcp-root / inline-size;
+
   @include utils.breakpoint(sm) {
     font-size: 13px;
   }

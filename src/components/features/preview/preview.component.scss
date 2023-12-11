@@ -61,6 +61,7 @@ section {
 }
 
 #stage {
+  container: wcp-preview-stage / inline-size;
   display: block;
   contain: content;
   isolation: isolate;
