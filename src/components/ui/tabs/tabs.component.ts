@@ -1,4 +1,4 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, queryAll } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 
@@ -129,7 +129,7 @@ export class Tabs extends ColorSchemable(LitElement) {
             >
               ${label}
             </button>
-          `
+          `,
         )}
       </nav>
 
@@ -146,7 +146,7 @@ export class Tabs extends ColorSchemable(LitElement) {
           >
             <slot name="${tab}"></slot>
           </div>
-        `
+        `,
       )}
     `;
   }

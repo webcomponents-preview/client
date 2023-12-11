@@ -1,4 +1,5 @@
 import type * as CEM from 'custom-elements-manifest';
+
 import type { Slot } from '@/utils/parser.types.js';
 
 export const CemSlot = class {

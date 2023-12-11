@@ -1,10 +1,10 @@
-import { LitElement, type TemplateResult, html, unsafeCSS, nothing } from 'lit';
+import { html, LitElement, nothing, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import type * as Parsed from '@/utils/parser.types.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { getManifest } from '@/utils/manifest.utils.js';
+import type * as Parsed from '@/utils/parser.types.js';
 import type { StagePlugin } from '@/utils/plugin.utils.js';
 
 import styles from './stage-readme.plugin.scss';

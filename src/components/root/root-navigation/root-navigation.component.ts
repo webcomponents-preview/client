@@ -1,4 +1,4 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
@@ -62,13 +62,13 @@ export class RootNavigation extends LitElement {
                     <wcp-navigation-item ?active="${Router.isActive(link, this.currentPath)}" href="#${link}">
                       ${name}
                     </wcp-navigation-item>
-                  `
+                  `,
                 )}
               </wcp-navigation>
-            `
+            `,
           )}
         `,
-        () => html`<p>${this.emptyMessage}</p>`
+        () => html`<p>${this.emptyMessage}</p>`,
       )}
     `;
   }

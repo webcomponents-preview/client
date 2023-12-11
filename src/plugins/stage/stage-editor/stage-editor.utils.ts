@@ -62,7 +62,7 @@ export function prepareInitialData(element: Parsed.Element): ElementData {
  */
 export function parseFieldValue(
   field: Parsed.Field,
-  value: unknown
+  value: unknown,
 ): ElementData['fields'][keyof ElementData['fields']] {
   if (field.isBoolean) {
     return value === 'on';
@@ -83,7 +83,7 @@ export function parseFieldValue(
 export function alignFormDataWebkit(
   formData: FormData,
   elements: HTMLFormControlsCollection,
-  element: Parsed.Element
+  element: Parsed.Element,
 ): FormData {
   // filter out unchecked checkboxes for Safari
   Array.from(element.fields.entries())

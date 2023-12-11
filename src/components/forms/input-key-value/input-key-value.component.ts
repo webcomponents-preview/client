@@ -1,8 +1,8 @@
 import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 
-import type { FormAssociated } from '@/utils/form.utils.js';
 import { Editable } from '@/mixins/editable.mixin.js';
+import type { FormAssociated } from '@/utils/form.utils.js';
 
 // instruct esbuild to load the CSS file as a string
 import styles from './input-key-value.component.scss';
@@ -117,7 +117,7 @@ export class InputKeyValue
         @input="${this.handleKeyInput}"
       />
       <span id="border"></span>
-      
+
       <input
         type="text"
         class="${id}"

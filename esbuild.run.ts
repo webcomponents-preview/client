@@ -1,30 +1,29 @@
 import { existsSync, watch as watchFile } from 'node:fs';
-import { resolve } from 'node:path';
 import { readFile, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 
-import { type BuildOptions, build, context } from 'esbuild';
-import copyPlugin from 'esbuild-copy-static-files';
-import { sassPlugin } from 'esbuild-sass-plugin';
-import { dtsPlugin } from 'esbuild-plugin-d.ts';
-
 import autoprefixer from 'autoprefixer';
+import { build, type BuildOptions, context } from 'esbuild';
+import copyPlugin from 'esbuild-copy-static-files';
+import { dtsPlugin } from 'esbuild-plugin-d.ts';
+import { sassPlugin } from 'esbuild-sass-plugin';
 import postcss from 'postcss';
 import postcssPresetEnv from 'postcss-preset-env';
 
-import { barrelsbyPlugin } from './esbuild-barrelsby.plugin';
-import { dtsAliasesPlugin } from './esbuild-declaration-aliases.plugin';
-import { createServer } from './esbuild.server';
+import { createServer } from './esbuild.server.js';
+import { barrelsbyPlugin } from './esbuild-barrelsby.plugin.js';
+import { dtsAliasesPlugin } from './esbuild-declaration-aliases.plugin.js';
 
 import BREAKPOINTS from './breakpoints.json' assert { type: 'json' };
-import pkg from './package.json' assert { type: 'json' };
+import MANIFEST from './package.json' assert { type: 'json' };
 
 // inject some global sass variables
 const precompile = (source: string, path: string): string => {
   if (path.endsWith('breakpoint.mixin.scss')) {
     const breakpoints = Object.entries(BREAKPOINTS).reduce(
       (acc, [key, value]) => `${acc}  ${key}: ${value}px,\n`,
-      '\n'
+      '\n',
     );
     return source.replace(/(\$breakpoints: \()(\);)/, `$1${breakpoints}$2`);
   }
@@ -81,15 +80,14 @@ const options: BuildOptions = {
   banner: {
     js: `// prepare global namespace
 if (!window.wcp) window.wcp = {};
-if (!window.wcp.def) window.wcp.def = {};
 
 // set WCP version globally
-if (window.wcp.def.version !== undefined && window.wcp.def.version !== '${pkg.version}') {
-  console.warn('[wcp] ${pkg.version}: Another version (' + window.wcp.def.version + ') has already been loaded.');
-} else window.wcp.def.version = '${pkg.version}';
+if (window.wcp.version !== undefined && window.wcp.version !== '${MANIFEST.version}') {
+  console.warn('[wcp] ${MANIFEST.version}: Another version (' + window.wcp.version + ') has already been loaded.');
+} else window.wcp.version = '${MANIFEST.version}';
 
 // set breakpoints globally
-window.wcp.def.breakpoints = {
+window.wcp.breakpoints = {
 ${Object.entries(BREAKPOINTS).reduce((acc, [key, value]) => `${acc}  ${key}: ${value},\n`, '')}};
 `,
   },

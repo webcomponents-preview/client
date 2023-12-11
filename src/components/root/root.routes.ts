@@ -1,8 +1,8 @@
 import { html } from 'lit';
-import { unsafeStatic, withStatic } from 'lit/static-html.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 import { until } from 'lit/directives/until.js';
+import { unsafeStatic, withStatic } from 'lit/static-html.js';
 
 import { getManifest } from '@/utils/manifest.utils.js';
 import { prefixRelativeUrls } from '@/utils/markdown.utils.js';
@@ -86,7 +86,7 @@ export const prepareRoutes = (): Route[] => [
               @wcp-stage-plugin:data-change="${({ detail: pluginData }: CustomEvent<string>) =>
                 Router.navigate('/element', tagName, pluginName, pluginData)}"
             ></${unsafeStatic(stagePlugin)}>
-          `
+          `,
           )}
         </wcp-stage>
       `;

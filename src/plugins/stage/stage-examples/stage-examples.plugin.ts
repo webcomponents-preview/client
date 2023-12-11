@@ -1,12 +1,12 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { until } from 'lit/directives/until.js';
 
-import type * as Parsed from '@/utils/parser.types.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { getManifest } from '@/utils/manifest.utils.js';
 import { renderMarkdown } from '@/utils/markdown.utils.js';
+import type * as Parsed from '@/utils/parser.types.js';
 import type { StagePlugin } from '@/utils/plugin.utils.js';
 
 import styles from './stage-examples.plugin.scss';
@@ -56,7 +56,8 @@ export class StageExamples extends ColorSchemable(LitElement) implements StagePl
     return html`
       ${map(
         this._element?.examples ?? [],
-        (example: string) => html`<section .innerHTML="${until(renderMarkdown(example, true, this._element?.tagName))}"></section>`
+        (example: string) =>
+          html`<section .innerHTML="${until(renderMarkdown(example, true, this._element?.tagName))}"></section>`,
       )}
     `;
   }

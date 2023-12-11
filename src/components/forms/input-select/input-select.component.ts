@@ -1,8 +1,9 @@
 import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, query } from 'lit/decorators.js';
 
-import type { FormAssociated } from '@/utils/form.utils.js';
 import { Editable } from '@/mixins/editable.mixin.js';
+import type { FormAssociated } from '@/utils/form.utils.js';
+
 import { InputSelectOption } from './input-select-option.component.js';
 
 // instruct esbuild to load the CSS file as a string
@@ -121,7 +122,7 @@ export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) i
     return this.internals.validity.valid;
   }
 
-  override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+  override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     super.attributeChangedCallback(name, oldValue, newValue);
 
     if (name !== 'value') return;
@@ -147,7 +148,7 @@ export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) i
         copy.disabled = option.disabled;
         copy.selected = copy.value === this.value;
         return copy;
-      })
+      }),
     );
   }
 

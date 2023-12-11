@@ -1,4 +1,4 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -134,7 +134,7 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
     const preview = this.container.parentElement!.parentElement!;
     const scale = Math.min(
       (preview.clientWidth - 20) / (this.invertSimulatedViewport ? h : w),
-      (preview.clientHeight - 20) / (this.invertSimulatedViewport ? w : h)
+      (preview.clientHeight - 20) / (this.invertSimulatedViewport ? w : h),
     );
     // add the scale styling to the style element
     this.prepareStyle().textContent += `
@@ -210,7 +210,7 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
           >
             <wcp-icon name="${ifDefined(ICONS.get(viewport))}"></wcp-icon>
           </wcp-button>
-        `
+        `,
       )}
 
       <wcp-button

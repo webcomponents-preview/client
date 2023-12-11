@@ -1,4 +1,4 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
@@ -46,7 +46,6 @@ export class TopbarPreviewEditorLinkToggle extends LitElement implements TopbarP
 }
 
 declare global {
-
   interface HTMLElementTagNameMap {
     'wcp-topbar-preview-editor-link-toggle': TopbarPreviewEditorLinkToggle;
   }

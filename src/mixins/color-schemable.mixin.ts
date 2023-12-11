@@ -1,13 +1,13 @@
 import { LitElement } from 'lit';
 import { property } from 'lit/decorators/property.js';
 
-import type { Constructor } from '@/utils/mixin.types.js';
 import {
+  addColorSchemable,
   type ColorScheme,
   getColorSchemeState,
-  addColorSchemable,
   removeColorSchemable,
 } from '@/utils/color-scheme.utils.js';
+import type { Constructor } from '@/utils/mixin.types.js';
 
 export declare class ColorSchemableInterface {
   colorScheme?: ColorScheme;

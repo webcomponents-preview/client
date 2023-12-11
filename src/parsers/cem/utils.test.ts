@@ -1,5 +1,6 @@
 import { expect } from '@esm-bundle/chai';
 import type * as CEM from 'custom-elements-manifest';
+
 import { getEnumValues, unwrapString } from './utils.js';
 
 describe('utils', () => {

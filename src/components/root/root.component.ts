@@ -1,22 +1,21 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
-
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { unsafeStatic, html as staticHtml } from 'lit/static-html.js';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, query, state } from 'lit/decorators.js';
-
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
+import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
 import { getConfig, loadConfig } from '@/utils/config.utils.js';
 import { loadManifest } from '@/utils/manifest.utils.js';
 import { type GroupedNavigationItems, prepareNavigation } from '@/utils/navigation.utils.js';
 import { Router } from '@/utils/router.utils.js';
 
-import type { RootNavigation } from './root-navigation/root-navigation.component.js';
 import { prepareRoutes } from './root.routes.js';
+import type { RootNavigation } from './root-navigation/root-navigation.component.js';
 
 import logo from '@/assets/icons/logo.svg';
+
 import styles from './root.component.scss';
 
 /**
@@ -142,7 +141,7 @@ export class Root extends LitElement {
           <wcp-root-splash ?hidden="${this.ready}" @transitionend="${this.handleSplashTransitionEnd}">
             Loading...
           </wcp-root-splash>
-        `
+        `,
       )}
       ${when(
         this.ready,
@@ -150,7 +149,7 @@ export class Root extends LitElement {
           <wcp-layout>
             <wcp-title slot="header" title="${ifDefined(getConfig()?.labels.title)}">
               <slot name="logo" slot="logo">
-                <img src="${logo}" height="20px" />
+                <img src="${logo}" alt="${ifDefined(getConfig()?.labels.title)}" height="20px" />
               </slot>
             </wcp-title>
 
@@ -174,7 +173,7 @@ export class Root extends LitElement {
 
             <slot name="stage">${this.#router.outlet()}</slot>
           </wcp-layout>
-        `
+        `,
       )}
     `;
   }

@@ -37,7 +37,7 @@ export function prepareNavigation(manifest: Manifest, config: Config): GroupedNa
   if (config.additionalReadmes?.length) {
     const readmes = config.additionalReadmes.reduce(
       (readmes, { name, url }) => [...readmes, prepareReadmeNavigationItem(name, url)],
-      [] as GroupedNavigationItem[]
+      [] as GroupedNavigationItem[],
     );
     items.set(config.labels.additionalReadmeGroupName, readmes);
   }
@@ -58,12 +58,12 @@ export function prepareNavigation(manifest: Manifest, config: Config): GroupedNa
               // collect the items
               .reduce(
                 (items, element) => [...items, prepareElementNavigationItem(element)],
-                [] as GroupedNavigationItem[]
+                [] as GroupedNavigationItem[],
               )
               // and sort them
-              .sort((a, b) => a.name.localeCompare(b.name))
+              .sort((a, b) => a.name.localeCompare(b.name)),
           ),
-        items
+        items,
       )
   );
 }
@@ -76,7 +76,7 @@ export function matchesSearch(content: string, terms: string[], minSearchLength 
 export function filterItems(
   items: GroupedNavigationItems,
   terms: string[],
-  minSearchLength = 1
+  minSearchLength = 1,
 ): GroupedNavigationItems {
   // check if we even want to filter
   if (terms.length < 1) return items;

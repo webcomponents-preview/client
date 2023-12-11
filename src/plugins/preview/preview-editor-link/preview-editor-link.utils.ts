@@ -1,5 +1,6 @@
 import { getManifest } from '@/utils/manifest.utils.js';
 import { litKey } from '@/utils/parser.utils.js';
+
 import type { ElementData } from '../../stage/stage-editor/stage-editor.utils.js';
 
 const IGNORED_ATTRIBUTES = ['slot'];
@@ -9,7 +10,7 @@ const IGNORED_ATTRIBUTES = ['slot'];
  * 1. Read all controllable fields from the element definition (from properties)
  * 2. Read all (remaining) attributes from the element reference (not reflected from already collected properties)
  * 3. Read all slots from the element definition with their stringified contents
- * 
+ *
  * @todo: separate steps into functions
  * @todo: test this sh!t
  */
@@ -36,7 +37,7 @@ export function readCurrentElementData(ref: HTMLElement): ElementData {
   const attributeNames = ref.getAttributeNames().filter((attribute) => !skipAttributes.includes(attribute));
   const attributes = attributeNames.reduce(
     (acc, attr) => ({ ...acc, [attr]: ref.getAttribute(attr) ?? undefined }),
-    {}
+    {},
   );
 
   // 3. read all slotted data with their current contents

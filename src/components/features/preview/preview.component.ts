@@ -1,9 +1,9 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { unsafeStatic, html as staticHtml } from 'lit/static-html.js';
-import { customElement, state, property, eventOptions } from 'lit/decorators.js';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
+import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
+import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { getConfig } from '@/utils/config.utils.js';
@@ -74,10 +74,10 @@ export class Preview extends ColorSchemable(LitElement) {
                     preview-tag-name="${this.previewTagName}"
                   ></${unsafeStatic(plugin)}>
                 `}
-              `
+              `,
             )}
           </nav>
-        `
+        `,
       )}
     `;
   }

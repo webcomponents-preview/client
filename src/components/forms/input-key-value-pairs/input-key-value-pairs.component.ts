@@ -3,8 +3,8 @@ import { customElement, eventOptions, property, query } from 'lit/decorators.js'
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
-import type { FormAssociated } from '@/utils/form.utils.js';
 import { Editable } from '@/mixins/editable.mixin.js';
+import type { FormAssociated } from '@/utils/form.utils.js';
 
 // instruct esbuild to load the CSS file as a string
 import styles from './input-key-value-pairs.component.scss';
@@ -166,30 +166,29 @@ export class InputKeyValuePairs
       <form @input="${this.handleInput}">
         ${map(
           this.#valuePairs,
-          ([key, value], index) =>
-            html`
-              <wcp-input-key-value ?disabled="${this.disabled}" name="${key}" value="${value ?? ''}">
-                ${when(
-                  key !== '',
-                  () => html`
-                    <wcp-button
-                      data-key="${key}"
-                      data-index="${index}"
-                      slot="after"
-                      kind="icon"
-                      @click="${this.handleRemoveClick}"
-                    >
-                      <wcp-icon name="remove" style="--wcp-icon-size: 20"></wcp-icon>
-                    </wcp-button>
-                  `,
-                  () => html`
-                    <wcp-button disabled slot="after" kind="icon">
-                      <wcp-icon name="add" style="--wcp-icon-size: 20"></wcp-icon>
-                    </wcp-button>
-                  `
-                )}
-              </wcp-input-key-value>
-            `
+          ([key, value], index) => html`
+            <wcp-input-key-value ?disabled="${this.disabled}" name="${key}" value="${value ?? ''}">
+              ${when(
+                key !== '',
+                () => html`
+                  <wcp-button
+                    data-key="${key}"
+                    data-index="${index}"
+                    slot="after"
+                    kind="icon"
+                    @click="${this.handleRemoveClick}"
+                  >
+                    <wcp-icon name="remove" style="--wcp-icon-size: 20"></wcp-icon>
+                  </wcp-button>
+                `,
+                () => html`
+                  <wcp-button disabled slot="after" kind="icon">
+                    <wcp-icon name="add" style="--wcp-icon-size: 20"></wcp-icon>
+                  </wcp-button>
+                `,
+              )}
+            </wcp-input-key-value>
+          `,
         )}
       </form>
     `;

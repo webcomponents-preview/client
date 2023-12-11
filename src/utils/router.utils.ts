@@ -1,4 +1,5 @@
 import type { LitElement, TemplateResult } from 'lit';
+
 import { log } from '@/utils/log.utils.js';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -48,7 +49,7 @@ export function mergeParams(oldParams: Params, newParams: Params, exclude: strin
       if (value !== undefined) params[key] = value;
       return params;
     },
-    { ...oldParams }
+    { ...oldParams },
   );
 }
 

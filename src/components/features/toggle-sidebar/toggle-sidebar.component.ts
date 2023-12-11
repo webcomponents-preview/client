@@ -1,4 +1,4 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, eventOptions } from 'lit/decorators.js';
 
 import { persist, read } from '@/utils/state.utils.js';

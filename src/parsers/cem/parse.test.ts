@@ -1,4 +1,5 @@
 import { expect } from '@esm-bundle/chai';
+
 import { parseCEM } from './parse.js';
 
 describe('parse', () => {

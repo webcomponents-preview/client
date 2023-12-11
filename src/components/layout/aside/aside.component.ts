@@ -1,8 +1,8 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 
-import { listen } from '@/utils/decorator.utils.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
+import { listen } from '@/utils/decorator.utils.js';
 import { persist, read } from '@/utils/state.utils.js';
 
 import styles from './aside.component.scss';
@@ -84,7 +84,7 @@ export class Aside extends ColorSchemable(LitElement) {
 
   override connectedCallback() {
     super.connectedCallback();
-    
+
     // check if the state is recoverable
     const visible = read('aside-visible');
     if (visible !== undefined) {

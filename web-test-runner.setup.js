@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 /**
  * Adds a simple `it.each` function to the global scope.
  */

@@ -1,4 +1,5 @@
 import type { Manifest, Parser } from '@/utils/parser.types.js';
+
 import { CemParser as CEM_1_0_0_Parser } from './1.0.0/cem-parser.js';
 
 // stores all available CEM parsers, keyed by their supporting schema version

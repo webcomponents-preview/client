@@ -1,13 +1,11 @@
 import { spread } from '@open-wc/lit-helpers';
-
-import { html, LitElement, type TemplateResult, unsafeCSS, nothing } from 'lit';
-import { unsafeStatic, withStatic } from 'lit/static-html.js';
+import { html, LitElement, nothing, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-
 import { keyed } from 'lit/directives/keyed.js';
 import { map } from 'lit/directives/map.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
+import { unsafeStatic, withStatic } from 'lit/static-html.js';
 
 import type { ElementData } from '../stage-editor.utils.js';
 
@@ -75,9 +73,9 @@ export class StageEditorPreview extends LitElement {
           ${when(
             name === '',
             () => unsafeHTML(content),
-            () => withStatic(html)`<div slot="${name}">${unsafeHTML(content)}</div>`
+            () => withStatic(html)`<div slot="${name}">${unsafeHTML(content)}</div>`,
           )}
-        `
+        `,
       )}
     `;
   }
@@ -96,7 +94,7 @@ export class StageEditorPreview extends LitElement {
             <${tag} ${spread(this.#prepareProps())}>
               ${this.renderSlots()}
             </${tag}>
-          `
+          `,
         )}
       </wcp-preview>
     `;

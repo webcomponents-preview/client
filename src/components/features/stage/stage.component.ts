@@ -1,4 +1,4 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, queryAssignedElements, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
@@ -60,7 +60,7 @@ export class Stage extends ColorSchemable(LitElement) {
   @eventOptions({ passive: true })
   protected handleSlotChange() {
     const plugins = this.assignedPlugins.filter(isStagePlugin);
-    log.info(`Found ${plugins.length} stage plugins.`)
+    log.info(`Found ${plugins.length} stage plugins.`);
 
     // once the plugins are slotted into their respective targets, the slot
     // change listener may be called again with an empty result set
@@ -94,7 +94,7 @@ export class Stage extends ColorSchemable(LitElement) {
   protected preparePluginTabs() {
     this._tabs = this._plugins.reduce(
       (tabs, { available, label, name }) => ({ ...tabs, [name]: { label, disabled: !available } }),
-      {}
+      {},
     );
   }
 
@@ -131,7 +131,7 @@ export class Stage extends ColorSchemable(LitElement) {
           >
             ${map(this._plugins, ({ name }) => html`<slot name="${name}" slot="${name}"></slot>`)}
           </wcp-tabs>
-        `
+        `,
       )}
       <slot @slotchange="${this.handleSlotChange}"></slot>
     `;

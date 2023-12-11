@@ -1,7 +1,8 @@
-import type { Plugin } from 'esbuild';
 import { exec } from 'node:child_process';
 import { cwd } from 'node:process';
 import { promisify } from 'node:util';
+
+import type { Plugin } from 'esbuild';
 
 export type DeclarationAliasesPluginOptions = {
   /**
@@ -17,6 +18,6 @@ export function dtsAliasesPlugin({ tsConfigPath }: DeclarationAliasesPluginOptio
       build.onEnd(async () => {
         await promisify(exec)(`tsc-alias -p ${tsConfigPath}`, { cwd: cwd() });
       });
-    }
+    },
   };
 }

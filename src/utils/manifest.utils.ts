@@ -1,5 +1,5 @@
-import type { Manifest } from '@/utils/parser.types.js';
 import { parseCEM } from '@/parsers/cem/parse.js';
+import type { Manifest } from '@/utils/parser.types.js';
 
 declare global {
   interface WCP {

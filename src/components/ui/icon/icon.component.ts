@@ -1,4 +1,4 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import styles from './icon.component.scss';
@@ -9,14 +9,14 @@ import styles from './icon.component.scss';
  * @example
  * ## Use icon
  * By setting the name attribute.
- * 
+ *
  * ```html
  * <wcp-icon name="smartphone"></wcp-icon>
  * ```
  *
  * @example
  * ### Set a custom size
- * 
+ *
  * ```html
  * <wcp-icon name="laptop" style="--wcp-icon-size: 44"></wcp-icon>
  * ```

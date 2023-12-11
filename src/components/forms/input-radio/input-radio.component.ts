@@ -1,8 +1,8 @@
 import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 
-import type { FormAssociated } from '@/utils/form.utils.js';
 import { Editable } from '@/mixins/editable.mixin.js';
+import type { FormAssociated } from '@/utils/form.utils.js';
 
 // instruct esbuild to load the CSS file as a string
 import styles from './input-radio.component.scss';
@@ -59,7 +59,7 @@ export class InputRadio
   implements FormAssociated<string>
 {
   static override readonly styles = [super.formStyles, unsafeCSS(styles)];
-  
+
   #checked = false;
   #initialChecked!: boolean;
 

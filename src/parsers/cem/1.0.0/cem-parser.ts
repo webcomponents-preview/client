@@ -1,5 +1,6 @@
 import type * as CEM from 'custom-elements-manifest';
-import type { Parser, Element } from '@/utils/parser.types.js';
+
+import type { Element, Parser } from '@/utils/parser.types.js';
 
 import { isCustomElementDeclarationWithTagName } from '../utils.js';
 import { CemElement } from './cem-element.js';
@@ -19,7 +20,10 @@ export const CemParser = class {
     }, new Map<string, Element[]>());
   }
 
-  constructor(private _data: CEM.Package, exclude: string[] = []) {
+  constructor(
+    private _data: CEM.Package,
+    exclude: string[] = [],
+  ) {
     // parse the elements
     this.#elements = this._data.modules
       .flatMap((module) => module.declarations)

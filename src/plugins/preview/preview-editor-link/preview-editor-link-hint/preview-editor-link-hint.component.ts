@@ -1,4 +1,4 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
@@ -42,6 +42,9 @@ export class PreviewEditorLinkHint extends ColorSchemable(LitElement) {
 
   @property({ type: Boolean, reflect: true })
   debug = false;
+
+  @property({ type: String, reflect: true })
+  label = 'Open in editor';
 
   @property({ attribute: false, noAccessor: true })
   set element(element: HTMLElement | undefined) {
@@ -91,7 +94,7 @@ export class PreviewEditorLinkHint extends ColorSchemable(LitElement) {
   }
 
   protected override render(): TemplateResult {
-    return html`<button></button>`;
+    return html`<button aria-label="${this.label}"></button>`;
   }
 }
 

@@ -1,4 +1,4 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';

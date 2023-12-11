@@ -15,7 +15,10 @@ export class CustomRenderer extends Renderer {
   // for later use in this convenient internal map.
   #rawCodeMap = new Map<string, string>();
 
-  constructor(private readonly addCodePreview = true, private readonly previewTagName?: string) {
+  constructor(
+    private readonly addCodePreview = true,
+    private readonly previewTagName?: string,
+  ) {
     super();
   }
 
@@ -71,7 +74,7 @@ export function prefixRelativeUrls(markdown: string, currentPath: string, basePa
       // is any assetic relative link
       const nextPath = resolveRelativePath(`${currentDir}${path}${ext}`);
       return [before, nextPath, after].join('');
-    }
+    },
   );
 }
 
@@ -97,7 +100,7 @@ export function mapLangToGrammar(lang: string): string {
 export async function renderMarkdown(
   markdown: string,
   addCodePreview = true,
-  previewTagName?: string
+  previewTagName?: string,
 ): Promise<string> {
   // prepare an individual renderer
   const renderer = new CustomRenderer(addCodePreview, previewTagName);
@@ -122,7 +125,7 @@ export async function renderMarkdown(
         renderer.storeRawCode(code, highlighted);
         return highlighted;
       },
-    })
+    }),
   );
 
   return marked(markdown, { renderer });

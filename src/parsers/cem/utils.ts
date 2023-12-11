@@ -6,7 +6,7 @@ export type CustomElementDeclarationWithReadme = CEM.CustomElementDeclaration & 
 export type CustomElementDeclarationWithTagName = CEM.CustomElementDeclaration & { tagName: string[] };
 
 export function isCustomElementDeclarationWithTagName(
-  declaration?: CEM.Declaration
+  declaration?: CEM.Declaration,
 ): declaration is CustomElementDeclarationWithTagName {
   return declaration !== undefined && 'customElement' in declaration && 'tagName' in declaration;
 }

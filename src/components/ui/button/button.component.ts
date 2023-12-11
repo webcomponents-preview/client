@@ -1,12 +1,12 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+// Safari still hasn't ElementInternals shipped
+import 'element-internals-polyfill';
+
+import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
-
-// Safari still hasn't ElementInternals shipped
-import 'element-internals-polyfill';
 
 import styles from './button.component.scss';
 
@@ -49,7 +49,7 @@ import styles from './button.component.scss';
  * ```html
  * <wcp-button href=".">Link</wcp-button>
  * ```
- * 
+ *
  * @example
  * ## Displaced to the right
  *
@@ -177,7 +177,7 @@ export class Button extends ColorSchemable(LitElement) {
           >
             <slot></slot>
           </button>
-        `
+        `,
       )}
     `;
   }

@@ -1,12 +1,12 @@
 import 'prismjs';
 import 'lit-code';
-import type { LitCode } from 'lit-code';
 
 import { html, LitElement, type PropertyValues, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, query } from 'lit/decorators.js';
+import type { LitCode } from 'lit-code';
 
-import type { FormAssociated } from '@/utils/form.utils.js';
 import { Editable } from '@/mixins/editable.mixin.js';
+import type { FormAssociated } from '@/utils/form.utils.js';
 
 // instruct esbuild to load the CSS file as a string
 import styles from './input-code.component.scss';

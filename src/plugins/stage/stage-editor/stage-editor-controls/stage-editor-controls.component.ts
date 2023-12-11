@@ -1,15 +1,14 @@
-import { html, LitElement, type TemplateResult, unsafeCSS, nothing } from 'lit';
-import { withStatic } from 'lit/static-html.js';
+import { html, LitElement, nothing, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, state } from 'lit/decorators.js';
-
 import { map } from 'lit/directives/map.js';
 import { until } from 'lit/directives/until.js';
 import { when } from 'lit/directives/when.js';
+import { withStatic } from 'lit/static-html.js';
 
-import type * as Parsed from '@/utils/parser.types.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { getManifest } from '@/utils/manifest.utils.js';
 import { renderMarkdown } from '@/utils/markdown.utils.js';
+import type * as Parsed from '@/utils/parser.types.js';
 import { litKey } from '@/utils/parser.utils.js';
 
 import { alignFormDataWebkit, type ElementData } from '../stage-editor.utils.js';
@@ -59,7 +58,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
         bubbles: true,
         composed: true,
         detail: formData,
-      })
+      }),
     );
   }
 
@@ -67,7 +66,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
   protected renderHint(content?: string): TemplateResult {
     return when(
       content,
-      () => withStatic(html)`<div slot="hint" .innerHTML="${until(renderMarkdown(content as string, false))}"></div>`
+      () => withStatic(html)`<div slot="hint" .innerHTML="${until(renderMarkdown(content as string, false))}"></div>`,
     );
   }
 
@@ -78,16 +77,15 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
     return html`
       ${when(
         field.isBoolean,
-        () =>
-          html`
-            <wcp-input-checkbox
-              name="field.${field.name}"
-              label="${field.name}"
-              ?checked="${Boolean(this.data?.fields[key])}"
-            >
-              ${this.renderHint(field.description)}
-            </wcp-input-checkbox>
-          `
+        () => html`
+          <wcp-input-checkbox
+            name="field.${field.name}"
+            label="${field.name}"
+            ?checked="${Boolean(this.data?.fields[key])}"
+          >
+            ${this.renderHint(field.description)}
+          </wcp-input-checkbox>
+        `,
       )}
       ${when(
         !field.isEnum && field.isString,
@@ -99,7 +97,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
           >
             ${this.renderHint(field.description)}
           </wcp-input-text>
-        `
+        `,
       )}
       ${when(
         !field.isEnum && field.isNumber,
@@ -111,7 +109,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
           >
             ${this.renderHint(field.description)}
           </wcp-input-number>
-        `
+        `,
       )}
       ${when(
         field.isEnum && field.isString,
@@ -125,11 +123,11 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
               field.enumValues,
               (option) => html`
                 <wcp-input-select-option label="${option}" .value="${option}"></wcp-input-select-option>
-              `
+              `,
             )}
             ${this.renderHint(field.description)}
           </wcp-input-select>
-        `
+        `,
       )}
     `;
   }
@@ -173,7 +171,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
               <fieldset slot="fields">
                 ${map(this._element?.fields.values(), (field) => this.renderFieldControl(field))}
               </fieldset>
-            `
+            `,
           )}
           ${when(
             this._element?.hasSlots,
@@ -181,7 +179,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
               <fieldset slot="slots">
                 ${map(this._element?.slots.values(), (slot) => this.renderSlotControl(slot))}
               </fieldset>
-            `
+            `,
           )}
           <fieldset slot="attributes">${this.renderAttributeControls()}</fieldset>
         </wcp-tabs>
