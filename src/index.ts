@@ -3,7 +3,7 @@
  */
 
 export * from './components/features/markdown-example/markdown-example.component.js';
-export * from './components/features/navigation/navigation.component.js';
+export * from './components/features/navigation/navigation/navigation.component.js';
 export * from './components/features/navigation/navigation-item/navigation-item.component.js';
 export * from './components/features/navigation/navigation-search/navigation-search.component.js';
 export * from './components/features/preview/preview.component.js';
