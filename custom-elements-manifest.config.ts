@@ -23,7 +23,11 @@ export default {
     }),
     customElementGroupingPlugin({
       addGroups(componentPath) {
-        const [, , group] = componentPath?.split('/') || [];
+        const path = componentPath?.split('/') || [];
+        const [, , group, subgroup] = path;
+        if (path.length > 5) {
+          return [`${group}/${subgroup}`];
+        }
         return [group];
       },
     }),
