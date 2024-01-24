@@ -47,13 +47,14 @@ export class RootNavigation extends LitElement {
     this.filteredItems = filterItems(this.#items, this.#searchTerms, this.minSearchLength);
   }
 
-  protected renderItems(items: GroupedNavigationItems): TemplateResult | undefined {
+  protected renderItems(items: GroupedNavigationItems, nested = false): TemplateResult | undefined {
     if (items.size > 0) {
       return html`
         ${map(
           items.entries(),
-          ([group, { items }]) => html`
-            <wcp-navigation headline="${group}">
+          ([group, { groups, items }]) => html`
+            <wcp-navigation headline="${group}" ?nested="${nested}">
+              ${when(groups.size > 0, () => this.renderItems(groups, true))}
               ${map(
                 items,
                 ({ name, link }) => html`
