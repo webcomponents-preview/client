@@ -5,6 +5,8 @@
   ---wcp-navigation-spacing: var(--wcp-navigation-spacing, #{0 0 utils.size(1)});
   ---wcp-navigation-spacing-items: var(--wcp-navigation-spacing-items, 0);
   ---wcp-navigation-spacing-headline: var(--wcp-navigation-spacing-headline, #{utils.size(1.5) 0 utils.size(1) utils.size(2)});
+
+  ---wcp-navigation-inset: var(--wcp-navigation-inset, #{utils.size(1.5)});
   
   ---wcp-navigation-dark-border-color: var(--wcp-navigation-headline-dark-border-color, var(--wcp-color-grey-24));
   ---wcp-navigation-light-border-color: var(--wcp-navigation-headline-light-border-color, var(--wcp-color-blue-24));
@@ -55,7 +57,7 @@ h3 {
     text-transform: uppercase;
   }
 
-  &::before {
+  :host(:not([nested])) &::before {
     content: '';
 
     position: absolute;
@@ -73,4 +75,8 @@ nav {
   display: flex;
   flex-direction: column;
   gap: var(---wcp-navigation-spacing-items);
+}
+
+:host([nested]) {
+  margin-left: var(---wcp-navigation-inset);
 }

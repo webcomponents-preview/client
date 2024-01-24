@@ -19,11 +19,26 @@ import styles from './navigation.component.scss';
  * </wcp-navigation>
  * ```
  *
- * @slot - Default slot for navigation items
+ * @example
+ * ### Nested navigation
+ *
+ * ```html
+ * <wcp-navigation headline="Navigation">
+ *   <wcp-navigation-item href="/home">Home</wcp-navigation-item>
+ *
+ *   <wcp-navigation nested headline="Nested">
+ *     <wcp-navigation-item href="/about">About</wcp-navigation-item>
+ *     <wcp-navigation-item href="/imprint">Imprint</wcp-navigation-item>
+ *   </wcp-navigation>
+ * </wcp-navigation>
+ * ```
+ *
+ * @slot - Default slot for navigation items or nested navigation
  *
  * @cssprop --wcp-navigation-spacing - Spacing between navigation and headline
  * @cssprop --wcp-navigation-spacing-items - Spacing between navigation items
  * @cssprop --wcp-navigation-spacing-headline - Inner padding of the navigation headline
+ * @cssprop --wcp-navigation-inset - Inset of the navigation if nested (is applied on each level)
  * @cssprop --wcp-navigation-dark-border-color - Border color of the navigation headline in dark mode
  * @cssprop --wcp-navigation-light-border-color - Border color of the navigation headline in light mode
  * @cssprop --wcp-navigation-headline-size - Font size of the navigation headline
@@ -39,9 +54,12 @@ export class Navigation extends ColorSchemable(LitElement) {
   @property({ type: String, reflect: true })
   headline?: string;
 
+  @property({ type: Boolean, reflect: true })
+  nested = false;
+
   protected override render(): TemplateResult {
     return html`
-      ${when(this.headline !== undefined, () => html`<h3><span>${this.headline}</span></h3>`)}
+      ${when(this.headline !== undefined, () => html`<h3 part="headline"><span>${this.headline}</span></h3>`)}
       <nav>
         <slot></slot>
       </nav>
