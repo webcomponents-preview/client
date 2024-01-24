@@ -47,27 +47,34 @@ export class RootNavigation extends LitElement {
     this.filteredItems = filterItems(this.#items, this.#searchTerms, this.minSearchLength);
   }
 
+  protected renderItems(items: GroupedNavigationItems): TemplateResult | undefined {
+    if (items.size > 0) {
+      return html`
+        ${map(
+          items.entries(),
+          ([group, { items }]) => html`
+            <wcp-navigation headline="${group}">
+              ${map(
+                items,
+                ({ name, link }) => html`
+                  <wcp-navigation-item ?active="${Router.isActive(link, this.currentPath)}" href="#${link}">
+                    ${name}
+                  </wcp-navigation-item>
+                `,
+              )}
+            </wcp-navigation>
+          `,
+        )}
+      `;
+    }
+    return undefined;
+  }
+
   protected override render(): TemplateResult {
     return html`
       ${when(
         this.filteredItems.size > 0,
-        () => html`
-          ${map(
-            this.filteredItems.entries(),
-            ([group, items]) => html`
-              <wcp-navigation headline="${group}">
-                ${map(
-                  items,
-                  ({ name, link }) => html`
-                    <wcp-navigation-item ?active="${Router.isActive(link, this.currentPath)}" href="#${link}">
-                      ${name}
-                    </wcp-navigation-item>
-                  `,
-                )}
-              </wcp-navigation>
-            `,
-          )}
-        `,
+        () => this.renderItems(this.filteredItems),
         () => html`<p>${this.emptyMessage}</p>`,
       )}
     `;
