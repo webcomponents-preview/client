@@ -10,8 +10,6 @@ import styles from './input-radio.component.scss';
 /**
  * A radio input element using the wcp style. Fully form aware.
  *
- * @element wcp-input-radio
- *
  * @property {string} label - The label of the input element.
  *
  * @slot hint - Receives optional descriptions below the input.

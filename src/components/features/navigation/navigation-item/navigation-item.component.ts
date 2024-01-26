@@ -8,8 +8,6 @@ import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import styles from './navigation-item.component.scss';
 
 /**
- * @element wcp-navigation-item
- *
  * @example
  * ### Non-interactive
  *

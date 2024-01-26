@@ -10,8 +10,6 @@ import styles from './input-key-value.component.scss';
 /**
  * A key-value input element using the wcp style. Fully form aware.
  *
- * @element wcp-input-key-value
- *
  * @property {string} label - The label of the input element.
  * @cssprop --wcp-input-key-value-gutter - The gutter between the key-value pair inputs.
  * @slot hint - Receives optional descriptions below the input.

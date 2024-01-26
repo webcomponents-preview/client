@@ -14,8 +14,6 @@ import styles from './preview.component.scss';
 /**
  * Previews given content.
  *
- * @element wcp-preview
- *
  * @cssprop --wcp-preview-menu-dark-border-color - Border color of the plugin menu in dark mode.
  * @cssprop --wcp-preview-menu-light-border-color - Border color of the plugin menu in light mode.
  *

@@ -12,8 +12,6 @@ import type { ElementData } from '../stage-editor.utils.js';
 import styles from './stage-editor-preview.component.scss';
 
 /**
- * @element wcp-stage-editor-preview
- *
  * @example
  * ```html
  * <wcp-stage-editor-preview>

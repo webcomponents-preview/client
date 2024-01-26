@@ -14,8 +14,6 @@ import styles from './stage-examples.plugin.scss';
 /**
  * Shows the examples of a custom element manifest.
  *
- * @element wcp-stage-examples
- *
  * @cssprop --wcp-stage-examples-spacing - Spacing between examples.
  */
 @customElement('wcp-stage-examples')

@@ -18,7 +18,6 @@ const UPDATE_DEBOUNCE = 300;
 /**
  * Allows editing a custom element.
  *
- * @element wcp-stage-editor
  */
 @customElement('wcp-stage-editor')
 export class StageEditor extends ColorSchemable(LitElement) implements StagePlugin {

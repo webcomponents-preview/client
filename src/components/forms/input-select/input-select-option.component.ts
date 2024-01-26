@@ -4,7 +4,6 @@ import { customElement, property } from 'lit/decorators.js';
 /**
  * A helper element to declare options for a `wcp-input-select` element.
  *
- * @element wcp-input-select-option
  */
 @customElement('wcp-input-select-option')
 export class InputSelectOption extends LitElement {

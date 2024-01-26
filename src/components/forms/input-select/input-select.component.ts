@@ -12,7 +12,6 @@ import styles from './input-select.component.scss';
 /**
  * A numeric input element using the wcp style. Fully form aware.
  *
- * @element wcp-input-select
  * 
  * @property {string} label - The label of the input element.
  * 

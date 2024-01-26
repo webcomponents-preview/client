@@ -12,8 +12,6 @@ import styles from './input-key-value-pairs.component.scss';
 /**
  * A key-value pairs editor. Integrates into forms and allows editing string based form data.
  *
- * @element wcp-input-key-value-pairs
- *
  * @property {string} label - The label of the input element.
  * @cssprop --wcp-input-key-value-pairs-gutter - The gutter between the key-value pair inputs.
  * @slot hint - Receives optional descriptions below the input.

@@ -12,7 +12,6 @@ import styles from './stage-readme.plugin.scss';
 /**
  * Shows the readme of a custom element.
  *
- * @element wcp-stage-readme
  */
 @customElement('wcp-stage-readme')
 export class StageReadme extends ColorSchemable(LitElement) implements StagePlugin {

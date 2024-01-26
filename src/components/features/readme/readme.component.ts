@@ -11,8 +11,6 @@ import styles from './readme.component.scss';
 /**
  * Displays a Readme file by its URL.
  *
- * @element wcp-readme
- *
  * @cssprop --wcp-readme-dark-color - Text color of the readme in dark mode.
  * @cssprop --wcp-readme-dark-color-accent - Accent text color (e.g. links) of the readme in dark mode.
  * @cssprop --wcp-readme-dark-color-muted - Muted text color of the readme in dark mode.

@@ -11,8 +11,6 @@ import styles from './input-text.component.scss';
  * A text input element using the wcp style. Fully form aware.
  * Can display multiline text (textarea) if configured to do so.
  *
- * @element wcp-input-text
- *
  * @property {string} label - The label of the input element.
  *
  * @slot hint - Receives optional descriptions below the input.
