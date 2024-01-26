@@ -15,8 +15,6 @@ import styles from './input-code.component.scss';
  * A text input element using the wcp style. Fully form aware.
  * Can display multiline text (textarea) if configured to do so.
  *
- * @element wcp-input-code
- *
  * @property {string} label - The label of the input element.
  *
  * @slot hint - Receives optional descriptions below the input.
@@ -37,46 +35,6 @@ import styles from './input-code.component.scss';
  * @cssprop --wcp-input-code-light-color - The font color of the input element in light mode.
  * @cssprop --wcp-input-code-light-background-lines - The background color of the line numbers in light mode.
  *
- * @example
- * ## With optional label
- * ```html
- * <wcp-input-code label="With optional label"></wcp-input-code>
- * ```
- *
- * @example
- * ## With optional initial value
- * ```html
- * <wcp-input-code
- *   label="With optional initial value"
- *   value="<strong>Test</strong>"
- *   language="html"
- * ></wcp-input-code>
- * ```
- *
- * @example
- * ## With autosize
- * ```html
- * <wcp-input-code
- *   autosize
- *   label="With optional initial value"
- *   value="<strong>Test</strong>"
- *   language="html"
- * ></wcp-input-code>
- * ```
- *
- * @example
- * ## Used within a form
- * ```html
- * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
- *   <wcp-input-code
- *     label="Fully form enabled component"
- *     value="<strong>Test</strong>"
- *     language="html"
- *   ></wcp-input-code>
- *   <button type="submit">Submit</button>
- *   <button type="reset">Reset</button>
- * </form>
- * ```
  */
 @customElement('wcp-input-code')
 export class InputCode extends Editable()(LitElement) implements FormAssociated<string> {

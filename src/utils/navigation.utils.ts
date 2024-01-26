@@ -1,14 +1,10 @@
-import type { Config } from '@/utils/config.utils.js';
-import type { Element, Manifest } from '@/utils/parser.types.js';
+// import type { Config } from '@/utils/config.utils.js';
+import type * as Parsed from '@/utils/parser.types.js';
 
-const ROUTE_ELEMENTS = '/element';
-const ROUTE_READMES = '/readme';
+export const ROUTE_ELEMENTS = '/element';
+export const ROUTE_READMES = '/readme';
 
-/**
- * Defines the structure of the navigation items.
- */
-export type GroupedNavigationItems = Map<string, GroupedNavigationItem[]>;
-export type GroupedNavigationItem = { name: string; link: string };
+type GroupedNavigationItem = { name: string; link: string };
 
 /**
  * Creates a navigation item for a given readme.
@@ -21,70 +17,48 @@ export function prepareReadmeNavigationItem(name: string, url: string): GroupedN
 /**
  * Creates a navigation item for a given element.
  */
-export function prepareElementNavigationItem(element: Element): GroupedNavigationItem {
+export function prepareElementNavigationItem(element: Parsed.Element): GroupedNavigationItem {
   const name = element.getNiceName();
   const link = `${ROUTE_ELEMENTS}/${element.getNiceUrl()}`;
   return { name, link };
 }
 
 /**
- * Prepares a grouped navigation structure of readmes and elements.
+ * Predicate function to match a given content against a list of search terms.
  */
-export function prepareNavigation(manifest: Manifest, config: Config): GroupedNavigationItems {
-  const items: GroupedNavigationItems = new Map();
-
-  // prepare readme navigation
-  if (config.additionalReadmes?.length) {
-    const readmes = config.additionalReadmes.reduce(
-      (readmes, { name, url }) => [...readmes, prepareReadmeNavigationItem(name, url)],
-      [] as GroupedNavigationItem[],
-    );
-    items.set(config.labels.additionalReadmeGroupName, readmes);
-  }
-
-  // prepare element navigation
-  return (
-    Array
-      // prepare an array
-      .from(manifest.getGroupedElements(config.labels.fallbackGroupName))
-      // sort groups
-      .sort(([a], [b]) => a.localeCompare(b))
-      // fill into structure
-      .reduce(
-        (items, [group, elements]) =>
-          items.set(
-            group,
-            elements
-              // collect the items
-              .reduce(
-                (items, element) => [...items, prepareElementNavigationItem(element)],
-                [] as GroupedNavigationItem[],
-              )
-              // and sort them
-              .sort((a, b) => a.name.localeCompare(b.name)),
-          ),
-        items,
-      )
-  );
-}
-
 export function matchesSearch(content: string, terms: string[], minSearchLength = 1): boolean {
   const contents = content.toLowerCase();
   return terms.every((term) => term.length < minSearchLength || contents.includes(term));
 }
 
+/**
+ * Filters the given navigation items by the given search terms recursively.
+ */
 export function filterItems(
-  items: GroupedNavigationItems,
+  items: Parsed.GroupedElements,
   terms: string[],
   minSearchLength = 1,
-): GroupedNavigationItems {
+): Parsed.GroupedElements {
   // check if we even want to filter
   if (terms.length < 1) return items;
 
   // filter the items, skip empty groups
-  return Array.from(items.entries()).reduce((all, [group, items]) => {
-    const filteredItems = [...items].filter(({ name }) => matchesSearch(`${group} ${name}`, terms, minSearchLength));
-    if (filteredItems.length < 1) return all;
-    return all.set(group, filteredItems);
-  }, new Map() as GroupedNavigationItems);
+  return Array.from(items.entries()).reduce((filtered, [group, item]) => {
+    // filter nested groups
+    if (item instanceof Map && item.size > 0) {
+      const filteredItems = filterItems(item, terms, minSearchLength);
+      if (filteredItems.size > 0) filtered.set(group, filteredItems);
+      return filtered;
+    }
+
+    // filter elements and take group names into account as well
+    const element = item as Parsed.Element;
+    const searchable = `${element.groups.join(' ')} ${element.getNiceName()}`;
+    if (matchesSearch(searchable, terms, minSearchLength)) {
+      filtered.set(group, item);
+    }
+
+    // hand out result
+    return filtered;
+  }, new Map() as Parsed.GroupedElements);
 }

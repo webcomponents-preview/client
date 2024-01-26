@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-stage-examples
 
 Shows the examples of a custom element manifest.
@@ -9,8 +11,8 @@ Shows the examples of a custom element manifest.
 | Property         | Attribute          | Modifiers | Type         | Default    |
 |------------------|--------------------|-----------|--------------|------------|
 | `available`      | `available`        |           | `boolean`    | false      |
-| `label`          | `label`            | readonly  | `"Examples"` | "Examples" |
-| `name`           | `name`             | readonly  | `"examples"` | "examples" |
+| `label`          |                    | readonly  | `"Examples"` | "Examples" |
+| `name`           |                    | readonly  | `"examples"` | "examples" |
 | `previewTagName` | `preview-tag-name` |           | `string`     |            |
 
 ## Events

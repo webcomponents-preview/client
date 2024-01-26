@@ -9,7 +9,7 @@ import { customElementGroupingPlugin } from '@webcomponents-preview/cem-plugin-g
 export default {
   packagejson: true,
   litelement: true,
-  globs: ['src/components/**/*.{component,plugin}.ts', 'src/components/**/EXAMPLES.md'],
+  globs: ['src/**/*.{component,plugin}.ts', 'src/**/EXAMPLES.md'],
   outdir: 'dist',
   plugins: [
     customElementExamplesPlugin(),
@@ -23,8 +23,11 @@ export default {
     }),
     customElementGroupingPlugin({
       addGroups(componentPath) {
-        const [, , group] = componentPath?.split('/') || [];
-        return [group];
+        const path = componentPath?.split('/') || [];
+        const [, type, category, sub] = path;
+        const group = `${type}/${category}`;
+
+        return path.length > 5 ? [`${group}/${sub}`] : [group];
       },
     }),
   ],

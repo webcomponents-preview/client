@@ -126,6 +126,12 @@ export type Element = {
   );
 
 /**
+ * Grouped elements, even nested.
+ * The key is either the group or element name.
+ */
+export type GroupedElements = Map<string, Element | GroupedElements>;
+
+/**
  * Wraps a manifest to provide additional meta data.
  */
 export type Manifest = {
@@ -137,7 +143,7 @@ export type Manifest = {
   /**
    * Delivers the elements grouped.
    */
-  getGroupedElements(fallbackGroupName: string): Map<string, Element[]>;
+  groupedElements(fallbackGroupName: string): GroupedElements;
 };
 
 export type Parser = {

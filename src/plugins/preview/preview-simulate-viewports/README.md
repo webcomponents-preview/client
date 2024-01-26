@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-preview-simulate-viewports
 
 Simulates various viewports for a custom element preview.
@@ -6,13 +8,13 @@ Simulates various viewports for a custom element preview.
 
 ## Properties
 
-| Property         | Attribute          | Modifiers | Type         | Default    |
-|------------------|--------------------|-----------|--------------|------------|
-| `available`      | `available`        | readonly  | `true`       | true       |
-| `container`      |                    | readonly  |              |            |
-| `label`          | `label`            | readonly  | `"Viewport"` | "Viewport" |
-| `name`           | `name`             | readonly  | `"viewport"` | "viewport" |
-| `previewTagName` | `preview-tag-name` | readonly  | `string`     |            |
+| Property         | Attribute          | Modifiers | Type          | Default    |
+|------------------|--------------------|-----------|---------------|------------|
+| `available`      | `available`        | readonly  | `true`        | true       |
+| `container`      |                    | readonly  | `HTMLElement` |            |
+| `label`          |                    | readonly  | `"Viewport"`  | "Viewport" |
+| `name`           |                    | readonly  | `"viewport"`  | "viewport" |
+| `previewTagName` | `preview-tag-name` | readonly  | `string`      |            |
 
 ## Methods
 

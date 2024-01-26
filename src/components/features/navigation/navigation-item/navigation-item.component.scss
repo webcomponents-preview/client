@@ -45,15 +45,33 @@
   }
 }
 
-a,
 span {
   display: block;
   padding: var(---wcp-navigation-item-spacing);
 
+  overflow: hidden;
   text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
 
   background-color: var(---wcp-navigation-item-background);
   color: var(---wcp-navigation-item-color);
+}
+
+// as the surrounding navigation element might be inset, we add the background
+// in front to fill the whole navigation width to increase the clickable area
+a {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    inset: 0 100% 0 auto;
+    width: calc(var(---wcp-aside-max-width, 100vw) - 100%);
+
+    background-color: var(---wcp-navigation-item-background);
+  }
 }

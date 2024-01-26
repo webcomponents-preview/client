@@ -11,8 +11,6 @@ import styles from './input-text.component.scss';
  * A text input element using the wcp style. Fully form aware.
  * Can display multiline text (textarea) if configured to do so.
  *
- * @element wcp-input-text
- *
  * @property {string} label - The label of the input element.
  *
  * @slot hint - Receives optional descriptions below the input.
@@ -29,33 +27,6 @@ import styles from './input-text.component.scss';
  * @cssprop --wcp-input-text-light-border - The border color of the element in light mode.
  * @cssprop --wcp-input-text-light-color - The font color of the input element in light mode.
  *
- * @example
- * ## With optional label
- * ```html
- * <wcp-input-text label="With optional label"></wcp-input-text>
- * ```
- *
- * @example
- * ## With optional initial value
- * ```html
- * <wcp-input-text label="With optional initial value" value="Foo"></wcp-input-text>
- * ```
- *
- * @example
- * ## Multiline
- * ```html
- * <wcp-input-text multiline label="With multiline value"></wcp-input-text>
- * ```
- *
- * @example
- * ## Used within a form
- * ```html
- * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
- *   <wcp-input-text label="Fully form enabled component"></wcp-input-text>
- *   <button type="submit">Submit</button>
- *   <button type="reset">Reset</button>
- * </form>
- * ```
  */
 @customElement('wcp-input-text')
 export class InputText extends Editable()(LitElement) implements FormAssociated<string> {

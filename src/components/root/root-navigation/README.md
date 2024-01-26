@@ -10,7 +10,7 @@ Manages the main root-navigation in the application root.
 |-------------------|---------------------|--------------------------|----------------------------------|
 | `currentPath`     | `current-path`      | `string \| undefined`    |                                  |
 | `emptyMessage`    | `empty-message`     | `string`                 | "No readmes nor elements found." |
-| `items`           |                     | `GroupedNavigationItems` |                                  |
+| `items`           |                     | `Parsed.GroupedElements` |                                  |
 | `minSearchLength` | `min-search-length` | `number`                 | 1                                |
 | `searchTerms`     |                     | `object`                 |                                  |
 

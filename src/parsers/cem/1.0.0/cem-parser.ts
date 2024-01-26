@@ -1,23 +1,57 @@
 import type * as CEM from 'custom-elements-manifest';
 
-import type { Element, Parser } from '@/utils/parser.types.js';
+import type * as Parsed from '@/utils/parser.types.js';
 
 import { isCustomElementDeclarationWithTagName } from '../utils.js';
 import { CemElement } from './cem-element.js';
 
 export const CemParser = class {
-  #elements: Map<string, Element>;
+  #elements: Map<string, Parsed.Element>;
 
   get elements() {
     return this.#elements;
   }
 
-  getGroupedElements(fallbackGroupName: string): Map<string, Element[]> {
-    return Array.from(this.elements.values()).reduce((map, element) => {
-      const { groups } = element.hasGroups ? element : { groups: [fallbackGroupName] };
+  groupedElements(fallbackGroupName: string): Parsed.GroupedElements {
+    // sort a given map
+    function sortGroupedElements(map: Parsed.GroupedElements): Parsed.GroupedElements {
+      return new Map([...map.entries()].sort(([a], [b]) => a.localeCompare(b)));
+    }
+
+    // helper function to recursively add a grouped element
+    function addGroupedElement(map: Parsed.GroupedElements, group: [string, ...string[]], element: Parsed.Element) {
+      // read current and nested groups
+      const [currentGroup, ...nestedGroups] = group;
+
+      // create the current group if not exists
+      const currentMap = (map.get(currentGroup) ?? new Map()) as Parsed.GroupedElements;
+
+      // add nested groups recursively
+      if (nestedGroups.length > 0) {
+        addGroupedElement(currentMap, nestedGroups as [string], element);
+      }
+      // or add element to current group
+      else {
+        currentMap.set(element.name, element);
+      }
+
+      // finally, sort the map
+      const sortedMap = sortGroupedElements(currentMap);
+      map.set(currentGroup, sortedMap);
+    }
+
+    const elements = new Map() as Parsed.GroupedElements;
+    Array.from(this.elements.values()).forEach((element) => {
+      console.log(element.name, element.groups);
+      // Read groups and fallback if not available
+      const groups = element.hasGroups ? element.groups : [fallbackGroupName];
+      // Cycle potentially nested groups and add the element
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return groups!.reduce((all, group) => all.set(group, (all.get(group) ?? []).concat(element)), map);
-    }, new Map<string, Element[]>());
+      groups!.forEach((group) => addGroupedElement(elements, group.split('/') as [string], element));
+    });
+
+    // deliver result
+    return sortGroupedElements(elements);
   }
 
   constructor(
@@ -33,9 +67,9 @@ export const CemParser = class {
 
     // allow access to the original data by proxying
     return new Proxy(this, {
-      get(t, p: keyof Parser) {
+      get(t, p: keyof Parsed.Parser) {
         return p in t ? t[p] : _data[p];
       },
     });
   }
-} as unknown as Parser;
+} as unknown as Parsed.Parser;

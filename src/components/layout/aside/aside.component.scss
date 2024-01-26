@@ -3,6 +3,7 @@
 // prettier-ignore
 :host {
   ---wcp-aside-max-width: var(--wcp-aside-max-width, #{utils.size(24)});
+  ---wcp-aside-min-width: var(--wcp-aside-min-width, var(---wcp-aside-max-width));
 
   ---wcp-aside-spacing: var(--wcp-aside-spacing, 0);
 
@@ -43,7 +44,7 @@
   @include utils.breakpoint(sm) {
     position: relative;
     max-width: var(---wcp-aside-max-width);
-    min-width: var(---wcp-aside-max-width);
+    min-width: var(---wcp-aside-min-width);
 
     transition: margin-left ease-in-out var(--wcp-fx-layout-duration);
     will-change: margin-left;

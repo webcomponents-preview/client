@@ -41,7 +41,6 @@ const SCALE_FACTOR = 1;
 /**
  * Simulates various viewports for a custom element preview.
  *
- * @element wcp-preview-simulate-viewports
  */
 @customElement('wcp-preview-simulate-viewports')
 export class PreviewSimulateViewports extends ColorSchemable(LitElement) implements PreviewPlugin {

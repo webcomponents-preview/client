@@ -18,22 +18,6 @@ const MARKDOWN_EXAMPLE_TABS = { preview: { label: 'Preview' }, code: { label: 'C
  * or the enhanced markdown renderer which instruments this element under the hood. It can be used with the
  * `renderMarkdown` function provided by the `@/utils/markdown.utils`.
  *
- * @example
- * ### Shows arbitrary HTML code example
- *
- * ```html
- * <wcp-markdown-example>
- *   <pre slot="code">
- * &lt;h1&gt;Readme&lt;/h1&gt;
- * &lt;p&gt;Some readme content&lt;/p&gt;
- *   </pre>
- *   <div slot="preview">
- *     <h1>Readme</h1>
- *     <p>Some readme content</p>
- *   </div>
- * </wcp-markdown-example>
- * ```
- *
  * @slot code - Code example
  * @slot preview - Rendered example preview
  *

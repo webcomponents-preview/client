@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-stage-editor-controls
 
 **Mixins:** ColorSchemable

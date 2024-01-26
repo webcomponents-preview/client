@@ -10,8 +10,6 @@ import styles from './input-checkbox.component.scss';
 /**
  * A checkbox input element using the wcp style. Fully form aware.
  *
- * @element wcp-input-checkbox
- *
  * @property {string} label - The label of the input element.
  *
  * @slot hint - Receives optional descriptions below the input.
@@ -31,27 +29,6 @@ import styles from './input-checkbox.component.scss';
  * @cssprop --wcp-input-checkbox-light-border - The border color of the checkbox input in light mode.
  * @cssprop --wcp-input-checkbox-light-color - The fill color of the checkbox input when checked in light mode.
  *
- * @example
- * ## With optional label
- * ```html
- * <wcp-input-checkbox label="With optional label"></wcp-input-checkbox>
- * ```
- *
- * @example
- * ## With initial value
- * ```html
- * <wcp-input-checkbox checked label="With optional initial value"></wcp-input-checkbox>
- * ```
- *
- * @example
- * ## Used within a form
- * ```html
- * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
- *   <wcp-input-checkbox label="Fully form enabled component"></wcp-input-checkbox>
- *   <button type="submit">Submit</button>
- *   <button type="reset">Reset</button>
- * </form>
- * ```
  */
 @customElement('wcp-input-checkbox')
 export class InputCheckbox

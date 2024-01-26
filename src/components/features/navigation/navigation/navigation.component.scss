@@ -5,6 +5,9 @@
   ---wcp-navigation-spacing: var(--wcp-navigation-spacing, #{0 0 utils.size(1)});
   ---wcp-navigation-spacing-items: var(--wcp-navigation-spacing-items, 0);
   ---wcp-navigation-spacing-headline: var(--wcp-navigation-spacing-headline, #{utils.size(1.5) 0 utils.size(1) utils.size(2)});
+  ---wcp-navigation-spacing-headline-togglable: var(--wcp-navigation-spacing-headline-togglable, #{utils.size(1) utils.size(1) utils.size(1) utils.size(2)});
+
+  ---wcp-navigation-inset: var(--wcp-navigation-inset, #{utils.size(1.5)});
   
   ---wcp-navigation-dark-border-color: var(--wcp-navigation-headline-dark-border-color, var(--wcp-color-grey-24));
   ---wcp-navigation-light-border-color: var(--wcp-navigation-headline-light-border-color, var(--wcp-color-blue-24));
@@ -34,9 +37,10 @@
 }
 
 h3 {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
 
   margin: 0;
   padding: var(---wcp-navigation-spacing-headline);
@@ -49,28 +53,55 @@ h3 {
   line-height: 1;
 
   span {
+    flex: 1 1 auto;
     display: block;
+
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
-  &::before {
-    content: '';
+  :host([togglable]) & {
+    cursor: pointer;
+    padding: var(---wcp-navigation-spacing-headline-togglable);
 
-    position: absolute;
-    inset: -1px 0 auto;
-    height: 1px;
+    wcp-icon {
+      flex: 0 1 auto;
+      pointer-events: none;
+      color: var(---wcp-navigation-border-color);
+      --wcp-icon-size: 20;
+    }
+  }
 
-    background-color: var(---wcp-navigation-border-color);
+  // static first level headlines are treated as sticky categories with a separator
+  :host(:not([togglable])) & {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    &::before {
+      content: '';
+
+      position: absolute;
+      inset: -1px 0 auto;
+      height: 1px;
+
+      background-color: var(---wcp-navigation-border-color);
+    }
   }
 }
 
 nav {
   position: relative;
+  margin-left: var(---wcp-navigation-inset);
   padding: var(---wcp-navigation-spacing);
 
   display: flex;
   flex-direction: column;
   gap: var(---wcp-navigation-spacing-items);
+
+  :host([togglable]:not([open])) & {
+    display: none;
+  }
 }

@@ -7,34 +7,6 @@ import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import styles from './tabs.component.scss';
 
 /**
- * @example
- * ```html
- * <wcp-tabs tabs='{"first": {"label": "First tab"}, "second": {"label": "Second tab"}}'>
- *  <div slot="first">First tab content</div>
- *  <div slot="second">Second tab content</div>
- * </wcp-tabs>
- * ```
- *
- * @example
- * ### Active tab preselected
- *
- * ```html
- * <wcp-tabs tabs='{"first": {"label": "First tab"}, "second": {"label": "Second tab"}}' active-tab="second">
- *  <div slot="first">First tab content</div>
- *  <div slot="second">Second tab content</div>
- * </wcp-tabs>
- * ```
- *
- * @example
- * ### Disabled tabs
- *
- * ```html
- * <wcp-tabs tabs='{"first": {"label": "First tab"}, "second": {"label": "Second tab", "disabled": true}}' active-tab="second">
- *  <div slot="first">First tab content</div>
- *  <div slot="second">Second tab content</div>
- * </wcp-tabs>
- * ```
- *
  * @slot tab name - The content of the named tab.
  * @emits wcp-tabs:active-tab-change - Notifies when the active tab changes
  *

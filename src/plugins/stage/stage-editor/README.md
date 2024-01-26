@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-stage-editor
 
 Allows editing a custom element.
@@ -10,8 +12,8 @@ Allows editing a custom element.
 |------------------|--------------------|-----------|-----------------------|----------|
 | `available`      | `available`        | readonly  | `true`                | true     |
 | `data`           | `data`             |           | `string \| undefined` |          |
-| `label`          | `label`            | readonly  | `"Editor"`            | "Editor" |
-| `name`           | `name`             | readonly  | `"editor"`            | "editor" |
+| `label`          |                    | readonly  | `"Editor"`            | "Editor" |
+| `name`           |                    | readonly  | `"editor"`            | "editor" |
 | `previewTagName` | `preview-tag-name` |           | `string`              |          |
 
 ## Methods

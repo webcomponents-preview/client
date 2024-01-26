@@ -11,16 +11,6 @@ import type { ElementData } from '../stage-editor.utils.js';
 
 import styles from './stage-editor-preview.component.scss';
 
-/**
- * @element wcp-stage-editor-preview
- *
- * @example
- * ```html
- * <wcp-stage-editor-preview>
- *   <wcp-button>Example button</wcp-button>
- * </wcp-stage-editor-preview>
- * ```
- */
 @customElement('wcp-stage-editor-preview')
 export class StageEditorPreview extends LitElement {
   static override readonly styles = unsafeCSS(styles);

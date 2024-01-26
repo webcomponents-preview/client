@@ -10,7 +10,6 @@ import styles from './topbar-preview-editor-link-toggle.plugin.scss';
 /**
  * Toggles all preview editor link plugins to show or hide the debug hints.
  *
- * @element wcp-topbar-preview-editor-link-toggle
  */
 @customElement('wcp-topbar-preview-editor-link-toggle')
 export class TopbarPreviewEditorLinkToggle extends LitElement implements TopbarPlugin {

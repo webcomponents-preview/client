@@ -6,17 +6,6 @@ A wrapper above the preview frame content to contain various controls.
 
 **Mixins:** ColorSchemable
 
-## Example
-
-### Usage with controls
-
-```html
-<wcp-topbar>
-  <wcp-toggle-sidebar></wcp-toggle-sidebar>
-  <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
-</wcp-topbar>
-```
-
 ## Slots
 
 | Name | Description                       |

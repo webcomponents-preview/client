@@ -17,7 +17,6 @@ import styles from './preview-editor-link.plugin.scss';
 /**
  * Links all found custom elements in a preview with their current state to the editor to be further played around with.
  *
- * @element wcp-preview-editor-link
  */
 @customElement('wcp-preview-editor-link')
 export class PreviewEditorLink extends LitElement implements PreviewPlugin {
