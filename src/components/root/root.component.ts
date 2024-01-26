@@ -8,8 +8,8 @@ import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
 import { getConfig, loadConfig } from '@/utils/config.utils.js';
 import { loadManifest } from '@/utils/manifest.utils.js';
+import { prepareNavigation } from '@/utils/navigation.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
-// import { type GroupedNavigationItems, prepareNavigation } from '@/utils/navigation.utils.js';
 import { Router } from '@/utils/router.utils.js';
 
 import { prepareRoutes } from './root.routes.js';
@@ -111,8 +111,7 @@ export class Root extends LitElement {
 
     // set the document title and prepare the navigation
     document.title = config.labels.title;
-    // this.navigationItems = prepareNavigation(manifest, config);
-    this.navigationItems = manifest.groupedElements(config.labels.fallbackGroupName);
+    this.navigationItems = prepareNavigation(manifest, config);
     this.topbarPlugins = config.topbarPlugins ?? [];
 
     // prepare and set routes

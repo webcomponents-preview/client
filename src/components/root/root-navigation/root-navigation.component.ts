@@ -4,7 +4,7 @@ import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
 import type { Navigation } from '@/components/features/navigation/navigation/navigation.component.js';
-import { filterItems, prepareElementNavigationItem } from '@/utils/navigation.utils.js';
+import { filterItems } from '@/utils/navigation.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
 import { Router } from '@/utils/router.utils.js';
 
@@ -86,8 +86,7 @@ export class RootNavigation extends LitElement {
     });
   }
 
-  protected renderItem(element: Parsed.Element): TemplateResult {
-    const { link, name } = prepareElementNavigationItem(element);
+  protected renderItem({ name, link }: Parsed.GroupedElement): TemplateResult {
     return html`
       <wcp-navigation-item ?active="${Router.isActive(link, this.currentPath)}" href="#${link}">
         ${name}
@@ -113,7 +112,7 @@ export class RootNavigation extends LitElement {
               ${this.renderItems(element as Parsed.GroupedElements, true)}
             </wcp-navigation>
           `,
-          () => this.renderItem(element as Parsed.Element),
+          () => this.renderItem(element as Parsed.GroupedElement),
         )}
       `,
     )}`;

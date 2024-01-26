@@ -1,26 +1,41 @@
-// import type { Config } from '@/utils/config.utils.js';
+import type { Config } from '@/utils/config.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
 
 export const ROUTE_ELEMENTS = '/element';
 export const ROUTE_READMES = '/readme';
 
-type GroupedNavigationItem = { name: string; link: string };
-
 /**
  * Creates a navigation item for a given readme.
  */
-export function prepareReadmeNavigationItem(name: string, url: string): GroupedNavigationItem {
-  const link = `${ROUTE_READMES}/${encodeURIComponent(url)}`;
-  return { name, link };
+export function prepareReadmeLink(url: string): string {
+  return `${ROUTE_READMES}/${encodeURIComponent(url)}`;
 }
 
 /**
  * Creates a navigation item for a given element.
  */
-export function prepareElementNavigationItem(element: Parsed.Element): GroupedNavigationItem {
-  const name = element.getNiceName();
-  const link = `${ROUTE_ELEMENTS}/${element.getNiceUrl()}`;
-  return { name, link };
+export function prepareElementLink(element: Parsed.Element): string {
+  return `${ROUTE_ELEMENTS}/${element.getNiceUrl()}`;
+}
+
+/**
+ * Prepares a grouped navigation structure of readmes and elements.
+ */
+export function prepareNavigation(manifest: Parsed.Manifest, config: Config): Parsed.GroupedElements {
+  const items = new Map() as Parsed.GroupedElements;
+
+  // prepare readme navigation
+  if (config.additionalReadmes?.length) {
+    const readmes = config.additionalReadmes.reduce(
+      (readmes, { name, url }) =>
+        readmes.set(name, { name, link: prepareReadmeLink(url), element: {} as Parsed.Element }),
+      new Map() as Parsed.GroupedElements,
+    );
+    items.set(config.labels.additionalReadmeGroupName, readmes);
+  }
+
+  const elements = manifest.groupedElements(config.labels.fallbackGroupName);
+  return new Map([...items, ...elements]);
 }
 
 /**
@@ -52,7 +67,7 @@ export function filterItems(
     }
 
     // filter elements and take group names into account as well
-    const element = item as Parsed.Element;
+    const { element } = item as Parsed.GroupedElement;
     const searchable = `${element.groups.join(' ')} ${element.getNiceName()}`;
     if (matchesSearch(searchable, terms, minSearchLength)) {
       filtered.set(group, item);

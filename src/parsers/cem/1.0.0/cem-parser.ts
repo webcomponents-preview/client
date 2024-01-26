@@ -2,6 +2,7 @@ import type * as CEM from 'custom-elements-manifest';
 
 import type * as Parsed from '@/utils/parser.types.js';
 
+import { prepareElementLink } from '../../../utils/navigation.utils.js';
 import { isCustomElementDeclarationWithTagName } from '../utils.js';
 import { CemElement } from './cem-element.js';
 
@@ -32,7 +33,8 @@ export const CemParser = class {
       }
       // or add element to current group
       else {
-        currentMap.set(element.name, element);
+        const name = element.getNiceName();
+        currentMap.set(name, { element, name, link: prepareElementLink(element) });
       }
 
       // finally, sort the map
@@ -42,7 +44,6 @@ export const CemParser = class {
 
     const elements = new Map() as Parsed.GroupedElements;
     Array.from(this.elements.values()).forEach((element) => {
-      console.log(element.name, element.groups);
       // Read groups and fallback if not available
       const groups = element.hasGroups ? element.groups : [fallbackGroupName];
       // Cycle potentially nested groups and add the element
