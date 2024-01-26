@@ -1,5 +1,13 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.7.4](https://github.com/webcomponents-preview/client/compare/0.7.3...0.7.4) (2024-01-26)
+
+
+### Bug Fixes
+
+* readme navigation group mock ([811756b](https://github.com/webcomponents-preview/client/commit/811756bb629ae3b0ed5662043bd6bae5812a80f2))
+* **wcp-aside:** set level for scroll bar ([3d78f59](https://github.com/webcomponents-preview/client/commit/3d78f59c8f689c399c6bd947eb7e1d53563717f7))
+
 ## [0.7.3](https://github.com/webcomponents-preview/client/compare/0.7.2...0.7.3) (2024-01-26)
 
 
