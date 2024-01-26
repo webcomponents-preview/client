@@ -6,14 +6,6 @@ Previews given content.
 
 **Mixins:** ColorSchemable
 
-## Example
-
-```html
-<wcp-preview>
-  <wcp-button>Example button</wcp-button>
-</wcp-preview>
-```
-
 ## Properties
 
 | Property         | Attribute          | Type                  |

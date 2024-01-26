@@ -9,10 +9,6 @@ import styles from './toggle-color-scheme.component.scss';
 /**
  * Shows a button to toggle the desired color-scheme.
  *
- * @example
- * ```html
- * <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
- * ```
  */
 @customElement('wcp-toggle-color-scheme')
 export class ToggleColorScheme extends ColorSchemable(LitElement) {

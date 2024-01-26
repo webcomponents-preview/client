@@ -29,27 +29,6 @@ import styles from './input-radio.component.scss';
  * @cssprop --wcp-input-radio-light-border - The border color of the radio input in light mode.
  * @cssprop --wcp-input-radio-light-color - The fill color of the radio input when checked in light mode.
  *
- * @example
- * ## With optional label
- * ```html
- * <wcp-input-radio label="With optional label"></wcp-input-radio>
- * ```
- *
- * @example
- * ## With initial value
- * ```html
- * <wcp-input-radio checked label="With optional initial value"></wcp-input-radio>
- * ```
- *
- * @example
- * ## Used within a form
- * ```html
- * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
- *   <wcp-input-radio label="Fully form enabled component"></wcp-input-radio>
- *   <button type="submit">Submit</button>
- *   <button type="reset">Reset</button>
- * </form>
- * ```
  */
 @customElement('wcp-input-radio')
 export class InputRadio

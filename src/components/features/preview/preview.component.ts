@@ -19,12 +19,6 @@ import styles from './preview.component.scss';
  *
  * @slot - The content to preview.
  *
- * @example
- * ```html
- * <wcp-preview>
- *   <wcp-button>Example button</wcp-button>
- * </wcp-preview>
- * ```
  */
 @customElement('wcp-preview')
 export class Preview extends ColorSchemable(LitElement) {

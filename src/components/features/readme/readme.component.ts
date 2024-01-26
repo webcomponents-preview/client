@@ -23,10 +23,6 @@ import styles from './readme.component.scss';
  * @cssprop --wcp-readme-light-border-color - Border color of the readme in light mode.
  * @cssprop --wcp-readme-light-highlight-background - Background color of highlighted table rows in light mode.
  *
- * @example
- * ```html
- * <wcp-readme markdown="# Hello _World_!"></wcp-readme>
- * ```
  */
 @customElement('wcp-readme')
 export class Readme extends ColorSchemable(LitElement) {

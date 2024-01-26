@@ -4,14 +4,6 @@
 
 Shows a splash screen whilst initializing the application.
 
-## Example
-
-# Basic usage
-
-```html
-<wcp-root-splash>Loading...</wcp-root-splash>
-```
-
 ## Properties
 
 | Property | Type      | Description                                      |

@@ -6,12 +6,6 @@ Displays a Readme file by its URL.
 
 **Mixins:** ColorSchemable
 
-## Example
-
-```html
-<wcp-readme markdown="# Hello _World_!"></wcp-readme>
-```
-
 ## Properties
 
 | Property          | Attribute          | Modifiers | Type                  | Default |

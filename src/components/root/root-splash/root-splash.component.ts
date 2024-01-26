@@ -15,12 +15,6 @@ import styles from './root-splash.component.scss';
  *
  * @slot {Loading...} - The text content to be displayed in the splash screen.
  *
- * @example
- * # Basic usage
- *
- * ```html
- * <wcp-root-splash>Loading...</wcp-root-splash>
- * ```
  */
 @customElement('wcp-root-splash')
 export class RootSplash extends LitElement {

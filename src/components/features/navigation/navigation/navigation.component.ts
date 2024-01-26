@@ -7,30 +7,6 @@ import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import styles from './navigation.component.scss';
 
 /**
- * @example
- * ### Usage with headline
- *
- * ```html
- * <wcp-navigation headline="Navigation">
- *   <wcp-navigation-item href="/home">Home</wcp-navigation-item>
- *   <wcp-navigation-item href="/about">About</wcp-navigation-item>
- * </wcp-navigation>
- * ```
- *
- * @example
- * ### Nested navigation
- *
- * ```html
- * <wcp-navigation headline="Navigation">
- *   <wcp-navigation-item href="/home">Home</wcp-navigation-item>
- *
- *   <wcp-navigation nested headline="Nested">
- *     <wcp-navigation-item href="/about">About</wcp-navigation-item>
- *     <wcp-navigation-item href="/imprint">Imprint</wcp-navigation-item>
- *   </wcp-navigation>
- * </wcp-navigation>
- * ```
- *
  * @slot - Default slot for navigation items or nested navigation
  *
  * @cssprop --wcp-navigation-spacing - Spacing between navigation and headline

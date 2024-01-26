@@ -8,10 +8,6 @@ import styles from './toggle-sidebar.component.scss';
 /**
  * Shows a button to toggle sidebar.
  *
- * @example
- * ```html
- * <wcp-toggle-sidebar></wcp-toggle-sidebar>
- * ```
  */
 @customElement('wcp-toggle-sidebar')
 export class ToggleSidebar extends LitElement {

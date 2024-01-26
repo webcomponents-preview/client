@@ -2,12 +2,6 @@
 
 # wcp-readme-frame
 
-## Example
-
-```html
-<wcp-readme-frame></wcp-readme-frame>
-```
-
 ## Slots
 
 | Name | Description                                      |

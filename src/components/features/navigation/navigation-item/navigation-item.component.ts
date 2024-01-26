@@ -8,26 +8,6 @@ import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import styles from './navigation-item.component.scss';
 
 /**
- * @example
- * ### Non-interactive
- *
- * This will probably only be used for the active item.
- *
- * ```html
- * <wcp-navigation-item>
- *   Non-interactive
- * </wcp-navigation-item>
- * ```
- *
- * @example
- * ### With link
- *
- * ```html
- * <wcp-navigation-item href="/home">
- *   Home
- * </wcp-navigation-item>
- * ```
- *
  * @slot - Default slot for contents
  *
  * @cssprop --wcp-navigation-item-spacing - Inner padding of the item

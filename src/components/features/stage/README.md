@@ -4,12 +4,6 @@
 
 **Mixins:** ColorSchemable
 
-## Example
-
-```html
-<wcp-stage></wcp-stage>
-```
-
 ## Methods
 
 | Method                   | Type                                         |

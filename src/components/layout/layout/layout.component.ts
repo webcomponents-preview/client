@@ -6,14 +6,6 @@ import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import styles from './layout.component.scss';
 
 /**
- * @example
- * ```html
- * <wcp-layout>
- *   <nav slot="aside">To the left!</nav>
- *   <article>Me the important content!</article>
- * </wcp-layout>
- * ```
- *
  * @cssprop --wcp-layout-dark-background - The background color of the whole layout
  * @cssprop --wcp-layout-dark-color - The text color of the whole layout
  *

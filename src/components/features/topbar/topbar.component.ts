@@ -18,15 +18,6 @@ import styles from './topbar.component.scss';
  * @cssprop --wcp-topbar-height - Overall height of the preview controls nav bar
  * @cssprop --wcp-topbar-spacing - Inner spacing, used as padding of the controls
  *
- * @example
- * ### Usage with controls
- *
- * ```html
- * <wcp-topbar>
- *   <wcp-toggle-sidebar></wcp-toggle-sidebar>
- *   <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
- * </wcp-topbar>
- * ```
  */
 @customElement('wcp-topbar')
 export class Topbar extends ColorSchemable(LitElement) {

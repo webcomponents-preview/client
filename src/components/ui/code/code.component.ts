@@ -8,12 +8,6 @@ import styles from './code.component.scss';
 /**
  * Shows a formatted code snippet.
  *
- * @example
- * ```html
- * <wcp-code>
- *   <pre><code>Some code</code></pre>
- * </wcp-code>
- * ```
  */
 @customElement('wcp-code')
 export class Code extends ColorSchemable(LitElement) {
