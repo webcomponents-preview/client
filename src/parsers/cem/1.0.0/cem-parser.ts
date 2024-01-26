@@ -12,37 +12,37 @@ export const CemParser = class {
     return this.#elements;
   }
 
-  groupedElements(fallbackGroupName: string): Parsed.GroupedElements<Parsed.Element> {
+  groupedElements(fallbackGroupName: string): Parsed.GroupedElements {
+    // sort a given map
+    function sortGroupedElements(map: Parsed.GroupedElements): Parsed.GroupedElements {
+      return new Map([...map.entries()].sort(([a], [b]) => a.localeCompare(b)));
+    }
+
     // helper function to recursively add a grouped element
-    function addGroupedElement(
-      map: Parsed.GroupedElements<Parsed.Element>,
-      group: [string, ...string[]],
-      element: Parsed.Element,
-    ) {
+    function addGroupedElement(map: Parsed.GroupedElements, group: [string, ...string[]], element: Parsed.Element) {
       // read current and nested groups
       const [currentGroup, ...nestedGroups] = group;
 
       // create the current group if not exists
-      if (!map.has(currentGroup)) {
-        map.set(currentGroup, {
-          items: new Set(),
-          groups: new Map(),
-        });
-      }
+      const currentMap = (map.get(currentGroup) ?? new Map()) as Parsed.GroupedElements;
 
       // add nested groups recursively
       if (nestedGroups.length > 0) {
-        addGroupedElement(map.get(currentGroup)!.groups, nestedGroups as [string], element);
+        addGroupedElement(currentMap, nestedGroups as [string], element);
       }
-      // or add element to current group in the end
+      // or add element to current group
       else {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        map.get(currentGroup)!.items.add(element);
+        currentMap.set(element.name, element);
       }
+
+      // finally, sort the map
+      const sortedMap = sortGroupedElements(currentMap);
+      map.set(currentGroup, sortedMap);
     }
 
-    const elements = new Map() as Parsed.GroupedElements<Parsed.Element>;
+    const elements = new Map() as Parsed.GroupedElements;
     Array.from(this.elements.values()).forEach((element) => {
+      console.log(element.name, element.groups);
       // Read groups and fallback if not available
       const groups = element.hasGroups ? element.groups : [fallbackGroupName];
       // Cycle potentially nested groups and add the element
@@ -51,7 +51,7 @@ export const CemParser = class {
     });
 
     // deliver result
-    return elements;
+    return sortGroupedElements(elements);
   }
 
   constructor(
