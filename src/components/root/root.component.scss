@@ -39,6 +39,7 @@
 wcp-topbar {
   position: sticky;
   inset: 0 0 auto;
+  z-index: 1;
 }
 
 wcp-root-splash {
