@@ -47,24 +47,21 @@ h3 {
 
   background-color: var(---wcp-navigation-headline-background);
 
-  font-size: var(---wcp-navigation-headline-size);
-  font-weight: var(---wcp-navigation-headline-weight);
-  letter-spacing: var(---wcp-navigation-headline-spacing);
-  line-height: 1;
-
   span {
     flex: 1 1 auto;
     display: block;
 
     overflow: hidden;
     text-overflow: ellipsis;
-    text-transform: uppercase;
     white-space: nowrap;
   }
 
   :host([togglable]) & {
     cursor: pointer;
     padding: var(---wcp-navigation-spacing-headline-togglable);
+
+    font-size: inherit;
+    font-weight: inherit;
 
     wcp-icon {
       flex: 0 1 auto;
@@ -79,6 +76,13 @@ h3 {
     position: sticky;
     top: 0;
     z-index: 1;
+
+    font-size: var(---wcp-navigation-headline-size);
+    font-weight: var(---wcp-navigation-headline-weight);
+    letter-spacing: var(---wcp-navigation-headline-spacing);
+    line-height: 1;
+    text-transform: uppercase;
+    font-weight: inherit;
 
     &::before {
       content: '';
