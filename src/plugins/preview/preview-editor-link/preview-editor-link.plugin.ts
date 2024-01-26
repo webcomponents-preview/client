@@ -29,7 +29,7 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   readonly name = 'editor-link';
   readonly label = 'Show in editor';
 
-  readonly container!: HTMLElement;
+  readonly container?: HTMLElement;
 
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
   readonly previewTagName!: string;
@@ -62,7 +62,7 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
     this.#overlay.style.position = 'absolute';
     this.#overlay.style.inset = '0';
     this.#overlay.style.isolation = 'isolate';
-    this.container.parentElement?.append(this.#overlay);
+    this.container?.parentElement?.append(this.#overlay);
   }
 
   #detachOverlay() {
@@ -70,7 +70,7 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   }
 
   #findContainerSlot(): HTMLSlotElement | undefined {
-    const host = this.container.getRootNode() as HTMLElement;
+    const host = this.container?.getRootNode() as HTMLElement;
     return host.querySelector('slot') ?? undefined;
   }
 
@@ -83,15 +83,15 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
   }
 
   #observeContainerScroll() {
-    this.container.addEventListener('scroll', this.#handleContainerScroll, false);
+    this.container?.addEventListener('scroll', this.#handleContainerScroll, false);
   }
 
   #unobserveContainerScroll() {
-    this.container.removeEventListener('scroll', this.#handleContainerScroll, false);
+    this.container?.removeEventListener('scroll', this.#handleContainerScroll, false);
   }
 
   #handleContainerScroll = () => {
-    this.#overlay.style.transform = `translateY(-${this.container.scrollTop ?? 0}px)`;
+    this.#overlay.style.transform = `translateY(-${this.container?.scrollTop ?? 0}px)`;
   };
 
   #handleContainerSlotChange = () => this.#attachHints();
@@ -102,8 +102,8 @@ export class PreviewEditorLink extends LitElement implements PreviewPlugin {
     if (!this.available) return;
 
     // gather all slotted elements
-    const host = this.container.getRootNode() as HTMLElement;
-    const slot = host.querySelector('slot');
+    const host = this.container?.getRootNode() as HTMLElement | undefined;
+    const slot = host?.querySelector('slot');
     const assigned = slot?.assignedElements({ flatten: true }) as HTMLElement[];
 
     // attach hints to all previewed elements

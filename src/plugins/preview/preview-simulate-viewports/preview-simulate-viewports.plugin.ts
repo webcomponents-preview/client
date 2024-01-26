@@ -49,7 +49,7 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
   readonly name = 'viewport';
   readonly label = 'Viewport';
 
-  readonly container!: HTMLElement;
+  readonly container?: HTMLElement;
 
   @property({ type: String, reflect: true, attribute: 'preview-tag-name' })
   readonly previewTagName!: string;
@@ -74,7 +74,7 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
   }
 
   protected removeStyle() {
-    this.container.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`)?.remove();
+    this.container?.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`)?.remove();
   }
 
   protected resetStyle() {
@@ -83,14 +83,14 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
 
   protected prepareStyle(): HTMLStyleElement {
     // check if a style element already exists
-    let style = this.container.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`);
-    if (style !== null) return style;
+    let style = this.container?.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`);
+    if (style) return style;
 
     // create a new style element
     style = document.createElement('style');
     style.id = STYLE_ID;
     style.textContent = this.defaultStyle;
-    this.container.append(style);
+    this.container?.append(style);
     return style;
   }
 
@@ -130,7 +130,8 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
     const [w, h] = VIEWPORTS.get(this.simulateViewport)!;
     // derive the scale to fit the viewport into the preview
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const preview = this.container.parentElement!.parentElement!;
+    const preview = this.container?.parentElement?.parentElement;
+    if (!preview) return;
     const scale = Math.min(
       (preview.clientWidth - 20) / (this.invertSimulatedViewport ? h : w),
       (preview.clientHeight - 20) / (this.invertSimulatedViewport ? w : h),
@@ -148,14 +149,14 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
     // remove our stuff if we are not simulating a viewport
     if (this.simulateViewport === undefined) {
       this.removeStyle();
-      this.container.parentElement?.classList.remove(DECORATION_CLASS, PROPORTION_CLASS);
-      this.container.classList.remove(SIZE_CLASS, SCALE_CLASS);
+      this.container?.parentElement?.classList.remove(DECORATION_CLASS, PROPORTION_CLASS);
+      this.container?.classList.remove(SIZE_CLASS, SCALE_CLASS);
     }
     // apply visual changes
     else {
       this.resetStyle();
-      this.container.parentElement?.classList.add(DECORATION_CLASS, PROPORTION_CLASS);
-      this.container.classList.add(SIZE_CLASS, SCALE_CLASS);
+      this.container?.parentElement?.classList.add(DECORATION_CLASS, PROPORTION_CLASS);
+      this.container?.classList.add(SIZE_CLASS, SCALE_CLASS);
       this.applyPreviewSize();
       this.applyPreviewScale();
     }

@@ -9,7 +9,7 @@ Links all found custom elements in a preview with their current state to the edi
 | Property         | Attribute          | Modifiers | Type               | Default                                     |
 |------------------|--------------------|-----------|--------------------|---------------------------------------------|
 | `available`      | `available`        |           | `boolean`          | true                                        |
-| `container`      |                    | readonly  | `HTMLElement`      |                                             |
+| `container`      |                    | readonly  |                    |                                             |
 | `enabled`        | `enabled`          |           |                    | "read('editor-link-hint-visible') ?? false" |
 | `label`          |                    | readonly  | `"Show in editor"` | "Show in editor"                            |
 | `name`           |                    | readonly  | `"editor-link"`    | "editor-link"                               |
