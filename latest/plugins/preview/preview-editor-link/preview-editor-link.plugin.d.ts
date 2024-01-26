@@ -9,7 +9,7 @@ export declare class PreviewEditorLink extends LitElement implements PreviewPlug
     static readonly styles: import("lit").CSSResult;
     readonly name = "editor-link";
     readonly label = "Show in editor";
-    readonly container: HTMLElement;
+    readonly container?: HTMLElement;
     readonly previewTagName: string;
     available: boolean;
     enabled: boolean;

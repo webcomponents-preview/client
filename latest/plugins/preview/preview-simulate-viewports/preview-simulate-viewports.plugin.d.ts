@@ -10,7 +10,7 @@ export declare class PreviewSimulateViewports extends PreviewSimulateViewports_b
     static readonly styles: import("lit").CSSResult;
     readonly name = "viewport";
     readonly label = "Viewport";
-    readonly container: HTMLElement;
+    readonly container?: HTMLElement;
     readonly previewTagName: string;
     readonly available = true;
     private simulateViewport?;

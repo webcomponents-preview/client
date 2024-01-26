@@ -27,8 +27,7 @@ export type StagePlugin = Plugin & {
  * Type to be used with preview plugins.
  */
 export type PreviewPlugin = Plugin & {
-    readonly container: HTMLElement;
-    readonly previewTagName: string;
+    readonly container?: HTMLElement;
 };
 /**
  * Type to be used with topbar plugins.
