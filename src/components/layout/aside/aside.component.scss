@@ -67,8 +67,10 @@ header {
 }
 
 section {
-  overflow: auto;
-  overflow-x: hidden;
+  @include utils.custom-scrollbar() {
+    overflow: auto;
+    overflow-x: hidden;
+  }
 }
 
 wcp-button {

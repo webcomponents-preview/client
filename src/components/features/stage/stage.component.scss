@@ -27,11 +27,14 @@
   flex-direction: column;
 
   display: flex;
-  overflow: auto;
   padding: var(---wcp-stage-spacing);
 
   background-color: var(---wcp-stage-background);
   color: var(---wcp-stage-color);
+
+  @include utils.custom-scrollbar() {
+    overflow: auto;
+  }
 
   @include utils.breakpoint(sm) {
     margin: var(---wcp-stage-distance);

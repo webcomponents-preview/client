@@ -61,5 +61,8 @@ button {
 [role='tabpanel'] {
   flex: 1 0 auto;
   padding: var(---wcp-tabs-panel-spacing);
-  overflow: auto;
+
+  @include utils.custom-scrollbar() {
+    overflow: auto;
+  }
 }

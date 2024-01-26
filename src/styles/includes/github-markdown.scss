@@ -1,4 +1,14 @@
+@use '@/styles/utils' as utils;
+
 $exclude: ':not(wcp-preview *)' !default;
+$font-family:
+  ui-monospace,
+  SFMono-Regular,
+  SF Mono,
+  Menlo,
+  Consolas,
+  Liberation Mono,
+  monospace !default;
 
 .markdown-body {
   @media (prefers-color-scheme: dark) {
@@ -323,12 +333,16 @@ $exclude: ':not(wcp-preview *)' !default;
   }
 
   table#{$exclude} {
-    border-spacing: 0;
-    border-collapse: collapse;
     display: block;
     width: max-content;
     max-width: 100%;
-    overflow: auto;
+
+    border-spacing: 0;
+    border-collapse: collapse;
+
+    @include utils.custom-scrollbar() {
+      overflow: auto;
+    }
   }
 
   td,
@@ -393,7 +407,7 @@ $exclude: ':not(wcp-preview *)' !default;
   kbd#{$exclude} {
     display: inline-block;
     padding: 3px 5px;
-    font: 11px ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    font: 11px $font-family;
     line-height: 10px;
     color: var(--wcp-github-markdown-color-fg-default);
     vertical-align: middle;
@@ -477,7 +491,7 @@ $exclude: ':not(wcp-preview *)' !default;
   code,
   samp {
     &#{$exclude} {
-      font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+      font-family: $font-family;
       font-size: 12px;
     }
   }
@@ -485,7 +499,7 @@ $exclude: ':not(wcp-preview *)' !default;
   pre#{$exclude} {
     margin-top: 0;
     margin-bottom: 0;
-    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    font-family: $font-family;
     font-size: 12px;
     word-wrap: normal;
   }
@@ -840,11 +854,12 @@ $exclude: ':not(wcp-preview *)' !default;
   pre {
     &#{$exclude} {
       padding: 16px;
-      overflow: auto;
       font-size: 85%;
       line-height: 1.45;
       background-color: var(--wcp-github-markdown-color-canvas-subtle);
       border-radius: 6px;
+
+      @include utils.custom-scrollbar();
     }
   }
 

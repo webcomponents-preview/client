@@ -65,5 +65,8 @@ section {
   display: block;
   contain: content;
   isolation: isolate;
-  overflow: auto;
+
+  @include utils.custom-scrollbar() {
+    overflow: auto;
+  }
 }

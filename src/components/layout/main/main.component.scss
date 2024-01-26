@@ -6,6 +6,9 @@
   flex: 1 1 auto;
 
   height: 100%;
-  overflow: auto;
-  overflow-x: hidden;
+
+  @include utils.custom-scrollbar() {
+    overflow: auto;
+    overflow-x: hidden;
+  }
 }
