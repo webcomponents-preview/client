@@ -88,7 +88,12 @@ export type Element = {
  * Grouped elements, even nested.
  * The key is either the group or element name.
  */
-export type GroupedElements = Map<string, Element | GroupedElements>;
+export type GroupedElements = Map<string, GroupedElement | GroupedElements>;
+export type GroupedElement = {
+    link: string;
+    name: string;
+    element: Element;
+};
 /**
  * Wraps a manifest to provide additional meta data.
  */

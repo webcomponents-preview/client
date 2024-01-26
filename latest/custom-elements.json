@@ -3796,9 +3796,9 @@
               },
               "parameters": [
                 {
-                  "name": "element",
+                  "name": "{ name, link }",
                   "type": {
-                    "text": "Parsed.Element"
+                    "text": "Parsed.GroupedElement"
                   }
                 }
               ]

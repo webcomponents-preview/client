@@ -21,7 +21,7 @@ export declare class RootNavigation extends LitElement {
     private handleKeyDown;
     private handleKeyUp;
     private handleNavigationToggle;
-    protected renderItem(element: Parsed.Element): TemplateResult;
+    protected renderItem({ name, link }: Parsed.GroupedElement): TemplateResult;
     protected renderItems(items: Parsed.GroupedElements, nested?: boolean): TemplateResult | undefined;
     protected render(): TemplateResult;
 }
