@@ -16,11 +16,11 @@
   }
 
   @include utils.breakpoint(md) {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   @include utils.breakpoint(lg) {
-    font-size: 17px;
+    font-size: 15px;
   }
 }
 
