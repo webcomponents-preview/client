@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.7.3](https://github.com/webcomponents-preview/client/compare/0.7.2...0.7.3) (2024-01-26)
+
+
+### Bug Fixes
+
+* bring back optional readmes ([4e778c6](https://github.com/webcomponents-preview/client/commit/4e778c6dbea6703c7bc693b8ff69012b35fc3adc))
+
 ## [0.7.2](https://github.com/webcomponents-preview/client/compare/0.7.1...0.7.2) (2024-01-26)
 
 
