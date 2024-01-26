@@ -67,7 +67,7 @@ header {
 }
 
 section {
-  @include utils.custom-scrollbar() {
+  @include utils.custom-scrollbar($level: 5) {
     overflow: auto;
     overflow-x: hidden;
   }
