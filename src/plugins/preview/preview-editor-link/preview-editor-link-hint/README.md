@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-preview-editor-link-hint
 
 Shows a hint to a given preview element.
@@ -6,19 +8,18 @@ Shows a hint to a given preview element.
 
 ## Properties
 
-| Property       | Attribute | Type      | Default |
-|----------------|-----------|-----------|---------|
-| `debug`        | `debug`   | `boolean` | false   |
-| `element`      |           |           |         |
-| `scrollParent` |           |           |         |
+| Property       | Attribute | Type      | Default          |
+|----------------|-----------|-----------|------------------|
+| `debug`        | `debug`   | `boolean` | false            |
+| `element`      |           |           |                  |
+| `label`        | `label`   | `string`  | "Open in editor" |
+| `scrollParent` |           |           |                  |
 
 ## Methods
 
 | Method            | Type       | Description                                |
 |-------------------|------------|--------------------------------------------|
 | `#observeElement` | `(): void` |                                            |
-| `#observeStage`   | `(): void` |                                            |
-| `#unobserveStage` | `(): void` |                                            |
 | `updatePosition`  | `(): void` | Allows to update the position of the hint. |
 
 ## CSS Custom Properties

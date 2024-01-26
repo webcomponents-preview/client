@@ -1,3 +1,5 @@
+<!-- Auto Generated Below -->
+
 # wcp-stage-readme
 
 Shows the readme of a custom element.
@@ -9,8 +11,8 @@ Shows the readme of a custom element.
 | Property         | Attribute          | Modifiers | Type       | Default  |
 |------------------|--------------------|-----------|------------|----------|
 | `available`      | `available`        |           | `boolean`  | false    |
-| `label`          | `label`            | readonly  | `"Readme"` | "Readme" |
-| `name`           | `name`             | readonly  | `"readme"` | "readme" |
+| `label`          |                    | readonly  | `"Readme"` | "Readme" |
+| `name`           |                    | readonly  | `"readme"` | "readme" |
 | `previewTagName` | `preview-tag-name` |           | `string`   |          |
 
 ## Events
