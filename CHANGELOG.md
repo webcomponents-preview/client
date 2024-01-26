@@ -1,5 +1,14 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+# [0.7.0](https://github.com/webcomponents-preview/client/compare/0.6.1...0.7.0) (2024-01-26)
+
+
+### Features
+
+* prepare for nested groups ([d5bd71d](https://github.com/webcomponents-preview/client/commit/d5bd71dd7fd2643da45f0eefd1e99154d730f298))
+* **wcp-navigation:** add togglability to navigation ([141782f](https://github.com/webcomponents-preview/client/commit/141782f068deab06a58a6757a005c37a4bbc4d9c))
+* **wcp-root-navigation:** nested navigation groups ([4177b0c](https://github.com/webcomponents-preview/client/commit/4177b0c9aea07ded5c1759f54fb7d837861c7c48))
+
 ## [0.6.1](https://github.com/webcomponents-preview/client/compare/0.6.0...0.6.1) (2023-12-11)
 
 # [0.6.0](https://github.com/webcomponents-preview/client/compare/0.5.11...0.6.0) (2023-12-08)
