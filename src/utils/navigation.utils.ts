@@ -23,15 +23,15 @@ export function prepareElementLink(element: Parsed.Element): string {
  */
 export function prepareNavigation(manifest: Parsed.Manifest, config: Config): Parsed.GroupedElements {
   const items = new Map() as Parsed.GroupedElements;
+  const group = config.labels.additionalReadmeGroupName;
 
   // prepare readme navigation
   if (config.additionalReadmes?.length) {
-    const readmes = config.additionalReadmes.reduce(
-      (readmes, { name, url }) =>
-        readmes.set(name, { name, link: prepareReadmeLink(url), element: {} as Parsed.Element }),
-      new Map() as Parsed.GroupedElements,
-    );
-    items.set(config.labels.additionalReadmeGroupName, readmes);
+    const readmes = config.additionalReadmes.reduce((readmes, { name, url }) => {
+      const element = { hasGroups: true, groups: [group], name, getNiceName: () => name } as unknown as Parsed.Element;
+      return readmes.set(name, { name, link: prepareReadmeLink(url), element });
+    }, new Map() as Parsed.GroupedElements);
+    items.set(group, readmes);
   }
 
   const elements = manifest.groupedElements(config.labels.fallbackGroupName);
