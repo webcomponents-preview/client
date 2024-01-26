@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.7.2](https://github.com/webcomponents-preview/client/compare/0.7.1...0.7.2) (2024-01-26)
+
+
+### Bug Fixes
+
+* preview plugins runtime error ([db60437](https://github.com/webcomponents-preview/client/commit/db60437827e2fe774ab0958e037f7c20a3333039))
+
 ## [0.7.1](https://github.com/webcomponents-preview/client/compare/0.7.0...0.7.1) (2024-01-26)
 
 # [0.7.0](https://github.com/webcomponents-preview/client/compare/0.6.1...0.7.0) (2024-01-26)
