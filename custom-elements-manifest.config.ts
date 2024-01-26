@@ -25,9 +25,15 @@ export default {
       addGroups(componentPath) {
         const path = componentPath?.split('/') || [];
         const [, type, category, sub] = path;
-        const group = `${type}/${category}`;
+        const groups = [type, category];
 
-        return path.length > 5 ? [`${group}/${sub}`] : [group];
+        if (path.length > 5) groups.push(sub);
+        return [
+          groups
+            .filter(Boolean)
+            .map(([Upper, ...lower]) => `${Upper.toLocaleUpperCase()}${lower.join('')}`)
+            .join('/'),
+        ];
       },
     }),
   ],
