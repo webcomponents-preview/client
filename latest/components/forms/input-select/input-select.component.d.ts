@@ -4,7 +4,6 @@ declare const InputSelect_base: import("../../../index.js").Constructor<import("
 /**
  * A numeric input element using the wcp style. Fully form aware.
  *
- * @element wcp-input-select
  *
  * @property {string} label - The label of the input element.
  *
@@ -24,49 +23,6 @@ declare const InputSelect_base: import("../../../index.js").Constructor<import("
  * @cssprop --wcp-input-select-light-border - The border color of the element in light mode.
  * @cssprop --wcp-input-select-light-color - The font color of the input element in light mode.
  *
- * @example
- * ## With optional label
- * ```html
- * <wcp-input-select label="With optional label">
- *   <wcp-input-select-option value="foo" label="Foo"></wcp-input-select-option>
- *   <wcp-input-select-option value="bar" label="Bar"></wcp-input-select-option>
- *   <wcp-input-select-option value="baz" label="Baz"></wcp-input-select-option>
- * </wcp-input-select>
- * ```
- *
- * @example
- * ## With disabled options
- * ```html
- * <wcp-input-select label="With disabled options">
- *   <wcp-input-select-option value="foo" label="Foo"></wcp-input-select-option>
- *   <wcp-input-select-option value="bar" label="Bar" disabled></wcp-input-select-option>
- *   <wcp-input-select-option value="baz" label="Baz"></wcp-input-select-option>
- * </wcp-input-select>
- * ```
- *
- * @example
- * ## With optional initial value
- * ```html
- * <wcp-input-select label="With optional initial value" value="bar">
- *   <wcp-input-select-option value="foo" label="Foo"></wcp-input-select-option>
- *   <wcp-input-select-option value="bar" label="Bar"></wcp-input-select-option>
- *   <wcp-input-select-option value="baz" label="Baz"></wcp-input-select-option>
- * </wcp-input-select>
- * ```
- *
- * @example
- * ## Used within a form
- * ```html
- * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
- *   <wcp-input-select label="Fully form enabled component">
- *     <wcp-input-select-option value="foo" label="Foo"></wcp-input-select-option>
- *     <wcp-input-select-option value="bar" label="Bar"></wcp-input-select-option>
- *     <wcp-input-select-option value="baz" label="Baz"></wcp-input-select-option>
- *   </wcp-input-select>
- *   <button type="submit">Submit</button>
- *   <button type="reset">Reset</button>
- * </form>
- * ```
  */
 export declare class InputSelect extends InputSelect_base implements FormAssociated<string> {
     #private;

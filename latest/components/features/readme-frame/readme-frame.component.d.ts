@@ -1,10 +1,5 @@
 import { LitElement, type TemplateResult } from 'lit';
 /**
- * @example
- * ```html
- * <wcp-readme-frame></wcp-readme-frame>
- * ```
- *
  * @slot - The readme frame is usually filled with a readme element.
  *
  * @cssprop --wcp-readme-frame-spacing - Inner padding of the preview frame

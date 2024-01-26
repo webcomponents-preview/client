@@ -4,8 +4,6 @@ declare const InputNumber_base: import("../../../index.js").Constructor<import("
 /**
  * A numeric input element using the wcp style. Fully form aware.
  *
- * @element wcp-input-number
- *
  * @property {string} label - The label of the input element.
  *
  * @slot hint - Receives optional descriptions below the input.
@@ -22,27 +20,6 @@ declare const InputNumber_base: import("../../../index.js").Constructor<import("
  * @cssprop --wcp-input-number-light-border - The border color of the element in light mode.
  * @cssprop --wcp-input-number-light-color - The font color of the input element in light mode.
  *
- * @example
- * ## With optional label
- * ```html
- * <wcp-input-number label="With optional label"></wcp-input-number>
- * ```
- *
- * @example
- * ## With optional initial value
- * ```html
- * <wcp-input-number label="With optional initial value" value="23"></wcp-input-number>
- * ```
- *
- * @example
- * ## Used within a form
- * ```html
- * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
- *   <wcp-input-number label="Fully form enabled component"></wcp-input-number>
- *   <button type="submit">Submit</button>
- *   <button type="reset">Reset</button>
- * </form>
- * ```
  */
 export declare class InputNumber extends InputNumber_base implements FormAssociated<number> {
     #private;

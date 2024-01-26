@@ -3,8 +3,6 @@ declare const Readme_base: import("../../../index.js").Constructor<import("../..
 /**
  * Displays a Readme file by its URL.
  *
- * @element wcp-readme
- *
  * @cssprop --wcp-readme-dark-color - Text color of the readme in dark mode.
  * @cssprop --wcp-readme-dark-color-accent - Accent text color (e.g. links) of the readme in dark mode.
  * @cssprop --wcp-readme-dark-color-muted - Muted text color of the readme in dark mode.
@@ -17,10 +15,6 @@ declare const Readme_base: import("../../../index.js").Constructor<import("../..
  * @cssprop --wcp-readme-light-border-color - Border color of the readme in light mode.
  * @cssprop --wcp-readme-light-highlight-background - Background color of highlighted table rows in light mode.
  *
- * @example
- * ```html
- * <wcp-readme markdown="# Hello _World_!"></wcp-readme>
- * ```
  */
 export declare class Readme extends Readme_base {
     static readonly styles: import("lit").CSSResult;

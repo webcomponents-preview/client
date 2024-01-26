@@ -3,10 +3,6 @@ declare const ToggleColorScheme_base: import("../../../index.js").Constructor<im
 /**
  * Shows a button to toggle the desired color-scheme.
  *
- * @example
- * ```html
- * <wcp-toggle-color-scheme></wcp-toggle-color-scheme>
- * ```
  */
 export declare class ToggleColorScheme extends ToggleColorScheme_base {
     static readonly styles: import("lit").CSSResult;

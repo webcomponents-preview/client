@@ -4,8 +4,6 @@ declare const StageExamples_base: import("../../../index.js").Constructor<import
 /**
  * Shows the examples of a custom element manifest.
  *
- * @element wcp-stage-examples
- *
  * @cssprop --wcp-stage-examples-spacing - Spacing between examples.
  */
 export declare class StageExamples extends StageExamples_base implements StagePlugin {

@@ -3,8 +3,6 @@ import type * as Parsed from '../../../../utils/parser.types.js';
 import { type ElementData } from '../stage-editor.utils.js';
 declare const StageEditorControls_base: import("../../../../index.js").Constructor<import("../../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
- * @element wcp-stage-editor-controls
- *
  * @cssprop --wcp-stage-editor-controls-headline-size - The font size of the headline.
  * @cssprop --wcp-stage-editor-controls-headline-weight - The font weight of the headline.
  * @cssprop --wcp-stage-editor-controls-headline-spacing - The inner spacing of the headline.

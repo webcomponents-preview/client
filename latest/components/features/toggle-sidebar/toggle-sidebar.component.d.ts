@@ -2,10 +2,6 @@ import { LitElement, type TemplateResult } from 'lit';
 /**
  * Shows a button to toggle sidebar.
  *
- * @example
- * ```html
- * <wcp-toggle-sidebar></wcp-toggle-sidebar>
- * ```
  */
 export declare class ToggleSidebar extends LitElement {
     static readonly styles: import("lit").CSSResult;

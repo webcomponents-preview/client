@@ -3,7 +3,6 @@ import type { TopbarPlugin } from '../../../utils/plugin.utils.js';
 /**
  * Toggles all preview editor link plugins to show or hide the debug hints.
  *
- * @element wcp-topbar-preview-editor-link-toggle
  */
 export declare class TopbarPreviewEditorLinkToggle extends LitElement implements TopbarPlugin {
     static readonly styles: import("lit").CSSResult;

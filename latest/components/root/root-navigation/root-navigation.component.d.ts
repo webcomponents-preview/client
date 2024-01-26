@@ -1,9 +1,7 @@
 import { LitElement, type TemplateResult } from 'lit';
-import { type GroupedNavigationItems } from '../../../utils/navigation.utils.js';
+import type * as Parsed from '../../../utils/parser.types.js';
 /**
  * Manages the main root-navigation in the application root.
- *
- * @element wcp-root-navigation
  *
  * @cssprop --wcp-root-navigation-empty-message-spacing - The spacing of the empty message.
  * @cssprop --wcp-root-navigation-empty-message-font-size - The font size of the empty message.
@@ -11,12 +9,20 @@ import { type GroupedNavigationItems } from '../../../utils/navigation.utils.js'
 export declare class RootNavigation extends LitElement {
     #private;
     static readonly styles: import("lit").CSSResult;
+    private readonly togglableNavigationRefs;
     private filteredItems;
     currentPath?: string;
     emptyMessage: string;
     minSearchLength: number;
     set searchTerms(terms: string[]);
-    set items(items: GroupedNavigationItems);
+    set items(items: Parsed.GroupedElements);
+    constructor();
+    disconnectedCallback(): void;
+    private handleKeyDown;
+    private handleKeyUp;
+    private handleNavigationToggle;
+    protected renderItem(element: Parsed.Element): TemplateResult;
+    protected renderItems(items: Parsed.GroupedElements, nested?: boolean): TemplateResult | undefined;
     protected render(): TemplateResult;
 }
 declare global {

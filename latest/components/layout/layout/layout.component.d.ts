@@ -1,14 +1,6 @@
 import { LitElement, type TemplateResult } from 'lit';
 declare const Layout_base: import("../../../index.js").Constructor<import("../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
- * @example
- * ```html
- * <wcp-layout>
- *   <nav slot="aside">To the left!</nav>
- *   <article>Me the important content!</article>
- * </wcp-layout>
- * ```
- *
  * @cssprop --wcp-layout-dark-background - The background color of the whole layout
  * @cssprop --wcp-layout-dark-color - The text color of the whole layout
  *

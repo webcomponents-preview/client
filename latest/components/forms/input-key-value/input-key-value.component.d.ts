@@ -4,28 +4,10 @@ declare const InputKeyValue_base: import("../../../index.js").Constructor<import
 /**
  * A key-value input element using the wcp style. Fully form aware.
  *
- * @element wcp-input-key-value
- *
  * @property {string} label - The label of the input element.
  * @cssprop --wcp-input-key-value-gutter - The gutter between the key-value pair inputs.
  * @slot hint - Receives optional descriptions below the input.
  *
- * @example
- * ## With optional label
- * ```html
- * <wcp-input-key-value label="With optional label"></wcp-input-key-value>
- * ```
- *
- * @example
- * ## Used within a form
- * ```html
- * <form onsubmit="console.log(Array.from(new FormData(this).entries()));return false" onreset="console.log('Reset!')">
- *   <input type="hidden" name="hidden" value="hidden" />
- *   <wcp-input-key-value name="embedded" label="Fully form enabled component"></wcp-input-key-value>
- *   <button type="submit">Submit</button>
- *   <button type="reset">Reset</button>
- * </form>
- * ```
  */
 export declare class InputKeyValue extends InputKeyValue_base implements FormAssociated<string> {
     #private;

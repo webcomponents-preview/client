@@ -1,10 +1,7 @@
-import type { Config } from '../utils/config.utils.js';
-import type { Element, Manifest } from '../utils/parser.types.js';
-/**
- * Defines the structure of the navigation items.
- */
-export type GroupedNavigationItems = Map<string, GroupedNavigationItem[]>;
-export type GroupedNavigationItem = {
+import type * as Parsed from '../utils/parser.types.js';
+export declare const ROUTE_ELEMENTS = "/element";
+export declare const ROUTE_READMES = "/readme";
+type GroupedNavigationItem = {
     name: string;
     link: string;
 };
@@ -15,10 +12,13 @@ export declare function prepareReadmeNavigationItem(name: string, url: string): 
 /**
  * Creates a navigation item for a given element.
  */
-export declare function prepareElementNavigationItem(element: Element): GroupedNavigationItem;
+export declare function prepareElementNavigationItem(element: Parsed.Element): GroupedNavigationItem;
 /**
- * Prepares a grouped navigation structure of readmes and elements.
+ * Predicate function to match a given content against a list of search terms.
  */
-export declare function prepareNavigation(manifest: Manifest, config: Config): GroupedNavigationItems;
 export declare function matchesSearch(content: string, terms: string[], minSearchLength?: number): boolean;
-export declare function filterItems(items: GroupedNavigationItems, terms: string[], minSearchLength?: number): GroupedNavigationItems;
+/**
+ * Filters the given navigation items by the given search terms recursively.
+ */
+export declare function filterItems(items: Parsed.GroupedElements, terms: string[], minSearchLength?: number): Parsed.GroupedElements;
+export {};

@@ -4,7 +4,6 @@ declare const StageEditor_base: import("../../../index.js").Constructor<import("
 /**
  * Allows editing a custom element.
  *
- * @element wcp-stage-editor
  */
 export declare class StageEditor extends StageEditor_base implements StagePlugin {
     #private;

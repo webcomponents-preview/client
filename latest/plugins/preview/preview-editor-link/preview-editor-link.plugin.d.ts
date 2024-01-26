@@ -3,7 +3,6 @@ import type { PreviewPlugin } from '../../../utils/plugin.utils.js';
 /**
  * Links all found custom elements in a preview with their current state to the editor to be further played around with.
  *
- * @element wcp-preview-editor-link
  */
 export declare class PreviewEditorLink extends LitElement implements PreviewPlugin {
     #private;

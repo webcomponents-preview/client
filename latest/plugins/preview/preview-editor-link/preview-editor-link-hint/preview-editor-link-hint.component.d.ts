@@ -3,8 +3,6 @@ declare const PreviewEditorLinkHint_base: import("../../../../index.js").Constru
 /**
  * Shows a hint to a given preview element.
  *
- * @element wcp-preview-editor-link-hint
- *
  * @cssprop --wcp-preview-editor-link-hint-button-passive-background - The background color of the hint button in passive state.
  * @cssprop --wcp-preview-editor-link-hint-button-active-background - The background color of the hint button in active state.
  * @cssprop --wcp-preview-editor-link-hint-button-passive-size - Size of the hint button in passive state.

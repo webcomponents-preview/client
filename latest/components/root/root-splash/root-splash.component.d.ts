@@ -11,12 +11,6 @@ import { LitElement, type TemplateResult } from 'lit';
  *
  * @slot {Loading...} - The text content to be displayed in the splash screen.
  *
- * @example
- * # Basic usage
- *
- * ```html
- * <wcp-root-splash>Loading...</wcp-root-splash>
- * ```
  */
 export declare class RootSplash extends LitElement {
     static readonly styles: import("lit").CSSResult;

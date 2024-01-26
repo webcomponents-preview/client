@@ -4,7 +4,6 @@ declare const StageReadme_base: import("../../../index.js").Constructor<import("
 /**
  * Shows the readme of a custom element.
  *
- * @element wcp-stage-readme
  */
 export declare class StageReadme extends StageReadme_base implements StagePlugin {
     #private;

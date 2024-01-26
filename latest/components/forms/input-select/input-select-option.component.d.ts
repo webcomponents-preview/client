@@ -2,7 +2,6 @@ import { LitElement } from 'lit';
 /**
  * A helper element to declare options for a `wcp-input-select` element.
  *
- * @element wcp-input-select-option
  */
 export declare class InputSelectOption extends LitElement {
     disabled: boolean;

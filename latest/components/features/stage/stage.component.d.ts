@@ -1,11 +1,6 @@
 import { LitElement, type TemplateResult } from 'lit';
 declare const Stage_base: import("../../../index.js").Constructor<import("../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
- * @example
- * ```html
- * <wcp-stage></wcp-stage>
- * ```
- *
  * @slot - The preview frame can be filled with any number of plugins. The plugins will be rendered as tabs.
  *
  * @cssprop --wcp-stage-dark-background - Background color of the preview frame in dark mode

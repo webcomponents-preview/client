@@ -5,7 +5,6 @@ declare const PreviewSimulateViewports_base: import("../../../index.js").Constru
 /**
  * Simulates various viewports for a custom element preview.
  *
- * @element wcp-preview-simulate-viewports
  */
 export declare class PreviewSimulateViewports extends PreviewSimulateViewports_base implements PreviewPlugin {
     static readonly styles: import("lit").CSSResult;

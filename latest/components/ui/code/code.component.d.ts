@@ -3,12 +3,6 @@ declare const Code_base: import("../../../index.js").Constructor<import("../../.
 /**
  * Shows a formatted code snippet.
  *
- * @example
- * ```html
- * <wcp-code>
- *   <pre><code>Some code</code></pre>
- * </wcp-code>
- * ```
  */
 export declare class Code extends Code_base {
     static readonly styles: import("lit").CSSResult;

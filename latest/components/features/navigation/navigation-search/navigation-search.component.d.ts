@@ -1,8 +1,6 @@
 import { LitElement, type TemplateResult } from 'lit';
 declare const NavigationSearch_base: import("../../../../index.js").Constructor<import("../../../../mixins/color-schemable.mixin.js").ColorSchemableInterface> & typeof LitElement;
 /**
- * @element wcp-navigation-search
- *
  * @emits wcp-navigation-search:search - Fired when the search term changes. Carries the new search term with it.
  *
  * @cssprop --wcp-navigation-search-spacing - The spacing around the search input.

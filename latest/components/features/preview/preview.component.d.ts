@@ -3,19 +3,11 @@ declare const Preview_base: import("../../../index.js").Constructor<import("../.
 /**
  * Previews given content.
  *
- * @element wcp-preview
- *
  * @cssprop --wcp-preview-menu-dark-border-color - Border color of the plugin menu in dark mode.
  * @cssprop --wcp-preview-menu-light-border-color - Border color of the plugin menu in light mode.
  *
  * @slot - The content to preview.
  *
- * @example
- * ```html
- * <wcp-preview>
- *   <wcp-button>Example button</wcp-button>
- * </wcp-preview>
- * ```
  */
 export declare class Preview extends Preview_base {
     #private;
