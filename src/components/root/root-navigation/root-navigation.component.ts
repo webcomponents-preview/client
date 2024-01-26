@@ -1,8 +1,9 @@
 import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, eventOptions, property, queryAll, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 
+import type { Navigation } from '@/components/features/navigation/navigation/navigation.component.js';
 import { filterItems, prepareElementNavigationItem } from '@/utils/navigation.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
 import { Router } from '@/utils/router.utils.js';
@@ -21,6 +22,13 @@ export class RootNavigation extends LitElement {
 
   #items: Parsed.GroupedElements = new Map();
   #searchTerms: string[] = [];
+
+  #altKeyPressed = false;
+  #handleKeyDown = this.handleKeyDown.bind(this);
+  #handleKeyUp = this.handleKeyUp.bind(this);
+
+  @queryAll('wcp-navigation[togglable]')
+  private readonly togglableNavigationRefs!: NodeListOf<Navigation>;
 
   @state()
   private filteredItems: Parsed.GroupedElements = new Map();
@@ -46,6 +54,38 @@ export class RootNavigation extends LitElement {
     this.filteredItems = filterItems(this.#items, this.#searchTerms, this.minSearchLength);
   }
 
+  constructor() {
+    super();
+    window.addEventListener('keydown', this.#handleKeyDown);
+    window.addEventListener('keyup', this.#handleKeyUp);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    window.removeEventListener('keydown', this.#handleKeyDown);
+    window.removeEventListener('keyup', this.#handleKeyUp);
+  }
+
+  @eventOptions({ passive: true })
+  private handleKeyDown(event: KeyboardEvent) {
+    this.#altKeyPressed = event.altKey;
+  }
+
+  @eventOptions({ passive: true })
+  private handleKeyUp() {
+    this.#altKeyPressed = false;
+  }
+
+  @eventOptions({ passive: true })
+  private handleNavigationToggle(event: CustomEvent<boolean>): void {
+    // only if 'alt' key is pressed
+    if (!this.#altKeyPressed) return;
+    // toggle all others as well
+    this.togglableNavigationRefs.forEach((navigation) => {
+      navigation.open = event.detail;
+    });
+  }
+
   protected renderItem(element: Parsed.Element): TemplateResult {
     const { link, name } = prepareElementNavigationItem(element);
     return html`
@@ -64,7 +104,12 @@ export class RootNavigation extends LitElement {
         ${when(
           element instanceof Map && element.size > 0,
           () => html`
-            <wcp-navigation headline="${group}" ?nested="${nested}">
+            <wcp-navigation
+              headline="${group}"
+              ?togglable="${nested}"
+              ?open="${nested}"
+              @wcp-navigation-toggle="${this.handleNavigationToggle}"
+            >
               ${this.renderItems(element as Parsed.GroupedElements, true)}
             </wcp-navigation>
           `,

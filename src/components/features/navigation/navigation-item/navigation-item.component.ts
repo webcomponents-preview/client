@@ -42,7 +42,11 @@ export class NavigationItem extends ColorSchemable(LitElement) {
     return html`
       ${when(
         this.href !== undefined,
-        () => html`<a href="${ifDefined(this.href)}"><slot></slot></a>`,
+        () => html`
+          <a href="${ifDefined(this.href)}">
+            <span><slot></slot></span>
+          </a>
+        `,
         () => html`<span><slot></slot></span>`,
       )}
     `;

@@ -6,6 +6,10 @@
   ---wcp-root-navigation-empty-message-font-size: var(--wcp-root-navigation-empty-message-font-size, 0.8em);
 }
 
+:host {
+  user-select: none;
+}
+
 p {
   margin: var(---wcp-root-navigation-empty-message-spacing);
   font-size: var(---wcp-root-navigation-empty-message-font-size);
