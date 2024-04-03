@@ -58,6 +58,8 @@ const {
 const options: BuildOptions = {
   sourceRoot: 'src',
   entryPoints: ['src/index.ts', 'src/index.html', 'src/styles/global.scss'],
+  // do not bundle the runtime, instead use the one provided by the consuming app
+  external: ['@lit/reactive-element', 'lit', 'lit-element', 'lit-html'],
   assetNames: '[name]',
   outdir: 'dist',
   platform: 'browser',
