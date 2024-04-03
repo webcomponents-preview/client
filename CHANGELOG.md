@@ -1,5 +1,17 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+# [0.8.0](https://github.com/webcomponents-preview/client/compare/0.7.4...0.8.0) (2024-04-03)
+
+
+### Bug Fixes
+
+* sass imports ([bc51f76](https://github.com/webcomponents-preview/client/commit/bc51f763afb794e70960108bb57cda8d824650f1))
+
+
+### Features
+
+* add runtime deps from cdn via importmap ([1815cf6](https://github.com/webcomponents-preview/client/commit/1815cf602a58a9c470d66e78b4b9f70b22e11cd2))
+
 ## [0.7.4](https://github.com/webcomponents-preview/client/compare/0.7.3...0.7.4) (2024-01-26)
 
 
