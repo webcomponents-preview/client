@@ -32,16 +32,14 @@ const precompile = (source: string, path: string): string => {
 
 // add postcss to sass transformer
 const transform = async (source: string): Promise<string> => {
-  const { css } = await postcss([autoprefixer, postcssPresetEnv({ stage: 0 })]).process(source, {
-    from: source,
-  });
+  const { css } = await postcss([autoprefixer, postcssPresetEnv({ stage: 0 })]).process(source, { from: source });
   return css;
 };
 
 // resolve @ imports in sass
 const importMapper = (path: string): string => {
   if (path.includes('node_modules')) return path;
-  if (path.includes('@')) return resolve(path.replace(/^.*@\/?/, './src/'));
+  if (path.startsWith('@')) return resolve(path.replace(/^.*@\/?/, './src/'));
   return path;
 };
 

@@ -31,7 +31,7 @@
 }
 
 // add some default styles from GitHub for the rendered readme for the time being
-@include meta.load-css('@/styles/includes/github-markdown.scss');
+@include meta.load-css('../../../styles/includes/github-markdown.scss');
 
 .markdown-body {
   // first, reset some defaults, to be inherited from the global scope
