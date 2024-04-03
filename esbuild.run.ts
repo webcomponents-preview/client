@@ -18,6 +18,8 @@ import { dtsAliasesPlugin } from './esbuild-declaration-aliases.plugin.js';
 import BREAKPOINTS from './breakpoints.json' assert { type: 'json' };
 import MANIFEST from './package.json' assert { type: 'json' };
 
+export const external = ['@lit/reactive-element', 'lit', 'lit-element', 'lit-html'];
+
 // inject some global sass variables
 const precompile = (source: string, path: string): string => {
   if (path.endsWith('breakpoint.mixin.scss')) {
@@ -59,7 +61,7 @@ const options: BuildOptions = {
   sourceRoot: 'src',
   entryPoints: ['src/index.ts', 'src/index.html', 'src/styles/global.scss'],
   // do not bundle the runtime, instead use the one provided by the consuming app
-  external: ['@lit/reactive-element', 'lit', 'lit-element', 'lit-html'],
+  external,
   assetNames: '[name]',
   outdir: 'dist',
   platform: 'browser',
@@ -137,6 +139,12 @@ ${Object.entries(BREAKPOINTS).reduce((acc, [key, value]) => `${acc}  ${key}: ${v
       src: 'node_modules/prismjs/components',
       dest: 'dist/grammars',
     }),
+    ...external.map((ext) =>
+      copyPlugin({
+        src: `node_modules/${ext}`,
+        dest: `dist/runtime/${ext}`,
+      }),
+    ),
   ],
 };
 
