@@ -1,5 +1,13 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.8.2](https://github.com/webcomponents-preview/client/compare/0.8.1...0.8.2) (2024-04-03)
+
+
+### Bug Fixes
+
+* exclude polyfill as well ([2a2febb](https://github.com/webcomponents-preview/client/commit/2a2febb3d2e12a403d3aa525f667317fe846faab))
+* use polyfill from importmap ([f4420dd](https://github.com/webcomponents-preview/client/commit/f4420dd0182e632743496bb196acbb9a71edbbbe))
+
 ## [0.8.1](https://github.com/webcomponents-preview/client/compare/0.8.0...0.8.1) (2024-04-03)
 
 
