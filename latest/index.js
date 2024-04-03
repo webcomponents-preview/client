@@ -2,9 +2,9 @@
 if (!window.wcp) window.wcp = {};
 
 // set WCP version globally
-if (window.wcp.version !== undefined && window.wcp.version !== '0.8.0') {
-  console.warn('[wcp] 0.8.0: Another version (' + window.wcp.version + ') has already been loaded.');
-} else window.wcp.version = '0.8.0';
+if (window.wcp.version !== undefined && window.wcp.version !== '0.8.1') {
+  console.warn('[wcp] 0.8.1: Another version (' + window.wcp.version + ') has already been loaded.');
+} else window.wcp.version = '0.8.1';
 
 // set breakpoints globally
 window.wcp.breakpoints = {
