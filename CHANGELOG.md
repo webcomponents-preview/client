@@ -1,5 +1,13 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.8.1](https://github.com/webcomponents-preview/client/compare/0.8.0...0.8.1) (2024-04-03)
+
+
+### Bug Fixes
+
+* copy runtime to dist ([8310fad](https://github.com/webcomponents-preview/client/commit/8310fad84d6fed162d3ba3cdc2cebe33b28fdb87))
+* use relative runtime instead of cdn ([751bd57](https://github.com/webcomponents-preview/client/commit/751bd57737607240b9b8d04c876e7de84415dc5e))
+
 # [0.8.0](https://github.com/webcomponents-preview/client/compare/0.7.4...0.8.0) (2024-04-03)
 
 
