@@ -8,5 +8,30 @@
 
 <body>
   <wcp-root config-url="config.json" manifest-url="custom-elements.json" reload-query-param="wcp-hot-reload"></wcp-root>
+
+  <script type="importmap">
+    {
+      "imports": {
+          "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/reactive-element.min.js",
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.1.2/+esm",
+          "lit/async-directive.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/async-directive.js/+esm",
+          "lit/decorators.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/decorators.js/+esm",
+          "lit/decorators/property.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/decorators/property.js/+esm",
+          "lit/directive.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/directive.js/+esm",
+          "lit/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/directives/class-map.js/+esm",
+          "lit/directives/if-defined.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/directives/if-defined.js/+esm",
+          "lit/directives/keyed.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/directives/keyed.js/+esm",
+          "lit/directives/map.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/directives/map.js/+esm",
+          "lit/directives/ref.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/directives/ref.js/+esm",
+          "lit/directives/unsafe-html.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/directives/unsafe-html.js/+esm",
+          "lit/directives/until.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/directives/until.js/+esm",
+          "lit/directives/when.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/directives/when.js/+esm",
+          "lit/static-html.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/static-html.js/+esm",
+          "lit/html.js": "https://cdn.jsdelivr.net/npm/lit@3.1.2/html.js/+esm",
+          "lit-element/lit-element.js": "https://cdn.jsdelivr.net/npm/lit-element@4.0.4/+esm",
+          "lit-html": "https://cdn.jsdelivr.net/npm/lit-html@3.1.2/lit-html.min.js/+esm"
+      }
+    }
+  </script>
   <script type="module" src="index.js"></script>
 </body>
