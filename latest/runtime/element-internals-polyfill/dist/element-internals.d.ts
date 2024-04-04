@@ -83,3 +83,21 @@ declare global {
     }
 }
 export declare function isElementInternalsSupported(): boolean;
+/**
+ * Forcibly applies the polyfill for CustomStateSet.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/API/CustomStateSet
+ */
+export declare function forceCustomStateSetPolyfill(attachInternals?: HTMLElement['attachInternals']): void;
+/**
+ * Forcibly applies the polyfill for ElementInternals. Useful for situations
+ * like Chrome extensions where Chrome supports ElementInternals, but the
+ * CustomElements polyfill is required.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals
+ *
+ * @param forceCustomStateSet Optional: when true, forces the
+ * [CustomStateSet](https://developer.mozilla.org/en-US/docs/Web/API/CustomStateSet)
+ * polyfill as well.
+ */
+export declare function forceElementInternalsPolyfill(forceCustomStateSet?: boolean): void;

@@ -1,4 +1,4 @@
-(function () {
+(function (exports) {
     'use strict';
 
     const refMap = new WeakMap();
@@ -195,6 +195,11 @@
     }
     const deferUpgrade = (fragment) => {
         const observer = new MutationObserver(fragmentObserverCallback);
+        if (window?.ShadyDOM?.inUse &&
+            fragment.mode &&
+            fragment.host) {
+            fragment = fragment.host;
+        }
         observer.observe?.(fragment, { childList: true });
         documentFragmentMap.set(fragment, observer);
     };
@@ -725,7 +730,27 @@
             'reportValidity'
         ].every(prop => prop in featureDetectionElement.internals);
     }
-    if (!isElementInternalsSupported()) {
+    let hasElementInternalsPolyfillBeenApplied = false;
+    let hasCustomStateSetPolyfillBeenApplied = false;
+    function forceCustomStateSetPolyfill(attachInternals) {
+        if (hasCustomStateSetPolyfillBeenApplied) {
+            return;
+        }
+        hasCustomStateSetPolyfillBeenApplied = true;
+        window.CustomStateSet = CustomStateSet;
+        if (attachInternals) {
+            HTMLElement.prototype.attachInternals = function (...args) {
+                const internals = attachInternals.call(this, args);
+                internals.states = new CustomStateSet(this);
+                return internals;
+            };
+        }
+    }
+    function forceElementInternalsPolyfill(forceCustomStateSet = true) {
+        if (hasElementInternalsPolyfillBeenApplied) {
+            return;
+        }
+        hasElementInternalsPolyfillBeenApplied = true;
         if (typeof window !== 'undefined') {
             window.ElementInternals = ElementInternals;
         }
@@ -790,18 +815,27 @@
         if (typeof HTMLFormElement !== 'undefined') {
             patchFormPrototype();
         }
-        if (typeof window !== 'undefined' && !window.CustomStateSet) {
-            window.CustomStateSet = CustomStateSet;
+        if (forceCustomStateSet ||
+            (typeof window !== "undefined" && !window.CustomStateSet)) {
+            forceCustomStateSetPolyfill();
         }
     }
-    else if (typeof window !== 'undefined' && !window.CustomStateSet) {
-        window.CustomStateSet = CustomStateSet;
-        const attachInternals = HTMLElement.prototype.attachInternals;
-        HTMLElement.prototype.attachInternals = function (...args) {
-            const internals = attachInternals.call(this, args);
-            internals.states = new CustomStateSet(this);
-            return internals;
-        };
+
+    const isCePolyfill = !!customElements.polyfillWrapFlushCallback;
+    if (!isCePolyfill) {
+        if (!isElementInternalsSupported()) {
+            forceElementInternalsPolyfill(false);
+        }
+        else if (typeof window !== "undefined" && !window.CustomStateSet) {
+            forceCustomStateSetPolyfill(HTMLElement.prototype.attachInternals);
+        }
     }
 
-})();
+    exports.forceCustomStateSetPolyfill = forceCustomStateSetPolyfill;
+    exports.forceElementInternalsPolyfill = forceElementInternalsPolyfill;
+
+    Object.defineProperty(exports, '__esModule', { value: true });
+
+    return exports;
+
+})({});
