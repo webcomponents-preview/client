@@ -1,5 +1,13 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.8.3](https://github.com/webcomponents-preview/client/compare/0.8.2...0.8.3) (2024-04-04)
+
+
+### Bug Fixes
+
+* move url-pattern-polyfill out as well ([16303ef](https://github.com/webcomponents-preview/client/commit/16303ef44dfd43c753562c93e17b0a11f38ea254))
+* properly define peer deps ([d16ca4b](https://github.com/webcomponents-preview/client/commit/d16ca4b35d792140dda500e739f690f86a033795))
+
 ## [0.8.2](https://github.com/webcomponents-preview/client/compare/0.8.1...0.8.2) (2024-04-03)
 
 
