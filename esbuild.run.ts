@@ -18,7 +18,14 @@ import { dtsAliasesPlugin } from './esbuild-declaration-aliases.plugin.js';
 import BREAKPOINTS from './breakpoints.json' assert { type: 'json' };
 import MANIFEST from './package.json' assert { type: 'json' };
 
-export const external = ['@lit/reactive-element', 'element-internals-polyfill', 'lit', 'lit-element', 'lit-html'];
+export const external = [
+  '@lit/reactive-element',
+  'element-internals-polyfill',
+  'lit',
+  'lit-element',
+  'lit-html',
+  'urlpattern-polyfill',
+];
 
 // inject some global sass variables
 const precompile = (source: string, path: string): string => {
