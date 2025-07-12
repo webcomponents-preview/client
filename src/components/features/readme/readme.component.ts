@@ -1,4 +1,5 @@
-import { LitElement, type TemplateResult, unsafeCSS } from 'lit';
+import type { TemplateResult } from 'lit';
+import { LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { until } from 'lit/directives/until.js';
 import { html } from 'lit/static-html.js';

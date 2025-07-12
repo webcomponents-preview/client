@@ -4,7 +4,6 @@ import type * as Parsed from '@/utils/parser.types.js';
 
 import { litKey } from './parser.utils.js';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const field = (data: Partial<Parsed.Field>) => data as Parsed.Field;
 
 describe('parser.utils', () => {

@@ -6,7 +6,8 @@ import { unsafeStatic, withStatic } from 'lit/static-html.js';
 
 import { getManifest } from '@/utils/manifest.utils.js';
 import { prefixRelativeUrls } from '@/utils/markdown.utils.js';
-import { areParamsEqual, mergeParams, type Route, Router } from '@/utils/router.utils.js';
+import type { Route } from '@/utils/router.utils.js';
+import { areParamsEqual, mergeParams, Router } from '@/utils/router.utils.js';
 
 export const prepareRoutes = (): Route[] => [
   {

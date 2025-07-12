@@ -247,9 +247,7 @@
           },
           "examples": [],
           "readme": "# class: `Root`\n\n## Fields\n\n| Name                | Privacy | Type                                  | Default    | Description                                                                                                                                                          | Inherited From |\n| ------------------- | ------- | ------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |\n| `config`            |         | `Config \\| undefined`                 |            |                                                                                                                                                                      |                |\n| `manifest`          |         | `Manifest \\| undefined`               |            |                                                                                                                                                                      |                |\n| `initialPreviewTab` |         | `string \\| undefined`                 |            |                                                                                                                                                                      |                |\n| `navigation`        |         | `Map<string, Element[]> \\| undefined` |            |                                                                                                                                                                      |                |\n| `readmesGroup`      |         | `string`                              | `'Readme'` |                                                                                                                                                                      |                |\n| `readmes`           |         | `{ name: string; url: string }[]`     | `[]`       |                                                                                                                                                                      |                |\n| `inline`            |         | `boolean`                             | `false`    | Flags the component to be displayed inline and not standalone. Requires the surrounding&#xA;layout to provide the necessary styles like for any other block element. |                |\n| `configUrl`         |         | `string \\| undefined`                 |            | Allows to set a url to load a config file from.                                                                                                                      |                |\n| `manifestUrl`       |         | `string`                              |            | Defines the location of the custom element manifest file.                                                                                                            |                |\n\n## Methods\n\n| Name                         | Privacy   | Description | Parameters                  | Return           | Inherited From |\n| ---------------------------- | --------- | ----------- | --------------------------- | ---------------- | -------------- |\n| `loadConfig`                 |           |             | `configUrl: string`         |                  |                |\n| `loadCustomElementsManifest` |           |             | `manifestUrl: string`       |                  |                |\n| `emitManifestLoaded`         |           |             |                             |                  |                |\n| `connectedCallback`          |           |             |                             |                  |                |\n| `renderReadme`               | protected |             | `url: string, hash: string` | `TemplateResult` |                |\n| `renderElement`              | protected |             | `tagName: string`           | `TemplateResult` |                |\n| `render`                     | protected |             |                             | `TemplateResult` |                |\n\n## Attributes\n\n| Name           | Field       | Inherited From |\n| -------------- | ----------- | -------------- |\n| `inline`       | inline      |                |\n| `config-url`   | configUrl   |                |\n| `manifest-url` | manifestUrl |                |\n\n## CSS Properties\n\n| Name                          | Default | Description                                                  |\n| ----------------------------- | ------- | ------------------------------------------------------------ |\n| `--wcp-root-dark-background`  |         | The background color of the root element in dark mode        |\n| `--wcp-root-dark-color`       |         | The text color of the text in the root element in dark mode  |\n| `--wcp-root-light-background` |         | The background color of the root element in light mode       |\n| `--wcp-root-light-color`      |         | The text color of the text in the root element in light mode |\n\n## Slots\n\n| Name               | Description                                                |\n| ------------------ | ---------------------------------------------------------- |\n| `logo`             | Allows setting a custom logo to be displayed in the title. |\n| `preview-controls` | Can be used to inject additional preview controls.         |\n| `preview-frame`    | Used to be override the existing preview pane.             |\n| `preview-details`  | Can be used to inject additional preview detail panes.     |\n\n<hr/>\n",
-          "groups": [
-            "root"
-          ],
+          "groups": ["root"],
           "tagName": "wcp-root",
           "customElement": true
         }
@@ -328,9 +326,7 @@
             "### Shows arbitrary HTML code example\n\n```html\n<wcp-markdown-example>\n  <pre slot=\"code\">\n&lt;h1&gt;Readme&lt;/h1&gt;\n&lt;p&gt;Some readme content&lt;/p&gt;\n  </pre>\n  <div slot=\"preview\">\n    <h1>Readme</h1>\n    <p>Some readme content</p>\n  </div>\n</wcp-markdown-example>\n```"
           ],
           "readme": "# class: `MarkdownExample`\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## CSS Properties\n\n| Name                                        | Default | Description                               |\n| ------------------------------------------- | ------- | ----------------------------------------- |\n| `--wcp-markdown-example-spacing`            |         | Inner padding of the example              |\n| `--wcp-markdown-example-border-radius`      |         | Border radius of the example              |\n| `--wcp-markdown-example-border-width`       |         | Border width of the example               |\n| `--wcp-markdown-example-dark-border-color`  |         | Border color of the example in dark mode  |\n| `--wcp-markdown-example-light-border-color` |         | Border color of the example in light mode |\n\n## Slots\n\n| Name      | Description              |\n| --------- | ------------------------ |\n| `code`    | Code example             |\n| `preview` | Rendered example preview |\n\n<hr/>\n\n# Variables\n\n| Name                    | Description | Type     |\n| ----------------------- | ----------- | -------- |\n| `MARKDOWN_EXAMPLE_TABS` |             | `object` |\n\n<hr/>\n\n# Functions\n\n| Name | Description | Parameters | Return |\n| ---- | ----------- | ---------- | ------ |\n|      |             |            |        |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
+          "groups": ["feature"],
           "tagName": "wcp-markdown-example",
           "customElement": true
         }
@@ -444,9 +440,7 @@
             "### Usage with headline\n\n```html\n<wcp-navigation headline=\"Navigation\">\n  <wcp-navigation-item href=\"/home\">Home</wcp-navigation-item>\n  <wcp-navigation-item href=\"/about\">About</wcp-navigation-item>\n</wcp-navigation>\n```"
           ],
           "readme": "# class: `Navigation`\n\n## Fields\n\n| Name       | Privacy | Type                  | Default | Description | Inherited From |\n| ---------- | ------- | --------------------- | ------- | ----------- | -------------- |\n| `headline` |         | `string \\| undefined` |         |             |                |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name       | Field    | Inherited From |\n| ---------- | -------- | -------------- |\n| `headline` | headline |                |\n\n## CSS Properties\n\n| Name                                         | Default | Description                                               |\n| -------------------------------------------- | ------- | --------------------------------------------------------- |\n| `--wcp-navigation-spacing`                   |         | Spacing between navigation and headline                   |\n| `--wcp-navigation-spacing-items`             |         | Spacing between navigation items                          |\n| `--wcp-navigation-spacing-headline`          |         | Inner padding of the navigation headline                  |\n| `--wcp-navigation-dark-border-color`         |         | Border color of the navigation headline in dark mode      |\n| `--wcp-navigation-light-border-color`        |         | Border color of the navigation headline in light mode     |\n| `--wcp-navigation-headline-size`             |         | Font size of the navigation headline                      |\n| `--wcp-navigation-headline-weight`           |         | Font weight of the navigation headline                    |\n| `--wcp-navigation-headline-spacing`          |         | Letter spacing of the navigation headline                 |\n| `--wcp-navigation-headline-dark-background`  |         | Background color of the navigation headline in dark mode  |\n| `--wcp-navigation-headline-light-background` |         | Background color of the navigation headline in light mode |\n\n## Slots\n\n| Name | Description                       |\n| ---- | --------------------------------- |\n|      | Default slot for navigation items |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
+          "groups": ["feature"],
           "tagName": "wcp-navigation",
           "customElement": true
         }
@@ -591,9 +585,7 @@
             "### With link\n\n```html\n<wcp-navigation-item href=\"/home\">\n  Home\n</wcp-navigation-item>\n```"
           ],
           "readme": "# class: `NavigationItem`\n\n## Fields\n\n| Name     | Privacy | Type                  | Default | Description | Inherited From |\n| -------- | ------- | --------------------- | ------- | ----------- | -------------- |\n| `active` |         | `boolean`             | `false` |             |                |\n| `href`   |         | `string \\| undefined` |         |             |                |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name     | Field  | Inherited From |\n| -------- | ------ | -------------- |\n| `active` | active |                |\n| `href`   | href   |                |\n\n## CSS Properties\n\n| Name                                             | Default | Description                                                     |\n| ------------------------------------------------ | ------- | --------------------------------------------------------------- |\n| `--wcp-navigation-item-spacing`                  |         | Inner padding of the item                                       |\n| `--wcp-navigation-item-dark-passive-background`  |         | Background color of the item when non interactive in dark mode  |\n| `--wcp-navigation-item-dark-hover-background`    |         | Background color of the item when hovered in dark mode          |\n| `--wcp-navigation-item-dark-active-background`   |         | Background color of the item when active in dark mode           |\n| `--wcp-navigation-item-dark-passive-color`       |         | Text color of the item when non interactive in dark mode        |\n| `--wcp-navigation-item-dark-hover-color`         |         | Text color of the item when hovered in dark mode                |\n| `--wcp-navigation-item-dark-active-color`        |         | Text color of the item when active in dark mode                 |\n| `--wcp-navigation-item-light-passive-background` |         | Background color of the item when non interactive in light mode |\n| `--wcp-navigation-item-light-hover-background`   |         | Background color of the item when hovered in light mode         |\n| `--wcp-navigation-item-light-active-background`  |         | Background color of the item when active in light mode          |\n| `--wcp-navigation-item-light-passive-color`      |         | Text color of the item when non interactive in light mode       |\n| `--wcp-navigation-item-light-hover-color`        |         | Text color of the item when hovered in light mode               |\n| `--wcp-navigation-item-light-active-color`       |         | Text color of the item when active in light mode                |\n\n## Slots\n\n| Name | Description               |\n| ---- | ------------------------- |\n|      | Default slot for contents |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
+          "groups": ["feature"],
           "tagName": "wcp-navigation-item",
           "customElement": true
         }
@@ -665,9 +657,7 @@
             "### Usage with controls\n\n```html\n<wcp-preview-controls>\n  <wcp-toggle-sidebar></wcp-toggle-sidebar>\n  <wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n</wcp-preview-controls>\n```"
           ],
           "readme": "# class: `PreviewControls`, `wcp-preview-controls`\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## CSS Properties\n\n| Name                                 | Default | Description                                    |\n| ------------------------------------ | ------- | ---------------------------------------------- |\n| `--wcp-preview-controls-dark-color`  |         | Text color of the controls in dark mode        |\n| `--wcp-preview-controls-light-color` |         | Text color of the controls in light mode       |\n| `--wcp-preview-controls-height`      |         | Overall height of the preview controls nav bar |\n| `--wcp-preview-controls-spacing`     |         | Inner spacing, used as padding of the controls |\n\n## Slots\n\n| Name | Description                       |\n| ---- | --------------------------------- |\n|      | Default slot for navigation items |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
+          "groups": ["feature"],
           "customElement": true
         }
       ],
@@ -843,13 +833,9 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "examples": [
-            "```html\n<wcp-preview-frame></wcp-preview-frame>\n```"
-          ],
+          "examples": ["```html\n<wcp-preview-frame></wcp-preview-frame>\n```"],
           "readme": "# class: `PreviewFrame`\n\n## Fields\n\n| Name                | Privacy | Type                                       | Default | Description | Inherited From |\n| ------------------- | ------- | ------------------------------------------ | ------- | ----------- | -------------- |\n| `initialPreviewTab` |         | `Config['initialPreviewTab'] \\| undefined` |         |             |                |\n\n## Methods\n\n| Name                       | Privacy   | Description | Parameters                   | Return           | Inherited From |\n| -------------------------- | --------- | ----------- | ---------------------------- | ---------------- | -------------- |\n| `handleSlotChange`         | protected |             | `event: Event`               |                  |                |\n| `handleAvailabilityChange` | protected |             |                              |                  |                |\n| `handleActiveTabChange`    | protected |             | `event: CustomEvent<string>` |                  |                |\n| `preparePluginTabs`        | protected |             |                              |                  |                |\n| `alignActiveTab`           | protected |             |                              |                  |                |\n| `render`                   | protected |             |                              | `TemplateResult` |                |\n\n## Attributes\n\n| Name                  | Field             | Inherited From |\n| --------------------- | ----------------- | -------------- |\n| `initial-preview-tab` | initialPreviewTab |                |\n\n## CSS Properties\n\n| Name                                     | Default | Description                                         |\n| ---------------------------------------- | ------- | --------------------------------------------------- |\n| `--wcp-preview-frame-dark-background`    |         | Background color of the preview frame in dark mode  |\n| `--wcp-preview-frame-dark-border-color`  |         | Border color of the example section in dark mode    |\n| `--wcp-preview-frame-dark-color`         |         | Text color of the preview frame in dark mode        |\n| `--wcp-preview-frame-light-background`   |         | Background color of the preview frame in light mode |\n| `--wcp-preview-frame-light-border-color` |         | Border color of the example section in light mode   |\n| `--wcp-preview-frame-light-color`        |         | Text color of the preview frame in light mode       |\n| `--wcp-preview-frame-border-radius`      |         | Border radius of the preview frame                  |\n| `--wcp-preview-frame-border-width`       |         | Border width of the preview frame                   |\n| `--wcp-preview-frame-distance`           |         | Outer margin of the preview frame                   |\n| `--wcp-preview-frame-spacing`            |         | Inner padding of the preview frame                  |\n\n## Slots\n\n| Name | Description                                                                                       |\n| ---- | ------------------------------------------------------------------------------------------------- |\n|      | The preview frame can be filled with any number of plugins. The plugins will be rendered as tabs. |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
+          "groups": ["feature"],
           "tagName": "wcp-preview-frame",
           "customElement": true
         }
@@ -1012,13 +998,9 @@
             "package": "lit"
           },
           "tagName": "wcp-readme",
-          "examples": [
-            "```html\n<wcp-readme markdown=\"# Hello _World_!\"></wcp-readme>\n```"
-          ],
+          "examples": ["```html\n<wcp-readme markdown=\"# Hello _World_!\"></wcp-readme>\n```"],
           "readme": "# class: `Readme`, `wcp-readme`\n\n## Fields\n\n| Name              | Privacy | Type                  | Default | Description | Inherited From |\n| ----------------- | ------- | --------------------- | ------- | ----------- | -------------- |\n| `showCodePreview` |         | `boolean`             | `false` |             |                |\n| `markdown`        |         | `string`              | `''`    |             |                |\n| `hash`            |         | `string \\| undefined` |         |             |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters        | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ----------------- | ---------------- | -------------- |\n| `connectedCallback` |           |             |                   |                  |                |\n| `updated`           | protected |             |                   |                  |                |\n| `createRenderRoot`  |           |             |                   |                  |                |\n| `scrollToId`        |           |             | `section: string` |                  |                |\n| `render`            | protected |             |                   | `TemplateResult` |                |\n\n## Attributes\n\n| Name               | Field           | Inherited From |\n| ------------------ | --------------- | -------------- |\n| `add-code-preview` | showCodePreview |                |\n| `markdown`         | markdown        |                |\n| `hash`             | hash            |                |\n\n## CSS Properties\n\n| Name                                      | Default | Description                                                 |\n| ----------------------------------------- | ------- | ----------------------------------------------------------- |\n| `--wcp-readme-dark-color`                 |         | Text color of the readme in dark mode.                      |\n| `--wcp-readme-dark-color-accent`          |         | Accent text color (e.g. links) of the readme in dark mode.  |\n| `--wcp-readme-dark-color-muted`           |         | Muted text color of the readme in dark mode.                |\n| `--wcp-readme-dark-border-color`          |         | Border color of the readme in dark mode.                    |\n| `--wcp-readme-dark-highlight-background`  |         | Background color of highlighted table rows in dark mode.    |\n| `--wcp-readme-light-color`                |         | Text color of the readme in light mode.                     |\n| `--wcp-readme-light-color-accent`         |         | Accent text color (e.g. links) of the readme in light mode. |\n| `--wcp-readme-light-color-muted`          |         | Muted text color of the readme in light mode.               |\n| `--wcp-readme-light-border-color`         |         | Border color of the readme in light mode.                   |\n| `--wcp-readme-light-highlight-background` |         | Background color of highlighted table rows in light mode.   |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
+          "groups": ["feature"],
           "customElement": true
         }
       ],
@@ -1066,13 +1048,9 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "examples": [
-            "```html\n<wcp-readme-frame></wcp-readme-frame>\n```"
-          ],
+          "examples": ["```html\n<wcp-readme-frame></wcp-readme-frame>\n```"],
           "readme": "# class: `ReadmeFrame`\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## CSS Properties\n\n| Name                         | Default | Description                        |\n| ---------------------------- | ------- | ---------------------------------- |\n| `--wcp-readme-frame-spacing` |         | Inner padding of the preview frame |\n\n## Slots\n\n| Name | Description                                               |\n| ---- | --------------------------------------------------------- |\n|      | The readme frame is usually filled with a readme element. |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
+          "groups": ["feature"],
           "tagName": "wcp-readme-frame",
           "customElement": true
         }
@@ -1124,13 +1102,9 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "examples": [
-            "```html\n<wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n```"
-          ],
+          "examples": ["```html\n<wcp-toggle-color-scheme></wcp-toggle-color-scheme>\n```"],
           "readme": "# class: `ToggleColorScheme`\n\n## Fields\n\n| Name          | Privacy | Type | Default | Description | Inherited From |\n| ------------- | ------- | ---- | ------- | ----------- | -------------- |\n| `colorScheme` |         |      |         |             |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `handleButtonClick` |           |             |            |                  |                |\n| `render`            | protected |             |            | `TemplateResult` |                |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
+          "groups": ["feature"],
           "tagName": "wcp-toggle-color-scheme",
           "customElement": true
         }
@@ -1172,13 +1146,9 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "examples": [
-            "```html\n<wcp-toggle-sidebar></wcp-toggle-sidebar>\n```"
-          ],
+          "examples": ["```html\n<wcp-toggle-sidebar></wcp-toggle-sidebar>\n```"],
           "readme": "# class: `ToggleSidebar`\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `handleButtonClick` |           |             |            |                  |                |\n| `render`            | protected |             |            | `TemplateResult` |                |\n\n<hr/>\n",
-          "groups": [
-            "feature"
-          ],
+          "groups": ["feature"],
           "tagName": "wcp-toggle-sidebar",
           "customElement": true
         }
@@ -1307,9 +1277,7 @@
           },
           "examples": [],
           "readme": "# class: `PreviewFrameExamples`\n\n## Fields\n\n| Name        | Privacy | Type      | Default      | Description | Inherited From |\n| ----------- | ------- | --------- | ------------ | ----------- | -------------- |\n| `available` |         | `boolean` | `false`      |             |                |\n| `element`   |         |           |              |             |                |\n| `name`      |         | `string`  | `'examples'` |             |                |\n| `label`     |         | `string`  | `'Examples'` |             |                |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `available` | available |                |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n\n## CSS Properties\n\n| Name                                   | Default | Description               |\n| -------------------------------------- | ------- | ------------------------- |\n| `--wcp-preview-frame-examples-spacing` |         | Spacing between examples. |\n\n<hr/>\n",
-          "groups": [
-            "plugins"
-          ],
+          "groups": ["plugins"],
           "tagName": "wcp-preview-frame-examples",
           "customElement": true
         }
@@ -1431,9 +1399,7 @@
             "package": "lit"
           },
           "readme": "# class: `PreviewFrameReadme`\n\n## Fields\n\n| Name        | Privacy | Type      | Default    | Description | Inherited From |\n| ----------- | ------- | --------- | ---------- | ----------- | -------------- |\n| `available` |         | `boolean` | `false`    |             |                |\n| `element`   |         |           |            |             |                |\n| `name`      |         | `string`  | `'readme'` |             |                |\n| `label`     |         | `string`  | `'Readme'` |             |                |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `available` | available |                |\n| `element`   | element   |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n\n<hr/>\n",
-          "groups": [
-            "plugins"
-          ],
+          "groups": ["plugins"],
           "tagName": "wcp-preview-frame-readme",
           "customElement": true
         }
@@ -1624,9 +1590,7 @@
             "package": "lit"
           },
           "readme": "# class: `PreviewFrameViewer`\n\n## Fields\n\n| Name        | Privacy | Type      | Default    | Description | Inherited From |\n| ----------- | ------- | --------- | ---------- | ----------- | -------------- |\n| `element`   |         |           |            |             |                |\n| `available` |         | `boolean` | `true`     |             |                |\n| `name`      |         | `string`  | `'viewer'` |             |                |\n| `label`     |         | `string`  | `'Viewer'` |             |                |\n\n## Methods\n\n| Name                  | Privacy   | Description | Parameters            | Return                 | Inherited From |\n| --------------------- | --------- | ----------- | --------------------- | ---------------------- | -------------- |\n| `getElementReference` | protected |             |                       | `Element \\| undefined` |                |\n| `handleControlsInput` | protected |             | `event: InputEvent`   |                        |                |\n| `renderFieldControl`  | protected |             | `field: Parsed.Field` | `TemplateResult`       |                |\n| `renderSlotControl`   | protected |             | `slot: Parsed.Slot`   | `TemplateResult`       |                |\n| `render`              | protected |             |                       | `TemplateResult`       |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `element`   | element   |                |\n| `available` | available |                |\n| `name`      | name      |                |\n| `label`     | label     |                |\n\n<hr/>\n",
-          "groups": [
-            "plugins"
-          ],
+          "groups": ["plugins"],
           "tagName": "wcp-preview-frame-viewer",
           "customElement": true
         }
@@ -1911,9 +1875,7 @@
             "## Use as native reset button in form\n\n```html\n<form onreset=\"alert('Reset!'); return false\">\n  <wcp-button type=\"reset\">Reset</wcp-button>\n</form>\n```"
           ],
           "readme": "# class: `Button`\n\n## Fields\n\n| Name        | Privacy | Type                                                      | Default    | Description                                                                                                                                                                                      | Inherited From |\n| ----------- | ------- | --------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------- |\n| `disabled`  |         | `boolean`                                                 | `false`    |                                                                                                                                                                                                  |                |\n| `nowrap`    |         | `boolean`                                                 | `false`    |                                                                                                                                                                                                  |                |\n| `stretched` |         | `boolean`                                                 | `false`    | Allows stretching the button across the full width of its container.&#xA;This is useful for buttons that are used in a narrow form, or in general&#xA;on small viewports, like handheld devices. |                |\n| `kind`      |         | `'button' \\| 'icon'`                                      | `'button'` | The kind of button to render. Either like a conventional button, or for&#xA;icons. Icon buttons are quadrtic and will show a radial background on interaction.                                   |                |\n| `type`      |         | `'button' \\| 'reset' \\| 'submit'`                         | `'button'` |                                                                                                                                                                                                  |                |\n| `href`      |         | `string \\| undefined`                                     |            |                                                                                                                                                                                                  |                |\n| `target`    |         | `'_self' \\| '_blank' \\| '_parent' \\| '_top' \\| undefined` |            |                                                                                                                                                                                                  |                |\n\n## Methods\n\n| Name                | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `handleButtonClick` |           |             |            |                  |                |\n| `render`            | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name        | Field     | Inherited From |\n| ----------- | --------- | -------------- |\n| `disabled`  | disabled  |                |\n| `nowrap`    | nowrap    |                |\n| `stretched` | stretched |                |\n| `kind`      | kind      |                |\n| `type`      | type      |                |\n| `href`      | href      |                |\n| `target`    | target    |                |\n\n## CSS Properties\n\n| Name                                      | Default | Description                                                     |\n| ----------------------------------------- | ------- | --------------------------------------------------------------- |\n| `--wcp-button-dark-passive-background`    |         | Background color of the button if non interactive in dark mode  |\n| `--wcp-button-dark-passive-border-color`  |         | Border color of the button if non interactive in dark mode      |\n| `--wcp-button-dark-passive-color`         |         | Text color of the button if non interactive in dark mode        |\n| `--wcp-button-dark-hover-background`      |         | Background color of the button if hovered in dark mode          |\n| `--wcp-button-dark-hover-border-color`    |         | Border color of the button if hovered in dark mode              |\n| `--wcp-button-dark-hover-color`           |         | Text color of the button if hovered in dark mode                |\n| `--wcp-button-dark-active-background`     |         | Background color of the button if active in dark mode           |\n| `--wcp-button-dark-active-border-color`   |         | Border color of the button if active in dark mode               |\n| `--wcp-button-dark-active-color`          |         | Text color of the button if active in dark mode                 |\n| `--wcp-button-light-passive-background`   |         | Background color of the button if non interactive in light mode |\n| `--wcp-button-light-passive-border-color` |         | Border color of the button if non interactive in light mode     |\n| `--wcp-button-light-passive-color`        |         | Text color of the button if non interactive in light mode       |\n| `--wcp-button-light-hover-background`     |         | Background color of the button if hovered in light mode         |\n| `--wcp-button-light-hover-border-color`   |         | Border color of the button if hovered in light mode             |\n| `--wcp-button-light-hover-color`          |         | Text color of the button if hovered in light mode               |\n| `--wcp-button-light-active-background`    |         | Background color of the button if active in light mode          |\n| `--wcp-button-light-active-border-color`  |         | Border color of the button if active in light mode              |\n| `--wcp-button-light-active-color`         |         | Text color of the button if active in light mode                |\n\n## Slots\n\n| Name | Description                         |\n| ---- | ----------------------------------- |\n|      | Default slot for the button content |\n\n<hr/>\n",
-          "groups": [
-            "ui"
-          ],
+          "groups": ["ui"],
           "tagName": "wcp-button",
           "customElement": true
         }
@@ -1961,13 +1923,9 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "examples": [
-            "```html\n<wcp-code>\n  <pre><code>Some code</code></pre>\n</wcp-code>\n```"
-          ],
+          "examples": ["```html\n<wcp-code>\n  <pre><code>Some code</code></pre>\n</wcp-code>\n```"],
           "readme": "# class: `Code`\n\n## Methods\n\n| Name               | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------------ | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `createRenderRoot` |           |             |            |                  |                |\n| `render`           | protected |             |            | `TemplateResult` |                |\n\n<hr/>\n",
-          "groups": [
-            "ui"
-          ],
+          "groups": ["ui"],
           "tagName": "wcp-code",
           "customElement": true
         }
@@ -2034,9 +1992,7 @@
             "### Set a custom size\n\n```html\n<wcp-icon name=\"laptop\" style=\"--wcp-icon-size: 44\"></wcp-icon>\n```"
           ],
           "readme": "# class: `Icon`\n\n## Fields\n\n| Name   | Privacy | Type     | Default | Description | Inherited From |\n| ------ | ------- | -------- | ------- | ----------- | -------------- |\n| `name` |         | `string` |         |             |                |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name   | Field | Inherited From |\n| ------ | ----- | -------------- |\n| `name` | name  |                |\n\n## CSS Properties\n\n| Name              | Default | Description                                            |\n| ----------------- | ------- | ------------------------------------------------------ |\n| `--wcp-icon-size` |         | Sets the size of the icon as unitless number in pixels |\n\n<hr/>\n",
-          "groups": [
-            "ui"
-          ],
+          "groups": ["ui"],
           "tagName": "wcp-icon",
           "customElement": true
         }
@@ -2207,9 +2163,7 @@
             "### Active tab preselected\n\n```html\n<wcp-tabs tabs='{\"first\": \"First tab\", \"second\": \"Second tab\"}' active-tab=\"second\">\n <div slot=\"first\">First tab content</div>\n <div slot=\"second\">Second tab content</div>\n</wcp-tabs>\n```"
           ],
           "readme": "# class: `Tabs`\n\n## Fields\n\n| Name        | Privacy | Type                                                    | Default | Description | Inherited From |\n| ----------- | ------- | ------------------------------------------------------- | ------- | ----------- | -------------- |\n| `tabFocus`  |         | `number`                                                | `0`     |             |                |\n| `tabRoles`  |         | `HTMLElement[]`                                         |         |             |                |\n| `tabs`      |         | `Record<string, { label: string; disabled?: boolean }>` | `{}`    |             |                |\n| `activeTab` |         | `string \\| undefined`                                   |         |             |                |\n\n## Methods\n\n| Name                  | Privacy   | Description | Parameters             | Return           | Inherited From |\n| --------------------- | --------- | ----------- | ---------------------- | ---------------- | -------------- |\n| `emitActiveTabChange` |           |             |                        |                  |                |\n| `handleTabClick`      |           |             | `event: Event`         |                  |                |\n| `handleKeydown`       |           |             | `event: KeyboardEvent` |                  |                |\n| `render`              | protected |             |                        | `TemplateResult` |                |\n\n## Attributes\n\n| Name         | Field     | Inherited From |\n| ------------ | --------- | -------------- |\n| `tabs`       | tabs      |                |\n| `active-tab` | activeTab |                |\n\n## CSS Properties\n\n| Name                                       | Default | Description                                      |\n| ------------------------------------------ | ------- | ------------------------------------------------ |\n| `--wcp-tabs-tablist-gap`                   |         | The gap between the tablist and the tabpanels    |\n| `--wcp-tabs-tablist-spacing`               |         | The inner padding of the tablist                 |\n| `--wcp-tabs-tab-spacing`                   |         | The inner padding of the tabs                    |\n| `--wcp-tabs-tab-active-border-width`       |         | The border width of the active tab               |\n| `--wcp-tabs-panel-spacing`                 |         | The inner padding of the tabpanels               |\n| `--wcp-tabs-tablist-dark-border-color`     |         | The border color of the tablist in dark mode     |\n| `--wcp-tabs-tab-active-dark-border-color`  |         | The border color of the active tab in dark mode  |\n| `--wcp-tabs-tablist-light-border-color`    |         | The border color of the tablist in light mode    |\n| `--wcp-tabs-tab-active-light-border-color` |         | The border color of the active tab in light mode |\n\n## Slots\n\n| Name  | Description                          |\n| ----- | ------------------------------------ |\n| `tab` | name - The content of the named tab. |\n\n<hr/>\n",
-          "groups": [
-            "ui"
-          ],
+          "groups": ["ui"],
           "tagName": "wcp-tabs",
           "customElement": true
         }
@@ -2309,9 +2263,7 @@
             "```html\n<wcp-title title=\"Web Components Preview\">\n  <img slot=\"logo\" src=\"assets/icons/logo.svg\" height=\"30px\" />\n</wcp-title>\n```"
           ],
           "readme": "# class: `Title`\n\n## Fields\n\n| Name    | Privacy | Type     | Default | Description | Inherited From |\n| ------- | ------- | -------- | ------- | ----------- | -------------- |\n| `title` |         | `string` |         |             |                |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name    | Field | Inherited From |\n| ------- | ----- | -------------- |\n| `title` | title |                |\n\n## CSS Properties\n\n| Name                               | Default | Description                                                     |\n| ---------------------------------- | ------- | --------------------------------------------------------------- |\n| `--wcp-title-gap`                  |         | The gap between the logo and the title                          |\n| `--wcp-title-height`               |         | The height of the title. Content may exceed and scales the tile |\n| `--wcp-title-spacing`              |         | Inner padding of the title                                      |\n| `--wcp-title-headline-size`        |         | The font size of the title                                      |\n| `--wcp-title-headline-weight`      |         | The font weight of the title                                    |\n| `--wcp-title-headline-spacing`     |         | The letter spacing of the title                                 |\n| `--wcp-title-headline-line-height` |         | The line height of the title                                    |\n| `--wcp-title-headline-transform`   |         | The text transform of the title                                 |\n\n## Slots\n\n| Name   | Description                         |\n| ------ | ----------------------------------- |\n| `logo` | Receives the logo image to be shown |\n\n<hr/>\n",
-          "groups": [
-            "ui"
-          ],
+          "groups": ["ui"],
           "tagName": "wcp-title",
           "customElement": true
         }
@@ -2362,9 +2314,7 @@
             "```html\n<wcp-layout>\n  <nav slot=\"aside\">To the left!</nav>\n  <article>Me the important content!</article>\n</wcp-layout>\n```"
           ],
           "readme": "# class: `Layout`\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Slots\n\n| Name    | Description                              |\n| ------- | ---------------------------------------- |\n| `aside` | Projects elements aside the main content |\n|         | Receives the content of the main section |\n\n<hr/>\n",
-          "groups": [
-            "layout"
-          ],
+          "groups": ["layout"],
           "tagName": "wcp-layout",
           "customElement": true
         }
@@ -2432,9 +2382,7 @@
           },
           "examples": [],
           "readme": "# class: `Main`\n\n## Fields\n\n| Name   | Privacy | Type     | Default  | Description                                                                 | Inherited From |\n| ------ | ------- | -------- | -------- | --------------------------------------------------------------------------- | -------------- |\n| `role` |         | `string` | `'main'` | Presets the aria role to \\`main\\` as we do not use te main element directly |                |\n\n## Methods\n\n| Name     | Privacy   | Description | Parameters | Return           | Inherited From |\n| -------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `render` | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name   | Field | Inherited From |\n| ------ | ----- | -------------- |\n| `role` | role  |                |\n\n## Slots\n\n| Name | Description                           |\n| ---- | ------------------------------------- |\n|      | Projects elements to the main content |\n\n<hr/>\n",
-          "groups": [
-            "layout"
-          ],
+          "groups": ["layout"],
           "tagName": "wcp-main",
           "customElement": true
         }
@@ -2519,9 +2467,7 @@
             "```html\n<wcp-preview-frame-viewer-stage>\n  <wcp-button>Example button</wcp-button>\n</wcp-preview-frame-viewer-stage>\n```"
           ],
           "readme": "# class: `PreviewFrameViewerStage`\n\n## Fields\n\n| Name             | Privacy | Type                       | Default | Description | Inherited From |\n| ---------------- | ------- | -------------------------- | ------- | ----------- | -------------- |\n| `previewTagName` |         | `string \\| undefined`      |         |             |                |\n| `data`           |         | `ElementData \\| undefined` |         |             |                |\n\n## Methods\n\n| Name          | Privacy   | Description | Parameters | Return           | Inherited From |\n| ------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `renderSlots` | protected |             |            | `TemplateResult` |                |\n| `render`      | protected |             |            | `TemplateResult` |                |\n\n## Attributes\n\n| Name               | Field          | Inherited From |\n| ------------------ | -------------- | -------------- |\n| `preview-tag-name` | previewTagName |                |\n| `data`             | data           |                |\n\n<hr/>\n",
-          "groups": [
-            "plugins"
-          ],
+          "groups": ["plugins"],
           "tagName": "wcp-preview-frame-viewer-stage",
           "customElement": true
         }
@@ -2663,9 +2609,7 @@
           },
           "examples": [],
           "readme": "# class: `Aside`\n\n## Fields\n\n| Name                | Privacy | Type      | Default           | Description                                                                           | Inherited From |\n| ------------------- | ------- | --------- | ----------------- | ------------------------------------------------------------------------------------- | -------------- |\n| `hidden`            |         | `boolean` | `false`           | Used to toggle the width of the aside bar                                             |                |\n| `role`              |         | `string`  | `'complementary'` | Presets the aria role to \\`complementary\\` as we do not use te aside element directly |                |\n| `listenAsideToggle` |         |           |                   |                                                                                       |                |\n\n## Methods\n\n| Name                   | Privacy   | Description | Parameters | Return           | Inherited From |\n| ---------------------- | --------- | ----------- | ---------- | ---------------- | -------------- |\n| `emitToggled`          |           |             |            |                  |                |\n| `handleButtonClick`    |           |             |            |                  |                |\n| `connectedCallback`    |           |             |            |                  |                |\n| `disconnectedCallback` |           |             |            |                  |                |\n| `render`               | protected |             |            | `TemplateResult` |                |\n\n## Events\n\n| Name                | Type | Description                                                                                                        | Inherited From |\n| ------------------- | ---- | ------------------------------------------------------------------------------------------------------------------ | -------------- |\n| `wcp-aside-toggled` |      | Dispatches this event when the side bar has been toggled. Do not get confused with the \\`wcp-aside:toggle\\` event. |                |\n\n## Attributes\n\n| Name     | Field  | Inherited From |\n| -------- | ------ | -------------- |\n| `hidden` | hidden |                |\n| `role`   | role   |                |\n\n## CSS Properties\n\n| Name                           | Default | Description                                        |\n| ------------------------------ | ------- | -------------------------------------------------- |\n| `--wcp-aside-max-width`        |         | The maximum width of the aside bar when visible    |\n| `--wcp-aside-spacing`          |         | Inner padding of the aside bar                     |\n| `--wcp-aside-toggle-size`      |         | The size of the toggle button                      |\n| `--wcp-aside-dark-background`  |         | The background color of the side bar in dark mode  |\n| `--wcp-aside-dark-color`       |         | The color of the side bar in dark mode             |\n| `--wcp-aside-light-background` |         | The background color of the side bar in light mode |\n| `--wcp-aside-light-color`      |         | The color of the side bar in light mode            |\n\n## Slots\n\n| Name | Description                              |\n| ---- | ---------------------------------------- |\n|      | Projects elements aside the main content |\n\n<hr/>\n",
-          "groups": [
-            "layout"
-          ],
+          "groups": ["layout"],
           "tagName": "wcp-aside",
           "customElement": true
         }

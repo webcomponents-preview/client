@@ -30,6 +30,7 @@ declare global {
     >;
   };
   // then add the type to the global window event map interface
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type -- we want some other name here
   interface WindowEventMap extends StateEventMap {}
 }
 
@@ -61,7 +62,7 @@ export function persist<K extends keyof State>(key: K, value: State[K]) {
 
     default:
       // some simple exhaustiveness check
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       _ = persistence;
       return _;
   }
@@ -92,7 +93,7 @@ export function read<K extends keyof State>(key: K): State[K] | undefined {
 
     default:
       // some simple exhaustiveness check
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       _ = persistence;
       return _;
   }

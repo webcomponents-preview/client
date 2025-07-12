@@ -7,7 +7,7 @@ import { promisify } from 'node:util';
 
 import type { OnResolveResult, Plugin } from 'esbuild';
 
-export type BarrelsbyPluginOptions = {
+export interface BarrelsbyPluginOptions {
   /**
    * Path to barrelsby config file
    */
@@ -17,7 +17,7 @@ export type BarrelsbyPluginOptions = {
    * Optionally add `*.js` extensions to generated barrels if missing
    */
   addMissingJsExtensions?: boolean;
-};
+}
 
 export function barrelsbyPlugin({ configPath, addMissingJsExtensions = false }: BarrelsbyPluginOptions): Plugin {
   const pluginName = 'esbuild-plugin-barrelsby';
@@ -41,7 +41,7 @@ export function barrelsbyPlugin({ configPath, addMissingJsExtensions = false }: 
             // https://regex101.com/r/9wGBMU/1
             if (addMissingJsExtensions) {
               const barrel = await readFile(index, 'utf-8');
-              const fixed = barrel.replace(/(?<!\.js)';$/gm, `.js';`);
+              const fixed = barrel.replace(/(?<!\.js)';$/gm, ".js';");
               await writeFile(index, fixed, 'utf-8');
             }
 

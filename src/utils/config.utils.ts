@@ -1,5 +1,5 @@
 // this type will be used to derive the config schema from
-export type Config = {
+export interface Config {
   excludeElements: string[];
 
   /**
@@ -87,7 +87,7 @@ export type Config = {
      */
     severity: 'info' | 'warn' | 'error' | 'none';
   };
-};
+}
 
 declare global {
   interface WCP {
@@ -134,7 +134,7 @@ export function mergeConfigWithDefaults(config: Partial<Config>): Config {
 }
 
 // mostly used internally
-export async function loadConfig(url = 'config.json'): Promise<Config> {
+export async function loadConfig(url = 'config.json'): Promise<Config | undefined> {
   const response = await fetch(url);
   const config = mergeConfigWithDefaults(await response.json());
 
@@ -145,7 +145,7 @@ export async function loadConfig(url = 'config.json'): Promise<Config> {
     window.wcp.config = config;
   }
 
-  return getConfig()!;
+  return getConfig();
 }
 
 /**

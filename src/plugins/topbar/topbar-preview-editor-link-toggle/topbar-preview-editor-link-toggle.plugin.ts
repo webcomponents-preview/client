@@ -1,4 +1,5 @@
-import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
+import type { TemplateResult } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 

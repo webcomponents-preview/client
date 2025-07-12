@@ -1,23 +1,22 @@
 import type { CustomElementDeclaration } from 'custom-elements-manifest/schema.d.js';
-import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
+import type { TemplateResult } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, query, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
 import { html as staticHtml, unsafeStatic } from 'lit/static-html.js';
 
+import logo from '@/assets/icons/logo.svg';
 import { getConfig, loadConfig } from '@/utils/config.utils.js';
 import { loadManifest } from '@/utils/manifest.utils.js';
 import { prepareNavigation } from '@/utils/navigation.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
 import { Router } from '@/utils/router.utils.js';
 
+import styles from './root.component.scss';
 import { prepareRoutes } from './root.routes.js';
 import type { RootNavigation } from './root-navigation/root-navigation.component.js';
-
-import logo from '@/assets/icons/logo.svg';
-
-import styles from './root.component.scss';
 
 /**
  * @slot logo - Allows setting a custom logo to be displayed in the title.

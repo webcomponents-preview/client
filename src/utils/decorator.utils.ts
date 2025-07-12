@@ -2,19 +2,19 @@ import type { ReactiveElement } from 'lit';
 
 export type ListenerFn<E> = (e: E) => void;
 
-export type TargetMap = {
+export interface TargetMap {
   host: typeof ReactiveElement;
   body: typeof document.body;
   document: typeof document;
   window: typeof window;
-};
+}
 
-export type TargetEventMap = {
+export interface TargetEventMap {
   host: HTMLElementEventMap;
   body: HTMLBodyElementEventMap & HTMLElementEventMap;
   document: DocumentEventMap & HTMLElementEventMap;
   window: WindowEventMap & HTMLElementEventMap;
-};
+}
 
 export function listen<B extends keyof TargetMap, T extends keyof TargetEventMap[B]>(type: T, bindTo?: B) {
   return function (ctor: ReactiveElement, name: PropertyKey) {

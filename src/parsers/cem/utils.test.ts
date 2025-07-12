@@ -6,8 +6,8 @@ import { getEnumValues, unwrapString } from './utils.js';
 describe('utils', () => {
   describe('unwrapString', () => {
     it('removes quotes from the start and end of a string', () => {
-      expect(unwrapString(`'foo'`)).to.eql('foo');
-      expect(unwrapString(`"foo"`)).to.equal('foo');
+      expect(unwrapString("'foo'")).to.eql('foo');
+      expect(unwrapString('"foo"')).to.equal('foo');
       expect(unwrapString('`foo`')).to.equal('foo');
     });
 

@@ -4,18 +4,18 @@ import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 
 import autoprefixer from 'autoprefixer';
-import { build, type BuildOptions, context } from 'esbuild';
+import type { BuildOptions } from 'esbuild';
+import { build, context } from 'esbuild';
 import copyPlugin from 'esbuild-copy-static-files';
 import { dtsPlugin } from 'esbuild-plugin-d.ts';
 import { sassPlugin } from 'esbuild-sass-plugin';
 import postcss from 'postcss';
 import postcssPresetEnv from 'postcss-preset-env';
 
+import BREAKPOINTS from './breakpoints.json' assert { type: 'json' };
 import { createServer } from './esbuild.server.js';
 import { barrelsbyPlugin } from './esbuild-barrelsby.plugin.js';
 import { dtsAliasesPlugin } from './esbuild-declaration-aliases.plugin.js';
-
-import BREAKPOINTS from './breakpoints.json' assert { type: 'json' };
 import MANIFEST from './package.json' assert { type: 'json' };
 
 export const external = [
@@ -159,6 +159,7 @@ if (watch) {
   // start dev server in watch mode
   const internalPort = 28487;
   const server = createServer(internalPort);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const manifestPath = resolve(options.outdir!, 'custom-elements.json');
 
   // prepare context and start watching
@@ -173,7 +174,7 @@ if (watch) {
   server.listen(Number(port), async () => {
     // notify user
     const url = `http://127.0.0.1:${port}/`;
-    // eslint-disable-next-line no-console
+
     console.info(` > Preview: \x1b[4m${url}\x1b[0m\n\n`);
 
     // as the docs are maybe not ready yet, touch the target already

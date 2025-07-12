@@ -44,21 +44,17 @@ declare module 'mocha' {
     type EachAsyncFunc = (this: Context, params: Record<string, any>) => PromiseLike<any>;
 
     namespace Mocha {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       interface TestFunction {
         each(
           strings: TemplateStringsArray,
           ...placeholders: any[]
         ): {
-          (fn: EachFunc): Test;
-          (fn: EachAsyncFunc): Test;
-          (title: string, fn?: EachFunc): Test;
-          (title: string, fn?: EachAsyncFunc): Test;
+          (fn: EachFunc | EachAsyncFunc): Test;
+          (title: string, fn?: EachFunc | EachAsyncFunc): Test;
         };
       }
     }
 
-    // eslint-disable-next-line no-var
     declare var it: Mocha.TestFunction;
   }
 }

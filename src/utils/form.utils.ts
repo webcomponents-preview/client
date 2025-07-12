@@ -1,7 +1,7 @@
 /**
  * Convenient interface to implement form-associated custom elements.
  */
-export type FormAssociated<T> = {
+export interface FormAssociated<T> {
   disabled?: boolean;
   readonly?: boolean;
   required?: boolean;
@@ -15,4 +15,4 @@ export type FormAssociated<T> = {
   formDisabledCallback?: (disabled: boolean) => void;
   formResetCallback?: () => void;
   formStateRestoreCallback?: (state: string | File | FormData | null, mode: 'autocomplete' | 'restore') => void;
-};
+}

@@ -1,4 +1,5 @@
-import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
+import type { TemplateResult } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, queryAssignedElements, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
@@ -6,7 +7,8 @@ import { when } from 'lit/directives/when.js';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import { log } from '@/utils/log.utils.js';
-import { isStagePlugin, type StagePlugin } from '@/utils/plugin.utils.js';
+import type { StagePlugin } from '@/utils/plugin.utils.js';
+import { isStagePlugin } from '@/utils/plugin.utils.js';
 
 import styles from './stage.component.scss';
 

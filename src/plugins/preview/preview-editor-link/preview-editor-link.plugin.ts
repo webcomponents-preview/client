@@ -1,4 +1,5 @@
-import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
+import type { TemplateResult } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
@@ -10,9 +11,8 @@ import type { PreviewPlugin } from '@/utils/plugin.utils.js';
 import { Router } from '@/utils/router.utils.js';
 import { read } from '@/utils/state.utils.js';
 
-import { readCurrentElementData } from './preview-editor-link.utils.js';
-
 import styles from './preview-editor-link.plugin.scss';
+import { readCurrentElementData } from './preview-editor-link.utils.js';
 
 /**
  * Links all found custom elements in a preview with their current state to the editor to be further played around with.

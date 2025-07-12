@@ -1,7 +1,7 @@
 /**
  * Wraps custom element field declarations to provide additional meta data.
  */
-export type GenericField<T> = {
+export interface GenericField<T> {
   name: string;
 
   // type information
@@ -36,7 +36,7 @@ export type GenericField<T> = {
 
   // we always need a call signature
   new (element: object): Field;
-};
+}
 
 export type Field =
   | GenericField<boolean>
@@ -130,12 +130,16 @@ export type Element = {
  * The key is either the group or element name.
  */
 export type GroupedElements = Map<string, GroupedElement | GroupedElements>;
-export type GroupedElement = { link: string; name: string; element: Element };
+export interface GroupedElement {
+  link: string;
+  name: string;
+  element: Element;
+}
 
 /**
  * Wraps a manifest to provide additional meta data.
  */
-export type Manifest = {
+export interface Manifest {
   /**
    * Contains all custom elements, keyed by their tag name.
    */
@@ -145,12 +149,10 @@ export type Manifest = {
    * Delivers the elements grouped.
    */
   groupedElements(fallbackGroupName: string): GroupedElements;
-};
+}
 
-export type Parser = {
-  /**
-   * Parses the given data to a manifest with some meta data.
-   * Allow the exclusion of certain elements by their tag name.
-   */
-  new (data: object, exclude?: string[]): Manifest;
-};
+/**
+ * Parses the given data to a manifest with some meta data.
+ * Allow the exclusion of certain elements by their tag name.
+ */
+export type Parser = new (data: object, exclude?: string[]) => Manifest;

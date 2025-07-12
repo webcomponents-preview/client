@@ -4,12 +4,12 @@ import { promisify } from 'node:util';
 
 import type { Plugin } from 'esbuild';
 
-export type DeclarationAliasesPluginOptions = {
+export interface DeclarationAliasesPluginOptions {
   /**
    * Path to tsconfig.json
    */
   tsConfigPath: string;
-};
+}
 
 export function dtsAliasesPlugin({ tsConfigPath }: DeclarationAliasesPluginOptions): Plugin {
   return {

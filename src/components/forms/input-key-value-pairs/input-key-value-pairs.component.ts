@@ -1,4 +1,5 @@
-import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
+import type { PropertyValues } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, query } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { when } from 'lit/directives/when.js';
@@ -132,8 +133,10 @@ export class InputKeyValuePairs
     this.#valuePairs = [...before, ...after];
 
     // remove the pair from the form data
-    this.#rawValue.delete(button.dataset.key!);
-    this.#prefixedValue.delete(`${this.name}${button.dataset.key!}`);
+    if (button.dataset.key !== undefined) {
+      this.#rawValue.delete(button.dataset.key);
+      this.#prefixedValue.delete(`${this.name}${button.dataset.key}`);
+    }
 
     // update the internal form value
     this.internals.setFormValue(this.#prefixedValue);

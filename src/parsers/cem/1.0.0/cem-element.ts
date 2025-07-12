@@ -2,12 +2,12 @@ import type * as CEM from 'custom-elements-manifest';
 
 import type { Element, Field, Slot } from '@/utils/parser.types.js';
 
-import {
-  type CustomElementDeclarationWithExamples,
-  type CustomElementDeclarationWithGroups,
-  type CustomElementDeclarationWithReadme,
-  isCustomElementField,
+import type {
+  CustomElementDeclarationWithExamples,
+  CustomElementDeclarationWithGroups,
+  CustomElementDeclarationWithReadme,
 } from '../utils.js';
+import { isCustomElementField } from '../utils.js';
 import { CemField } from './cem-field.js';
 import { CemSlot } from './cem-slot.js';
 

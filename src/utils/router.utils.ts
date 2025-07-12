@@ -10,15 +10,15 @@ if (!globalThis.URLPattern) {
 
 export type Params = Record<string, string | undefined>;
 
-export type Route = {
+export interface Route {
   path: string;
   enter?: (params: Params, router: Router, outgoingParams?: Params) => boolean | Promise<boolean>;
   render?: (params: Params, router: Router) => TemplateResult;
-};
+}
 
 export type RegisterRoutes = (router: Router) => Route[];
 
-export type ParsedUrl = {
+export interface ParsedUrl {
   /**
    * Cleaned up path, derived from hash
    */
@@ -28,7 +28,7 @@ export type ParsedUrl = {
    * Prefixed url with base
    */
   url: string;
-};
+}
 
 /**
  * Helps comparing param objects for equality
@@ -45,6 +45,7 @@ export function areParamsEqual(a: Params, b: Params, exclude: string[] = []): bo
 export function mergeParams(oldParams: Params, newParams: Params, exclude: string[] = []): Params {
   return Object.entries(newParams).reduce(
     (params, [key, value]) => {
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       if (exclude.includes(key)) delete params[key];
       if (value !== undefined) params[key] = value;
       return params;

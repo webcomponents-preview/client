@@ -1,11 +1,13 @@
 // Safari still hasn't ElementInternals shipped
 import 'element-internals-polyfill';
 
-import { type CSSResultGroup, html, type LitElement, nothing, type TemplateResult, unsafeCSS } from 'lit';
+import type { CSSResultGroup, LitElement, TemplateResult } from 'lit';
+import { html, nothing, unsafeCSS } from 'lit';
 import { property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 
-import { ColorSchemable, type ColorSchemableInterface } from '@/mixins/color-schemable.mixin.js';
+import type { ColorSchemableInterface } from '@/mixins/color-schemable.mixin.js';
+import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import type { Constructor } from '@/utils/mixin.types.js';
 
 import styles from './editable.mixin.scss';
@@ -22,12 +24,12 @@ export interface EditablePrototype {
   formAssociated: true;
 }
 
-export type EditableOptions = {
+export interface EditableOptions {
   hasHintSlot?: boolean;
   hasBeforeSlot?: boolean;
   hasAfterSlot?: boolean;
   hasBorder?: boolean;
-};
+}
 
 export const Editable =
   ({
@@ -46,7 +48,6 @@ export const Editable =
       @property({ type: String, reflect: true })
       label?: string;
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       renderInput(_: string): TemplateResult {
         return html`${nothing}`;
       }

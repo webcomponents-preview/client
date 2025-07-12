@@ -52,7 +52,7 @@ describe('cem-field', () => {
   it('flags string type', () => {
     expect(new CemField({}).isString).to.be.false;
     expect(new CemField({ type: { text: 'string' } }).isString).to.be.true;
-    expect(new CemField({ type: { text: `'foo'` } }).isString).to.be.true;
+    expect(new CemField({ type: { text: "'foo'" } }).isString).to.be.true;
     expect(new CemField({ type: { text: 'string | undefined' } }).isBoolean).to.be.false;
     expect(new CemField({ type: { text: 'string | undefined' } }).isNumber).to.be.false;
     expect(new CemField({ type: { text: 'string | undefined' } }).isString).to.be.true;
@@ -60,28 +60,28 @@ describe('cem-field', () => {
     expect(new CemField({ type: { text: 'string | undefined' } }).isArray).to.be.false;
     expect(new CemField({ type: { text: 'string | undefined' } }).isObject).to.be.false;
 
-    expect(new CemField({ type: { text: `'foo' | undefined` } }).isBoolean).to.be.false;
-    expect(new CemField({ type: { text: `'foo' | undefined` } }).isNumber).to.be.false;
-    expect(new CemField({ type: { text: `'foo' | undefined` } }).isString).to.be.true;
-    expect(new CemField({ type: { text: `'foo' | undefined` } }).isEnum).to.be.false;
-    expect(new CemField({ type: { text: `'foo' | undefined` } }).isArray).to.be.false;
-    expect(new CemField({ type: { text: `'foo' | undefined` } }).isObject).to.be.false;
+    expect(new CemField({ type: { text: "'foo' | undefined" } }).isBoolean).to.be.false;
+    expect(new CemField({ type: { text: "'foo' | undefined" } }).isNumber).to.be.false;
+    expect(new CemField({ type: { text: "'foo' | undefined" } }).isString).to.be.true;
+    expect(new CemField({ type: { text: "'foo' | undefined" } }).isEnum).to.be.false;
+    expect(new CemField({ type: { text: "'foo' | undefined" } }).isArray).to.be.false;
+    expect(new CemField({ type: { text: "'foo' | undefined" } }).isObject).to.be.false;
 
-    expect(new CemField({ type: { text: `'foo' | 'bar' | undefined` } }).isBoolean).to.be.false;
-    expect(new CemField({ type: { text: `'foo' | 'bar' | undefined` } }).isNumber).to.be.false;
-    expect(new CemField({ type: { text: `'foo' | 'bar' | undefined` } }).isString).to.be.true;
-    expect(new CemField({ type: { text: `'foo' | 'bar' | undefined` } }).isEnum).to.be.true;
-    expect(new CemField({ type: { text: `'foo' | 'bar' | undefined` } }).isArray).to.be.false;
-    expect(new CemField({ type: { text: `'foo' | 'bar' | undefined` } }).isObject).to.be.false;
+    expect(new CemField({ type: { text: "'foo' | 'bar' | undefined" } }).isBoolean).to.be.false;
+    expect(new CemField({ type: { text: "'foo' | 'bar' | undefined" } }).isNumber).to.be.false;
+    expect(new CemField({ type: { text: "'foo' | 'bar' | undefined" } }).isString).to.be.true;
+    expect(new CemField({ type: { text: "'foo' | 'bar' | undefined" } }).isEnum).to.be.true;
+    expect(new CemField({ type: { text: "'foo' | 'bar' | undefined" } }).isArray).to.be.false;
+    expect(new CemField({ type: { text: "'foo' | 'bar' | undefined" } }).isObject).to.be.false;
   });
 
   it('flags enum type', () => {
-    expect(new CemField({ type: { text: `'foo' | 'bar' | undefined` } }).isEnum).to.be.true;
-    expect(new CemField({ type: { text: `| 'foo'\n    | 'bar'\n    | 'baz'` } }).isEnum).to.be.true;
+    expect(new CemField({ type: { text: "'foo' | 'bar' | undefined" } }).isEnum).to.be.true;
+    expect(new CemField({ type: { text: "| 'foo'\n    | 'bar'\n    | 'baz'" } }).isEnum).to.be.true;
   });
 
   it('sanitizes malformed unions (as this happens in the wild...)', () => {
-    expect(new CemField({ type: { text: `| 'foo'\n    | 'bar'\n    | 'baz'` } }).enumValues).to.eql([
+    expect(new CemField({ type: { text: "| 'foo'\n    | 'bar'\n    | 'baz'" } }).enumValues).to.eql([
       'foo',
       'bar',
       'baz',

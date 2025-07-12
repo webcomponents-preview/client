@@ -1,4 +1,5 @@
-import { html, LitElement, type TemplateResult, unsafeCSS } from 'lit';
+import type { TemplateResult } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { keyed } from 'lit/directives/keyed.js';
@@ -9,9 +10,9 @@ import { getManifest } from '@/utils/manifest.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
 import type { StagePlugin } from '@/utils/plugin.utils.js';
 
-import { compressFormData, decompressElementData, type ElementData, prepareInitialData } from './stage-editor.utils.js';
-
 import styles from './stage-editor.plugin.scss';
+import type { ElementData } from './stage-editor.utils.js';
+import { compressFormData, decompressElementData, prepareInitialData } from './stage-editor.utils.js';
 
 const UPDATE_DEBOUNCE = 300;
 

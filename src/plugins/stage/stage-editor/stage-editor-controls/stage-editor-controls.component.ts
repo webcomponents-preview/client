@@ -1,4 +1,5 @@
-import { html, LitElement, nothing, type TemplateResult, unsafeCSS } from 'lit';
+import type { TemplateResult } from 'lit';
+import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
 import { until } from 'lit/directives/until.js';
@@ -11,8 +12,8 @@ import { renderMarkdown } from '@/utils/markdown.utils.js';
 import type * as Parsed from '@/utils/parser.types.js';
 import { litKey } from '@/utils/parser.utils.js';
 
-import { alignFormDataWebkit, type ElementData } from '../stage-editor.utils.js';
-
+import type { ElementData } from '../stage-editor.utils.js';
+import { alignFormDataWebkit } from '../stage-editor.utils.js';
 import styles from './stage-editor-controls.component.scss';
 
 /**

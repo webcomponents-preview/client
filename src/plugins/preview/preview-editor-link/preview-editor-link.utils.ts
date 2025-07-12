@@ -25,8 +25,8 @@ export function readCurrentElementData(ref: HTMLElement): ElementData {
     Array.from(elementData?.fields.values() ?? []).reduce((acc, field) => {
       if (field.isControllable) {
         const value = ref[field.name as keyof HTMLElement];
-        if (value !== undefined) {
-          if (field.hasAttribute) skipAttributes.push(field.attribute!);
+        if (value !== undefined && field.attribute !== undefined) {
+          if (field.hasAttribute) skipAttributes.push(field.attribute);
           return { ...acc, [litKey(field)]: value };
         }
       }

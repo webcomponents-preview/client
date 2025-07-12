@@ -1,7 +1,8 @@
 import 'prismjs';
 import 'lit-code';
 
-import { html, LitElement, type PropertyValues, unsafeCSS } from 'lit';
+import type { PropertyValues } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, query } from 'lit/decorators.js';
 import type { LitCode } from 'lit-code';
 

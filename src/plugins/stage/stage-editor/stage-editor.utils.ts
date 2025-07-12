@@ -7,7 +7,7 @@ const URI_DATA_PARAM_COMPRESSION: CompressionFormat = 'deflate-raw';
 /**
  * State of the custom element.
  */
-export type ElementData = {
+export interface ElementData {
   /**
    * Additional attributes mapped by attribute name to attribute value.
    * Should not overlap with reflected attributes from fields.
@@ -23,7 +23,7 @@ export type ElementData = {
    * Slot state mapped by slot name to slot (html) content.
    */
   slots: Record<string, string>;
-};
+}
 
 /**
  * Empty state object of the element data.

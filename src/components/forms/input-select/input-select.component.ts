@@ -1,23 +1,23 @@
-import { html, LitElement, PropertyValues, unsafeCSS } from 'lit';
+import type { PropertyValues } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property, query } from 'lit/decorators.js';
 
 import { Editable } from '@/mixins/editable.mixin.js';
 import type { FormAssociated } from '@/utils/form.utils.js';
 
-import { InputSelectOption } from './input-select-option.component.js';
-
 // instruct esbuild to load the CSS file as a string
 import styles from './input-select.component.scss';
+import { InputSelectOption } from './input-select-option.component.js';
 
 /**
  * A numeric input element using the wcp style. Fully form aware.
  *
- * 
+ *
  * @property {string} label - The label of the input element.
- * 
+ *
  * @slot {<wcp-input-select-option value="foo" label="Foo"></wcp-input-select-option>} - Projects options into the select elements dropdown menu.
  * @slot hint - Receives optional descriptions below the input.
- * 
+ *
  * @cssprop --wcp-input-select-arrow-size - The size of the arrow icon.
  * @cssprop --wcp-input-select-hint-size - The font size of the hint.
  * @cssprop --wcp-input-select-label-size - The font size of the label.
@@ -26,11 +26,11 @@ import styles from './input-select.component.scss';
  * @cssprop --wcp-input-select-dark-background - The background color of the element in dark mode.
  * @cssprop --wcp-input-select-dark-border - The border color of the element in dark mode.
  * @cssprop --wcp-input-select-dark-color - The font color of the input element in dark mode.
- * 
+ *
  * @cssprop --wcp-input-select-light-background - The background color of the element in light mode.
  * @cssprop --wcp-input-select-light-border - The border color of the element in light mode.
  * @cssprop --wcp-input-select-light-color - The font color of the input element in light mode.
- * 
+ *
  */
 @customElement('wcp-input-select')
 export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) implements FormAssociated<string> {
@@ -95,8 +95,9 @@ export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) i
       .filter((element) => element instanceof InputSelectOption) as InputSelectOption[];
 
     // clear the input and append the options as copies
-    this.input!.innerHTML = '';
-    this.input!.append(
+    if (this.input === undefined) return;
+    this.input.innerHTML = '';
+    this.input.append(
       ...options.map((option) => {
         const copy = document.createElement('option');
         copy.value = option.value ?? '';

@@ -1,4 +1,5 @@
-import http, { type OutgoingHttpHeaders, type Server, type ServerResponse } from 'node:http';
+import type { OutgoingHttpHeaders, Server, ServerResponse } from 'node:http';
+import http from 'node:http';
 
 type DevServer = Server & {
   /**
@@ -74,7 +75,7 @@ if (typeof EventSource !== 'undefined') {
   new EventSource('${host}/wcp').addEventListener('message', () => {
     ${
       !reloadQueryParam
-        ? `window.location.reload();`
+        ? 'window.location.reload();'
         : `const redirect = new URL(window.location.href);
     redirect.searchParams.set('${reloadQueryParam}', '');
     window.location.href = redirect.toString();`

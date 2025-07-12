@@ -70,7 +70,7 @@ export class InputCheckbox
       this.checkValidity();
 
       this.internals.ariaChecked = String(this.checked);
-      this.internals.setFormValue(this.checked ? this.value ?? null : null, null);
+      this.internals.setFormValue(this.checked ? (this.value ?? null) : null, null);
     }
   }
 

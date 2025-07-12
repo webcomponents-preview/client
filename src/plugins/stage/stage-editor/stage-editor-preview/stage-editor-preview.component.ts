@@ -1,5 +1,6 @@
 import { spread } from '@open-wc/lit-helpers';
-import { html, LitElement, nothing, type TemplateResult, unsafeCSS } from 'lit';
+import type { TemplateResult } from 'lit';
+import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { map } from 'lit/directives/map.js';
@@ -8,7 +9,6 @@ import { when } from 'lit/directives/when.js';
 import { unsafeStatic, withStatic } from 'lit/static-html.js';
 
 import type { ElementData } from '../stage-editor.utils.js';
-
 import styles from './stage-editor-preview.component.scss';
 
 @customElement('wcp-stage-editor-preview')

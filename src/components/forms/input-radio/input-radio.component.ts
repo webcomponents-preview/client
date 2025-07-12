@@ -55,7 +55,7 @@ export class InputRadio
     this.checkValidity();
 
     this.internals.ariaChecked = String(this.checked);
-    this.internals.setFormValue(this.#checked ? this.value ?? null : null);
+    this.internals.setFormValue(this.#checked ? (this.value ?? null) : null);
   }
   get checked(): boolean {
     return this.#checked;
