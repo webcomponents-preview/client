@@ -7,16 +7,14 @@ import autoprefixer from 'autoprefixer';
 import type { BuildOptions } from 'esbuild';
 import { build, context } from 'esbuild';
 import copyPlugin from 'esbuild-copy-static-files';
-import { dtsPlugin } from 'esbuild-plugin-d.ts';
 import { sassPlugin } from 'esbuild-sass-plugin';
 import postcss from 'postcss';
 import postcssPresetEnv from 'postcss-preset-env';
 
-import BREAKPOINTS from './breakpoints.json' assert { type: 'json' };
+import BREAKPOINTS from './breakpoints.json' with { type: 'json' };
 import { createServer } from './esbuild.server.js';
 import { barrelsbyPlugin } from './esbuild-barrelsby.plugin.js';
-import { dtsAliasesPlugin } from './esbuild-declaration-aliases.plugin.js';
-import MANIFEST from './package.json' assert { type: 'json' };
+import MANIFEST from './package.json' with { type: 'json' };
 
 export const external = [
   '@lit/reactive-element',
@@ -102,8 +100,6 @@ ${Object.entries(BREAKPOINTS).reduce((acc, [key, value]) => `${acc}  ${key}: ${v
   },
   plugins: [
     barrelsbyPlugin({ configPath: '.barrelsby.json', addMissingJsExtensions: true }),
-    dtsPlugin(),
-    dtsAliasesPlugin({ tsConfigPath: 'tsconfig.types.json' }),
 
     sassPlugin({
       type: 'css-text',

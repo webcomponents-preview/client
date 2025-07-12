@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@open-wc/lit-helpers": "0.7.0",
-    "css.gg": "2.1.4",
+    "css.gg": "2.1.1",
     "lit-code": "0.1.12",
     "marked": "16.0.0",
     "marked-highlight": "2.2.2",
@@ -75,7 +75,6 @@
     "element-internals-polyfill": "3.0.2",
     "esbuild": "0.25.6",
     "esbuild-copy-static-files": "0.1.0",
-    "esbuild-plugin-d.ts": "1.3.1",
     "esbuild-sass-plugin": "3.3.1",
     "eslint": "9.31.0",
     "eslint-formatter-junit": "8.40.0",
