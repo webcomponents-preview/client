@@ -33,7 +33,7 @@ jobs:
         with:
           check_name: Lint results
           fail_on: errors
-          files: reports/lint-results.xml
+          files: reports/*.junit.xml
 
   test:
     name: Test

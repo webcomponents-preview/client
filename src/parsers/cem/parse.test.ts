@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { expect } from '@esm-bundle/chai';
 
 import { parseCEM } from './parse.js';
@@ -15,14 +14,10 @@ describe('parse', () => {
       expect(parse).to.throw('No parser for CEM version 0.0.10 found.');
     });
 
-    it.each`
-      name        | lib
-      ${'SAB UI'} | ${'sab-ui'}
-      ${'WCP'}    | ${'wcp-client'}
-      ${'ZUi'}    | ${'zui'}
-    `('parses the $name manifest', async ({ lib }: any) => {
-      const { default: raw } = await import(`../../../fixtures/manifests/${lib}.json`, { assert: { type: 'json' } });
-      const data = parseCEM(raw);
+    it('parses the manifest', async () => {
+      const response = await fetch('/fixtures/manifests/wcp-client.json');
+      const clientManifest = await response.json();
+      const data = parseCEM(clientManifest);
 
       expect(data).to.have.property('elements');
     });

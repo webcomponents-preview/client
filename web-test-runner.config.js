@@ -19,17 +19,18 @@ export default {
       tsconfig: fileURLToPath(new URL('./tsconfig.test.json', import.meta.url)),
     }),
   ],
-  testRunnerHtml: (testFramework) => `
-    <script type="module" src="${testFramework}"></script>
-    <script type="module" src="/web-test-runner.setup.js"></script>
-  `,
   reporters: isCi
     ? [
         junitReporter({
-          outputPath: './reports/test-results.xml',
+          outputPath: './reports/test.junit.xml',
           reportLogs: true,
         }),
         summaryReporter({ flatten: false }),
       ]
-    : [defaultReporter({ reportTestResults: true, reportTestProgress: true })],
+    : [
+        defaultReporter({
+          reportTestResults: true,
+          reportTestProgress: true,
+        }),
+      ],
 };
