@@ -134,7 +134,7 @@ jobs:
             --ci \
             --npm.skipChecks \
             --no-npm.publish \
-            --github.release \
+            --no-github.release \
             --github.autoGenerate \
             --git.commitMessage='chore: release v${version}' \
             --git.pushArgs=--follow-tags \
