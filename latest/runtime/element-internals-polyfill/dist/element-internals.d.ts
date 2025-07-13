@@ -1,9 +1,11 @@
-import { ValidityState } from './ValidityState.js';
-import { IElementInternals, ICustomElement, LabelsList } from './types.js';
-import { CustomStateSet } from './CustomStateSet.js';
-export declare class ElementInternals implements IElementInternals {
+import { ValidityState } from "./ValidityState.js";
+import { LabelsList } from "./types.js";
+import { CustomStateSet } from "./CustomStateSet.js";
+export declare class ElementInternals implements globalThis.ElementInternals {
     ariaAtomic: string;
     ariaAutoComplete: string;
+    ariaBrailleLabel: string;
+    ariaBrailleRoleDescription: string;
     ariaBusy: string;
     ariaChecked: string;
     ariaColCount: string;
@@ -11,6 +13,7 @@ export declare class ElementInternals implements IElementInternals {
     ariaColIndexText: string;
     ariaColSpan: string;
     ariaCurrent: string;
+    ariaDescription: string;
     ariaDisabled: string;
     ariaExpanded: string;
     ariaHasPopup: string;
@@ -45,7 +48,7 @@ export declare class ElementInternals implements IElementInternals {
     role: string;
     states: CustomStateSet;
     static get isPolyfilled(): boolean;
-    constructor(ref: ICustomElement);
+    constructor(ref: FormAssociatedCustomElement);
     /**
      * Will return true if the element is in a valid state
      */
@@ -88,7 +91,7 @@ export declare function isElementInternalsSupported(): boolean;
  *
  * https://developer.mozilla.org/en-US/docs/Web/API/CustomStateSet
  */
-export declare function forceCustomStateSetPolyfill(attachInternals?: HTMLElement['attachInternals']): void;
+export declare function forceCustomStateSetPolyfill(attachInternals?: HTMLElement["attachInternals"]): void;
 /**
  * Forcibly applies the polyfill for ElementInternals. Useful for situations
  * like Chrome extensions where Chrome supports ElementInternals, but the

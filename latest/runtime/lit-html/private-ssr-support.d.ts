@@ -22,7 +22,7 @@ export declare const _$LH: {
     marker: string;
     markerMatch: string;
     HTML_RESULT: number;
-    getTemplateHtml: (strings: TemplateStringsArray, type: 1 | 2) => [import("trusted-types/lib/index.js").TrustedHTML, string[]];
+    getTemplateHtml: (strings: TemplateStringsArray, type: 1 | 2 | 3) => [import("trusted-types/lib/index.js").TrustedHTML, Array<string>];
     overrideDirectiveResolve: (directiveClass: new (part: PartInfo) => Directive & {
         render(): unknown;
     }, resolveOverrideFn: (directive: Directive, values: unknown[]) => unknown) => {
@@ -30,21 +30,21 @@ export declare const _$LH: {
             _$resolve(this: Directive, _part: Part, values: unknown[]): unknown;
             __part: Part;
             __attributeIndex: number | undefined;
-            __directive?: Directive | undefined;
+            __directive?: Directive;
             _$parent: Disconnectable;
-            _$disconnectableChildren?: Set<Disconnectable> | undefined;
+            _$disconnectableChildren?: Set<Disconnectable>;
             _$notifyDirectiveConnectionChanged?(isConnected: boolean): void;
             readonly _$isConnected: boolean;
             _$initialize(part: Part, parent: Disconnectable, attributeIndex: number | undefined): void;
-            render: ((...props: unknown[]) => unknown) & (() => unknown);
-            update(_part: Part, props: unknown[]): unknown;
+            render: ((...props: Array<unknown>) => unknown) & (() => unknown);
+            update(_part: Part, props: Array<unknown>): unknown;
         };
     };
     patchDirectiveResolve: (directiveClass: typeof Directive, resolveOverrideFn: (this: Directive, _part: Part, values: unknown[]) => unknown) => void;
     setDirectiveClass(value: DirectiveResult, directiveClass: DirectiveClass): void;
     getAttributePartCommittedValue: (part: AttributePart, value: unknown, index: number | undefined) => unknown;
     connectedDisconnectable: (props?: object) => Disconnectable;
-    resolveDirective: (part: ChildPart | AttributePart | ElementPart, value: unknown, parent?: import("./lit-html.js").DirectiveParent, attributeIndex?: number | undefined) => unknown;
+    resolveDirective: (part: ChildPart | AttributePart | ElementPart, value: unknown, parent?: import("./lit-html.js").DirectiveParent, attributeIndex?: number) => unknown;
     AttributePart: typeof AttributePart;
     PropertyPart: typeof PropertyPart;
     BooleanAttributePart: typeof BooleanAttributePart;

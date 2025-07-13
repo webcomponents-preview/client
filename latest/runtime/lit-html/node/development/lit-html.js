@@ -28,17 +28,24 @@ let debugLogRenderId = 0;
 let issueWarning;
 {
     global.litIssuedWarnings ??= new Set();
-    // Issue a warning, if we haven't already.
+    /**
+     * Issue a warning if we haven't already, based either on `code` or `warning`.
+     * Warnings are disabled automatically only by `warning`; disabling via `code`
+     * can be done by users.
+     */
     issueWarning = (code, warning) => {
         warning += code
             ? ` See https://lit.dev/msg/${code} for more information.`
             : '';
-        if (!global.litIssuedWarnings.has(warning)) {
+        if (!global.litIssuedWarnings.has(warning) &&
+            !global.litIssuedWarnings.has(code)) {
             console.warn(warning);
             global.litIssuedWarnings.add(warning);
         }
     };
-    issueWarning('dev-mode', `Lit is in dev mode. Not recommended for production!`);
+    queueMicrotask(() => {
+        issueWarning('dev-mode', `Lit is in dev mode. Not recommended for production!`);
+    });
 }
 const wrap = (node) => node;
 const trustedTypes = global.trustedTypes;
@@ -81,7 +88,7 @@ const boundAttributeSuffix = '$lit$';
 // a valid element name and attribute name. We don't support dynamic names (yet)
 // but this at least ensures that the parse tree is closer to the template
 // intention.
-const marker = `lit$${String(Math.random()).slice(9)}$`;
+const marker = `lit$${Math.random().toFixed(9).slice(2)}$`;
 // String used to tell if a comment is a marker comment
 const markerMatch = '?' + marker;
 // Text used to insert a comment marker node. We use processing instruction
@@ -165,6 +172,7 @@ const rawTextElement = /^(?:script|style|textarea|title)$/i;
 /** TemplateResult types */
 const HTML_RESULT = 1;
 const SVG_RESULT = 2;
+const MATHML_RESULT = 3;
 // TemplatePart types
 // IMPORTANT: these must match the values in PartType
 const ATTRIBUTE_PART = 1;
@@ -217,8 +225,8 @@ const tag = (type) => (strings, ...values) => {
  */
 const html = tag(HTML_RESULT);
 /**
- * Interprets a template literal as an SVG fragment that can efficiently
- * render to and update a container.
+ * Interprets a template literal as an SVG fragment that can efficiently render
+ * to and update a container.
  *
  * ```ts
  * const rect = svg`<rect width="10" height="10"></rect>`;
@@ -237,9 +245,35 @@ const html = tag(HTML_RESULT);
  *
  * In LitElement usage, it's invalid to return an SVG fragment from the
  * `render()` method, as the SVG fragment will be contained within the element's
- * shadow root and thus cannot be used within an `<svg>` HTML element.
+ * shadow root and thus not be properly contained within an `<svg>` HTML
+ * element.
  */
 const svg = tag(SVG_RESULT);
+/**
+ * Interprets a template literal as MathML fragment that can efficiently render
+ * to and update a container.
+ *
+ * ```ts
+ * const num = mathml`<mn>1</mn>`;
+ *
+ * const eq = html`
+ *   <math>
+ *     ${num}
+ *   </math>`;
+ * ```
+ *
+ * The `mathml` *tag function* should only be used for MathML fragments, or
+ * elements that would be contained **inside** a `<math>` HTML element. A common
+ * error is placing a `<math>` *element* in a template tagged with the `mathml`
+ * tag function. The `<math>` element is an HTML element and should be used
+ * within a template tagged with the {@linkcode html} tag function.
+ *
+ * In LitElement usage, it's invalid to return an MathML fragment from the
+ * `render()` method, as the MathML fragment will be contained within the
+ * element's shadow root and thus not be properly contained within a `<math>`
+ * HTML element.
+ */
+const mathml = tag(MATHML_RESULT);
 /**
  * A sentinel value that signals that a value was handled by a directive and
  * should not be written to the DOM.
@@ -268,7 +302,7 @@ const nothing = Symbol.for('lit-nothing');
 /**
  * The cache of prepared templates, keyed by the tagged TemplateStringsArray
  * and _not_ accounting for the specific template tag used. This means that
- * template tags cannot be dynamic - the must statically be one of html, svg,
+ * template tags cannot be dynamic - they must statically be one of html, svg,
  * or attr. This restriction simplifies the cache lookup, which is on the hot
  * path for rendering.
  */
@@ -281,7 +315,7 @@ function trustFromTemplateString(tsa, stringFromTSA) {
     // though we might need to make that check inside of the html and svg
     // functions, because precompiled templates don't come in as
     // TemplateStringArray objects.
-    if (!Array.isArray(tsa) || !tsa.hasOwnProperty('raw')) {
+    if (!isArray(tsa) || !tsa.hasOwnProperty('raw')) {
         let message = 'invalid template strings array';
         {
             message = `
@@ -328,7 +362,7 @@ const getTemplateHtml = (strings, type) => {
     // parts. ElementParts are also reflected in this array as undefined
     // rather than a string, to disambiguate from attribute bindings.
     const attrNames = [];
-    let html = type === SVG_RESULT ? '<svg>' : '';
+    let html = type === SVG_RESULT ? '<svg>' : type === MATHML_RESULT ? '<math>' : '';
     // When we're inside a raw text tag (not it's text content), the regex
     // will still be tagRegex so we can find attributes, but will switch to
     // this regex when the tag ends.
@@ -452,7 +486,9 @@ const getTemplateHtml = (strings, type) => {
                         end
                     : s + marker + (attrNameEndIndex === -2 ? i : end);
     }
-    const htmlResult = html + (strings[l] || '<?>') + (type === SVG_RESULT ? '</svg>' : '');
+    const htmlResult = html +
+        (strings[l] || '<?>') +
+        (type === SVG_RESULT ? '</svg>' : type === MATHML_RESULT ? '</math>' : '');
     // Returned as an array for terseness
     return [trustFromTemplateString(strings, htmlResult), attrNames];
 };
@@ -470,10 +506,10 @@ class Template {
         const [html, attrNames] = getTemplateHtml(strings, type);
         this.el = Template.createElement(html, options);
         walker.currentNode = this.el.content;
-        // Re-parent SVG nodes into template root
-        if (type === SVG_RESULT) {
-            const svgElement = this.el.content.firstChild;
-            svgElement.replaceWith(...svgElement.childNodes);
+        // Re-parent SVG or MathML nodes into template root
+        if (type === SVG_RESULT || type === MATHML_RESULT) {
+            const wrapper = this.el.content.firstChild;
+            wrapper.replaceWith(...wrapper.childNodes);
         }
         // Walk the template to find binding markers and create TemplateParts
         while ((node = walker.nextNode()) !== null && parts.length < partCount) {
@@ -543,10 +579,7 @@ class Template {
                             ? trustedTypes.emptyScript
                             : '';
                         // Generate a new text node for each literal section
-                        // These nodes are also used as the markers for node parts
-                        // We can't use empty text nodes as markers because they're
-                        // normalized when cloning in IE (could simplify when
-                        // IE is no longer supported)
+                        // These nodes are also used as the markers for child parts
                         for (let i = 0; i < lastIndex; i++) {
                             node.append(strings[i], createMarker());
                             // Walk past the marker node we just added
@@ -873,7 +906,7 @@ class ChildPart {
                                     `This is a security risk, as style injection attacks can ` +
                                     `exfiltrate data and spoof UIs. ` +
                                     `Consider instead using css\`...\` literals ` +
-                                    `to compose styles, and make do dynamic styling with ` +
+                                    `to compose styles, and do dynamic styling with ` +
                                     `css custom properties, ::parts, <slot>s, ` +
                                     `and by mutating the DOM rather than stylesheets.`;
                         }
@@ -1052,21 +1085,24 @@ class ChildPart {
      * @param start Start node to clear from, for clearing a subset of the part's
      *     DOM (used when truncating iterables)
      * @param from  When `start` is specified, the index within the iterable from
-     *     which ChildParts are being removed, used for disconnecting directives in
-     *     those Parts.
+     *     which ChildParts are being removed, used for disconnecting directives
+     *     in those Parts.
      *
      * @internal
      */
     _$clear(start = wrap(this._$startNode).nextSibling, from) {
         this._$notifyConnectionChanged?.(false, true, from);
-        while (start && start !== this._$endNode) {
+        while (start !== this._$endNode) {
+            // The non-null assertion is safe because if _$startNode.nextSibling is
+            // null, then _$endNode is also null, and we would not have entered this
+            // loop.
             const n = wrap(start).nextSibling;
             wrap(start).remove();
             start = n;
         }
     }
     /**
-     * Implementation of RootPart's `isConnected`. Note that this metod
+     * Implementation of RootPart's `isConnected`. Note that this method
      * should only be called on `RootPart`s (the `ChildPart` returned from a
      * top-level `render()` call). It has no effect on non-root ChildParts.
      * @param isConnected Whether to set
@@ -1291,9 +1327,6 @@ class EventPart extends AttributePart {
             this.element.removeEventListener(this.name, this, oldListener);
         }
         if (shouldAddListener) {
-            // Beware: IE11 and Chrome 41 don't like using the listener as the
-            // options object. Figure out how to deal w/ this in IE11 - maybe
-            // patch addEventListener?
             this.element.addEventListener(this.name, this, newListener);
         }
         this._$committedValue = newListener;
@@ -1338,7 +1371,7 @@ class ElementPart {
  * external users.
  *
  * We currently do not make a mangled rollup build of the lit-ssr code. In order
- * to keep a number of (otherwise private) top-level exports  mangled in the
+ * to keep a number of (otherwise private) top-level exports mangled in the
  * client side code, we export a _$LH object containing those members (or
  * helper methods for accessing private fields of those members), and then
  * re-export them for use in lit-ssr. This keeps lit-ssr agnostic to whether the
@@ -1373,10 +1406,12 @@ const polyfillSupport = global.litHtmlPolyfillSupportDevMode
 polyfillSupport?.(Template, ChildPart);
 // IMPORTANT: do not change the property name or the assignment expression.
 // This line will be used in regexes to search for lit-html usage.
-(global.litHtmlVersions ??= []).push('3.1.2');
+(global.litHtmlVersions ??= []).push('3.3.1');
 if (global.litHtmlVersions.length > 1) {
-    issueWarning('multiple-versions', `Multiple versions of Lit loaded. ` +
-        `Loading multiple versions is not recommended.`);
+    queueMicrotask(() => {
+        issueWarning('multiple-versions', `Multiple versions of Lit loaded. ` +
+            `Loading multiple versions is not recommended.`);
+    });
 }
 /**
  * Renders a value, usually a lit-html TemplateResult, to the container.
@@ -1452,5 +1487,5 @@ const render = (value, container, options) => {
     }
 }
 
-export { _$LH, html, noChange, nothing, render, svg };
+export { _$LH, html, mathml, noChange, nothing, render, svg };
 //# sourceMappingURL=lit-html.js.map

@@ -5,7 +5,7 @@
  */
 // Any new exports need to be added to the export statement in
 // `packages/lit/src/index.all.ts`.
-import { html as coreHtml, svg as coreSvg } from './lit-html.js';
+import { html as coreHtml, svg as coreSvg, mathml as coreMathml, } from './lit-html.js';
 /**
  * Prevents JSON injection attacks.
  *
@@ -139,4 +139,11 @@ export const html = withStatic(coreHtml);
  * Includes static value support from `lit-html/static.js`.
  */
 export const svg = withStatic(coreSvg);
+/**
+ * Interprets a template literal as MathML fragment that can efficiently render
+ * to and update a container.
+ *
+ * Includes static value support from `lit-html/static.js`.
+ */
+export const mathml = withStatic(coreMathml);
 //# sourceMappingURL=static.js.map

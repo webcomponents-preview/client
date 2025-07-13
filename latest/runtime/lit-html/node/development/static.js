@@ -1,10 +1,12 @@
-import { html as html$1, svg as svg$1 } from './lit-html.js';
+import { html as html$1, svg as svg$1, mathml as mathml$1 } from './lit-html.js';
 
 /**
  * @license
  * Copyright 2020 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
+// Any new exports need to be added to the export statement in
+// `packages/lit/src/index.all.ts`.
 /**
  * Prevents JSON injection attacks.
  *
@@ -138,6 +140,13 @@ const html = withStatic(html$1);
  * Includes static value support from `lit-html/static.js`.
  */
 const svg = withStatic(svg$1);
+/**
+ * Interprets a template literal as MathML fragment that can efficiently render
+ * to and update a container.
+ *
+ * Includes static value support from `lit-html/static.js`.
+ */
+const mathml = withStatic(mathml$1);
 
-export { html, literal, svg, unsafeStatic, withStatic };
+export { html, literal, mathml, svg, unsafeStatic, withStatic };
 //# sourceMappingURL=static.js.map

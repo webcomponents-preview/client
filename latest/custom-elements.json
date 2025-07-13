@@ -2676,16 +2676,6 @@
               },
               "attribute": "label",
               "reflects": true
-            },
-            {
-              "kind": "method",
-              "name": "createRenderRoot",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "HTMLElement | DocumentFragment"
-                }
-              }
             }
           ],
           "attributes": [
@@ -4251,12 +4241,7 @@
           "kind": "class",
           "description": "Shows a formatted code snippet.",
           "name": "Code",
-          "members": [
-            {
-              "kind": "method",
-              "name": "createRenderRoot"
-            }
-          ],
+          "members": [],
           "mixins": [
             {
               "name": "ColorSchemable",
@@ -4716,19 +4701,23 @@
             },
             {
               "kind": "method",
-              "name": "#checkAvailability"
+              "name": "#checkAvailability",
+              "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "#attachOverlay"
+              "name": "#attachOverlay",
+              "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "#detachOverlay"
+              "name": "#detachOverlay",
+              "privacy": "private"
             },
             {
               "kind": "method",
               "name": "#findContainerSlot",
+              "privacy": "private",
               "return": {
                 "type": {
                   "text": "HTMLSlotElement | undefined"
@@ -4737,19 +4726,23 @@
             },
             {
               "kind": "method",
-              "name": "#observeContainerSlot"
+              "name": "#observeContainerSlot",
+              "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "#unobserveContainerSlot"
+              "name": "#unobserveContainerSlot",
+              "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "#observeContainerScroll"
+              "name": "#observeContainerScroll",
+              "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "#unobserveContainerScroll"
+              "name": "#unobserveContainerScroll",
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -4763,11 +4756,13 @@
             },
             {
               "kind": "method",
-              "name": "#attachHints"
+              "name": "#attachHints",
+              "privacy": "private"
             },
             {
               "kind": "method",
               "name": "#attachHint",
+              "privacy": "private",
               "parameters": [
                 {
                   "name": "element",
@@ -4779,19 +4774,23 @@
             },
             {
               "kind": "method",
-              "name": "#detachHints"
+              "name": "#detachHints",
+              "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "#setupHints"
+              "name": "#setupHints",
+              "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "#teardownHints"
+              "name": "#teardownHints",
+              "privacy": "private"
             },
             {
               "kind": "method",
               "name": "#openViewer",
+              "privacy": "private",
               "parameters": [
                 {
                   "name": "element",
@@ -5172,6 +5171,7 @@
             {
               "kind": "method",
               "name": "#prepareElementData",
+              "privacy": "private",
               "parameters": [
                 {
                   "name": "compressed",
@@ -6009,6 +6009,7 @@
             {
               "kind": "method",
               "name": "#updateSearchTerm",
+              "privacy": "private",
               "parameters": [
                 {
                   "name": "term",
@@ -6203,7 +6204,8 @@
             },
             {
               "kind": "method",
-              "name": "#observeElement"
+              "name": "#observeElement",
+              "privacy": "private"
             },
             {
               "kind": "method",
@@ -6500,6 +6502,7 @@
             {
               "kind": "method",
               "name": "#alignAttributes",
+              "privacy": "private",
               "return": {
                 "type": {
                   "text": "ElementData['attributes']"
@@ -6513,19 +6516,18 @@
                   }
                 }
               ],
-              "description": "Takes the given attributes record, eliminates the empty keys and aligns boolean attributes.",
-              "privacy": "private"
+              "description": "Takes the given attributes record, eliminates the empty keys and aligns boolean attributes."
             },
             {
               "kind": "method",
               "name": "#prepareProps",
+              "privacy": "private",
               "return": {
                 "type": {
                   "text": "Record<string, unknown>"
                 }
               },
-              "description": "Prepares a record of lit aware attributes and properties.",
-              "privacy": "private"
+              "description": "Prepares a record of lit aware attributes and properties."
             },
             {
               "kind": "method",

@@ -1,6 +1,6 @@
 import { isSingleExpression } from './directive-helpers.js';
 import { Directive, PartType } from './directive.js';
-export { Directive, PartType, directive } from './directive.js';
+export { directive } from './directive.js';
 
 /**
  * @license
@@ -241,5 +241,5 @@ class AsyncDirective extends Directive {
     reconnected() { }
 }
 
-export { AsyncDirective };
+export { AsyncDirective, Directive, PartType };
 //# sourceMappingURL=async-directive.js.map

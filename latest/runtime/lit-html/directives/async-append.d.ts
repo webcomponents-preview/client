@@ -30,7 +30,7 @@ declare class AsyncAppendDirective extends AsyncReplaceDirective {
  * @param mapper An optional function that maps from (value, index) to another
  *     value. Useful for generating templates for each item in the iterable.
  */
-export declare const asyncAppend: (value: AsyncIterable<unknown>, _mapper?: ((v: unknown, index?: number | undefined) => unknown) | undefined) => import("../directive.js").DirectiveResult<typeof AsyncAppendDirective>;
+export declare const asyncAppend: (value: AsyncIterable<unknown>, _mapper?: ((v: unknown, index?: number) => unknown) | undefined) => import("../directive.js").DirectiveResult<typeof AsyncAppendDirective>;
 /**
  * The type of the class that powers this directive. Necessary for naming the
  * directive's return type.
