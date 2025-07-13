@@ -19,11 +19,10 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          cache: "npm"
-          node-version: 20.10.0
+          node-version-file: .nvmrc
       - name: Install dependencies
         run: npm ci
       - name: Lint
@@ -33,18 +32,17 @@ jobs:
         with:
           check_name: Lint results
           fail_on: errors
-          files: reports/*.junit.xml
+          files: reports/lint.junit.xml
 
   test:
     name: Test
     needs: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          cache: "npm"
-          node-version: 20.10.0
+          node-version-file: .nvmrc
       - name: Install dependencies
         run: npm ci && node ./node_modules/puppeteer/install.mjs
       - name: Test
@@ -54,18 +52,17 @@ jobs:
         with:
           check_name: Test results
           fail_on: errors
-          files: reports/test-results.xml
+          files: reports/test.junit.xml
 
   build:
     name: Build
     needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          cache: "npm"
-          node-version: 20.10.0
+          node-version-file: .nvmrc
       - name: Install dependencies
         run: npm ci
       - name: Build
@@ -75,7 +72,7 @@ jobs:
         run: npm run generate:docs
       - name: Upload
         if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: preview
           path: dist
@@ -89,11 +86,11 @@ jobs:
       name: Review
       url: https://webcomponents-preview.github.io/client/pr/${{ github.event.number }}/
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: deploy
           token: ${{secrets.WCP_GITHUB_TOKEN}}
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: preview
           path: .tmp
@@ -116,14 +113,13 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{secrets.WCP_GITHUB_TOKEN}}
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          cache: "npm"
-          node-version: 20.10.0
+          node-version-file: .nvmrc
           registry-url: https://registry.npmjs.org/
       - name: Configure git
         run: |
