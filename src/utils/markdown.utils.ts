@@ -1,3 +1,4 @@
+import type { Tokens } from 'marked';
 import { marked, Renderer } from 'marked';
 import { markedHighlight } from 'marked-highlight';
 import * as Prism from 'prismjs';
@@ -25,21 +26,24 @@ export class CustomRenderer extends Renderer {
   storeRawCode(raw: string, highlighted: string) {
     this.#rawCodeMap.set(highlighted, raw);
   }
-
-  override code(code: string, language = 'plaintext', escaped = false): string {
+  /**
+   * Override the code renderer to wrap the code in a custom element.
+   * If the `addCodePreview` flag is set, it will also add a preview component.
+   */
+  override code({ text, lang = 'plaintext', escaped = false, ...tokens }: Tokens.Code): string {
     // do not use example component for anything but html examples
-    if (language !== 'html' || !this.addCodePreview || (escaped && !this.#rawCodeMap.has(code))) {
-      return `<wcp-code>${super.code(code, language, escaped)}</wcp-code>`;
+    if (lang !== 'html' || !this.addCodePreview || (escaped && !this.#rawCodeMap.has(text))) {
+      return `<wcp-code>${super.code({ text, lang, escaped, ...tokens })}</wcp-code>`;
     }
 
     // if a tag name is provided, use it to parametrize the preview component
     const previewTagName = this.previewTagName ? ` preview-tag-name="${this.previewTagName}"` : '';
-    const raw = escaped ? this.#rawCodeMap.get(code) : code;
+    const raw = escaped ? this.#rawCodeMap.get(text) : text;
 
     // wrap the code in a custom element to preview it
     return `
       <wcp-markdown-example>
-        <wcp-code slot="code">${super.code(code, language, escaped)}</wcp-code>
+        <wcp-code slot="code">${super.code({ text, lang, escaped, ...tokens })}</wcp-code>
         <wcp-preview slot="preview"${previewTagName}>${raw}</wcp-preview>
       </wcp-markdown-example>
     `;
