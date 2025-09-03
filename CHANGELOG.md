@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.8.8](https://github.com/webcomponents-preview/client/compare/0.8.7...0.8.8) (2025-09-03)
+
+
+### Bug Fixes
+
+* preview from markdown ([f4813b0](https://github.com/webcomponents-preview/client/commit/f4813b0e8c9f240bea8e6e0d8d48145a1a17b4e1))
+
 ## [0.8.7](https://github.com/webcomponents-preview/client/compare/0.8.6...0.8.7) (2025-07-13)
 
 ## [0.8.6](https://github.com/webcomponents-preview/client/compare/0.8.5...0.8.6) (2025-07-13)
