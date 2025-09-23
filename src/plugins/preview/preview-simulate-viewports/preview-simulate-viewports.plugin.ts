@@ -85,7 +85,9 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
   protected prepareStyle(): HTMLStyleElement {
     // check if a style element already exists
     let style = this.container?.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`);
-    if (style) return style;
+    if (style) {
+      return style;
+    }
 
     // create a new style element
     style = document.createElement('style');
@@ -99,7 +101,9 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
    * Sets the size of the viewport to simulate its dimensions.
    */
   protected applyPreviewSize() {
-    if (this.simulateViewport === undefined) return;
+    if (this.simulateViewport === undefined) {
+      return;
+    }
 
     // read the viewport dimensions to apply
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -124,7 +128,9 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
    * Scales the sized viewport to fit into the preview container.
    */
   protected applyPreviewScale() {
-    if (this.simulateViewport === undefined) return;
+    if (this.simulateViewport === undefined) {
+      return;
+    }
 
     // read the viewport dimensions to apply
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -132,10 +138,12 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
     // derive the scale to fit the viewport into the preview
 
     const preview = this.container?.parentElement?.parentElement;
-    if (!preview) return;
+    if (!preview) {
+      return;
+    }
     const scale = Math.min(
       (preview.clientWidth - 20) / (this.invertSimulatedViewport ? h : w),
-      (preview.clientHeight - 20) / (this.invertSimulatedViewport ? w : h),
+      (preview.clientHeight - 20) / (this.invertSimulatedViewport ? w : h)
     );
     // add the scale styling to the style element
     this.prepareStyle().textContent += `
@@ -168,7 +176,11 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
 
   private emitChange() {
     const detail = { viewport: this.simulateViewport, inverted: this.invertSimulatedViewport };
-    const event = new CustomEvent('wcp-preview-simulate-viewports:changed', { detail, bubbles: true, composed: true });
+    const event = new CustomEvent('wcp-preview-simulate-viewports:changed', {
+      detail,
+      bubbles: true,
+      composed: true,
+    });
     this.dispatchEvent(event);
   }
 
@@ -202,7 +214,7 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
     return html`
       ${map(
         VIEWPORTS.keys(),
-        (viewport) => html`
+        viewport => html`
           <wcp-button
             kind="icon"
             data-viewport="${viewport}"
@@ -211,13 +223,15 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
           >
             <wcp-icon name="${ifDefined(ICONS.get(viewport))}"></wcp-icon>
           </wcp-button>
-        `,
+        `
       )}
 
       <wcp-button
         kind="icon"
         ?disabled="${this.simulateViewport === undefined}"
-        class="${classMap({ active: this.simulateViewport !== undefined && this.invertSimulatedViewport })}"
+        class="${classMap({
+          active: this.simulateViewport !== undefined && this.invertSimulatedViewport,
+        })}"
         @click="${this.handleInvertSimulatedViewport}"
       >
         <wcp-icon name="ratio" style="--wcp-icon-size: 19"></wcp-icon>
@@ -228,7 +242,10 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
 
 declare global {
   interface HTMLElementEventMap {
-    'wcp-preview-simulate-viewports:changed': CustomEvent<{ viewport: Viewport; inverted: boolean }>;
+    'wcp-preview-simulate-viewports:changed': CustomEvent<{
+      viewport: Viewport;
+      inverted: boolean;
+    }>;
   }
 
   interface HTMLElementTagNameMap {

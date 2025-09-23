@@ -1,12 +1,18 @@
 import type * as CEM from 'custom-elements-manifest';
 
-export type CustomElementDeclarationWithExamples = CEM.CustomElementDeclaration & { examples: string[] };
-export type CustomElementDeclarationWithGroups = CEM.CustomElementDeclaration & { groups: string[] };
+export type CustomElementDeclarationWithExamples = CEM.CustomElementDeclaration & {
+  examples: string[];
+};
+export type CustomElementDeclarationWithGroups = CEM.CustomElementDeclaration & {
+  groups: string[];
+};
 export type CustomElementDeclarationWithReadme = CEM.CustomElementDeclaration & { readme: string };
-export type CustomElementDeclarationWithTagName = CEM.CustomElementDeclaration & { tagName: string[] };
+export type CustomElementDeclarationWithTagName = CEM.CustomElementDeclaration & {
+  tagName: string[];
+};
 
 export function isCustomElementDeclarationWithTagName(
-  declaration?: CEM.Declaration,
+  declaration?: CEM.Declaration
 ): declaration is CustomElementDeclarationWithTagName {
   return declaration !== undefined && 'customElement' in declaration && 'tagName' in declaration;
 }
@@ -22,7 +28,7 @@ export function unwrapString(value: string): string {
 
 export function getEnumValues(field: CEM.CustomElementField): string[] {
   const parsed = field.type?.text?.split('|') ?? [];
-  const trimmed = parsed.map((value) => value.trim());
+  const trimmed = parsed.map(value => value.trim());
   const unique = new Set(trimmed);
-  return [...unique].filter((value) => value !== '');
+  return [...unique].filter(value => value !== '');
 }

@@ -48,8 +48,12 @@ export function persist<K extends keyof State>(key: K, value: State[K]) {
   switch (persistence) {
     case 'none':
       // prepare global state object if missing
-      if (!window.wcp) window.wcp = {} as WCP;
-      if (!window.wcp.__state) window.wcp.__state = {};
+      if (!window.wcp) {
+        window.wcp = {} as WCP;
+      }
+      if (!window.wcp.__state) {
+        window.wcp.__state = {};
+      }
 
       window.wcp.__state[keyWithPrefix] = serializedValue;
       break;

@@ -1,4 +1,4 @@
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, URL } from 'node:url';
 import { parseArgs } from 'node:util';
 
 import { esbuildPlugin } from '@web/dev-server-esbuild';

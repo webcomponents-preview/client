@@ -76,10 +76,10 @@ describe('markdown.utils', () => {
       expect(prefixRelativeUrls('[foo](baz/bar.md)', 'foo.md', '/#/readme/')).to.equal('[foo](/#/readme/baz%2Fbar.md)');
 
       expect(prefixRelativeUrls('[foo](bar.mdx)', 'baz/foo.md', '/#/readme/')).to.equal(
-        '[foo](/#/readme/baz%2Fbar.mdx)',
+        '[foo](/#/readme/baz%2Fbar.mdx)'
       );
       expect(prefixRelativeUrls('[foo](baz/bar.mdx)', 'foo.md', '/#/readme/')).to.equal(
-        '[foo](/#/readme/baz%2Fbar.mdx)',
+        '[foo](/#/readme/baz%2Fbar.mdx)'
       );
     });
 
@@ -100,7 +100,7 @@ describe('markdown.utils', () => {
     it('should replace all occurrences', () => {
       expect(prefixRelativeUrls('[foo](bar) [foo](bar)', 'baz/foo.md')).to.equal('[foo](baz/bar) [foo](baz/bar)');
       expect(prefixRelativeUrls('[foo](bar.md#hash) [foo](bar.md#hash)', 'baz/foo.md')).to.equal(
-        '[foo](baz%2Fbar.md/hash) [foo](baz%2Fbar.md/hash)',
+        '[foo](baz%2Fbar.md/hash) [foo](baz%2Fbar.md/hash)'
       );
     });
   });

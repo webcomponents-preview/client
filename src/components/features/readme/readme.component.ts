@@ -51,7 +51,7 @@ export class Readme extends ColorSchemable(LitElement) {
     const element = this.querySelector(`#${section}`);
     if (element !== null) {
       // as hash routing may be used, we can't rely on the `:target` pseudo selector, thus we set a class
-      this.querySelectorAll('.target').forEach((el) => el.classList.remove('target'));
+      this.querySelectorAll('.target').forEach(el => el.classList.remove('target'));
       element.classList.add('target');
 
       // finally, scroll to the element

@@ -74,7 +74,9 @@ export class InputKeyValuePairs
     });
 
     // add at least on single empty pair
-    if (!this.#hasEmptyPair) this.#valuePairs.push(['', '']);
+    if (!this.#hasEmptyPair) {
+      this.#valuePairs.push(['', '']);
+    }
 
     // set internal form value
     this.internals.setFormValue(this.#prefixedValue);
@@ -119,7 +121,9 @@ export class InputKeyValuePairs
   handleInput() {
     // prepare new form data and make sure to keep the empty entry
     const formData = new FormData(this.form);
-    if (this.#hasEmptyPair) formData.append('', this.#rawValue.get('') ?? '');
+    if (this.#hasEmptyPair) {
+      formData.append('', this.#rawValue.get('') ?? '');
+    }
     this.value = formData;
   }
 
@@ -171,10 +175,10 @@ export class InputKeyValuePairs
                   <wcp-button disabled slot="after" kind="icon">
                     <wcp-icon name="add" style="--wcp-icon-size: 20"></wcp-icon>
                   </wcp-button>
-                `,
+                `
               )}
             </wcp-input-key-value>
-          `,
+          `
         )}
       </form>
     `;

@@ -56,7 +56,9 @@ export class StageEditor extends ColorSchemable(LitElement) implements StagePlug
   readonly available = true;
 
   async #prepareElementData(compressed?: string) {
-    if (this._element === undefined) return;
+    if (this._element === undefined) {
+      return;
+    }
 
     // given data is always without default values, thus we have to retrieve them first
     const initialData = prepareInitialData(this._element);
@@ -78,14 +80,18 @@ export class StageEditor extends ColorSchemable(LitElement) implements StagePlug
   }
 
   protected getElementReference(): Element | undefined {
-    if (this._element === undefined) return undefined;
+    if (this._element === undefined) {
+      return undefined;
+    }
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.renderRoot.querySelector(this._element.tagName!) ?? undefined;
   }
 
   @eventOptions({ passive: true })
   protected async handleControlsInput({ detail }: CustomEvent<FormData>) {
-    if (this._element === undefined) return;
+    if (this._element === undefined) {
+      return;
+    }
     this.#updateFormData(detail, this._element);
   }
 
@@ -107,7 +113,7 @@ export class StageEditor extends ColorSchemable(LitElement) implements StagePlug
           .data="${this._elementData}"
           @wcp-stage-editor-controls:input="${this.handleControlsInput}"
         ></wcp-stage-editor-controls>
-      `,
+      `
     )}`;
   }
 }

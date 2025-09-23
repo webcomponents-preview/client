@@ -97,7 +97,7 @@ export class InputKeyValue
         ?required="${this.required}"
         .value="${this.name ?? ''}"
         @input="${this.handleKeyInput}"
-      />
+      >
       <span id="border"></span>
 
       <input
@@ -109,7 +109,7 @@ export class InputKeyValue
         ?required="${this.required}"
         .value="${this.value ?? ''}"
         @input="${this.handleValueInput}"
-      />
+      >
       <span class="border"></span>
     `;
   }

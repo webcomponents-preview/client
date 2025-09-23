@@ -22,7 +22,7 @@ export const removeColorSchemable = (element: ColorSchemableInterface) => colorS
 function handleColorSchemeChange({ detail }: CustomEvent<ColorScheme>) {
   // update state in module
   const colorScheme = detail ?? undefined;
-  colorSchemables.forEach((colorSchemable) => (colorSchemable.colorScheme = colorScheme));
+  colorSchemables.forEach(colorSchemable => (colorSchemable.colorScheme = colorScheme));
 }
 
 // bind a single listener to keep track of changes

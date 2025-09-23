@@ -63,7 +63,7 @@ export class Stage extends ColorSchemable(LitElement) {
     // change listener may be called again with an empty result set
     if (plugins.length > 0) {
       this._plugins = plugins;
-      this._plugins.forEach((tab) => tab.setAttribute('slot', tab.name));
+      this._plugins.forEach(tab => tab.setAttribute('slot', tab.name));
 
       this.preparePluginTabs();
       this.alignActivePlugin();
@@ -91,7 +91,7 @@ export class Stage extends ColorSchemable(LitElement) {
   protected preparePluginTabs() {
     this._tabs = this._plugins.reduce(
       (tabs, { available, label, name }) => ({ ...tabs, [name]: { label, disabled: !available } }),
-      {},
+      {}
     );
   }
 
@@ -128,7 +128,7 @@ export class Stage extends ColorSchemable(LitElement) {
           >
             ${map(this._plugins, ({ name }) => html`<slot name="${name}" slot="${name}"></slot>`)}
           </wcp-tabs>
-        `,
+        `
       )}
       <slot @slotchange="${this.handleSlotChange}"></slot>
     `;

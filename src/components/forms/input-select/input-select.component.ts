@@ -81,7 +81,9 @@ export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) i
   override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     super.attributeChangedCallback(name, oldValue, newValue);
 
-    if (name !== 'value') return;
+    if (name !== 'value') {
+      return;
+    }
     this.checkValidity();
     this.internals.setFormValue(this.value ?? null);
   }
@@ -92,20 +94,22 @@ export class InputSelect extends Editable({ hasAfterSlot: false })(LitElement) i
     const slot = event.target as HTMLSlotElement;
     const options = slot
       .assignedElements({ flatten: true })
-      .filter((element) => element instanceof InputSelectOption) as InputSelectOption[];
+      .filter(element => element instanceof InputSelectOption) as InputSelectOption[];
 
     // clear the input and append the options as copies
-    if (this.input === undefined) return;
+    if (this.input === undefined) {
+      return;
+    }
     this.input.innerHTML = '';
     this.input.append(
-      ...options.map((option) => {
+      ...options.map(option => {
         const copy = document.createElement('option');
         copy.value = option.value ?? '';
         copy.textContent = option.label ?? '';
         copy.disabled = option.disabled;
         copy.selected = copy.value === this.value;
         return copy;
-      }),
+      })
     );
   }
 

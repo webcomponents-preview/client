@@ -45,12 +45,16 @@ export function areParamsEqual(a: Params, b: Params, exclude: string[] = []): bo
 export function mergeParams(oldParams: Params, newParams: Params, exclude: string[] = []): Params {
   return Object.entries(newParams).reduce(
     (params, [key, value]) => {
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      if (exclude.includes(key)) delete params[key];
-      if (value !== undefined) params[key] = value;
+      if (exclude.includes(key)) {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete params[key];
+      }
+      if (value !== undefined) {
+        params[key] = value;
+      }
       return params;
     },
-    { ...oldParams },
+    { ...oldParams }
   );
 }
 
@@ -172,7 +176,9 @@ export class Router {
     // match on enter
     if (typeof nextRoute.enter === 'function') {
       const success = await nextRoute.enter(nextParams, this, outgoingParams);
-      if (success === false) return;
+      if (success === false) {
+        return;
+      }
     }
 
     // update state

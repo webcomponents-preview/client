@@ -40,8 +40,8 @@ export const prepareRoutes = (): Route[] => [
       const encoded = decodeURIComponent(url);
       // fetch the readme contents and parse it as markdown
       const markdown = fetch(encoded)
-        .then((response) => response.text())
-        .then((markdown) => prefixRelativeUrls(markdown, encoded, '/#/readme/'));
+        .then(response => response.text())
+        .then(markdown => prefixRelativeUrls(markdown, encoded, '/#/readme/'));
       return html`
         <wcp-readme-frame>
           <wcp-readme markdown="${until(markdown, '')}" hash="${ifDefined(hash)}"></wcp-readme>
@@ -80,14 +80,14 @@ export const prepareRoutes = (): Route[] => [
         >
           ${map(
             window.wcp.config.stagePlugins ?? [],
-            (stagePlugin) => withStatic(html)`
+            stagePlugin => withStatic(html)`
             <${unsafeStatic(stagePlugin)}
               preview-tag-name="${tagName}"
               .data="${ifDefined(pluginData)}"
               @wcp-stage-plugin:data-change="${({ detail: pluginData }: CustomEvent<string>) =>
                 Router.navigate('/element', tagName, pluginName, pluginData)}"
             ></${unsafeStatic(stagePlugin)}>
-          `,
+          `
           )}
         </wcp-stage>
       `;

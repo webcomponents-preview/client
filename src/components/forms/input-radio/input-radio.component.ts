@@ -105,7 +105,7 @@ export class InputRadio
         ?checked="${this.#checked}"
         .value="${this.value}"
         @input="${this.handleInput}"
-      />
+      >
     `;
   }
 }

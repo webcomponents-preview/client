@@ -114,7 +114,7 @@ export class Button extends ColorSchemable(LitElement) {
           >
             <slot></slot>
           </button>
-        `,
+        `
       )}
     `;
   }

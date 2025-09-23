@@ -56,7 +56,7 @@ export class StageExamples extends ColorSchemable(LitElement) implements StagePl
       ${map(
         this._element?.examples ?? [],
         (example: string) =>
-          html`<section .innerHTML="${until(renderMarkdown(example, true, this._element?.tagName))}"></section>`,
+          html`<section .innerHTML="${until(renderMarkdown(example, true, this._element?.tagName))}"></section>`
       )}
     `;
   }

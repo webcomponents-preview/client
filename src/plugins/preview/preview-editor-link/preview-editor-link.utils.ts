@@ -26,7 +26,9 @@ export function readCurrentElementData(ref: HTMLElement): ElementData {
       if (field.isControllable) {
         const value = ref[field.name as keyof HTMLElement];
         if (value !== undefined && field.attribute !== undefined) {
-          if (field.hasAttribute) skipAttributes.push(field.attribute);
+          if (field.hasAttribute) {
+            skipAttributes.push(field.attribute);
+          }
           return { ...acc, [litKey(field)]: value };
         }
       }
@@ -34,10 +36,10 @@ export function readCurrentElementData(ref: HTMLElement): ElementData {
     }, {}) ?? {};
 
   // 2. get all remaining attributes
-  const attributeNames = ref.getAttributeNames().filter((attribute) => !skipAttributes.includes(attribute));
+  const attributeNames = ref.getAttributeNames().filter(attribute => !skipAttributes.includes(attribute));
   const attributes = attributeNames.reduce(
     (acc, attr) => ({ ...acc, [attr]: ref.getAttribute(attr) ?? undefined }),
-    {},
+    {}
   );
 
   // 3. read all slotted data with their current contents
@@ -51,9 +53,13 @@ export function readCurrentElementData(ref: HTMLElement): ElementData {
       // read node contents into string
       const value =
         nodes.reduce((content, node) => {
-          if (node instanceof HTMLElement) return `${content}${node.outerHTML}`;
-          else if (node instanceof Text) return `${content}${node.textContent}`;
-          else return content;
+          if (node instanceof HTMLElement) {
+            return `${content}${node.outerHTML}`;
+          } else if (node instanceof Text) {
+            return `${content}${node.textContent}`;
+          } else {
+            return content;
+          }
         }, '') ?? slot.default;
 
       // deliver combined result

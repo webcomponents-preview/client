@@ -48,7 +48,7 @@ export class NavigationItem extends ColorSchemable(LitElement) {
             <span><slot></slot></span>
           </a>
         `,
-        () => html`<span><slot></slot></span>`,
+        () => html`<span><slot></slot></span>`
       )}
     `;
   }

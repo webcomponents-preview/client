@@ -80,9 +80,11 @@ export class RootNavigation extends LitElement {
   @eventOptions({ passive: true })
   private handleNavigationToggle(event: CustomEvent<boolean>): void {
     // only if 'alt' key is pressed
-    if (!this.#altKeyPressed) return;
+    if (!this.#altKeyPressed) {
+      return;
+    }
     // toggle all others as well
-    this.togglableNavigationRefs.forEach((navigation) => {
+    this.togglableNavigationRefs.forEach(navigation => {
       navigation.open = event.detail;
     });
   }
@@ -96,7 +98,9 @@ export class RootNavigation extends LitElement {
   }
 
   protected renderItems(items: Parsed.GroupedElements, nested = false): TemplateResult | undefined {
-    if (!items.size) return undefined;
+    if (!items.size) {
+      return undefined;
+    }
 
     return html`${map(
       items.entries(),
@@ -113,9 +117,9 @@ export class RootNavigation extends LitElement {
               ${this.renderItems(element as Parsed.GroupedElements, true)}
             </wcp-navigation>
           `,
-          () => this.renderItem(element as Parsed.GroupedElement),
+          () => this.renderItem(element as Parsed.GroupedElement)
         )}
-      `,
+      `
     )}`;
   }
 
@@ -124,7 +128,7 @@ export class RootNavigation extends LitElement {
       ${when(
         this.filteredItems.size > 0,
         () => this.renderItems(this.filteredItems),
-        () => html`<p>${this.emptyMessage}</p>`,
+        () => html`<p>${this.emptyMessage}</p>`
       )}
     `;
   }

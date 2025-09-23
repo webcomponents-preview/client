@@ -30,7 +30,7 @@ const precompile = (source: string, path: string): string => {
   if (path.endsWith('breakpoint.mixin.scss')) {
     const breakpoints = Object.entries(BREAKPOINTS).reduce(
       (acc, [key, value]) => `${acc}  ${key}: ${value}px,\n`,
-      '\n',
+      '\n'
     );
     return source.replace(/(\$breakpoints: \()(\);)/, `$1${breakpoints}$2`);
   }
@@ -39,14 +39,20 @@ const precompile = (source: string, path: string): string => {
 
 // add postcss to sass transformer
 const transform = async (source: string): Promise<string> => {
-  const { css } = await postcss([autoprefixer, postcssPresetEnv({ stage: 0 })]).process(source, { from: source });
+  const { css } = await postcss([autoprefixer, postcssPresetEnv({ stage: 0 })]).process(source, {
+    from: source,
+  });
   return css;
 };
 
 // resolve @ imports in sass
 const importMapper = (path: string): string => {
-  if (path.includes('node_modules')) return path;
-  if (path.startsWith('@')) return resolve(path.replace(/^.*@\/?/, './src/'));
+  if (path.includes('node_modules')) {
+    return path;
+  }
+  if (path.startsWith('@')) {
+    return resolve(path.replace(/^.*@\/?/, './src/'));
+  }
   return path;
 };
 
@@ -142,11 +148,11 @@ ${Object.entries(BREAKPOINTS).reduce((acc, [key, value]) => `${acc}  ${key}: ${v
       src: 'node_modules/prismjs/components',
       dest: 'dist/grammars',
     }),
-    ...external.map((ext) =>
+    ...external.map(ext =>
       copyPlugin({
         src: `node_modules/${ext}`,
         dest: `dist/runtime/${ext}`,
-      }),
+      })
     ),
   ],
 };
@@ -171,10 +177,13 @@ if (watch) {
     // notify user
     const url = `http://127.0.0.1:${port}/`;
 
+    // eslint-disable-next-line no-console
     console.info(` > Preview: \x1b[4m${url}\x1b[0m\n\n`);
 
     // as the docs are maybe not ready yet, touch the target already
-    if (!existsSync(manifestPath)) await writeFile(manifestPath, '{}', 'utf-8');
+    if (!existsSync(manifestPath)) {
+      await writeFile(manifestPath, '{}', 'utf-8');
+    }
     watchFile(manifestPath, async () => {
       const manifest = await readFile(manifestPath, 'utf-8');
       server.respond(manifest);

@@ -29,7 +29,7 @@ const silent = false;
 const { positionals: paths } = parseArgs({ allowPositionals: true });
 const componentPaths = await glob(paths, { cwd: cwd(), absolute: true, onlyFiles: true });
 
-componentPaths.forEach(async (componentPath) => {
+componentPaths.forEach(async componentPath => {
   const componentName = basename(componentPath);
   const content = await readFile(componentPath, 'utf-8');
   const matchAnyAnnotation = /\*\s+@(\w+)\s*\n*/;
@@ -40,7 +40,7 @@ componentPaths.forEach(async (componentPath) => {
   // prepare match for examples
   const matchExamples = new RegExp(
     `(?<=${matchExampleAnnotation.source})(${matchAnything.source}?)(?:(?=${matchJsDocEnd.source})|(?=${matchAnyAnnotation.source}))`,
-    'g',
+    'g'
   );
   const examples = Array
     // find all examples
@@ -50,7 +50,10 @@ componentPaths.forEach(async (componentPath) => {
 
   // skip if no examples found
   if (skipEmpty && !examples.length) {
-    if (!silent) console.info(`No examples found in ${componentName}`);
+    if (!silent) {
+      // eslint-disable-next-line no-console
+      console.info(`No examples found in ${componentName}`);
+    }
     return;
   }
 
@@ -67,7 +70,7 @@ componentPaths.forEach(async (componentPath) => {
     // remove found examples from component file
     const replaceExamples = new RegExp(
       `(${matchExampleAnnotation.source}(${matchAnything.source}?))(?:(?=${matchJsDocEnd.source})|(?=${matchAnyAnnotation.source}))`,
-      'g',
+      'g'
     );
     const cleanedContent = content
       // remove the examples
@@ -79,6 +82,7 @@ componentPaths.forEach(async (componentPath) => {
 
   // notify
   if (!silent) {
+    // eslint-disable-next-line no-console
     console.info(`Separated ${examples.length} example${examples.length > 1 ? 's' : ''} from ${componentName}`);
   }
 });

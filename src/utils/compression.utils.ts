@@ -11,7 +11,7 @@ export async function compress(data: string, encoding: CompressionFormat): Promi
   // convert the stream to an array buffer
   const buffer = await new Response(stream).arrayBuffer();
   // convert the array buffer to a binary string
-  const binary = Array.from(new Uint8Array(buffer), (x) => String.fromCodePoint(x)).join('');
+  const binary = Array.from(new Uint8Array(buffer), x => String.fromCodePoint(x)).join('');
   // convert and deliver the binary as ascii string
   return btoa(binary);
 }
@@ -27,7 +27,7 @@ export async function decompress(data: string, encoding: CompressionFormat): Pro
   // convert the input to a binary string
   const binary = atob(data);
   // stream the string through the decompressor
-  const stream = new Blob([Uint8Array.from(binary, (m) => m.codePointAt(0) ?? 0)])
+  const stream = new Blob([Uint8Array.from(binary, m => m.codePointAt(0) ?? 0)])
     .stream()
     .pipeThrough(new DecompressionStream(encoding));
   // convert the stream to a string

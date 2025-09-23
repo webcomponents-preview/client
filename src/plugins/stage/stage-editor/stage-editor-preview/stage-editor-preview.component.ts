@@ -30,7 +30,9 @@ export class StageEditorPreview extends LitElement {
       // align the ky by removing forbidden characters
       key = key.replace(/[^a-zA-Z0-9-]/g, '');
       // skip empty keys
-      if (key === '') return acc;
+      if (key === '') {
+        return acc;
+      }
       // missing value means boolean attribute
       if (['', null, undefined].includes(value)) {
         return { ...acc, [`?${key}`]: true };
@@ -63,16 +65,18 @@ export class StageEditorPreview extends LitElement {
           ${when(
             name === '',
             () => unsafeHTML(content),
-            () => withStatic(html)`<div slot="${name}">${unsafeHTML(content)}</div>`,
+            () => withStatic(html)`<div slot="${name}">${unsafeHTML(content)}</div>`
           )}
-        `,
+        `
       )}
     `;
   }
 
   protected override render(): TemplateResult {
     // we need the tag name to be defined and the iframe ready
-    if (this.previewTagName === undefined || !this.previewTagName.length) return html`${nothing}`;
+    if (this.previewTagName === undefined || !this.previewTagName.length) {
+      return html`${nothing}`;
+    }
 
     // prepare the tag name and render it along with the slots and properties
     const tag = unsafeStatic(this.previewTagName);
@@ -84,7 +88,7 @@ export class StageEditorPreview extends LitElement {
             <${tag} ${spread(this.#prepareProps())}>
               ${this.renderSlots()}
             </${tag}>
-          `,
+          `
         )}
       </wcp-preview>
     `;

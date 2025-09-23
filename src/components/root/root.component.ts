@@ -101,11 +101,16 @@ export class Root extends LitElement {
     // check for the reload query param
     if (this.reloadQueryParam) {
       const params = new URLSearchParams(window.location.search);
-      if (params.has(this.reloadQueryParam)) this.hideSplash = true;
+      if (params.has(this.reloadQueryParam)) {
+        this.hideSplash = true;
+      }
     }
 
     // once connected, load the config and the manifest
     const config = await loadConfig(this.configUrl);
+    if (config === undefined) {
+      throw new Error('Failed to load config');
+    }
     const manifest = await loadManifest(this.manifestUrl, config.excludeElements);
 
     // set the document title and prepare the navigation
@@ -142,7 +147,7 @@ export class Root extends LitElement {
           <wcp-root-splash ?hidden="${this.ready}" @transitionend="${this.handleSplashTransitionEnd}">
             Loading...
           </wcp-root-splash>
-        `,
+        `
       )}
       ${when(
         this.ready,
@@ -150,7 +155,7 @@ export class Root extends LitElement {
           <wcp-layout>
             <wcp-title slot="header" title="${ifDefined(getConfig()?.labels.title)}">
               <slot name="logo" slot="logo">
-                <img src="${logo}" alt="${ifDefined(getConfig()?.labels.title)}" height="20px" />
+                <img src="${logo}" alt="${ifDefined(getConfig()?.labels.title)}" height="20px">
               </slot>
             </wcp-title>
 
@@ -168,13 +173,13 @@ export class Root extends LitElement {
             ></wcp-root-navigation>
 
             <wcp-topbar>
-              ${map(this.topbarPlugins, (plugin) => staticHtml`<${unsafeStatic(plugin)}></${unsafeStatic(plugin)}>`)}
+              ${map(this.topbarPlugins, plugin => staticHtml`<${unsafeStatic(plugin)}></${unsafeStatic(plugin)}>`)}
               <slot name="topbar-plugins"></slot>
             </wcp-topbar>
 
             <slot name="stage">${this.#router.outlet()}</slot>
           </wcp-layout>
-        `,
+        `
       )}
     `;
   }

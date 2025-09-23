@@ -17,7 +17,9 @@ export default {
       addInlineReadme: true,
       transformer: 'wca',
       outputPath(path) {
-        if (path === undefined) return '';
+        if (path === undefined) {
+          return '';
+        }
         return resolve(dirname(path), 'README.md');
       },
     }),
@@ -27,7 +29,9 @@ export default {
         const [, type, category, sub] = path;
         const groups = [type, category];
 
-        if (path.length > 5) groups.push(sub);
+        if (path.length > 5) {
+          groups.push(sub);
+        }
         return [
           groups
             .filter(Boolean)

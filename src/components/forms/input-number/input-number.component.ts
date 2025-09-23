@@ -76,7 +76,9 @@ export class InputNumber extends Editable()(LitElement) implements FormAssociate
   override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     super.attributeChangedCallback(name, oldValue, newValue);
 
-    if (name !== 'value') return;
+    if (name !== 'value') {
+      return;
+    }
     this.checkValidity();
     this.internals.setFormValue(this.value ? `${this.value}` : null);
   }
@@ -98,7 +100,7 @@ export class InputNumber extends Editable()(LitElement) implements FormAssociate
         ?required="${this.required}"
         .value="${this.value ? `${this.value}` : ''}"
         @input="${this.handleInput}"
-      />
+      >
     `;
   }
 }

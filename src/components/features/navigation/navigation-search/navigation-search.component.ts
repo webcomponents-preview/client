@@ -54,7 +54,7 @@ export class NavigationSearch extends ColorSchemable(LitElement) {
             <wcp-button slot="after" kind="icon" @click="${this.handleResetClick}">
               <wcp-icon name="close"></wcp-icon>
             </wcp-button>
-          `,
+          `
         )}
       </wcp-input-text>
     `;

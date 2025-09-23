@@ -28,7 +28,12 @@ export function prepareNavigation(manifest: Parsed.Manifest, config: Config): Pa
   // prepare readme navigation
   if (config.additionalReadmes?.length) {
     const readmes = config.additionalReadmes.reduce((readmes, { name, url }) => {
-      const element = { hasGroups: true, groups: [group], name, getNiceName: () => name } as unknown as Parsed.Element;
+      const element = {
+        hasGroups: true,
+        groups: [group],
+        name,
+        getNiceName: () => name,
+      } as unknown as Parsed.Element;
       return readmes.set(name, { name, link: prepareReadmeLink(url), element });
     }, new Map() as Parsed.GroupedElements);
     items.set(group, readmes);
@@ -43,7 +48,7 @@ export function prepareNavigation(manifest: Parsed.Manifest, config: Config): Pa
  */
 export function matchesSearch(content: string, terms: string[], minSearchLength = 1): boolean {
   const contents = content.toLowerCase();
-  return terms.every((term) => term.length < minSearchLength || contents.includes(term));
+  return terms.every(term => term.length < minSearchLength || contents.includes(term));
 }
 
 /**
@@ -52,17 +57,21 @@ export function matchesSearch(content: string, terms: string[], minSearchLength 
 export function filterItems(
   items: Parsed.GroupedElements,
   terms: string[],
-  minSearchLength = 1,
+  minSearchLength = 1
 ): Parsed.GroupedElements {
   // check if we even want to filter
-  if (terms.length < 1) return items;
+  if (terms.length < 1) {
+    return items;
+  }
 
   // filter the items, skip empty groups
   return Array.from(items.entries()).reduce((filtered, [group, item]) => {
     // filter nested groups
     if (item instanceof Map && item.size > 0) {
       const filteredItems = filterItems(item, terms, minSearchLength);
-      if (filteredItems.size > 0) filtered.set(group, filteredItems);
+      if (filteredItems.size > 0) {
+        filtered.set(group, filteredItems);
+      }
       return filtered;
     }
 

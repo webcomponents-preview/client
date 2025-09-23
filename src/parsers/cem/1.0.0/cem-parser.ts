@@ -43,12 +43,12 @@ export const CemParser = class {
     }
 
     const elements = new Map() as Parsed.GroupedElements;
-    Array.from(this.elements.values()).forEach((element) => {
+    Array.from(this.elements.values()).forEach(element => {
       // Read groups and fallback if not available
       const groups = element.hasGroups ? element.groups : [fallbackGroupName];
       // Cycle potentially nested groups and add the element
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      groups!.forEach((group) => addGroupedElement(elements, group.split('/') as [string], element));
+      groups!.forEach(group => addGroupedElement(elements, group.split('/') as [string], element));
     });
 
     // deliver result
@@ -57,13 +57,13 @@ export const CemParser = class {
 
   constructor(
     private _data: CEM.Package,
-    exclude: string[] = [],
+    exclude: string[] = []
   ) {
     // parse the elements
     this.#elements = this._data.modules
-      .flatMap((module) => module.declarations)
+      .flatMap(module => module.declarations)
       .filter(isCustomElementDeclarationWithTagName)
-      .filter((element) => !exclude.includes(element.tagName))
+      .filter(element => !exclude.includes(element.tagName))
       .reduce((map, element) => map.set(element.tagName, new CemElement(element)), new Map());
 
     // allow access to the original data by proxying

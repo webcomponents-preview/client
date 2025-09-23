@@ -102,13 +102,13 @@ export class Tabs extends ColorSchemable(LitElement) {
             >
               ${label}
             </button>
-          `,
+          `
         )}
       </nav>
 
       ${map(
         Object.keys(this.tabs),
-        (tab) => html`
+        tab => html`
           <div
             id="${tab}-panel"
             part="${tab}-panel"
@@ -119,7 +119,7 @@ export class Tabs extends ColorSchemable(LitElement) {
           >
             <slot name="${tab}"></slot>
           </div>
-        `,
+        `
       )}
     `;
   }

@@ -87,7 +87,9 @@ export class InputText extends Editable()(LitElement) implements FormAssociated<
   override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     super.attributeChangedCallback(name, oldValue, newValue);
 
-    if (name !== 'value') return;
+    if (name !== 'value') {
+      return;
+    }
     this.checkValidity();
     this.internals.setFormValue(this.value ?? null);
   }
@@ -123,7 +125,7 @@ export class InputText extends Editable()(LitElement) implements FormAssociated<
         ?required="${this.required}"
         .value="${this.value ?? ''}"
         @input="${this.handleInput}"
-      />
+      >
     `;
   }
 }

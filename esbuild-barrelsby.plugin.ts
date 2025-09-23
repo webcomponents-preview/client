@@ -29,13 +29,15 @@ export function barrelsbyPlugin({ configPath, addMissingJsExtensions = false }: 
         const index = resolve(resolveDir, path);
 
         // return a promise that resolves when the watcher fires
-        return new Promise<OnResolveResult | undefined>((done) => {
+        return new Promise<OnResolveResult | undefined>(done => {
           // as we can not await the result of barrelsby directly,
           // we have to watch the file system for a change
           const watcher = watchFile(index, { interval: 200, persistent: false }, async () => {
             // if the file is created entirely new, we have to wait
             // for the next change event, by checking for existence
-            if (!existsSync(index)) return;
+            if (!existsSync(index)) {
+              return;
+            }
 
             // add missing js extension if configured
             // https://regex101.com/r/9wGBMU/1
@@ -49,6 +51,7 @@ export function barrelsbyPlugin({ configPath, addMissingJsExtensions = false }: 
             const message = `updated${addMissingJsExtensions ? ' and *.js extensions added' : ''}`;
             const level = build.initialOptions.logLevel ?? 'info';
             if (['verbose', 'debug', 'info'].includes(level)) {
+              // eslint-disable-next-line no-console
               console.info('[barrelsby]', message);
             }
 

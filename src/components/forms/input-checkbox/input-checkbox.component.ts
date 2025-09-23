@@ -106,7 +106,7 @@ export class InputCheckbox
         ?checked="${this.checked}"
         .value="${this.value}"
         @input="${this.handleInput}"
-      />
+      >
     `;
   }
 }

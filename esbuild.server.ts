@@ -34,7 +34,7 @@ export function createServer(port: number, cors = false): DevServer {
         method: request.method,
         headers: request.headers,
       },
-      (proxyResponse) => {
+      proxyResponse => {
         // intercept /wcp requests
         if (request.headers.accept === 'text/event-stream' && request.url === '/wcp') {
           // prepare headers for SSE
@@ -58,7 +58,7 @@ export function createServer(port: number, cors = false): DevServer {
         // Otherwise, forward the response from esbuild to the client
         response.writeHead(proxyResponse.statusCode ?? 200, proxyResponse.headers);
         proxyResponse.pipe(response, { end: true });
-      },
+      }
     );
     request.pipe(proxyRequest, { end: true });
   }) as DevServer;

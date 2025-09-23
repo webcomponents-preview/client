@@ -45,7 +45,9 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
 
   @eventOptions({ passive: true })
   protected handleFormInput(event: InputEvent): void {
-    if (this._element === undefined) return;
+    if (this._element === undefined) {
+      return;
+    }
 
     // prepare form data
     const form = event.currentTarget as HTMLFormElement;
@@ -57,7 +59,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
         bubbles: true,
         composed: true,
         detail: formData,
-      }),
+      })
     );
   }
 
@@ -65,12 +67,14 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
   protected renderHint(content?: string): TemplateResult {
     return when(
       content,
-      () => withStatic(html)`<div slot="hint" .innerHTML="${until(renderMarkdown(content as string, false))}"></div>`,
+      () => withStatic(html)`<div slot="hint" .innerHTML="${until(renderMarkdown(content as string, false))}"></div>`
     );
   }
 
   protected renderFieldControl(field: Parsed.Field): TemplateResult {
-    if (!field.isControllable) return html`${nothing}`;
+    if (!field.isControllable) {
+      return html`${nothing}`;
+    }
     const key = litKey(field);
 
     return html`
@@ -84,7 +88,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
           >
             ${this.renderHint(field.description)}
           </wcp-input-checkbox>
-        `,
+        `
       )}
       ${when(
         !field.isEnum && field.isString,
@@ -96,7 +100,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
           >
             ${this.renderHint(field.description)}
           </wcp-input-text>
-        `,
+        `
       )}
       ${when(
         !field.isEnum && field.isNumber,
@@ -108,7 +112,7 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
           >
             ${this.renderHint(field.description)}
           </wcp-input-number>
-        `,
+        `
       )}
       ${when(
         field.isEnum && field.isString,
@@ -120,13 +124,11 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
           >
             ${map(
               field.enumValues,
-              (option) => html`
-                <wcp-input-select-option label="${option}" .value="${option}"></wcp-input-select-option>
-              `,
+              option => html` <wcp-input-select-option label="${option}" .value="${option}"></wcp-input-select-option> `
             )}
             ${this.renderHint(field.description)}
           </wcp-input-select>
-        `,
+        `
       )}
     `;
   }
@@ -168,17 +170,17 @@ export class StageEditorControls extends ColorSchemable(LitElement) {
             this._element?.hasFields,
             () => html`
               <fieldset slot="fields">
-                ${map(this._element?.fields.values(), (field) => this.renderFieldControl(field))}
+                ${map(this._element?.fields.values(), field => this.renderFieldControl(field))}
               </fieldset>
-            `,
+            `
           )}
           ${when(
             this._element?.hasSlots,
             () => html`
               <fieldset slot="slots">
-                ${map(this._element?.slots.values(), (slot) => this.renderSlotControl(slot))}
+                ${map(this._element?.slots.values(), slot => this.renderSlotControl(slot))}
               </fieldset>
-            `,
+            `
           )}
           <fieldset slot="attributes">${this.renderAttributeControls()}</fieldset>
         </wcp-tabs>

@@ -23,7 +23,7 @@ export function isElementWithin(element: Element, container: Element = document.
  */
 export function getRelativeBoundary(
   element: HTMLElement,
-  parent: Element | null = element.offsetParent,
+  parent: Element | null = element.offsetParent
 ): Pick<DOMRect, 'x' | 'y' | 'height' | 'width'> {
   const { height, width, x, y } = element.getBoundingClientRect();
   const { x: relX = 0, y: relY = 0 } = parent?.getBoundingClientRect() ?? {};
@@ -35,12 +35,14 @@ export function getRelativeBoundary(
  */
 export function getAncestorPath(
   element: Element,
-  check: (element: Element) => boolean = () => true,
+  check: (element: Element) => boolean = () => true
 ): (Element | Document)[] {
   const ancestors: Element[] = [];
   let currentElement: Element | null = element;
   while (currentElement !== null) {
-    if (!check(currentElement)) break;
+    if (!check(currentElement)) {
+      break;
+    }
     ancestors.unshift(currentElement);
     currentElement = currentElement.parentElement ?? (currentElement.getRootNode() as ShadowRoot).host ?? null;
   }

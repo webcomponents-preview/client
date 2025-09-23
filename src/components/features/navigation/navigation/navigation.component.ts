@@ -54,15 +54,21 @@ export class Navigation extends ColorSchemable(LitElement) {
 
   @eventOptions({ passive: true })
   toggleClick(): void {
-    if (!this.togglable) return;
+    if (!this.togglable) {
+      return;
+    }
     this.open = !this.open;
     this.dispatchEvent(new CustomEvent('wcp-navigation-toggle', { detail: this.open }));
   }
 
   @eventOptions({ capture: true })
   toggleKeyboard(event: KeyboardEvent): void {
-    if (!this.togglable) return;
-    if (![' ', 'Enter'].includes(event.key)) return;
+    if (!this.togglable) {
+      return;
+    }
+    if (![' ', 'Enter'].includes(event.key)) {
+      return;
+    }
 
     event.preventDefault();
     this.open = !this.open;
@@ -85,7 +91,7 @@ export class Navigation extends ColorSchemable(LitElement) {
               ${when(this.togglable, () => html`<wcp-icon name="chevron-${this.open ? 'up' : 'down'}"></wcp-icon>`)}
             </slot>
           </h3>
-        `,
+        `
       )}
       <nav part="nav"><slot></slot></nav>
     `;

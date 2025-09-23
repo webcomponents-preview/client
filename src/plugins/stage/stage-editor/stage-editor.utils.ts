@@ -62,7 +62,7 @@ export function prepareInitialData(element: Parsed.Element): ElementData {
  */
 export function parseFieldValue(
   field: Parsed.Field,
-  value: unknown,
+  value: unknown
 ): ElementData['fields'][keyof ElementData['fields']] {
   if (field.isBoolean) {
     return value === 'on';
@@ -83,7 +83,7 @@ export function parseFieldValue(
 export function alignFormDataWebkit(
   formData: FormData,
   elements: HTMLFormControlsCollection,
-  element: Parsed.Element,
+  element: Parsed.Element
 ): FormData {
   // filter out unchecked checkboxes for Safari
   Array.from(element.fields.entries())
@@ -91,7 +91,9 @@ export function alignFormDataWebkit(
     .forEach(([, field]) => {
       const name = `field.${field.name}`;
       const checkbox = elements.namedItem(name) as HTMLInputElement;
-      if (!checkbox.checked) formData.delete(name);
+      if (!checkbox.checked) {
+        formData.delete(name);
+      }
     });
 
   // give away aligned form data
@@ -114,7 +116,9 @@ export function mapFormData(data: FormData, element: Parsed.Element): ElementDat
     // map the field data
     if (group === 'field') {
       const field = element.fields.get(name);
-      if (field === undefined) return acc;
+      if (field === undefined) {
+        return acc;
+      }
 
       // pass the key-value pair into the data set
       return { ...acc, fields: { ...acc.fields, [litKey(field)]: parseFieldValue(field, value) } };

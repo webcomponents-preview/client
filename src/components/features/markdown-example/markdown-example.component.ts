@@ -38,7 +38,7 @@ export class MarkdownExample extends ColorSchemable(LitElement) {
   protected override render(): TemplateResult {
     return html`
       <wcp-tabs .tabs="${MARKDOWN_EXAMPLE_TABS}" active-tab="${ifDefined(this.#config?.initialCodePreviewTab)}">
-        ${map(Object.keys(MARKDOWN_EXAMPLE_TABS), (tab) => html`<slot name="${tab}" slot="${tab}"></slot>`)}
+        ${map(Object.keys(MARKDOWN_EXAMPLE_TABS), tab => html`<slot name="${tab}" slot="${tab}"></slot>`)}
       </wcp-tabs>
     `;
   }
