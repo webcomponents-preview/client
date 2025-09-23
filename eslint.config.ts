@@ -1,10 +1,10 @@
 import config from '@enke.dev/lint';
-import type { Linter } from 'eslint';
+import { defineConfig } from 'eslint/config';
 
-export default [
+export default defineConfig([
   ...config,
   {
-    ignores: ['dist', 'node_modules', 'src/index.ts', 'src/config.schema.json'],
+    ignores: ['src/index.ts'],
   },
   {
     files: ['**/*.test.ts'],
@@ -13,4 +13,4 @@ export default [
       'import/no-unresolved': ['off'],
     },
   },
-] satisfies Linter.Config[];
+]);
