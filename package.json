@@ -39,7 +39,7 @@
     "dev": "run-p -lns dev:*"
   },
   "peerDependencies": {
-    "element-internals-polyfill": "1.x.x",
+    "element-internals-polyfill": "3.x.x",
     "lit": "3.x.x",
     "urlpattern-polyfill": "10.x.x"
   },
