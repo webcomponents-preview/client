@@ -125,6 +125,7 @@ export class Root extends LitElement {
 
     // we're finished loading
     this.ready = true;
+    document.documentElement.dataset.wcpReady = 'true';
 
     // remove reload query param
     if (this.reloadQueryParam) {
