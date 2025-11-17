@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+# [0.9.0](/compare/0.8.10...0.9.0) (2025-11-17)
+
+
+### Features
+
+* reflect ready state in document root b653468
+
 ## [0.8.10](https://github.com/webcomponents-preview/client/compare/0.8.9...0.8.10) (2025-09-23)
 
 
