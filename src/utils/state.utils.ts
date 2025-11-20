@@ -1,3 +1,4 @@
+import type { Config } from './config.utils.js';
 import { getConfig } from './config.utils.js';
 
 // for session and local storage we'll need to prefix the keys
@@ -37,12 +38,12 @@ declare global {
 /**
  * Helper function to persist a given key with the given stateful value.
  */
-export function persist<K extends keyof State>(key: K, value: State[K]) {
+export function persist<K extends keyof State>(key: K, value: State[K], storage?: Config['statePersistence']): void {
   // in memory we can store arbitrary values, nevertheless we may want to
   // do more with them in the future, so we should use serializable values
   const serializedValue = JSON.stringify(value);
   const keyWithPrefix = `${STORAGE_PREFIX}${key}`;
-  const persistence = getConfig()?.statePersistence ?? 'none';
+  const persistence = storage ?? getConfig()?.statePersistence ?? 'none';
 
   let _: never;
   switch (persistence) {
@@ -78,10 +79,10 @@ export function persist<K extends keyof State>(key: K, value: State[K]) {
 /**
  * Read stateful values from the persistence layer.
  */
-export function read<K extends keyof State>(key: K): State[K] | undefined {
+export function read<K extends keyof State>(key: K, storage?: Config['statePersistence']): State[K] | undefined {
   let serializedValue: string | undefined;
   const keyWithPrefix = `${STORAGE_PREFIX}${key}`;
-  const persistence = getConfig()?.statePersistence ?? 'none';
+  const persistence = storage ?? getConfig()?.statePersistence ?? 'none';
 
   let _: never;
   switch (persistence) {
