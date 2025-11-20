@@ -105,7 +105,7 @@ export const defaultConfig = {
   initialActiveElement: undefined,
   initialCodePreviewTab: 'preview',
   initialStageTab: 'editor',
-  previewPlugins: ['wcp-preview-simulate-viewports', 'wcp-preview-editor-link'],
+  previewPlugins: ['wcp-preview-simulate-viewports', 'wcp-preview-editor-link', 'wcp-preview-maximize'],
   stagePlugins: ['wcp-stage-examples', 'wcp-stage-readme', 'wcp-stage-editor'],
   topbarPlugins: ['wcp-toggle-sidebar', 'wcp-toggle-color-scheme', 'wcp-topbar-preview-editor-link-toggle'],
   additionalReadmes: [],
