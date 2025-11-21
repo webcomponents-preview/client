@@ -1,5 +1,18 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.10.3](/compare/0.10.2...0.10.3) (2025-11-21)
+
+
+### Bug Fixes
+
+* **wcp-preview-maximize:** close on escape 8d511a4
+* **wcp-preview-maximize:** persisitant preview ids 97eede6
+
+
+### Reverts
+
+* Revert "chore: generate hash for previews" 16f2ef2
+
 ## [0.10.2](/compare/0.10.1...0.10.2) (2025-11-21)
 
 
