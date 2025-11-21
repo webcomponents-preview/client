@@ -42,6 +42,13 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
     return this.container?.getRootNode() as ShadowRoot | null;
   }
 
+  #minimizeOnEscape = ((event: KeyboardEvent) => {
+    if (event.key === 'Escape' && this.isMaximized) {
+      event.preventDefault();
+      this.#updateMaximized(false);
+    }
+  }).bind(this);
+
   #injectStyles() {
     // check if a style element already exists
     let style = this.#containerRoot?.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`);
@@ -113,11 +120,13 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
       containerHost.dataset.maximized = '';
       otherPlugins?.forEach(plugin => plugin.style.setProperty('display', 'none'));
       otherStyles?.forEach(style => (style.disabled = true));
+      window.addEventListener('keydown', this.#minimizeOnEscape, { capture: true });
       persist('maximized-preview', parseInt(containerHost.id, 10), 'url');
     } else {
       delete containerHost.dataset.maximized;
       otherPlugins?.forEach(plugin => plugin.style.removeProperty('display'));
       otherStyles?.forEach(style => (style.disabled = false));
+      window.removeEventListener('keydown', this.#minimizeOnEscape, { capture: true });
       remove('maximized-preview', 'url');
     }
 
