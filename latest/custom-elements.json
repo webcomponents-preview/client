@@ -5114,6 +5114,15 @@
             },
             {
               "kind": "field",
+              "name": "#containerRoot",
+              "privacy": "private",
+              "type": {
+                "text": "ShadowRoot | null"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "defaultStyle",
               "type": {
                 "text": "string"
