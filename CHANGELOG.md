@@ -1,5 +1,13 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.10.1](/compare/0.10.0...0.10.1) (2025-11-21)
+
+
+### Bug Fixes
+
+* **wcp-preview-maximize:** make the whole preview fullscreen 5c08e63
+* **wcp-preview-maximize:** place toggle button to the right d622e16
+
 # [0.10.0](/compare/0.9.0...0.10.0) (2025-11-21)
 
 
