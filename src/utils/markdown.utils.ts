@@ -3,8 +3,6 @@ import { marked, Renderer } from 'marked';
 import { markedHighlight } from 'marked-highlight';
 import * as Prism from 'prismjs';
 
-import { generateHash } from './hash.utils.js';
-
 export function getCodeExample(slot: HTMLSlotElement): string {
   return slot.assignedElements().reduce((acc, el) => `${acc}\n${el.outerHTML}`, '');
 }
@@ -41,13 +39,12 @@ export class CustomRenderer extends Renderer {
     // if a tag name is provided, use it to parametrize the preview component
     const previewTagName = this.previewTagName ? ` preview-tag-name="${this.previewTagName}"` : '';
     const raw = escaped ? this.#rawCodeMap.get(text) : text;
-    const hash = generateHash(`${previewTagName}${raw}`);
 
     // wrap the code in a custom element to preview it
     return `
       <wcp-markdown-example>
         <wcp-code slot="code">${super.code({ text, lang, escaped, ...tokens })}</wcp-code>
-        <wcp-preview id="${hash}" slot="preview"${previewTagName}>${raw}</wcp-preview>
+        <wcp-preview slot="preview"${previewTagName}>${raw}</wcp-preview>
       </wcp-markdown-example>
     `;
   }
