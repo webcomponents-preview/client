@@ -91,11 +91,12 @@
             "type": "array"
         },
         "statePersistence": {
-            "description": "Sets the persistence of the global state. Defaults to 'session'.\nIf set to 'none', the state will not be persisted at all and only kept in memory.\nIf set to 'session', the state will be persisted in the session storage and restored.\nIf set to 'local', the state will be persisted in the local storage and restored.",
+            "description": "Sets the persistence of the global state. Defaults to 'session'.\nIf set to 'none', the state will not be persisted at all and only kept in memory.\nIf set to 'url', the state will be persisted in the URL and restored.\nIf set to 'session', the state will be persisted in the session storage and restored.\nIf set to 'local', the state will be persisted in the local storage and restored.",
             "enum": [
                 "local",
                 "none",
-                "session"
+                "session",
+                "url"
             ],
             "type": "string"
         },
