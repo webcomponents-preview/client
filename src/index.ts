@@ -54,6 +54,7 @@ export * from './utils/debounce.utils.js';
 export * from './utils/decorator.utils.js';
 export * from './utils/dom.utils.js';
 export * from './utils/form.utils.js';
+export * from './utils/hash.utils.js';
 export * from './utils/log.utils.js';
 export * from './utils/manifest.utils.js';
 export * from './utils/markdown.utils.js';

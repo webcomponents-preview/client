@@ -8,6 +8,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { when } from 'lit/directives/when.js';
 import { unsafeStatic, withStatic } from 'lit/static-html.js';
 
+import { generateHash } from '../../../../utils/hash.utils.js';
 import type { ElementData } from '../stage-editor.utils.js';
 import styles from './stage-editor-preview.component.scss';
 
@@ -81,7 +82,7 @@ export class StageEditorPreview extends LitElement {
     // prepare the tag name and render it along with the slots and properties
     const tag = unsafeStatic(this.previewTagName);
     return html`
-      <wcp-preview preview-tag-name="${this.previewTagName}">
+      <wcp-preview id="${generateHash(this.previewTagName)}" preview-tag-name="${this.previewTagName}">
         ${keyed(
           this.data,
           withStatic(html)`
