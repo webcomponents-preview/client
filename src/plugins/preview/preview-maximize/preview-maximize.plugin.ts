@@ -54,20 +54,26 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
     style.id = STYLE_ID;
     style.textContent = `
       :host([data-maximized]) {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: var(---wcp-stage-background);
+
+        section, #wrapper, #stage {
+          display: flex;
+          flex-direction: column;
+          flex: 1 1 auto;
+          min-height: 0;
+          width: 100%;
+        }
+
         section, #stage {
           isolation: auto;
         }
 
         #stage {
-          position: fixed;
-          inset: 0;
-          z-index: 1000;
-
-          display: flex;
           justify-content: center;
           align-items: center;
-
-          background: var(---wcp-stage-background);
         }
       }
     `;
@@ -92,17 +98,30 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
   }
 
   #updateMaximized(maximized: boolean) {
+    // get the host element reference
     const containerHost = this.#containerRoot?.host as HTMLElement | undefined;
     if (!containerHost) {
       return;
     }
+
+    // find other preview plugins and styles
+    const otherPlugins = this.#containerRoot?.querySelectorAll<HTMLElement>('nav > :not(wcp-preview-maximize)');
+    const otherStyles = this.#containerRoot?.querySelectorAll<HTMLStyleElement>(`style:not(#${STYLE_ID})`);
+
+    // apply or remove the maximize styles
     if (maximized) {
       containerHost.dataset.maximized = '';
+      otherPlugins?.forEach(plugin => plugin.style.setProperty('display', 'none'));
+      otherStyles?.forEach(style => (style.disabled = true));
       persist('maximized-preview', parseInt(containerHost.id, 10), 'session');
     } else {
       delete containerHost.dataset.maximized;
+      otherPlugins?.forEach(plugin => plugin.style.removeProperty('display'));
+      otherStyles?.forEach(style => (style.disabled = false));
       remove('maximized-preview', 'session');
     }
+
+    // update state and tell the world
     this.isMaximized = maximized;
     this.#emitChange();
   }
