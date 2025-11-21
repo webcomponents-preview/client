@@ -1,5 +1,13 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+# [0.10.0](/compare/0.9.0...0.10.0) (2025-11-21)
+
+
+### Features
+
+* **wcp-preview-maximize:** (re)store currently maximized preview d696f59
+* **wcp-preview-maximize:** add preview plugin 580287d
+
 # [0.9.0](/compare/0.8.10...0.9.0) (2025-11-17)
 
 
