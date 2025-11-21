@@ -17,12 +17,13 @@ Maximizes a custom element preview to fullscreen.
 
 ## Methods
 
-| Method             | Type                         |
-|--------------------|------------------------------|
-| `#emitChange`      | `(): void`                   |
-| `#initMaximized`   | `(): void`                   |
-| `#injectStyles`    | `(): void`                   |
-| `#updateMaximized` | `(maximized: boolean): void` |
+| Method             | Type                        |
+|--------------------|-----------------------------|
+| `#emitChange`      | `(): void`                  |
+| `#inferPreviewId`  | `(): Promise<string>`       |
+| `#initMaximized`   | `(): any`                   |
+| `#injectStyles`    | `(): void`                  |
+| `#updateMaximized` | `(maximized: boolean): any` |
 
 ## Events
 

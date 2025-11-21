@@ -2,10 +2,12 @@ import type { TemplateResult } from 'lit';
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, eventOptions, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
+import { querySelectorAllDeep } from 'query-selector-shadow-dom';
 
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
 
+import { compress } from '../../../utils/compression.utils.js';
 import { persist, read, remove } from '../../../utils/state.utils.js';
 import styles from './preview-maximize.plugin.scss';
 
@@ -87,8 +89,28 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
     this.#containerRoot?.append(style);
   }
 
-  #initMaximized() {
-    const instanceId = parseInt(this.#containerRoot?.host?.id ?? '', 10);
+  // Previously, the previews have been identified by the hash of its contents.
+  // But when working with the example, the content changes often, causing
+  // the preview to lose its maximized state. Therefore, we need a more stable
+  // way to identify previews.
+  //
+  // A preview can be identified by
+  // - the tag name of the previewed component,
+  // - the current preview tab,
+  // - the index of the preview
+  async #inferPreviewId(): Promise<string> {
+    // instead of a preview tab, we use the location hash
+    const { pathname } = new URL(location.hash.slice(1), location.origin);
+    // determine preview index
+    const preview = this.#containerRoot?.host as HTMLElementTagNameMap['wcp-preview'];
+    const previews = querySelectorAllDeep('wcp-preview');
+    const index = previews.indexOf(preview);
+    // build and return the id
+    return compress(`${pathname}:${preview?.previewTagName}:${index}`, 'deflate-raw');
+  }
+
+  async #initMaximized() {
+    const instanceId = await this.#inferPreviewId();
     const isMaximized = read('maximized-preview', 'url') === instanceId;
     if (isMaximized) {
       this.#updateMaximized(true);
@@ -104,7 +126,7 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
     this.dispatchEvent(event);
   }
 
-  #updateMaximized(maximized: boolean) {
+  async #updateMaximized(maximized: boolean) {
     // get the host element reference
     const containerHost = this.#containerRoot?.host as HTMLElement | undefined;
     if (!containerHost) {
@@ -121,7 +143,7 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
       otherPlugins?.forEach(plugin => plugin.style.setProperty('display', 'none'));
       otherStyles?.forEach(style => (style.disabled = true));
       window.addEventListener('keydown', this.#minimizeOnEscape, { capture: true });
-      persist('maximized-preview', parseInt(containerHost.id, 10), 'url');
+      persist('maximized-preview', await this.#inferPreviewId(), 'url');
     } else {
       delete containerHost.dataset.maximized;
       otherPlugins?.forEach(plugin => plugin.style.removeProperty('display'));
@@ -166,7 +188,7 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
 
 declare global {
   interface State {
-    'maximized-preview': number;
+    'maximized-preview': string;
   }
 
   interface HTMLElementEventMap {
