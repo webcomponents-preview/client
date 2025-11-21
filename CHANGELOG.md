@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.10.2](/compare/0.10.1...0.10.2) (2025-11-21)
+
+
+### Bug Fixes
+
+* **wcp-preview-maximize:** persist state in url 0e79b5b
+
 ## [0.10.1](/compare/0.10.0...0.10.1) (2025-11-21)
 
 
