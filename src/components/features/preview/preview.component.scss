@@ -29,6 +29,10 @@ nav {
   align-items: center;
   justify-content: flex-start;
   border-bottom: 1px solid var(---wcp-preview-menu-border-color);
+
+  > :last-child {
+    margin-left: auto;
+  }
 }
 
 .plugin:not([available]) {

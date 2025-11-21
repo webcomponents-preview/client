@@ -1,7 +1,1 @@
 @use '@/styles/utils' as utils;
-
-:host([maximized]) wcp-button {
-  position: fixed;
-  inset: utils.size(1) utils.size(1) auto auto;
-  z-index: 1001;
-}
