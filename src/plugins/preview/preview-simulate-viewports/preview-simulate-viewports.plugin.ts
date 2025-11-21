@@ -64,6 +64,10 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
   @property({ type: Boolean, reflect: true, attribute: 'invert-simulated-viewport' })
   private invertSimulatedViewport = false;
 
+  get #containerRoot(): ShadowRoot | null {
+    return this.container?.getRootNode() as ShadowRoot | null;
+  }
+
   protected get defaultStyle(): string {
     return `
       .${DECORATION_CLASS} {
@@ -75,7 +79,7 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
   }
 
   protected removeStyle() {
-    this.container?.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`)?.remove();
+    this.#containerRoot?.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`)?.remove();
   }
 
   protected resetStyle() {
@@ -84,7 +88,7 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
 
   protected prepareStyle(): HTMLStyleElement {
     // check if a style element already exists
-    let style = this.container?.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`);
+    let style = this.#containerRoot?.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`);
     if (style) {
       return style;
     }
@@ -93,7 +97,7 @@ export class PreviewSimulateViewports extends ColorSchemable(LitElement) impleme
     style = document.createElement('style');
     style.id = STYLE_ID;
     style.textContent = this.defaultStyle;
-    this.container?.append(style);
+    this.#containerRoot?.append(style);
     return style;
   }
 
