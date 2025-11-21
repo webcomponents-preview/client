@@ -35,6 +35,33 @@ declare global {
   interface WindowEventMap extends StateEventMap {}
 }
 
+type UrlStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+
+/**
+ * Helper function to read state from URL query parameters.
+ * As we only use the hash for routing, we read from the search params encoded in there.
+ */
+export function getUrlState(): UrlStorage {
+  const route = new URL(window.location.hash.slice(1), window.location.origin);
+  const params = new URLSearchParams(route.search);
+  // const state: Partial<State> = {};
+  return {
+    getItem(key: string): string | null {
+      return params.get(key);
+    },
+    setItem(key: string, value: string): void {
+      params.set(key, value);
+      route.search = params.toString();
+      window.location.hash = route.href.slice(window.location.origin.length);
+    },
+    removeItem(key: string): void {
+      params.delete(key);
+      route.search = params.toString();
+      window.location.hash = route.href.slice(window.location.origin.length);
+    },
+  };
+}
+
 /**
  * Helper function to persist a given key with the given stateful value.
  */
@@ -57,6 +84,9 @@ export function persist<K extends keyof State>(key: K, value: State[K], storage?
       }
 
       window.wcp.__state[keyWithPrefix] = serializedValue;
+      break;
+    case 'url':
+      getUrlState().setItem(keyWithPrefix, serializedValue);
       break;
     case 'session':
       window.sessionStorage.setItem(keyWithPrefix, serializedValue);
@@ -90,6 +120,9 @@ export function remove<K extends keyof State>(key: K, storage?: Config['statePer
         delete window.wcp.__state[keyWithPrefix];
       }
       break;
+    case 'url':
+      getUrlState().removeItem(keyWithPrefix);
+      break;
     case 'session':
       window.sessionStorage.removeItem(keyWithPrefix);
       break;
@@ -119,6 +152,9 @@ export function read<K extends keyof State>(key: K, storage?: Config['statePersi
   switch (persistence) {
     case 'none':
       serializedValue = window?.wcp?.__state?.[keyWithPrefix];
+      break;
+    case 'url':
+      serializedValue = getUrlState().getItem(keyWithPrefix) ?? undefined;
       break;
     case 'session':
       serializedValue = window.sessionStorage.getItem(keyWithPrefix) ?? undefined;

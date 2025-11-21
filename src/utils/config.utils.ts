@@ -48,10 +48,11 @@ export interface Config {
   /**
    * Sets the persistence of the global state. Defaults to 'session'.
    * If set to 'none', the state will not be persisted at all and only kept in memory.
+   * If set to 'url', the state will be persisted in the URL and restored.
    * If set to 'session', the state will be persisted in the session storage and restored.
    * If set to 'local', the state will be persisted in the local storage and restored.
    */
-  statePersistence: 'none' | 'session' | 'local';
+  statePersistence: 'none' | 'url' | 'session' | 'local';
 
   /**
    * Labels to be translated or customized
