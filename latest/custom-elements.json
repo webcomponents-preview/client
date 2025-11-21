@@ -4875,6 +4875,168 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/plugins/preview/preview-maximize/preview-maximize.plugin.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Maximizes a custom element preview to fullscreen.",
+          "name": "PreviewMaximize",
+          "members": [
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "default": "'maximize'"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true,
+              "default": "'Maximize'"
+            },
+            {
+              "kind": "field",
+              "name": "container",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "isMaximized",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "attribute": "maximized",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true,
+              "default": "true",
+              "attribute": "available",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "#containerRoot",
+              "privacy": "private",
+              "type": {
+                "text": "ShadowRoot | null"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "#injectStyles",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "#initMaximized",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "#emitChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "#updateMaximized",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "maximized",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleMaximizePreview",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "handleMinimizePreview",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "maximized",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "isMaximized"
+            },
+            {
+              "name": "available",
+              "type": {
+                "text": "boolean"
+              },
+              "readonly": true,
+              "default": "true",
+              "fieldName": "available"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ColorSchemable",
+              "package": "@/mixins/color-schemable.mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "examples": [],
+          "readme": "<!-- Auto Generated Below -->\n\n# wcp-preview-maximize\n\nMaximizes a custom element preview to fullscreen.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property    | Attribute   | Modifiers | Type         | Default    |\n|-------------|-------------|-----------|--------------|------------|\n| `available` | `available` | readonly  | `true`       | true       |\n| `container` |             | readonly  |              |            |\n| `label`     |             | readonly  | `\"Maximize\"` | \"Maximize\" |\n| `name`      |             | readonly  | `\"maximize\"` | \"maximize\" |\n\n## Methods\n\n| Method             | Type                         |\n|--------------------|------------------------------|\n| `#emitChange`      | `(): void`                   |\n| `#initMaximized`   | `(): void`                   |\n| `#injectStyles`    | `(): void`                   |\n| `#updateMaximized` | `(maximized: boolean): void` |\n\n## Events\n\n| Event                          |\n|--------------------------------|\n| `wcp-preview-maximize:toggled` |\n",
+          "groups": [
+            "Plugins/Preview"
+          ],
+          "tagName": "wcp-preview-maximize",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PreviewMaximize",
+          "declaration": {
+            "name": "PreviewMaximize",
+            "module": "src/plugins/preview/preview-maximize/preview-maximize.plugin.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "wcp-preview-maximize",
+          "declaration": {
+            "name": "PreviewMaximize",
+            "module": "src/plugins/preview/preview-maximize/preview-maximize.plugin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/plugins/preview/preview-simulate-viewports/preview-simulate-viewports.plugin.ts",
       "declarations": [
         {
