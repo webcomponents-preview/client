@@ -82,7 +82,7 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
 
   #initMaximized() {
     const instanceId = parseInt(this.#containerRoot?.host?.id ?? '', 10);
-    const isMaximized = read('maximized-preview', 'session') === instanceId;
+    const isMaximized = read('maximized-preview', 'url') === instanceId;
     if (isMaximized) {
       this.#updateMaximized(true);
     }
@@ -113,12 +113,12 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
       containerHost.dataset.maximized = '';
       otherPlugins?.forEach(plugin => plugin.style.setProperty('display', 'none'));
       otherStyles?.forEach(style => (style.disabled = true));
-      persist('maximized-preview', parseInt(containerHost.id, 10), 'session');
+      persist('maximized-preview', parseInt(containerHost.id, 10), 'url');
     } else {
       delete containerHost.dataset.maximized;
       otherPlugins?.forEach(plugin => plugin.style.removeProperty('display'));
       otherStyles?.forEach(style => (style.disabled = false));
-      remove('maximized-preview', 'session');
+      remove('maximized-preview', 'url');
     }
 
     // update state and tell the world
