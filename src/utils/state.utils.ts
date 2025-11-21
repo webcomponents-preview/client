@@ -67,13 +67,44 @@ export function persist<K extends keyof State>(key: K, value: State[K], storage?
 
     default:
       // some simple exhaustiveness check
-
       _ = persistence;
       return _;
   }
 
   // dispatch an event to notify others about the change
   window.dispatchEvent(new CustomEvent(`${STATE_EVENT_NAME}:${key}`, { detail: value }));
+}
+
+/**
+ * Remove a stateful value from the persistence layer.
+ */
+export function remove<K extends keyof State>(key: K, storage?: Config['statePersistence']): void {
+  const keyWithPrefix = `${STORAGE_PREFIX}${key}`;
+  const persistence = storage ?? getConfig()?.statePersistence ?? 'none';
+
+  let _: never;
+  switch (persistence) {
+    case 'none':
+      if (window.wcp?.__state) {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete window.wcp.__state[keyWithPrefix];
+      }
+      break;
+    case 'session':
+      window.sessionStorage.removeItem(keyWithPrefix);
+      break;
+    case 'local':
+      window.localStorage.removeItem(keyWithPrefix);
+      break;
+
+    default:
+      // some simple exhaustiveness check
+      _ = persistence;
+      return _;
+  }
+
+  // dispatch an event to notify others about the change
+  window.dispatchEvent(new CustomEvent(`${STATE_EVENT_NAME}:${key}`, { detail: undefined }));
 }
 
 /**
@@ -98,7 +129,6 @@ export function read<K extends keyof State>(key: K, storage?: Config['statePersi
 
     default:
       // some simple exhaustiveness check
-
       _ = persistence;
       return _;
   }

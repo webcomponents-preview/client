@@ -6,6 +6,7 @@ import { when } from 'lit/directives/when.js';
 import { ColorSchemable } from '@/mixins/color-schemable.mixin.js';
 import type { PreviewPlugin } from '@/utils/plugin.utils.js';
 
+import { persist, read, remove } from '../../../utils/state.utils.js';
 import styles from './preview-maximize.plugin.scss';
 
 // internal identifiers for styling
@@ -33,6 +34,15 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
   override connectedCallback() {
     super.connectedCallback();
 
+    this.#injectStyles();
+    this.#initMaximized();
+  }
+
+  get #containerRoot(): ShadowRoot | null {
+    return this.container?.getRootNode() as ShadowRoot | null;
+  }
+
+  #injectStyles() {
     // check if a style element already exists
     let style = this.#containerRoot?.querySelector<HTMLStyleElement>(`style#${STYLE_ID}`);
     if (style) {
@@ -64,8 +74,12 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
     this.#containerRoot?.append(style);
   }
 
-  get #containerRoot(): ShadowRoot | null {
-    return this.container?.getRootNode() as ShadowRoot | null;
+  #initMaximized() {
+    const instanceId = parseInt(this.#containerRoot?.host?.id ?? '', 10);
+    const isMaximized = read('maximized-preview', 'session') === instanceId;
+    if (isMaximized) {
+      this.#updateMaximized(true);
+    }
   }
 
   #emitChange() {
@@ -77,15 +91,17 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
     this.dispatchEvent(event);
   }
 
-  #setMaximized(maximized: boolean) {
+  #updateMaximized(maximized: boolean) {
     const containerHost = this.#containerRoot?.host as HTMLElement | undefined;
     if (!containerHost) {
       return;
     }
     if (maximized) {
       containerHost.dataset.maximized = '';
+      persist('maximized-preview', parseInt(containerHost.id, 10), 'session');
     } else {
       delete containerHost.dataset.maximized;
+      remove('maximized-preview', 'session');
     }
     this.isMaximized = maximized;
     this.#emitChange();
@@ -93,12 +109,12 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
 
   @eventOptions({ passive: true })
   private handleMaximizePreview() {
-    this.#setMaximized(true);
+    this.#updateMaximized(true);
   }
 
   @eventOptions({ passive: true })
   private handleMinimizePreview() {
-    this.#setMaximized(false);
+    this.#updateMaximized(false);
   }
 
   protected override render(): TemplateResult {
@@ -121,6 +137,10 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
 }
 
 declare global {
+  interface State {
+    'maximized-preview': number;
+  }
+
   interface HTMLElementEventMap {
     'wcp-preview-maximize:toggled': CustomEvent<boolean>;
   }

@@ -27,7 +27,7 @@ export const prepareRoutes = (): Route[] => [
       }
 
       // redirect to first element
-      const firstElement = getManifest().elements.values().next().value.getNiceUrl();
+      const firstElement = getManifest().elements.values().next().value?.getNiceUrl();
       Router.navigate(`/element/${firstElement}`);
       return false;
     },
