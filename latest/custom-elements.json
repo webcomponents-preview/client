@@ -4940,9 +4940,24 @@
               "readonly": true
             },
             {
+              "kind": "field",
+              "name": "#minimizeOnEscape",
+              "privacy": "private"
+            },
+            {
               "kind": "method",
               "name": "#injectStyles",
               "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "#inferPreviewId",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<string>"
+                }
+              }
             },
             {
               "kind": "method",
@@ -5008,7 +5023,7 @@
             "package": "lit"
           },
           "examples": [],
-          "readme": "<!-- Auto Generated Below -->\n\n# wcp-preview-maximize\n\nMaximizes a custom element preview to fullscreen.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property    | Attribute   | Modifiers | Type         | Default    |\n|-------------|-------------|-----------|--------------|------------|\n| `available` | `available` | readonly  | `true`       | true       |\n| `container` |             | readonly  |              |            |\n| `label`     |             | readonly  | `\"Maximize\"` | \"Maximize\" |\n| `name`      |             | readonly  | `\"maximize\"` | \"maximize\" |\n\n## Methods\n\n| Method             | Type                         |\n|--------------------|------------------------------|\n| `#emitChange`      | `(): void`                   |\n| `#initMaximized`   | `(): void`                   |\n| `#injectStyles`    | `(): void`                   |\n| `#updateMaximized` | `(maximized: boolean): void` |\n\n## Events\n\n| Event                          |\n|--------------------------------|\n| `wcp-preview-maximize:toggled` |\n",
+          "readme": "<!-- Auto Generated Below -->\n\n# wcp-preview-maximize\n\nMaximizes a custom element preview to fullscreen.\n\n**Mixins:** ColorSchemable\n\n## Properties\n\n| Property    | Attribute   | Modifiers | Type         | Default    |\n|-------------|-------------|-----------|--------------|------------|\n| `available` | `available` | readonly  | `true`       | true       |\n| `container` |             | readonly  |              |            |\n| `label`     |             | readonly  | `\"Maximize\"` | \"Maximize\" |\n| `name`      |             | readonly  | `\"maximize\"` | \"maximize\" |\n\n## Methods\n\n| Method             | Type                        |\n|--------------------|-----------------------------|\n| `#emitChange`      | `(): void`                  |\n| `#inferPreviewId`  | `(): Promise<string>`       |\n| `#initMaximized`   | `(): any`                   |\n| `#injectStyles`    | `(): void`                  |\n| `#updateMaximized` | `(maximized: boolean): any` |\n\n## Events\n\n| Event                          |\n|--------------------------------|\n| `wcp-preview-maximize:toggled` |\n",
           "groups": [
             "Plugins/Preview"
           ],
