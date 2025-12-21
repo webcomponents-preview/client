@@ -84,6 +84,10 @@ export class PreviewMaximize extends ColorSchemable(LitElement) implements Previ
           justify-content: center;
           align-items: center;
         }
+
+        wcp-preview-maximize[available] {
+          margin-left: auto;
+        }
       }
     `;
     this.#containerRoot?.append(style);
