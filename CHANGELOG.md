@@ -1,5 +1,12 @@
 # <img align="left" src="https://github.com/webcomponents-preview/client/raw/main/src/assets/icons/logo.svg" alt="WCP Logo" height="43px"> Web Components Preview
 
+## [0.10.4](https://github.com/webcomponents-preview/client/compare/0.10.3...0.10.4) (2025-12-21)
+
+
+### Bug Fixes
+
+* **wcp-preview-maximize:** self align minimize button ([550e690](https://github.com/webcomponents-preview/client/commit/550e690673215a032127c7a692de1abcb088ee60))
+
 ## [0.10.3](/compare/0.10.2...0.10.3) (2025-11-21)
 
 
